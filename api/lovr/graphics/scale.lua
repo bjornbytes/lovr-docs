@@ -17,11 +17,13 @@ return {
     {
       name = 'y',
       type = 'number',
+      default = 'x',
       description = 'The amount to scale on the y axis.'
     },
     {
       name = 'z',
       type = 'number',
+      default = 'x',
       description = 'The amount to scale on the z axis.'
     }
   },

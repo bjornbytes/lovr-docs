@@ -17,7 +17,7 @@ return {
     function lovr.load(args)
       model = lovr.graphics.newModel('cena.fbx')
       texture = lovr.graphics.newTexture('cena.png')
-      levelGeometry = lovr.graphics.newBuffer(1000)
+      levelGeometry = lovr.graphics.newMesh(1000)
       effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')
       loadLevel(1)
     end

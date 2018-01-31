@@ -30,6 +30,10 @@ return {
     images = {
       type = 'table',
       description = 'A table containing 6 images, as described above.'
+    },
+    image = {
+      type = 'string',
+      description = 'A filename for an equirectangular image to load.'
     }
   },
   returns = {
@@ -45,6 +49,11 @@ return {
     },
     {
       arguments = { 'images' },
+      returns = { 'skybox' }
+    },
+    {
+      description = 'Creates a Skybox from a single equirectangular image.',
+      arguments = { 'image' },
       returns = { 'skybox' }
     }
   }

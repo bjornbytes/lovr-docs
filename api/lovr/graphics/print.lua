@@ -27,16 +27,10 @@ return {
       description = 'The z coordinate of the center of the text.'
     },
     {
-      name = 'w',
+      name = 'scale',
       type = 'number',
-      default = 0,
-      description = 'The maximum width of each line, in meters.  Use zero for unlimited.'
-    },
-    {
-      name = 'h',
-      type = 'number',
-      default = .1,
-      description = 'The height of each line, in meters.'
+      default = 1,
+      description = 'The scale of the text.'
     },
     {
       name = 'angle',
@@ -61,6 +55,27 @@ return {
       type = 'number',
       default = 0,
       description = 'The z component of the axis of rotation.'
+    },
+    {
+      name = 'wrap',
+      type = 'number',
+      default = '0',
+      description = [[
+        The maximum width of each line, in meters (affected by `scale`).  Set to 0 or `nil` for no
+        wrapping.
+      ]]
+    },
+    {
+      name = 'halign',
+      type = 'HorizontalAlign',
+      default = [['center']],
+      description = 'The horizontal alignment.'
+    },
+    {
+      name = 'valign',
+      type = 'VerticalAlign',
+      default = [['middle']],
+      description = 'The vertical alignment.'
     }
   },
   returns = {},

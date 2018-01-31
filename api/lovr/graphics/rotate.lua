@@ -16,16 +16,19 @@ return {
     {
       name = 'ax',
       type = 'number',
+      default = '0',
       description = 'The x component of the axis of rotation.'
     },
     {
       name = 'ay',
       type = 'number',
+      default = '1',
       description = 'The y component of the axis of rotation.'
     },
     {
       name = 'az',
       type = 'number',
+      default = '0',
       description = 'The z component of the axis of rotation.'
     }
   },

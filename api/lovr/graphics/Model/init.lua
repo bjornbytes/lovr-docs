@@ -1,9 +1,8 @@
 return {
   summary = 'An asset imported from a 3D model file.',
   description = [[
-    A Model is a drawable object loaded from a 3D file format.  Most common 3D file formats are
-    supported, such as `3ds`, `blend`, `dae`, `fbx`, `stl`, `obj`, and `glTF`.  Models will use
-    normals and texture coordinates, if provided.
+    A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are
+    `obj`, `fbx`, and collada.  Models will use normals and texture coordinates, if provided.
 
     The following advanced features are not supported yet: animations, materials, and vertex colors.
   ]],

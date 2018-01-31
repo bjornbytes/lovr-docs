@@ -1,6 +1,9 @@
 return {
   summary = 'Get the position of the Source.',
-  description = 'Returns the position of the Source in space.',
+  description = [[
+    Returns the position of the Source, in meters.  Setting the position will cause the Source to
+    be distorted and attenuated based on its position relative to the listener.
+  ]],
   arguments = {},
   returns = {
     {

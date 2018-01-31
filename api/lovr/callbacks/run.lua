@@ -33,6 +33,7 @@ return {
             if lovr.headset and lovr.headset.isPresent() then
               lovr.audio.setPosition(lovr.headset.getPosition())
               lovr.audio.setOrientation(lovr.headset.getOrientation())
+              lovr.audio.setVelocity(lovr.headset.getVelocity())
             end
           end
 

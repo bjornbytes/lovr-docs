@@ -1,7 +1,7 @@
 return {
   tag = 'listener',
   summary = 'Set the position of the listener.',
-  description = 'Sets the position of the virtual audio listener.',
+  description = 'Sets the position of the virtual audio listener, in meters.',
   arguments = {
     {
       name = 'x',

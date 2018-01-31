@@ -18,6 +18,20 @@ return {
           description = 'A unique label for this project.'
         },
         {
+          name = 'headset',
+          type = 'table',
+          description = 'Configuration for the headset.',
+          table = {
+            {
+              name = 'mirrored',
+              type = 'boolean',
+              description = [[
+                Whether the desktop window should display a mirror of what's in the headset.
+              ]]
+            }
+          }
+        },
+        {
           name = 'modules',
           type = 'table',
           description = 'The set of enabled modules to use.',
@@ -73,6 +87,9 @@ return {
         function lovr.conf(t)
           -- Set the project identity
           t.identity = 'default'
+
+          -- Headset settings
+          t.headset.mirror = true -- Mirror the headset to the desktop
 
           -- Enable or disable different modules
           t.modules.audio = true
