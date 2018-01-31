@@ -333,23 +333,61 @@ return {
     {
       name = "run",
       tag = "callbacks",
-      summary = "The main loop.",
-      description = "This callback contains the main loop to run everything.  The default is usually suitable, but sometimes it is helpful to override this callback for custom behavior.",
+      summary = "The main entry point.",
+      description = "This callback is the main entry point for a LÖVR program.  It is responsible for calling `lovr.load` and `lovr.step`.",
       key = "lovr.run",
       module = "lovr",
       variants = {
         {
           arguments = {},
-          returns = {}
+          returns = {
+            {
+              name = "exit",
+              type = "number",
+              description = "The exit code.  A nonzero exit code indicates an error."
+            }
+          }
         }
       },
       examples = {
         {
           description = "The default `lovr.run`:",
-          code = "function lovr.run()\n  if lovr.load then\n    lovr.load()\n  end\n\n  while true do\n    lovr.event.pump()\n\n    for name, a, b, c, d in lovr.event.poll() do\n      if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n        return a\n      end\n\n      lovr.handlers[name](a, b, c, d)\n    end\n\n    local dt = lovr.timer.step()\n\n    if lovr.audio then\n      lovr.audio.update()\n      if lovr.headset and lovr.headset.isPresent() then\n        lovr.audio.setPosition(lovr.headset.getPosition())\n        lovr.audio.setOrientation(lovr.headset.getOrientation())\n        lovr.audio.setVelocity(lovr.headset.getVelocity())\n      end\n    end\n\n    if lovr.update then\n      lovr.update(dt)\n    end\n\n    lovr.graphics.clear()\n    lovr.graphics.origin()\n    if lovr.draw then\n      if lovr.headset and lovr.headset.isPresent() then\n        lovr.headset.renderTo(lovr.draw)\n      else\n        lovr.draw()\n      end\n    end\n    lovr.graphics.present()\n\n    lovr.timer.sleep(.001)\n  end\nend"
+          code = "function lovr.run()\n  if lovr.load then lovr.load() end\n  while true do\n    local exit = lovr.step()\n    if exit then return exit end\n  end\nend"
         }
       },
       related = {
+        "lovr.step",
+        "lovr.load",
+        "lovr.quit"
+      }
+    },
+    {
+      name = "step",
+      tag = "callbacks",
+      summary = "The main loop.",
+      description = "This callback is called continuously and contains a single iteration of the main loop.  The default is usually suitable, but sometimes it is helpful to override this callback for custom behavior.",
+      key = "lovr.step",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "exit",
+              type = "number",
+              description = "The exit code.  A nonzero exit code indicates an error."
+            }
+          }
+        }
+      },
+      examples = {
+        {
+          description = "The default `lovr.step`:",
+          code = "function lovr.step()\n  lovr.event.pump()\n  for name, a, b, c, d in lovr.event.poll() do\n    if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n      return a\n    end\n    lovr.handlers[name](a, b, c, d)\n  end\n\n  local dt = lovr.timer.step()\n  if lovr.audio then\n    lovr.audio.update()\n    if lovr.headset and lovr.headset.isPresent() then\n      lovr.audio.setOrientation(lovr.headset.getOrientation())\n      lovr.audio.setPosition(lovr.headset.getPosition())\n      lovr.audio.setVelocity(lovr.headset.getVelocity())\n    end\n  end\n  if lovr.update then lovr.update(dt) end\n\n  lovr.graphics.clear()\n  lovr.graphics.origin()\n  if lovr.draw then\n    if lovr.headset and lovr.headset.isPresent() then\n      lovr.headset.renderTo(lovr.draw)\n    else\n      lovr.draw()\n    end\n  end\n  lovr.graphics.present()\n\n  lovr.timer.sleep(.001)\nend"
+        }
+      },
+      related = {
+        "lovr.run",
         "lovr.load",
         "lovr.quit"
       }
@@ -903,7 +941,7 @@ return {
           name = "update",
           tag = "sources",
           summary = "Updates the audio system.",
-          description = "Updates all playing sources. This must be called regularly for audio playback to occur. Normally this is called for you by `lovr.run`.",
+          description = "Updates all playing sources. This must be called regularly for audio playback to occur. Normally this is called for you by `lovr.step`.",
           key = "lovr.audio.update",
           module = "lovr.audio",
           variants = {
@@ -1710,7 +1748,7 @@ return {
         {
           name = "poll",
           summary = "Iterate over unprocessed events in the queue.",
-          description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  Typically this function is automatically called for you by `lovr.run`.",
+          description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  Typically this function is automatically called for you by `lovr.step`.",
           key = "lovr.event.poll",
           module = "lovr.event",
           variants = {
@@ -1729,7 +1767,7 @@ return {
         {
           name = "pump",
           summary = "Pump new events into the queue for processing.",
-          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider your application unresponsive.  By default, this function is called automatically by `lovr.run`.",
+          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider your application unresponsive.  By default, this function is called automatically by `lovr.step`.",
           key = "lovr.event.pump",
           module = "lovr.event",
           related = {
@@ -2819,7 +2857,7 @@ return {
           name = "clear",
           tag = "window",
           summary = "Clear the screen.",
-          description = "Clears the screen to the background color.  This function is called automatically by `lovr.run`.",
+          description = "Clears the screen to the background color.  This function is called automatically by `lovr.step`.",
           key = "lovr.graphics.clear",
           module = "lovr.graphics",
           related = {
@@ -4124,7 +4162,7 @@ return {
           name = "present",
           tag = "window",
           summary = "Present a frame to the window.",
-          description = "Presents the results of pending drawing operations to the window.  This is automatically called after `lovr.draw` by the default `lovr.run` function.",
+          description = "Presents the results of pending drawing operations to the window.  This is automatically called after `lovr.draw` by the default `lovr.step` function.",
           key = "lovr.graphics.present",
           module = "lovr.graphics",
           variants = {
@@ -6635,7 +6673,7 @@ return {
           name = "renderTo",
           tag = "headset",
           summary = "Render to the headset using a function.",
-          description = "Renders to each eye of the headset using a function.\n\nThis function takes care of setting the appropriate graphics transformations to ensure that the scene is rendered as though it is being viewed through each eye of the player.  It also takes care of setting the correct projection for the headset lenses.\n\nIf the headset module is enabled, this function is called automatically by `lovr.run` with `lovr.draw` as the callback.",
+          description = "Renders to each eye of the headset using a function.\n\nThis function takes care of setting the appropriate graphics transformations to ensure that the scene is rendered as though it is being viewed through each eye of the player.  It also takes care of setting the correct projection for the headset lenses.\n\nIf the headset module is enabled, this function is called automatically by `lovr.step` with `lovr.draw` as the callback.",
           key = "lovr.headset.renderTo",
           module = "lovr.headset",
           variants = {
@@ -6929,6 +6967,22 @@ return {
               }
             }
           }
+        }
+      }
+    },
+    {
+      name = "json",
+      tag = "library",
+      summary = "Encodes and decodes JSON.",
+      description = "The json module exposes functions for encoding and decoding JSON. You can use it by requiring the `json` module.",
+      key = "json",
+      functions = {},
+      objects = {},
+      enums = {},
+      external = true,
+      examples = {
+        {
+          code = "local json = require 'json'\nlocal data = { health = 10, position = { 1, 2, 3 } }\nlocal encoded = json.encode(data)\nprint(encoded)\nlocal decoded = json.decode(encoded)\nprint(decoded.health, unpack(decoded.position))"
         }
       }
     },
@@ -7465,7 +7519,7 @@ return {
         {
           name = "step",
           summary = "Steps the internal clock.",
-          description = "Steps the timer, returning the new delta time.  This is called automatically in `lovr.run` and it's used to calculate the new `dt` to pass to `lovr.update`.",
+          description = "Steps the timer, returning the new delta time.  This is called automatically in `lovr.step` and it's used to calculate the new `dt` to pass to `lovr.update`.",
           key = "lovr.timer.step",
           module = "lovr.timer",
           variants = {

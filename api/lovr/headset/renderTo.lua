@@ -8,7 +8,7 @@ return {
     scene is rendered as though it is being viewed through each eye of the player.  It also takes
     care of setting the correct projection for the headset lenses.
 
-    If the headset module is enabled, this function is called automatically by `lovr.run` with
+    If the headset module is enabled, this function is called automatically by `lovr.step` with
     `lovr.draw` as the callback.
   ]],
   arguments = {

@@ -2,7 +2,8 @@ return {
   tag = 'window',
   summary = 'Clear the screen.',
   description = [[
-    Clears the screen to the background color.  This function is called automatically by `lovr.run`.
+    Clears the screen to the background color.  This function is called automatically by
+    `lovr.step`.
   ]],
   arguments = {
     {

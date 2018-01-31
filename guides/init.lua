@@ -7,5 +7,6 @@ return {
   '3D_Models',
   'Controllers',
   'Sound',
-  'Game_Distribution'
+  'Game_Distribution',
+  'WebVR'
 }
