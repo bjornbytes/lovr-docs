@@ -1,4 +1,11 @@
 return {
   'Introduction',
-  'Drawing_Shapes'
+  'Getting_Started',
+  'How_to_Lua',
+  'Callbacks',
+  'Simple_Shapes',
+  '3D_Models',
+  'Controllers',
+  'Sound',
+  'Game_Distribution'
 }

@@ -1730,6 +1730,23 @@ return {
           }
         },
         {
+          name = "TextureProjection",
+          summary = "Different projection types for renderable textures.",
+          description = "When creating Textures to be used as render targets, they can be created in either \"2d\" or \"3d\" mode.  2D mode is good for 2D user interfaces or postprocessing, whereas 3d is useful for portals, weapon scopes, mirrors, and other situations where 3D content needs to be rendered.",
+          key = "TextureProjection",
+          module = "graphics",
+          values = {
+            {
+              name = "2d",
+              description = "Use an orthographic projection."
+            },
+            {
+              name = "3d",
+              description = "Use a perspective projection."
+            }
+          }
+        },
+        {
           name = "WrapMode",
           summary = "How to wrap Textures.",
           description = "The method used to render textures when texture coordinates are outside of the 0-1 range.",
@@ -1800,6 +1817,64 @@ return {
                   name = "mode",
                   type = "DrawMode",
                   description = "How to draw the cube."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the cube.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the cube.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the cube.",
+                  default = "0"
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the cube, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The rotation of the cube around its rotation axis, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the cube's axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the cube's axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the cube's axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The Texture to apply to the cube faces."
                 },
                 {
                   name = "x",
@@ -2571,6 +2646,38 @@ return {
                   description = "The new Texture."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the Texture, in pixels."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the Texture, in pixels."
+                },
+                {
+                  name = "projection",
+                  type = "TextureProjection",
+                  description = "The type of projection to use when rendering to the Texture."
+                },
+                {
+                  name = "msaa",
+                  type = "number",
+                  description = "The number of samples to use for multisample antialiasing.",
+                  default = "0"
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The new Texture."
+                }
+              }
             }
           }
         },
@@ -2645,6 +2752,70 @@ return {
                   type = "number",
                   description = "The z coordinate of the normal vector of the plane.",
                   default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Draw a textured plane.",
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The texture to apply to the plane."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the plane.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the plane.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the plane.",
+                  default = "0"
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the plane, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "nx",
+                  type = "number",
+                  description = "The x coordinate of the normal vector of the plane.",
+                  default = "0"
+                },
+                {
+                  name = "ny",
+                  type = "number",
+                  description = "The y coordinate of the normal vector of the plane.",
+                  default = "1"
+                },
+                {
+                  name = "nz",
+                  type = "number",
+                  description = "The z coordinate of the normal vector of the plane.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Draw a fullscreen textured plane.",
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The texture to apply to the plane."
                 }
               },
               returns = {}
@@ -4012,6 +4183,26 @@ return {
                       description = "How the texture wraps vertically."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "renderTo",
+              summary = "Render to a Texture.",
+              description = "Renders to a Texture using a function.  The Texture must be created as a framebuffer by passing a width and height to `lovr.graphics.newTexture` instead of a filename.",
+              key = "Texture:renderTo",
+              module = "lovr.graphics",
+              notes = "Make sure you clear the contents of the Texture before rendering to it to clear any previous contents.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "A function that calls drawing commands to render to the Texture."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },

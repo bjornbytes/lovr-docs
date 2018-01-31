@@ -3,59 +3,64 @@ return {
   summary = 'Draw a cube.',
   description = 'Draws a cube.',
   arguments = {
-    {
-      name = 'mode',
+    texture = {
+      type = 'Texture',
+      description = 'The Texture to apply to the cube faces.'
+    },
+    mode = {
       type = 'DrawMode',
       description = 'How to draw the cube.'
     },
-    {
-      name = 'x',
+    x = {
       type = 'number',
       default = '0',
       description = 'The x coordinate of the center of the cube.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       default = '0',
       description = 'The y coordinate of the center of the cube.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'number',
       default = '0',
       description = 'The z coordinate of the center of the cube.'
     },
-    {
-      name = 'size',
+    size = {
       type = 'number',
       default = '1',
       description = 'The size of the cube, in meters.'
     },
-    {
-      name = 'angle',
+    angle = {
       type = 'number',
       default = '0',
       description = 'The rotation of the cube around its rotation axis, in radians.'
     },
-    {
-      name = 'ax',
+    ax = {
       type = 'number',
       default = '0',
       description = 'The x coordinate of the cube\'s axis of rotation.'
     },
-    {
-      name = 'ay',
+    ay = {
       type = 'number',
       default = '1',
       description = 'The y coordinate of the cube\'s axis of rotation.'
     },
-    {
-      name = 'az',
+    az = {
       type = 'number',
       default = '0',
       description = 'The z coordinate of the cube\'s axis of rotation.'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'mode', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    },
+    {
+      arguments = { 'texture', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    }
+  }
 }

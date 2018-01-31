@@ -7,33 +7,40 @@ prototyping, creative coding, game jams, and more.
 Why LÖVR?
 ---
 
-LÖVR aims to be simple to use.  You can get up and running with just a few lines of Lua,
-and there is no bloated editor to use, account to create, or compiling to do.
+LÖVR aims to be simple to use.  You can start making VR prototypes with just a few lines of code,
+and there is no complicated editor to use, account to create, or compiling to do.
 
 There is no cost to use LÖVR and it's open source, so you can use it for pretty much any
 project without restrictions, and even modify the framework if you need to.
 
-LÖVR is really fast.  It's written in C and uses LuaJIT, a crazy-fast just in time compiler for Lua
-code.
+LÖVR is really fast.  It's written in C and uses LuaJIT, an incredibly fast Lua implementation.
 
 Under the hood LÖVR uses OpenVR, so both the HTC Vive and the Oculus Rift are supported.  Support
 for other headsets is also in the works.
 
-Hello World
+Example
 ---
 
-First, download LÖVR from the home page, or click [here](http://bjornbyt.es/f/lovr.zip).
+What does LÖVR look like?  Here's a simple example that draws a cube at the position of each
+motion controller:
 
-You'll need a directory to hold the code for your game.  For this example, we'll create a folder
-called `myGame`.  In the `myGame` folder we'll create a file called `main.lua`, which is the "entry
-point" for any LÖVR project.  We'll put some code in `main.lua` that draws a cube:
+```
+function lovr.load()
+  controllers = lovr.headset.getControllers()
+end
 
-    function lovr.draw()
-      lovr.graphics.cube('line', 0, 1, 0, .5)
-    end
+function lovr.draw()
+  for i, controller in pairs(controllers) do
+    local x, y, z = controller:getPosition()
+    lovr.graphics.cube('line', x, y, z, .2, controller:getOrientation())
+  end
+end
+```
 
-The numbers `(0, 1, 0)` are the x, y, z, position of the cube in meters.  So the cube will be drawn
-one meter off the ground.  The number `.5` is the size of the cube, in meters.
+Onward!
+---
 
-Start SteamVR, then drag and drop the `myGame` folder onto `lovr.exe`.  Put on your headset and you
-should see a white cube at the center of your play area!
+If you want to learn more about creating experiences with LÖVR, check out the <a data-key="Getting_Started">Getting Started</a>
+guide.  You can also explore everything LÖVR can do
+using the sidebar on the left.  Or, if you're looking for a particular feature, you can type a
+keyword, like 'audio'.
