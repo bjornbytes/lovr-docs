@@ -2,54 +2,60 @@ return {
   summary = 'Draw the Model.',
   description = 'Draw the Model.',
   arguments = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       default = '0',
-      description = 'The x coordinate to draw the model at.'
+      description = 'The x coordinate to draw the Model at.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       default = '0',
-      description = 'The y coordinate to draw the model at.'
+      description = 'The y coordinate to draw the Model at.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'number',
       default = '0',
-      description = 'The z coordinate to draw the model at.'
+      description = 'The z coordinate to draw the Model at.'
     },
-    {
-      name = 'scale',
+    scale = {
       type = 'number',
       default = '1',
-      description = 'The scale to draw the model at.'
+      description = 'The scale to draw the Model at.'
     },
-    {
-      name = 'angle',
+    angle = {
       type = 'number',
       default = '0',
-      description = 'The angle to rotate the model around its axis of rotation.'
+      description = 'The angle to rotate the Model around its axis of rotation.'
     },
-    {
-      name = 'ax',
+    ax = {
       type = 'number',
       default = '0',
       description = 'The x component of the axis of rotation.'
     },
-    {
-      name = 'ay',
+    ay = {
       type = 'number',
       default = '1',
       description = 'The y component of the axis of rotation.'
     },
-    {
-      name = 'az',
+    az = {
       type = 'number',
       default = '0',
       description = 'The z component of the axis of rotation.'
+    },
+    transform = {
+      type = 'Transform',
+      description = 'The transform to apply before drawing.'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'x', 'y', 'z', 'scale', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    },
+    {
+      arguments = { 'transform' },
+      returns = {}
+    }
+  }
 }

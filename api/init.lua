@@ -51,6 +51,11 @@ return {
                       description = "Whether the headset module should be enabled."
                     },
                     {
+                      name = "math",
+                      type = "boolean",
+                      description = "Whether the math module should be enabled."
+                    },
+                    {
                       name = "timer",
                       type = "boolean",
                       description = "Whether the timer module should be enabled."
@@ -69,7 +74,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.timer = true\nend"
+          code = "function lovr.conf(t)\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.timer = true\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`."
@@ -139,8 +144,8 @@ return {
           arguments = {
             {
               name = "eye",
-              type = "string",
-              description = "The eye currently being rendered to (\"left\" or \"right\")."
+              type = "HeadsetEye",
+              description = "The eye currently being rendered to."
             }
           },
           returns = {}
@@ -1926,6 +1931,36 @@ return {
                 }
               },
               returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "mode",
+                  type = "DrawMode",
+                  description = "How to draw the cube."
+                },
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The cube's transform."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The Texture to apply to the cube faces."
+                },
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The cube's transform."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -2082,6 +2117,29 @@ return {
                   name = "height",
                   type = "number",
                   description = "The height of the window, in pixels."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getFont",
+          tag = "graphicsState",
+          summary = "Get the active font.",
+          description = "Returns the active font.",
+          key = "lovr.graphics.getFont",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.print"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The active font object."
                 }
               }
             }
@@ -2500,6 +2558,57 @@ return {
           }
         },
         {
+          name = "newFont",
+          tag = "graphicsObjects",
+          summary = "Create a new Font.",
+          description = "Creates a new Font.  It can be used to render text with `lovr.graphics.print`.\n\nCurrently, the only supported font format is TTF.",
+          key = "lovr.graphics.newFont",
+          module = "lovr.graphics",
+          notes = "Larger font sizes will lead to sharper text at the cost of performance.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the font file."
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the font, in pixels.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            },
+            {
+              description = "Creates a new Font from the default font included with LÖVR (Cabin).",
+              arguments = {
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the font, in pixels.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newModel",
           tag = "graphicsObjects",
           summary = "Create a new Model.",
@@ -2513,6 +2622,12 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The filename of the model to load."
+                },
+                {
+                  name = "texture",
+                  type = "string",
+                  description = "A filename for a texture to apply to the Model, or `nil` for no texture.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -2900,6 +3015,87 @@ return {
           }
         },
         {
+          name = "print",
+          tag = "graphicsPrimitives",
+          summary = "Render text.",
+          description = "Draws text in 3D space using the active font.",
+          key = "lovr.graphics.print",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "str",
+                  type = "string",
+                  description = "The text to render."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the text.",
+                  default = 0
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the text.",
+                  default = 0
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the text.",
+                  default = 0
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The maximum width of each line, in meters.  Use zero for unlimited.",
+                  default = 0
+                },
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of each line, in meters.",
+                  default = 0.10000000000000001
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians to rotate the text around its rotation axis.",
+                  default = 0
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = 0
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = 1
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = 0
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.getFont",
+            "lovr.graphics.setFont",
+            "lovr.graphics.newFont",
+            "Font"
+          },
+          notes = "Unicode text is supported.\n\nUse `\\n` to add line breaks."
+        },
+        {
           name = "push",
           tag = "graphicsTransforms",
           summary = "Push a copy of the current transform onto the stack.",
@@ -2967,7 +3163,8 @@ return {
           },
           related = {
             "lovr.graphics.scale",
-            "lovr.graphics.translate"
+            "lovr.graphics.translate",
+            "lovr.graphics.transform"
           },
           notes = "Order matters when scaling, translating, and rotating the coordinate system."
         },
@@ -3002,7 +3199,8 @@ return {
           },
           related = {
             "lovr.graphics.rotate",
-            "lovr.graphics.translate"
+            "lovr.graphics.translate",
+            "lovr.graphics.transform"
           },
           notes = "Order matters when scaling, translating, and rotating the coordinate system."
         },
@@ -3195,6 +3393,29 @@ return {
           }
         },
         {
+          name = "setFont",
+          tag = "graphicsState",
+          summary = "Set the active font.",
+          description = "Sets the active font used to render text with `lovr.graphics.print`.",
+          key = "lovr.graphics.setFont",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.print"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The font to use."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setLineWidth",
           tag = "graphicsState",
           summary = "Set the line width.",
@@ -3379,6 +3600,85 @@ return {
           notes = "Wireframe rendering is initially disabled."
         },
         {
+          name = "transform",
+          tag = "graphicsTransforms",
+          summary = "Apply a general transform to the coordinate system.",
+          description = "Apply a transform to the coordinate system, changing its translation, rotation, and scale using a single function.  A Transform object can also be used.\n\nThe transformation will last until `lovr.draw` returns or the transformation is popped off the transformation stack.",
+          key = "lovr.graphics.transform",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale",
+            "lovr.graphics.translate"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the translation.",
+                  default = 0
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the translation.",
+                  default = 0
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the translation.",
+                  default = 0
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "The scale factor.",
+                  default = 1
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians to rotate around the rotation axis.",
+                  default = 0
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = 0
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = 1
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = 0
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Modify the coordinate system using a Transform object.",
+              arguments = {
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The Transform to apply to the coordinate system."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "translate",
           tag = "graphicsTransforms",
           summary = "Translate the coordinate system.",
@@ -3409,7 +3709,8 @@ return {
           },
           related = {
             "lovr.graphics.rotate",
-            "lovr.graphics.scale"
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
           },
           notes = "Order matters when scaling, translating, and rotating the coordinate system."
         },
@@ -3500,7 +3801,66 @@ return {
               module = "lovr.graphics",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to draw the Buffer at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to draw the Buffer at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to draw the Buffer at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale to draw the Buffer at.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle to rotate the Buffer around its axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The transform to apply before drawing."
+                    }
+                  },
                   returns = {}
                 }
               }
@@ -3638,6 +3998,25 @@ return {
                       name = "size",
                       type = "number",
                       description = "The number of vertices the Buffer can hold."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexFormat",
+              summary = "Get the vertex format of the Buffer.",
+              description = "Get the format table of the Buffer's vertices.  The format table describes the set of data that each vertex contains.",
+              key = "Buffer:getVertexFormat",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "table",
+                      description = "The table of vertex attributes.  Each attribute is a table containing the name of the attribute, the data type, and the number of components."
                     }
                   }
                 }
@@ -3848,6 +4227,56 @@ return {
           }
         },
         {
+          name = "Font",
+          summary = "A loaded font used to render text.",
+          description = "A Font is an object created from a TTF file.  It can be used to render text with `lovr.graphics.print`.",
+          key = "Font",
+          module = "lovr.graphics",
+          methods = {
+            {
+              name = "getLineHeight",
+              summary = "Get the line height of the Font.",
+              description = "Returns the current line height of the Font.  The default is 1.0.",
+              key = "Font:getLineHeight",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "lineHeight",
+                      type = "number",
+                      description = "The line height."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setLineHeight",
+              summary = "Set the line height of the Font.",
+              description = "Sets the line height of the Font, which controls how far lines apart lines are vertically separated.  This value is a ratio and the default is 1.0.",
+              key = "Font:setLineHeight",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "lineHeight",
+                      type = "number",
+                      description = "The new line height."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.graphics.newFont"
+          }
+        },
+        {
           name = "Model",
           summary = "An asset imported from a 3D model file.",
           description = "A Model is a drawable object loaded from a 3D file format.  Most common 3D file formats are supported, such as `3ds`, `blend`, `dae`, `fbx`, `stl`, `obj`, and `glTF`.  Models will use normals and texture coordinates, if provided.\n\nThe following advanced features are not supported yet: animations, materials, and vertex colors.",
@@ -3875,31 +4304,31 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate to draw the model at.",
+                      description = "The x coordinate to draw the Model at.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate to draw the model at.",
+                      description = "The y coordinate to draw the Model at.",
                       default = "0"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate to draw the model at.",
+                      description = "The z coordinate to draw the Model at.",
                       default = "0"
                     },
                     {
                       name = "scale",
                       type = "number",
-                      description = "The scale to draw the model at.",
+                      description = "The scale to draw the Model at.",
                       default = "1"
                     },
                     {
                       name = "angle",
                       type = "number",
-                      description = "The angle to rotate the model around its axis of rotation.",
+                      description = "The angle to rotate the Model around its axis of rotation.",
                       default = "0"
                     },
                     {
@@ -3919,6 +4348,16 @@ return {
                       type = "number",
                       description = "The z component of the axis of rotation.",
                       default = "0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The transform to apply before drawing."
                     }
                   },
                   returns = {}
@@ -4330,6 +4769,23 @@ return {
               description = "The button on the touchpad."
             }
           }
+        },
+        {
+          name = "HeadsetEye",
+          summary = "The two different eyes.",
+          description = "Represents either the left eye or the right eye.",
+          key = "HeadsetEye",
+          module = "headset",
+          values = {
+            {
+              name = "left",
+              description = "The left eye."
+            },
+            {
+              name = "right",
+              description = "The right eye."
+            }
+          }
         }
       },
       functions = {
@@ -4608,6 +5064,45 @@ return {
                   name = "width",
                   type = "number",
                   description = "The width of each lens."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getEyePosition",
+          tag = "headset",
+          summary = "Get the position of an eye.",
+          description = "Returns the current position of one of the eyes in 3D space.",
+          key = "lovr.headset.getEyePosition",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getPosition"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "eye",
+                  type = "HeadsetEye",
+                  description = "The eye to get the position of."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the eye."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the eye."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the eye."
                 }
               }
             }
@@ -5063,6 +5558,448 @@ return {
                 }
               }
             }
+          }
+        }
+      }
+    },
+    {
+      name = "math",
+      tag = "modules",
+      summary = "Contains useful math helpers.",
+      description = "The `lovr.math` module provides math helpers commonly used for 3D applications.  Currently, only `Transform` objects are exposed.",
+      key = "lovr.math",
+      functions = {
+        {
+          name = "newTransform",
+          summary = "Create a new Transform.",
+          description = "A transform is a 4x4, column major matrix that can be used to represent the 3D transform of an object.  Most graphics primitives accept a Transform instead of the usual coordinate arguments. Transforms provide a convenient way to represent translation, rotation, and scale in a single object.",
+          key = "lovr.math.newTransform",
+          module = "lovr.math",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the Transform."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The x position of the Transform."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The x position of the Transform."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "The scale of the Transform."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the Transform is rotated around its axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The new Transform."
+                }
+              }
+            }
+          }
+        }
+      },
+      enums = {},
+      objects = {
+        {
+          name = "Transform",
+          summary = "A 3D transform.",
+          description = "A Transform represents a translation, rotation, and scale in 3D space.  They're commonly used to describe how entities are arranged in a scene or how a camera is positioned.",
+          key = "Transform",
+          module = "lovr.math",
+          methods = {
+            {
+              name = "apply",
+              summary = "Combine two Transforms.",
+              description = "Applies a Transform onto this Transform.",
+              key = "Transform:apply",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "other",
+                      type = "Transform",
+                      description = "Combine two Transforms together.  Order matters, so applying Transforms in different orders will yield different results."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The original Transform."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "clone",
+              summary = "Clone the Transform.",
+              description = "Returns a copy of the Transform.",
+              key = "Transform:clone",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "copy",
+                      type = "Transform",
+                      description = "The copy of the original."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "inverse",
+              summary = "Get the inverse of the Transform.",
+              description = "Returns a new Transform representing the inverse of the original.  The inverse \"cancels out\" the effects of the original, so applying one onto the other will result in the origin.",
+              key = "Transform:inverse",
+              module = "lovr.math",
+              related = {
+                "Transform:inverseTransformPoint"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "inverse",
+                      type = "Transform",
+                      description = "The inverse transform."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "inverseTransformPoint",
+              summary = "Apply the inverse of the Transform to a point.",
+              description = "Applies the inverse of the Transform to a point, returning the transformed point.",
+              key = "Transform:inverseTransformPoint",
+              module = "lovr.math",
+              related = {
+                "Transform:transformPoint"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x coordinate of the transformed point."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y coordinate of the transformed point."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z coordinate of the transformed point."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "origin",
+              summary = "Reset the Transform.",
+              description = "Resets the Transform to the origin.",
+              key = "Transform:origin",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The original Transform."
+                    }
+                  }
+                }
+              },
+              examples = {
+                {
+                  code = "transform = lovr.math.newTransform(3, 4, 5)\nprint(transform:transformPoint(1, 2, 2)) -- Prints 4, 6, 7\ntransform:origin()\nprint(transform:transformPoint(1, 2, 3)) -- Prints 1, 2, 3"
+                }
+              }
+            },
+            {
+              name = "rotate",
+              summary = "Rotate the Transform.",
+              description = "Rotates the Transform using an angle/axis rotation.",
+              key = "Transform:rotate",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians to rotate around the axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The original Transform."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "scale",
+              summary = "Scale the Transform.",
+              description = "Scales the Transform.",
+              key = "Transform:scale",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The scale factor for the x axis."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The scale factor for the y axis.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The scale factor for the z axis.",
+                      default = "x"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The original Transform."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setTransformation",
+              summary = "Set the position, rotation, and scale of the Transform.",
+              description = "Sets the translation, rotation, and scale of the Transform.  This will override the current values in the Transform.",
+              key = "Transform:setTransformation",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Transform."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The x position of the Transform."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The x position of the Transform."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the Transform."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Transform is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The original Transform."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "transformPoint",
+              summary = "Apply the Transform to a point.",
+              description = "Applies the Transform to a point, returning the new position.",
+              key = "Transform:transformPoint",
+              module = "lovr.math",
+              related = {
+                "Transform:inverseTransformPoint"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x coordinate of the transformed point."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y coordinate of the transformed point."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z coordinate of the transformed point."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "translate",
+              summary = "Translate the Transform.",
+              description = "Translates the Transform.",
+              key = "Transform:translate",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The original Transform."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.math.newTransform"
           }
         }
       }

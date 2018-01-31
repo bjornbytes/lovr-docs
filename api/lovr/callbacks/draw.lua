@@ -9,8 +9,8 @@ return {
   arguments = {
     {
       name = 'eye',
-      type = 'string',
-      description = 'The eye currently being rendered to ("left" or "right").'
+      type = 'HeadsetEye',
+      description = 'The eye currently being rendered to.'
     }
   },
   returns = {},

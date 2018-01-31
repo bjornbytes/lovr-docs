@@ -33,6 +33,7 @@ return {
   notes = 'Order matters when scaling, translating, and rotating the coordinate system.',
   related = {
     'lovr.graphics.scale',
-    'lovr.graphics.translate'
+    'lovr.graphics.translate',
+    'lovr.graphics.transform'
   }
 }

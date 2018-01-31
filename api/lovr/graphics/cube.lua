@@ -11,6 +11,10 @@ return {
       type = 'DrawMode',
       description = 'How to draw the cube.'
     },
+    transform = {
+      type = 'Transform',
+      description = 'The cube\'s transform.'
+    },
     x = {
       type = 'number',
       default = '0',
@@ -60,6 +64,14 @@ return {
     },
     {
       arguments = { 'texture', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    },
+    {
+      arguments = { 'mode', 'transform' },
+      returns = {}
+    },
+    {
+      arguments = { 'texture', 'transform' },
       returns = {}
     }
   }

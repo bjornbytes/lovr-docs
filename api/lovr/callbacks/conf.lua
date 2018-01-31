@@ -48,6 +48,11 @@ return {
               description = 'Whether the headset module should be enabled.'
             },
             {
+              name = 'math',
+              type = 'boolean',
+              description = 'Whether the math module should be enabled.'
+            },
+            {
               name = 'timer',
               type = 'boolean',
               description = 'Whether the timer module should be enabled.'
@@ -74,6 +79,7 @@ return {
           t.modules.event = true
           t.modules.graphics = true
           t.modules.headset = true
+          t.modules.math = true
           t.modules.timer = true
         end
     ]]
