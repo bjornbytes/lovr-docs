@@ -27,6 +27,15 @@ return {
           end
 
           local dt = lovr.timer.step()
+
+          if lovr.audio then
+            lovr.audio.update()
+            if lovr.headset and lovr.headset.isPresent() then
+              lovr.audio.setPosition(lovr.headset.getPosition())
+              lovr.audio.setOrientation(lovr.headset.getOrientation())
+            end
+          end
+
           if lovr.update then
             lovr.update(dt)
           end

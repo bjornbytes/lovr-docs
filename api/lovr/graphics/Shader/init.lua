@@ -38,6 +38,7 @@ return {
         uniform vec4 lovrColor;
         uniform sampler2D lovrTexture;
         in vec2 texCoord;
+        in vec4 gl_FragCoord;
         out vec4 lovrFragColor;
   ]],
   example = {

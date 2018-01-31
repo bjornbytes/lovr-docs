@@ -23,6 +23,11 @@ return {
           description = 'The set of enabled modules to use.',
           table = {
             {
+              name = 'audio',
+              type = 'boolean',
+              description = 'Whether the audio module should be enabled.'
+            },
+            {
               name = 'event',
               type = 'boolean',
               description = 'Whether the event module should be enabled.'
@@ -65,6 +70,7 @@ return {
           t.identity = 'default'
 
           -- Enable or disable different modules
+          t.modules.audio = true
           t.modules.event = true
           t.modules.graphics = true
           t.modules.headset = true

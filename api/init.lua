@@ -26,6 +26,11 @@ return {
                   description = "The set of enabled modules to use.",
                   table = {
                     {
+                      name = "audio",
+                      type = "boolean",
+                      description = "Whether the audio module should be enabled."
+                    },
+                    {
                       name = "event",
                       type = "boolean",
                       description = "Whether the event module should be enabled."
@@ -64,7 +69,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Enable or disable different modules\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.timer = true\nend"
+          code = "function lovr.conf(t)\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.timer = true\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`."
@@ -215,7 +220,7 @@ return {
       examples = {
         {
           description = "The default `lovr.run`:",
-          code = "function lovr.run()\n  if lovr.load then\n    lovr.load()\n  end\n\n  while true do\n    lovr.event.pump()\n\n    for name, a, b, c, d in lovr.event.poll() do\n      if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n        return a\n      end\n\n      lovr.handlers[name](a, b, c, d)\n    end\n\n    local dt = lovr.timer.step()\n    if lovr.update then\n      lovr.update(dt)\n    end\n\n    lovr.graphics.clear()\n    lovr.graphics.origin()\n    if lovr.draw then\n      if lovr.headset and lovr.headset.isPresent() then\n        lovr.headset.renderTo(lovr.draw)\n      else\n        lovr.draw()\n      end\n    end\n    lovr.graphics.present()\n\n    lovr.timer.sleep(.001)\n  end\nend"
+          code = "function lovr.run()\n  if lovr.load then\n    lovr.load()\n  end\n\n  while true do\n    lovr.event.pump()\n\n    for name, a, b, c, d in lovr.event.poll() do\n      if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n        return a\n      end\n\n      lovr.handlers[name](a, b, c, d)\n    end\n\n    local dt = lovr.timer.step()\n\n    if lovr.audio then\n      lovr.audio.update()\n      if lovr.headset and lovr.headset.isPresent() then\n        lovr.audio.setPosition(lovr.headset.getPosition())\n        lovr.audio.setOrientation(lovr.headset.getOrientation())\n      end\n    end\n\n    if lovr.update then\n      lovr.update(dt)\n    end\n\n    lovr.graphics.clear()\n    lovr.graphics.origin()\n    if lovr.draw then\n      if lovr.headset and lovr.headset.isPresent() then\n        lovr.headset.renderTo(lovr.draw)\n      else\n        lovr.draw()\n      end\n    end\n    lovr.graphics.present()\n\n    lovr.timer.sleep(.001)\n  end\nend"
         }
       },
       related = {
@@ -309,6 +314,816 @@ return {
         }
       },
       objects = {}
+    },
+    {
+      name = "audio",
+      tag = "modules",
+      summary = "Plays sound.",
+      description = "The `lovr.audio` module is responsible for playing sound effects and music.  Currently, the only supported audio format is .ogg (Vorbis).  Playing a sound involves creating a `Source` object for the sound and calling `Source:play` on it.",
+      key = "lovr.audio",
+      sections = {
+        {
+          name = "Sources",
+          tag = "sources",
+          description = "Sources are objects that represent a single sound instance."
+        },
+        {
+          name = "Listener",
+          tag = "listener",
+          description = "The listener is a virtual object in 3D space that \"hears\" all the sounds that are playing. The listener can be positioned and oriented in 3D space, which controls how Sources in the world are heard.  For example, sounds further away from the listener will be more quiet, and sounds to the left of the listener will be heard from the left speaker.  By default, the listener will be synchronized with any connected headset so audio is positioned properly as the headset is moved around and rotated."
+        }
+      },
+      enums = {
+        {
+          name = "TimeUnit",
+          summary = "Time units for sound samples.",
+          description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of samples.",
+          key = "TimeUnit",
+          module = "audio",
+          values = {
+            {
+              name = "seconds",
+              description = "Seconds."
+            },
+            {
+              name = "samples",
+              description = "Samples."
+            }
+          }
+        }
+      },
+      functions = {
+        {
+          name = "getOrientation",
+          tag = "listener",
+          summary = "Get the orientation of the listener.",
+          description = "Returns the orientation of the virtual audio listener in angle/axis representation.",
+          key = "lovr.audio.getOrientation",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the listener is rotated around its axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getPosition",
+          tag = "listener",
+          summary = "Get the position of the listener.",
+          description = "Returns the position of the virtual audio listener.",
+          key = "lovr.audio.getPosition",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the listener."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the listener."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the listener."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getVolume",
+          tag = "listener",
+          summary = "Get the master volume.",
+          description = "Returns the master volume.  All Source objects have their volume multiplied by this factor.",
+          key = "lovr.audio.getVolume",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "volume",
+                  type = "number",
+                  description = "The master volume."
+                }
+              }
+            }
+          },
+          notes = "The default is 1.0."
+        },
+        {
+          name = "newSource",
+          tag = "sources",
+          summary = "Create a new Source.",
+          description = "Creates a new Source from an ogg file.",
+          key = "lovr.audio.newSource",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the sound to load."
+                }
+              },
+              returns = {
+                {
+                  name = "source",
+                  type = "Source",
+                  description = "The new Source."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "pause",
+          tag = "sources",
+          summary = "Pause all Sources.",
+          description = "Pause all playing audio.",
+          key = "lovr.audio.pause",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "resume",
+          tag = "sources",
+          summary = "Resume all Sources.",
+          description = "Resume all Sources.  Has no effect on Sources that are playing or stopped.",
+          key = "lovr.audio.resume",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "rewind",
+          tag = "sources",
+          summary = "Rewind all Sources.",
+          description = "Rewind all playing audio.",
+          key = "lovr.audio.rewind",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "Sources that are paused will remain paused. Sources that are currently playing will restart from the beginning."
+        },
+        {
+          name = "setOrientation",
+          tag = "listener",
+          summary = "Set the orientation of the listener.",
+          description = "Sets the orientation of the virtual audio listener in angle/axis representation.",
+          key = "lovr.audio.setOrientation",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the listener should be rotated around its rotation axis."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setPosition",
+          tag = "listener",
+          summary = "Set the position of the listener.",
+          description = "Sets the position of the virtual audio listener.",
+          key = "lovr.audio.setPosition",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the listener."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the listener."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the listener."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setVolume",
+          tag = "listener",
+          summary = "Set the master volume.",
+          description = "Sets the master volume.  The volume of all Sources will be multiplied by this factor.",
+          key = "lovr.audio.setVolume",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "volume",
+                  type = "number",
+                  description = "The master volume."
+                }
+              }
+            }
+          },
+          notes = "The default is 1.0."
+        },
+        {
+          name = "stop",
+          tag = "sources",
+          summary = "Stop all Sources.",
+          description = "Stops all audio.",
+          key = "lovr.audio.stop",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "If you want to resume the stopped audio later, see `lovr.audio.pause`."
+        },
+        {
+          name = "update",
+          tag = "sources",
+          summary = "Updates the audio system.",
+          description = "Updates all playing sources. This must be called regularly for audio playback to occur. Normally this is called for you by `lovr.run`.",
+          key = "lovr.audio.update",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        }
+      },
+      objects = {
+        {
+          name = "Source",
+          summary = "A playable sound object.",
+          description = "A Source is an object representing a single sound.  Currently, only ogg sounds are supported. Sources can be in three different states:\n\n<table>\n  <tr>\n    <td>Playing</td>\n    <td>The source is currently playing. It can be stopped, paused, or rewound.</td>\n  </tr>\n  <tr>\n    <td>Paused</td>\n    <td>The source is paused. It can be stopped, played/resumed, or rewound.</td>\n  </tr>\n  <tr>\n    <td>Stopped</td>\n    <td>The source has been stopped. It can be played.</td>\n  </tr> </table>",
+          key = "Source",
+          module = "lovr.audio",
+          methods = {
+            {
+              name = "getBitDepth",
+              summary = "Get the bit depth of the Source.",
+              description = "Returns the number of bits per sample in the Source.  This is a rough indicator of the resolution of the Source, and is usually 16.",
+              key = "Source:getBitDepth",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "bits",
+                      type = "number",
+                      description = "The number of bits per sample."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getChannels",
+              summary = "Get the number of channels in the Source.",
+              description = "Returns the number of channels in the Source.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
+              key = "Source:getChannels",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "number",
+                      description = "The number of channels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDuration",
+              summary = "Get the duration of the Source.",
+              description = "Returns the duration of the Source.",
+              key = "Source:getDuration",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "unit",
+                      type = "TimeUnit",
+                      description = "The unit to return.",
+                      default = "'seconds'"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "duration",
+                      type = "number",
+                      description = "The duration of the Source."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getOrientation",
+              summary = "Get the direction vector of the Source.",
+              description = "Returns the direction vector of the Source (the direction it's playing in).",
+              key = "Source:getOrientation",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the direction vector."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the direction vector."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the direction vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPitch",
+              summary = "Get the pitch of the Source.",
+              description = "Returns the current pitch factor of the Source.  The default is 1.0.",
+              key = "Source:getPitch",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pitch",
+                      type = "number",
+                      description = "The current pitch."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPosition",
+              summary = "Get the position of the Source.",
+              description = "Returns the position of the Source in space.",
+              key = "Source:getPosition",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSampleRate",
+              summary = "Get the sample rate of the Source.",
+              description = "Returns the number of samples per second in the Source.  This is usually a high number like 44100.",
+              key = "Source:getSampleRate",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The number of samples per second in the Source."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVolume",
+              summary = "Get the volume of the Source.",
+              description = "Returns the current volume factor for the Source.  1.0 is the default and the maximum.",
+              key = "Source:getVolume",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "volume",
+                      type = "number",
+                      description = "The volume of the Source."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isLooping",
+              summary = "Check if the Source is looping.",
+              description = "Returns whether or not the Source will loop when it finishes.",
+              key = "Source:isLooping",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "looping",
+                      type = "boolean",
+                      description = "Whether or not the Source is looping."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isPaused",
+              summary = "Check if the Source is paused.",
+              description = "Returns whether or not the Source is paused.",
+              key = "Source:isPaused",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "paused",
+                      type = "boolean",
+                      description = "Whether the Source is paused."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isPlaying",
+              summary = "Check if the Source is playing.",
+              description = "Returns whether or not the Source is playing.",
+              key = "Source:isPlaying",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "playing",
+                      type = "boolean",
+                      description = "Whether the Source is playing."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isStopped",
+              summary = "Check if the Source is stopped.",
+              description = "Returns whether or not the Source is stopped.",
+              key = "Source:isStopped",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "stopped",
+                      type = "boolean",
+                      description = "Whether the Source is stopped."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "pause",
+              summary = "Pause the Source.",
+              description = "Pauses the source.  It can be resumed with `Source:resume` or `Source:play`. If a paused source is rewound, it will remain paused.",
+              key = "Source:pause",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "play",
+              summary = "Play the Source.",
+              description = "Plays the Source.  This has no effect if the Source is already playing.",
+              key = "Source:play",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "resume",
+              summary = "Resume the Source.",
+              description = "Resumes the Source.",
+              key = "Source:resume",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "rewind",
+              summary = "Rewind the Source.",
+              description = "Rewinds the Source, starting it over at the beginning.  Paused Sources will remain paused.",
+              key = "Source:rewind",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "seek",
+              summary = "Set the playback position of the Source.",
+              description = "Seeks the Source to the specified position.",
+              key = "Source:seek",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "number",
+                      description = "The position to seek to."
+                    },
+                    {
+                      name = "unit",
+                      type = "TimeUnit",
+                      description = "The units for the seek position.",
+                      default = "'seconds'"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setLooping",
+              summary = "Set whether or not the Source loops.",
+              description = "Sets whether or not the Source loops.",
+              key = "Source:setLooping",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "loop",
+                      type = "boolean",
+                      description = "Whether or not the Source will loop."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setOrientation",
+              summary = "Set the direction vector of the Source.",
+              description = "Sets the direction vector of the Source (the direction it's playing in).",
+              key = "Source:setOrientation",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the direction vector."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the direction vector."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the direction vector."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPitch",
+              summary = "Set the pitch of the Source.",
+              description = "Sets the pitch of the Source.  The default is 1.0.",
+              key = "Source:setPitch",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "pitch",
+                      type = "number",
+                      description = "The new pitch."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPosition",
+              summary = "Set the position of the Source.",
+              description = "Sets the position of the Source in space.",
+              key = "Source:setPosition",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setVolume",
+              summary = "Set the volume of the Source.",
+              description = "Sets the current volume factor for the Source.  1.0 is the default and the maximum.",
+              key = "Source:setVolume",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "volume",
+                      type = "number",
+                      description = "The new volume."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "stop",
+              summary = "Stop the Source.",
+              description = "Stops the source.",
+              key = "Source:stop",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "tell",
+              summary = "Get the playback position of the Source.",
+              description = "Returns the current playback position of the Source.",
+              key = "Source:tell",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "unit",
+                      type = "TimeUnit",
+                      description = "The unit to return.",
+                      default = "'seconds'"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "position",
+                      type = "number",
+                      description = "The current playback position."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.audio.newSource"
+          }
+        }
+      }
     },
     {
       name = "event",
@@ -2988,7 +3803,7 @@ return {
           constructors = {
             "lovr.graphics.newShader"
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrProjection;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    out vec2 texCoord;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform sampler2D lovrTexture;\n    in vec2 texCoord;\n    out vec4 lovrFragColor;",
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrProjection;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    out vec2 texCoord;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform sampler2D lovrTexture;\n    in vec2 texCoord;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
           methods = {
             {
               name = "send",
