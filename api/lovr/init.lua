@@ -31,6 +31,13 @@ return {
       description = [[
         The lovr module also exposes some functions for retrieving information about the system.
       ]]
+    },
+    {
+      name = 'Libraries',
+      tag = 'library',
+      description = [[
+        A few helpful third-party libraries are included with LÖVR for convenience.
+      ]]
     }
   }
 }

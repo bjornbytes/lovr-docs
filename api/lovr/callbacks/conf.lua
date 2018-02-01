@@ -67,6 +67,11 @@ return {
               description = 'Whether the math module should be enabled.'
             },
             {
+              name = 'physics',
+              type = 'boolean',
+              description = 'Whether the physics module should be enabled.'
+            },
+            {
               name = 'timer',
               type = 'boolean',
               description = 'Whether the timer module should be enabled.'
@@ -89,7 +94,7 @@ return {
           t.identity = 'default'
 
           -- Headset settings
-          t.headset.mirror = true -- Mirror the headset to the desktop
+          t.headset.mirror = true
 
           -- Enable or disable different modules
           t.modules.audio = true
@@ -97,6 +102,7 @@ return {
           t.modules.graphics = true
           t.modules.headset = true
           t.modules.math = true
+          t.modules.physics = true
           t.modules.timer = true
         end
     ]]
