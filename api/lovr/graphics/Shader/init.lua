@@ -27,6 +27,7 @@ return {
     Vertex shader header:
 
         uniform mat4 lovrTransform;
+        uniform mat4 lovrNormalMatrix;
         uniform mat4 lovrProjection;
         in vec3 lovrPosition;
         in vec3 lovrNormal;

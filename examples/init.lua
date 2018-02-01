@@ -1,3 +1,4 @@
 return {
-  'Cube'
+  'Cube',
+  '360_Image'
 }

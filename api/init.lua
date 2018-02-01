@@ -548,37 +548,6 @@ return {
       },
       functions = {
         {
-          name = "getDopplerEffect",
-          tag = "listener",
-          summary = "Get the doppler effect settings.",
-          description = "Returns the parameters for the doppler effect.  The speed of sound and the intensity of the effect can be controlled.\n\nThe doppler effect changes the pitch of Sources based on their relative velocity to the listener.",
-          key = "lovr.audio.getDopplerEffect",
-          module = "lovr.audio",
-          related = {
-            "lovr.audio.getVelocity",
-            "lovr.audio.setVelocity",
-            "Source:getVelocity",
-            "Source:setVelocity"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "factor",
-                  type = "number",
-                  description = "How intense the doppler factor is."
-                },
-                {
-                  name = "speedOfSound",
-                  type = "number",
-                  description = "The speed of virtual sound, in meters per second."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getOrientation",
           tag = "listener",
           summary = "Get the orientation of the listener.",
@@ -783,37 +752,6 @@ return {
             }
           },
           notes = "Sources that are paused will remain paused. Sources that are currently playing will restart from the beginning."
-        },
-        {
-          name = "setDopplerEffect",
-          tag = "listener",
-          summary = "Set the doppler effect.",
-          description = "Sets parameters for the doppler effect.  The speed of sound and the intensity of the effect can be controlled.\n\nThe doppler effect changes the pitch of Sources based on their relative velocity to the listener.",
-          key = "lovr.audio.setDopplerEffect",
-          module = "lovr.audio",
-          related = {
-            "lovr.audio.getVelocity",
-            "lovr.audio.setVelocity",
-            "Source:getVelocity",
-            "Source:setVelocity"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "factor",
-                  type = "number",
-                  description = "How intense the doppler factor is."
-                },
-                {
-                  name = "speedOfSound",
-                  type = "number",
-                  description = "The speed of virtual sound, in meters per second."
-                }
-              },
-              returns = {}
-            }
-          }
         },
         {
           name = "setOrientation",
@@ -2864,6 +2802,186 @@ return {
       },
       functions = {
         {
+          name = "box",
+          tag = "graphicsPrimitives",
+          summary = "Draw a box.",
+          description = "Draws a box.  This is similar to `lovr.graphics.cube` except you can have different values for the width, height, and depth of the box.",
+          key = "lovr.graphics.box",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "mode",
+                  type = "DrawMode",
+                  description = "How to draw the box."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the box.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the box.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the box.",
+                  default = "0"
+                },
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the box, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the box, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "depth",
+                  type = "number",
+                  description = "The depth of the box, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The rotation of the box around its rotation axis, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The Texture to apply to the box."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the box.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the box.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the box.",
+                  default = "0"
+                },
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the box, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the box, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "depth",
+                  type = "number",
+                  description = "The depth of the box, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The rotation of the box around its rotation axis, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "mode",
+                  type = "DrawMode",
+                  description = "How to draw the box."
+                },
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The transform of the box."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The Texture to apply to the box."
+                },
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The transform of the box."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "clear",
           tag = "window",
           summary = "Clear the screen.",
@@ -3043,6 +3161,75 @@ return {
                   name = "transform",
                   type = "Transform",
                   description = "The cube's transform."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "cylinder",
+          tag = "graphicsPrimitives",
+          summary = "Draw a cylinder.",
+          description = "Draws a cylinder.",
+          key = "lovr.graphics.cylinder",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x1",
+                  type = "number",
+                  description = "The x coordinate of the top of the cylinder."
+                },
+                {
+                  name = "y1",
+                  type = "number",
+                  description = "The y coordinate of the top of the cylinder."
+                },
+                {
+                  name = "z1",
+                  type = "number",
+                  description = "The z coordinate of the top of the cylinder."
+                },
+                {
+                  name = "x2",
+                  type = "number",
+                  description = "The x coordinate of the bottom of the cylinder."
+                },
+                {
+                  name = "y2",
+                  type = "number",
+                  description = "The y coordinate of the bottom of the cylinder."
+                },
+                {
+                  name = "z2",
+                  type = "number",
+                  description = "The z coordinate of the bottom of the cylinder."
+                },
+                {
+                  name = "r1",
+                  type = "number",
+                  description = "The radius of the top of the cylinder.",
+                  default = "1"
+                },
+                {
+                  name = "r2",
+                  type = "number",
+                  description = "The radius of the bottom of the cylinder.",
+                  default = "1"
+                },
+                {
+                  name = "capped",
+                  type = "boolean",
+                  description = "Whether the top and bottom should be rendered.",
+                  default = "true"
+                },
+                {
+                  name = "segments",
+                  type = "number",
+                  description = "The number of radial segments to use for the cylinder.  If nil, the segment count is automatically determined from the radii.",
+                  default = "nil"
                 }
               },
               returns = {}
@@ -4784,6 +4971,152 @@ return {
           notes = "Wireframe rendering is initially disabled."
         },
         {
+          name = "sphere",
+          tag = "graphicsPrimitives",
+          summary = "Draw a sphere.",
+          description = "Draws a sphere.",
+          key = "lovr.graphics.sphere",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the sphere.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the sphere.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the sphere.",
+                  default = "0"
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the sphere, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The rotation of the sphere around its rotation axis, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the sphere's axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the sphere's axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the sphere's axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The Texture to apply to the sphere."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the center of the sphere.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the center of the sphere.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the center of the sphere.",
+                  default = "0"
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the sphere, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The rotation of the sphere around its rotation axis, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the sphere's axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the sphere's axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the sphere's axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The sphere's transform."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The Texture to apply to the sphere."
+                },
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The sphere's transform."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "transform",
           tag = "graphicsTransforms",
           summary = "Apply a general transform to the coordinate system.",
@@ -4817,9 +5150,21 @@ return {
                   default = 0
                 },
                 {
-                  name = "scale",
+                  name = "sx",
                   type = "number",
-                  description = "The scale factor.",
+                  description = "The x scale factor.",
+                  default = 1
+                },
+                {
+                  name = "sy",
+                  type = "number",
+                  description = "The y scale factor.",
+                  default = 1
+                },
+                {
+                  name = "sz",
+                  type = "number",
+                  description = "The z scale factor.",
                   default = 1
                 },
                 {
@@ -5743,6 +6088,53 @@ return {
               }
             },
             {
+              name = "getAABB",
+              summary = "Get the Model's axis aligned bounding box.",
+              description = "Returns a bounding box that encloses the vertices of the Model.",
+              key = "Model:getAABB",
+              module = "lovr.graphics",
+              related = {
+                "Collider:getAABB"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the box."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the box."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the box."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the box."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the box."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the box."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getTexture",
               summary = "Get the Texture applied to the Model.",
               description = "Get the Texture applied to the Model.",
@@ -5791,7 +6183,7 @@ return {
           constructors = {
             "lovr.graphics.newShader"
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrProjection;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    out vec2 texCoord;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform sampler2D lovrTexture;\n    in vec2 texCoord;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrNormalMatrix;\n    uniform mat4 lovrProjection;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    out vec2 texCoord;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform sampler2D lovrTexture;\n    in vec2 texCoord;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
           methods = {
             {
               name = "send",
@@ -7028,9 +7420,19 @@ return {
                   description = "The x position of the Transform."
                 },
                 {
-                  name = "scale",
+                  name = "sx",
                   type = "number",
-                  description = "The scale of the Transform."
+                  description = "The x scale of the Transform."
+                },
+                {
+                  name = "sy",
+                  type = "number",
+                  description = "The y scale of the Transform."
+                },
+                {
+                  name = "sz",
+                  type = "number",
+                  description = "The z scale of the Transform."
                 },
                 {
                   name = "angle",
@@ -7313,9 +7715,19 @@ return {
                       description = "The x position of the Transform."
                     },
                     {
-                      name = "scale",
+                      name = "sx",
                       type = "number",
-                      description = "The scale of the Transform."
+                      description = "The x scale of the Transform."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale of the Transform."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale of the Transform."
                     },
                     {
                       name = "angle",

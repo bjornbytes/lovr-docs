@@ -23,9 +23,19 @@ return {
       description = 'The x position of the Transform.'
     },
     {
-      name = 'scale',
+      name = 'sx',
       type = 'number',
-      description = 'The scale of the Transform.'
+      description = 'The x scale of the Transform.'
+    },
+    {
+      name = 'sy',
+      type = 'number',
+      description = 'The y scale of the Transform.'
+    },
+    {
+      name = 'sz',
+      type = 'number',
+      description = 'The z scale of the Transform.'
     },
     {
       name = 'angle',

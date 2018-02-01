@@ -28,10 +28,20 @@ return {
       default = 0,
       description = 'The z component of the translation.'
     },
-    scale = {
+    sx = {
       type = 'number',
       default = 1,
-      description = 'The scale factor.'
+      description = 'The x scale factor.'
+    },
+    sy = {
+      type = 'number',
+      default = 1,
+      description = 'The y scale factor.'
+    },
+    sz = {
+      type = 'number',
+      default = 1,
+      description = 'The z scale factor.'
     },
     angle = {
       type = 'number',
@@ -57,7 +67,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'scale', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
