@@ -2,7 +2,7 @@ return {
   tag = 'graphicsState',
   summary = 'Set the background color.',
   description = [[
-    Sets the background color used to clear the screen.  Color components are from 0 to 255.
+    Sets the background color used to clear the screen.  Color components are from 0.0 to 1.0.
   ]],
   arguments = {
     {
@@ -23,7 +23,7 @@ return {
     {
       name = 'a',
       type = 'number',
-      default = '255',
+      default = '1.0',
       description = 'The alpha component of the background color.'
     }
   },

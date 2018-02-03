@@ -3,57 +3,61 @@ return {
   summary = 'Draw a triangle.',
   description = 'Draws a triangle from three points.',
   arguments = {
-    {
-      name = 'mode',
+    mode = {
       type = 'DrawMode',
       description = 'How to draw the triangle.'
     },
-    {
-      name = 'x1',
+    material = {
+      type = 'Material',
+      description = 'The Material to apply.'
+    },
+    x1 = {
       type = 'number',
       description = 'The x coordinate of the first point.'
     },
-    {
-      name = 'y1',
+    y1 = {
       type = 'number',
       description = 'The y coordinate of the first point.'
     },
-    {
-      name = 'z1',
+    z1 = {
       type = 'number',
       description = 'The z coordinate of the first point.'
     },
-    {
-      name = 'x2',
+    x2 = {
       type = 'number',
       description = 'The x coordinate of the second point.'
     },
-    {
-      name = 'y2',
+    y2 = {
       type = 'number',
       description = 'The y coordinate of the second point.'
     },
-    {
-      name = 'z2',
+    z2 = {
       type = 'number',
       description = 'The z coordinate of the second point.'
     },
-    {
-      name = 'x3',
+    x3 = {
       type = 'number',
       description = 'The x coordinate of the third point.'
     },
-    {
-      name = 'y3',
+    y3 = {
       type = 'number',
       description = 'The y coordinate of the third point.'
     },
-    {
-      name = 'z3',
+    z3 = {
       type = 'number',
       description = 'The z coordinate of the third point.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'mode', 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'x3', 'y3', 'z3' },
+      returns = {}
+    },
+    {
+      arguments = { 'material', 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'x3', 'y3', 'z3' },
+      returns = {}
+    }
+  },
   notes = 'Unlike some of the other primitives, exactly 3 points are required here.'
 }

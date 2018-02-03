@@ -6,9 +6,9 @@ return {
     the width, height, and depth of the box.
   ]],
   arguments = {
-    texture = {
-      type = 'Texture',
-      description = 'The Texture to apply to the box.'
+    material = {
+      type = 'Material',
+      description = 'The Material to apply to the box.'
     },
     mode = {
       type = 'DrawMode',
@@ -76,7 +76,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'texture', 'x', 'y', 'z', 'width', 'height', 'depth', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'material', 'x', 'y', 'z', 'width', 'height', 'depth', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
@@ -84,7 +84,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'texture', 'transform' },
+      arguments = { 'material', 'transform' },
       returns = {}
     }
   }

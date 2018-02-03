@@ -34,7 +34,7 @@ return {
     description = 'Mount `data.zip` with a file `images/background.png`:',
     code = [[
       lovr.filesystem.mount('data.zip', 'assets')
-      print(lovr.filesystem.exists('assets/images/background.png')) -- true
+      print(lovr.filesystem.isFile('assets/images/background.png')) -- true
     ]]
   },
   related = {

@@ -2,7 +2,7 @@ return {
   tag = 'graphicsState',
   summary = 'Get the background color.',
   description = [[
-    Returns the current background color.  Color components are from 0 to 255.
+    Returns the current background color.  Color components are from 0.0 to 1.0.
   ]],
   arguments = {},
   returns = {

@@ -5,7 +5,11 @@ return {
   arguments = {
     texture = {
       type = 'Texture',
-      description = 'The texture to apply to the plane.'
+      description = 'The texture to use.'
+    },
+    material = {
+      type = 'Material',
+      description = 'The material to apply to the plane.'
     },
     mode = {
       type = 'DrawMode',
@@ -60,8 +64,8 @@ return {
       returns = {}
     },
     {
-      description = 'Draw a textured plane.',
-      arguments = { 'texture', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      description = 'Draw a plane with a custom material.',
+      arguments = { 'material', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {

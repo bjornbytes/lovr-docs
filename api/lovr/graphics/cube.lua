@@ -3,9 +3,9 @@ return {
   summary = 'Draw a cube.',
   description = 'Draws a cube.',
   arguments = {
-    texture = {
-      type = 'Texture',
-      description = 'The Texture to apply to the cube faces.'
+    material = {
+      type = 'Material',
+      description = 'The Material to apply to the cube faces.'
     },
     mode = {
       type = 'DrawMode',
@@ -63,7 +63,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'texture', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'material', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
@@ -71,7 +71,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'texture', 'transform' },
+      arguments = { 'material', 'transform' },
       returns = {}
     }
   }

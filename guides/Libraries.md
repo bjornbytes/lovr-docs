@@ -26,7 +26,6 @@ List of Libraries
 - [flux](https://github.com/rxi/flux) - A tweening library for Lua.
 - [handy](https://github.com/bjornbytes/handy) - Helper utilities for managing controllers.
 - [knife](https://github.com/airstruck/knife) - A collection of useful micromodules for Lua.
-- [lovr-circle](https://github.com/bjornbytes/lovr-circle) - Create circle geometry.
 - [lovr-icosphere](https://github.com/bjornbytes/lovr-icosphere) - A library to create icospheres.
 - [lovr-grid](https://github.com/bjornbytes/lovr-grid) - A library for drawing grids.
 - [lovr-lighting](https://github.com/bjornbytes/lovr-lighting) - Simple lighting shaders to add to

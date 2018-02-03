@@ -2,8 +2,8 @@ return {
   tag = 'graphicsState',
   summary = 'Get the global color factor.',
   description = [[
-    Returns the current global color factor.  Color components are from 0 to 255.  Every pixel drawn
-    will be multiplied (i.e. tinted) by this color.
+    Returns the current global color factor.  Color components are from 0.0 to 1.0.  Every pixel
+    drawn will be multiplied (i.e. tinted) by this color.
   ]],
   arguments = {},
   returns = {

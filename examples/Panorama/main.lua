@@ -1,10 +1,10 @@
 local skybox
 
 function lovr.load()
-  skybox = lovr.graphics.newSkybox('equirectangular.jpg')
+  skybox = lovr.graphics.newTexture('equirectangular.jpg')
 end
 
 function lovr.draw()
   local angle, x, y, z = lovr.headset.getOrientation()
-  skybox:draw(-angle, x, y, z)
+  lovr.graphics.skybox(skybox, -angle, x, y, z)
 end

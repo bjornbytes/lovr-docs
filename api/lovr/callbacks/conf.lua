@@ -23,6 +23,11 @@ return {
           description = 'Configuration for the headset.',
           table = {
             {
+              name = 'drivers',
+              type = 'table',
+              description = 'An ordered list of preferred headset drivers.'
+            },
+            {
               name = 'mirrored',
               type = 'boolean',
               description = [[
@@ -82,6 +87,11 @@ return {
               description = 'Whether the timer module should be enabled.'
             }
           }
+        },
+        {
+          name = 'gammacorrect',
+          type = 'boolean',
+          description = 'Whether colors are gamma corrected.'
         },
         {
           name = 'window',
@@ -148,6 +158,7 @@ return {
           t.identity = 'default'
 
           -- Headset settings
+          t.headset.drivers = { 'openvr', 'webvr', 'fake' }
           t.headset.mirror = true
           t.headset.offset = 1.7
 
@@ -159,6 +170,9 @@ return {
           t.modules.math = true
           t.modules.physics = true
           t.modules.timer = true
+
+          -- Configure gamma correction
+          t.gammacorrect = false
 
           -- Configure the desktop window
           t.window.width = 800

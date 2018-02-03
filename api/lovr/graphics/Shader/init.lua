@@ -18,7 +18,7 @@ return {
     The default fragment shader:
 
         vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
-          return graphicsColor * texture(image, uv);
+          return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);
         }
 
     Additionally, the following headers are prepended to the shader source, giving you convenient
@@ -31,16 +31,25 @@ return {
         uniform mat4 lovrTransform;
         uniform mat4 lovrNormalMatrix;
         uniform mat4 lovrProjection;
+        uniform float lovrPointSize;
+        uniform mat4 lovrPose[48];
         in vec3 lovrPosition;
         in vec3 lovrNormal;
         in vec2 lovrTexCoord;
+        in vec4 lovrVertexColor;
+        in ivec4 lovrBones;
+        in vec4 lovrBoneWeights;
         out vec2 texCoord;
+        out vec4 vertexColor;
 
     Fragment shader header:
 
         uniform vec4 lovrColor;
-        uniform sampler2D lovrTexture;
+        uniform vec4 lovrDiffuseColor;
+        uniform sampler2D lovrDiffuseTexture;
+        uniform samplerCube lovrEnvironmentTexture;
         in vec2 texCoord;
+        in vec4 vertexColor;
         in vec4 gl_FragCoord;
         out vec4 lovrFragColor;
   ]],

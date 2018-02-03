@@ -79,7 +79,7 @@ The graphics module is the most exciting module, and is also the largest.  Most 
 These can be used to quickly prototype a scene without needing to create or load assets.
 
 There are lots of different rendering-related objects that can be created using `lovr.graphics`,
-such as `Model`, `Texture`, `Font`, `Shader`, `Skybox`, and more.  Every function to create a new
+such as `Model`, `Texture`, `Font`, `Shader`, and more.  Every function to create a new
 object is prefixed with `new`, so to create a 3D model object you can use `lovr.graphics.newModel`.
 
 > Note: Creating graphics objects uses memory and can slow things down if done every frame.  For
@@ -107,14 +107,14 @@ end
 
 function lovr.draw()
   -- Use a dark grey background
-  lovr.graphics.setBackgroundColor(50, 50, 50)
+  lovr.graphics.setBackgroundColor(.2, .2, .2)
 
   -- Draw the model
-  lovr.graphics.setColor(255, 255, 255)
+  lovr.graphics.setColor(1.0, 1.0, 1.0)
   model:draw(-.5, 1, -3)
 
   -- Draw a red cube using the "cube" primitive
-  lovr.graphics.setColor(255, 0, 0)
+  lovr.graphics.setColor(1.0, 0, 0)
   lovr.graphics.cube('fill', .5, 1, -3, .5, lovr.timer.getTime())
 end
 ```
@@ -229,12 +229,12 @@ function drawBox(box)
 end
 
 function lovr.draw()
-  lovr.graphics.setColor(255, 0, 0)
+  lovr.graphics.setColor(1.0, 0, 0)
   for i, box in ipairs(boxes) do
     drawBox(box)
   end
 
-  lovr.graphics.setColor(0, 0, 255)
+  lovr.graphics.setColor(0, 0, 1.0)
   for i, box in ipairs(controllerBoxes) do
     drawBox(box)
   end

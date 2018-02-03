@@ -39,15 +39,15 @@ function drawBox(box)
 end
 
 function lovr.draw()
-  lovr.graphics.setBackgroundColor(200, 200, 200)
+  lovr.graphics.setBackgroundColor(.8, .8, .8)
   lovr.graphics.setShader(shader)
 
-  lovr.graphics.setColor(255, 0, 0)
+  lovr.graphics.setColor(1, 0, 0)
   for i, box in ipairs(boxes) do
     drawBox(box)
   end
 
-  lovr.graphics.setColor(0, 0, 255)
+  lovr.graphics.setColor(0, 0, 1)
   for i, box in ipairs(controllerBoxes) do
     drawBox(box)
   end

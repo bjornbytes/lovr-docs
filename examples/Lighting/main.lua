@@ -36,7 +36,6 @@ function lovr.load()
 
       vec3 cFinal = vec3(diffuse) * cDiffuse + vec3(specular) * cSpecular;
       cFinal = clamp(cFinal, cAmbient, vec3(1.));
-      cFinal = pow(cFinal, vec3(.4545));
       return vec4(cFinal, 1.) * graphicsColor * texture(image, uv);
     }
   ]])
