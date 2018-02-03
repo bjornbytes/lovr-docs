@@ -27,10 +27,6 @@ return {
     color = {
       type = 'table',
       description = 'A table containing the color components.'
-    },
-    hex = {
-      type = 'number',
-      description = 'An integer containing all four color components.'
     }
   },
   returns = {},
@@ -41,10 +37,6 @@ return {
     },
     {
       arguments = { 'color' },
-      returns = {}
-    },
-    {
-      arguments = { 'hex' },
       returns = {}
     }
   },

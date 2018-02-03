@@ -29,6 +29,11 @@ return {
                       name = "mirrored",
                       type = "boolean",
                       description = "                Whether the desktop window should display a mirror of what's in the headset.\n              "
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The vertical offset for seated experiences."
                     }
                   }
                 },
@@ -78,6 +83,43 @@ return {
                       description = "Whether the timer module should be enabled."
                     }
                   }
+                },
+                {
+                  name = "window",
+                  type = "table",
+                  description = "Configuration for the window.",
+                  table = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the window."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the window."
+                    },
+                    {
+                      name = "fullscreen",
+                      type = "boolean",
+                      description = "Whether the window is fullscreen."
+                    },
+                    {
+                      name = "msaa",
+                      type = "number",
+                      description = "The number of antialiasing samples to use."
+                    },
+                    {
+                      name = "title",
+                      type = "string",
+                      description = "The window title."
+                    },
+                    {
+                      name = "icon",
+                      type = "string",
+                      description = "The path to the window icon file."
+                    }
+                  }
                 }
               }
             }
@@ -91,10 +133,10 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.mirror = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.timer = true\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.mirror = true\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.timer = true\n\n  -- Configure the desktop window\n  t.window.width = 800\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
-      notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`."
+      notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
     },
     {
       name = "controlleradded",
@@ -470,7 +512,7 @@ return {
                 {
                   name = "os",
                   type = "string",
-                  description = "Either \"windows\" or \"macOS\"."
+                  description = "Either \"windows\", \"macOS\", or \"linux\"."
                 }
               }
             }
@@ -1674,6 +1716,23 @@ return {
       }
     },
     {
+      name = "enet",
+      tag = "library",
+      summary = "Multiplayer utilities.",
+      description = "ENet is a UDP networking library bundled with LÖVR that allows you to create multiplayer experiences.\n\nTo use it, `require` the `enet` module.\n\nMore information, including full documentation and examples can be found on the [lua-enet](http://leafo.net/lua-enet/) page.",
+      key = "enet",
+      functions = {},
+      objects = {},
+      enums = {},
+      external = true,
+      examples = {
+        {
+          description = "Here's a simple echo server example. The client sends a message to the server and waits for a response. The server waits for a message and sends it back to the client.",
+          code = "-- client/main.lua\nlocal enet = require 'enet'\n\nfunction lovr.load()\n  local host = enet.host_create()\n  local server = host:connect('localhost:6789')\n\n  local done = false\n  while not done do\n    local event = host:service(100)\n    if event then\n      if event.type == 'connect' then\n        print('Connected to', event.peer)\n        event.peer:send('hello world')\n      elseif event.type == 'receive' then\n        print('Got message: ', event.data, event.peer)\n        done = true\n      end\n    end\n  end\n\n  server:disconnect()\n  host:flush()\nend\n\n-- server/main.lua\nlocal enet = require 'enet'\n\nfunction lovr.load()\n  local host = enet.host_create('localhost:6789')\n  while true do\n    local event = host:service(100)\n    if event and event.type == 'receive' then\n      print('Got message: ', event.data, event.peer)\n      event.peer:send(event.data)\n    end\n  end\nend"
+        }
+      }
+    },
+    {
       name = "event",
       tag = "modules",
       summary = "Handles events from the operating system.",
@@ -2685,13 +2744,44 @@ return {
           module = "graphics",
           values = {
             {
-              name = "linear",
-              description = "The texture will be smoothed."
+              name = "nearest",
+              description = "Fast nearest-neighbor sampling.  Leads to a pixelated style."
             },
             {
-              name = "nearest",
-              description = "The texture will be pixelated."
+              name = "bilinear",
+              description = "Smooth pixel sampling."
+            },
+            {
+              name = "trilinear",
+              description = "Smooth pixel sampling, with smooth sampling across mipmap levels."
+            },
+            {
+              name = "anisotropic",
+              description = "Anisotropic texture filtering.  The level of anisotropy can also be specified when setting this filter mode.  Gives the best results but is also slower."
             }
+          }
+        },
+        {
+          name = "MatrixType",
+          summary = "Types of matrix on the transform stack.",
+          description = "When modifying the coordinate system using functions like `lovr.graphics.translate`, you can modify either the model matrix or the view matrix.  The model matrix is meant to represent the transform of the object being rendered, whereas the view matrix is meant to represent the transform of the camera.  By default, the model matrix is manipulated.",
+          key = "MatrixType",
+          module = "graphics",
+          values = {
+            {
+              name = "model",
+              description = "The model matrix."
+            },
+            {
+              name = "view",
+              description = "The view matrix."
+            }
+          },
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
           }
         },
         {
@@ -3010,6 +3100,58 @@ return {
               returns = {}
             }
           }
+        },
+        {
+          name = "createWindow",
+          tag = "window",
+          summary = "Creates the window.",
+          description = "Create the desktop window, usually used to mirror the headset display.",
+          key = "lovr.graphics.createWindow",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the window.",
+                  default = "800"
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the window.",
+                  default = "600"
+                },
+                {
+                  name = "fullscreen",
+                  type = "boolean",
+                  description = "Whether the window should be fullscreen.",
+                  default = "false"
+                },
+                {
+                  name = "msaa",
+                  type = "number",
+                  description = "The number of samples to use for multisample antialiasing.",
+                  default = "0"
+                },
+                {
+                  name = "title",
+                  type = "string",
+                  description = "The window title.",
+                  default = "nil"
+                },
+                {
+                  name = "icon",
+                  type = "string",
+                  description = "A path to an image to use for the window icon.",
+                  default = "nil"
+                }
+              },
+              returns = {}
+            }
+          },
+          notes = "This function can only be called once. It is normally called internally, but you can override this by setting window to `nil` in conf.lua.  See `lovr.conf` for more information."
         },
         {
           name = "cube",
@@ -3338,40 +3480,33 @@ return {
           notes = "The default color is white."
         },
         {
-          name = "getColorMask",
+          name = "getDefaultFilter",
           tag = "graphicsState",
-          summary = "Get the color mask.",
-          description = "Returns the active color channels.  If a color channel is active, then drawing operations will affect that particular channel.",
-          key = "lovr.graphics.getColorMask",
+          summary = "Get the default filter mode for Textures.",
+          description = "Returns the default filter mode for new Textures.  This controls how textures are sampled when they are minified, magnified, or stretched.",
+          key = "lovr.graphics.getDefaultFilter",
           module = "lovr.graphics",
+          related = {
+            "Texture:getFilter",
+            "Texture:setFilter"
+          },
           variants = {
             {
               arguments = {},
               returns = {
                 {
-                  name = "r",
-                  type = "boolean",
-                  description = "Whether or not the red channel is enabled."
+                  name = "mode",
+                  type = "FilterMode",
+                  description = "The filter mode."
                 },
                 {
-                  name = "g",
-                  type = "boolean",
-                  description = "Whether or not the green channel is enabled."
-                },
-                {
-                  name = "b",
-                  type = "boolean",
-                  description = "Whether or not the blue channel is enabled."
-                },
-                {
-                  name = "a",
-                  type = "boolean",
-                  description = "Whether or not the alpha channel is enabled."
+                  name = "anisotropy",
+                  type = "number",
+                  description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
                 }
               }
             }
-          },
-          notes = "Initially, all color channels are enabled."
+          }
         },
         {
           name = "getDepthTest",
@@ -3392,7 +3527,7 @@ return {
               }
             }
           },
-          notes = "The default depth test is `less`."
+          notes = "The default depth test is `lequal`."
         },
         {
           name = "getDimensions",
@@ -3519,66 +3654,6 @@ return {
           notes = "The default point size is `1.0`."
         },
         {
-          name = "getPolygonWinding",
-          tag = "graphicsState",
-          summary = "Get the winding direction.",
-          description = "Returns the current polygon winding.  The winding direction determines which face of a triangle is the front face and which is the back face.  This lets the graphics engine cull the back faces of polygons, improving performance.",
-          key = "lovr.graphics.getPolygonWinding",
-          module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "winding",
-                  type = "PolygonWinding",
-                  description = "The current winding direction."
-                }
-              }
-            }
-          },
-          related = {
-            "lovr.graphics.setCullingEnabled",
-            "lovr.graphics.isCullingEnabled"
-          },
-          notes = "Culling is initially disabled and must be enabled using `lovr.graphics.setCullingEnabled`.\n\nThe default winding direction is counterclockwise."
-        },
-        {
-          name = "getScissor",
-          tag = "graphicsState",
-          summary = "Get the scissor rectangle.",
-          description = "Returns the current scissor.  The scissor is a rectangular area of the screen.  Any pixels outside the scissor region will be unaffected by drawing operations.",
-          key = "lovr.graphics.getScissor",
-          module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the upper left corner of the scissor."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the upper left corner of the scissor."
-                },
-                {
-                  name = "w",
-                  type = "number",
-                  description = "The width of the scissor in pixels."
-                },
-                {
-                  name = "h",
-                  type = "number",
-                  description = "The height of the scissor in pixels."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getShader",
           tag = "graphicsState",
           summary = "Get the active shader.",
@@ -3658,6 +3733,31 @@ return {
               }
             }
           }
+        },
+        {
+          name = "getWinding",
+          tag = "graphicsState",
+          summary = "Get the winding direction.",
+          description = "Returns the current polygon winding.  The winding direction determines which face of a triangle is the front face and which is the back face.  This lets the graphics engine cull the back faces of polygons, improving performance.",
+          key = "lovr.graphics.getWinding",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "winding",
+                  type = "PolygonWinding",
+                  description = "The current winding direction."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.graphics.setCullingEnabled",
+            "lovr.graphics.isCullingEnabled"
+          },
+          notes = "Culling is initially disabled and must be enabled using `lovr.graphics.setCullingEnabled`.\n\nThe default winding direction is counterclockwise."
         },
         {
           name = "isCullingEnabled",
@@ -4206,21 +4306,27 @@ return {
                   default = "1"
                 },
                 {
-                  name = "nx",
+                  name = "angle",
                   type = "number",
-                  description = "The x coordinate of the normal vector of the plane.",
+                  description = "The number of radians to rotate around the rotation axis.",
                   default = "0"
                 },
                 {
-                  name = "ny",
+                  name = "ax",
                   type = "number",
-                  description = "The y coordinate of the normal vector of the plane.",
+                  description = "The x component of the rotation axis.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the rotation axis.",
                   default = "1"
                 },
                 {
-                  name = "nz",
+                  name = "az",
                   type = "number",
-                  description = "The z coordinate of the normal vector of the plane.",
+                  description = "The z component of the rotation axis.",
                   default = "0"
                 }
               },
@@ -4259,21 +4365,27 @@ return {
                   default = "1"
                 },
                 {
-                  name = "nx",
+                  name = "angle",
                   type = "number",
-                  description = "The x coordinate of the normal vector of the plane.",
+                  description = "The number of radians to rotate around the rotation axis.",
                   default = "0"
                 },
                 {
-                  name = "ny",
+                  name = "ax",
                   type = "number",
-                  description = "The y coordinate of the normal vector of the plane.",
+                  description = "The x component of the rotation axis.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the rotation axis.",
                   default = "1"
                 },
                 {
-                  name = "nz",
+                  name = "az",
                   type = "number",
-                  description = "The z coordinate of the normal vector of the plane.",
+                  description = "The z component of the rotation axis.",
                   default = "0"
                 }
               },
@@ -4460,7 +4572,7 @@ return {
             "lovr.graphics.newFont",
             "Font"
           },
-          notes = "Unicode text is supported.\n\nUse `\\n` to add line breaks."
+          notes = "Unicode text is supported.\n\nUse `\\n` to add line breaks.\n\nLÖVR uses a fancy technique for font rendering called multichanel signed distance fields.  This leads to crisp text in VR, but requires a special shader to use.  LÖVR internally switches to the appropriate shader, but only when the default shader is already set.  If you see strange font artifacts, make sure you switch back to the default shader by using `lovr.graphics.setShader()` before you draw text."
         },
         {
           name = "push",
@@ -4501,9 +4613,44 @@ return {
           description = "Rotates the coordinate system around an axis.\n\nThe rotation will last until `lovr.draw` returns or the transformation is popped off the transformation stack.",
           key = "lovr.graphics.rotate",
           module = "lovr.graphics",
+          notes = "Order matters when scaling, translating, and rotating the coordinate system.",
           variants = {
             {
               arguments = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount to rotate the coordinate system by, in radians."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "matrix",
+                  type = "MatrixType",
+                  description = "The matrix to modify.",
+                  default = "'model'"
+                },
                 {
                   name = "angle",
                   type = "number",
@@ -4535,8 +4682,7 @@ return {
             "lovr.graphics.scale",
             "lovr.graphics.translate",
             "lovr.graphics.transform"
-          },
-          notes = "Order matters when scaling, translating, and rotating the coordinate system."
+          }
         },
         {
           name = "scale",
@@ -4545,9 +4691,38 @@ return {
           description = "Scales the coordinate system in 3 dimensions.  This will cause objects to appear bigger or smaller.\n\nThe scaling will last until `lovr.draw` returns or the transformation is popped off the transformation stack.",
           key = "lovr.graphics.scale",
           module = "lovr.graphics",
+          notes = "Order matters when scaling, translating, and rotating the coordinate system.",
           variants = {
             {
               arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The amount to scale on the x axis."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The amount to scale on the y axis.",
+                  default = "x"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The amount to scale on the z axis.",
+                  default = "x"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "matrix",
+                  type = "MatrixType",
+                  description = "The matrix to modify.",
+                  default = "'model'"
+                },
                 {
                   name = "x",
                   type = "number",
@@ -4573,8 +4748,7 @@ return {
             "lovr.graphics.rotate",
             "lovr.graphics.translate",
             "lovr.graphics.transform"
-          },
-          notes = "Order matters when scaling, translating, and rotating the coordinate system."
+          }
         },
         {
           name = "setBackgroundColor",
@@ -4686,16 +4860,6 @@ return {
                 }
               },
               returns = {}
-            },
-            {
-              arguments = {
-                {
-                  name = "hex",
-                  type = "number",
-                  description = "An integer containing all four color components."
-                }
-              },
-              returns = {}
             }
           },
           examples = {
@@ -4704,46 +4868,6 @@ return {
               code = "function lovr.draw()\n  lovr.graphics.setColor(255, 0, 0)\n  lovr.graphics.cube('fill', 0, 1.7, -1, .5, lovr.timer.getTime())\nend"
             }
           }
-        },
-        {
-          name = "setColorMask",
-          tag = "graphicsState",
-          summary = "Set the color mask.",
-          description = "Sets which color channels are affected by drawing operations.",
-          key = "lovr.graphics.setColorMask",
-          module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "r",
-                  type = "boolean",
-                  description = "Whether or not the red channel should be enabled.",
-                  default = "true"
-                },
-                {
-                  name = "g",
-                  type = "boolean",
-                  description = "Whether or not the green channel should be enabled.",
-                  default = "true"
-                },
-                {
-                  name = "b",
-                  type = "boolean",
-                  description = "Whether or not the blue channel should be enabled.",
-                  default = "true"
-                },
-                {
-                  name = "a",
-                  type = "boolean",
-                  description = "Whether or not the alpha channel should be enabled.",
-                  default = "true"
-                }
-              },
-              returns = {}
-            }
-          },
-          notes = "Initially, all color channels are enabled."
         },
         {
           name = "setCullingEnabled",
@@ -4767,13 +4891,42 @@ return {
           notes = "Culling is disabled by default."
         },
         {
+          name = "setDefaultFilter",
+          tag = "graphicsState",
+          summary = "Set the default filter mode for Textures.",
+          description = "Sets the default filter mode for new Textures.  This controls how textures are sampled when they are minified, magnified, or stretched.",
+          key = "lovr.graphics.setDefaultFilter",
+          module = "lovr.graphics",
+          related = {
+            "Texture:getFilter",
+            "Texture:setFilter"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "mode",
+                  type = "FilterMode",
+                  description = "The filter mode."
+                },
+                {
+                  name = "anisotropy",
+                  type = "number",
+                  description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setDepthTest",
           tag = "graphicsState",
           summary = "Set or disable the depth test.",
           description = "Sets the current depth test.  The depth test controls how overlapping objects are rendered.",
           key = "lovr.graphics.setDepthTest",
           module = "lovr.graphics",
-          notes = "The default depth test is `less`.",
+          notes = "The default depth test is `lequal`.",
           variants = {
             {
               description = "Set a new depth test.",
@@ -4809,7 +4962,8 @@ return {
                 {
                   name = "font",
                   type = "Font",
-                  description = "The font to use."
+                  description = "The font to use.  If nil, the default font is set.",
+                  default = "nil"
                 }
               },
               returns = {}
@@ -4865,66 +5019,6 @@ return {
           notes = "The default point size is `1.0`."
         },
         {
-          name = "setPolygonWinding",
-          tag = "graphicsState",
-          summary = "Set the winding direction.",
-          description = "Sets the polygon winding.  The winding direction determines which face of a triangle is the front face and which is the back face.  This lets the graphics engine cull the back faces of polygons, improving performance.  The default is counterclockwise.",
-          key = "lovr.graphics.setPolygonWinding",
-          module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "winding",
-                  type = "PolygonWinding",
-                  description = "The new winding direction."
-                }
-              },
-              returns = {}
-            }
-          },
-          related = {
-            "lovr.graphics.setCullingEnabled",
-            "lovr.graphics.isCullingEnabled"
-          },
-          notes = "Culling is initially disabled and must be enabled using `lovr.graphics.setCullingEnabled`.\n\nThe default winding direction is counterclockwise."
-        },
-        {
-          name = "setScissor",
-          tag = "graphicsState",
-          summary = "Set the scissor rectangle.",
-          description = "Sets the scissor region.  The scissor is a rectangular area of the screen.  Any pixels outside the scissor region will be unaffected by drawing operations.",
-          key = "lovr.graphics.setScissor",
-          module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the upper left corner of the scissor."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the upper left corner of the scissor."
-                },
-                {
-                  name = "w",
-                  type = "number",
-                  description = "The width of the scissor in pixels."
-                },
-                {
-                  name = "h",
-                  type = "number",
-                  description = "The height of the scissor in pixels."
-                }
-              },
-              returns = {}
-            }
-          }
-        },
-        {
           name = "setShader",
           tag = "graphicsState",
           summary = "Set or disable the active shader.",
@@ -4948,6 +5042,31 @@ return {
               returns = {}
             }
           }
+        },
+        {
+          name = "setWinding",
+          tag = "graphicsState",
+          summary = "Set the winding direction.",
+          description = "Sets the polygon winding.  The winding direction determines which face of a triangle is the front face and which is the back face.  This lets the graphics engine cull the back faces of polygons, improving performance.  The default is counterclockwise.",
+          key = "lovr.graphics.setWinding",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "winding",
+                  type = "PolygonWinding",
+                  description = "The new winding direction."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.setCullingEnabled",
+            "lovr.graphics.isCullingEnabled"
+          },
+          notes = "Culling is initially disabled and must be enabled using `lovr.graphics.setCullingEnabled`.\n\nThe default winding direction is counterclockwise."
         },
         {
           name = "setWireframe",
@@ -5204,6 +5323,95 @@ return {
                 }
               },
               returns = {}
+            },
+            {
+              description = "Modify the model or view matrix.",
+              arguments = {
+                {
+                  name = "matrix",
+                  type = "MatrixType",
+                  description = "The matrix to modify.",
+                  default = "'model'"
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the translation.",
+                  default = 0
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the translation.",
+                  default = 0
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the translation.",
+                  default = 0
+                },
+                {
+                  name = "sx",
+                  type = "number",
+                  description = "The x scale factor.",
+                  default = 1
+                },
+                {
+                  name = "sy",
+                  type = "number",
+                  description = "The y scale factor.",
+                  default = 1
+                },
+                {
+                  name = "sz",
+                  type = "number",
+                  description = "The z scale factor.",
+                  default = 1
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians to rotate around the rotation axis.",
+                  default = 0
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = 0
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = 1
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = 0
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Modify the model or view matrix using a Transform object.",
+              arguments = {
+                {
+                  name = "matrix",
+                  type = "MatrixType",
+                  description = "The matrix to modify.",
+                  default = "'model'"
+                },
+                {
+                  name = "transform",
+                  type = "Transform",
+                  description = "The Transform to apply to the coordinate system."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -5214,9 +5422,36 @@ return {
           description = "Translates the coordinate system in three dimensions.  All graphics operations that use coordinates will behave as if they are offset by the translation value.\n\nThe translation will last until `lovr.draw` returns or the transformation is popped off the transformation stack.",
           key = "lovr.graphics.translate",
           module = "lovr.graphics",
+          notes = "Order matters when scaling, translating, and rotating the coordinate system.",
           variants = {
             {
               arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The amount to translate on the x axis."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The amount to translate on the y axis."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The amount to translate on the z axis."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "matrix",
+                  type = "MatrixType",
+                  description = "The matrix to modify.",
+                  default = "'model'"
+                },
                 {
                   name = "x",
                   type = "number",
@@ -5240,8 +5475,7 @@ return {
             "lovr.graphics.rotate",
             "lovr.graphics.scale",
             "lovr.graphics.transform"
-          },
-          notes = "Order matters when scaling, translating, and rotating the coordinate system."
+          }
         },
         {
           name = "triangle",
@@ -6183,7 +6417,7 @@ return {
           constructors = {
             "lovr.graphics.newShader"
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrNormalMatrix;\n    uniform mat4 lovrProjection;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    out vec2 texCoord;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform sampler2D lovrTexture;\n    in vec2 texCoord;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrNormalMatrix;\n    uniform mat4 lovrProjection;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    out vec2 texCoord;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform sampler2D lovrTexture;\n    in vec2 texCoord;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
           methods = {
             {
               name = "send",
@@ -6281,7 +6515,7 @@ return {
         {
           name = "Texture",
           summary = "An image that can be applied to Meshes and Models.",
-          description = "A Texture is an image that can be applied to `Model`s and `Mesh`s.  Supported file formats include `.png`, `.jpg`, `.tga`, and `.bmp`.",
+          description = "A Texture is an image that can be applied to `Model`s and `Mesh`s.  Supported file formats include `.png`, `.jpg`, `.tga`, and `.bmp`.  Additionally, three compressed formats are supported: DXT1, DXT3, and DXT5 (all have the `.dds` extension).  Compressed textures are generally recommended as they use less video memory and usually improve performance.",
           key = "Texture",
           module = "lovr.graphics",
           methods = {
@@ -6320,14 +6554,14 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "min",
+                      name = "mode",
                       type = "FilterMode",
-                      description = "The filter mode used for minification."
+                      description = "The filter mode for the Texture."
                     },
                     {
-                      name = "mag",
-                      type = "FilterMode",
-                      description = "The filter mode used for magnification."
+                      name = "anisotropy",
+                      type = "number",
+                      description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
                     }
                   }
                 }
@@ -6418,27 +6652,31 @@ return {
             {
               name = "setFilter",
               summary = "Set the FilterMode for the Texture.",
-              description = "Sets the `FilterMode` used by the texture when upsampling or downsampling.  The default mode is `linear`.",
+              description = "Sets the `FilterMode` used by the texture.",
               key = "Texture:setFilter",
               module = "lovr.graphics",
+              related = {
+                "lovr.graphics.getDefaultFilter",
+                "lovr.graphics.setDefaultFilter"
+              },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "min",
+                      name = "mode",
                       type = "FilterMode",
-                      description = "The filter mode used for minification."
+                      description = "The filter mode."
                     },
                     {
-                      name = "mag",
-                      type = "FilterMode",
-                      description = "The filter mode used for magnification.",
-                      default = "min"
+                      name = "anisotropy",
+                      type = "number",
+                      description = "The level of anisotropy to use when using anisotropic filtering."
                     }
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "The default setting for new textures can be set with `lovr.graphics.setDefaultFilter`."
             },
             {
               name = "setWrap",
@@ -6503,6 +6741,10 @@ return {
           module = "headset",
           values = {
             {
+              name = "grip",
+              description = "The grip."
+            },
+            {
               name = "trigger",
               description = "The trigger."
             },
@@ -6523,6 +6765,10 @@ return {
           module = "headset",
           values = {
             {
+              name = "unknown",
+              description = "An unknown button."
+            },
+            {
               name = "system",
               description = "The system button."
             },
@@ -6531,12 +6777,52 @@ return {
               description = "The menu button."
             },
             {
+              name = "trigger",
+              description = "The trigger button."
+            },
+            {
               name = "grip",
               description = "The grip button."
             },
             {
               name = "touchpad",
               description = "The button on the touchpad."
+            },
+            {
+              name = "a",
+              description = "The A button present on Oculus Touch controllers."
+            },
+            {
+              name = "b",
+              description = "The B button present on Oculus Touch controllers."
+            },
+            {
+              name = "x",
+              description = "The X button present on Oculus Touch controllers."
+            },
+            {
+              name = "y",
+              description = "The Y button present on Oculus Touch controllers."
+            }
+          }
+        },
+        {
+          name = "ControllerHand",
+          description = "Represents which hand a Controller is thought to be held in.",
+          key = "ControllerHand",
+          module = "headset",
+          values = {
+            {
+              name = "left",
+              description = "The left hand."
+            },
+            {
+              name = "right",
+              description = "The right hand."
+            },
+            {
+              name = "unknown",
+              description = "Can not be determined."
             }
           }
         },
@@ -6554,6 +6840,44 @@ return {
             {
               name = "right",
               description = "The right eye."
+            }
+          }
+        },
+        {
+          name = "HeadsetOrigin",
+          summary = "Different types of coordinate space origins.",
+          description = "Represents the different types of origins for coordinate spaces.  An origin of \"floor\" is common for headsets that support roomscale tracking, and means that the origin is on the floor in the center of the play area.  An origin of \"head\" is common for devices that do not support positional tracking and means the origin is relative to the position of the head.",
+          key = "HeadsetOrigin",
+          module = "headset",
+          values = {
+            {
+              name = "head",
+              description = "The origin is near the head."
+            },
+            {
+              name = "floor",
+              description = "The origin is on the floor."
+            }
+          }
+        },
+        {
+          name = "HeadsetType",
+          summary = "Types of VR headsets.",
+          description = "Types of headsets LÖVR recognizes.",
+          key = "HeadsetType",
+          module = "headset",
+          values = {
+            {
+              name = "vive",
+              description = "HTC Vive."
+            },
+            {
+              name = "rift",
+              description = "Oculus Rift."
+            },
+            {
+              name = "unknown",
+              description = "An unknown headset."
             }
           }
         }
@@ -6919,6 +7243,29 @@ return {
           }
         },
         {
+          name = "getOriginType",
+          tag = "headset",
+          summary = "Get the type of tracking origin of the headset.",
+          description = "Returns the type of origin used for the tracking volume.  The different types of origins are explained on the `HeadsetOrigin` page.",
+          key = "lovr.headset.getOriginType",
+          module = "lovr.headset",
+          related = {
+            "HeadsetOrigin"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "origin",
+                  type = "HeadsetOrigin",
+                  description = "The type of origin."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getPosition",
           tag = "headset",
           summary = "Get the position of the headset.",
@@ -7201,6 +7548,28 @@ return {
               }
             },
             {
+              name = "getHand",
+              summary = "Get the hand the Controller is in.",
+              description = "Returns which hand the controller is in, if known.",
+              key = "Controller:getHand",
+              module = "lovr.headset",
+              related = {
+                "ControllerHand"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "hand",
+                      type = "ControllerHand",
+                      description = "The hand the controller is in."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getOrientation",
               summary = "Get the orientation of the Controller.",
               description = "Returns the current orientation of the Controller.",
@@ -7275,11 +7644,12 @@ return {
             {
               name = "isDown",
               summary = "Get the state of a button on the Controller.",
-              description = "Check if a button on the Controller is currently pressed.",
+              description = "Returns the state of a button on the Controller.",
               key = "Controller:isDown",
               module = "lovr.headset",
               related = {
                 "ControllerButton",
+                "Controller:isTouched",
                 "Controller:getAxis"
               },
               variants = {
@@ -7318,6 +7688,36 @@ return {
                       name = "isPresent",
                       type = "boolean",
                       description = "Whether or not the Controller is connected."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isTouched",
+              summary = "Check whether a button on the Controller is touched.",
+              description = "Returns whether or not a given button on the Controller is currently touched.  This may not mean the button is actually pressed since some controllers are touch-sensitive.",
+              key = "Controller:isTouched",
+              module = "lovr.headset",
+              related = {
+                "ControllerButton",
+                "Controller:isDown",
+                "Controller:getAxis"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "button",
+                      type = "ControllerButton",
+                      description = "The button to query."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "touched",
+                      type = "boolean",
+                      description = "Whether the button is touched."
                     }
                   }
                 }
@@ -7392,9 +7792,176 @@ return {
       name = "math",
       tag = "modules",
       summary = "Contains useful math helpers.",
-      description = "The `lovr.math` module provides math helpers commonly used for 3D applications.  Currently, only `Transform` objects are exposed.",
+      description = "The `lovr.math` module provides math helpers commonly used for 3D applications.",
       key = "lovr.math",
       functions = {
+        {
+          name = "getRandomSeed",
+          summary = "Get the random seed.",
+          description = "Get the seed used to initialize the random generator.",
+          key = "lovr.math.getRandomSeed",
+          module = "lovr.math",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "seed",
+                  type = "number",
+                  description = "The new seed."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "lookAt",
+          summary = "Compute an angle/axis rotation from a vector.",
+          description = "Returns the angle/axis orientation to use to get an object to look at a point.",
+          key = "lovr.math.lookAt",
+          module = "lovr.math",
+          notes = "With the default up vector, strange things will happen when trying to look in directions that line up with the up vector, similar to how the cameras in a first person shooter work. Sometimes this is alright, but other times you may want to keep track of the up vector of the camera as it rotates and pass that in as the up vector to avoid issues.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the object."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the object."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the object."
+                },
+                {
+                  name = "tx",
+                  type = "number",
+                  description = "The x position of the target to look at."
+                },
+                {
+                  name = "ty",
+                  type = "number",
+                  description = "The y position of the target to look at."
+                },
+                {
+                  name = "tz",
+                  type = "number",
+                  description = "The z position of the target to look at."
+                },
+                {
+                  name = "ux",
+                  type = "number",
+                  description = "The x component of the global up vector.",
+                  default = "0"
+                },
+                {
+                  name = "uy",
+                  type = "number",
+                  description = "The y component of the global up vector.",
+                  default = "1"
+                },
+                {
+                  name = "uz",
+                  type = "number",
+                  description = "The z component of the global up vector.",
+                  default = "0"
+                }
+              },
+              returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians to rotate around the axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            }
+          },
+          examples = {
+            {
+              description = "Rotate a texture so it always faces the headset.",
+              code = "function lovr.load()\n  eye = lovr.graphics.newTexture('texture.png')\nend\n\nfunction lovr.draw()\n  local x, y, z = 0, 2, -2\n  local angle, ax, ay, az = lovr.math.lookAt(x, y, z, lovr.headset.getPosition())\n  lovr.graphics.plane(eye, x, y, z, 1, angle, ax, ay, az)\nend"
+            }
+          }
+        },
+        {
+          name = "newRandomGenerator",
+          summary = "Create a new RandomGenerator.",
+          description = "Creates a new `RandomGenerator`, which can be used to generate random numbers. If you just want some random numbers, you can use `lovr.math.random`. Individual RandomGenerator objects are useful if you need more control over the random sequence used or need a random generator isolated from other instances.",
+          key = "lovr.math.newRandomGenerator",
+          module = "lovr.math",
+          variants = {
+            {
+              description = "Create a RandomGenerator with a default seed.",
+              arguments = {},
+              returns = {
+                {
+                  name = "randomGenerator",
+                  type = "RandomGenerator",
+                  description = "The new RandomGenerator."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "seed",
+                  type = "number",
+                  description = "The initial seed for the RandomGenerator."
+                }
+              },
+              returns = {
+                {
+                  name = "randomGenerator",
+                  type = "RandomGenerator",
+                  description = "The new RandomGenerator."
+                }
+              }
+            },
+            {
+              description = "This variant allows creation of random generators with precise 64-bit seed values, since Lua's number format loses precision with really big numbers.",
+              arguments = {
+                {
+                  name = "low",
+                  type = "number",
+                  description = "The lower 32 bits of the seed."
+                },
+                {
+                  name = "high",
+                  type = "number",
+                  description = "The upper 32 bits of the seed."
+                }
+              },
+              returns = {
+                {
+                  name = "randomGenerator",
+                  type = "RandomGenerator",
+                  description = "The new RandomGenerator."
+                }
+              }
+            }
+          }
+        },
         {
           name = "newTransform",
           summary = "Create a new Transform.",
@@ -7464,10 +8031,335 @@ return {
               }
             }
           }
+        },
+        {
+          name = "random",
+          summary = "Get a random number.",
+          description = "Returns a uniformly distributed pseudo-random number.  This function has improved randomness over Lua's `math.random` and also guarantees that the sequence of random numbers will be the same on all platforms (given the same seed).",
+          key = "lovr.math.random",
+          module = "lovr.math",
+          related = {
+            "lovr.math.randomNormal",
+            "RandomGenerator"
+          },
+          variants = {
+            {
+              description = "Generate a pseudo-random floating point number in the range `[0,1)`",
+              arguments = {},
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "A pseudo-random number."
+                }
+              }
+            },
+            {
+              description = "Generate a pseudo-random integer in the range `[1,high]`",
+              arguments = {
+                {
+                  name = "high",
+                  type = "number",
+                  description = "The maximum number to generate."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "A pseudo-random number."
+                }
+              }
+            },
+            {
+              description = "Generate a pseudo-random integer in the range `[low,high]`",
+              arguments = {
+                {
+                  name = "low",
+                  type = "number",
+                  description = "The minimum number to generate."
+                },
+                {
+                  name = "high",
+                  type = "number",
+                  description = "The maximum number to generate."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "A pseudo-random number."
+                }
+              }
+            }
+          },
+          notes = "You can set the random seed using `lovr.math.setRandomSeed`."
+        },
+        {
+          name = "randomNormal",
+          summary = "Get a random number from a normal distribution.",
+          description = "Returns a pseudo-random number from a normal distribution (a bell curve).  You can control the center of the bell curve (the mean value) and the overall width (sigma, or standard deviation).",
+          key = "lovr.math.randomNormal",
+          module = "lovr.math",
+          related = {
+            "lovr.math.random",
+            "RandomGenerator"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "sigma",
+                  type = "number",
+                  description = "The standard deviation of the distribution.  This can be thought of how \"wide\" the range of numbers is or how much variability there is.",
+                  default = "1"
+                },
+                {
+                  name = "mu",
+                  type = "number",
+                  description = "The average value returned.",
+                  default = "0"
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "A normally distributed pseudo-random number."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "setRandomSeed",
+          summary = "Set the random seed.",
+          description = "Seed the random generator with a new seed.  Each seed will cause `lovr.math.random` and `lovr.math.randomNormal` to produce a unique sequence of random numbers.  This is done once automatically at startup by `lovr.run`.",
+          key = "lovr.math.setRandomSeed",
+          module = "lovr.math",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "seed",
+                  type = "number",
+                  description = "The new seed."
+                }
+              },
+              returns = {}
+            }
+          }
         }
       },
       enums = {},
       objects = {
+        {
+          name = "RandomGenerator",
+          summary = "A pseudo-random number generator.",
+          description = "A RandomGenerator is a standalone object that can be used to independently generate pseudo-random numbers. If you just need basic randomness, you can use `lovr.math.random` without needing to create a random generator.",
+          key = "RandomGenerator",
+          module = "lovr.math",
+          methods = {
+            {
+              name = "getSeed",
+              summary = "Get the seed value of the RandomGenerator.",
+              description = "Returns the seed used to initialize the RandomGenerator.",
+              key = "RandomGenerator:getSeed",
+              module = "lovr.math",
+              related = {
+                "lovr.math.newRandomGenerator"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "low",
+                      type = "number",
+                      description = "The lower 32 bits of the seed."
+                    },
+                    {
+                      name = "high",
+                      type = "number",
+                      description = "The upper 32 bits of the seed."
+                    }
+                  }
+                }
+              },
+              notes = "Since the seed is a 64 bit integer, each 32 bits of the seed are returned separately to avoid precision issues."
+            },
+            {
+              name = "getState",
+              summary = "Get the current state of the RandomGenerator.",
+              description = "Returns the current state of the RandomGenerator.  This can be used with `RandomGenerator:setState` to reliably restore a previous state of the generator.",
+              key = "RandomGenerator:getState",
+              module = "lovr.math",
+              notes = "The seed represents the starting state of the RandomGenerator, whereas the state represents the current state of the generator.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "state",
+                      type = "string",
+                      description = "The serialized state."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "random",
+              summary = "Get a random number.",
+              description = "Returns the next uniformly distributed pseudo-random number from the RandomGenerator's sequence.",
+              key = "RandomGenerator:random",
+              module = "lovr.math",
+              related = {
+                "lovr.math.random",
+                "RandomGenerator:randomNormal"
+              },
+              variants = {
+                {
+                  description = "Generate a pseudo-random floating point number in the range `[0,1)`",
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A pseudo-random number."
+                    }
+                  }
+                },
+                {
+                  description = "Generate a pseudo-random integer in the range `[1,high]`",
+                  arguments = {
+                    {
+                      name = "high",
+                      type = "number",
+                      description = "The maximum number to generate."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A pseudo-random number."
+                    }
+                  }
+                },
+                {
+                  description = "Generate a pseudo-random integer in the range `[low,high]`",
+                  arguments = {
+                    {
+                      name = "low",
+                      type = "number",
+                      description = "The minimum number to generate."
+                    },
+                    {
+                      name = "high",
+                      type = "number",
+                      description = "The maximum number to generate."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A pseudo-random number."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "randomNormal",
+              summary = "Get a random number from a normal distribution.",
+              description = "Returns a pseudo-random number from a normal distribution (a bell curve).  You can control the center of the bell curve (the mean value) and the overall width (sigma, or standard deviation).",
+              key = "RandomGenerator:randomNormal",
+              module = "lovr.math",
+              related = {
+                "lovr.math.randomNormal",
+                "RandomGenerator:random"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "sigma",
+                      type = "number",
+                      description = "The standard deviation of the distribution.  This can be thought of how \"wide\" the range of numbers is or how much variability there is.",
+                      default = "1"
+                    },
+                    {
+                      name = "mu",
+                      type = "number",
+                      description = "The average value returned.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A normally distributed pseudo-random number."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setSeed",
+              summary = "Reinitialize the RandomGenerator with a new seed.",
+              description = "Seed the RandomGenerator with a new seed.  Each seed will cause the RandomGenerator to produce a unique sequence of random numbers.",
+              key = "RandomGenerator:setSeed",
+              module = "lovr.math",
+              notes = "For precise 64 bit seeds, you should specify the lower and upper 32 bits of the seed separately. Otherwise, seeds larger than 2^53 will start to lose precision.",
+              variants = {
+                {
+                  arguments = {
+                    low = {
+                      type = "number",
+                      description = "The lower 32 bits of the seed."
+                    },
+                    seed = {
+                      type = "number",
+                      description = "The random seed."
+                    },
+                    high = {
+                      type = "number",
+                      description = "The upper 32 bits of the seed."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setState",
+              summary = "Set the state of the RandomGenerator.",
+              description = "Sets the state of the RandomGenerator, as previously obtained using `RandomGenerator:getState`. This can be used to reliably restore a previous state of the generator.",
+              key = "RandomGenerator:setState",
+              module = "lovr.math",
+              notes = "The seed represents the starting state of the RandomGenerator, whereas the state represents the current state of the generator.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "state",
+                      type = "string",
+                      description = "The serialized state."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.math.newRandomGenerator"
+          }
+        },
         {
           name = "Transform",
           summary = "A 3D transform.",

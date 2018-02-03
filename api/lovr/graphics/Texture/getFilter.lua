@@ -4,14 +4,17 @@ return {
   arguments = {},
   returns = {
     {
-      name = 'min',
+      name = 'mode',
       type = 'FilterMode',
-      description = 'The filter mode used for minification.'
+      description = 'The filter mode for the Texture.'
     },
     {
-      name = 'mag',
-      type = 'FilterMode',
-      description = 'The filter mode used for magnification.'
+      name = 'anisotropy',
+      type = 'number',
+      description = [[
+        If the filtering mode is "anisotropic", returns the level of anisotropy.  Otherwise, this
+        will be nil.
+      ]]
     }
   }
 }

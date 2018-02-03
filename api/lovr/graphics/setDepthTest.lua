@@ -23,5 +23,5 @@ return {
       returns = {}
     }
   },
-  notes = 'The default depth test is `less`.'
+  notes = 'The default depth test is `lequal`.'
 }

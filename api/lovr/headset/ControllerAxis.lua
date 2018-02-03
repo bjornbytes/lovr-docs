@@ -2,6 +2,10 @@ return {
   description = 'Axes on a Controller.',
   values = {
     {
+      name = 'grip',
+      description = 'The grip.'
+    },
+    {
       name = 'trigger',
       description = 'The trigger.'
     },

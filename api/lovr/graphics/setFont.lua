@@ -6,7 +6,8 @@ return {
     {
       name = 'font',
       type = 'Font',
-      description = 'The font to use.'
+      default = 'nil',
+      description = 'The font to use.  If nil, the default font is set.'
     }
   },
   returns = {},

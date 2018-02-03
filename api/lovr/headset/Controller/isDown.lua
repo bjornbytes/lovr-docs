@@ -1,6 +1,6 @@
 return {
   summary = 'Get the state of a button on the Controller.',
-  description = 'Check if a button on the Controller is currently pressed.',
+  description = 'Returns the state of a button on the Controller.',
   arguments = {
     {
       name = 'button',
@@ -17,6 +17,7 @@ return {
   },
   related = {
     'ControllerButton',
+    'Controller:isTouched',
     'Controller:getAxis'
   }
 }

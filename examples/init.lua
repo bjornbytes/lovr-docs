@@ -1,4 +1,7 @@
 return {
-  'Cube',
-  '360_Image'
+  'Primitives',
+  'Panorama',
+  'Lighting',
+  'Physics',
+  'Billboard'
 }

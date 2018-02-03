@@ -6,12 +6,23 @@ return {
   ]],
   values = {
     {
-      name = 'linear',
-      description = 'The texture will be smoothed.'
+      name = 'nearest',
+      description = 'Fast nearest-neighbor sampling.  Leads to a pixelated style.'
     },
     {
-      name = 'nearest',
-      description = 'The texture will be pixelated.'
+      name = 'bilinear',
+      description = 'Smooth pixel sampling.'
+    },
+    {
+      name = 'trilinear',
+      description = 'Smooth pixel sampling, with smooth sampling across mipmap levels.'
+    },
+    {
+      name = 'anisotropic',
+      description = [[
+        Anisotropic texture filtering.  The level of anisotropy can also be specified when setting
+        this filter mode.  Gives the best results but is also slower.
+      ]]
     }
   }
 }

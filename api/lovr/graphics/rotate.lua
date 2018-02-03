@@ -8,31 +8,42 @@ return {
     transformation stack.
   ]],
   arguments = {
-    {
-      name = 'angle',
+    angle = {
       type = 'number',
       description = 'The amount to rotate the coordinate system by, in radians.'
     },
-    {
-      name = 'ax',
+    ax = {
       type = 'number',
       default = '0',
       description = 'The x component of the axis of rotation.'
     },
-    {
-      name = 'ay',
+    ay = {
       type = 'number',
       default = '1',
       description = 'The y component of the axis of rotation.'
     },
-    {
-      name = 'az',
+    az = {
       type = 'number',
       default = '0',
       description = 'The z component of the axis of rotation.'
+    },
+    matrix = {
+      type = 'MatrixType',
+      default = [['model']],
+      description = 'The matrix to modify.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    },
+    {
+      arguments = { 'matrix', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    }
+  },
   notes = 'Order matters when scaling, translating, and rotating the coordinate system.',
   related = {
     'lovr.graphics.scale',

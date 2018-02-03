@@ -32,31 +32,36 @@ return {
       default = '1',
       description = 'The size of the plane, in meters.'
     },
-    nx = {
+    angle = {
       type = 'number',
       default = '0',
-      description = 'The x coordinate of the normal vector of the plane.'
+      description = 'The number of radians to rotate around the rotation axis.'
     },
-    ny = {
+    ax = {
+      type = 'number',
+      default = '0',
+      description = 'The x component of the rotation axis.'
+    },
+    ay = {
       type = 'number',
       default = '1',
-      description = 'The y coordinate of the normal vector of the plane.'
+      description = 'The y component of the rotation axis.'
     },
-    nz = {
+    az = {
       type = 'number',
       default = '0',
-      description = 'The z coordinate of the normal vector of the plane.'
+      description = 'The z component of the rotation axis.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'mode', 'x', 'y', 'z', 'size', 'nx', 'ny', 'nz' },
+      arguments = { 'mode', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
       description = 'Draw a textured plane.',
-      arguments = { 'texture', 'x', 'y', 'z', 'size', 'nx', 'ny', 'nz' },
+      arguments = { 'texture', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {

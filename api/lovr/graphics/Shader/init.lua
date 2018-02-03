@@ -26,6 +26,8 @@ return {
 
     Vertex shader header:
 
+        uniform mat4 lovrModel;
+        uniform mat4 lovrView;
         uniform mat4 lovrTransform;
         uniform mat4 lovrNormalMatrix;
         uniform mat4 lovrProjection;

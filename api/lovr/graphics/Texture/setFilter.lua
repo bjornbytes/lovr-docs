@@ -1,21 +1,24 @@
 return {
   summary = 'Set the FilterMode for the Texture.',
-  description = [[
-    Sets the `FilterMode` used by the texture when upsampling or downsampling.  The default mode is
-    `linear`.
-  ]],
+  description = 'Sets the `FilterMode` used by the texture.',
   arguments = {
     {
-      name = 'min',
+      name = 'mode',
       type = 'FilterMode',
-      description = 'The filter mode used for minification.'
+      description = 'The filter mode.'
     },
     {
-      name = 'mag',
-      default = 'min',
-      type = 'FilterMode',
-      description = 'The filter mode used for magnification.'
+      name = 'anisotropy',
+      type = 'number',
+      description = 'The level of anisotropy to use when using anisotropic filtering.'
     }
   },
-  returns = {}
+  returns = {},
+  notes = [[
+    The default setting for new textures can be set with `lovr.graphics.setDefaultFilter`.
+  ]],
+  related = {
+    'lovr.graphics.getDefaultFilter',
+    'lovr.graphics.setDefaultFilter'
+  }
 }

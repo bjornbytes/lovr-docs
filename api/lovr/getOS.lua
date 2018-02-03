@@ -7,7 +7,7 @@ return {
     {
       name = 'os',
       type = 'string',
-      description = 'Either "windows" or "macOS".'
+      description = 'Either "windows", "macOS", or "linux".'
     }
   }
 }
