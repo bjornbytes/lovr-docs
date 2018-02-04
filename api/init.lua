@@ -2692,6 +2692,23 @@ return {
           }
         },
         {
+          name = "CanvasType",
+          summary = "Different projection methods for Canvases.",
+          description = "When creating Canvases, they can be created in either \"2d\" or \"3d\" mode.  2D mode is good for 2D user interfaces or postprocessing, whereas 3d is useful for portals, weapon scopes, mirrors, and other situations where 3D content needs to be rendered.",
+          key = "CanvasType",
+          module = "graphics",
+          values = {
+            {
+              name = "2d",
+              description = "Use a 2d orthographic projection matrix."
+            },
+            {
+              name = "3d",
+              description = "Use a 3d perspective projection matrix."
+            }
+          }
+        },
+        {
           name = "CompareMode",
           summary = "Different depth test modes.",
           description = "The method used to compare z values when deciding how to overlap rendered objects.  This is called the \"depth test\", and it happens on a pixel-by-pixel basis every time new objects are drawn.  If the depth test \"passes\" for a pixel, then the pixel color will be replaced by the new color and the depth value in the depth buffer will be updated.  Otherwise, the pixel will not be changed and the depth value will not be updated.",
@@ -2903,19 +2920,64 @@ return {
           }
         },
         {
-          name = "TextureProjection",
-          summary = "Different projection types for renderable textures.",
-          description = "When creating Textures to be used as render targets, they can be created in either \"2d\" or \"3d\" mode.  2D mode is good for 2D user interfaces or postprocessing, whereas 3d is useful for portals, weapon scopes, mirrors, and other situations where 3D content needs to be rendered.",
-          key = "TextureProjection",
+          name = "StencilAction",
+          summary = "Different stencil operations available.",
+          description = "How to modify pixels in the stencil buffer when using `lovr.graphics.stencil`.",
+          key = "StencilAction",
           module = "graphics",
           values = {
             {
-              name = "2d",
-              description = "Use an orthographic projection."
+              name = "replace",
+              description = "Stencil values will be replaced with a custom value."
             },
             {
-              name = "3d",
-              description = "Use a perspective projection."
+              name = "increment",
+              description = "Stencil values will increment every time they are rendered to."
+            },
+            {
+              name = "decrement",
+              description = "Stencil values will decrement every time they are rendered to."
+            },
+            {
+              name = "incrementwrap",
+              description = "Similar to `increment`, but the stencil value will be set to 0 if it exceeds 255."
+            },
+            {
+              name = "decrementwrap",
+              description = "Similar to `decrement`, but the stencil value will be set to 255 if it drops below 0."
+            },
+            {
+              name = "invert",
+              description = "Stencil values will be bitwise inverted every time they are rendered to."
+            }
+          }
+        },
+        {
+          name = "TextureFormat",
+          summary = "Different internal storage formats for Canvas objects.",
+          description = "Canvas objects can use different internal storage formats. These formats differ in how much space each pixel takes up and the precision of each color channel. In general, formats that take up more space support better precision and can be used for HDR rendering, but can reduce performance.",
+          key = "TextureFormat",
+          module = "graphics",
+          values = {
+            {
+              name = "rgb",
+              description = "Each pixel is 24 bits, or 8 bits for each channel."
+            },
+            {
+              name = "rgba",
+              description = "Each pixel is 32 bits, or 8 bits for each channel (including alpha)."
+            },
+            {
+              name = "rgba16f",
+              description = "Each pixel is 64 bits. Each channel is a 16 bit floating point number."
+            },
+            {
+              name = "rgba32f",
+              description = "Each pixel is 128 bits. Each channel is a 32 bit floating point number."
+            },
+            {
+              name = "rg11b10f",
+              description = "Each pixel is 32 bits, and packs three color channels into 10 or 11 bits each."
             }
           }
         },
@@ -4363,6 +4425,67 @@ return {
           }
         },
         {
+          name = "getStats",
+          tag = "graphicsState",
+          summary = "Get renderer stats for the current frame.",
+          description = "Returns graphics-related performance statistics for the current frame.",
+          key = "lovr.graphics.getStats",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "stats",
+                  type = "table",
+                  description = "The table of stats.",
+                  table = {
+                    {
+                      name = "drawcalls",
+                      type = "number",
+                      description = "The number of draw calls."
+                    },
+                    {
+                      name = "shaderswitches",
+                      type = "number",
+                      description = "The number of times the shader has been switched."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getStencilTest",
+          tag = "graphicsState",
+          summary = "Get the current stencil test.",
+          description = "Returns the current stencil test.  The stencil test lets you mask out pixels that meet certain criteria, based on the contents of the stencil buffer.  The stencil buffer can be modified using `lovr.graphics.stencil`.  After rendering to the stencil buffer, the stencil test can be set to control how subsequent drawing functions are masked by the stencil buffer.",
+          key = "lovr.graphics.getStencilTest",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "compareMode",
+                  type = "CompareMode",
+                  description = "The comparison method used to decide if a pixel should be visible, or nil if the stencil test is disabled."
+                },
+                {
+                  name = "compareValue",
+                  type = "number",
+                  description = "The value stencil values are compared against, or nil if the stencil test is disabled."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.graphics.stencil"
+          },
+          notes = "Stencil values are between 0 and 255."
+        },
+        {
           name = "getSystemLimits",
           tag = "graphicsState",
           summary = "Get capabilities of the graphics card.",
@@ -4605,6 +4728,76 @@ return {
             "Model:setAnimator"
           },
           notes = "You can attach an animator to a Model with `Model:setAnimator`."
+        },
+        {
+          name = "newCanvas",
+          tag = "graphicsObjects",
+          summary = "Create a new Canvas.",
+          description = "Creates a new canvas with a given width and height.",
+          key = "lovr.graphics.newCanvas",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the canvas, in pixels."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the canvas, in pixels."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "The height of the canvas, in pixels.",
+                  default = "{}",
+                  table = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The internal format to use for the canvas.",
+                      default = "'rgba'"
+                    },
+                    {
+                      name = "type",
+                      type = "CanvasType",
+                      description = "Whether the Canvas uses a 3d or 2d projection.",
+                      default = "'3d'"
+                    },
+                    {
+                      name = "msaa",
+                      type = "number",
+                      description = "The number of MSAA samples to use for antialiasing.",
+                      default = "0"
+                    },
+                    {
+                      name = "depth",
+                      type = "boolean",
+                      description = "Whether a depth buffer should be created for the Canvas.  If set to nil, will be created only if the canvas is 3d.",
+                      default = "nil"
+                    },
+                    {
+                      name = "stencil",
+                      type = "boolean",
+                      description = "Whether a stencil buffer should be created.",
+                      default = "false"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "The new Canvas."
+                }
+              }
+            }
+          },
+          notes = "You can render to the Canvas using `Canvas:renderTo`."
         },
         {
           name = "newFont",
@@ -5060,38 +5253,6 @@ return {
                     }
                   },
                   default = "{}"
-                }
-              },
-              returns = {
-                {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The new Texture."
-                }
-              }
-            },
-            {
-              description = "Create a render texture (also called a \"framebuffer\" or a \"canvas\").",
-              arguments = {
-                {
-                  name = "width",
-                  type = "number",
-                  description = "The width of the Texture, in pixels."
-                },
-                {
-                  name = "height",
-                  type = "number",
-                  description = "The height of the Texture, in pixels."
-                },
-                {
-                  name = "projection",
-                  type = "TextureProjection",
-                  description = "The type of projection to use when rendering to the Texture."
-                },
-                {
-                  name = "msaa",
-                  type = "number",
-                  description = "The number of samples to use for multisample antialiasing."
                 }
               },
               returns = {
@@ -5897,6 +6058,40 @@ return {
           }
         },
         {
+          name = "setStencilTest",
+          tag = "graphicsState",
+          summary = "Set the stencil test.",
+          description = "Sets the stencil test.  The stencil test lets you mask out pixels that meet certain criteria, based on the contents of the stencil buffer.  The stencil buffer can be modified using `lovr.graphics.stencil`.  After rendering to the stencil buffer, the stencil test can be set to control how subsequent drawing functions are masked by the stencil buffer.",
+          key = "lovr.graphics.setStencilTest",
+          module = "lovr.graphics",
+          notes = "Stencil values are between 0 and 255.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "compareMode",
+                  type = "CompareMode",
+                  description = "The comparison method used to decide if a pixel should be visible, or nil if the stencil test is disabled."
+                },
+                {
+                  name = "compareValue",
+                  type = "number",
+                  description = "The value to compare stencil values to."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Disables the stencil test.",
+              arguments = {},
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.stencil"
+          }
+        },
+        {
           name = "setWinding",
           tag = "graphicsState",
           summary = "Set the winding direction.",
@@ -6132,6 +6327,49 @@ return {
               returns = {}
             }
           }
+        },
+        {
+          name = "stencil",
+          tag = "graphicsPrimitives",
+          summary = "Modify the stencil buffer.",
+          description = "Renders to the stencil buffer using a function.",
+          key = "lovr.graphics.stencil",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "callback",
+                  type = "function",
+                  description = "The function that will be called to render to the stencil buffer."
+                },
+                {
+                  name = "action",
+                  type = "StencilAction",
+                  description = "How to modify the stencil value of pixels that are rendered to.",
+                  default = "'replace'"
+                },
+                {
+                  name = "replaceValue",
+                  type = "number",
+                  description = "If `action` is \"replace\", this is the value that pixels are replaced with.",
+                  default = "1"
+                },
+                {
+                  name = "keepValues",
+                  type = "boolean",
+                  description = "If false, the stencil buffer will be cleared before rendering.",
+                  default = "false"
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.getStencilTest",
+            "lovr.graphics.setStencilTest"
+          },
+          notes = "Stencil values are between 0 and 255."
         },
         {
           name = "transform",
@@ -7052,6 +7290,87 @@ return {
                       name = "dt",
                       type = "number",
                       description = "The amount of time to advance."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "Canvas",
+          summary = "An offscreen render target.",
+          description = "A Canvas is also known as a framebuffer or render-to-texture.  It allows you to render to an offscreen canvas instead of directly to the screen.  This lets you postprocess or transform the results later before finally rendering them to the screen.\n\nCanvases extend Textures, so Canvases can be used as textures in materials or rendered as fullscreen quads just like textures can, and they inherit all Texture functions.",
+          key = "Canvas",
+          module = "lovr.graphics",
+          examples = {
+            {
+              description = "Apply a postprocessing effect (wave) using a Canvas and a fragment shader.",
+              code = "function lovr.load()\n  lovr.graphics.setBackgroundColor(.1, .1, .1)\n  canvas = lovr.graphics.newCanvas(lovr.headset.getDisplayDimensions())\n\n  wave = lovr.graphics.newShader([[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return vertex;\n    }\n  ]], [[\n    uniform float time;\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      uv.x += sin(uv.y * 10 + time * 4) * .01;\n      uv.y += cos(uv.x * 10 + time * 4) * .01;\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n  ]])\nend\n\nfunction lovr.update(dt)\n  wave:send('time', lovr.timer.getTime())\nend\n\nfunction lovr.draw(eye)\n  -- Render the scene to the canvas instead of the headset.\n  canvas:renderTo(function()\n    lovr.graphics.clear()\n    local size = 5\n    for i = 1, size do\n      for j = 1, size do\n        for k = 1, size do\n          lovr.graphics.setColor(i / size, j / size, k / size)\n          local x, y, z = i - size / 2, j - size / 2, k - size / 2\n          lovr.graphics.cube('fill', x, y, z, .5)\n        end\n      end\n    end\n  end)\n\n  -- Render the canvas to the headset using a shader.\n  lovr.graphics.setColor(1, 1, 1)\n  lovr.graphics.setShader(wave)\n  lovr.graphics.plane(canvas)\n  lovr.graphics.setShader()\nend"
+            }
+          },
+          constructors = {
+            "lovr.graphics.newCanvas"
+          },
+          methods = {
+            {
+              name = "getFormat",
+              summary = "Get the format of the Canvas texture.",
+              description = "Returns the internal storage format used for the Canvas.",
+              key = "Canvas:getFormat",
+              module = "lovr.graphics",
+              related = {
+                "TextureFormat",
+                "lovr.graphics.newCanvas"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The texture format used by the Canvas."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMSAA",
+              summary = "Get the number of MSAA samples used by the Canvas.",
+              description = "Returns the number of multisample antialiasing samples to use when rendering to the Canvas. Increasing this number will make the contents of the Canvas appear more smooth at the cost of performance.  It is common to use powers of 2 for this value.",
+              key = "Canvas:getMSAA",
+              module = "lovr.graphics",
+              notes = "This can only be set when the Canvas is created with `lovr.graphics.newCanvas`.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "The number of MSAA samples."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "renderTo",
+              summary = "Render to the Canvas using a function.",
+              description = "Renders to the Canvas using a function.  All graphics functions inside the callback will affect the Canvas contents instead of directly rendering to the headset.  This can be used in `lovr.update`.",
+              key = "Canvas:renderTo",
+              module = "lovr.graphics",
+              notes = "Make sure you clear the contents of the canvas before rendering by using `lovr.graphics.clear`. Otherwise there might be data in the canvas left over from a previous frame.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The function to use to render to the Canvas."
                     }
                   },
                   returns = {}
@@ -8550,26 +8869,6 @@ return {
               }
             },
             {
-              name = "renderTo",
-              summary = "Render to a Texture.",
-              description = "Renders to a Texture using a function.  The Texture must be created as a framebuffer by passing a width and height to `lovr.graphics.newTexture` instead of a filename.",
-              key = "Texture:renderTo",
-              module = "lovr.graphics",
-              notes = "Make sure you clear the contents of the Texture before rendering to it to clear any previous contents.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "callback",
-                      type = "function",
-                      description = "A function that calls drawing commands to render to the Texture."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "setFilter",
               summary = "Set the FilterMode for the Texture.",
               description = "Sets the `FilterMode` used by the texture.",
@@ -8794,6 +9093,10 @@ return {
             {
               name = "rift",
               description = "Oculus Rift."
+            },
+            {
+              name = "windowsmr",
+              description = "A Windows Mixed Reality headset."
             },
             {
               name = "unknown",
@@ -9084,45 +9387,6 @@ return {
           }
         },
         {
-          name = "getEyePosition",
-          tag = "headset",
-          summary = "Get the position of an eye.",
-          description = "Returns the current position of one of the eyes in 3D space.",
-          key = "lovr.headset.getEyePosition",
-          module = "lovr.headset",
-          related = {
-            "lovr.headset.getPosition"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "eye",
-                  type = "HeadsetEye",
-                  description = "The eye to get the position of."
-                }
-              },
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the eye."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the eye."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z position of the eye."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getOrientation",
           tag = "headset",
           summary = "Get the orientation of the headset.",
@@ -9141,7 +9405,39 @@ return {
                 {
                   name = "angle",
                   type = "number",
-                  description = "The number of radians the headset is rotated around its axis of rotation."
+                  description = "The amount of rotation around the axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            },
+            {
+              description = "Get the orientation of a single eye.",
+              arguments = {
+                {
+                  name = "eye",
+                  type = "HeadsetEye",
+                  description = "The eye to get the orientation of."
+                }
+              },
+              returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount of rotation around the axis of rotation."
                 },
                 {
                   name = "ax",
@@ -9186,6 +9482,108 @@ return {
           }
         },
         {
+          name = "getPose",
+          tag = "headset",
+          summary = "Get the pose of the headset.",
+          description = "Returns the current position and orientation of the headset.",
+          key = "lovr.headset.getPose",
+          module = "lovr.headset",
+          notes = "Units are in meters.",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount of rotation around the axis of rotation, in radians."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            },
+            {
+              description = "Get the pose of an eye.",
+              arguments = {
+                {
+                  name = "eye",
+                  type = "HeadsetEye",
+                  description = "The eye to get the pose of."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount of rotation around the axis of rotation, in radians."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.headset.getPosition",
+            "lovr.headset.getOrientation"
+          }
+        },
+        {
           name = "getPosition",
           tag = "headset",
           summary = "Get the position of the headset.",
@@ -9200,6 +9598,33 @@ return {
           variants = {
             {
               arguments = {},
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the headset."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the headset."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the headset."
+                }
+              }
+            },
+            {
+              description = "Get the position of an eye.",
+              arguments = {
+                {
+                  name = "eye",
+                  type = "HeadsetEye",
+                  description = "The eye to get the position of."
+                }
+              },
               returns = {
                 {
                   name = "x",
@@ -9526,6 +9951,61 @@ return {
                   }
                 }
               }
+            },
+            {
+              name = "getPose",
+              summary = "Get the pose of the Controller.",
+              description = "Returns the current position and orientation of the Controller.",
+              key = "Controller:getPose",
+              module = "lovr.headset",
+              related = {
+                "Controller:getPosition",
+                "Controller:getOrientation",
+                "lovr.headset.getPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Controller."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Controller."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Controller."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              },
+              notes = "Units are in meters."
             },
             {
               name = "getPosition",

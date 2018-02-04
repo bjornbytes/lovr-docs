@@ -47,22 +47,6 @@ return {
           description = 'Whether the texture is in linear color space instead of sRGB.'
         }
       }
-    },
-    width = {
-      type = 'number',
-      description = 'The width of the Texture, in pixels.'
-    },
-    height = {
-      type = 'number',
-      description = 'The height of the Texture, in pixels.'
-    },
-    projection = {
-      type = 'TextureProjection',
-      description = 'The type of projection to use when rendering to the Texture.'
-    },
-    msaa = {
-      type = 'number',
-      description = 'The number of samples to use for multisample antialiasing.'
     }
   },
   returns = {
@@ -88,11 +72,6 @@ return {
     {
       description = 'Create a new texture from a table of images.',
       arguments = { 'images', 'flags' },
-      returns = { 'texture' }
-    },
-    {
-      description = 'Create a render texture (also called a "framebuffer" or a "canvas").',
-      arguments = { 'width', 'height', 'projection', 'msaa' },
       returns = { 'texture' }
     }
   },

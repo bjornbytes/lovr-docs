@@ -11,6 +11,10 @@ return {
       description = 'Oculus Rift.'
     },
     {
+      name = 'windowsmr',
+      description = 'A Windows Mixed Reality headset.'
+    },
+    {
       name = 'unknown',
       description = 'An unknown headset.'
     }
