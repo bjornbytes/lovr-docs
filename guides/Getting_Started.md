@@ -10,12 +10,12 @@ Installing LÖVR
 
 First, download LÖVR from the website:
 
-![LOVR Home Page](../static/img/please.jpg)
+![LOVR Home Page](https://lovr.org/static/img/please.jpg)
 
 Next, extract the zip file and open up the folder.  You should see a file called `lovr.exe` and a
 bunch of `.dll` files.
 
-![Archive Contents](../static/img/dlls.png)
+![Archive Contents](https://lovr.org/static/img/dlls.png)
 
 Double click on `lovr.exe` to open LÖVR.  If you see a window with a black screen, don't panic!
 That means LÖVR is working.  If you don't tell LÖVR what project you want to run, it will just open
@@ -58,16 +58,16 @@ Running a Project
 We're going to run our project with LÖVR and experience our cube in VR.  First, start SteamVR if it
 isn't started already:
 
-![Steam VR](../static/img/steamvr.png)
+![Steam VR](https://lovr.org/static/img/steamvr.png)
 
 Now, drag the `SuperEpicCube` folder on to the `lovr.exe` application we ran earlier:
 
-![Drag and Drop](../static/img/dragonDrop.png)
+![Drag and Drop](https://lovr.org/static/img/dragonDrop.png)
 
 Ok, put on your headset!  You should see a cube floating in the middle of the play space.  Walk
 around, introduce yourself to it, befriend it.
 
-![A Beautiful Cube](../static/img/cube.png)
+![A Beautiful Cube](https://lovr.org/static/img/cube.png)
 
 That's it for this guide.  I knew you could do it.
 If you want to make something even more cool, you'll need to learn a little bit more about Lua.
