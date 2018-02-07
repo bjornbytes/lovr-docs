@@ -3,7 +3,7 @@ Getting Started
 
 This guide will teach you how to install LÖVR, create a project, and run it. TL;DR version:
 
-<img src="../static/img/gettingStarted.png" width="400" height="515" class="flat">
+<img src="https://lovr.org/static/img/gettingStarted.png" width="400" height="515" class="flat">
 
 Installing LÖVR
 ---
