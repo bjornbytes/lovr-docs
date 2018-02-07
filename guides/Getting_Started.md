@@ -12,12 +12,12 @@ First, download LÖVR from the home page or click [here](http://bjornbyt.es/f/lo
 zip archive and open up the folder.  You should see the `lovr.exe` executable and a bunch of `.dll`
 files.
 
-![Archive Contents](../static/img/dlls.png)
+![Archive Contents](https://lovr.org/static/img/dlls.png)
 
 Double click on `lovr.exe` to open LÖVR.  You should see a window with the LÖVR logo in it.  This is
 what's shown if you run LÖVR without specifying a project.
 
-![The Default Project](../static/img/defaultProject.png)
+![The Default Project](https://lovr.org/static/img/defaultProject.png)
 
 > Note: If you're using a VR headset, you'll only see the logo if your headset is pointing in the
 > forward direction.
@@ -52,11 +52,11 @@ Running a Project
 To run a LÖVR project, drop its folder onto `lovr.exe`.  You can also run `lovr.exe` from the
 command line and pass the path to the project as the first argument.
 
-![Drag and Drop](../static/img/dragonDrop.png)
+![Drag and Drop](https://lovr.org/static/img/dragonDrop.png)
 
 If you followed the example above, you should see the following in VR:
 
-![Hello World](../static/img/helloWorld.png)
+![Hello World](https://lovr.org/static/img/helloWorld.png)
 
 That's all there is to it!
 
