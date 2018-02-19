@@ -159,6 +159,12 @@ local function processObject(path, parent)
   object.notes = unwrap(object.notes)
   object.examples = pluralify(object, 'example')
 
+  if object.sections then
+    for _, section in ipairs(object.sections) do
+      section.description = unwrap(section.description)
+    end
+  end
+
   for k, example in ipairs(object.examples or {}) do
     object.examples[k] = processExample(example)
   end
