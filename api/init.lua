@@ -7363,7 +7363,7 @@ return {
               description = "Renders to the Canvas using a function.  All graphics functions inside the callback will affect the Canvas contents instead of directly rendering to the headset.  This can be used in `lovr.update`.",
               key = "Canvas:renderTo",
               module = "lovr.graphics",
-              notes = "Make sure you clear the contents of the canvas before rendering by using `lovr.graphics.clear`. Otherwise there might be data in the canvas left over from a previous frame.",
+              notes = "Make sure you clear the contents of the canvas before rendering by using `lovr.graphics.clear`. Otherwise there might be data in the canvas left over from a previous frame.\n\nAlso note that the transform stack is not modified by this function.  If you plan on modifying the transform stack inside your callback it may be a good idea to use `lovr.graphics.push` and `lovr.graphics.pop` so you can revert to the previous transform afterwards.",
               variants = {
                 {
                   arguments = {
@@ -8351,7 +8351,7 @@ return {
         {
           name = "Model",
           summary = "An asset imported from a 3D model file.",
-          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and collada.  Models will use normals and texture coordinates, if provided.\n\nThe following advanced features are not supported yet: animations, materials, and vertex colors.",
+          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and collada.  Models will use normals and texture coordinates, if provided.",
           key = "Model",
           module = "lovr.graphics",
           examples = {
