@@ -8032,7 +8032,7 @@ return {
         {
           name = "Model",
           summary = "An asset imported from a 3D model file.",
-          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and collada.  Models will use normals and texture coordinates, if provided.\n\nThe following advanced features are not supported yet: animations, materials, and vertex colors.",
+          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and collada.  Models will use normals and texture coordinates, if provided.",
           key = "Model",
           module = "lovr.graphics",
           examples = {
