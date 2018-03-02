@@ -1,5 +1,5 @@
 function lovr.load()
-  eye = lovr.graphics.newTexture('eye.png')
+  eye = lovr.graphics.newMaterial( lovr.graphics.newTexture('eye.png') )
 end
 
 function lovr.draw()
