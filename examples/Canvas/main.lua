@@ -38,11 +38,11 @@ local screenShaderFragment = [[
   vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
     vec2 pixelOff = direction / resolution;
     vec4 color = vec4(0.0);
-    color += texture2D(image, uv) * WEIGHT0;
-    color += texture2D(image, uv + pixelOff * OFFSET1) * WEIGHT1;
-    color += texture2D(image, uv - pixelOff * OFFSET1) * WEIGHT1;
-    color += texture2D(image, uv + pixelOff * OFFSET2) * WEIGHT2;
-    color += texture2D(image, uv - pixelOff * OFFSET2) * WEIGHT2;
+    color += texture(image, uv) * WEIGHT0;
+    color += texture(image, uv + pixelOff * OFFSET1) * WEIGHT1;
+    color += texture(image, uv - pixelOff * OFFSET1) * WEIGHT1;
+    color += texture(image, uv + pixelOff * OFFSET2) * WEIGHT2;
+    color += texture(image, uv - pixelOff * OFFSET2) * WEIGHT2;
     return color;
   }
 ]]
