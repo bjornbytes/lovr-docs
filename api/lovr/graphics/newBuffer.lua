@@ -12,7 +12,7 @@ return {
     },
     mode = {
       type = 'BufferDrawMode',
-      default = [['triangles']],
+      default = [['fan']],
       description = 'How the Buffer will render its vertices.'
     },
     usage = {
