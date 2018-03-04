@@ -12,7 +12,7 @@ return {
     },
     mode = {
       type = 'MeshDrawMode',
-      default = [['triangles']],
+      default = [['fan']],
       description = 'How the Mesh will render its vertices.'
     },
     usage = {
