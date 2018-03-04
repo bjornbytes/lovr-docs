@@ -3832,7 +3832,7 @@ return {
                   name = "mode",
                   type = "MeshDrawMode",
                   description = "How the Mesh will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
@@ -3860,7 +3860,7 @@ return {
                   name = "mode",
                   type = "MeshDrawMode",
                   description = "How the Mesh will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
@@ -3894,7 +3894,7 @@ return {
                   name = "mode",
                   type = "MeshDrawMode",
                   description = "How the Mesh will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
@@ -3927,7 +3927,7 @@ return {
                   name = "mode",
                   type = "MeshDrawMode",
                   description = "How the Mesh will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
