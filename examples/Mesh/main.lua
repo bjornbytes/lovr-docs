@@ -1,9 +1,10 @@
 local fragmentShader = require("shader")
 
-local mesh1, mesh2
+local mesh1, mesh2, mesh4
 local mesh4Instance
 local mesh1Program, mesh3Program, mesh4Program
 local gridSize = 8
+local gridSizeCubed = gridSize*gridSize*gridSize
 
 -- Call this function with a string containing a glsl function preTransform()
 -- Which maps world space coordinates to world space coordinates.
@@ -39,7 +40,7 @@ function lovr.load()
 
 --  mesh1Program()
 
-  mesh1 = lovr.graphics.newMesh({{ 'lovrPosition', 'float', 3 }, { 'lovrNormal', 'float', 3 }}, 3)
+  mesh1 = lovr.graphics.newMesh({{ 'lovrPosition', 'float', 3 }, { 'lovrNormal', 'float', 3 }}, 3, 'triangles')
   mesh1:setVertices({{0,0,0, 0,0,1}, {1,0,0, 0,0,1}, {0,1,0, 0,0,1}}) -- A triangle
 
   mesh2 = lovr.graphics.newMesh({{ 'lovrPosition', 'float', 3 }, { 'lovrNormal', 'float', 3 }}, 24, 'triangles')
@@ -85,14 +86,16 @@ function lovr.load()
 
   mesh2:setVertices(mesh2Vertices)
 
-  mesh2:setVertexMap({ -- Indexes for mesh 2
+  local mesh2Indexes = { -- Indexes for mesh 2
     1,  2,  3,  1,  3,  4,  -- Face front
     5,  6,  7,  5,  7,  8,  -- Face top
     9,  10,  11, 9,  11, 12, -- Face right
     13, 14, 15, 13, 15, 16, -- Face left
     17, 18, 19, 17, 19, 20, -- Face back
     21, 22, 23, 21, 23, 24, -- Face bottom
-  })
+  }
+
+  mesh2:setVertexMap(mesh2Indexes)
 
   mesh3Program = makeShader([[
   uniform int gridSize;
@@ -106,6 +109,30 @@ function lovr.load()
   }
   ]])
   mesh3Program:send("gridSize", gridSize)
+
+  mesh4Program = makeShader([[
+  uniform int gridSize;
+  in float cubeSize;
+  vec4 preTransform(vec4 v) {
+    int x = gl_InstanceID % gridSize;
+    int y = (gl_InstanceID / gridSize) % gridSize;
+    int z = (gl_InstanceID / gridSize) / gridSize;
+    return v * vec4(cubeSize,cubeSize,cubeSize,1) + vec4(x,y,z,0) - vec4(gridSize, gridSize, gridSize, 0)/2;
+  }
+  ]])
+  mesh4Program:send("gridSize", gridSize)
+
+  mesh4 = lovr.graphics.newMesh({}, 24, 'triangles')
+  mesh4Instance = lovr.graphics.newMesh({{'cubeSize', 'float', 1}}, gridSizeCubed)
+  local mesh4Vertices = {}
+  for i=1,gridSizeCubed do
+    table.insert(mesh4Vertices, {math.random()})
+  end
+  mesh4Instance:setVertices(mesh4Vertices)
+  mesh4:setVertexMap(mesh2Indexes)
+  mesh4:attachAttributes(mesh2)
+  mesh4:attachAttributes(mesh4Instance, 1)
+
   --local vertexData = lovr.data.newVertexData(3, {{ 'position', 'float', 3 }, { 'normal', 'float', 3 }})
   --vertexData:setVertices({{0,0,0}, {0,1,0}, {1,0,0}})
 --  mesh:attachAttribute(instancingMesh, 'instancedPosition') -- NYI, attaches an attribute from a different mesh onto this mesh
@@ -136,17 +163,18 @@ function lovr.draw(eye)
   lovr.graphics.setShader(mesh3Program)
   lovr.graphics.push()
   lovr.graphics.rotate(2 * math.pi/2, 0, 1, 0)
-  lovr.graphics.translate(0, 00, -2.5)
+  lovr.graphics.translate(0, 0, -2)
   lovr.graphics.scale(1/gridSize)
   mesh3Program:send("animate", animate)
-  mesh2:drawInstanced(gridSize*gridSize*gridSize, 0,0,0)
+  mesh2:drawInstanced(gridSizeCubed, 0,0,0)
   lovr.graphics.pop()
 
-  lovr.graphics.setShader(mesh1Program)
+  lovr.graphics.setShader(mesh4Program)
   lovr.graphics.push()
   lovr.graphics.rotate(3 * math.pi/2, 0, 1, 0)
   lovr.graphics.translate(0, 0, -2)
-  lovr.graphics.cube('fill', 0,0,0)
+  lovr.graphics.scale(1/gridSize)
+  mesh4:drawInstanced(gridSizeCubed, 0,0,0)
   --mesh1:draw(0,0,0)
   lovr.graphics.pop()
 
