@@ -1,3 +1,9 @@
+-- This demo renders four examples of mesh drawing:
+-- A plain mesh (one triangle, white)
+-- A mesh with a vertex map (a cube, magenta)
+-- An instanced mesh with its size controlled by gl_InstanceID and an equation (512 cubes animated, cyan)
+-- An instanced mesh with its size controlled by an attached attribute (512 cubes with random sizes, yellow)
+
 local fragmentShader = require("shader")
 
 local mesh1, mesh2, mesh4
@@ -32,7 +38,6 @@ end
 -- This "standard" program is the same as the standard light shader from the other examples-- it does nothing.
 local mesh1Program = makeShader("vec4 preTransform(vec4 v) { return v; }")
 
-local rotate = 0
 local animate = 0
 
 function lovr.load()
@@ -123,7 +128,7 @@ function lovr.load()
   mesh4Program:send("gridSize", gridSize)
 
   mesh4 = lovr.graphics.newMesh({}, 24, 'triangles')
-  mesh4Instance = lovr.graphics.newMesh({{'cubeSize', 'float', 1}}, gridSizeCubed)
+  mesh4Instance = lovr.graphics.newMesh({{'cubeSize', 'float', 1}}, gridSizeCubed, 'points')
   local mesh4Vertices = {}
   for i=1,gridSizeCubed do
     table.insert(mesh4Vertices, {math.random()})
@@ -132,35 +137,30 @@ function lovr.load()
   mesh4:setVertexMap(mesh2Indexes)
   mesh4:attachAttributes(mesh2)
   mesh4:attachAttributes(mesh4Instance, 1)
-
-  --local vertexData = lovr.data.newVertexData(3, {{ 'position', 'float', 3 }, { 'normal', 'float', 3 }})
-  --vertexData:setVertices({{0,0,0}, {0,1,0}, {1,0,0}})
---  mesh:attachAttribute(instancingMesh, 'instancedPosition') -- NYI, attaches an attribute from a different mesh onto this mesh
---  mesh:drawInstanced(500, x, y, z, ...) -- works
 end
 
 function lovr.update(dt)
---  rotate = rotate + dt/math.pi/8
   animate = animate + dt/math.pi*2
 end
 
 function lovr.draw(eye)
   lovr.graphics.setShader(mesh1Program)
-  lovr.graphics.setColor(1,1,1,1)
-  lovr.graphics.rotate(rotate, 0, 1, 0)
 
   lovr.graphics.push()
+  lovr.graphics.setColor(1,1,1)
   lovr.graphics.translate(0, 0, -2)
   mesh1:draw(0,0,0)
   lovr.graphics.pop()
 
   lovr.graphics.push()
+  lovr.graphics.setColor(1,0,1)
   lovr.graphics.rotate(1 * math.pi/2, 0, 1, 0)
   lovr.graphics.translate(0, 0, -2)
   mesh2:draw(0,0,0)
   lovr.graphics.pop()
 
   lovr.graphics.setShader(mesh3Program)
+  lovr.graphics.setColor(0,1,1)
   lovr.graphics.push()
   lovr.graphics.rotate(2 * math.pi/2, 0, 1, 0)
   lovr.graphics.translate(0, 0, -2)
@@ -170,12 +170,11 @@ function lovr.draw(eye)
   lovr.graphics.pop()
 
   lovr.graphics.setShader(mesh4Program)
+  lovr.graphics.setColor(1,1,0)
   lovr.graphics.push()
   lovr.graphics.rotate(3 * math.pi/2, 0, 1, 0)
   lovr.graphics.translate(0, 0, -2)
   lovr.graphics.scale(1/gridSize)
   mesh4:drawInstanced(gridSizeCubed, 0,0,0)
-  --mesh1:draw(0,0,0)
   lovr.graphics.pop()
-
 end
