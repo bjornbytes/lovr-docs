@@ -2443,7 +2443,7 @@ return {
                   name = "mode",
                   type = "BufferDrawMode",
                   description = "How the Buffer will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
@@ -2471,7 +2471,7 @@ return {
                   name = "mode",
                   type = "BufferDrawMode",
                   description = "How the Buffer will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
@@ -2505,7 +2505,7 @@ return {
                   name = "mode",
                   type = "BufferDrawMode",
                   description = "How the Buffer will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
@@ -2538,7 +2538,7 @@ return {
                   name = "mode",
                   type = "BufferDrawMode",
                   description = "How the Buffer will render its vertices.",
-                  default = "'triangles'"
+                  default = "'fan'"
                 },
                 {
                   name = "usage",
