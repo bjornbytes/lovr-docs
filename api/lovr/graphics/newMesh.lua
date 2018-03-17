@@ -2,8 +2,10 @@ return {
   tag = 'graphicsObjects',
   summary = 'Create a new Mesh.',
   description = [[
-    Creates a new Mesh.  You must specify either the capacity for the Mesh or an initial set of
-    vertex data.  The draw mode and usage hint can also optionally be specified.
+    Creates a new Mesh.  Meshes contain the data for an arbitrary set of vertices, and can be drawn.
+    You must specify either the capacity for the Mesh or an initial set of vertex data.  Optionally,
+    a custom format table can be used to specify the set of vertex attributes the mesh will provide
+    to the active shader.  The draw mode and usage hint can also optionally be specified.
   ]],
   arguments = {
     size = {
@@ -13,12 +15,14 @@ return {
     mode = {
       type = 'MeshDrawMode',
       default = [['fan']],
-      description = 'How the Mesh will render its vertices.'
+      description = 'How the Mesh will connect its vertices into triangles.'
     },
     usage = {
       type = 'MeshUsage',
       default = [['dynamic']],
-      description = 'How the Mesh will be updated.'
+      description = [[
+        An optimization hint indicating how often the data in the Mesh will be updated.
+      ]]
     },
     vertices = {
       type = 'table',
