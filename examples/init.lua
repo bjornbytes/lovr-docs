@@ -1,3 +1,4 @@
 return {
-  'Cube'
+  'Cube',
+  'Model'
 }
