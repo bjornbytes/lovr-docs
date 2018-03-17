@@ -8,17 +8,38 @@ return {
     The following features are not supported yet: animations, materials, vertex colors.
   ]],
   arguments = {
-    {
-      name = 'filename',
+    filename = {
       type = 'string',
       description = 'The filename of the model to load.'
+    },
+    texture = {
+      type = 'string',
+      default = 'nil',
+      description = 'The filename of the texture to apply to the model.'
+    },
+    material = {
+      type = 'Material',
+      default = 'nil',
+      description = [[
+        The material to apply to the model.  If nil, the materials will be loaded from
+        the model file.
+      ]]
     }
   },
   returns = {
-    {
-      name = 'model',
+    model = {
       type = 'Model',
       description = 'The new Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'filename', 'texture' },
+      returns = { 'model' }
+    },
+    {
+      arguments = { 'filename', 'material' },
+      returns = { 'model' }
     }
   },
   notes = [[
