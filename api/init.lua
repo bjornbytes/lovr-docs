@@ -5622,7 +5622,7 @@ return {
               description = "Update multiple vertices in the Mesh.",
               key = "Mesh:setVertices",
               module = "lovr.graphics",
-              notes = "The number of vertices in the table should not exceed the maximum size of the Mesh.",
+              notes = "The start index plus the number of vertices in the table should not exceed the maximum size of the Mesh.",
               variants = {
                 {
                   arguments = {
@@ -5630,6 +5630,12 @@ return {
                       name = "vertices",
                       type = "table",
                       description = "The new set of vertices."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the vertex to start replacing at.",
+                      default = "1"
                     }
                   },
                   returns = {}
