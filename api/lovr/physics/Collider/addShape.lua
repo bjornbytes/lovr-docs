@@ -13,7 +13,7 @@ return {
   returns = {},
   related = {
     'Collider:removeShape',
-    'Collider:getShapeList',
+    'Collider:getShapes',
     'Shape'
   }
 }

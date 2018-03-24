@@ -9,11 +9,6 @@ return {
     transformation stack.
   ]],
   arguments = {
-    matrix = {
-      type = 'MatrixType',
-      default = [['model']],
-      description = 'The matrix to modify.'
-    },
     transform = {
       type = 'Transform',
       description = 'The Transform to apply to the coordinate system.'
@@ -78,16 +73,6 @@ return {
     {
       description = 'Modify the coordinate system using a Transform object.',
       arguments = { 'transform' },
-      returns = {}
-    },
-    {
-      description = 'Modify the model or view matrix.',
-      arguments = { 'matrix', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' },
-      returns = {}
-    },
-    {
-      description = 'Modify the model or view matrix using a Transform object.',
-      arguments = { 'matrix', 'transform' },
       returns = {}
     }
   },

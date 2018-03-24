@@ -2,10 +2,6 @@ return {
   description = 'Buttons on a Controller.',
   values = {
     {
-      name = 'unknown',
-      description = 'An unknown button.'
-    },
-    {
       name = 'system',
       description = 'The system button.'
     },

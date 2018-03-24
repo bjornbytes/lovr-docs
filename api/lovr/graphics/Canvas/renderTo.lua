@@ -10,6 +10,11 @@ return {
       name = 'callback',
       type = 'function',
       description = 'The function to use to render to the Canvas.'
+    },
+    {
+      name = '...',
+      type = '*',
+      description = 'Additional arguments to pass to the callback.'
     }
   },
   returns = {},

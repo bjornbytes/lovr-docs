@@ -175,7 +175,7 @@ return {
           t.gammacorrect = false
 
           -- Configure the desktop window
-          t.window.width = 800
+          t.window.width = 1080
           t.window.height = 600
           t.window.fullscreen = false
           t.window.msaa = 0

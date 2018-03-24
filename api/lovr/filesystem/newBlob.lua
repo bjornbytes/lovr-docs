@@ -1,18 +1,11 @@
 return {
-  summary = 'Create a new Blob.',
-  description = 'Creates a new Blob from a file.',
+  summary = 'Create a new Blob from a file.',
+  description = 'Creates a new Blob that contains the contents of a file.',
   arguments = {
-    filename = {
+    {
+      name = 'filename',
       type = 'string',
       description = 'The file to load.'
-    },
-    str = {
-      type = 'string',
-      description = 'A string containing the Blob\'s contents.'
-    },
-    name = {
-      type = 'string',
-      description = 'A name for the Blob (used in error messages)',
     }
   },
   returns = {
@@ -21,5 +14,9 @@ return {
       type = 'Blob',
       description = 'The new Blob.'
     }
+  },
+  related = {
+    'lovr.data.newBlob',
+    'Blob'
   }
 }

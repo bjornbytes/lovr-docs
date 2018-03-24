@@ -3,10 +3,6 @@ return {
   summary = 'Draw a plane.',
   description = 'Draws a plane with a given position, size, and orientation.',
   arguments = {
-    texture = {
-      type = 'Texture',
-      description = 'The texture to use.'
-    },
     material = {
       type = 'Material',
       description = 'The material to apply to the plane.'
@@ -31,10 +27,15 @@ return {
       default = '0',
       description = 'The z coordinate of the center of the plane.'
     },
-    size = {
+    width = {
       type = 'number',
       default = '1',
-      description = 'The size of the plane, in meters.'
+      description = 'The width of the plane, in meters.'
+    },
+    height = {
+      type = 'number',
+      default = '1',
+      description = 'The height of the plane, in meters.'
     },
     angle = {
       type = 'number',
@@ -60,17 +61,12 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'mode', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'mode', 'x', 'y', 'z', 'width', 'height', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
       description = 'Draw a plane with a custom material.',
-      arguments = { 'material', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
-      returns = {}
-    },
-    {
-      description = 'Draw a fullscreen textured plane.',
-      arguments = { 'texture' },
+      arguments = { 'material', 'x', 'y', 'z', 'width', 'height', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     }
   }

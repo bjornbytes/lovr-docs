@@ -5,11 +5,16 @@ return {
     {
       name = 'diffuse',
       description = 'The diffuse color.'
+    },
+    {
+      name = 'emissive',
+      description = 'The emissive color.'
     }
   },
   related = {
     'Material:getColor',
     'Material:setColor',
+    'MaterialScalar',
     'MaterialTexture',
     'Material'
   }

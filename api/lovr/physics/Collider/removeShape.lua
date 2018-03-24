@@ -12,7 +12,7 @@ return {
   notes = 'Colliders without any shapes won\'t collide with anything.',
   related = {
     'Collider:addShape',
-    'Collider:getShapeList',
+    'Collider:getShapes',
     'Shape'
   }
 }

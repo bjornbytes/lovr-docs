@@ -9,35 +9,23 @@ return {
     transformation stack.
   ]],
   arguments = {
-    x = {
+    {
+      name = 'x',
       type = 'number',
       description = 'The amount to translate on the x axis.'
     },
-    y = {
+    {
+      name = 'y',
       type = 'number',
       description = 'The amount to translate on the y axis.'
     },
-    z = {
+    {
+      name = 'z',
       type = 'number',
       description = 'The amount to translate on the z axis.'
-    },
-    matrix = {
-      type = 'MatrixType',
-      default = [['model']],
-      description = 'The matrix to modify.'
     }
   },
   returns = {},
-  variants = {
-    {
-      arguments = { 'x', 'y', 'z' },
-      returns = {}
-    },
-    {
-      arguments = { 'matrix', 'x', 'y', 'z' },
-      returns = {}
-    }
-  },
   notes = 'Order matters when scaling, translating, and rotating the coordinate system.',
   related = {
     'lovr.graphics.rotate',

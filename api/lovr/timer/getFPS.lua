@@ -1,7 +1,7 @@
 return {
   summary = 'Get the current frames per second.',
   description = [[
-    Returns the current frames per second, averaged over the last 60 frames.
+    Returns the current frames per second, averaged over the last 90 frames.
   ]],
   arguments = {},
   returns = {

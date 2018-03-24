@@ -6,7 +6,7 @@ return {
     {
       name = 'width',
       type = 'number',
-      default = '800',
+      default = '1080',
       description = 'The width of the window.'
     },
     {
