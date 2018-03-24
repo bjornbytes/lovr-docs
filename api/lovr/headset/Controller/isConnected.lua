@@ -4,12 +4,14 @@ return {
   arguments = {},
   returns = {
     {
-      name = 'isPresent',
+      name = 'connected',
       type = 'boolean',
       description = 'Whether or not the Controller is connected.'
     }
   },
   related = {
-    'lovr.headset.isPresent'
+    'lovr.headset.getControllers',
+    'lovr.controlleradded',
+    'lovr.controllerremoved'
   }
 }

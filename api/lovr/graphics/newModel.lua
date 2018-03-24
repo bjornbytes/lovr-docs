@@ -24,6 +24,10 @@ return {
         The material to apply to the model.  If nil, the materials will be loaded from
         the model file.
       ]]
+    },
+    modelData = {
+      type = 'ModelData',
+      description = 'The ModelData holding the data for the Model.'
     }
   },
   returns = {
@@ -39,6 +43,14 @@ return {
     },
     {
       arguments = { 'filename', 'material' },
+      returns = { 'model' }
+    },
+    {
+      arguments = { 'modelData', 'texture' },
+      returns = { 'model' }
+    },
+    {
+      arguments = { 'modelData', 'material' },
       returns = { 'model' }
     }
   },

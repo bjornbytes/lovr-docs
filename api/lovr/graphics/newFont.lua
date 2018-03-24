@@ -15,6 +15,10 @@ return {
       type = 'number',
       default = '32',
       description = 'The size of the font, in pixels.'
+    },
+    rasterizer = {
+      type = 'Rasterizer',
+      description = 'The existing Rasterizer object used to render the glyphs.'
     }
   },
   returns = {
@@ -31,6 +35,10 @@ return {
     {
       description = 'Creates a new Font from the default font included with LÖVR (Cabin).',
       arguments = { 'size' },
+      returns = { 'font' }
+    },
+    {
+      arguments = { 'rasterizer' },
       returns = { 'font' }
     }
   },

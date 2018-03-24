@@ -651,6 +651,32 @@ return {
       },
       functions = {
         {
+          name = "getDopplerEffect",
+          tag = "listener",
+          summary = "Get the doppler effect parameters.",
+          description = "Returns the parameters that control the simulated doppler effect: The effect intensity and the speed of sound.",
+          key = "lovr.audio.getDopplerEffect",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "factor",
+                  type = "number",
+                  description = "The doppler effect scaling factor."
+                },
+                {
+                  name = "speedOfSound",
+                  type = "number",
+                  description = "The speed of sound, in meters per second."
+                }
+              }
+            }
+          },
+          notes = "The default factor is 1 and the default speed of sound is 343.29."
+        },
+        {
           name = "getOrientation",
           tag = "listener",
           summary = "Get the orientation of the listener.",
@@ -803,13 +829,27 @@ return {
                   description = "The filename of the sound to load."
                 }
               },
-              returns = {
+              returns = {}
+            },
+            {
+              arguments = {
                 {
-                  name = "source",
-                  type = "Source",
-                  description = "The new Source."
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing the Source data."
                 }
-              }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "stream",
+                  type = "AudioStream",
+                  description = "The AudioStream used to stream audio data to the Source."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -855,6 +895,34 @@ return {
             }
           },
           notes = "Sources that are paused will remain paused. Sources that are currently playing will restart from the beginning."
+        },
+        {
+          name = "setDopplerEffect",
+          tag = "listener",
+          summary = "Set the doppler effect parameters.",
+          description = "Sets the parameters that control the simulated doppler effect: The effect intensity and the speed of sound.",
+          key = "lovr.audio.setDopplerEffect",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "factor",
+                  type = "number",
+                  description = "The doppler effect scaling factor.",
+                  default = "1.0"
+                },
+                {
+                  name = "speedOfSound",
+                  type = "number",
+                  description = "The speed of sound, in meters per second.",
+                  default = "343.29"
+                }
+              },
+              returns = {}
+            }
+          },
+          notes = "The default factor is 1 and the default speed of sound is 343.29."
         },
         {
           name = "setOrientation",
@@ -1865,7 +1933,7 @@ return {
         {
           name = "Blob",
           summary = "A chunk of binary data.",
-          description = "A Blob is an object that holds binary data.  It can be passed to most functions that take filename arguments, like `lovr.graphics.newModel` or `lovr.audio.newSource`.  Blobs aren't usually necessary for simple projects, but they can be really helpful if:\n\n- You need to work with low level binary data, potentially using the LuaJIT FFI for increased\n  performance.\n- You are working with data that isn't stored as a file, such as programmatically generated data\n  or a string from a network request.\n- You want to load data from a file once and then use it to create many different objects.",
+          description = "A Blob is an object that holds binary data.  It can be passed to most functions that take filename arguments, like `lovr.graphics.newModel` or `lovr.audio.newSource`.  Blobs aren't usually necessary for simple projects, but they can be really helpful if:\n\n- You need to work with low level binary data, potentially using the LuaJIT FFI for increased\n  performance.\n- You are working with data that isn't stored as a file, such as programmatically generated data\n  or a string from a network request.\n- You want to load data from a file once and then use it to create many different objects.\n\nA Blob's size cannot be changed once it is created.",
           key = "Blob",
           module = "lovr.data",
           methods = {
@@ -1953,6 +2021,7 @@ return {
             }
           },
           constructors = {
+            "lovr.data.newBlob",
             "lovr.filesystem.newBlob"
           }
         }
@@ -2896,23 +2965,6 @@ return {
           }
         },
         {
-          name = "CanvasType",
-          summary = "Different projection methods for Canvases.",
-          description = "When creating Canvases, they can be created in either \"2d\" or \"3d\" mode.  2D mode is good for 2D user interfaces or postprocessing, whereas 3d is useful for portals, weapon scopes, mirrors, and other situations where 3D content needs to be rendered.",
-          key = "CanvasType",
-          module = "graphics",
-          values = {
-            {
-              name = "2d",
-              description = "Use a 2d orthographic projection matrix."
-            },
-            {
-              name = "3d",
-              description = "Use a 3d perspective projection matrix."
-            }
-          }
-        },
-        {
           name = "CompareMode",
           summary = "Different depth test modes.",
           description = "The method used to compare z values when deciding how to overlap rendered objects.  This is called the \"depth test\", and it happens on a pixel-by-pixel basis every time new objects are drawn.  If the depth test \"passes\" for a pixel, then the pixel color will be replaced by the new color and the depth value in the depth buffer will be updated.  Otherwise, the pixel will not be changed and the depth value will not be updated.",
@@ -3209,6 +3261,31 @@ return {
             {
               name = "rg11b10f",
               description = "Each pixel is 32 bits, and packs three color channels into 10 or 11 bits each."
+            }
+          }
+        },
+        {
+          name = "TextureType",
+          summary = "Different types of Textures.",
+          description = "Different types of Textures.",
+          key = "TextureType",
+          module = "graphics",
+          values = {
+            {
+              name = "2d",
+              description = "A 2D texture."
+            },
+            {
+              name = "array",
+              description = "A 2D array texture with multiple independent 2D layers."
+            },
+            {
+              name = "cube",
+              description = "A cubemap texture with 6 2D faces."
+            },
+            {
+              name = "volume",
+              description = "A 3D volumetric texture consisting of multiple 2D layers."
             }
           }
         },
@@ -4490,6 +4567,31 @@ return {
           }
         },
         {
+          name = "getCanvas",
+          tag = "graphicsState",
+          summary = "Get the active Canvas.",
+          description = "Returns the set of active Canvas objects.  Usually when you render something it will render directly to the screen.  If one or more Canvas objects are active, things will be rendered to those Canvases instead of to the screen.",
+          key = "lovr.graphics.getCanvas",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "...",
+                  type = "Canvas",
+                  description = "The set of active Canvas objects, or `nil` if none are set."
+                }
+              }
+            }
+          },
+          related = {
+            "Canvas:renderTo",
+            "Canvas"
+          },
+          notes = "Up to 4 Canvases can be active at a time."
+        },
+        {
           name = "getColor",
           tag = "graphicsState",
           summary = "Get the global color factor.",
@@ -5062,12 +5164,6 @@ return {
                       default = "'rgba'"
                     },
                     {
-                      name = "type",
-                      type = "CanvasType",
-                      description = "Whether the Canvas uses a 3d or 2d projection.",
-                      default = "'3d'"
-                    },
-                    {
                       name = "msaa",
                       type = "number",
                       description = "The number of MSAA samples to use for antialiasing.",
@@ -5076,14 +5172,26 @@ return {
                     {
                       name = "depth",
                       type = "boolean",
-                      description = "Whether a depth buffer should be created for the Canvas.  If set to nil, will be created only if the canvas is 3d.",
-                      default = "nil"
+                      description = "Whether a depth buffer should be created for the Canvas.",
+                      default = "true"
                     },
                     {
                       name = "stencil",
                       type = "boolean",
                       description = "Whether a stencil buffer should be created.",
                       default = "false"
+                    },
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "Whether the Canvas is stereo.  A stereo Canvas will be split in half and replicate drawn objects to both eyes.",
+                      default = "false"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether the Canvas will automatically generate mipmaps.",
+                      default = "true"
                     }
                   }
                 }
@@ -5138,6 +5246,22 @@ return {
                   type = "number",
                   description = "The size of the font, in pixels.",
                   default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The existing Rasterizer object used to render the glyphs."
                 }
               },
               returns = {
@@ -5431,6 +5555,50 @@ return {
                   description = "The new Model."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The ModelData holding the data for the Model."
+                },
+                {
+                  name = "texture",
+                  type = "string",
+                  description = "The filename of the texture to apply to the model.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The ModelData holding the data for the Model."
+                },
+                {
+                  name = "material",
+                  type = "Material",
+                  description = "The material to apply to the model.  If nil, the materials will be loaded from the model file.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model."
+                }
+              }
             }
           }
         },
@@ -5491,62 +5659,18 @@ return {
                       type = "boolean",
                       description = "Whether the texture is in linear color space instead of sRGB.",
                       default = "false"
-                    }
-                  },
-                  default = "{}"
-                }
-              },
-              returns = {
-                {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The new Texture."
-                }
-              }
-            },
-            {
-              description = "Creates a new cubemap texture from 6 images.  It can be used as a skybox using `lovr.graphics.skybox`.",
-              arguments = {
-                {
-                  name = "right",
-                  type = "string",
-                  description = "The filename of the image for the positive x direction."
-                },
-                {
-                  name = "left",
-                  type = "string",
-                  description = "The filename of the image for the negative x direction."
-                },
-                {
-                  name = "top",
-                  type = "string",
-                  description = "The filename of the image for the positive y direction."
-                },
-                {
-                  name = "bottom",
-                  type = "string",
-                  description = "The filename of the image for the negative y direction."
-                },
-                {
-                  name = "back",
-                  type = "string",
-                  description = "The filename of the image for the positive z direction."
-                },
-                {
-                  name = "front",
-                  type = "string",
-                  description = "The filename of the image for the negative z direction."
-                },
-                {
-                  name = "flags",
-                  type = "table",
-                  description = "Optional settings for the texture.",
-                  table = {
+                    },
                     {
-                      name = "linear",
+                      name = "mipmaps",
                       type = "boolean",
-                      description = "Whether the texture is in linear color space instead of sRGB.",
-                      default = "false"
+                      description = "Whether mipmaps will be generated for the texture.",
+                      default = "true"
+                    },
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      default = "nil"
                     }
                   },
                   default = "{}"
@@ -5561,12 +5685,12 @@ return {
               }
             },
             {
-              description = "Create a new texture from a table of images.",
+              description = "Create a Texture from a table of filenames, Blobs, or TextureData.  For cube textures, the individual faces can be specified using the string keys \"right\", \"left\", \"top\", \"bottom\", \"back\", \"front\".",
               arguments = {
                 {
                   name = "images",
                   type = "table",
-                  description = "The table of image filenames.  Either 1 or 6 can be provided, as above."
+                  description = ""
                 },
                 {
                   name = "flags",
@@ -5578,6 +5702,104 @@ return {
                       type = "boolean",
                       description = "Whether the texture is in linear color space instead of sRGB.",
                       default = "false"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether mipmaps will be generated for the texture.",
+                      default = "true"
+                    },
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      default = "nil"
+                    }
+                  },
+                  default = "{}"
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The new Texture."
+                }
+              }
+            },
+            {
+              description = "Create a texture from a single Blob.",
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing encoded image data used to create the Texture."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "Optional settings for the texture.",
+                  table = {
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "Whether the texture is in linear color space instead of sRGB.",
+                      default = "false"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether mipmaps will be generated for the texture.",
+                      default = "true"
+                    },
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      default = "nil"
+                    }
+                  },
+                  default = "{}"
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The new Texture."
+                }
+              }
+            },
+            {
+              description = "Create a texture from a single TextureData.",
+              arguments = {
+                {
+                  name = "textureData",
+                  type = "TextureData",
+                  description = "The TextureData to create the Texture from."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "Optional settings for the texture.",
+                  table = {
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "Whether the texture is in linear color space instead of sRGB.",
+                      default = "false"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether mipmaps will be generated for the texture.",
+                      default = "true"
+                    },
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      default = "nil"
                     }
                   },
                   default = "{}"
@@ -6098,6 +6320,31 @@ return {
           }
         },
         {
+          name = "setCanvas",
+          tag = "graphicsState",
+          summary = "Set the active Canvas.",
+          description = "Sets or disables active Canvas objects.  If one or more Canvas objects are active, things will be rendered to those Canvases instead of to the screen.",
+          key = "lovr.graphics.setCanvas",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "...",
+                  type = "Canvas",
+                  description = "The new set of active Canvas objects, or `nil` to just render to the screen/headset."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "Canvas:renderTo",
+            "Canvas"
+          },
+          notes = "Up to 4 Canvases can be active at a time.  Multicanvas rendering only works with 2D Canvases.\n\nRendering to multiple Canvases simultaneously requires the active Shader to specify a different color output for each active Canvas.  To do this, add the `#define MULTICANVAS` line to the top of the fragment shader and write the `void colors` function instead of the usual `vec4 color` function.  You can then assign different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single color."
+        },
+        {
           name = "setColor",
           tag = "graphicsState",
           summary = "Set the global color factor.",
@@ -6603,6 +6850,7 @@ return {
           description = "Renders to the stencil buffer using a function.",
           key = "lovr.graphics.stencil",
           module = "lovr.graphics",
+          notes = "Stencil values are between 0 and 255.",
           variants = {
             {
               arguments = {
@@ -6618,16 +6866,44 @@ return {
                   default = "'replace'"
                 },
                 {
-                  name = "replaceValue",
+                  name = "value",
                   type = "number",
                   description = "If `action` is \"replace\", this is the value that pixels are replaced with.",
                   default = "1"
                 },
                 {
-                  name = "keepValues",
+                  name = "keep",
                   type = "boolean",
-                  description = "If false, the stencil buffer will be cleared before rendering.",
+                  description = "If false, the stencil buffer will be cleared to zero before rendering.",
                   default = "false"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "callback",
+                  type = "function",
+                  description = "The function that will be called to render to the stencil buffer."
+                },
+                {
+                  name = "action",
+                  type = "StencilAction",
+                  description = "How to modify the stencil value of pixels that are rendered to.",
+                  default = "'replace'"
+                },
+                {
+                  name = "value",
+                  type = "number",
+                  description = "If `action` is \"replace\", this is the value that pixels are replaced with.",
+                  default = "1"
+                },
+                {
+                  name = "initial",
+                  type = "number",
+                  description = "The value to clear the stencil buffer to before rendering.",
+                  default = "0"
                 }
               },
               returns = {}
@@ -6636,8 +6912,7 @@ return {
           related = {
             "lovr.graphics.getStencilTest",
             "lovr.graphics.setStencilTest"
-          },
-          notes = "Stencil values are between 0 and 255."
+          }
         },
         {
           name = "transform",
@@ -9045,6 +9320,29 @@ return {
               }
             },
             {
+              name = "getType",
+              summary = "Get the type of the Texture.",
+              description = "Returns the type of the Texture.",
+              key = "Texture:getType",
+              module = "lovr.graphics",
+              related = {
+                "TextureType",
+                "lovr.graphics.newTexture"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of the Texture."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getWidth",
               summary = "Get the width of the Texture.",
               description = "Returns the width of the Texture.",
@@ -10237,6 +10535,30 @@ return {
               notes = "Units are in meters."
             },
             {
+              name = "isConnected",
+              summary = "Determine if the Controller is still connected.",
+              description = "Determine if the Controller is still connected.",
+              key = "Controller:isConnected",
+              module = "lovr.headset",
+              related = {
+                "lovr.headset.getControllers",
+                "lovr.controlleradded",
+                "lovr.controllerremoved"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "connected",
+                      type = "boolean",
+                      description = "Whether or not the Controller is connected."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isDown",
               summary = "Get the state of a button on the Controller.",
               description = "Returns the state of a button on the Controller.",
@@ -10261,28 +10583,6 @@ return {
                       name = "down",
                       type = "boolean",
                       description = "The current state of the button."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "isPresent",
-              summary = "Determine if the Controller is still connected.",
-              description = "Determine if the Controller is still connected.",
-              key = "Controller:isPresent",
-              module = "lovr.headset",
-              related = {
-                "lovr.headset.isPresent"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "isPresent",
-                      type = "boolean",
-                      description = "Whether or not the Controller is connected."
                     }
                   }
                 }

@@ -7,33 +7,18 @@ return {
       type = 'string',
       description = 'The filename of the image to load.'
     },
-    right = {
-      type = 'string',
-      description = 'The filename of the image for the positive x direction.'
+    blob = {
+      type = 'Blob',
+      description = 'The Blob containing encoded image data used to create the Texture.'
     },
-    left = {
-      type = 'string',
-      description = 'The filename of the image for the negative x direction.'
-    },
-    top = {
-      type = 'string',
-      description = 'The filename of the image for the positive y direction.'
-    },
-    bottom = {
-      type = 'string',
-      description = 'The filename of the image for the negative y direction.'
-    },
-    back = {
-      type = 'string',
-      description = 'The filename of the image for the positive z direction.'
-    },
-    front = {
-      type = 'string',
-      description = 'The filename of the image for the negative z direction.'
+    textureData = {
+      type = 'TextureData',
+      description = 'The TextureData to create the Texture from.'
     },
     images = {
       type = 'table',
-      description = 'The table of image filenames.  Either 1 or 6 can be provided, as above.'
+      description = [[
+      ]]
     },
     flags = {
       type = 'table',
@@ -45,6 +30,22 @@ return {
           type = 'boolean',
           default = 'false',
           description = 'Whether the texture is in linear color space instead of sRGB.'
+        },
+        {
+          name = 'mipmaps',
+          type = 'boolean',
+          default = 'true',
+          description = 'Whether mipmaps will be generated for the texture.'
+        },
+        {
+          name = 'type',
+          type = 'TextureType',
+          default = 'nil',
+          description = [[
+            The type of Texture to load the images into.  If `nil`, the type will be `2d` for a
+            single image, `array` for a table of images with numeric keys, or `cube` for a table
+            of images with string keys.
+          ]]
         }
       }
     }
@@ -63,17 +64,23 @@ return {
     },
     {
       description = [[
-        Creates a new cubemap texture from 6 images.  It can be used as a skybox using
-        `lovr.graphics.skybox`.
+        Create a Texture from a table of filenames, Blobs, or TextureData.  For cube textures, the
+        individual faces can be specified using the string keys "right", "left", "top", "bottom",
+        "back", "front".
       ]],
-      arguments = { 'right', 'left', 'top', 'bottom', 'back', 'front', 'flags' },
+      arguments = { 'images', 'flags' },
       returns = { 'texture' }
     },
     {
-      description = 'Create a new texture from a table of images.',
-      arguments = { 'images', 'flags' },
+      description = 'Create a texture from a single Blob.',
+      arguments = { 'blob', 'flags' },
       returns = { 'texture' }
-    }
+    },
+    {
+      description = 'Create a texture from a single TextureData.',
+      arguments = { 'textureData', 'flags' },
+      returns = { 'texture' }
+    },
   },
   notes = [[
     The "linear" flag should be set to true for textures that don't contain color information, such

@@ -10,6 +10,8 @@ return {
     - You are working with data that isn't stored as a file, such as programmatically generated data
       or a string from a network request.
     - You want to load data from a file once and then use it to create many different objects.
+
+    A Blob's size cannot be changed once it is created.
   ]],
-  constructor = 'lovr.filesystem.newBlob'
+  constructors = { 'lovr.data.newBlob', 'lovr.filesystem.newBlob' }
 }
