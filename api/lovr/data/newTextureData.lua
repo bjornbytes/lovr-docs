@@ -1,5 +1,5 @@
 return {
-  summary = 'Create a new TextureData',
+  summary = 'Create a new TextureData.',
   description = 'Creates a new TextureData with a given width and height or from an image file.',
   arguments = {
     width = {

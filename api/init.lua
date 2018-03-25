@@ -2070,7 +2070,7 @@ return {
         },
         {
           name = "newTextureData",
-          summary = "Create a new TextureData",
+          summary = "Create a new TextureData.",
           description = "Creates a new TextureData with a given width and height or from an image file.",
           key = "lovr.data.newTextureData",
           module = "lovr.data",
@@ -2126,6 +2126,38 @@ return {
                   name = "textureData",
                   type = "TextureData",
                   description = "The new TextureData."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newVertexData",
+          summary = "Create a new VertexData.",
+          description = "Creates a new VertexData with a given capacity and format.",
+          key = "lovr.data.newVertexData",
+          module = "lovr.data",
+          notes = "The format table specifies the data held in each vertex.  Each entry in the table indicates the name of the attribute, the data type, and the number of components in the attribute.  The default format table contains attributes for vertex positions, normals and texture coordinates:\n\n   {\n     { 'lovrPosition', 'float', 3 },\n     { 'lovrNormal', 'float', 3 },\n     { 'lovrTexCoord', 'float', 2 }\n   }",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "count",
+                  type = "number",
+                  description = "The maximum number of vertices the VertexData can hold."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "The format table containing the vertex layout for the VertexData.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "vertexData",
+                  type = "VertexData",
+                  description = "The new VertexData."
                 }
               }
             }
@@ -3574,6 +3606,206 @@ return {
           constructors = {
             "lovr.data.newTextureData",
             "Canvas:newTextureData"
+          }
+        },
+        {
+          name = "VertexData",
+          summary = "Stores vertices.",
+          description = "VertexData stores a list of vertices, each with a set of attributes.  It can be used to create or modify `Mesh` objects.",
+          key = "VertexData",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "getCount",
+              summary = "Get the number vertices the VertexData can hold.",
+              description = "Returns the vertex capacity of the VertexData.",
+              key = "VertexData:getCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices the VertexData can hold."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFormat",
+              summary = "Get the format table of the VertexData.",
+              description = "Returns the format of the VertexData.  The format table specifies the data held in each vertex. Each entry in the table indicates the name of the attribute, the data type, and the number of components in the attribute.",
+              key = "VertexData:getFormat",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "table",
+                      description = "The format table."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertex",
+              summary = "Get a single vertex from the VertexData.",
+              description = "Gets the data for a single vertex in the VertexData.  The set of data returned depends on the vertex format.",
+              key = "VertexData:getVertex",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the vertex to retrieve, starting at 1 for the first vertex."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "numbers",
+                      description = "All attributes of the vertex."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexAttribute",
+              summary = "Get an attribute of a single vertex in the VertexData.",
+              description = "Get the components of a specific attribute of a single vertex in the VertexData.",
+              key = "VertexData:getVertexAttribute",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the vertex to retrieve the attribute of."
+                    },
+                    {
+                      name = "attribute",
+                      type = "number",
+                      description = "The index of the attribute to retrieve the components of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The components of the vertex attribute."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setVertex",
+              summary = "Update a single vertex in the VertexData.",
+              description = "Update a single vertex in the VertexData.",
+              key = "VertexData:setVertex",
+              module = "lovr.data",
+              notes = "Any unspecified components will be set to 0 for float and int attributes, or 255 for byte attributes.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the vertex to set."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The attributes of the vertex."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the vertex to set."
+                    },
+                    {
+                      name = "vertexData",
+                      type = "table",
+                      description = "A table containing the attributes of the vertex."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setVertexAttribute",
+              summary = "Update a specific attribute of a single vertex in the VertexData.",
+              description = "Set the components of a specific attribute of a vertex in the VertexData.",
+              key = "VertexData:setVertexAttribute",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the vertex to update."
+                    },
+                    {
+                      name = "attribute",
+                      type = "number",
+                      description = "The index of the attribute to update."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Thew new components for the attribute."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setVertices",
+              summary = "Update multiple vertices in the VertexData.",
+              description = "Update multiple vertices in the VertexData.",
+              key = "VertexData:setVertices",
+              module = "lovr.data",
+              notes = "The start index plus the number of vertices in the table should not exceed the maximum size of the VertexData.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "The new set of vertices."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the vertex to start replacing at.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.data.newVertexData"
           }
         }
       }
