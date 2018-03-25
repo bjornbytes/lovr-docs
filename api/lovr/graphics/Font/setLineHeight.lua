@@ -11,5 +11,8 @@ return {
       description = 'The new line height.'
     }
   },
-  returns = {}
+  returns = {},
+  related = {
+    'Rasterizer:getLineHeight'
+  }
 }

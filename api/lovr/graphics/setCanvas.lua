@@ -10,7 +10,7 @@ return {
       name = '...',
       type = 'Canvas',
       description = [[
-        The new set of active Canvas objects, or `nil` to just render to the screen/headset.
+        The new set of active Canvas objects, or nil to just render to the screen/headset.
       ]]
     }
   },

@@ -11,5 +11,8 @@ return {
       type = 'number',
       description = 'The height of a rendered line of text.'
     }
+  },
+  related = {
+    'Rasterizer:getHeight'
   }
 }

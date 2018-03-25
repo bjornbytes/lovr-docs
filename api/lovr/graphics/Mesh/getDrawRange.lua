@@ -10,14 +10,14 @@ return {
       name = 'start',
       type = 'number',
       description = [[
-        The index of the first vertex that will be drawn, or `nil` if no draw range is set.
+        The index of the first vertex that will be drawn, or nil if no draw range is set.
       ]]
     },
     {
       name = 'count',
       type = 'number',
       description = [[
-        The number of vertices that will be drawn, or `nil` if no draw range is set.
+        The number of vertices that will be drawn, or nil if no draw range is set.
       ]]
     }
   }

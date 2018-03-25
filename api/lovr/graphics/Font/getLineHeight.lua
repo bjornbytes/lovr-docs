@@ -8,5 +8,8 @@ return {
       type = 'number',
       description = 'The line height.'
     }
+  },
+  related = {
+    'Rasterizer:getLineHeight'
   }
 }

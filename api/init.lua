@@ -1852,6 +1852,59 @@ return {
       key = "lovr.data",
       functions = {
         {
+          name = "newAudioStream",
+          summary = "Create a new AudioStream.",
+          description = "Creates a new AudioStream from ogg data.",
+          key = "lovr.data.newAudioStream",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the audio file to load."
+                },
+                {
+                  name = "bufferSize",
+                  type = "number",
+                  description = "The size of the stream's audio buffer.",
+                  default = "4096"
+                }
+              },
+              returns = {
+                {
+                  name = "audioStream",
+                  type = "AudioStream",
+                  description = "The new AudioStream."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing audio data to decode."
+                },
+                {
+                  name = "bufferSize",
+                  type = "number",
+                  description = "The size of the stream's audio buffer.",
+                  default = "4096"
+                }
+              },
+              returns = {
+                {
+                  name = "audioStream",
+                  type = "AudioStream",
+                  description = "The new AudioStream."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newBlob",
           summary = "Create a new Blob.",
           description = "Creates a new Blob.  A Blob is a piece of binary data.",
@@ -1926,10 +1979,268 @@ return {
               }
             }
           }
+        },
+        {
+          name = "newModelData",
+          summary = "Create a new ModelData.",
+          description = "Creates a new ModelData from a 3D model file.",
+          key = "lovr.data.newModelData",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The new ModelData."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing model to decode."
+                }
+              },
+              returns = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The new ModelData."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newRasterizer",
+          summary = "Create a new Rasterizer.",
+          description = "Creates a new Rasterizer from a TTF file.",
+          key = "lovr.data.newRasterizer",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the font file to load."
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the fonts at, in pixels.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing font data."
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the fonts at, in pixels.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newTextureData",
+          summary = "Create a new TextureData",
+          description = "Creates a new TextureData with a given width and height or from an image file.",
+          key = "lovr.data.newTextureData",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the image to load."
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            },
+            {
+              description = "Create an empty TextureData, initializing all color components to 0.",
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the texture data."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the texture data."
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "string",
+                  description = "The Blob containing image data to decode."
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            }
+          }
         }
       },
       enums = {},
       objects = {
+        {
+          name = "AudioStream",
+          summary = "An object that gradually decodes audio data.",
+          description = "An AudioStream is an object that reads and decodes compressed sound data.  All Source objects are powered by AudioStreams.\n\nUsually you can just use Sources without having to deal with AudioStreams, but sometimes you may need low-level access to the audio stream.",
+          key = "AudioStream",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "getBitDepth",
+              summary = "Get the bit depth of the AudioStream.",
+              description = "Returns the number of bits per sample in the stream's sound data.  This is a rough indicator of the \"resolution\" of the sound, and is usually 16.",
+              key = "AudioStream:getBitDepth",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "bits",
+                      type = "number",
+                      description = "The number of bits per sample."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getChannelCount",
+              summary = "Get the number of channels in the AudioStream.",
+              description = "Returns the number of channels present in the stream's sound data.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
+              key = "AudioStream:getChannelCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "number",
+                      description = "The number of channels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDuration",
+              summary = "Get the duration of the AudioStream.",
+              description = "Returns the duration of the sound data in seconds.",
+              key = "AudioStream:getDuration",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "duration",
+                      type = "number",
+                      description = "The duration of the sound."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSampleRate",
+              summary = "Get the sample rate of the AudioStream.",
+              description = "Returns the number of samples per second in the stream's sound data.  This is usually a high number like 44100.",
+              key = "AudioStream:getSampleRate",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The number of samples per second in the AudioStream."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "seek",
+              summary = "Seek the stream to a new position.",
+              description = "Seeks the AudioStream to the specified position.  This will cause any Sources created from the stream to also seek their playback position.",
+              key = "AudioStream:seek",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The time to seek to, in seconds."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.data.newAudioStream"
+          }
+        },
         {
           name = "Blob",
           summary = "A chunk of binary data.",
@@ -2023,6 +2334,1246 @@ return {
           constructors = {
             "lovr.data.newBlob",
             "lovr.filesystem.newBlob"
+          }
+        },
+        {
+          name = "ModelData",
+          summary = "An object that loads and stores data for 3D models.",
+          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the `VertexData` it contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are `obj`, `fbx`, `gltf`, and collada.  glTF files do not currently load animations.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
+          key = "ModelData",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "getAnimationCount",
+              summary = "Get the number of animations in the ModelData.",
+              description = "Returns the number of animations in the ModelData.",
+              key = "ModelData:getAnimationCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of animations in the ModelData."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDiffuseColor",
+              summary = "Get the diffuse color of a material in the ModelData.",
+              description = "Returns the diffuse color of a material in the ModelData.",
+              key = "ModelData:getDiffuseColor",
+              module = "lovr.data",
+              related = {
+                "ModelData:getDiffuseTexture",
+                "ModelData:getEmissiveColor",
+                "Material:getColor",
+                "MaterialColor"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red channel of the diffuse color, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green channel of the diffuse color, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue channel of the diffuse color, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha channel of the diffuse color, from 0.0 to 1.0."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDiffuseTexture",
+              summary = "Get the diffuse texture of a material in the ModelData.",
+              description = "Returns the diffuse texture of a material in the ModelData.",
+              key = "ModelData:getDiffuseTexture",
+              module = "lovr.data",
+              related = {
+                "ModelData:getDiffuseColor",
+                "Material:getTexture",
+                "MaterialTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "TextureData",
+                      description = "The diffuse texture data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getEmissiveColor",
+              summary = "Get the emissive color of a material in the ModelData.",
+              description = "Returns the emissive color of a material in the ModelData.",
+              key = "ModelData:getEmissiveColor",
+              module = "lovr.data",
+              related = {
+                "ModelData:getEmissiveTexture",
+                "ModelData:getDiffuseColor",
+                "Material:getColor",
+                "MaterialColor"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red channel of the emissive color, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green channel of the emissive color, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue channel of the emissive color, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha channel of the emissive color, from 0.0 to 1.0."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getEmissiveTexture",
+              summary = "Get the emissive texture of a material in the ModelData.",
+              description = "Returns the emissive texture of a material in the ModelData.",
+              key = "ModelData:getEmissiveTexture",
+              module = "lovr.data",
+              related = {
+                "ModelData:getEmissiveColor",
+                "Material:getTexture",
+                "MaterialTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "TextureData",
+                      description = "The emissive texture data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getGlobalNodeTransform",
+              summary = "Get the global transform of a node.",
+              description = "Returns the transform of a node in the ModelData relative to the root.",
+              key = "ModelData:getGlobalNodeTransform",
+              module = "lovr.data",
+              related = {
+                "ModelData:getLocalNodeTransform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node (1-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the node."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the node."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the node."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale of the node."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale of the node."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node (1-indexed)."
+                    },
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The Transform object to fill with the node's transform."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The supplied Transform."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if an invalid node index is supplied."
+            },
+            {
+              name = "getLocalNodeTransform",
+              summary = "Get the local transform of a node.",
+              description = "Returns the transform of a node in the ModelData relative to its parent.",
+              key = "ModelData:getLocalNodeTransform",
+              module = "lovr.data",
+              related = {
+                "ModelData:getGlobalNodeTransform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node (1-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the node."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the node."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the node."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale of the node."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale of the node."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node (1-indexed)."
+                    },
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The Transform object to fill with the node's transform."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The supplied Transform."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if an invalid node index is supplied."
+            },
+            {
+              name = "getMaterialCount",
+              summary = "Get the number of materials in the ModelData.",
+              description = "Returns the number of materials in the ModelData.",
+              key = "ModelData:getMaterialCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of materials in the ModelData."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMetalness",
+              summary = "Get the metalness factor of a material in the ModelData.",
+              description = "Returns the metalness factor of a material in the ModelData.",
+              key = "ModelData:getMetalness",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMetalnessTexture",
+                "ModelData:getRoughness",
+                "Material:getScalar",
+                "MaterialScalar"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "metalness",
+                      type = "number",
+                      description = "The metalness factor for the material, from 0.0 to 1.0."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMetalnessTexture",
+              summary = "Get the metalness texture of a material in the ModelData.",
+              description = "Returns the metalness texture of a material in the ModelData.",
+              key = "ModelData:getMetalnessTexture",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMetalness",
+                "ModelData:getRoughnessTexture",
+                "Material:getTexture",
+                "MaterialTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "TextureData",
+                      description = "The metalness texture data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeChildren",
+              summary = "Get the children of a node.",
+              description = "Returns the children of a node in the ModelData.",
+              key = "ModelData:getNodeChildren",
+              module = "lovr.data",
+              notes = "An error will be thrown if an invalid node index is supplied.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the children of (1-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "children",
+                      type = "table",
+                      description = "A table of node indices representing the children of the node."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the children of (1-indexed)."
+                    },
+                    {
+                      name = "table",
+                      type = "table",
+                      description = "A table to fill with the children."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "table",
+                      type = "table",
+                      description = "The supplied table."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeComponent",
+              summary = "Get a subcomponent of a node.",
+              description = "Returns a subcomponent of a node of the ModelData.\n\nEach node is composed of several pieces of geometry.  These are called the components of a node. A component is a range of vertices and a material.  To render a node, the appropriate material is applied and the component's range of vertices is rendered with that material.",
+              key = "ModelData:getNodeComponent",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeComponentCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the number of components of (1-indexed)."
+                    },
+                    {
+                      name = "subcomponent",
+                      type = "number",
+                      description = "The index of the subcomponent to retrieve."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the first vertex in the subcomponent."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices in the subcomponent."
+                    },
+                    {
+                      name = "material",
+                      type = "number",
+                      description = "The index of the subcomponent's material."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if an invalid node index or subcomponent index is supplied."
+            },
+            {
+              name = "getNodeComponentCount",
+              summary = "Get the number of subcomponents that comprise a node.",
+              description = "Returns the number of subcomponents of a node in the ModelData.\n\nEach node is composed of several pieces of geometry.  These are called the components of a node. A component is a range of vertices and a material.  To render a node, the appropriate material is applied and the component's range of vertices is rendered with that material.",
+              key = "ModelData:getNodeComponentCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeComponent"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the number of components of (1-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of components of the node."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if an invalid node index is supplied."
+            },
+            {
+              name = "getNodeCount",
+              summary = "Get the number of nodes in the ModelData.",
+              description = "Returns the number of nodes in the ModelData.",
+              key = "ModelData:getNodeCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "nodes",
+                      type = "number",
+                      description = "The number of nodes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeName",
+              summary = "Get the name of a node.",
+              description = "Returns the name of a node in the ModelData.",
+              key = "ModelData:getNodeName",
+              module = "lovr.data",
+              notes = "An error will be thrown if an invalid node index is supplied.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the name of (1-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeParent",
+              summary = "Get the parent of a node.",
+              description = "Returns the parent of a node in the ModelData.",
+              key = "ModelData:getNodeParent",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeChildren"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the parent of (1-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "parent",
+                      type = "number",
+                      description = "The index of the node's parent, or nil if the node is the root node."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if an invalid node index is supplied."
+            },
+            {
+              name = "getNormalTexture",
+              summary = "Get the normal texture of a material in the ModelData.",
+              description = "Returns the normal texture of a material in the ModelData.",
+              key = "ModelData:getNormalTexture",
+              module = "lovr.data",
+              related = {
+                "Material:getTexture",
+                "MaterialTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "TextureData",
+                      description = "The normal texture data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getOcclusionTexture",
+              summary = "Get the occlusion texture of a material in the ModelData.",
+              description = "Returns the occlusion texture of a material in the ModelData.",
+              key = "ModelData:getOcclusionTexture",
+              module = "lovr.data",
+              related = {
+                "Material:getTexture",
+                "MaterialTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "TextureData",
+                      description = "The occlusion texture data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRoughness",
+              summary = "Get the roughness factor of a material in the ModelData.",
+              description = "Returns the roughness factor of a material in the ModelData.",
+              key = "ModelData:getRoughness",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMetalness",
+                "ModelData:getRoughnessTexture",
+                "Material:getScalar",
+                "MaterialScalar"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "roughness",
+                      type = "number",
+                      description = "The roughness factor for the material, from 0.0 to 1.0."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRoughnessTexture",
+              summary = "Get the roughness texture of a material in the ModelData.",
+              description = "Returns the roughness texture of a material in the ModelData.",
+              key = "ModelData:getRoughnessTexture",
+              module = "lovr.data",
+              related = {
+                "ModelData:getRoughness",
+                "ModelData:getMetalnessTexture",
+                "Material:getTexture",
+                "MaterialTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "TextureData",
+                      description = "The roughness texture data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTriangle",
+              summary = "Get a triangle in the ModelData.",
+              description = "Returns a single triangle in the ModelData.",
+              key = "ModelData:getTriangle",
+              module = "lovr.data",
+              related = {
+                "ModelData:getTriangleCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the triangle to get."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "i",
+                      type = "number",
+                      description = "The index of the first vertex in the triangle."
+                    },
+                    {
+                      name = "j",
+                      type = "number",
+                      description = "The index of the second vertex in the triangle."
+                    },
+                    {
+                      name = "k",
+                      type = "number",
+                      description = "The index of the third vertex in the triangle."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTriangleCount",
+              summary = "Get the number of triangles in the ModelData.",
+              description = "Returns the number of triangles in the ModelData.",
+              key = "ModelData:getTriangleCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getTriangle"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "triangles",
+                      type = "number",
+                      description = "The number of triangles."
+                    }
+                  }
+                }
+              },
+              notes = "This is the number of unique triangles in the ModelData.  A larger or smaller number of triangles may be rendered when the model is drawn because nodes and components of a model can be reused."
+            },
+            {
+              name = "getVertexData",
+              summary = "Get the VertexData contained in the ModelData.",
+              description = "Returns the VertexData contained in the ModelData.",
+              key = "ModelData:getVertexData",
+              module = "lovr.data",
+              related = {
+                "VertexData",
+                "ModelData:getTriangle",
+                "ModelData:getTriangles",
+                "ModelData:getTriangleCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "vertexData",
+                      type = "VertexData",
+                      description = "The VertexData."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.data.newModelData"
+          }
+        },
+        {
+          name = "Rasterizer",
+          summary = "An object that rasterizes glyphs from font files.",
+          description = "A Rasterizer is an object that parses a TTF file, decoding and rendering glyphs from it.\n\nUsually you can just use `Font` objects.",
+          key = "Rasterizer",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "getAdvance",
+              summary = "Get the advance of the font.",
+              description = "Returns the advance metric of the font, in pixels.  The advance is how many pixels the font advances horizontally after each glyph is rendered.  This does not include kerning.",
+              key = "Rasterizer:getAdvance",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "advance",
+                      type = "number",
+                      description = "The advance of the font, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAscent",
+              summary = "Get the ascent of the font.",
+              description = "Returns the ascent metric of the font, in pixels.  The ascent represents how far any glyph of the font ascends above the baseline.",
+              key = "Rasterizer:getAscent",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getDescent",
+                "Font:getAscent"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "ascent",
+                      type = "number",
+                      description = "The ascent of the font, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDescent",
+              summary = "Get the descent of the font.",
+              description = "Returns the descent metric of the font, in pixels.  The descent represents how far any glyph of the font descends below the baseline.",
+              key = "Rasterizer:getDescent",
+              module = "lovr.data",
+              related = {
+                "Rasterzer:getAscent",
+                "Font:getDescent"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "descent",
+                      type = "number",
+                      description = "The descent of the font, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getGlyphCount",
+              summary = "Get the number of glyphs stored in the font file.",
+              description = "Returns the number of glyphs stored in the font file.",
+              key = "Rasterizer:getGlyphCount",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:hasGlyphs"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of glyphs stored in the font file."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getHeight",
+              summary = "Get the height of the font.",
+              description = "Returns the height metric of the font, in pixels.",
+              key = "Rasterizer:getHeight",
+              module = "lovr.data",
+              related = {
+                "Font:getHeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the font, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getLineHeight",
+              summary = "Get the line height of the font.",
+              description = "Returns the line height metric of the font, in pixels.  This is how far apart lines are.",
+              key = "Rasterizer:getLineHeight",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getHeight",
+                "Font:getLineHeight",
+                "Font:setLineHeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The line height of the font, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "hasGlyphs",
+              summary = "Get whether the Rasterizer can rasterize a set of glyphs.",
+              description = "Check if the Rasterizer can rasterize a set of glyphs.",
+              key = "Rasterizer:hasGlyphs",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getGlyphCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "...",
+                      type = "*",
+                      description = "Strings (sets of characters) or numbers (character codes) to check for."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "hasGlyphs",
+                      type = "boolean",
+                      description = "true if the Rasterizer can rasterize all of the supplied characters, false otherwise."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.data.newRasterizer"
+          }
+        },
+        {
+          name = "TextureData",
+          summary = "An object that stores pixel data for Textures.",
+          description = "A TextureData stores raw pixel info for `Texture`s.  It has a width and a height.  Currently, all TextureData is in the RGBA format.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels or load Textures in a background thread.",
+          key = "TextureData",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "encode",
+              summary = "Encode the TextureData as png and write it to a file.",
+              description = "Encodes the TextureData to png and writes it to the specified file.",
+              key = "TextureData:encode",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "filename",
+                      type = "string",
+                      description = "The file to write the png data to."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "success",
+                      type = "boolean",
+                      description = "Whether or not the file was successfully written to."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDimensions",
+              summary = "Get the dimensions of the TextureData.",
+              description = "Returns the dimensions of the TextureData, in pixels.",
+              key = "TextureData:getDimensions",
+              module = "lovr.data",
+              related = {
+                "TextureData:getWidth",
+                "TextureData:getHeight",
+                "Texture:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the TextureData, in pixels."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the TextureData, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getHeight",
+              summary = "Get the height of the TextureData.",
+              description = "Returns the height of the TextureData, in pixels.",
+              key = "TextureData:getHeight",
+              module = "lovr.data",
+              related = {
+                "TextureData:getWidth",
+                "TextureData:getDimensions",
+                "Texture:getHeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the TextureData, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPixel",
+              summary = "Get the value of a pixel of the TextureData.",
+              description = "Returns the value of a pixel of the TextureData.",
+              key = "TextureData:getPixel",
+              module = "lovr.data",
+              related = {
+                "TextureData:setPixel",
+                "Texture:replacePixels"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the pixel to get (0-indexed)."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the pixel to get (0-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the pixel, from 0.0 to 1.0."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWidth",
+              summary = "Get the width of the TextureData.",
+              description = "Returns the width of the TextureData, in pixels.",
+              key = "TextureData:getWidth",
+              module = "lovr.data",
+              related = {
+                "TextureData:getHeight",
+                "TextureData:getDimensions",
+                "Texture:getWidth"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the TextureData, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setPixel",
+              summary = "Set the value of a pixel of the TextureData.",
+              description = "Sets the value of a pixel of the TextureData.",
+              key = "TextureData:setPixel",
+              module = "lovr.data",
+              related = {
+                "TextureData:getPixel",
+                "Texture:replacePixels"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the pixel to get (0-indexed)."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the pixel to get (0-indexed)."
+                    },
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the pixel, from 0.0 to 1.0.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.data.newTextureData",
+            "Canvas:newTextureData"
           }
         }
       }
@@ -4580,7 +6131,7 @@ return {
                 {
                   name = "...",
                   type = "Canvas",
-                  description = "The set of active Canvas objects, or `nil` if none are set."
+                  description = "The set of active Canvas objects, or nil if none are set."
                 }
               }
             }
@@ -4820,7 +6371,7 @@ return {
                 {
                   name = "shader",
                   type = "Shader",
-                  description = "The active shader object, or `nil` if none is active."
+                  description = "The active shader object, or nil if none is active."
                 }
               }
             }
@@ -5214,7 +6765,7 @@ return {
           description = "Creates a new Font.  It can be used to render text with `lovr.graphics.print`.\n\nCurrently, the only supported font format is TTF.",
           key = "lovr.graphics.newFont",
           module = "lovr.graphics",
-          notes = "Larger font sizes will lead to sharper text at the cost of performance.",
+          notes = "Larger font sizes will lead to more detailed curves at the cost of performance.",
           variants = {
             {
               arguments = {
@@ -5615,12 +7166,12 @@ return {
                 {
                   name = "vertex",
                   type = "string",
-                  description = "The code or filename of the vertex shader.  If `nil`, the default vertex shader is used."
+                  description = "The code or filename of the vertex shader.  If nil, the default vertex shader is used."
                 },
                 {
                   name = "fragment",
                   type = "string",
-                  description = "The code or filename of the fragment shader.  If `nil`, the default fragment shader is used."
+                  description = "The code or filename of the fragment shader.  If nil, the default fragment shader is used."
                 }
               },
               returns = {
@@ -5669,7 +7220,7 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      description = "The type of Texture to load the images into.  If nil, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
                       default = "nil"
                     }
                   },
@@ -5712,7 +7263,7 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      description = "The type of Texture to load the images into.  If nil, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
                       default = "nil"
                     }
                   },
@@ -5755,7 +7306,7 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      description = "The type of Texture to load the images into.  If nil, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
                       default = "nil"
                     }
                   },
@@ -5798,7 +7349,7 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "The type of Texture to load the images into.  If `nil`, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      description = "The type of Texture to load the images into.  If nil, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
                       default = "nil"
                     }
                   },
@@ -6112,7 +7663,7 @@ return {
                 {
                   name = "wrap",
                   type = "number",
-                  description = "The maximum width of each line, in meters (affected by `scale`).  Set to 0 or `nil` for no wrapping.",
+                  description = "The maximum width of each line, in meters (affected by `scale`).  Set to 0 or nil for no wrapping.",
                   default = "0"
                 },
                 {
@@ -6332,7 +7883,7 @@ return {
                 {
                   name = "...",
                   type = "Canvas",
-                  description = "The new set of active Canvas objects, or `nil` to just render to the screen/headset."
+                  description = "The new set of active Canvas objects, or nil to just render to the screen/headset."
                 }
               },
               returns = {}
@@ -6460,7 +8011,7 @@ return {
                 {
                   name = "compareMode",
                   type = "CompareMode",
-                  description = "The new depth test.  Use `nil` to disable the depth test.",
+                  description = "The new depth test.  Use nil to disable the depth test.",
                   default = "nil"
                 },
                 {
@@ -7786,6 +9337,29 @@ return {
               }
             },
             {
+              name = "newTextureData",
+              summary = "Create a new TextureData from the Canvas contents",
+              description = "Returns a new TextureData containing the current contents of the Canvas.",
+              key = "Canvas:newTextureData",
+              module = "lovr.graphics",
+              related = {
+                "lovr.data.newTextureData",
+                "TextureData"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "textureData",
+                      type = "TextureData",
+                      description = "The new TextureData."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "renderTo",
               summary = "Render to the Canvas using a function.",
               description = "Renders to the Canvas using a function.  All graphics functions inside the callback will affect the Canvas contents instead of directly rendering to the headset.  This can be used in `lovr.update`.",
@@ -7825,6 +9399,10 @@ return {
               description = "Returns the maximum distance that any glyph will extend above the Font's baseline.  Units are generally in meters, see `Font:getPixelDensity`.",
               key = "Font:getAscent",
               module = "lovr.graphics",
+              related = {
+                "Font:getDescent",
+                "Rasterizer:getAscent"
+              },
               variants = {
                 {
                   arguments = {},
@@ -7882,6 +9460,9 @@ return {
               description = "Returns the height of a line of text, in meters.  Units are in meters, see `Font:setPixelDensity`.",
               key = "Font:getHeight",
               module = "lovr.graphics",
+              related = {
+                "Rasterizer:getHeight"
+              },
               variants = {
                 {
                   arguments = {},
@@ -7901,6 +9482,9 @@ return {
               description = "Returns the current line height of the Font.  The default is 1.0.",
               key = "Font:getLineHeight",
               module = "lovr.graphics",
+              related = {
+                "Rasterizer:getLineHeight"
+              },
               variants = {
                 {
                   arguments = {},
@@ -7970,6 +9554,9 @@ return {
               description = "Sets the line height of the Font, which controls how far lines apart lines are vertically separated.  This value is a ratio and the default is 1.0.",
               key = "Font:setLineHeight",
               module = "lovr.graphics",
+              related = {
+                "Rasterizer:getLineHeight"
+              },
               variants = {
                 {
                   arguments = {
@@ -8458,12 +10045,12 @@ return {
                     {
                       name = "start",
                       type = "number",
-                      description = "The index of the first vertex that will be drawn, or `nil` if no draw range is set."
+                      description = "The index of the first vertex that will be drawn, or nil if no draw range is set."
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of vertices that will be drawn, or `nil` if no draw range is set."
+                      description = "The number of vertices that will be drawn, or nil if no draw range is set."
                     }
                   }
                 }
@@ -8596,7 +10183,7 @@ return {
                     {
                       name = "map",
                       type = "table",
-                      description = "The list of indices in the vertex map, or `nil` if no vertex map is set."
+                      description = "The list of indices in the vertex map, or nil if no vertex map is set."
                     }
                   }
                 }

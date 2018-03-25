@@ -9,7 +9,7 @@ return {
       name = 'compareMode',
       type = 'CompareMode',
       default = 'nil',
-      description = 'The new depth test.  Use `nil` to disable the depth test.'
+      description = 'The new depth test.  Use nil to disable the depth test.'
     },
     {
       name = 'write',

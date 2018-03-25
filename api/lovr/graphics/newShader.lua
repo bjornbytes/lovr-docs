@@ -7,16 +7,14 @@ return {
       name = 'vertex',
       type = 'string',
       description = [[
-        The code or filename of the vertex shader.  If `nil`, the default vertex shader
-        is used.
+        The code or filename of the vertex shader.  If nil, the default vertex shader is used.
       ]]
     },
     {
       name = 'fragment',
       type = 'string',
       description = [[
-        The code or filename of the fragment shader.  If `nil`, the default fragment shader
-        is used.
+        The code or filename of the fragment shader.  If nil, the default fragment shader is used.
       ]]
     }
   },

@@ -9,7 +9,7 @@ return {
     {
       name = 'map',
       type = 'table',
-      description = 'The list of indices in the vertex map, or `nil` if no vertex map is set.'
+      description = 'The list of indices in the vertex map, or nil if no vertex map is set.'
     }
   }
 }

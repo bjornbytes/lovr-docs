@@ -42,7 +42,7 @@ return {
           type = 'TextureType',
           default = 'nil',
           description = [[
-            The type of Texture to load the images into.  If `nil`, the type will be `2d` for a
+            The type of Texture to load the images into.  If nil, the type will be `2d` for a
             single image, `array` for a table of images with numeric keys, or `cube` for a table
             of images with string keys.
           ]]

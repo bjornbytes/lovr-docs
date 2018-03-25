@@ -11,5 +11,9 @@ return {
       type = 'number',
       description = 'The ascent of the Font.'
     }
+  },
+  related = {
+    'Font:getDescent',
+    'Rasterizer:getAscent'
   }
 }

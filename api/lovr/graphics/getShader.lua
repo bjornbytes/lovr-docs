@@ -7,7 +7,7 @@ return {
     {
       name = 'shader',
       type = 'Shader',
-      description = 'The active shader object, or `nil` if none is active.'
+      description = 'The active shader object, or nil if none is active.'
     }
   }
 }

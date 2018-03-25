@@ -11,7 +11,7 @@ return {
     {
       name = '...',
       type = 'Canvas',
-      description = 'The set of active Canvas objects, or `nil` if none are set.'
+      description = 'The set of active Canvas objects, or nil if none are set.'
     }
   },
   notes = 'Up to 4 Canvases can be active at a time.',

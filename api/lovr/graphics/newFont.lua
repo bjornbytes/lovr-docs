@@ -42,5 +42,5 @@ return {
       returns = { 'font' }
     }
   },
-  notes = 'Larger font sizes will lead to sharper text at the cost of performance.'
+  notes = 'Larger font sizes will lead to more detailed curves at the cost of performance.'
 }
