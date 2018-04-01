@@ -18477,7 +18477,10 @@ return {
           description = "Creates a new Thread from Lua code.",
           key = "lovr.thread.newThread",
           module = "lovr.thread",
-          notes = "The Thread won't start running immediately.  Use `Thread:start` to start it.",
+          related = {
+            "Thread:start",
+            "lovr.threaderror"
+          },
           variants = {
             {
               arguments = {
@@ -18495,7 +18498,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "The Thread won't start running immediately.  Use `Thread:start` to start it."
         }
       },
       enums = {},
@@ -18653,6 +18657,97 @@ return {
             {
               "lovr.thread.getChannel"
             }
+          }
+        },
+        {
+          name = "Thread",
+          summary = "A separate thread of execution that can run code in parallel with other threads.",
+          description = "A Thread is an object that runs a chunk of Lua code in the background.  Threads are completely isolated from other threads, meaning they have their own Lua context and can't access the variables and functions of other threads.  Communication between threads is limited and is accomplished by using `Channel` objects.",
+          key = "Thread",
+          module = "lovr.thread",
+          methods = {
+            {
+              name = "getError",
+              summary = "Get the Thread's error message.",
+              description = "Returns the message for the error that occurred on the Thread, or nil if no error has occurred.",
+              key = "Thread:getError",
+              module = "lovr.thread",
+              related = {
+                "lovr.threaderror"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "error",
+                      type = "string",
+                      description = "The error message, or nil if no error has occurred on the Thread."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isRunning",
+              summary = "Check if the Thread is running.",
+              description = "Returns whether or not the Thread is currently running.",
+              key = "Thread:isRunning",
+              module = "lovr.thread",
+              related = {
+                "Thread:start"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "running",
+                      type = "boolean",
+                      description = "Whether or not the Thread is running."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "start",
+              summary = "Start the Thread.",
+              description = "Starts the Thread.",
+              key = "Thread:start",
+              module = "lovr.thread",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "wait",
+              summary = "Wait for the Thread to complete.",
+              description = "Waits for the Thread to complete, then returns.",
+              key = "Thread:wait",
+              module = "lovr.thread",
+              related = {
+                "Thread:isRunning"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            {
+              "lovr.thread.newThread"
+            }
+          },
+          related = {
+            "lovr.threaderror",
+            "Channel"
           }
         }
       }

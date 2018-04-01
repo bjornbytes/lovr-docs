@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the Thread\s error message.',
+  summary = 'Get the Thread\'s error message.',
   description = [[
     Returns the message for the error that occurred on the Thread, or nil if no error has occurred.
   ]],
