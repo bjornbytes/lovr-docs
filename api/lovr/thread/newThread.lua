@@ -16,4 +16,8 @@ return {
     }
   },
   notes = 'The Thread won\'t start running immediately.  Use `Thread:start` to start it.',
+  related = {
+    'Thread:start',
+    'lovr.threaderror'
+  }
 }
