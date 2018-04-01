@@ -18654,9 +18654,7 @@ return {
             }
           },
           constructors = {
-            {
-              "lovr.thread.getChannel"
-            }
+            "lovr.thread.getChannel"
           }
         },
         {
@@ -18741,9 +18739,7 @@ return {
             }
           },
           constructors = {
-            {
-              "lovr.thread.newThread"
-            }
+            "lovr.thread.newThread"
           },
           related = {
             "lovr.threaderror",

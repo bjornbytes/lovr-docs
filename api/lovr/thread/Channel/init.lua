@@ -7,5 +7,5 @@ return {
     `Channel:push` and `Channel:pop`.  The following types of data that can be passed through
     Channels: nil, boolean, number, string, and any LÖVR object.
   ]],
-  constructor = { 'lovr.thread.getChannel' }
+  constructor = 'lovr.thread.getChannel'
 }

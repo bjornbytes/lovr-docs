@@ -6,7 +6,7 @@ return {
     variables and functions of other threads.  Communication between threads is limited and is
     accomplished by using `Channel` objects.
   ]],
-  constructor = { 'lovr.thread.newThread' },
+  constructor = 'lovr.thread.newThread',
   related = {
     'lovr.threaderror',
     'Channel'
