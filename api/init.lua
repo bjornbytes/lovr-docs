@@ -18437,6 +18437,227 @@ return {
       }
     },
     {
+      name = "thread",
+      tag = "modules",
+      summary = "Allows you to work with background threads.",
+      description = "The `lovr.thread` module provides functions for creating threads and communicating between them.\n\nThese are operating system level threads, which are different from Lua coroutines.\n\nThreads are useful for performing expensive background computation without affecting the framerate or performance of the main thread.  Some examples of this include asset loading, networking and network requests, and physics simulation.\n\nThreads come with some limitations though.\n\n- Threads are completely isolated from other threads.  They do not have access to the variables\n  or functions of other threads, and communication between threads must be coordinated through\n  `Channel` objects.\n- The graphics module (or any functions that perform rendering) cannot be used in a thread.\n  Note that this includes creating graphics objects like Models and Textures.  There are \"data\"\n  equivalent `ModelData` and `TextureData` objects that can be used in threads though.\n- Crashes or problems can happen if two threads access the same object at the same time, so\n  special care must be taken to coordinate access to objects from multiple threads.",
+      key = "lovr.thread",
+      functions = {
+        {
+          name = "getChannel",
+          summary = "Get a Channel for communicating between threads.",
+          description = "Returns a named Channel for communicating between threads.",
+          key = "lovr.thread.getChannel",
+          module = "lovr.thread",
+          related = {
+            "Channel"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "name",
+                  type = "string",
+                  description = "The name of the Channel to get."
+                }
+              },
+              returns = {
+                {
+                  name = "channel",
+                  type = "Channel",
+                  description = "The Channel with the specified name."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newThread",
+          summary = "Create a new Thread.",
+          description = "Creates a new Thread from Lua code.",
+          key = "lovr.thread.newThread",
+          module = "lovr.thread",
+          notes = "The Thread won't start running immediately.  Use `Thread:start` to start it.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "body",
+                  type = "string",
+                  description = "The code to run in the Thread."
+                }
+              },
+              returns = {
+                {
+                  name = "thread",
+                  type = "Thread",
+                  description = "The new Thread."
+                }
+              }
+            }
+          }
+        }
+      },
+      enums = {},
+      objects = {
+        {
+          name = "Channel",
+          summary = "A message channel for communicating between threads.",
+          description = "A Channel is an object used to communicate between `Thread` objects.  Channels are obtained by name using `lovr.thread.getChannel`.  Different threads can send messages on the same Channel to communicate with each other.  Messages can be sent and received on a Channel using `Channel:push` and `Channel:pop`.  The following types of data that can be passed through Channels: nil, boolean, number, string, and any LÖVR object.",
+          key = "Channel",
+          module = "lovr.thread",
+          methods = {
+            {
+              name = "clear",
+              summary = "Clear all messages from the Channel.",
+              description = "Removes all pending messages from the Channel.",
+              key = "Channel:clear",
+              module = "lovr.thread",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "hasRead",
+              summary = "Get whether a message has been read.",
+              description = "Returns whether or not the message with the given ID has been read.  Every call to `Channel:push` returns a message ID.",
+              key = "Channel:hasRead",
+              module = "lovr.thread",
+              related = {
+                "Channel:push"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "The ID of the message to check."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "read",
+                      type = "boolean",
+                      description = "Whether the message has been read."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "peek",
+              summary = "Look at a message from the Channel without popping it.",
+              description = "Returns a message from the Channel without popping it from the queue.  If the Channel is empty, `nil` is returned.  This can be useful to determine if the Channel is empty.",
+              key = "Channel:peek",
+              module = "lovr.thread",
+              related = {
+                "Channel:pop"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "message",
+                      type = "*",
+                      description = "The message."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "pop",
+              summary = "Pop a message from the Channel.",
+              description = "Pops a message from the Channel.  If the Channel is empty, an optional timeout argument can be used to wait for a message, otherwise `nil` is returned.",
+              key = "Channel:pop",
+              module = "lovr.thread",
+              related = {
+                "Channel:peek",
+                "Channel:push"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "timeout",
+                      type = "number",
+                      description = "How long to wait for a message, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
+                      default = "false"
+                    },
+                    {
+                      name = "wait",
+                      type = "number",
+                      description = "How long to wait for the message to be popped.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
+                      default = "false"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "message",
+                      type = "*",
+                      description = "The received message, or nil if nothing was received."
+                    }
+                  }
+                }
+              },
+              notes = "Threads can get stuck forever waiting on Channel messages, so be careful."
+            },
+            {
+              name = "push",
+              summary = "Push a message onto the Channel.",
+              description = "Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean, number, string, and userdata.  Simple tables can be serialized to JSON using the `json` module.",
+              key = "Channel:push",
+              module = "lovr.thread",
+              related = {
+                "Channel:pop",
+                "Channel:hasRead"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "message",
+                      type = "*",
+                      description = "The message to push."
+                    },
+                    {
+                      name = "wait",
+                      type = "number",
+                      description = "How long to wait for the message to be popped, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
+                      default = "false"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "The ID of the pushed message."
+                    },
+                    {
+                      name = "read",
+                      type = "boolean",
+                      description = "Whether the message was read by another thread before the wait timeout."
+                    }
+                  }
+                }
+              },
+              notes = "Threads can get stuck forever waiting on Channel messages, so be careful."
+            }
+          },
+          constructors = {
+            {
+              "lovr.thread.getChannel"
+            }
+          }
+        }
+      }
+    },
+    {
       name = "timer",
       tag = "modules",
       summary = "Exposes a high resolution timer.",
