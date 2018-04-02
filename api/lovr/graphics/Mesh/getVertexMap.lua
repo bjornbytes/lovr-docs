@@ -4,12 +4,34 @@ return {
     Returns the current vertex map for the Mesh.  The vertex map is a list of indices in the Mesh,
     allowing the reordering or reuse of vertices.
   ]],
-  arguments = {},
+  arguments = {
+    t = {
+      type = 'table',
+      description = 'The table to fill with the vertex map.'
+    },
+    blob = {
+      type = 'Blob',
+      description = 'The Blob to fill with the vertex map data.'
+    }
+  },
   returns = {
-    {
-      name = 'map',
+    map = {
       type = 'table',
       description = 'The list of indices in the vertex map, or nil if no vertex map is set.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 't' }
+    },
+    {
+      arguments = { 't' },
+      returns = {}
+    },
+    {
+      arguments = { 'blob' },
+      returns = {}
     }
   }
 }

@@ -10569,13 +10569,27 @@ return {
               variants = {
                 {
                   arguments = {},
-                  returns = {
+                  returns = {}
+                },
+                {
+                  arguments = {
                     {
-                      name = "map",
+                      name = "t",
                       type = "table",
-                      description = "The list of indices in the vertex map, or nil if no vertex map is set."
+                      description = "The table to fill with the vertex map."
                     }
-                  }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob to fill with the vertex map data."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -11275,6 +11289,25 @@ return {
           module = "lovr.graphics",
           methods = {
             {
+              name = "getDepth",
+              summary = "Get the depth of the Texture.",
+              description = "Returns the depth of the Texture, or the number of images stored in the Texture.",
+              key = "Texture:getDepth",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth of the Texture."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDimensions",
               summary = "Get the dimensions of the Texture.",
               description = "Returns the dimensions of the Texture.",
@@ -11293,6 +11326,11 @@ return {
                       name = "height",
                       type = "number",
                       description = "The height of the Texture, in pixels."
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The number of images stored in the Texture."
                     }
                   }
                 }
