@@ -18,6 +18,7 @@ return {
     - The graphics module (or any functions that perform rendering) cannot be used in a thread.
       Note that this includes creating graphics objects like Models and Textures.  There are "data"
       equivalent `ModelData` and `TextureData` objects that can be used in threads though.
+    - `lovr.event.pump` cannot be called from a thread.
     - Crashes or problems can happen if two threads access the same object at the same time, so
       special care must be taken to coordinate access to objects from multiple threads.
   ]]
