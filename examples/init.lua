@@ -1,6 +1,6 @@
 return {
   'Primitives',
-  'Model',
+  '3D_Model',
   'Panorama',
   'Lighting',
   'Physics',
