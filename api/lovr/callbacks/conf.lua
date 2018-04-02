@@ -28,7 +28,7 @@ return {
               description = 'An ordered list of preferred headset drivers.'
             },
             {
-              name = 'mirrored',
+              name = 'mirror',
               type = 'boolean',
               description = [[
                 Whether the desktop window should display a mirror of what's in the headset.
@@ -50,6 +50,11 @@ return {
               name = 'audio',
               type = 'boolean',
               description = 'Whether the audio module should be enabled.'
+            },
+            {
+              name = 'data',
+              type = 'boolean',
+              description = 'Whether the data module should be enabled.'
             },
             {
               name = 'event',
@@ -80,6 +85,11 @@ return {
               name = 'physics',
               type = 'boolean',
               description = 'Whether the physics module should be enabled.'
+            },
+            {
+              name = 'thread',
+              type = 'boolean',
+              description = 'Whether the thread module should be enabled.'
             },
             {
               name = 'timer',
@@ -164,11 +174,13 @@ return {
 
           -- Enable or disable different modules
           t.modules.audio = true
+          t.modules.data = true
           t.modules.event = true
           t.modules.graphics = true
           t.modules.headset = true
           t.modules.math = true
           t.modules.physics = true
+          t.modules.thread = true
           t.modules.timer = true
 
           -- Configure gamma correction

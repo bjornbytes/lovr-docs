@@ -28,28 +28,47 @@ return {
 
         uniform mat4 lovrModel;
         uniform mat4 lovrView;
-        uniform mat4 lovrTransform;
-        uniform mat4 lovrNormalMatrix;
         uniform mat4 lovrProjection;
+        uniform mat4 lovrTransform; // Model-View matrix
+        uniform mat4 lovrNormalMatrix;
+        uniform mat4 lovrViews[2];  // View matrices for both eyes
+        uniform mat4 lovrTransforms[2]; // Model-View matrices for both eyes
+        uniform mat4 lovrProjections[2]; // Projection matrices for both eyes
+        uniform mat4 lovrNormalMatrices[2]; // Normal matrices for both eyes
         uniform float lovrPointSize;
         uniform mat4 lovrPose[48];
+        uniform int lovrIsStereo;
         in vec3 lovrPosition;
         in vec3 lovrNormal;
         in vec2 lovrTexCoord;
         in vec4 lovrVertexColor;
+        in vec3 lovrTangent;
         in ivec4 lovrBones;
         in vec4 lovrBoneWeights;
         out vec2 texCoord;
         out vec4 vertexColor;
+        flat out int lovrEye;
+
+    Additionally, the `lovrInstanceID` variable should be used to get the current instance ID when
+    using instanced rendering.
 
     Fragment shader header:
 
+        uniform float lovrMetalness;
+        uniform float lovrRoughness;
         uniform vec4 lovrColor;
         uniform vec4 lovrDiffuseColor;
+        uniform vec4 lovrEmissiveColor;
         uniform sampler2D lovrDiffuseTexture;
+        uniform sampler2D lovrEmissiveTexture;
+        uniform sampler2D lovrMetalnessTexture;
+        uniform sampler2D lovrRoughnessTexture;
+        uniform sampler2D lovrOcclusionTexture;
+        uniform sampler2D lovrNormalTexture;
         uniform samplerCube lovrEnvironmentTexture;
         in vec2 texCoord;
         in vec4 vertexColor;
+        flat in int lovrEye;
         in vec4 gl_FragCoord;
         out vec4 lovrFragColor;
   ]],

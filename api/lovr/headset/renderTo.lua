@@ -16,8 +16,8 @@ return {
       name = 'callback',
       type = 'function',
       description = [[
-        The function used to render.  It will be passed a string representing the
-        current eye that is being rendered to, either "left" or "right".
+        The function used to render.  Any functions called will render to the headset instead of to
+        the window.
       ]]
     }
   },

@@ -28,6 +28,10 @@ return {
       type = 'table',
       description = 'A table of vertices.  Each vertex is a table containing the vertex data.'
     },
+    vertexData = {
+      type = 'VertexData',
+      description = 'The VertexData to load into the Mesh.'
+    },
     format = {
       type = 'table',
       description = 'A table describing the attribute format for the vertices.'
@@ -58,6 +62,10 @@ return {
     },
     {
       arguments = { 'format', 'vertices', 'mode', 'usage' },
+      returns = { 'mesh' }
+    },
+    {
+      arguments = { 'vertices', 'mode', 'usage' },
       returns = { 'mesh' }
     }
   },

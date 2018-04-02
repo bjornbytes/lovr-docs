@@ -21,6 +21,8 @@ return {
     can be sent a `Transform` object.
 
     An error is thrown if the uniform does not exist or is not used in the shader.
+
+    `Blob`s can be used to pass arbitrary binary data to Shader variables.
   ]],
   example = {
     description = 'Updating a `vec3` uniform:',

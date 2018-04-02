@@ -6,13 +6,7 @@ return {
     this function will be called twice per frame (once for each eye) and the function will instead
     draw to the headset's display.
   ]],
-  arguments = {
-    {
-      name = 'eye',
-      type = 'HeadsetEye',
-      description = 'The eye currently being rendered to.'
-    }
-  },
+  arguments = {},
   returns = {},
   related = {
     'lovr.headset.renderTo'

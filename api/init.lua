@@ -31,7 +31,7 @@ return {
                       description = "An ordered list of preferred headset drivers."
                     },
                     {
-                      name = "mirrored",
+                      name = "mirror",
                       type = "boolean",
                       description = "                Whether the desktop window should display a mirror of what's in the headset.\n              "
                     },
@@ -51,6 +51,11 @@ return {
                       name = "audio",
                       type = "boolean",
                       description = "Whether the audio module should be enabled."
+                    },
+                    {
+                      name = "data",
+                      type = "boolean",
+                      description = "Whether the data module should be enabled."
                     },
                     {
                       name = "event",
@@ -81,6 +86,11 @@ return {
                       name = "physics",
                       type = "boolean",
                       description = "Whether the physics module should be enabled."
+                    },
+                    {
+                      name = "thread",
+                      type = "boolean",
+                      description = "Whether the thread module should be enabled."
                     },
                     {
                       name = "timer",
@@ -143,7 +153,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.drivers = { 'openvr', 'webvr', 'fake' }\n  t.headset.mirror = true\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.drivers = { 'openvr', 'webvr', 'fake' }\n  t.headset.mirror = true\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
@@ -270,13 +280,7 @@ return {
       },
       variants = {
         {
-          arguments = {
-            {
-              name = "eye",
-              type = "HeadsetEye",
-              description = "The eye currently being rendered to."
-            }
-          },
+          arguments = {},
           returns = {}
         }
       }
@@ -461,7 +465,7 @@ return {
       examples = {
         {
           description = "The default `lovr.step`:",
-          code = "function lovr.step()\n  lovr.event.pump()\n  for name, a, b, c, d in lovr.event.poll() do\n    if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n      return a\n    end\n    lovr.handlers[name](a, b, c, d)\n  end\n\n  local dt = lovr.timer.step()\n  if lovr.audio then\n    lovr.audio.update()\n    if lovr.headset and lovr.headset.isPresent() then\n      lovr.audio.setOrientation(lovr.headset.getOrientation())\n      lovr.audio.setPosition(lovr.headset.getPosition())\n      lovr.audio.setVelocity(lovr.headset.getVelocity())\n    end\n  end\n  if lovr.update then lovr.update(dt) end\n\n  lovr.graphics.clear()\n  lovr.graphics.origin()\n  if lovr.draw then\n    if lovr.headset and lovr.headset.isPresent() then\n      lovr.headset.renderTo(lovr.draw)\n    else\n      lovr.draw()\n    end\n  end\n  lovr.graphics.present()\n\n  lovr.timer.sleep(.001)\nend"
+          code = "function lovr.step()\n  lovr.event.pump()\n  for name, a, b, c, d in lovr.event.poll() do\n    if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n      return a\n    end\n    if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n  end\n\n  local dt = lovr.timer.step()\n  if lovr.headset then\n    lovr.headset.update(dt)\n  end\n  if lovr.audio then\n    lovr.audio.update()\n    if lovr.headset then\n      lovr.audio.setOrientation(lovr.headset.getOrientation())\n      lovr.audio.setPosition(lovr.headset.getPosition())\n      lovr.audio.setVelocity(lovr.headset.getVelocity())\n    end\n  end\n  if lovr.update then lovr.update(dt) end\n  if lovr.graphics then\n    lovr.graphics.clear()\n    lovr.graphics.origin()\n    if lovr.draw then\n      if lovr.headset then\n        lovr.headset.renderTo(lovr.draw)\n      else\n        lovr.draw()\n      end\n    end\n    lovr.graphics.present()\n  end\n  lovr.timer.sleep(.001)\nend"
         }
       },
       related = {
@@ -7283,6 +7287,34 @@ return {
                   description = "The new Mesh."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "vertices",
+                  type = "table",
+                  description = "A table of vertices.  Each vertex is a table containing the vertex data."
+                },
+                {
+                  name = "mode",
+                  type = "MeshDrawMode",
+                  description = "How the Mesh will connect its vertices into triangles.",
+                  default = "'fan'"
+                },
+                {
+                  name = "usage",
+                  type = "MeshUsage",
+                  description = "An optimization hint indicating how often the data in the Mesh will be updated.",
+                  default = "'dynamic'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
             }
           }
         },
@@ -10089,6 +10121,132 @@ return {
           notes = "Each vertex in a Mesh can hold several pieces of data.  For example, you might want a vertex to keep track of its position, color, and a weight.  Each one of these pieces of information is called a vertex **attribute**.  A vertex attribute must have a name, a type, and a size.  Here's what the \"position\" attribute would look like as a Lua table:\n\n    { 'vPosition', 'float', 3 } -- 3 floats for x, y, and z\n\nEvery vertex in a Mesh must have the same set of attributes.  We call this set of attributes the **format** of the Mesh, and it's specified as a simple table of attributes.  For example, we could represent the format described above as:\n\n    {\n      { 'vPosition', 'float', 3 },\n      { 'vColor',    'byte',  4 },\n      { 'vWeight',   'int',   1 }\n    }\n\nWhen creating a Mesh, you can give it any format you want, or use the default.  The default Mesh format looks like this:\n\n    {\n      { 'lovrPosition', 'float', 3 },\n      { 'lovrNormal',   'float', 3 },\n      { 'lovrTexCoord', 'float', 2 }\n      { 'lovrVertexColor', 'byte', 4 }\n    }\n\nGreat, so why do we go through the trouble of naming everything in our vertex and saying what type and size it is?  The cool part is that we can access this data in a Shader.  We can write a vertex Shader that has `in` variables for every vertex attribute in our Mesh:\n\n    in vec3 vPosition;\n    in vec4 vColor;\n    in int vWeight;\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      // Here we can access the vPosition, vColor, and vWeight of each vertex in the Mesh!\n    }\n\nSpecifying custom vertex data is really powerful and is often used for lighting, animation, and more!",
           methods = {
             {
+              name = "attachAttributes",
+              summary = "Attach attributes from another Mesh onto this one.",
+              description = "Attaches attributes from another Mesh onto this one.  This can be used to share vertex data across multiple meshes without duplicating the data, and can also be used for instanced rendering by using the `divisor` parameter.",
+              key = "Mesh:attachAttributes",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:detachAttributes",
+                "Mesh:drawInstanced"
+              },
+              variants = {
+                {
+                  description = "Attach all attributes from the other mesh.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to attach attributes from."
+                    },
+                    {
+                      name = "divisor",
+                      type = "number",
+                      description = "The attribute divisor for all attached attributes.",
+                      default = "0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to attach attributes from."
+                    },
+                    {
+                      name = "divisor",
+                      type = "number",
+                      description = "The attribute divisor for all attached attributes.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "string",
+                      description = "The names of attributes to attach from the other Mesh."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to attach attributes from."
+                    },
+                    {
+                      name = "divisor",
+                      type = "number",
+                      description = "The attribute divisor for all attached attributes.",
+                      default = "0"
+                    },
+                    {
+                      name = "attributes",
+                      type = "table",
+                      description = "A table of attribute names to attach from the other Mesh."
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "The attribute divisor is a  number used to control how the attribute data relates to instancing. If 0, then the attribute data is considered \"per vertex\", and each vertex will get the next element of the attribute's data.  If the divisor 1 or more, then the attribute data is considered \"per instance\", and every N instances will get the next element of the attribute data.\n\nTo prevent cycles, it is not possible to attach attributes onto a Mesh that already has attributes attached to a different Mesh."
+            },
+            {
+              name = "detachAttributes",
+              summary = "Detach attributes that were attached from a different Mesh.",
+              description = "Detaches attributes that were attached using `Mesh:attachAttributes`.",
+              key = "Mesh:detachAttributes",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:attachAttributes"
+              },
+              variants = {
+                {
+                  description = "Detaches all attributes from the other mesh, by name.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "A Mesh.  The names of all of the attributes from this Mesh will be detached."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "A Mesh.  The names of all of the attributes from this Mesh will be detached."
+                    },
+                    {
+                      name = "...",
+                      type = "string",
+                      description = "The names of attributes to detach."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "A Mesh.  The names of all of the attributes from this Mesh will be detached."
+                    },
+                    {
+                      name = "attributes",
+                      type = "table",
+                      description = "A table of attribute names to detach."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "draw",
               summary = "Draw the Mesh.",
               description = "Draws the contents of the Mesh.",
@@ -10624,6 +10782,23 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  description = "This variant is much faster than the previous one, but is harder to use.",
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob to use to update vertex data."
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The size of each element of the Blob, in bytes.  Must be 2 or 4.",
+                      default = "4"
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -10633,7 +10808,7 @@ return {
               description = "Update multiple vertices in the Mesh.",
               key = "Mesh:setVertices",
               module = "lovr.graphics",
-              notes = "The start index plus the number of vertices in the table should not exceed the maximum size of the Mesh.",
+              notes = "The start index plus the number of vertices in the table should not exceed the maximum size of the Mesh.\n\nTo use a VertexData, the Mesh and the VertexData must have the same format.",
               variants = {
                 {
                   arguments = {
@@ -10647,6 +10822,34 @@ return {
                       type = "number",
                       description = "The index of the vertex to start replacing at.",
                       default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to replace.  If nil, all vertices in the table or VertexData will be used.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "vertexData",
+                      type = "VertexData",
+                      description = "The VertexData object to use the vertices from."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the vertex to start replacing at.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to replace.  If nil, all vertices in the table or VertexData will be used.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -10997,7 +11200,7 @@ return {
           constructors = {
             "lovr.graphics.newShader"
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrTransform;\n    uniform mat4 lovrNormalMatrix;\n    uniform mat4 lovrProjection;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n\nFragment shader header:\n\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform mat4 lovrViews[2];  // View matrices for both eyes\n    uniform mat4 lovrTransforms[2]; // Model-View matrices for both eyes\n    uniform mat4 lovrProjections[2]; // Projection matrices for both eyes\n    uniform mat4 lovrNormalMatrices[2]; // Normal matrices for both eyes\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    uniform int lovrIsStereo;\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n    flat out int lovrEye;\n\nAdditionally, the `lovrInstanceID` variable should be used to get the current instance ID when using instanced rendering.\n\nFragment shader header:\n\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    flat in int lovrEye;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
           methods = {
             {
               name = "hasUniform",
@@ -11031,7 +11234,7 @@ return {
               description = "Update a uniform variable in the Shader.",
               key = "Shader:send",
               module = "lovr.graphics",
-              notes = "The shader does not need to be active to update its uniforms.  However, the types must match up. Uniform variables declared as `float`s must be sent a single number, whereas uniforms declared as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s can be sent a `Transform` object.\n\nAn error is thrown if the uniform does not exist or is not used in the shader.",
+              notes = "The shader does not need to be active to update its uniforms.  However, the types must match up. Uniform variables declared as `float`s must be sent a single number, whereas uniforms declared as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s can be sent a `Transform` object.\n\nAn error is thrown if the uniform does not exist or is not used in the shader.\n\n`Blob`s can be used to pass arbitrary binary data to Shader variables.",
               variants = {
                 {
                   arguments = {
@@ -11201,6 +11404,35 @@ return {
                       description = "How the texture wraps vertically."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "replacePixels",
+              summary = "Replace pixels in the Texture using a TextureData object.",
+              description = "Replaces pixels in the Texture, sourcing from a `TextureData` object.",
+              key = "Texture:replacePixels",
+              module = "lovr.graphics",
+              related = {
+                "TextureData:setPixel",
+                "TextureData"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "textureData",
+                      type = "TextureData",
+                      description = "The TextureData containing the pixels to use.  Currently, the TextureData needs to have the same dimensions as the source Texture."
+                    },
+                    {
+                      name = "slice",
+                      type = "number",
+                      description = "The slice to replace.  Not applicable for 2D textures.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -12088,7 +12320,7 @@ return {
                 {
                   name = "callback",
                   type = "function",
-                  description = "The function used to render.  It will be passed a string representing the current eye that is being rendered to, either \"left\" or \"right\"."
+                  description = "The function used to render.  Any functions called will render to the headset instead of to the window."
                 }
               },
               returns = {}
