@@ -423,6 +423,22 @@ return {
   },
   modules = {
     {
+      name = "json",
+      tag = "library",
+      summary = "Encodes and decodes JSON.",
+      description = "The json module exposes functions for encoding and decoding JSON. You can use it by requiring the `json` module.",
+      key = "json",
+      functions = {},
+      objects = {},
+      enums = {},
+      external = true,
+      examples = {
+        {
+          code = "local json = require 'json'\nlocal data = { health = 10, position = { 1, 2, 3 } }\nlocal encoded = json.encode(data)\nprint(encoded)\nlocal decoded = json.decode(encoded)\nprint(decoded.health, unpack(decoded.position))"
+        }
+      }
+    },
+    {
       name = "lovr",
       summary = "In the beginning, there was nothing.",
       description = "`lovr` is the single global table that is exposed to every LÖVR app. It contains a set of **modules** and a set of **callbacks**.",
@@ -2155,9 +2171,12 @@ return {
         {
           name = "isDirectory",
           summary = "Check whether a path is a directory.",
-          description = "Check if a path is a directory.",
+          description = "Check if a path exists and is a directory.",
           key = "lovr.filesystem.isDirectory",
           module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.isFile"
+          },
           variants = {
             {
               arguments = {
@@ -2180,9 +2199,12 @@ return {
         {
           name = "isFile",
           summary = "Check whether a path is a file.",
-          description = "Check if a path is a file.",
+          description = "Check if a path exists and is a file.",
           key = "lovr.filesystem.isFile",
           module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.isDirectory"
+          },
           variants = {
             {
               arguments = {
@@ -6973,22 +6995,6 @@ return {
               }
             }
           }
-        }
-      }
-    },
-    {
-      name = "json",
-      tag = "library",
-      summary = "Encodes and decodes JSON.",
-      description = "The json module exposes functions for encoding and decoding JSON. You can use it by requiring the `json` module.",
-      key = "json",
-      functions = {},
-      objects = {},
-      enums = {},
-      external = true,
-      examples = {
-        {
-          code = "local json = require 'json'\nlocal data = { health = 10, position = { 1, 2, 3 } }\nlocal encoded = json.encode(data)\nprint(encoded)\nlocal decoded = json.decode(encoded)\nprint(decoded.health, unpack(decoded.position))"
         }
       }
     },
