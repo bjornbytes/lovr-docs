@@ -175,6 +175,8 @@ local function processObject(path, parent)
     end
   end
 
+  table.sort(object.methods, function(a, b) return a.key < b.key end)
+
   return object
 end
 
@@ -215,6 +217,10 @@ local function processModule(path)
     end
   end
 
+  table.sort(module.functions, function(a, b) return a.key < b.key end)
+  table.sort(module.objects, function(a, b) return a.key < b.key end)
+  table.sort(module.enums, function(a, b) return a.key < b.key end)
+
   return module
 end
 
@@ -240,6 +246,10 @@ function lovr.load()
   for _, file in ipairs(lovr.filesystem.getDirectoryItems(callbacks)) do
     table.insert(api.callbacks, processFunction(callbacks .. '/' .. file:gsub('%.lua', ''), api.modules[1]))
   end
+
+  -- Sort
+  table.sort(api.modules, function(a, b) return a.key < b.key end)
+  table.sort(api.callbacks, function(a, b) return a.key < b.key end)
 
   -- Serialize
   local file = io.open(lovr.filesystem.getSource() .. '/init.lua', 'w')
