@@ -1422,9 +1422,12 @@ return {
         {
           name = "isDirectory",
           summary = "Check whether a path is a directory.",
-          description = "Check if a path is a directory.",
+          description = "Check if a path exists and is a directory.",
           key = "lovr.filesystem.isDirectory",
           module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.isFile"
+          },
           variants = {
             {
               arguments = {
@@ -1447,9 +1450,12 @@ return {
         {
           name = "isFile",
           summary = "Check whether a path is a file.",
-          description = "Check if a path is a file.",
+          description = "Check if a path exists and is a file.",
           key = "lovr.filesystem.isFile",
           module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.isDirectory"
+          },
           variants = {
             {
               arguments = {
