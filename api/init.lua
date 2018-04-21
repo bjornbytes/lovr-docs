@@ -2784,6 +2784,31 @@ return {
           }
         },
         {
+          name = "HorizontalAlign",
+          summary = "Different ways to horizontally align text.",
+          description = "Different ways to horizontally align text when using `lovr.graphics.print`.",
+          key = "HorizontalAlign",
+          module = "graphics",
+          values = {
+            {
+              name = "left",
+              description = "Left aligned lines of text."
+            },
+            {
+              name = "center",
+              description = "Centered aligned lines of text."
+            },
+            {
+              name = "right",
+              description = "Right aligned lines of text."
+            }
+          },
+          related = {
+            "VerticalAlign",
+            "lovr.graphics.print"
+          }
+        },
+        {
           name = "MatrixType",
           summary = "Types of matrix on the transform stack.",
           description = "When modifying the coordinate system using functions like `lovr.graphics.translate`, you can modify either the model matrix or the view matrix.  The model matrix is meant to represent the transform of the object being rendered, whereas the view matrix is meant to represent the transform of the camera.  By default, the model matrix is manipulated.",
@@ -2884,6 +2909,31 @@ return {
               name = "3d",
               description = "Use a perspective projection."
             }
+          }
+        },
+        {
+          name = "VerticalAlign",
+          summary = "Different ways to vertically align text.",
+          description = "Different ways to vertically align text when using `lovr.graphics.print`.",
+          key = "VerticalAlign",
+          module = "graphics",
+          values = {
+            {
+              name = "top",
+              description = "Align the top of the text to the origin."
+            },
+            {
+              name = "middle",
+              description = "Vertically center the text."
+            },
+            {
+              name = "bottom",
+              description = "Align the bottom of the text to the origin."
+            }
+          },
+          related = {
+            "HorizontalAlign",
+            "lovr.graphics.print"
           }
         },
         {
