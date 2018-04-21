@@ -2779,6 +2779,31 @@ return {
           }
         },
         {
+          name = "HorizontalAlign",
+          summary = "Different ways to horizontally align text.",
+          description = "Different ways to horizontally align text when using `lovr.graphics.print`.",
+          key = "HorizontalAlign",
+          module = "graphics",
+          values = {
+            {
+              name = "left",
+              description = "Left aligned lines of text."
+            },
+            {
+              name = "center",
+              description = "Centered aligned lines of text."
+            },
+            {
+              name = "right",
+              description = "Right aligned lines of text."
+            }
+          },
+          related = {
+            "VerticalAlign",
+            "lovr.graphics.print"
+          }
+        },
+        {
           name = "MeshDrawMode",
           summary = "Different ways Mesh objects can be drawn.",
           description = "Meshes are lists of arbitrary vertices.  These vertices can be drawn in a few different ways, leading to different results.",
@@ -2856,6 +2881,31 @@ return {
               name = "3d",
               description = "Use a perspective projection."
             }
+          }
+        },
+        {
+          name = "VerticalAlign",
+          summary = "Different ways to vertically align text.",
+          description = "Different ways to vertically align text when using `lovr.graphics.print`.",
+          key = "VerticalAlign",
+          module = "graphics",
+          values = {
+            {
+              name = "top",
+              description = "Align the top of the text to the origin."
+            },
+            {
+              name = "middle",
+              description = "Vertically center the text."
+            },
+            {
+              name = "bottom",
+              description = "Align the bottom of the text to the origin."
+            }
+          },
+          related = {
+            "HorizontalAlign",
+            "lovr.graphics.print"
           }
         },
         {
