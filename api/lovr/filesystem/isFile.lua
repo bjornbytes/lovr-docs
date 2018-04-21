@@ -1,6 +1,6 @@
 return {
   summary = 'Check whether a path is a file.',
-  description = 'Check if a path is a file.',
+  description = 'Check if a path exists and is a file.',
   arguments = {
     {
       name = 'path',
@@ -14,5 +14,8 @@ return {
       type = 'boolean',
       description = 'Whether or not path is a file.'
     }
+  },
+  related = {
+    'lovr.filesystem.isDirectory'
   }
 }
