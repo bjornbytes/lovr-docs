@@ -2806,6 +2806,31 @@ return {
           }
         },
         {
+          name = "HorizontalAlign",
+          summary = "Different ways to horizontally align text.",
+          description = "Different ways to horizontally align text when using `lovr.graphics.print`.",
+          key = "HorizontalAlign",
+          module = "graphics",
+          values = {
+            {
+              name = "left",
+              description = "Left aligned lines of text."
+            },
+            {
+              name = "center",
+              description = "Centered aligned lines of text."
+            },
+            {
+              name = "right",
+              description = "Right aligned lines of text."
+            }
+          },
+          related = {
+            "VerticalAlign",
+            "lovr.graphics.print"
+          }
+        },
+        {
           name = "MaterialColor",
           summary = "Different material color parameters.",
           description = "The different types of color parameters `Material`s can hold.",
@@ -3001,6 +3026,31 @@ return {
               name = "rg11b10f",
               description = "Each pixel is 32 bits, and packs three color channels into 10 or 11 bits each."
             }
+          }
+        },
+        {
+          name = "VerticalAlign",
+          summary = "Different ways to vertically align text.",
+          description = "Different ways to vertically align text when using `lovr.graphics.print`.",
+          key = "VerticalAlign",
+          module = "graphics",
+          values = {
+            {
+              name = "top",
+              description = "Align the top of the text to the origin."
+            },
+            {
+              name = "middle",
+              description = "Vertically center the text."
+            },
+            {
+              name = "bottom",
+              description = "Align the bottom of the text to the origin."
+            }
+          },
+          related = {
+            "HorizontalAlign",
+            "lovr.graphics.print"
           }
         },
         {
