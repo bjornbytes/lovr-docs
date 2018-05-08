@@ -343,7 +343,9 @@ return {
                 {
                   name = "iterator",
                   type = "function",
-                  description = "The iterator function, usable in a for loop."
+                  description = "The iterator function, usable in a for loop.",
+                  arguments = {},
+                  returns = {}
                 }
               }
             }
@@ -3799,7 +3801,14 @@ return {
                 {
                   name = "callback",
                   type = "function",
-                  description = "The function used to render.  It will be passed a string representing the current eye that is being rendered to, either \"left\" or \"right\"."
+                  description = "The function used to render.  It will be passed a string representing the current eye that is being rendered to, either \"left\" or \"right\".",
+                  arguments = {
+                    {
+                      name = "eye",
+                      type = "HeadsetEye"
+                    }
+                  },
+                  returns = {}
                 }
               },
               returns = {}
