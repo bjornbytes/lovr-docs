@@ -15,6 +15,13 @@ return {
     {
       name = 'callback',
       type = 'function',
+      arguments = {
+        {
+          name = 'eye',
+          type = 'HeadsetEye'
+        }
+      },
+      returns = {},
       description = [[
         The function used to render.  It will be passed a string representing the
         current eye that is being rendered to, either "left" or "right".
