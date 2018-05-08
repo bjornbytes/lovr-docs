@@ -11,6 +11,8 @@ return {
     {
       name = 'iterator',
       type = 'function',
+      arguments = {},
+      returns = {},
       description = 'A Lua iterator, usable in a for loop.'
     }
   },
