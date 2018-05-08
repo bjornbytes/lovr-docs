@@ -38,6 +38,37 @@ return {
     {
       name = 'callback',
       type = 'function',
+      arguments = {
+        {
+          name = 'shape',
+          type = 'Shape'
+        },
+        {
+          name = 'x',
+          type = 'number'
+        },
+        {
+          name = 'y',
+          type = 'number'
+        },
+        {
+          name = 'z',
+          type = 'number'
+        },
+        {
+          name = 'nx',
+          type = 'number'
+        },
+        {
+          name = 'ny',
+          type = 'number'
+        },
+        {
+          name = 'nz',
+          type = 'number'
+        }
+      },
+      returns = {},
       description = 'The function to call when an intersection is detected.'
     }
   },
