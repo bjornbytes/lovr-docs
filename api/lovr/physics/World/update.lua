@@ -14,6 +14,13 @@ return {
     {
       name = 'resolver',
       type = 'function',
+      arguments = {
+        {
+          name = 'world',
+          type = 'World'
+        }
+      },
+      returns = {},
       default = 'nil',
       description = [[
         The collision resolver function to use.  This will be called before updating to allow for

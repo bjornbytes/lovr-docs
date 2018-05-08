@@ -9,6 +9,8 @@ return {
     {
       name = 'callback',
       type = 'function',
+      arguments = {},
+      returns = {},
       description = 'The function to use to render to the Canvas.'
     }
   },

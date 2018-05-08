@@ -12,6 +12,18 @@ return {
     {
       name = 'chunk',
       type = 'function',
+      arguments = {
+        {
+          name = '...',
+          type = '*'
+        }
+      },
+      returns = {
+        {
+          name = '...',
+          type = '*'
+        }
+      },
       description = 'The runnable chunk.'
     }
   },
