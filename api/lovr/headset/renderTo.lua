@@ -15,6 +15,8 @@ return {
     {
       name = 'callback',
       type = 'function',
+      arguments = {},
+      returns = {},
       description = [[
         The function used to render.  Any functions called will render to the headset instead of to
         the window.

@@ -5,6 +5,8 @@ return {
   arguments = {
     callback = {
       type = 'function',
+      arguments = {},
+      returns = {},
       description = 'The function that will be called to render to the stencil buffer.'
     },
     action = {

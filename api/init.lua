@@ -3880,7 +3880,9 @@ return {
                 {
                   name = "iterator",
                   type = "function",
-                  description = "The iterator function, usable in a for loop."
+                  description = "The iterator function, usable in a for loop.",
+                  arguments = {},
+                  returns = {}
                 }
               }
             }
@@ -4392,7 +4394,19 @@ return {
                 {
                   name = "chunk",
                   type = "function",
-                  description = "The runnable chunk."
+                  description = "The runnable chunk.",
+                  arguments = {
+                    {
+                      name = "...",
+                      type = "*"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "*"
+                    }
+                  }
                 }
               }
             }
@@ -8744,7 +8758,9 @@ return {
                 {
                   name = "callback",
                   type = "function",
-                  description = "The function that will be called to render to the stencil buffer."
+                  description = "The function that will be called to render to the stencil buffer.",
+                  arguments = {},
+                  returns = {}
                 },
                 {
                   name = "action",
@@ -8772,7 +8788,9 @@ return {
                 {
                   name = "callback",
                   type = "function",
-                  description = "The function that will be called to render to the stencil buffer."
+                  description = "The function that will be called to render to the stencil buffer.",
+                  arguments = {},
+                  returns = {}
                 },
                 {
                   name = "action",
@@ -9708,7 +9726,14 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "The function to use to render to the Canvas."
+                      description = "The function to use to render to the Canvas.",
+                      arguments = {
+                        {
+                          name = "...",
+                          type = "*"
+                        }
+                      },
+                      returns = {}
                     },
                     {
                       name = "...",
@@ -12430,7 +12455,9 @@ return {
                 {
                   name = "callback",
                   type = "function",
-                  description = "The function used to render.  Any functions called will render to the headset instead of to the window."
+                  description = "The function used to render.  Any functions called will render to the headset instead of to the window.",
+                  arguments = {},
+                  returns = {}
                 }
               },
               returns = {}
@@ -18522,7 +18549,9 @@ return {
                     {
                       name = "iterator",
                       type = "function",
-                      description = "A Lua iterator, usable in a for loop."
+                      description = "A Lua iterator, usable in a for loop.",
+                      arguments = {},
+                      returns = {}
                     }
                   }
                 }
@@ -18582,7 +18611,38 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "The function to call when an intersection is detected."
+                      description = "The function to call when an intersection is detected.",
+                      arguments = {
+                        {
+                          name = "shape",
+                          type = "Shape"
+                        },
+                        {
+                          name = "x",
+                          type = "number"
+                        },
+                        {
+                          name = "y",
+                          type = "number"
+                        },
+                        {
+                          name = "z",
+                          type = "number"
+                        },
+                        {
+                          name = "nx",
+                          type = "number"
+                        },
+                        {
+                          name = "ny",
+                          type = "number"
+                        },
+                        {
+                          name = "nz",
+                          type = "number"
+                        }
+                      },
+                      returns = {}
                     }
                   },
                   returns = {}
@@ -18720,6 +18780,13 @@ return {
                       name = "resolver",
                       type = "function",
                       description = "The collision resolver function to use.  This will be called before updating to allow for custom collision processing.  If absent, a default will be used.",
+                      arguments = {
+                        {
+                          name = "world",
+                          type = "World"
+                        }
+                      },
+                      returns = {},
                       default = "nil"
                     }
                   },
