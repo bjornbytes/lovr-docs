@@ -1501,9 +1501,6 @@ return {
           description = "Set the name of the save directory.",
           key = "lovr.filesystem.setIdentity",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.getIdentity"
-          },
           variants = {
             {
               arguments = {
