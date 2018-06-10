@@ -82,6 +82,9 @@ function lovr.load()
       lovr.graphics.newCanvas(width, height),
       lovr.graphics.newCanvas(width, height)
     }
+
+    tempCanvas[1]:setWrap('clamp')
+    tempCanvas[2]:setWrap('clamp')
   end
 end
 
