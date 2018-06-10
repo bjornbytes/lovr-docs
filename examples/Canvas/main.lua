@@ -102,14 +102,16 @@ local function sceneDraw()
   end
 
   -- Because the eyechart image is non-square, we must stretch its plane
+  lovr.graphics.push()
   lovr.graphics.scale(1, eyechart.aspect, 1)
   lovr.graphics.translate(0, 0.5, -0.75)
   lovr.graphics.plane(eyechart.material, 0, 0, 0)
+  lovr.graphics.pop()
 end
 
 -- This simple callback is used to draw one canvas onto another
 local function fullScreenDraw(source)
-  lovr.graphics.plane(source)
+  lovr.graphics.fill(source)
 end
 
 function lovr.draw()
@@ -146,6 +148,6 @@ function lovr.draw()
     tempCanvas[2]:renderTo(fullScreenDraw, tempCanvas[1])
 
     screenShader:send("direction", {0, 4})
-    lovr.graphics.plane(tempCanvas[2]) -- On the final pass, render directly to the screen.
+    lovr.graphics.fill(tempCanvas[2]) -- On the final pass, render directly to the screen.
   end
 end
