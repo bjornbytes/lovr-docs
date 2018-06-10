@@ -28,13 +28,13 @@ local screenShaderFragment = [[
   #define OFFSET2 3.2307692308
 
   // UVs are sampled from a texture over the range 0..1.
-  // This uniform is set outside the shader so we know what UV distance "one pixel" is.  
+  // This uniform is set outside the shader so we know what UV distance "one pixel" is.
   uniform vec2 resolution;
-  
+
   // This uniform will be set every draw to determine whether we are sampling horizontally or vertically.
   uniform vec2 direction;
-  
-  // lovr's shader architecture will automatically supply a main(), which will call this color() function 
+
+  // lovr's shader architecture will automatically supply a main(), which will call this color() function
   vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
     vec2 pixelOff = direction / resolution;
     vec4 color = vec4(0.0);
@@ -70,7 +70,7 @@ function lovr.load()
   -- Configure the shader
   if useCanvas then
     local width, height = lovr.headset.getDisplayDimensions()
-    
+
     -- Compile the shader
     screenShader = lovr.graphics.newShader(screenShaderVertex, screenShaderFragment)
 
