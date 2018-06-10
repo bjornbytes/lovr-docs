@@ -38,7 +38,7 @@ function lovr.draw()
   -- Plane
   local x, y, z = -.6, 1.7, -1.5
   lovr.graphics.setColor(.94, .33, .31)
-  lovr.graphics.plane('fill', x, y, z, .4, lovr.timer.getTime())
+  lovr.graphics.plane('fill', x, y, z, .4, .4, lovr.timer.getTime())
 
   -- Cube
   local x, y, z = 0, 1.7, -1.5
