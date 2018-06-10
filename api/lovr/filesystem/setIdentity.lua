@@ -8,8 +8,5 @@ return {
       description = 'The new name of the save directory.'
     }
   },
-  returns = {},
-  related = {
-    'lovr.filesystem.getIdentity'
-  }
+  returns = {}
 }
