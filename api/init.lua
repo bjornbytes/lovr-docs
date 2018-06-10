@@ -1342,9 +1342,6 @@ return {
           description = "Returns the identity of the game, which is used as the name of the save directory.  The default is `default`.",
           key = "lovr.filesystem.getIdentity",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.setIdentity"
-          },
           variants = {
             {
               arguments = {},
