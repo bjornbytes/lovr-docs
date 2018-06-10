@@ -11,8 +11,5 @@ return {
       type = 'string',
       description = 'The name of the save directory.'
     }
-  },
-  related = {
-    'lovr.filesystem.setIdentity'
   }
 }
