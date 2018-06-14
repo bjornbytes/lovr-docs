@@ -3,7 +3,7 @@ return {
   summary = 'Clear the screen.',
   description = [[
     Clears the screen, resetting the color, depth, and stencil information to default values.  This
-    function is called automatically by `lovr.step` at the beginning of each frame to clear out the
+    function is called automatically by `lovr.run` at the beginning of each frame to clear out the
     data from the previous frame.
   ]],
   arguments = {

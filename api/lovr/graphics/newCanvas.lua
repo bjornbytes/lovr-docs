@@ -44,15 +44,6 @@ return {
           description = 'Whether a stencil buffer should be created.'
         },
         {
-          name = 'stereo',
-          type = 'boolean',
-          default = 'false',
-          description = [[
-            Whether the Canvas is stereo.  A stereo Canvas will be split in half and replicate drawn
-            objects to both eyes.
-          ]]
-        },
-        {
           name = 'mipmaps',
           type = 'boolean',
           default = 'true',
