@@ -10,7 +10,7 @@ return {
   returns = {
     {
       name = 'winding',
-      type = 'PolygonWinding',
+      type = 'Winding',
       description = 'The current winding direction.'
     }
   },

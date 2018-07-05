@@ -280,13 +280,7 @@ return {
       },
       variants = {
         {
-          arguments = {
-            {
-              name = "eye",
-              type = "HeadsetEye",
-              description = "The eye currently being rendered to."
-            }
-          },
+          arguments = {},
           returns = {}
         }
       }
@@ -5015,23 +5009,6 @@ return {
           }
         },
         {
-          name = "PolygonWinding",
-          summary = "Different winding directions.",
-          description = "Whether the points on triangles are specified in a clockwise or counterclockwise order.",
-          key = "PolygonWinding",
-          module = "graphics",
-          values = {
-            {
-              name = "clockwise",
-              description = "Triangle vertices are specified in a clockwise order."
-            },
-            {
-              name = "counterclockwise",
-              description = "Triangle vertices are specified in a counterclockwise order."
-            }
-          }
-        },
-        {
           name = "StencilAction",
           summary = "Different stencil operations available.",
           description = "How to modify pixels in the stencil buffer when using `lovr.graphics.stencil`.",
@@ -5141,6 +5118,23 @@ return {
           related = {
             "HorizontalAlign",
             "lovr.graphics.print"
+          }
+        },
+        {
+          name = "Winding",
+          summary = "Different winding directions.",
+          description = "Whether the points on triangles are specified in a clockwise or counterclockwise order.",
+          key = "Winding",
+          module = "graphics",
+          values = {
+            {
+              name = "clockwise",
+              description = "Triangle vertices are specified in a clockwise order."
+            },
+            {
+              name = "counterclockwise",
+              description = "Triangle vertices are specified in a counterclockwise order."
+            }
           }
         },
         {
@@ -6815,7 +6809,7 @@ return {
               returns = {
                 {
                   name = "winding",
-                  type = "PolygonWinding",
+                  type = "Winding",
                   description = "The current winding direction."
                 }
               }
@@ -8494,7 +8488,7 @@ return {
               arguments = {
                 {
                   name = "winding",
-                  type = "PolygonWinding",
+                  type = "Winding",
                   description = "The new winding direction."
                 }
               },
