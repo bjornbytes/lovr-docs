@@ -31,13 +31,8 @@ return {
         uniform mat4 lovrProjection;
         uniform mat4 lovrTransform; // Model-View matrix
         uniform mat4 lovrNormalMatrix;
-        uniform mat4 lovrViews[2];  // View matrices for both eyes
-        uniform mat4 lovrTransforms[2]; // Model-View matrices for both eyes
-        uniform mat4 lovrProjections[2]; // Projection matrices for both eyes
-        uniform mat4 lovrNormalMatrices[2]; // Normal matrices for both eyes
         uniform float lovrPointSize;
         uniform mat4 lovrPose[48];
-        uniform int lovrIsStereo;
         in vec3 lovrPosition;
         in vec3 lovrNormal;
         in vec2 lovrTexCoord;
@@ -47,7 +42,6 @@ return {
         in vec4 lovrBoneWeights;
         out vec2 texCoord;
         out vec4 vertexColor;
-        flat out int lovrEye;
 
     Additionally, the `lovrInstanceID` variable should be used to get the current instance ID when
     using instanced rendering.
@@ -68,7 +62,6 @@ return {
         uniform samplerCube lovrEnvironmentTexture;
         in vec2 texCoord;
         in vec4 vertexColor;
-        flat in int lovrEye;
         in vec4 gl_FragCoord;
         out vec4 lovrFragColor;
   ]],
