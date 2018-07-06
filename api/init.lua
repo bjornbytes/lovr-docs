@@ -7442,26 +7442,6 @@ return {
           }
         },
         {
-          name = "isBoundsVisible",
-          tag = "playArea",
-          summary = "Get whether the chaperone is currently visible.",
-          description = "Returns whether or not the boundary indicator is visible, indicating that the user is near the edge of the play area.",
-          key = "lovr.headset.isBoundsVisible",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "isVisible",
-                  type = "boolean",
-                  description = "Whether or not the bounds are visible."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "isMirrored",
           tag = "headset",
           summary = "Check if the headset is mirrored to the desktop.",
@@ -7525,26 +7505,6 @@ return {
                     }
                   },
                   returns = {}
-                }
-              },
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "setBoundsVisible",
-          tag = "playArea",
-          summary = "Request that the chaperone be shown or hidden.",
-          description = "Requests that the boundary indicator be shown or hidden.",
-          key = "lovr.headset.setBoundsVisible",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "visible",
-                  type = "boolean",
-                  description = "Whether the bounds should be visible or invisible."
                 }
               },
               returns = {}
