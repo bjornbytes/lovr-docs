@@ -13,7 +13,7 @@ return {
     bufferSize = {
       type = 'number',
       default = '4096',
-      description = 'The size of the stream\'s audio buffer.'
+      description = 'The size of the stream\'s audio buffer, in samples.'
     }
   },
   returns = {
