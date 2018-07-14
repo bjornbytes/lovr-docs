@@ -1892,7 +1892,7 @@ return {
                 {
                   name = "bufferSize",
                   type = "number",
-                  description = "The size of the stream's audio buffer.",
+                  description = "The size of the stream's audio buffer, in samples.",
                   default = "4096"
                 }
               },
@@ -1914,7 +1914,7 @@ return {
                 {
                   name = "bufferSize",
                   type = "number",
-                  description = "The size of the stream's audio buffer.",
+                  description = "The size of the stream's audio buffer, in samples.",
                   default = "4096"
                 }
               },
