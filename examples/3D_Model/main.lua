@@ -1,8 +1,8 @@
 function lovr.load()
-  model = lovr.graphics.newModel('duck.dae', 'duck.png')
-  lovr.graphics.setBackgroundColor(.2, .2, .2)
+  model = lovr.graphics.newModel('teapot.obj')
 end
 
 function lovr.draw()
-  model:draw(0, 0, -3, 1, 4 + lovr.timer.getTime() * .1)
+  lovr.graphics.setWireframe(true)
+  model:draw(0, 1.2, -2.5, .35, lovr.timer.getTime() * .5, 0, 1, .1)
 end
