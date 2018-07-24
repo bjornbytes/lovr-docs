@@ -24,5 +24,9 @@ return {
       type = 'Shader',
       description = 'The new Shader.'
     }
+  },
+  related = {
+    'lovr.graphics.setShader',
+    'lovr.graphics.getShader'
   }
 }

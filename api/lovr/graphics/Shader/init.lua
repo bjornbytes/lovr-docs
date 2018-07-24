@@ -91,5 +91,9 @@ return {
         model:draw(x, y, z, 1)
       end
     ]=]
+  },
+  related = {
+    'lovr.graphics.setShader',
+    'lovr.graphics.getShader'
   }
 }
