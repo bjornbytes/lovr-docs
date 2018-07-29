@@ -3,7 +3,7 @@ return {
   'Spinning_Cube',
   'Primitives',
   '3D_Model',
-  'Panorama',
+  '360_Photo',
   'Lighting',
   'Physics',
   'Billboard'
