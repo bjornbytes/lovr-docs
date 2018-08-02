@@ -47,5 +47,4 @@ guide](https://github.com/bjornbytes/lovr/blob/master/COMPILING.md#webvr).
 Note that there are a few differences when running LÖVR in the browser:
 
 - `Controller:newModel` will always return `nil`.
-- `lovr.headset.getBoundsGeometry` is not supported and will return four zero vectors.
 - Oculus Touch controllers are not fully supported yet.
