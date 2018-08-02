@@ -2300,7 +2300,7 @@ return {
           methods = {
             {
               name = "getName",
-              summary = "Get the label the Blob.",
+              summary = "Get the label of the Blob.",
               description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
               key = "Blob:getName",
               module = "lovr.data",
@@ -7479,6 +7479,10 @@ return {
           description = "Creates a new Shader.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.setShader",
+            "lovr.graphics.getShader"
+          },
           variants = {
             {
               arguments = {
@@ -11277,10 +11281,19 @@ return {
           description = "Shaders are GLSL programs that transform the way vertices and pixels show up on the screen. They can be used for lighting, postprocessing, particles, animation, and much more.  You can use `lovr.graphics.setShader` to change the active Shader.",
           key = "Shader",
           module = "lovr.graphics",
+          examples = {
+            {
+              description = "Set a simple shader that colors pixels based on vertex normals.",
+              code = "function lovr.load()\n  lovr.graphics.setShader(lovr.graphics.newShader([[\n    out vec3 vNormal; // This gets passed to the fragment shader\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vNormal = lovrNormal;\n      return projection * transform * vertex;\n    }\n  ]], [[\n    in vec3 vNormal; // This gets passed from the vertex shader\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(vNormal * .5 + .5, 1.0);\n    }\n  ]]))\n\n  model = lovr.graphics.newModel('model.fbx')\nend\n\nfunction lovr.draw()\n  model:draw(x, y, z, 1)\nend"
+            }
+          },
+          related = {
+            "lovr.graphics.setShader",
+            "lovr.graphics.getShader"
+          },
           constructors = {
             "lovr.graphics.newShader"
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n\nAdditionally, the `lovrInstanceID` variable should be used to get the current instance ID when using instanced rendering.\n\nFragment shader header:\n\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;",
           methods = {
             {
               name = "hasUniform",
@@ -11340,12 +11353,7 @@ return {
               }
             }
           },
-          examples = {
-            {
-              description = "Set a simple shader that colors pixels based on vertex normals.",
-              code = "function lovr.load()\n  lovr.graphics.setShader(lovr.graphics.newShader([[\n    out vec3 vNormal; // This gets passed to the fragment shader\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vNormal = lovrNormal;\n      return projection * transform * vertex;\n    }\n  ]], [[\n    in vec3 vNormal; // This gets passed from the vertex shader\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(vNormal * .5 + .5, 1.0);\n    }\n  ]]))\n\n  model = lovr.graphics.newModel('model.fbx')\nend\n\nfunction lovr.draw()\n  model:draw(x, y, z, 1)\nend"
-            }
-          }
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n\nAdditionally, the `lovrInstanceID` variable should be used to get the current instance ID when using instanced rendering.\n\nFragment shader header:\n\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;"
         },
         {
           name = "Texture",
