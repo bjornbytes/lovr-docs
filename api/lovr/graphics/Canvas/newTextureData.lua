@@ -1,5 +1,5 @@
 return {
-  summary = 'Create a new TextureData from the Canvas contents',
+  summary = 'Create a new TextureData from the Canvas contents.',
   description = 'Returns a new TextureData containing the current contents of the Canvas.',
   arguments = {},
   returns = {
