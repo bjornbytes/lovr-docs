@@ -6675,7 +6675,7 @@ return {
             },
             {
               name = "getAnimationNames",
-              summary = "Get the a table containing all animation names.",
+              summary = "Get a table containing all animation names.",
               description = "Returns a table containing the names of all animations supported by this Animator.",
               key = "Animator:getAnimationNames",
               module = "lovr.graphics",
