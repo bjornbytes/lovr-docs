@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the linear velocity the Collider at a world space point.',
+  summary = 'Get the linear velocity of the Collider at a world space point.',
   description = [[
     Returns the linear velocity of a point on the Collider specified in world space.
   ]],

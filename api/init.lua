@@ -14966,8 +14966,8 @@ return {
         },
         {
           name = "Collider",
-          summary = "A single entity in the simultion.",
-          description = "Colliders are objects that represent a single rigid body in the physics simulation.  They can have forces applied to them and collide with other colliders.",
+          summary = "A single entity in a physics simulation.",
+          description = "Colliders are objects that represent a single rigid body in a physics simulation.  They can have forces applied to them and collide with other colliders.",
           key = "Collider",
           module = "lovr.physics",
           methods = {
@@ -15379,7 +15379,7 @@ return {
             },
             {
               name = "getLinearVelocityFromWorldPoint",
-              summary = "Get the linear velocity the Collider at a world space point.",
+              summary = "Get the linear velocity of the Collider at a world space point.",
               description = "Returns the linear velocity of a point on the Collider specified in world space.",
               key = "Collider:getLinearVelocityFromWorldPoint",
               module = "lovr.physics",
