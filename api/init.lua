@@ -1103,6 +1103,10 @@ return {
               description = "Returns the number of bits per sample in the Source.  This is a rough indicator of the resolution of the Source, and is usually 16.",
               key = "Source:getBitDepth",
               module = "lovr.audio",
+              related = {
+                "SoundData:getBitDepth",
+                "AudioStream:getBitDepth"
+              },
               variants = {
                 {
                   arguments = {},
@@ -1122,6 +1126,10 @@ return {
               description = "Returns the number of channels in the Source.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
               key = "Source:getChannelCount",
               module = "lovr.audio",
+              related = {
+                "SoundData:getChannelCount",
+                "AudioStream:getChannelCount"
+              },
               variants = {
                 {
                   arguments = {},
@@ -1200,6 +1208,10 @@ return {
               description = "Returns the duration of the Source.",
               key = "Source:getDuration",
               module = "lovr.audio",
+              related = {
+                "AudioStream:getDuration",
+                "SoundData:getDuration"
+              },
               variants = {
                 {
                   arguments = {
@@ -1307,6 +1319,10 @@ return {
               description = "Returns the number of samples per second in the Source.  This is usually a high number like 44100.",
               key = "Source:getSampleRate",
               module = "lovr.audio",
+              related = {
+                "SoundData:getSampleRate",
+                "AudioStream:getSampleRate"
+              },
               variants = {
                 {
                   arguments = {},
@@ -2197,6 +2213,10 @@ return {
               description = "Returns the number of bits per sample in the stream's sound data.  This is a rough indicator of the \"resolution\" of the sound, and is usually 16.",
               key = "AudioStream:getBitDepth",
               module = "lovr.data",
+              related = {
+                "SoundData:getBitDepth",
+                "Source:getBitDepth"
+              },
               variants = {
                 {
                   arguments = {},
@@ -2216,6 +2236,10 @@ return {
               description = "Returns the number of channels present in the stream's sound data.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
               key = "AudioStream:getChannelCount",
               module = "lovr.data",
+              related = {
+                "SoundData:getChannelCount",
+                "Source:getChannelCount"
+              },
               variants = {
                 {
                   arguments = {},
@@ -2235,6 +2259,10 @@ return {
               description = "Returns the duration of the sound data in seconds.",
               key = "AudioStream:getDuration",
               module = "lovr.data",
+              related = {
+                "SoundData:getDuration",
+                "Source:getDuration"
+              },
               variants = {
                 {
                   arguments = {},
@@ -2254,6 +2282,10 @@ return {
               description = "Returns the number of samples per second in the stream's sound data.  This is usually a high number like 44100.",
               key = "AudioStream:getSampleRate",
               module = "lovr.data",
+              related = {
+                "SoundData:getSampleRate",
+                "Source:getSampleRate"
+              },
               variants = {
                 {
                   arguments = {},
@@ -3411,6 +3443,197 @@ return {
           },
           constructors = {
             "lovr.data.newRasterizer"
+          }
+        },
+        {
+          name = "SoundData",
+          summary = "An object that holds raw audio samples.",
+          description = "A SoundData stores raw audio samples that make up a sound file.  You can use `Source` objects to play SoundData.",
+          key = "SoundData",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "getBitDepth",
+              summary = "Get the bit depth of the SoundData.",
+              description = "Returns the number of bits taken up by each sample in the SoundData.  Higher bit depths mean the sound is higher quality and takes up more space.  This is usually 8 or 16.",
+              key = "SoundData:getBitDepth",
+              module = "lovr.data",
+              related = {
+                "AudioStream:getBitDepth",
+                "Source:getBitDepth"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "bitDepth",
+                      type = "number",
+                      description = "The size of each sample, in bits."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getChannelCount",
+              summary = "Get the number of channels in the SoundData.",
+              description = "Returns the number of channels in the SoundData.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
+              key = "SoundData:getChannelCount",
+              module = "lovr.data",
+              related = {
+                "AudioStream:getChannelCount",
+                "Source:getChannelCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "number",
+                      description = "The number of channels."
+                    }
+                  }
+                }
+              },
+              notes = "It's important to keep in mind the channel count if you're using `SoundData:getSample` and `SoundData:setSample`.  The SoundData stores its samples in an \"interleaved\" manner, meaning the samples from different channels are stored next to each other.\n\nIf you want to get the 3rd sample of the second channel of a stereo sound, you would use sample number 5, since samples start at zero and `(sample * channelCount) + channelIndex = 5`."
+            },
+            {
+              name = "getDuration",
+              summary = "Get the duration of the SoundData.",
+              description = "Returns the duration of the sound data in seconds.",
+              key = "SoundData:getDuration",
+              module = "lovr.data",
+              related = {
+                "SoundData:getSampleCount",
+                "AudioStream:getDuration",
+                "Source:getDuration"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "duration",
+                      type = "number",
+                      description = "The duration of the sound."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSample",
+              summary = "Get a sample from the SoundData.",
+              description = "Returns a single sample from the SoundData.  Sample indices start at 0, and the returned value will be between -1 and 1.",
+              key = "SoundData:getSample",
+              module = "lovr.data",
+              related = {
+                "SoundData:getSampleCount",
+                "SoundData:getSampleRate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the sample to get."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "value",
+                      type = "number",
+                      description = "A number indicating the value of the sample at the given index."
+                    }
+                  }
+                }
+              },
+              notes = "Note that samples for individual channels in stereo sounds are stored next to each other."
+            },
+            {
+              name = "getSampleCount",
+              summary = "Get the number of samples stored in the SoundData.",
+              description = "Returns the number of samples in the SoundData (per channel).",
+              key = "SoundData:getSampleCount",
+              module = "lovr.data",
+              related = {
+                "SoundData:getSample",
+                "SoundData:getChannelCount",
+                "Source:getDuration"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "The total number of channels per channel."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSampleRate",
+              summary = "Get the sample rate of the SoundData.",
+              description = "Returns the number of samples per second in the SoundData.  This is usually a high number like 44100.",
+              key = "SoundData:getSampleRate",
+              module = "lovr.data",
+              related = {
+                "AudioStream:getSampleRate",
+                "Source:getSampleRate"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The number of samples per second in the SoundData."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setSample",
+              summary = "Modify a sample in the SoundData.",
+              description = "Modify a single sample in the SoundData.  Sample indices start at zero, and samples should be between -1 and 1.",
+              key = "SoundData:setSample",
+              module = "lovr.data",
+              related = {
+                "SoundData:getSampleCount",
+                "SoundData:getSampleRate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the sample to set."
+                    },
+                    {
+                      name = "value",
+                      type = "number",
+                      description = "The new value of the sample."
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "Note that samples for individual channels in stereo sounds are stored next to each other."
+            }
+          },
+          constructors = {
+            "lovr.data.newSoundData",
+            "AudioStream:decode",
+            "Microphone:getData"
           }
         },
         {

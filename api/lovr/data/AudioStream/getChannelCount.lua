@@ -11,5 +11,9 @@ return {
       type = 'number',
       description = 'The number of channels.'
     }
+  },
+  related = {
+    'SoundData:getChannelCount',
+    'Source:getChannelCount'
   }
 }

@@ -11,5 +11,9 @@ return {
       type = 'number',
       description = 'The number of samples per second in the AudioStream.'
     }
+  },
+  related = {
+    'SoundData:getSampleRate',
+    'Source:getSampleRate'
   }
 }

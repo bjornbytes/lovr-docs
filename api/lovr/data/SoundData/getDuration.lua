@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the duration of the AudioStream.',
+  summary = 'Get the duration of the SoundData.',
   description = 'Returns the duration of the sound data in seconds.',
   arguments = {},
   returns = {
@@ -10,7 +10,8 @@ return {
     }
   },
   related = {
-    'SoundData:getDuration',
+    'SoundData:getSampleCount',
+    'AudioStream:getDuration',
     'Source:getDuration'
   }
 }

@@ -11,5 +11,9 @@ return {
       type = 'number',
       description = 'The number of bits per sample.'
     }
+  },
+  related = {
+    'SoundData:getBitDepth',
+    'AudioStream:getBitDepth'
   }
 }

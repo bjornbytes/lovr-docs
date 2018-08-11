@@ -15,5 +15,9 @@ return {
       type = 'number',
       description = 'The duration of the Source.'
     }
+  },
+  related = {
+    'AudioStream:getDuration',
+    'SoundData:getDuration'
   }
 }
