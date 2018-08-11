@@ -19,7 +19,6 @@ the repository, so make sure you clone with the `--recursive` flag or run `git s
 - OpenVR (1.0.9, for `lovr.headset`)
 - PhysicsFS (3+)
 - OpenAL (1.17+ recommended for HRTF support)
-- FreeType
 - msdfgen
 - ODE (for `lovr.physics`)
 - Emscripten (optional, for compiling for web)
