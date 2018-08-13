@@ -14,10 +14,13 @@ return {
     {
       name = '...',
       type = '*',
-      description = 'The arguments for the event.'
+      description = 'The arguments for the event.  Currently, up to 4 are supported.'
     }
   },
   returns = {},
+  notes = [[
+    Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event payloads.
+  ]],
   related = {
     'lovr.event.poll',
     'lovr.event.quit'
