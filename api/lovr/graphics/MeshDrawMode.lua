@@ -24,6 +24,10 @@ return {
       ]]
     },
     {
+      name = 'lineloop',
+      description = 'Similar to linestrip, except the last vertex is connected back to the first.'
+    },
+    {
       name = 'strip',
       description = [[
         The first three vertices define a triangle.  Each vertex after that creates a triangle using
