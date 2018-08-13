@@ -14,6 +14,14 @@ return {
     stream = {
       type = 'AudioStream',
       description = 'The AudioStream used to stream audio data to the Source.'
+    },
+    soundData = {
+      type = 'SoundData',
+      description = 'The SoundData containing raw audio samples to play.'
+    },
+    type = {
+      type = 'SourceType',
+      description = 'How to stream in audio data.'
     }
   },
   returns = {
@@ -24,16 +32,20 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename' },
-      returns = { 'source '}
+      arguments = { 'filename', 'type' },
+      returns = { 'source' }
     },
     {
-      arguments = { 'blob' },
-      returns = { 'source '}
+      arguments = { 'blob', 'type' },
+      returns = { 'source' }
     },
     {
-      arguments = { 'stream' },
-      returns = { 'source '}
+      arguments = { 'stream', 'type' },
+      returns = { 'source' }
+    },
+    {
+      arguments = { 'soundData' },
+      returns = { 'source' }
     }
   }
 }

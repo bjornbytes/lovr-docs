@@ -12,14 +12,17 @@ return {
     },
     sampleRate = {
       type = 'number',
+      default = '44100',
       description = 'The number of samples per second.'
     },
     bitDepth = {
       type = 'number',
+      default = '16',
       description = 'The number of bits stored for each sample.'
     },
     channels = {
       type = 'number',
+      default = '2',
       description = 'The number of channels in the sound (1 for mono, 2 for stereo).'
     },
     filename = {

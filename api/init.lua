@@ -650,6 +650,23 @@ return {
       },
       enums = {
         {
+          name = "SourceType",
+          summary = "Different ways to handle audio data for Source objects.",
+          description = "When you create a Source, you can either decode audio data gradually over time or you can decode it all at once.  Streaming it over time will use less memory but cause higher processing overhead because audio is continuously being decoded.  On the other hand, decoding a sound all at once means it will take more time to load and use more memory, but after it's loaded there is virtually no processing overhead.  It's recommended to use the 'static' mode for short sound effects and the 'stream' mode for longer music tracks.",
+          key = "SourceType",
+          module = "audio",
+          values = {
+            {
+              name = "static",
+              description = "Decode the entire sound file up front."
+            },
+            {
+              name = "stream",
+              description = "Decode the sound gradually over time."
+            }
+          }
+        },
+        {
           name = "TimeUnit",
           summary = "Time units for sound samples.",
           description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of samples.",
@@ -845,9 +862,20 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The filename of the sound to load."
+                },
+                {
+                  name = "type",
+                  type = "SourceType",
+                  description = "How to stream in audio data."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "source",
+                  type = "Source",
+                  description = "The new Source."
+                }
+              }
             },
             {
               arguments = {
@@ -855,9 +883,20 @@ return {
                   name = "blob",
                   type = "Blob",
                   description = "The Blob containing the Source data."
+                },
+                {
+                  name = "type",
+                  type = "SourceType",
+                  description = "How to stream in audio data."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "source",
+                  type = "Source",
+                  description = "The new Source."
+                }
+              }
             },
             {
               arguments = {
@@ -865,9 +904,36 @@ return {
                   name = "stream",
                   type = "AudioStream",
                   description = "The AudioStream used to stream audio data to the Source."
+                },
+                {
+                  name = "type",
+                  type = "SourceType",
+                  description = "How to stream in audio data."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "source",
+                  type = "Source",
+                  description = "The new Source."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "soundData",
+                  type = "SoundData",
+                  description = "The SoundData containing raw audio samples to play."
+                }
+              },
+              returns = {
+                {
+                  name = "source",
+                  type = "Source",
+                  description = "The new Source."
+                }
+              }
             }
           }
         },
@@ -2135,12 +2201,14 @@ return {
                 {
                   name = "sampleRate",
                   type = "number",
-                  description = "The number of samples per second."
+                  description = "The number of samples per second.",
+                  default = "44100"
                 },
                 {
                   name = "bitDepth",
                   type = "number",
-                  description = "The number of bits stored for each sample."
+                  description = "The number of bits stored for each sample.",
+                  default = "16"
                 }
               },
               returns = {
