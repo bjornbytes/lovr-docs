@@ -5754,8 +5754,8 @@ return {
         },
         {
           name = "TextureFormat",
-          summary = "Different internal storage formats for Canvas objects.",
-          description = "Canvas objects can use different internal storage formats. These formats differ in how much space each pixel takes up and the precision of each color channel. In general, formats that take up more space support better precision and can be used for HDR rendering, but can reduce performance.",
+          summary = "Different storage formats for pixels in Textures.",
+          description = "Textures can store their pixels in different formats.  The set of color channels and the number of bits stored for each channel can differ, allowing Textures to optimize their storage for certain kinds of image formats or rendering techniques.",
           key = "TextureFormat",
           module = "graphics",
           values = {
@@ -5768,12 +5768,32 @@ return {
               description = "Each pixel is 32 bits, or 8 bits for each channel (including alpha)."
             },
             {
+              name = "rgba4",
+              description = "An rgba format where the colors occupy 4 bits instead of the usual 8."
+            },
+            {
               name = "rgba16f",
               description = "Each pixel is 64 bits. Each channel is a 16 bit floating point number."
             },
             {
               name = "rgba32f",
               description = "Each pixel is 128 bits. Each channel is a 32 bit floating point number."
+            },
+            {
+              name = "r16f",
+              description = "A 16-bit floating point format with a single color channel."
+            },
+            {
+              name = "r32f",
+              description = "A 32-bit floating point format with a single color channel."
+            },
+            {
+              name = "rgb5a1",
+              description = "A 16 bit format with 5-bit color channels and a single alpha bit."
+            },
+            {
+              name = "rgb10a2",
+              description = "A 32 bit format with 10-bit color channels and two alpha bits."
             },
             {
               name = "rg11b10f",
