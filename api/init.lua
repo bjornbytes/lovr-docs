@@ -2892,7 +2892,7 @@ return {
         {
           name = "ModelData",
           summary = "An object that loads and stores data for 3D models.",
-          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the `VertexData` it contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are `obj`, `fbx`, `gltf`, and collada.  glTF files do not currently load animations.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
+          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the `VertexData` it contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are `obj`, `fbx`, and `gltf`.  glTF files do not currently load animations.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
           key = "ModelData",
           module = "lovr.data",
           methods = {
@@ -8122,7 +8122,7 @@ return {
           name = "newModel",
           tag = "graphicsObjects",
           summary = "Create a new Model.",
-          description = "Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and collada.  Models use normals and texture coordinates, if provided.\n\nThe following features are not supported yet: animations, materials, vertex colors.",
+          description = "Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.\n\nThe following features are not supported yet: animations, materials, vertex colors.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
           notes = "Models loaded from glTF files do not currently import animations properly.",
@@ -11774,7 +11774,7 @@ return {
         {
           name = "Model",
           summary = "An asset imported from a 3D model file.",
-          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and collada.  Models will use normals and texture coordinates, if provided.",
+          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.",
           key = "Model",
           module = "lovr.graphics",
           examples = {

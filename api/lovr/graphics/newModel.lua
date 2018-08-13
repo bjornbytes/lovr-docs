@@ -2,8 +2,7 @@ return {
   tag = 'graphicsObjects',
   summary = 'Create a new Model.',
   description = [[
-    Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, `gltf`, and
-    collada.  Models use normals and texture coordinates, if provided.
+    Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.
 
     The following features are not supported yet: animations, materials, vertex colors.
   ]],

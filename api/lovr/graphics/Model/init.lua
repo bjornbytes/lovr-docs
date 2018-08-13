@@ -2,8 +2,7 @@ return {
   summary = 'An asset imported from a 3D model file.',
   description = [[
     A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are
-    `obj`, `fbx`, `gltf`, and collada.  Models will use normals and texture coordinates, if
-    provided.
+    `obj`, `fbx`, and `gltf`.
   ]],
   constructors = {
     'lovr.graphics.newModel',
