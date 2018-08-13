@@ -35,6 +35,11 @@ return {
               ]]
             },
             {
+              name = 'msaa',
+              type = 'number',
+              description = 'The amount of antialiasing to use when rendering to the headset.'
+            },
+            {
               name = 'offset',
               type = 'number',
               description = 'The vertical offset for seated experiences.'
@@ -170,6 +175,7 @@ return {
           -- Headset settings
           t.headset.drivers = { 'openvr', 'webvr', 'fake' }
           t.headset.mirror = true
+          t.headset.msaa = 4
           t.headset.offset = 1.7
 
           -- Enable or disable different modules

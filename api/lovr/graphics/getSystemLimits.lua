@@ -1,5 +1,5 @@
 return {
-  tag = 'graphicsState',
+  tag = 'window',
   summary = 'Get capabilities of the graphics card.',
   description = [[
     Returns information about the capabilities of the graphics card, such as the maximum texture
@@ -29,5 +29,8 @@ return {
         }
       }
     }
+  },
+  related = {
+    'lovr.graphics.getSupported'
   }
 }
