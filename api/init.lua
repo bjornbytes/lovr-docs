@@ -2679,6 +2679,26 @@ return {
           module = "lovr.data",
           methods = {
             {
+              name = "decode",
+              summary = "Decode the next chunk of audio in the AudioStream.",
+              description = "Returns a new SoundData containing the next chunk of audio in the AudioStream.",
+              key = "AudioStream:decode",
+              module = "lovr.data",
+              notes = "This function may return nil if there isn't any audio left in the stream.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "soundData",
+                      type = "SoundData",
+                      description = "The SoundData object containing raw audio samples."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getBitDepth",
               summary = "Get the bit depth of the AudioStream.",
               description = "Returns the number of bits per sample in the stream's sound data.  This is a rough indicator of the \"resolution\" of the sound, and is usually 16.",
