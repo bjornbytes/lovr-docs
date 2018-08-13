@@ -10783,6 +10783,45 @@ return {
               }
             },
             {
+              name = "getTransform",
+              summary = "Get the transformation applied to texture coordinates.",
+              description = "Returns the transformation applied to texture coordinates of the Material.",
+              key = "Material:getTransform",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "ox",
+                      type = "number",
+                      description = "The texture coordinate x offset."
+                    },
+                    {
+                      name = "oy",
+                      type = "number",
+                      description = "The texture coordinate y offset."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The texture coordinate x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The texture coordinate y scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The texture coordinate rotation, in radians."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "setColor",
               summary = "Set a color property of the Material.",
               description = "Sets a color property for a Material.  Different types of colors are supported for different lighting parameters.  Color channels should be from 0.0 to 1.0. Colors default to white and are gamma corrected as necessary, see `lovr.graphics.isGammaCorrect` for more info on that.",
@@ -10913,6 +10952,45 @@ return {
                       name = "texture",
                       type = "Texture",
                       description = "The texture to apply, or nil to use the default."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setTransform",
+              summary = "Set the transformation applied to texture coordinates.",
+              description = "Sets the transformation applied to texture coordinates of the Material.  This lets you offset, scale, or rotate textures as they are applied to geometry.",
+              key = "Material:setTransform",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "ox",
+                      type = "number",
+                      description = "The texture coordinate x offset."
+                    },
+                    {
+                      name = "oy",
+                      type = "number",
+                      description = "The texture coordinate y offset."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The texture coordinate x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The texture coordinate y scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The texture coordinate rotation, in radians."
                     }
                   },
                   returns = {}
