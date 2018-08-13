@@ -41,6 +41,7 @@ return {
   notes = 'You can set the random seed using `lovr.math.setRandomSeed`.',
   related = {
     'lovr.math.randomNormal',
-    'RandomGenerator'
+    'RandomGenerator',
+    'lovr.math.noise'
   }
 }

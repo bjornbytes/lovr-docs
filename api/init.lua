@@ -36,6 +36,11 @@ return {
                       description = "                Whether the desktop window should display a mirror of what's in the headset.\n              "
                     },
                     {
+                      name = "msaa",
+                      type = "number",
+                      description = "The amount of antialiasing to use when rendering to the headset."
+                    },
+                    {
                       name = "offset",
                       type = "number",
                       description = "The vertical offset for seated experiences."
@@ -153,7 +158,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.drivers = { 'openvr', 'webvr', 'fake' }\n  t.headset.mirror = true\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.drivers = { 'openvr', 'webvr', 'fake' }\n  t.headset.mirror = true\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
@@ -4849,10 +4854,10 @@ return {
         {
           name = "getRequirePath",
           summary = "Get the require path.",
-          description = "Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.",
+          description = "Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.\n\nFor the C require path, double question marks will be replaced by the name of the module with the operating system's native extension for shared libraries.  For example, if you do `require('lib')` and the C require path is `??`, LÖVR will try to load `lib.dll` if you're on Windows or `lib.so` if you're on Linux.",
           key = "lovr.filesystem.getRequirePath",
           module = "lovr.filesystem",
-          notes = "The default reqiure path is '?.lua;?/init.lua'.",
+          notes = "The default reqiure path is '?.lua;?/init.lua'.  The default C require path is '??'.",
           variants = {
             {
               arguments = {},
@@ -4861,6 +4866,11 @@ return {
                   name = "path",
                   type = "string",
                   description = "The semicolon separated list of search patterns."
+                },
+                {
+                  name = "cpath",
+                  type = "string",
+                  description = "The semicolon separated list of search patterns for C libraries."
                 }
               }
             }
@@ -5230,17 +5240,24 @@ return {
         {
           name = "setRequirePath",
           summary = "Set the require path.",
-          description = "Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.",
+          description = "Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.\n\nFor the C require path, double question marks will be replaced by the name of the module with the operating system's native extension for shared libraries.  For example, if you do `require('lib')` and the C require path is `??`, LÖVR will try to load `lib.dll` if you're on Windows or `lib.so` if you're on Linux.",
           key = "lovr.filesystem.setRequirePath",
           module = "lovr.filesystem",
-          notes = "The default reqiure path is '?.lua;?/init.lua'.",
+          notes = "The default reqiure path is '?.lua;?/init.lua'.  The default C require path is '??'.",
           variants = {
             {
               arguments = {
                 {
                   name = "path",
                   type = "string",
-                  description = "The semicolon separated list of search patterns."
+                  description = "An optional semicolon separated list of search patterns.",
+                  default = "nil"
+                },
+                {
+                  name = "cpath",
+                  type = "string",
+                  description = "An optional semicolon separated list of search patterns for C libraries.",
+                  default = "nil"
                 }
               },
               returns = {}
@@ -7426,12 +7443,50 @@ return {
           notes = "Stencil values are between 0 and 255."
         },
         {
+          name = "getSupported",
+          tag = "window",
+          summary = "Check if certain features are supported.",
+          description = "Returns whether certain features are supported by the system\\'s graphics card.",
+          key = "lovr.graphics.getSupported",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getSystemLimits"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "features",
+                  type = "table",
+                  description = "A table of features and whether or not they are supported.",
+                  table = {
+                    {
+                      name = "writableblocks",
+                      type = "boolean",
+                      description = "Whether ShaderBlock objects can be created with the 'writable' flag."
+                    },
+                    {
+                      name = "computeshaders",
+                      type = "boolean",
+                      description = "Whether compute shaders are available."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getSystemLimits",
-          tag = "graphicsState",
+          tag = "window",
           summary = "Get capabilities of the graphics card.",
           description = "Returns information about the capabilities of the graphics card, such as the maximum texture size or the amount of supported antialiasing.",
           key = "lovr.graphics.getSystemLimits",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getSupported"
+          },
           variants = {
             {
               arguments = {},
@@ -13913,6 +13968,112 @@ return {
           }
         },
         {
+          name = "noise",
+          summary = "Generate perlin noise.",
+          description = "Returns a 1D, 2D, 3D, or 4D perlin noise value.  The number will be between 0 and 1, and it will always be 0.5 when the inputs are integers.",
+          key = "lovr.math.noise",
+          module = "lovr.math",
+          related = {
+            "lovr.math.random"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the input."
+                }
+              },
+              returns = {
+                {
+                  name = "noise",
+                  type = "number",
+                  description = "The noise value, between 0 and 1."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the input."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the input."
+                }
+              },
+              returns = {
+                {
+                  name = "noise",
+                  type = "number",
+                  description = "The noise value, between 0 and 1."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the input."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the input."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the input."
+                }
+              },
+              returns = {
+                {
+                  name = "noise",
+                  type = "number",
+                  description = "The noise value, between 0 and 1."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the input."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the input."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the input."
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The w coordinate of the input."
+                }
+              },
+              returns = {
+                {
+                  name = "noise",
+                  type = "number",
+                  description = "The noise value, between 0 and 1."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "orientationToDirection",
           summary = "Convert an angle/axis orientation to a direction vector.",
           description = "Converts a rotation in angle/axis representation into a direction vector.",
@@ -13982,7 +14143,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.randomNormal",
-            "RandomGenerator"
+            "RandomGenerator",
+            "lovr.math.noise"
           },
           variants = {
             {
