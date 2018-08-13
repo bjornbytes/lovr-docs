@@ -2103,6 +2103,83 @@ return {
           }
         },
         {
+          name = "newSoundData",
+          summary = "Create a new SoundData.",
+          description = "Creates a new SoundData.  You can pass a filename or Blob to decode, an existing AudioStream to decode audio samples from, or you can create an empty SoundData that is able to hold a certain number of samples.",
+          key = "lovr.data.newSoundData",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the sound to decode."
+                }
+              },
+              returns = {
+                {
+                  name = "soundData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "samples",
+                  type = "number",
+                  description = "The total number of samples in each channel."
+                },
+                {
+                  name = "sampleRate",
+                  type = "number",
+                  description = "The number of samples per second."
+                },
+                {
+                  name = "bitDepth",
+                  type = "number",
+                  description = "The number of bits stored for each sample."
+                }
+              },
+              returns = {
+                {
+                  name = "soundData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            },
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "soundData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "string",
+                  description = "The Blob containing sound data to decode."
+                }
+              },
+              returns = {
+                {
+                  name = "soundData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newTextureData",
           summary = "Create a new TextureData.",
           description = "Creates a new TextureData with a given width and height or from an image file.",
