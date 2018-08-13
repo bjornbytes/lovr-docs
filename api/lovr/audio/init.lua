@@ -23,6 +23,11 @@ return {
         listener will be synchronized with any connected headset so audio is positioned properly as
         the headset is moved around and rotated.
       ]]
+    },
+    {
+      name = 'Microphones',
+      tag = 'microphones',
+      description = 'Microphones can be used to receive audio input.'
     }
   }
 }

@@ -646,6 +646,11 @@ return {
           name = "Listener",
           tag = "listener",
           description = "The listener is a virtual object in 3D space that \"hears\" all the sounds that are playing. The listener can be positioned and oriented in 3D space, which controls how Sources in the world are heard.  For example, sounds further away from the listener will be more quiet, and sounds to the left of the listener will be heard from the left speaker.  By default, the listener will be synchronized with any connected headset so audio is positioned properly as the headset is moved around and rotated."
+        },
+        {
+          name = "Microphones",
+          tag = "microphones",
+          description = "Microphones can be used to receive audio input."
         }
       },
       enums = {
@@ -710,6 +715,46 @@ return {
             }
           },
           notes = "The default factor is 1 and the default speed of sound is 343.29."
+        },
+        {
+          name = "getMicrophoneNames",
+          tag = "microphones",
+          summary = "Get a table containing the names of all connected microphones.",
+          description = "Returns a table containing the names of all microphones connected to the system.",
+          key = "lovr.audio.getMicrophoneNames",
+          module = "lovr.audio",
+          related = {
+            "lovr.audio.newMicrophone",
+            "Microphone"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "names",
+                  type = "table",
+                  description = "The list of microphone names as strings."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "t",
+                  type = "table",
+                  description = "A table to fill with the microphone names."
+                }
+              },
+              returns = {
+                {
+                  name = "t",
+                  type = "table",
+                  description = "The original table that was passed in."
+                }
+              }
+            }
+          }
         },
         {
           name = "getOrientation",
@@ -843,6 +888,60 @@ return {
                   name = "spatialized",
                   type = "boolean",
                   description = "Whether or not audio is spatialized."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newMicrophone",
+          tag = "microphones",
+          summary = "Create a new Microphone.",
+          description = "Creates a new Microphone based on the name of an existing micrphone and a set of capture parameters.  If the specified parameters are not supported, `nil` will be returned.",
+          key = "lovr.audio.newMicrophone",
+          module = "lovr.audio",
+          related = {
+            "lovr.audio.getMicrophoneNames",
+            "Microphone"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "name",
+                  type = "string",
+                  description = "The name of the microphone that this Microphone will record from."
+                },
+                {
+                  name = "samples",
+                  type = "number",
+                  description = "The maximum number of samples that will be stored in the Microphone's internal buffer.",
+                  default = "1024"
+                },
+                {
+                  name = "sampleRate",
+                  type = "number",
+                  description = "The number of audio samples to record each second.",
+                  default = "8000"
+                },
+                {
+                  name = "bitDepth",
+                  type = "number",
+                  description = "The number of bits occupied by each sample.  Usually 8 or 16.",
+                  default = "16"
+                },
+                {
+                  name = "channelCount",
+                  type = "number",
+                  description = "The number of channels to record (1 for mono, 2 for stereo).",
+                  default = "1"
+                }
+              },
+              returns = {
+                {
+                  name = "microphone",
+                  type = "Microphone",
+                  description = "The new Microphone, or nil if the capture settings are not supported."
                 }
               }
             }
@@ -1156,6 +1255,228 @@ return {
         }
       },
       objects = {
+        {
+          name = "Microphone",
+          summary = "An object that records audio.",
+          description = "A Microphone object provides audio input by recording sounds.",
+          key = "Microphone",
+          module = "lovr.audio",
+          methods = {
+            {
+              name = "getBitDepth",
+              summary = "Get the bit depth of the Microphone.",
+              description = "Returns the number of bits occupied for each recorded sample.  This is a rough indicator of the quality of the recording, and is 16 by default.",
+              key = "Microphone:getBitDepth",
+              module = "lovr.audio",
+              related = {
+                "Microphone:getChannelCount",
+                "Microphone:getSampleRate",
+                "lovr.audio.newMicrophone"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "bits",
+                      type = "number",
+                      description = "The number of bits per sample."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getChannelCount",
+              summary = "Get the number of channels recorded by the Microphone.",
+              description = "Returns the number of channels recorded by the Microphone.  One recorded channel will result in a mono sound, and there will be two channels for a stereo sound.  Most microphones only support recording a single channel.",
+              key = "Microphone:getChannelCount",
+              module = "lovr.audio",
+              related = {
+                "Microphone:getBitDepth",
+                "Microphone:getSampleRate",
+                "lovr.audio.newMicrophone"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "number",
+                      description = "The number of channels recorded."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getData",
+              summary = "Get a new SoundData with recorded audio.",
+              description = "Returns a new SoundData with all of the buffered audio samples that the Microphone has recorded.",
+              key = "Microphone:getData",
+              module = "lovr.audio",
+              related = {
+                "Microphone:getSampleCount",
+                "Microphone:startRecording",
+                "Microphone:stopRecording",
+                "Microphone:isRecording",
+                "SoundData"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "number",
+                      description = "The number of channels recorded."
+                    }
+                  }
+                }
+              },
+              notes = "There's a limit on the number of samples the Microphone is able to hold, which can be set at creation time in `lovr.audio.newMicrophone`.  While the Microphone is recording, be sure to call this function periodically to get a new chunk of audio in order to make room for more.\n\nYou can use `Microphone:getSampleCount` to figure out how many samples the Microphone is currently holding."
+            },
+            {
+              name = "getName",
+              summary = "Get the name of the Microphone.",
+              description = "Returns the name of the Microphone.",
+              key = "Microphone:getName",
+              module = "lovr.audio",
+              related = {
+                "lovr.audio.getMicrophoneNames",
+                "lovr.audio.newMicrophone"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Microphone."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSampleCount",
+              summary = "Get the number of recorded audio samples.",
+              description = "Returns the number of audio samples the Microphone has recorded so far.  This will be zero if the Microphone hasn't started recording yet, see `Microphone:startRecording`.\n\nThere's a limit on the number of samples the Microphone is able to hold, which can be set at creation time in `lovr.audio.newMicrophone`.  While the Microphone is recording, be sure to call `Microphone:getData` periodically to get a new chunk of audio in order to make room for more.",
+              key = "Microphone:getSampleCount",
+              module = "lovr.audio",
+              related = {
+                "Microphone:getData",
+                "Microphone:isRecording",
+                "Microphone:startRecording",
+                "Microphone:stopRecording",
+                "lovr.audio.newMicrophone"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "The number of recorded samples."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSampleRate",
+              summary = "Get the sample rate of the Microphone.",
+              description = "Returns the number of samples recorded each second.  Higher sample rates lead to higher quality audio, but they can reduce performance and may not be supported by all microphones.",
+              key = "Microphone:getSampleRate",
+              module = "lovr.audio",
+              related = {
+                "Microphone:getBitDepth",
+                "Microphone:getChannelCount",
+                "lovr.audio.newMicrophone"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sampleRate",
+                      type = "number",
+                      description = "The number of samples recorded every second."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isRecording",
+              summary = "Get whether the Microphone is recording.",
+              description = "Returns whether or not the Microphone is currently recording.",
+              key = "Microphone:isRecording",
+              module = "lovr.audio",
+              related = {
+                "Microphone:startRecording",
+                "Microphone:stopRecording"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "recording",
+                      type = "boolean",
+                      description = "Whether the Microphone is recording."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "startRecording",
+              summary = "Start recording.",
+              description = "Starts recording audio samples from the Microphone.  You can use `Microphone:getData` to periodically read the captured audio samples, and use `Microphone:stopRecording` when you're done.",
+              key = "Microphone:startRecording",
+              module = "lovr.audio",
+              related = {
+                "Microphone:getData",
+                "Microphone:stopRecording",
+                "Microphone:isRecording"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "stopRecording",
+              summary = "Stop recording.",
+              description = "Stops recording from the Microphone.",
+              key = "Microphone:stopRecording",
+              module = "lovr.audio",
+              related = {
+                "Microphone:startRecording",
+                "Microphone:isRecording"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.audio.newMicrophone"
+          },
+          related = {
+            "lovr.audio.getMicrophoneNames",
+            "SoundData"
+          }
+        },
         {
           name = "Source",
           summary = "A playable sound object.",
