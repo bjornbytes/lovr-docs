@@ -5,7 +5,10 @@ return {
     They can be used for lighting, postprocessing, particles, animation, and much more.  You can use
     `lovr.graphics.setShader` to change the active Shader.
   ]],
-  constructor = 'lovr.graphics.newShader',
+  constructors = {
+    'lovr.graphics.newShader',
+    'lovr.graphics.newComputeShader'
+  },
   notes = [[
     The current GLSL version used is 150.
 
@@ -64,6 +67,34 @@ return {
         in vec4 vertexColor;
         in vec4 gl_FragCoord;
         out vec4 lovrFragColor;
+
+    ### Compute Shaders
+
+    Compute shaders can be created with `lovr.graphics.newComputeShader` and run with
+    `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no
+    default compute shader, instead the `void compute();` function must be implemented.
+
+    You can use the `layout` qualifier to specify a local work group size:
+
+        layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;
+
+    And the following built in variables can be used:
+
+        in uvec3 gl_NumWorkGroups;      // The size passed to lovr.graphics.compute
+        in uvec3 gl_WorkGroupSize;      // The local work group size
+        in uvec3 gl_WorkGroupID;        // The current global work group
+        in uvec3 gl_LocalInvocationID;  // The current local work group
+        in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs
+
+    Compute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s.
+    To bind a texture in a way that can be written to a compute shader, declare the uniforms with a
+    type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a
+    texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL
+    functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to
+    using assignment syntax.
+
+    LÖVR handles synchronization of textures and shader blocks so there is no need to use manual
+    memory barriers to synchronize writes to resources from compute shaders.
   ]],
   example = {
     description = 'Set a simple shader that colors pixels based on vertex normals.',
@@ -93,6 +124,7 @@ return {
     ]=]
   },
   related = {
+    'lovr.graphics.newComputeShader',
     'lovr.graphics.setShader',
     'lovr.graphics.getShader'
   }
