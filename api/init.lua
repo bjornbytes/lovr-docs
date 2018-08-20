@@ -5721,6 +5721,28 @@ return {
           }
         },
         {
+          name = "ShaderType",
+          summary = "Different types of shaders.",
+          description = "Shaders can be used for either rendering operations or generic compute tasks.  Graphics shaders are created with `lovr.graphics.newShader` and compute shaders are created with `lovr.graphics.newComputeShader`.  `Shader:getType` can be used on an existing Shader to figure out what type it is.",
+          key = "ShaderType",
+          module = "graphics",
+          values = {
+            {
+              name = "graphics",
+              description = "A graphics shader."
+            },
+            {
+              name = "stream",
+              description = "A compute shader."
+            }
+          },
+          related = {
+            "Shader",
+            "lovr.graphics.newShader",
+            "lovr.graphics.newComputeShader"
+          }
+        },
+        {
           name = "StencilAction",
           summary = "Different stencil operations available.",
           description = "How to modify pixels in the stencil buffer when using `lovr.graphics.stencil`.",
@@ -6785,6 +6807,51 @@ return {
           }
         },
         {
+          name = "compute",
+          tag = "graphicsPrimitives",
+          summary = "Run a compute shader.",
+          description = "This function runs a compute shader on the GPU.  Compute shaders must be created with `lovr.graphics.newComputeShader` and they should implement the `void compute();` GLSL function. Running a compute shader doesn't actually do anything, but the Shader can modify data stored in `Texture`s or `ShaderBlock`s to get interesting things to happen.\n\nWhen running the compute shader, you can specify the number of times to run it in 3 dimensions, which is useful to iterate over large numbers of elements like pixels or array elements.",
+          key = "lovr.graphics.compute",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "shader",
+                  type = "Shader",
+                  description = "The compute shader to run."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The amount of times to run in the x direction.",
+                  default = "1"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The amount of times to run in the y direction.",
+                  default = "1"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The amount of times to run in the z direction.",
+                  default = "1"
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.newComputeShader",
+            "lovr.graphics.getShader",
+            "lovr.graphics.setShader",
+            "Shader"
+          },
+          notes = "Only compute shaders created with `lovr.graphics.newComputeShaders` can be used here."
+        },
+        {
           name = "createWindow",
           tag = "window",
           summary = "Creates the window.",
@@ -7818,6 +7885,39 @@ return {
             }
           },
           notes = "You can render to the Canvas using `Canvas:renderTo`."
+        },
+        {
+          name = "newComputeShader",
+          tag = "graphicsObjects",
+          summary = "Create a new compute Shader.",
+          description = "Creates a new compute Shader, used for running generic compute operations on the GPU.",
+          key = "lovr.graphics.newComputeShader",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "source",
+                  type = "string",
+                  description = "The code or filename of the compute shader."
+                }
+              },
+              returns = {
+                {
+                  name = "shader",
+                  type = "Shader",
+                  description = "The new compute Shader."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.graphics.compute",
+            "lovr.graphics.newShader",
+            "lovr.graphics.setShader",
+            "lovr.graphics.getShader"
+          },
+          notes = "Compute shaders are not supported on all hardware, use `lovr.graphics.getSupported` to check if they're available on the current system.\n\nThe source code for a compute shader needs to implement the `void compute();` GLSL function. This function doesn't return anything, but the compute shader is able to write data out to `Texture`s or `ShaderBlock`s.\n\nThe GLSL version used for compute shaders is GLSL 430."
         },
         {
           name = "newFont",
@@ -12136,13 +12236,37 @@ return {
             }
           },
           related = {
+            "lovr.graphics.newComputeShader",
             "lovr.graphics.setShader",
             "lovr.graphics.getShader"
           },
           constructors = {
-            "lovr.graphics.newShader"
+            "lovr.graphics.newShader",
+            "lovr.graphics.newComputeShader"
           },
           methods = {
+            {
+              name = "getType",
+              summary = "Get the type of the Shader.",
+              description = "Returns the type of the Shader, which will be \"graphics\" or \"compute\".\n\nGraphics shaders are created with `lovr.graphics.newShader` and can be used for rendering with `lovr.graphics.setShader`.  Compute shaders are created with `lovr.graphics.newComputeShader` and can be run using `lovr.graphics.compute`.",
+              key = "Shader:getType",
+              module = "lovr.graphics",
+              related = {
+                "ShaderType"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "type",
+                      type = "ShaderType",
+                      description = "The type of the Shader."
+                    }
+                  }
+                }
+              }
+            },
             {
               name = "hasUniform",
               summary = "Check if a Shader has a uniform variable.",
@@ -12201,7 +12325,7 @@ return {
               }
             }
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n\nAdditionally, the `lovrInstanceID` variable should be used to get the current instance ID when using instanced rendering.\n\nFragment shader header:\n\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;"
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n\nAdditionally, the `lovrInstanceID` variable should be used to get the current instance ID when using instanced rendering.\n\nFragment shader header:\n\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;\n\n### Compute Shaders\n\nCompute shaders can be created with `lovr.graphics.newComputeShader` and run with `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no default compute shader, instead the `void compute();` function must be implemented.\n\nYou can use the `layout` qualifier to specify a local work group size:\n\n    layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;\n\nAnd the following built in variables can be used:\n\n    in uvec3 gl_NumWorkGroups;      // The size passed to lovr.graphics.compute\n    in uvec3 gl_WorkGroupSize;      // The local work group size\n    in uvec3 gl_WorkGroupID;        // The current global work group\n    in uvec3 gl_LocalInvocationID;  // The current local work group\n    in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs\n\nCompute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s. To bind a texture in a way that can be written to a compute shader, declare the uniforms with a type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to using assignment syntax.\n\nLÖVR handles synchronization of textures and shader blocks so there is no need to use manual memory barriers to synchronize writes to resources from compute shaders."
         },
         {
           name = "Texture",
