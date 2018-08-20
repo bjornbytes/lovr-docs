@@ -59,7 +59,7 @@ Unix (CMake)
 ---
 
 First, clone [OpenVR](https://github.com/ValveSoftware/openvr).  For this example, we'll clone
-`openvr` into the same directory that `lovr` was cloned into.
+`openvr` into the same directory that lovr was cloned into.
 
 ```sh
 git clone --branch v1.0.5 https://github.com/ValveSoftware/openvr.git
@@ -83,14 +83,14 @@ cmake .. -DOPENVR_DIR=../../openvr
 cmake --build .
 ```
 
-The `lovr` executable should exist in `lovr/build` now.  You can run a game like this:
+The lovr executable should exist in `lovr/build` now.  You can run a game like this:
 
 ```sh
 ./lovr /path/to/myGame
 ```
 
 You can also copy or symlink LÖVR into a directory on your `PATH` environment variable (e.g.
-`/usr/local/bin`) and run games from anywhere by just typing `lovr`.
+`/usr/local/bin`) and run games from anywhere by just typing 'lovr'.
 
 WebVR
 ---
