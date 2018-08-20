@@ -5732,7 +5732,7 @@ return {
               description = "A graphics shader."
             },
             {
-              name = "stream",
+              name = "compute",
               description = "A compute shader."
             }
           },
