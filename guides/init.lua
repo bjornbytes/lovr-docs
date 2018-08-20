@@ -8,5 +8,6 @@ return {
   'Controllers',
   'Sound',
   'Game_Distribution',
-  'WebVR'
+  'WebVR',
+  'Compiling'
 }
