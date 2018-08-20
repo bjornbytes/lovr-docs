@@ -26,7 +26,7 @@ the repository, so make sure you clone with the `--recursive` flag or run `git s
 Windows
 ---
 
-From the `lovr` folder, run these commands to create a build folder and compile the project using
+From the lovr folder, run these commands to create a build folder and compile the project using
 CMake:
 
 ```sh
@@ -58,7 +58,7 @@ cmake ..
 cmake --build .
 ```
 
-The `lovr` executable should exist in `lovr/build` now.  It's recommended to set up an alias or
+The lovr executable should exist in `lovr/build` now.  It's recommended to set up an alias or
 symlink so that this executable can be found in your PATH environment variable.  Once that's done,
 you can run a project like this:
 
