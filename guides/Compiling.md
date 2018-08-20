@@ -30,7 +30,7 @@ git submodule update --init
 Windows
 ---
 
-From the `lovr` folder, run these commands to create a build folder and compile the project using
+From the lovr folder, run these commands to create a build folder and compile the project using
 CMake:
 
 ```sh
@@ -62,7 +62,7 @@ cmake ..
 cmake --build .
 ```
 
-The `lovr` executable should exist in `lovr/build` now.  It's recommended to set up an alias or
+The lovr executable should exist in `lovr/build` now.  It's recommended to set up an alias or
 symlink so that this executable exists on your path.  Once that's done, you can run a game like this:
 
 ```sh
