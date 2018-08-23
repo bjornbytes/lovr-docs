@@ -52,6 +52,10 @@ return {
   returns = {},
   variants = {
     {
+      description = [[
+        Clears the color, depth, and stencil to their default values.  Color will be cleared to the
+        current background color, depth will be cleared to 1.0, and stencil will be cleared to 0.
+      ]],
       arguments = { 'color', 'depth', 'stencil' },
       returns = {}
     },

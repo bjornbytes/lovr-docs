@@ -5988,6 +5988,7 @@ return {
           notes = "The two variants of this function can be mixed and matched, meaning you can use booleans for some of the values and numeric values for others.",
           variants = {
             {
+              description = "Clears the color, depth, and stencil to their default values.  Color will be cleared to the current background color, depth will be cleared to 1.0, and stencil will be cleared to 0.",
               arguments = {
                 {
                   name = "color",
