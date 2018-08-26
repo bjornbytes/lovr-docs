@@ -63,10 +63,6 @@ return {
     {
       arguments = { 'format', 'vertices', 'mode', 'usage' },
       returns = { 'mesh' }
-    },
-    {
-      arguments = { 'vertices', 'mode', 'usage' },
-      returns = { 'mesh' }
     }
   },
   notes = 'Once created, the size of the Mesh can\'t be changed.'

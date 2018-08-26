@@ -7343,34 +7343,6 @@ return {
                   description = "The new Mesh."
                 }
               }
-            },
-            {
-              arguments = {
-                {
-                  name = "vertices",
-                  type = "table",
-                  description = "A table of vertices.  Each vertex is a table containing the vertex data."
-                },
-                {
-                  name = "mode",
-                  type = "MeshDrawMode",
-                  description = "How the Mesh will connect its vertices into triangles.",
-                  default = "'fan'"
-                },
-                {
-                  name = "usage",
-                  type = "MeshUsage",
-                  description = "An optimization hint indicating how often the data in the Mesh will be updated.",
-                  default = "'dynamic'"
-                }
-              },
-              returns = {
-                {
-                  name = "mesh",
-                  type = "Mesh",
-                  description = "The new Mesh."
-                }
-              }
             }
           }
         },
