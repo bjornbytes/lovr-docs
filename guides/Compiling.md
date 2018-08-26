@@ -29,7 +29,7 @@ Windows
 From the lovr folder, run these commands to create a build folder and compile the project using
 CMake:
 
-```sh
+```
 mkdir build
 cd build
 cmake ..
@@ -45,13 +45,13 @@ macOS
 
 Install the dependencies using your package manager of choice:
 
-```sh
+```
 brew install assimp glfw3 luajit physfs openal-soft ode libccd
 ```
 
 Next, build using CMake, as above:
 
-```sh
+```
 mkdir build
 cd build
 cmake ..
@@ -62,7 +62,7 @@ The lovr executable should exist in `lovr/build` now.  It's recommended to set u
 symlink so that this executable can be found in your PATH environment variable.  Once that's done,
 you can run a project like this:
 
-```sh
+```
 lovr /path/to/myGame
 ```
 
@@ -76,19 +76,19 @@ First, install the dependencies using your package manager of choice.
 
 #### Arch Linux
 
-```sh
+```
 pacman -S assimp glfw-x11 luajit physfs openal ode
 ```
 
 #### Debian/Ubuntu
 
-```sh
+```
 sudo apt-get install build-essential cmake libassimp-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev
 ```
 
 Then, build with CMake:
 
-```sh
+```
 mkdir build
 cd build
 cmake ..
@@ -100,14 +100,14 @@ Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next, [install
 rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).  Then, run LÖVR
 within the Steam runtime:
 
-```sh
+```
 ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
 If you receive errors related to `libstdc++`, set the `LD_PRELOAD` environment variable when running
 the command:
 
-```sh
+```
 LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
@@ -118,7 +118,7 @@ First, install the Emscripten SDK.
 
 Unix:
 
-```sh
+```
 mkdir build
 cd build
 emcmake cmake ..
@@ -127,7 +127,7 @@ emmake make -j2
 
 Windows (from a Visual Studio Command Prompt, make sure the Emscripten SDK is on PATH):
 
-```sh
+```
 mkdir build
 cd build
 emcmake cmake -G "NMake Makefiles" ..
