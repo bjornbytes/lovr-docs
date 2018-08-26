@@ -7,10 +7,10 @@ how to export and distribute a project.
 Creating an Archive
 ---
 
-The first step is to create an archive of your project, which is really just a zipped up version of
-its contents.  On Windows you can select all the files in a project (**not** the project folder),
-right click them, and choose "Send to" -> "Compressed (zip) folder".  On Unix systems, the `zip`
-utility can be used:
+The first step is to create an archive of your project, which is a zipped up version of its
+contents.  On Windows you can select all the files in a project (**not** the project folder), right
+click them, and choose "Send to" -> "Compressed (zip) folder".  On Unix systems, the `zip` utility
+can be used:
 
 ```
 zip -9qr .
@@ -36,15 +36,10 @@ original LÖVR download.
 WebVR
 ---
 
-You can use the [WebVR Exporter](/share) to export to WebVR.  Just drag and drop a `.zip` file into
-your window to create a WebVR page.
-
-> Note that WebVR exports are removed after 30 days of inactivity!
-
 To create a custom WebVR build, see [this
 guide](https://github.com/bjornbytes/lovr/blob/master/COMPILING.md#webvr).
 
 Note that there are a few differences when running LÖVR in the browser:
 
 - `Controller:newModel` will always return `nil`.
-- Oculus Touch controllers are not fully supported yet.
+- Compute shaders are not supported.
