@@ -29,7 +29,9 @@ List of Libraries
 - [lovr-haxe-wrappergen](https://github.com/excessive/lovr-haxe-wrappergen) - Haxe bindings for LÖVR.
 - [lovr-icosphere](https://github.com/bjornbytes/lovr-icosphere) - A library to create icospheres.
 - [lovr-grid](https://github.com/bjornbytes/lovr-grid) - A library for drawing grids.
+- [lovr-keyboard](https://github.com/bjornbytes/lovr-keyboard) - Keyboard input
 - [lovr-lighting](https://github.com/bjornbytes/lovr-lighting) - Simple lighting shaders to add to
+- [lovr-mouse](https://github.com/bjornbytes/lovr-mouse) - Mouse input
 - [lovr-pointer](https://github.com/bjornbytes/lovr-pointer) - A general pointer system that can be
   used to select objects or create teleporters.
 - [lovr-webvr-server](https://github.com/bjornbytes/lovr-webvr-server) - A local development server for
