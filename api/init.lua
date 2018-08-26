@@ -9384,22 +9384,26 @@ return {
                   type = "Texture",
                   description = "The texture to use."
                 },
-                ay = {
-                  type = "number",
-                  description = "The y coordinate of the axis of rotation.",
-                  default = "1"
-                },
-                angle = {
+                {
+                  name = "angle",
                   type = "number",
                   description = "How much to rotate the skybox around its axis of rotation.",
                   default = "0"
                 },
-                ax = {
+                {
+                  name = "ax",
                   type = "number",
                   description = "The x coordinate of the axis of rotation.",
                   default = "0"
                 },
-                az = {
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
                   type = "number",
                   description = "The z coordinate of the axis of rotation.",
                   default = "0"
