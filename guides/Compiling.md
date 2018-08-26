@@ -27,14 +27,14 @@ Windows (CMake)
 
 First, install [lovr-deps](https://github.com/bjornbytes/lovr-deps):
 
-```sh
+```
 cd lovr
 git clone --recursive https://github.com/bjornbytes/lovr-deps deps
 ```
 
 Next, use CMake to generate the build files:
 
-```sh
+```
 mkdir build
 cd build
 cmake ..
@@ -43,7 +43,7 @@ cmake ..
 This should output a Visual Studio solution, which can be built using Visual Studio.  Or you can
 just build it with CMake:
 
-```sh
+```
 cmake --build .
 ```
 
@@ -61,13 +61,13 @@ Unix (CMake)
 First, clone [OpenVR](https://github.com/ValveSoftware/openvr).  For this example, we'll clone
 `openvr` into the same directory that lovr was cloned into.
 
-```sh
+```
 git clone --branch v1.0.5 https://github.com/ValveSoftware/openvr.git
 ```
 
 Next, install the other dependencies above using your package manager of choice:
 
-```sh
+```
 brew install assimp glfw3 luajit physfs freetype openal-soft
 ```
 
@@ -76,7 +76,7 @@ On OSX, you'll need to set the `DYLD_LIBRARY_PATH` environment variable to be
 
 Next, build using CMake:
 
-```sh
+```
 mkdir build
 cd build
 cmake .. -DOPENVR_DIR=../../openvr
@@ -85,7 +85,7 @@ cmake --build .
 
 The lovr executable should exist in `lovr/build` now.  You can run a game like this:
 
-```sh
+```
 ./lovr /path/to/myGame
 ```
 
@@ -100,7 +100,7 @@ branch](https://github.com/bjornbytes/emscripten/tree/lovr) of Emscripten.
 
 Unix:
 
-```sh
+```
 mkdir build
 cd build
 emcmake cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -109,7 +109,7 @@ emmake make -j2
 
 Windows (from a Visual Studio Command Prompt, make sure the Emscripten SDK is on PATH):
 
-```sh
+```
 mkdir build
 cd build
 emcmake cmake -G "NMake Makefiles" ..
