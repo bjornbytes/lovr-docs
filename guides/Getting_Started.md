@@ -58,8 +58,6 @@ If you followed the example above, you should see the following in VR:
 
 ![Hello World](https://lovr.org/static/img/helloWorld.png)
 
-That's all there is to it!
-
 Next Steps
 ---
 
