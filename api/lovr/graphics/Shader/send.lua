@@ -1,6 +1,6 @@
 return {
   summary = 'Update a uniform variable in the Shader.',
-  description = 'Update a uniform variable in the Shader.',
+  description = 'Updates a uniform variable in the Shader.',
   arguments = {
     {
       name = 'uniform',
@@ -39,5 +39,8 @@ return {
         shader:send('offset', { .3, .7, 0 })
       end
     ]=]
+  },
+  related = {
+    'Shader:sendBlock'
   }
 }

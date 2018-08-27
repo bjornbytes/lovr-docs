@@ -12289,9 +12289,12 @@ return {
             {
               name = "send",
               summary = "Update a uniform variable in the Shader.",
-              description = "Update a uniform variable in the Shader.",
+              description = "Updates a uniform variable in the Shader.",
               key = "Shader:send",
               module = "lovr.graphics",
+              related = {
+                "Shader:sendBlock"
+              },
               notes = "The shader does not need to be active to update its uniforms.  However, the types must match up. Uniform variables declared as `float`s must be sent a single number, whereas uniforms declared as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s can be sent a `Transform` object.\n\nAn error is thrown if the uniform does not exist or is not used in the shader.\n\n`Blob`s can be used to pass arbitrary binary data to Shader variables.",
               variants = {
                 {
@@ -12316,9 +12319,62 @@ return {
                   code = "function lovr.load()\n  shader = lovr.graphics.newShader [[\n    uniform vec3 offset;\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vertex.xyz += offset;\n      return projection * transform * vertex;\n    }\n  ]]\n\n  shader:send('offset', { .3, .7, 0 })\nend"
                 }
               }
+            },
+            {
+              name = "sendBlock",
+              summary = "Send a ShaderBlock to a Shader.",
+              description = "Sends a ShaderBlock to a Shader.  After the block is sent, you can update the data in the block without needing to resend the block.  The block can be sent to multiple shaders and they will all see the same data from the block.",
+              key = "Shader:sendBlock",
+              module = "lovr.graphics",
+              related = {
+                "Shader:send",
+                "ShaderBlock:getShaderCode",
+                "UniformAccess",
+                "ShaderBlock"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the block to send to."
+                    },
+                    {
+                      name = "block",
+                      type = "ShaderBlock",
+                      description = "The ShaderBlock to associate with the specified block."
+                    },
+                    {
+                      name = "access",
+                      type = "UniformAccess",
+                      description = "How the Shader will use this block (used as an optimization hint).",
+                      default = "readwrite"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "The shader does not need to send it a block.\n\nMake sure the ShaderBlock's variables line up with the block variables declared in the shader code, otherwise you'll get garbage data in the block.  An easy way to do this is to use `ShaderBlock:getShaderCode` to get a GLSL snippet that is compatible with the block."
             }
           },
           notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n\nAdditionally, the `lovrInstanceID` variable should be used to get the current instance ID when using instanced rendering.\n\nFragment shader header:\n\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;\n\n### Compute Shaders\n\nCompute shaders can be created with `lovr.graphics.newComputeShader` and run with `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no default compute shader, instead the `void compute();` function must be implemented.\n\nYou can use the `layout` qualifier to specify a local work group size:\n\n    layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;\n\nAnd the following built in variables can be used:\n\n    in uvec3 gl_NumWorkGroups;      // The size passed to lovr.graphics.compute\n    in uvec3 gl_WorkGroupSize;      // The local work group size\n    in uvec3 gl_WorkGroupID;        // The current global work group\n    in uvec3 gl_LocalInvocationID;  // The current local work group\n    in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs\n\nCompute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s. To bind a texture in a way that can be written to a compute shader, declare the uniforms with a type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to using assignment syntax.\n\nLÖVR handles synchronization of textures and shader blocks so there is no need to use manual memory barriers to synchronize writes to resources from compute shaders."
+        },
+        {
+          name = "ShaderBlock",
+          summary = "A big ol' block of data that can be accessed in a Shader.",
+          description = "ShaderBlocks are objects that can hold large amounts of data and can be sent to Shaders.  It is common to use \"uniform\" variables to send data to shaders, but uniforms are usually limited to a few kilobytes in size.  ShaderBlocks are useful for a few reasons:\n\n- They can hold a lot more data.\n- Shaders can modify the data in them, which is really useful for compute shaders.\n- Setting the data in a ShaderBlock updates the data for all Shaders using the block, so you\n  don't need to go around setting the same uniforms in lots of different shaders.\n\nOn systems that support compute shaders, ShaderBlocks can optionally be \"writable\".  A writable ShaderBlock is a little bit slower than a non-writable one, but shaders can modify its contents and it can be much, much larger than a non-writable ShaderBlock.",
+          key = "ShaderBlock",
+          module = "lovr.graphics",
+          examples = {
+            {
+              code = "function lovr.load()\n  -- Create a ShaderBlock to store positions for 1000 models\n  block = lovr.graphics.newShaderBlock({\n    modelPositions = { 'mat4', 1000 }\n  }, { writable = false, usage = 'static' })\n\n  -- Write some random transforms to the block\n  local transforms = {}\n  for i = 1, 1000 do\n    local transform = lovr.math.newTransform()\n\n    local x = lovr.math.randomNormal(10)\n    local y = lovr.math.randomNormal(10)\n    local z = lovr.math.randomNormal(10)\n    transform:translate(x, y, z)\n    local angle = lovr.math.random() * 2 * math.pi\n    local ax, ay, az = lovr.math.random(), lovr.math.random(), lovr.math.random()\n    transform:rotate(angle, ax, ay, az)\n\n    transforms[i] = transform\n  end\n\n  -- Create the shader, injecting the shader code for the block\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('ModelBlock') .. [[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * lovrTransform * modelPositions[gl_InstanceID] * vertex;\n    }\n  ]])\n\n  -- Bind the block to the shader\n  shader:sendBlock('ModelBlock', block)\n\n  model = lovr.graphics.newModel('monkey.obj')\nend\n\n-- Draw the model 1000 times, using positions from the shader block\nfunction lovr.draw()\n  lovr.graphics.setShader(shader)\n  model:drawInstanced(1000)\n  lovr.graphics.setShader()\nend"
+            }
+          },
+          constructors = {
+            "lovr.graphics.newShaderBlock"
+          },
+          methods = {}
         },
         {
           name = "Texture",
