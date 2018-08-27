@@ -35,6 +35,14 @@ return {
       description = 'A 32-bit floating point format with a single color channel.'
     },
     {
+      name = 'rg16f',
+      description = 'A 16-bit floating point format with two color channels.'
+    },
+    {
+      name = 'rg32f',
+      description = 'A 32-bit floating point format with two color channels.'
+    },
+    {
       name = 'rgb5a1',
       description = 'A 16 bit format with 5-bit color channels and a single alpha bit.'
     },

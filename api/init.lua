@@ -5811,6 +5811,14 @@ return {
               description = "A 32-bit floating point format with a single color channel."
             },
             {
+              name = "rg16f",
+              description = "A 16-bit floating point format with two color channels."
+            },
+            {
+              name = "rg32f",
+              description = "A 32-bit floating point format with two color channels."
+            },
+            {
               name = "rgb5a1",
               description = "A 16 bit format with 5-bit color channels and a single alpha bit."
             },
@@ -12378,6 +12386,28 @@ return {
                       name = "anisotropy",
                       type = "number",
                       description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFormat",
+              summary = "Get the format of the Texture.",
+              description = "Returns the format of the Texture.  This describes how many color channels are in the texture as well as the size of each one.  The most common format used is `rgba`, which contains red, green, blue, and alpha color channels.  See `TextureFormat` for all of the possible formats.",
+              key = "Texture:getFormat",
+              module = "lovr.graphics",
+              related = {
+                "TextureFormat"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of the Texture."
                     }
                   }
                 }
