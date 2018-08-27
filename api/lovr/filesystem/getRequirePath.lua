@@ -26,6 +26,7 @@ return {
     }
   },
   notes = [[
-    The default reqiure path is '?.lua;?/init.lua'.  The default C require path is '??'.
+    The default reqiure path is '?.lua;?/init.lua;lua_modules/?.lua;lua_modules/?/init.lua'.  The
+    default C require path is '??'.
   ]]
 }
