@@ -12323,7 +12323,7 @@ return {
         {
           name = "Texture",
           summary = "An image that can be applied to Materials.",
-          description = "A Texture is an image that can be applied to `Material`s.  Supported file formats include `.png`, `.jpg`, `.tga`, and `.bmp`.  Additionally, three compressed formats are supported: DXT1, DXT3, and DXT5 (all have the `.dds` extension).  Compressed textures are generally recommended as they use less video memory and usually improve performance.",
+          description = "A Texture is an image that can be applied to `Material`s.  The supported file formats are `.png`, `.jpg`, and `.hdr`.  Additionally, three compressed formats are supported: DXT1, DXT3, and DXT5 (all have the `.dds` extension).  Compressed textures are generally recommended as they use less video memory and usually improve performance.",
           key = "Texture",
           module = "lovr.graphics",
           methods = {
@@ -12335,7 +12335,14 @@ return {
               module = "lovr.graphics",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The mipmap level to get the depth of.  This is only valid for volume textures.",
+                      default = "1"
+                    }
+                  },
                   returns = {
                     {
                       name = "depth",
@@ -12354,7 +12361,14 @@ return {
               module = "lovr.graphics",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The mipmap level to get the dimensions of.",
+                      default = "1"
+                    }
+                  },
                   returns = {
                     {
                       name = "width",
@@ -12369,7 +12383,7 @@ return {
                     {
                       name = "depth",
                       type = "number",
-                      description = "The number of images stored in the Texture."
+                      description = "The number of images stored in the Texture, for non-2D textures."
                     }
                   }
                 }
@@ -12429,12 +12443,45 @@ return {
               module = "lovr.graphics",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The mipmap level to get the height of.",
+                      default = "1"
+                    }
+                  },
                   returns = {
                     {
                       name = "height",
                       type = "number",
                       description = "The height of the Texture, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMipmapCount",
+              summary = "Get the number of mipmap levels of the Texture.",
+              description = "Returns the number of mipmap levels of the Texture.",
+              key = "Texture:getMipmapCount",
+              module = "lovr.graphics",
+              related = {
+                "Texture:getWidth",
+                "Texture:getHeight",
+                "Texture:getDepth",
+                "Texture:getDimensions",
+                "lovr.graphics.newTexture"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "mipmaps",
+                      type = "number",
+                      description = "The number of mipmap levels in the Texture."
                     }
                   }
                 }
@@ -12471,7 +12518,14 @@ return {
               module = "lovr.graphics",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The mipmap level to get the width of.",
+                      default = "1"
+                    }
+                  },
                   returns = {
                     {
                       name = "width",
@@ -12525,9 +12579,27 @@ return {
                       description = "The TextureData containing the pixels to use.  Currently, the TextureData needs to have the same dimensions as the source Texture."
                     },
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x offset to replace at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y offset to replace at.",
+                      default = "0"
+                    },
+                    {
                       name = "slice",
                       type = "number",
                       description = "The slice to replace.  Not applicable for 2D textures.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The mipmap to replace.",
                       default = "1"
                     }
                   },

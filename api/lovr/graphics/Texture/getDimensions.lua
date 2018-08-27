@@ -1,7 +1,14 @@
 return {
   summary = 'Get the dimensions of the Texture.',
   description = 'Returns the dimensions of the Texture.',
-  arguments = {},
+  arguments = {
+    {
+      name = 'mipmap',
+      type = 'number',
+      default = '1',
+      description = 'The mipmap level to get the dimensions of.'
+    }
+  },
   returns = {
     {
       name = 'width',
@@ -16,7 +23,7 @@ return {
     {
       name = 'depth',
       type = 'number',
-      description = 'The number of images stored in the Texture.'
+      description = 'The number of images stored in the Texture, for non-2D textures.'
     }
   }
 }

@@ -11,10 +11,28 @@ return {
       ]]
     },
     {
+      name = 'x',
+      type = 'number',
+      default = '0',
+      description = 'The x offset to replace at.'
+    },
+    {
+      name = 'y',
+      type = 'number',
+      default = '0',
+      description = 'The y offset to replace at.'
+    },
+    {
       name = 'slice',
       type = 'number',
       default = '1',
       description = 'The slice to replace.  Not applicable for 2D textures.'
+    },
+    {
+      name = 'mipmap',
+      type = 'number',
+      default = '1',
+      description = 'The mipmap to replace.'
     }
   },
   returns = {},
