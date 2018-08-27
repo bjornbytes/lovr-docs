@@ -10,6 +10,11 @@ return {
       type = 'number',
       description = 'The height of the texture data.'
     },
+    format = {
+      type = 'TextureFormat',
+      default = 'rgba',
+      description = 'The format of the texture\'s pixels.'
+    },
     filename = {
       type = 'string',
       description = 'The filename of the image to load.'
@@ -27,15 +32,17 @@ return {
   },
   variants = {
     {
+      description = 'Load image data from a file.',
       arguments = { 'filename' },
       returns = { 'textureData' }
     },
     {
       description = 'Create an empty TextureData, initializing all color components to 0.',
-      arguments = { 'width', 'height' },
+      arguments = { 'width', 'height', 'format' },
       returns = { 'textureData' }
     },
     {
+      description = 'Decode image data from a Blob.',
       arguments = { 'blob' },
       returns = { 'textureData' }
     }
