@@ -7175,8 +7175,10 @@ return {
           description = "Draws a fullscreen textured quad.",
           key = "lovr.graphics.fill",
           module = "lovr.graphics",
+          notes = "This function ignores stereo rendering, so it will stretch the input across the entire Canvas if it's stereo.",
           variants = {
             {
+              description = "Fills the screen with a Texture.",
               arguments = {
                 {
                   name = "texture",
@@ -7184,6 +7186,22 @@ return {
                   description = "The texture to use."
                 }
               },
+              returns = {}
+            },
+            {
+              description = "Fills the screen with the first Texture attached to a Canvas.",
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "The first Texture attached to this Canvas will be used."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Fills the screen with the active color.",
+              arguments = {},
               returns = {}
             }
           }
