@@ -1729,6 +1729,29 @@ return {
               }
             },
             {
+              name = "getType",
+              summary = "Get the SourceType of the Source.",
+              description = "Returns the SourceType of the Source that controls how the Source decodes audio.  See `SourceType` for more info.",
+              key = "Source:getType",
+              module = "lovr.audio",
+              related = {
+                "SourceType",
+                "lovr.audio.newSource"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "type",
+                      type = "SourceType",
+                      description = "The SourceType of the Source."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getVelocity",
               summary = "Get the velocity of the Source.",
               description = "Returns the velocity of the Source, in meters per second.  This affects the doppler effect.",
@@ -12366,15 +12389,16 @@ return {
           description = "ShaderBlocks are objects that can hold large amounts of data and can be sent to Shaders.  It is common to use \"uniform\" variables to send data to shaders, but uniforms are usually limited to a few kilobytes in size.  ShaderBlocks are useful for a few reasons:\n\n- They can hold a lot more data.\n- Shaders can modify the data in them, which is really useful for compute shaders.\n- Setting the data in a ShaderBlock updates the data for all Shaders using the block, so you\n  don't need to go around setting the same uniforms in lots of different shaders.\n\nOn systems that support compute shaders, ShaderBlocks can optionally be \"writable\".  A writable ShaderBlock is a little bit slower than a non-writable one, but shaders can modify its contents and it can be much, much larger than a non-writable ShaderBlock.",
           key = "ShaderBlock",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newShaderBlock"
+          },
+          notes = "A Shader can use up to 8 ShaderBlocks.",
+          methods = {},
           examples = {
             {
               code = "function lovr.load()\n  -- Create a ShaderBlock to store positions for 1000 models\n  block = lovr.graphics.newShaderBlock({\n    modelPositions = { 'mat4', 1000 }\n  }, { writable = false, usage = 'static' })\n\n  -- Write some random transforms to the block\n  local transforms = {}\n  for i = 1, 1000 do\n    local transform = lovr.math.newTransform()\n\n    local x = lovr.math.randomNormal(10)\n    local y = lovr.math.randomNormal(10)\n    local z = lovr.math.randomNormal(10)\n    transform:translate(x, y, z)\n    local angle = lovr.math.random() * 2 * math.pi\n    local ax, ay, az = lovr.math.random(), lovr.math.random(), lovr.math.random()\n    transform:rotate(angle, ax, ay, az)\n\n    transforms[i] = transform\n  end\n\n  -- Create the shader, injecting the shader code for the block\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('ModelBlock') .. [[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * lovrTransform * modelPositions[gl_InstanceID] * vertex;\n    }\n  ]])\n\n  -- Bind the block to the shader\n  shader:sendBlock('ModelBlock', block)\n\n  model = lovr.graphics.newModel('monkey.obj')\nend\n\n-- Draw the model 1000 times, using positions from the shader block\nfunction lovr.draw()\n  lovr.graphics.setShader(shader)\n  model:drawInstanced(1000)\n  lovr.graphics.setShader()\nend"
             }
-          },
-          constructors = {
-            "lovr.graphics.newShaderBlock"
-          },
-          methods = {}
+          }
         },
         {
           name = "Texture",
