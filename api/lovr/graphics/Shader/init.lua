@@ -29,13 +29,6 @@ return {
 
     Vertex shader header:
 
-        uniform mat4 lovrModel;
-        uniform mat4 lovrView;
-        uniform mat4 lovrProjection;
-        uniform mat4 lovrTransform; // Model-View matrix
-        uniform mat4 lovrNormalMatrix;
-        uniform float lovrPointSize;
-        uniform mat4 lovrPose[48];
         in vec3 lovrPosition;
         in vec3 lovrNormal;
         in vec2 lovrTexCoord;
@@ -45,12 +38,22 @@ return {
         in vec4 lovrBoneWeights;
         out vec2 texCoord;
         out vec4 vertexColor;
-
-    Additionally, the `lovrInstanceID` variable should be used to get the current instance ID when
-    using instanced rendering.
+        uniform mat4 lovrModel;
+        uniform mat4 lovrView;
+        uniform mat4 lovrProjection;
+        uniform mat4 lovrTransform; // Model-View matrix
+        uniform mat4 lovrNormalMatrix;
+        uniform float lovrPointSize;
+        uniform mat4 lovrPose[48];
+        uniform int lovrViewportCount;
+        uniform int lovrViewportIndex;
 
     Fragment shader header:
 
+        in vec2 texCoord;
+        in vec4 vertexColor;
+        in vec4 gl_FragCoord;
+        out vec4 lovrFragColor;
         uniform float lovrMetalness;
         uniform float lovrRoughness;
         uniform vec4 lovrColor;
@@ -63,10 +66,8 @@ return {
         uniform sampler2D lovrOcclusionTexture;
         uniform sampler2D lovrNormalTexture;
         uniform samplerCube lovrEnvironmentTexture;
-        in vec2 texCoord;
-        in vec4 vertexColor;
-        in vec4 gl_FragCoord;
-        out vec4 lovrFragColor;
+        uniform int lovrViewportCount;
+        uniform int lovrViewportIndex;
 
     ### Compute Shaders
 
