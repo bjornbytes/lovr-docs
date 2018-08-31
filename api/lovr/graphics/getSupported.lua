@@ -12,14 +12,14 @@ return {
       description = 'A table of features and whether or not they are supported.',
       table = {
         {
-          name = 'writableblocks',
-          type = 'boolean',
-          description = 'Whether ShaderBlock objects can be created with the \'writable\' flag.'
-        },
-        {
           name = 'computeshaders',
           type = 'boolean',
           description = 'Whether compute shaders are available.'
+        },
+        {
+          name = 'singlepass',
+          type = 'boolean',
+          description = 'Whether single pass stereo rendering is supported.'
         }
       }
     }
