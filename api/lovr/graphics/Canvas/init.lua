@@ -1,16 +1,23 @@
 return {
   summary = 'An offscreen render target.',
   description = [[
-    A Canvas is also known as a framebuffer or render-to-texture.  It allows you to render to an
-    offscreen canvas instead of directly to the screen.  This lets you postprocess or transform the
-    results later before finally rendering them to the screen.
+    A Canvas is also known as a framebuffer or render-to-texture.  It allows you to render to a
+    texture instead of directly to the screen.  This lets you postprocess or transform the results
+    later before finally rendering them to the screen.
 
-    Canvases extend Textures, so Canvases can be used as textures in materials or rendered as
-    fullscreen quads just like textures can, and they inherit all Texture functions.
+    After creating a Canvas, you can attach Textures to it using `Canvas:setTexture`.
   ]],
   constructors = {
     'lovr.graphics.newCanvas'
   },
+  notes = [[
+    Up to four textures can be attached to a Canvas and anything rendered to the Canvas will be
+    broadcast to all attached Textures.  If you want to do render different things to different
+    textures, add a `#define MULTICANVAS` line to the top of your fragment shader and implement the
+    `void colors` function instead of the usual `vec4 color` function.  You can then assign
+    different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single
+    color.
+  ]],
   example = {
     description = 'Apply a postprocessing effect (wave) using a Canvas and a fragment shader.',
     code = [=[

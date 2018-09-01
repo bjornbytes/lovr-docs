@@ -13,5 +13,9 @@ return {
       description = 'The number of MSAA samples.'
     }
   },
-  notes = 'This can only be set when the Canvas is created with `lovr.graphics.newCanvas`.'
+  notes = 'All textures attached to the Canvas must be created with this MSAA value.',
+  related = {
+    'lovr.graphics.newCanvas',
+    'lovr.graphics.newTexture'
+  }
 }

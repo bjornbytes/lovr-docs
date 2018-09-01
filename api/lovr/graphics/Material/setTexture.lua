@@ -13,6 +13,10 @@ return {
     texture = {
       type = 'Texture',
       description = 'The texture to apply, or nil to use the default.'
+    },
+    canvas = {
+      type = 'Canvas',
+      description = 'A Canvas.  The first Texture attached to the Canvas will be used.'
     }
   },
   returns = {},
@@ -23,6 +27,14 @@ return {
     },
     {
       arguments = { 'texture' },
+      returns = {}
+    },
+    {
+      arguments = { 'textureType', 'canvas' },
+      returns = {}
+    },
+    {
+      arguments = { 'canvas' },
       returns = {}
     }
   },

@@ -1,29 +1,57 @@
 return {
   tag = 'graphicsObjects',
   summary = 'Create a new Canvas.',
-  description = 'Creates a new canvas with a given width and height.',
+  description = [[
+    Creates a new Canvas.  You can specify Textures to attach to it, or just specify a width and
+    height and attach textures later using `Canvas:setTexture`.
+
+    Once created, you can render to the Canvas using `Canvas:renderTo`, or
+    `lovr.graphics.setCanvas`.
+  ]],
   arguments = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
       description = 'The width of the canvas, in pixels.'
     },
-    {
-      name = 'height',
+    height = {
       type = 'number',
       description = 'The height of the canvas, in pixels.'
     },
-    {
-      name = 'flags',
+    ['...'] = {
+      type = 'Texture',
+      description = 'One or more Textures to attach to the Canvas.'
+    },
+    attachments = {
+      type = 'table',
+      description = 'A table of textures, layers, and mipmaps (in any combination) to attach.'
+    },
+    flags = {
       type = 'table',
       default = '{}',
-      description = 'The height of the canvas, in pixels.',
+      description = 'Optional settings for the Canvas.',
       table = {
         {
           name = 'format',
           type = 'TextureFormat',
           default = [['rgba']],
-          description = 'The internal format to use for the canvas.'
+          description = [[
+            The format of a Texture to create and attach to this Canvas, or false if no Texture
+            should be created.  This is ignored if Textures are already passed in.
+          ]]
+        },
+        {
+          name = 'depth',
+          type = 'DepthFormat',
+          default = 'd16',
+          description = [[
+            A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.
+          ]]
+        },
+        {
+          name = 'stereo',
+          type = 'boolean',
+          default = 'true',
+          description = 'Whether the Canvas is stereo.'
         },
         {
           name = 'msaa',
@@ -32,34 +60,46 @@ return {
           description = 'The number of MSAA samples to use for antialiasing.'
         },
         {
-          name = 'depth',
-          type = 'boolean',
-          default = 'true',
-          description = 'Whether a depth buffer should be created for the Canvas.'
-        },
-        {
-          name = 'stencil',
-          type = 'boolean',
-          default = 'false',
-          description = 'Whether a stencil buffer should be created.'
-        },
-        {
           name = 'mipmaps',
           type = 'boolean',
           default = 'true',
-          description = 'Whether the Canvas will automatically generate mipmaps.'
+          description = [[
+            Whether the Canvas will automatically generate mipmaps for its attached textures.
+          ]]
         }
       }
     }
   },
   returns = {
-    {
-      name = 'canvas',
+    canvas = {
       type = 'Canvas',
       description = 'The new Canvas.'
     }
   },
-  notes = [[
-    You can render to the Canvas using `Canvas:renderTo`.
-  ]]
+  variants = {
+    {
+      description = 'Create an empty Canvas with no Textures attached.',
+      arguments = { 'width', 'height', 'flags' },
+      returns = { 'canvas' }
+    },
+    {
+      description = 'Create a Canvas with attached Textures.',
+      arguments = { '...', 'flags' },
+      returns = { 'canvas' }
+    },
+    {
+      description = [[
+        Create a Canvas with attached Textures, using specific layers and mipmap levels from each
+        one.  Layers and mipmaps can be specified after each Texture as numbers, or a table of a
+        Texture, layer, and mipmap can be used for each attachment.
+      ]],
+      arguments = { 'attachments', 'flags' },
+      returns = { 'canvas' }
+    }
+  },
+  related = {
+    'lovr.graphics.setCanvas',
+    'lovr.graphics.getCanvas',
+    'Canvas:renderTo'
+  }
 }

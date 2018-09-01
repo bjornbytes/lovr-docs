@@ -7,47 +7,56 @@ return {
     images.
   ]],
   arguments = {
-    {
-      name = 'texture',
+    texture = {
       type = 'Texture',
       description = 'The texture to use.'
     },
-    {
-      name = 'angle',
+    canvas = {
+      type = 'Canvas',
+      description = 'The canvas to use.'
+    },
+    angle = {
       type = 'number',
       default = '0',
       description = 'How much to rotate the skybox around its axis of rotation.'
     },
-    {
-      name = 'ax',
+    ax = {
       type = 'number',
       default = '0',
       description = 'The x coordinate of the axis of rotation.'
     },
-    {
-      name = 'ay',
+    ay = {
       type = 'number',
       default = '1',
       description = 'The y coordinate of the axis of rotation.'
     },
-    {
-      name = 'az',
+    az = {
       type = 'number',
       default = '0',
       description = 'The z coordinate of the axis of rotation.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'texture', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    },
+    {
+      arguments = { 'canvas', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    }
+  },
   example = [[
     function lovr.load()
-      skybox = lovr.graphics.newTexture(
+      skybox = lovr.graphics.newTexture({
         'right.png',
         'left.png',
         'up.png',
         'down.png',
         'back.png',
         'front.png'
-      )
+      }, { type = 'cube' })
 
       -- or skybox = lovr.graphics.newTexture('equirectangular.png')
     end

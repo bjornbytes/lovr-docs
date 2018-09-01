@@ -11,6 +11,10 @@ return {
       type = 'Texture',
       description = 'The diffuse texture.'
     },
+    canvas = {
+      type = 'Canvas',
+      description = 'A Canvas to use as the diffuse texture.'
+    },
     r = {
       type = 'number',
       default = '1',
@@ -45,6 +49,10 @@ return {
     },
     {
       arguments = { 'texture', 'r', 'g', 'b', 'a' },
+      returns = { 'material' }
+    },
+    {
+      arguments = { 'canvas', 'r', 'g', 'b', 'a' },
       returns = { 'material' }
     },
     {

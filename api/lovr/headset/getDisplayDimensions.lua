@@ -1,18 +1,18 @@
 return {
   tag = 'headset',
   summary = 'Get the dimensions of the headset display.',
-  description = 'Returns the dimensions of the display for each lens of the headset, in pixels.',
+  description = 'Returns the dimensions of the headset display (for both eyes), in pixels.',
   arguments = {},
   returns = {
     {
       name = 'width',
       type = 'number',
-      description = 'The width of each lens.'
+      description = 'The width of the display.'
     },
     {
       name = 'height',
       type = 'number',
-      description = 'The height of each lens.'
+      description = 'The height of the display.'
     }
   },
   related = {

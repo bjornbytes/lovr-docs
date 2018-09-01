@@ -1,13 +1,13 @@
 return {
   tag = 'headset',
   summary = 'Get the height of the headset display.',
-  description = 'Returns the height of the display for each lens of the headset, in pixels.',
+  description = 'Returns the height of the headset display (both eyes), in pixels.',
   arguments = {},
   returns = {
     {
       name = 'height',
       type = 'number',
-      description = 'The height of each lens.'
+      description = 'The height of the display.'
     }
   },
   related = {

@@ -1,13 +1,13 @@
 return {
   tag = 'headset',
   summary = 'Get the width of the headset display.',
-  description = 'Returns the width of the display for each lens of the headset, in pixels.',
+  description = 'Returns the width of the headset display (for both eyes), in pixels.',
   arguments = {},
   returns = {
     {
       name = 'width',
       type = 'number',
-      description = 'The width of each lens.'
+      description = 'The width of the display.'
     }
   },
   related = {

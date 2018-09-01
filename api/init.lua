@@ -5535,6 +5535,35 @@ return {
           }
         },
         {
+          name = "DepthFormat",
+          summary = "Different types of depth maps used by Canvases.",
+          description = "When you create a Canvas, you can give it a depth buffer, which stores the 3D positions of pixels to ensure that the depth of objects is sorted properly.  This depth information can be stored in various formats that differ in size and precision.  Additionally, this depth buffer can also be used for stenciling information.",
+          key = "DepthFormat",
+          module = "graphics",
+          values = {
+            {
+              name = "d16",
+              description = "A 16 bit depth buffer."
+            },
+            {
+              name = "d32f",
+              description = "A 32 bit floating point depth buffer."
+            },
+            {
+              name = "d24s8",
+              description = "A depth buffer with 24 bits for depth and 8 bits for stencil."
+            }
+          },
+          related = {
+            "lovr.graphics.newCanvas",
+            "Canvas:getDepthFormat",
+            "lovr.graphics.getDepthTest",
+            "lovr.graphics.setDepthTest",
+            "lovr.graphics.stencil",
+            "Canvas"
+          }
+        },
+        {
           name = "DrawMode",
           summary = "Different ways graphics primitives can be drawn.",
           description = "Most graphics primitives can be drawn in one of two modes: a filled mode and a wireframe mode.",
@@ -7275,26 +7304,25 @@ return {
           name = "getCanvas",
           tag = "graphicsState",
           summary = "Get the active Canvas.",
-          description = "Returns the set of active Canvas objects.  Usually when you render something it will render directly to the screen.  If one or more Canvas objects are active, things will be rendered to those Canvases instead of to the screen.",
+          description = "Returns the active Canvas.  Usually when you render something it will render directly to the headset.  If a Canvas object is active, things will be rendered to the textures attached to the Canvas instead.",
           key = "lovr.graphics.getCanvas",
           module = "lovr.graphics",
+          related = {
+            "Canvas:renderTo",
+            "Canvas"
+          },
           variants = {
             {
               arguments = {},
               returns = {
                 {
-                  name = "...",
+                  name = "canvas",
                   type = "Canvas",
-                  description = "The set of active Canvas objects, or nil if none are set."
+                  description = "The active Canvas, or nil if no canvas is set."
                 }
               }
             }
-          },
-          related = {
-            "Canvas:renderTo",
-            "Canvas"
-          },
-          notes = "Up to 4 Canvases can be active at a time."
+          }
         },
         {
           name = "getColor",
@@ -7878,11 +7906,17 @@ return {
           name = "newCanvas",
           tag = "graphicsObjects",
           summary = "Create a new Canvas.",
-          description = "Creates a new canvas with a given width and height.",
+          description = "Creates a new Canvas.  You can specify Textures to attach to it, or just specify a width and height and attach textures later using `Canvas:setTexture`.\n\nOnce created, you can render to the Canvas using `Canvas:renderTo`, or `lovr.graphics.setCanvas`.",
           key = "lovr.graphics.newCanvas",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.setCanvas",
+            "lovr.graphics.getCanvas",
+            "Canvas:renderTo"
+          },
           variants = {
             {
+              description = "Create an empty Canvas with no Textures attached.",
               arguments = {
                 {
                   name = "width",
@@ -7897,14 +7931,25 @@ return {
                 {
                   name = "flags",
                   type = "table",
-                  description = "The height of the canvas, in pixels.",
-                  default = "{}",
+                  description = "Optional settings for the Canvas.",
                   table = {
                     {
                       name = "format",
                       type = "TextureFormat",
-                      description = "The internal format to use for the canvas.",
+                      description = "The format of a Texture to create and attach to this Canvas, or false if no Texture should be created.  This is ignored if Textures are already passed in.",
                       default = "'rgba'"
+                    },
+                    {
+                      name = "depth",
+                      type = "DepthFormat",
+                      description = "A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.",
+                      default = "d16"
+                    },
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "Whether the Canvas is stereo.",
+                      default = "true"
                     },
                     {
                       name = "msaa",
@@ -7913,24 +7958,123 @@ return {
                       default = "0"
                     },
                     {
-                      name = "depth",
+                      name = "mipmaps",
                       type = "boolean",
-                      description = "Whether a depth buffer should be created for the Canvas.",
+                      description = "Whether the Canvas will automatically generate mipmaps for its attached textures.",
+                      default = "true"
+                    }
+                  },
+                  default = "{}"
+                }
+              },
+              returns = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "The new Canvas."
+                }
+              }
+            },
+            {
+              description = "Create a Canvas with attached Textures.",
+              arguments = {
+                {
+                  name = "...",
+                  type = "Texture",
+                  description = "One or more Textures to attach to the Canvas."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "Optional settings for the Canvas.",
+                  table = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of a Texture to create and attach to this Canvas, or false if no Texture should be created.  This is ignored if Textures are already passed in.",
+                      default = "'rgba'"
+                    },
+                    {
+                      name = "depth",
+                      type = "DepthFormat",
+                      description = "A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.",
+                      default = "d16"
+                    },
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "Whether the Canvas is stereo.",
                       default = "true"
                     },
                     {
-                      name = "stencil",
-                      type = "boolean",
-                      description = "Whether a stencil buffer should be created.",
-                      default = "false"
+                      name = "msaa",
+                      type = "number",
+                      description = "The number of MSAA samples to use for antialiasing.",
+                      default = "0"
                     },
                     {
                       name = "mipmaps",
                       type = "boolean",
-                      description = "Whether the Canvas will automatically generate mipmaps.",
+                      description = "Whether the Canvas will automatically generate mipmaps for its attached textures.",
                       default = "true"
                     }
-                  }
+                  },
+                  default = "{}"
+                }
+              },
+              returns = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "The new Canvas."
+                }
+              }
+            },
+            {
+              description = "Create a Canvas with attached Textures, using specific layers and mipmap levels from each one.  Layers and mipmaps can be specified after each Texture as numbers, or a table of a Texture, layer, and mipmap can be used for each attachment.",
+              arguments = {
+                {
+                  name = "attachments",
+                  type = "table",
+                  description = "A table of textures, layers, and mipmaps (in any combination) to attach."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "Optional settings for the Canvas.",
+                  table = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of a Texture to create and attach to this Canvas, or false if no Texture should be created.  This is ignored if Textures are already passed in.",
+                      default = "'rgba'"
+                    },
+                    {
+                      name = "depth",
+                      type = "DepthFormat",
+                      description = "A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.",
+                      default = "d16"
+                    },
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "Whether the Canvas is stereo.",
+                      default = "true"
+                    },
+                    {
+                      name = "msaa",
+                      type = "number",
+                      description = "The number of MSAA samples to use for antialiasing.",
+                      default = "0"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether the Canvas will automatically generate mipmaps for its attached textures.",
+                      default = "true"
+                    }
+                  },
+                  default = "{}"
                 }
               },
               returns = {
@@ -7941,8 +8085,7 @@ return {
                 }
               }
             }
-          },
-          notes = "You can render to the Canvas using `Canvas:renderTo`."
+          }
         },
         {
           name = "newComputeShader",
@@ -8068,6 +8211,46 @@ return {
                   name = "texture",
                   type = "Texture",
                   description = "The diffuse texture."
+                },
+                {
+                  name = "r",
+                  type = "number",
+                  description = "The red component of the diffuse color.",
+                  default = "1"
+                },
+                {
+                  name = "g",
+                  type = "number",
+                  description = "The green component of the diffuse color.",
+                  default = "1"
+                },
+                {
+                  name = "b",
+                  type = "number",
+                  description = "The blue component of the diffuse color.",
+                  default = "1"
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "The alpha component of the diffuse color.",
+                  default = "1"
+                }
+              },
+              returns = {
+                {
+                  name = "material",
+                  type = "Material",
+                  description = "The new Material."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "A Canvas to use as the diffuse texture."
                 },
                 {
                   name = "r",
@@ -9150,26 +9333,25 @@ return {
           name = "setCanvas",
           tag = "graphicsState",
           summary = "Set the active Canvas.",
-          description = "Sets or disables active Canvas objects.  If one or more Canvas objects are active, things will be rendered to those Canvases instead of to the screen.",
+          description = "Sets or disables the active Canvas object.  If there is an active Canvas, things will be rendered to the Textures attached to that Canvas instead of to the headset.",
           key = "lovr.graphics.setCanvas",
           module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "...",
-                  type = "Canvas",
-                  description = "The new set of active Canvas objects, or nil to just render to the screen/headset."
-                }
-              },
-              returns = {}
-            }
-          },
           related = {
             "Canvas:renderTo",
             "Canvas"
           },
-          notes = "Up to 4 Canvases can be active at a time.  Multicanvas rendering only works with 2D Canvases.\n\nRendering to multiple Canvases simultaneously requires the active Shader to specify a different color output for each active Canvas.  To do this, add the `#define MULTICANVAS` line to the top of the fragment shader and write the `void colors` function instead of the usual `vec4 color` function.  You can then assign different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single color."
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "The new active Canvas object, or nil to just render to the headset."
+                }
+              },
+              returns = {}
+            }
+          }
         },
         {
           name = "setColor",
@@ -9486,6 +9668,11 @@ return {
           description = "Render a skybox from a texture.  Two common kinds of skybox textures are supported: A rectangular texture with an equirectangular projection can be used, or a \"cubemap\" texture created from 6 images.",
           key = "lovr.graphics.skybox",
           module = "lovr.graphics",
+          examples = {
+            {
+              code = "function lovr.load()\n  skybox = lovr.graphics.newTexture({\n    'right.png',\n    'left.png',\n    'up.png',\n    'down.png',\n    'back.png',\n    'front.png'\n  }, { type = 'cube' })\n\n  -- or skybox = lovr.graphics.newTexture('equirectangular.png')\nend\n\nfunction lovr.draw()\n  local angle, ax, ay, az = lovr.headset.getOrientation()\n  lovr.graphics.skybox(skybox, -angle, ax, ay, az)\nend"
+            }
+          },
           variants = {
             {
               arguments = {
@@ -9520,11 +9707,40 @@ return {
                 }
               },
               returns = {}
-            }
-          },
-          examples = {
+            },
             {
-              code = "function lovr.load()\n  skybox = lovr.graphics.newTexture(\n    'right.png',\n    'left.png',\n    'up.png',\n    'down.png',\n    'back.png',\n    'front.png'\n  )\n\n  -- or skybox = lovr.graphics.newTexture('equirectangular.png')\nend\n\nfunction lovr.draw()\n  local angle, ax, ay, az = lovr.headset.getOrientation()\n  lovr.graphics.skybox(skybox, -angle, ax, ay, az)\nend"
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "Canvas",
+                  description = "The canvas to use."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "How much to rotate the skybox around its axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -10564,7 +10780,7 @@ return {
         {
           name = "Canvas",
           summary = "An offscreen render target.",
-          description = "A Canvas is also known as a framebuffer or render-to-texture.  It allows you to render to an offscreen canvas instead of directly to the screen.  This lets you postprocess or transform the results later before finally rendering them to the screen.\n\nCanvases extend Textures, so Canvases can be used as textures in materials or rendered as fullscreen quads just like textures can, and they inherit all Texture functions.",
+          description = "A Canvas is also known as a framebuffer or render-to-texture.  It allows you to render to a texture instead of directly to the screen.  This lets you postprocess or transform the results later before finally rendering them to the screen.\n\nAfter creating a Canvas, you can attach Textures to it using `Canvas:setTexture`.",
           key = "Canvas",
           module = "lovr.graphics",
           examples = {
@@ -10577,6 +10793,58 @@ return {
             "lovr.graphics.newCanvas"
           },
           methods = {
+            {
+              name = "getDepthFormat",
+              summary = "Get the format of the Canvas depth buffer.",
+              description = "Returns the format of the Canvas depth buffer.",
+              key = "Canvas:getDepthFormat",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newCanvas",
+                "DepthFormat"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "DepthFormat",
+                      description = "The format of the Canvas depth buffer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDimensions",
+              summary = "Get the dimensions of the Canvas.",
+              description = "Returns the dimensions of the Canvas, its Textures, and its depth buffer.",
+              key = "Canvas:getDimensions",
+              module = "lovr.graphics",
+              related = {
+                "Canvas:getWidth",
+                "Canvas:getHeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the Canvas, in pixels."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the Canvas, in pixels."
+                    }
+                  }
+                }
+              },
+              notes = "The dimensions of a Canvas can not be changed after it is created."
+            },
             {
               name = "getFormat",
               summary = "Get the format of the Canvas texture.",
@@ -10601,12 +10869,39 @@ return {
               }
             },
             {
+              name = "getHeight",
+              summary = "Get the height of the Canvas.",
+              description = "Returns the height of the Canvas, its Textures, and its depth buffer.",
+              key = "Canvas:getHeight",
+              module = "lovr.graphics",
+              related = {
+                "Canvas:getWidth",
+                "Canvas:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the Canvas, in pixels."
+                    }
+                  }
+                }
+              },
+              notes = "The height of a Canvas can not be changed after it is created."
+            },
+            {
               name = "getMSAA",
               summary = "Get the number of MSAA samples used by the Canvas.",
               description = "Returns the number of multisample antialiasing samples to use when rendering to the Canvas. Increasing this number will make the contents of the Canvas appear more smooth at the cost of performance.  It is common to use powers of 2 for this value.",
               key = "Canvas:getMSAA",
               module = "lovr.graphics",
-              notes = "This can only be set when the Canvas is created with `lovr.graphics.newCanvas`.",
+              related = {
+                "lovr.graphics.newCanvas",
+                "lovr.graphics.newTexture"
+              },
               variants = {
                 {
                   arguments = {},
@@ -10618,12 +10913,80 @@ return {
                     }
                   }
                 }
+              },
+              notes = "All textures attached to the Canvas must be created with this MSAA value."
+            },
+            {
+              name = "getTexture",
+              summary = "Get the Textures attached to the Canvas.",
+              description = "Returns the set of Textures currently attached to the Canvas.",
+              key = "Canvas:getTexture",
+              module = "lovr.graphics",
+              notes = "Up to 4 Textures can be attached at once.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "...",
+                      type = "Texture",
+                      description = "One or more Textures attached to the Canvas."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWidth",
+              summary = "Get the width of the Canvas.",
+              description = "Returns the width of the Canvas, its Textures, and its depth buffer.",
+              key = "Canvas:getWidth",
+              module = "lovr.graphics",
+              related = {
+                "Canvas:getHeight",
+                "Canvas:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the Canvas, in pixels."
+                    }
+                  }
+                }
+              },
+              notes = "The width of a Canvas can not be changed after it is created."
+            },
+            {
+              name = "isStereo",
+              summary = "Check if the Canvas is stereo.",
+              description = "Returns whether the Canvas was created with the `stereo` flag.  Drawing something to a stereo Canvas will draw it to two viewports in the left and right half of the Canvas, using transform information from two different eyes.",
+              key = "Canvas:isStereo",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newCanvas",
+                "lovr.graphics.fill"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "Whether the Canvas is stereo."
+                    }
+                  }
+                }
               }
             },
             {
               name = "newTextureData",
-              summary = "Create a new TextureData from the Canvas contents.",
-              description = "Returns a new TextureData containing the current contents of the Canvas.",
+              summary = "Create a new TextureData from a Canvas texture.",
+              description = "Returns a new TextureData containing the contents of a Texture attached to the Canvas.",
               key = "Canvas:newTextureData",
               module = "lovr.graphics",
               related = {
@@ -10632,7 +10995,14 @@ return {
               },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the Texture to read from.",
+                      default = "1"
+                    }
+                  },
                   returns = {
                     {
                       name = "textureData",
@@ -10674,8 +11044,35 @@ return {
                   returns = {}
                 }
               }
+            },
+            {
+              name = "setTexture",
+              summary = "Attach one or more Textures to the Canvas.",
+              description = "Attaches one or more Textures to the Canvas.  When rendering to the Canvas, everything will be drawn to all attached Textures.  You can attach different layers of an array, cubemap, or volume texture, and also attach different mipmap levels of Textures.",
+              key = "Canvas:setTexture",
+              module = "lovr.graphics",
+              notes = "There are some restrictions on how textures can be attached:\n\n- Up to 4 textures can be attached at once.\n- Textures must have the same dimensions and multisample settings as the Canvas.\n\nTo specify layers and mipmaps to attach, specify them after the Texture.  You can also optionally wrap them in a table.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "...",
+                      type = "*",
+                      description = "One or more Textures to attach to the Canvas."
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              examples = {
+                {
+                  description = "Various ways to attach textures to a Canvas.",
+                  code = "canvas:setTexture(textureA)\ncanvas:setTexture(textureA, textureB) -- Attach two textures\ncanvas:setTexture(textureA, layer, mipmap) -- Attach a specific layer and mipmap\ncanvas:setTexture(textureA, layer, textureB, layer) -- Attach specific layers\ncanvas:setTexture({ textureA, layer, mipmap }, textureB, { textureC, layer }) -- Tables\ncanvas:setTexture({ { textureA, layer, mipmap }, textureB, { textureC, layer } })"
+                }
+              }
             }
-          }
+          },
+          notes = "Up to four textures can be attached to a Canvas and anything rendered to the Canvas will be broadcast to all attached Textures.  If you want to do render different things to different textures, add a `#define MULTICANVAS` line to the top of your fragment shader and implement the `void colors` function instead of the usual `vec4 color` function.  You can then assign different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single color."
         },
         {
           name = "Font",
@@ -11164,6 +11561,32 @@ return {
                       name = "texture",
                       type = "Texture",
                       description = "The texture to apply, or nil to use the default."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "textureType",
+                      type = "MaterialTexture",
+                      description = "The type of texture to get.",
+                      default = "'diffuse'"
+                    },
+                    {
+                      name = "canvas",
+                      type = "Canvas",
+                      description = "A Canvas.  The first Texture attached to the Canvas will be used."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "canvas",
+                      type = "Canvas",
+                      description = "A Canvas.  The first Texture attached to the Canvas will be used."
                     }
                   },
                   returns = {}
@@ -13179,7 +13602,7 @@ return {
           name = "getDisplayDimensions",
           tag = "headset",
           summary = "Get the dimensions of the headset display.",
-          description = "Returns the dimensions of the display for each lens of the headset, in pixels.",
+          description = "Returns the dimensions of the headset display (for both eyes), in pixels.",
           key = "lovr.headset.getDisplayDimensions",
           module = "lovr.headset",
           related = {
@@ -13193,12 +13616,12 @@ return {
                 {
                   name = "width",
                   type = "number",
-                  description = "The width of each lens."
+                  description = "The width of the display."
                 },
                 {
                   name = "height",
                   type = "number",
-                  description = "The height of each lens."
+                  description = "The height of the display."
                 }
               }
             }
@@ -13208,7 +13631,7 @@ return {
           name = "getDisplayHeight",
           tag = "headset",
           summary = "Get the height of the headset display.",
-          description = "Returns the height of the display for each lens of the headset, in pixels.",
+          description = "Returns the height of the headset display (both eyes), in pixels.",
           key = "lovr.headset.getDisplayHeight",
           module = "lovr.headset",
           related = {
@@ -13222,7 +13645,7 @@ return {
                 {
                   name = "height",
                   type = "number",
-                  description = "The height of each lens."
+                  description = "The height of the display."
                 }
               }
             }
@@ -13232,7 +13655,7 @@ return {
           name = "getDisplayWidth",
           tag = "headset",
           summary = "Get the width of the headset display.",
-          description = "Returns the width of the display for each lens of the headset, in pixels.",
+          description = "Returns the width of the headset display (for both eyes), in pixels.",
           key = "lovr.headset.getDisplayWidth",
           module = "lovr.headset",
           related = {
@@ -13246,7 +13669,7 @@ return {
                 {
                   name = "width",
                   type = "number",
-                  description = "The width of each lens."
+                  description = "The width of the display."
                 }
               }
             }
