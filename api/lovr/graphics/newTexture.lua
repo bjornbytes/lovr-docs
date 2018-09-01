@@ -3,6 +3,18 @@ return {
   summary = 'Create a new Texture.',
   description = 'Creates a new Texture from an image file.',
   arguments = {
+    width = {
+      type = 'number',
+      description = 'The width of the Texture.'
+    },
+    height = {
+      type = 'number',
+      description = 'The height of the Texture.'
+    },
+    depth = {
+      type = 'number',
+      description = 'The depth of the Texture.'
+    },
     filename = {
       type = 'string',
       description = 'The filename of the image to load.'
@@ -72,6 +84,15 @@ return {
       returns = { 'texture' }
     },
     {
+      description = [[
+        Creates a blank Texture with specified dimensions.  This saves memory if you're planning on
+        rendering to the Texture using a Canvas or a compute shader, but the contents of the Texture
+        will be initialized to random data.
+      ]],
+      arguments = { 'width', 'height', 'depth', 'flags' },
+      returns = { 'texture' }
+    },
+    {
       description = 'Create a texture from a single Blob.',
       arguments = { 'blob', 'flags' },
       returns = { 'texture' }
@@ -80,7 +101,7 @@ return {
       description = 'Create a texture from a single TextureData.',
       arguments = { 'textureData', 'flags' },
       returns = { 'texture' }
-    },
+    }
   },
   notes = [[
     The "linear" flag should be set to true for textures that don't contain color information, such

@@ -8502,6 +8502,59 @@ return {
               }
             },
             {
+              description = "Creates a blank Texture with specified dimensions.  This saves memory if you're planning on rendering to the Texture using a Canvas or a compute shader, but the contents of the Texture will be initialized to random data.",
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the Texture."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the Texture."
+                },
+                {
+                  name = "depth",
+                  type = "number",
+                  description = "The depth of the Texture."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "Optional settings for the texture.",
+                  table = {
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "Whether the texture is in linear color space instead of sRGB.",
+                      default = "false"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether mipmaps will be generated for the texture.",
+                      default = "true"
+                    },
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of Texture to load the images into.  If nil, the type will be `2d` for a single image, `array` for a table of images with numeric keys, or `cube` for a table of images with string keys.",
+                      default = "nil"
+                    }
+                  },
+                  default = "{}"
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The new Texture."
+                }
+              }
+            },
+            {
               description = "Create a texture from a single Blob.",
               arguments = {
                 {
