@@ -18,5 +18,5 @@ There are three main types of documentation here:
 - The **`guides`** folder contains markdown files that explain LÖVR-related concepts in depth.
   - Similarly, `init.lua` contains a manifest used to populate the sidebar on the website.
 
-Note that each release of LÖVR has its own branch.  Cherry picks are used to propagate fixes to 
-relevant branches as needed.
+Note that each release of LÖVR has its own branch.  Cherry picks are used to propagate fixes to
+relevant branches as needed.  Which will totally scale.
