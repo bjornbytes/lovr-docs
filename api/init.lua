@@ -10831,7 +10831,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "Animations require that you multiply vertices by a special pose matrix in your vertex shader:\n\n    vec4 vertex(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * lovrPoseMatrix * vertex;\n    }"
         },
         {
           name = "Canvas",
@@ -13010,7 +13011,7 @@ return {
               }
             }
           },
-          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    uniform int lovrViewportCount;\n    uniform int lovrViewportIndex;\n\nFragment shader header:\n\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    uniform int lovrViewportCount;\n    uniform int lovrViewportIndex;\n\n### Compute Shaders\n\nCompute shaders can be created with `lovr.graphics.newComputeShader` and run with `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no default compute shader, instead the `void compute();` function must be implemented.\n\nYou can use the `layout` qualifier to specify a local work group size:\n\n    layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;\n\nAnd the following built in variables can be used:\n\n    in uvec3 gl_NumWorkGroups;      // The size passed to lovr.graphics.compute\n    in uvec3 gl_WorkGroupSize;      // The local work group size\n    in uvec3 gl_WorkGroupID;        // The current global work group\n    in uvec3 gl_LocalInvocationID;  // The current local work group\n    in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs\n\nCompute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s. To bind a texture in a way that can be written to a compute shader, declare the uniforms with a type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to using assignment syntax.\n\nLÖVR handles synchronization of textures and shader blocks so there is no need to use manual memory barriers to synchronize writes to resources from compute shaders."
+          notes = "The current GLSL version used is 150.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in ivec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat4 lovrNormalMatrix;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    uniform int lovrViewportCount;\n    uniform int lovrViewportIndex;\n    const mat4 lovrPoseMatrix; // Bone-weighted pose\n    const int lovrInstanceID; // Current instance ID\n\nFragment shader header:\n\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 gl_FragCoord;\n    out vec4 lovrFragColor;\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    uniform int lovrViewportCount;\n    uniform int lovrViewportIndex;\n\n### Compute Shaders\n\nCompute shaders can be created with `lovr.graphics.newComputeShader` and run with `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no default compute shader, instead the `void compute();` function must be implemented.\n\nYou can use the `layout` qualifier to specify a local work group size:\n\n    layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;\n\nAnd the following built in variables can be used:\n\n    in uvec3 gl_NumWorkGroups;      // The size passed to lovr.graphics.compute\n    in uvec3 gl_WorkGroupSize;      // The local work group size\n    in uvec3 gl_WorkGroupID;        // The current global work group\n    in uvec3 gl_LocalInvocationID;  // The current local work group\n    in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs\n\nCompute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s. To bind a texture in a way that can be written to a compute shader, declare the uniforms with a type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to using assignment syntax.\n\nLÖVR handles synchronization of textures and shader blocks so there is no need to use manual memory barriers to synchronize writes to resources from compute shaders."
         },
         {
           name = "ShaderBlock",
@@ -15746,10 +15747,7 @@ return {
                       name = "m14",
                       type = "number"
                     },
-                    {
-                      name = "m24",
-                      type = "number"
-                    },
+                    nil,
                     {
                       name = "m34",
                       type = "number"
@@ -15757,6 +15755,22 @@ return {
                     {
                       name = "m44",
                       type = "number"
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table to fill with values."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "matrix",
+                      type = "table",
+                      description = "The original table."
                     }
                   }
                 }

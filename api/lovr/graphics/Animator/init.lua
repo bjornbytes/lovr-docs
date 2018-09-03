@@ -9,6 +9,13 @@ return {
   constructors = {
     'lovr.graphics.newAnimator'
   },
+  notes = [[
+    Animations require that you multiply vertices by a special pose matrix in your vertex shader:
+
+        vec4 vertex(mat4 projection, mat4 transform, vec4 vertex) {
+          return projection * transform * lovrPoseMatrix * vertex;
+        }
+  ]],
   example = [[
     function lovr.load()
       model = lovr.graphics.newModel('model.fbx')
