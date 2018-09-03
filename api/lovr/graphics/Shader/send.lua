@@ -41,6 +41,7 @@ return {
     ]=]
   },
   related = {
+    'ShaderBlock:sendBlock',
     'Shader:sendBlock'
   }
 }

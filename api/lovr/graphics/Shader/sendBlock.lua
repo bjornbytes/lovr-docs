@@ -25,7 +25,7 @@ return {
   },
   returns = {},
   notes = [[
-    The shader does not need to send it a block.
+    The Shader does not need to be active to send it a block.
 
     Make sure the ShaderBlock's variables line up with the block variables declared in the shader
     code, otherwise you'll get garbage data in the block.  An easy way to do this is to use
@@ -33,6 +33,7 @@ return {
   ]],
   related = {
     'Shader:send',
+    'ShaderBlock:send',
     'ShaderBlock:getShaderCode',
     'UniformAccess',
     'ShaderBlock'
