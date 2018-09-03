@@ -44,6 +44,15 @@ local function pluralify(t, key)
   return t[key .. 's']
 end
 
+local lookup = {}
+local function track(obj)
+  lookup[obj.key] = obj
+end
+
+local function warnIf(cond, s, ...)
+  if cond then print(string.format(s, ...)) end
+end
+
 -- Processors
 local function processExample(example)
   if type(example) == 'string' then
@@ -71,6 +80,7 @@ local function processEnum(path, parent)
     value.description = unwrap(value.description)
   end
 
+  track(enum)
   return enum
 end
 
@@ -143,6 +153,7 @@ local function processFunction(path, parent)
   fn.arguments = nil
   fn.returns = nil
 
+  track(fn)
   return fn
 end
 
@@ -177,6 +188,7 @@ local function processObject(path, parent)
 
   table.sort(object.methods, function(a, b) return a.key < b.key end)
 
+  track(object)
   return object
 end
 
@@ -221,7 +233,35 @@ local function processModule(path)
   table.sort(module.objects, function(a, b) return a.key < b.key end)
   table.sort(module.enums, function(a, b) return a.key < b.key end)
 
+  track(module)
   return module
+end
+
+-- Validation
+local function validateObject(object)
+  for _, constructor in ipairs(object.constructors or {}) do
+    warnIf(not lookup[constructor], 'Constructor not found: %s', constructor)
+  end
+end
+
+local function validateFunction(fn)
+  if fn.tag then
+    local found = false
+    for _, section in ipairs(lookup[fn.module].sections or {}) do
+      if section.tag == fn.tag then found = true break end
+    end
+    warnIf(not found, 'Unknown tag %s for %s', fn.tag, fn.key)
+  end
+end
+
+local function validateModule(module)
+  for _, object in ipairs(module.objects) do
+    validateObject(object)
+  end
+
+  for _, fn in ipairs(module.functions) do
+    validateFunction(fn)
+  end
 end
 
 function lovr.load()
@@ -245,6 +285,11 @@ function lovr.load()
   local callbacks = 'lovr/callbacks'
   for _, file in ipairs(lovr.filesystem.getDirectoryItems(callbacks)) do
     table.insert(api.callbacks, processFunction(callbacks .. '/' .. file:gsub('%.lua', ''), api.modules[1]))
+  end
+
+  -- Validate
+  for _, module in ipairs(api.modules) do
+    validateModule(module)
   end
 
   -- Sort
