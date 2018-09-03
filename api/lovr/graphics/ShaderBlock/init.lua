@@ -1,5 +1,5 @@
 return {
-  summary = 'A big ol\' block of data that can be accessed in a Shader.',
+  summary = 'A big ol\' block of data that can be sent to a Shader.',
   description = [[
     ShaderBlocks are objects that can hold large amounts of data and can be sent to Shaders.  It is
     common to use "uniform" variables to send data to shaders, but uniforms are usually limited to

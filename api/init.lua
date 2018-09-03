@@ -8591,6 +8591,61 @@ return {
           }
         },
         {
+          name = "newShaderBlock",
+          tag = "graphicsObjects",
+          summary = "Create a new ShaderBlock.",
+          description = "Creates a new ShaderBlock from a table of variable definitions with their names and types.",
+          key = "lovr.graphics.newShaderBlock",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "uniforms",
+                  type = "table",
+                  description = "A table where the keys are uniform names and the values are uniform types.  Uniform arrays can be specified by supplying a table as the uniform's value containing the type and the array size."
+                },
+                {
+                  name = "flags",
+                  type = "table",
+                  description = "Optional settings.",
+                  default = "{}",
+                  table = {
+                    {
+                      name = "usage",
+                      type = "BufferUsage",
+                      description = "How the data in the block will be updated.",
+                      default = "dynamic"
+                    },
+                    {
+                      name = "writable",
+                      type = "boolean",
+                      description = "Whether Shaders can write to the data in the block.",
+                      default = "false"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  type = "ShaderBlock",
+                  description = "The new ShaderBlock."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.graphics.newShader"
+          },
+          examples = {
+            {
+              description = "Create a ShaderBlock to hold a block of useful shader data.",
+              code = "function lovr.load()\n  block = lovr.graphics.newShaderBlock({\n    time = 'float',\n    lightCount = 'int',\n    lightPositions = { 'vec3', 16 },\n    lightColors = { 'vec3', 16 },\n    objectCount = 'int',\n    objectTransforms = { 'mat4', 256 }\n  })\n\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('Block') .. -- Define the block in the shader\n    [[\n      vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n        // ...use the object transforms from the block\n        return projection * transform * vertex;\n      }\n    ]],\n\n    block:getShaderCode('Block') ..\n    [[\n      vec4 color(vec4 gColor, sampler2D image, vec2 uv) {\n        // ...use the lights from the block\n        return gColor * texture(image, uv);\n      }\n    ]]\n  )\n\n  -- Bind the block to the shader\n  shader:sendBlock('Block', block)\nend\n\n-- Update the data in the block every frame\nfunction lovr.update(dt)\n  block:send('time', lovr.timer.getTime())\n  block:send('lightCount', lightCount)\n  block:send('lightPositions', { { x, y, z}, { x, y, z } })\n  -- etc.\nend"
+            }
+          },
+          notes = "The writable flag can only be true if compute shaders are supported, see `lovr.graphics.getSupported`.  Writable blocks may be slightly slower than non-writable blocks, but they can also be much, much larger.  Non-writable blocks are usually limited to around 16 kilobytes in size, depending on hardware."
+        },
+        {
           name = "newTexture",
           tag = "graphicsObjects",
           summary = "Create a new Texture.",
@@ -12879,7 +12934,7 @@ return {
         },
         {
           name = "ShaderBlock",
-          summary = "A big ol' block of data that can be accessed in a Shader.",
+          summary = "A big ol' block of data that can be sent to a Shader.",
           description = "ShaderBlocks are objects that can hold large amounts of data and can be sent to Shaders.  It is common to use \"uniform\" variables to send data to shaders, but uniforms are usually limited to a few kilobytes in size.  ShaderBlocks are useful for a few reasons:\n\n- They can hold a lot more data.\n- Shaders can modify the data in them, which is really useful for compute shaders.\n- Setting the data in a ShaderBlock updates the data for all Shaders using the block, so you\n  don't need to go around setting the same uniforms in lots of different shaders.\n\nOn systems that support compute shaders, ShaderBlocks can optionally be \"writable\".  A writable ShaderBlock is a little bit slower than a non-writable one, but shaders can modify its contents and it can be much, much larger than a non-writable ShaderBlock.",
           key = "ShaderBlock",
           module = "lovr.graphics",
