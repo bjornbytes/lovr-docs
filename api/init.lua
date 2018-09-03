@@ -664,7 +664,7 @@ return {
           summary = "Different ways to handle audio data for Source objects.",
           description = "When you create a Source, you can either decode audio data gradually over time or you can decode it all at once.  Streaming it over time will use less memory but cause higher processing overhead because audio is continuously being decoded.  On the other hand, decoding a sound all at once means it will take more time to load and use more memory, but after it's loaded there is virtually no processing overhead.  It's recommended to use the 'static' mode for short sound effects and the 'stream' mode for longer music tracks.",
           key = "SourceType",
-          module = "audio",
+          module = "lovr.audio",
           values = {
             {
               name = "static",
@@ -681,7 +681,7 @@ return {
           summary = "Time units for sound samples.",
           description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of samples.",
           key = "TimeUnit",
-          module = "audio",
+          module = "lovr.audio",
           values = {
             {
               name = "seconds",
@@ -5416,7 +5416,7 @@ return {
           summary = "Different ways arcs can be drawn.",
           description = "Different ways arcs can be drawn with `lovr.graphics.arc`.",
           key = "ArcMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "pie",
@@ -5437,7 +5437,7 @@ return {
           summary = "Different ways of blending alpha.",
           description = "Different ways the alpha channel of pixels affects blending.",
           key = "BlendAlphaMode",
-          module = "graphics",
+          module = "lovr.graphics",
           notes = "The premultiplied mode should be used if pixels being drawn have already been blended, or \"pre-multiplied\", by the alpha channel.  This happens when rendering a framebuffer that contains pixels with transparent alpha values, since the stored color values have already been faded by alpha and don't need to be faded a second time with the alphamultiply blend mode.",
           related = {
             "BlendMode",
@@ -5460,7 +5460,7 @@ return {
           summary = "Different blend modes.",
           description = "Blend modes control how overlapping pixels are blended together, similar to layers in Photoshop.",
           key = "BlendMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "alpha",
@@ -5506,7 +5506,7 @@ return {
           summary = "Different depth test modes.",
           description = "The method used to compare z values when deciding how to overlap rendered objects.  This is called the \"depth test\", and it happens on a pixel-by-pixel basis every time new objects are drawn.  If the depth test \"passes\" for a pixel, then the pixel color will be replaced by the new color and the depth value in the depth buffer will be updated.  Otherwise, the pixel will not be changed and the depth value will not be updated.",
           key = "CompareMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "equal",
@@ -5539,7 +5539,7 @@ return {
           summary = "Different types of depth maps used by Canvases.",
           description = "When you create a Canvas, you can give it a depth buffer, which stores the 3D positions of pixels to ensure that the depth of objects is sorted properly.  This depth information can be stored in various formats that differ in size and precision.  Additionally, this depth buffer can also be used for stenciling information.",
           key = "DepthFormat",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "d16",
@@ -5568,7 +5568,7 @@ return {
           summary = "Different ways graphics primitives can be drawn.",
           description = "Most graphics primitives can be drawn in one of two modes: a filled mode and a wireframe mode.",
           key = "DrawMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "fill",
@@ -5585,7 +5585,7 @@ return {
           summary = "How textures are sampled.",
           description = "The method used to downsample (or upsample) a texture.  \"nearest\" can be used for a pixelated effect, whereas \"linear\" leads to more smooth results.  Nearest is slightly faster than linear.",
           key = "FilterMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "nearest",
@@ -5610,7 +5610,7 @@ return {
           summary = "Different ways to horizontally align text.",
           description = "Different ways to horizontally align text when using `lovr.graphics.print`.",
           key = "HorizontalAlign",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "left",
@@ -5635,7 +5635,7 @@ return {
           summary = "Different material color parameters.",
           description = "The different types of color parameters `Material`s can hold.",
           key = "MaterialColor",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "diffuse",
@@ -5659,7 +5659,7 @@ return {
           summary = "Different material parameters.",
           description = "The different types of float parameters `Material`s can hold.",
           key = "MaterialScalar",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "metalness",
@@ -5683,7 +5683,7 @@ return {
           summary = "Different material texture parameters.",
           description = "The different types of texture parameters `Material`s can hold.",
           key = "MaterialTexture",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "diffuse",
@@ -5727,7 +5727,7 @@ return {
           summary = "Different ways Mesh objects can be drawn.",
           description = "Meshes are lists of arbitrary vertices.  These vertices can be drawn in a few different ways, leading to different results.",
           key = "MeshDrawMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "points",
@@ -5764,7 +5764,7 @@ return {
           summary = "How a Mesh is going to be updated.",
           description = "Meshes can have a usage hint, describing how they are planning on being updated.  Setting the usage hint allows the graphics driver optimize how it handles the data in the Mesh.",
           key = "MeshUsage",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "static",
@@ -5785,7 +5785,7 @@ return {
           summary = "Different types of shaders.",
           description = "Shaders can be used for either rendering operations or generic compute tasks.  Graphics shaders are created with `lovr.graphics.newShader` and compute shaders are created with `lovr.graphics.newComputeShader`.  `Shader:getType` can be used on an existing Shader to figure out what type it is.",
           key = "ShaderType",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "graphics",
@@ -5807,7 +5807,7 @@ return {
           summary = "Different stencil operations available.",
           description = "How to modify pixels in the stencil buffer when using `lovr.graphics.stencil`.",
           key = "StencilAction",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "replace",
@@ -5840,7 +5840,7 @@ return {
           summary = "Different storage formats for pixels in Textures.",
           description = "Textures can store their pixels in different formats.  The set of color channels and the number of bits stored for each channel can differ, allowing Textures to optimize their storage for certain kinds of image formats or rendering techniques.",
           key = "TextureFormat",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "rgb",
@@ -5897,7 +5897,7 @@ return {
           summary = "Different types of Textures.",
           description = "Different types of Textures.",
           key = "TextureType",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "2d",
@@ -5922,7 +5922,7 @@ return {
           summary = "Different ways to vertically align text.",
           description = "Different ways to vertically align text when using `lovr.graphics.print`.",
           key = "VerticalAlign",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "top",
@@ -5947,7 +5947,7 @@ return {
           summary = "Different winding directions.",
           description = "Whether the points on triangles are specified in a clockwise or counterclockwise order.",
           key = "Winding",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "clockwise",
@@ -5964,7 +5964,7 @@ return {
           summary = "How to wrap Textures.",
           description = "The method used to render textures when texture coordinates are outside of the 0-1 range.",
           key = "WrapMode",
-          module = "graphics",
+          module = "lovr.graphics",
           values = {
             {
               name = "clamp",
@@ -13551,7 +13551,7 @@ return {
           name = "ControllerAxis",
           description = "Axes on a Controller.",
           key = "ControllerAxis",
-          module = "headset",
+          module = "lovr.headset",
           values = {
             {
               name = "grip",
@@ -13575,7 +13575,7 @@ return {
           name = "ControllerButton",
           description = "Buttons on a Controller.",
           key = "ControllerButton",
-          module = "headset",
+          module = "lovr.headset",
           values = {
             {
               name = "system",
@@ -13619,7 +13619,7 @@ return {
           name = "ControllerHand",
           description = "Represents which hand a Controller is thought to be held in.",
           key = "ControllerHand",
-          module = "headset",
+          module = "lovr.headset",
           values = {
             {
               name = "left",
@@ -13640,7 +13640,7 @@ return {
           summary = "The two different eyes.",
           description = "Represents either the left eye or the right eye.",
           key = "HeadsetEye",
-          module = "headset",
+          module = "lovr.headset",
           values = {
             {
               name = "left",
@@ -13657,7 +13657,7 @@ return {
           summary = "Different types of coordinate space origins.",
           description = "Represents the different types of origins for coordinate spaces.  An origin of \"floor\" is common for headsets that support roomscale tracking, and means that the origin is on the floor in the center of the play area.  An origin of \"head\" is common for devices that do not support positional tracking and means the origin is relative to the position of the head.",
           key = "HeadsetOrigin",
-          module = "headset",
+          module = "lovr.headset",
           values = {
             {
               name = "head",
@@ -13674,7 +13674,7 @@ return {
           summary = "Types of VR headsets.",
           description = "Types of headsets LÖVR recognizes.",
           key = "HeadsetType",
-          module = "headset",
+          module = "lovr.headset",
           values = {
             {
               name = "vive",
@@ -16215,7 +16215,7 @@ return {
           summary = "Types of physics joints.",
           description = "Represents the different types of physics Joints available.",
           key = "JointType",
-          module = "physics",
+          module = "lovr.physics",
           values = {
             {
               name = "ball",
@@ -16247,7 +16247,7 @@ return {
           summary = "Types of physics shapes.",
           description = "Represents the different types of physics Shapes available.",
           key = "ShapeType",
-          module = "physics",
+          module = "lovr.physics",
           values = {
             {
               name = "box",

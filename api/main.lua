@@ -72,7 +72,7 @@ local function processEnum(path, parent)
 
   enum.name = path:match('[^/]+$')
   enum.key = enum.name
-  enum.module = parent.name
+  enum.module = parent.key
   enum.description = unwrap(enum.description)
   enum.notes = unwrap(enum.notes)
 
