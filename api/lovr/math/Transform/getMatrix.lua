@@ -1,71 +1,74 @@
 return {
   summary = 'Get the Transform\'s matrix.',
   description = 'Returns the individual matrix components of a Transform, in column-major order.',
-  arguments = {},
+  arguments = {
+    t = {
+      type = 'table',
+      description = 'A table to fill with values.'
+    }
+  },
   returns = {
-    {
-      name = 'm11',
+    m11 = {
       type = 'number'
     },
-    {
-      name = 'm21',
+    m21 = {
       type = 'number'
     },
-    {
-      name = 'm31',
+    m31 = {
       type = 'number'
     },
-    {
-      name = 'm41',
+    m41 = {
       type = 'number'
     },
-    {
-      name = 'm12',
+    m12 = {
       type = 'number'
     },
-    {
-      name = 'm22',
+    m22 = {
       type = 'number'
     },
-    {
-      name = 'm32',
+    m32 = {
       type = 'number'
     },
-    {
-      name = 'm42',
+    m42 = {
       type = 'number'
     },
-    {
-      name = 'm13',
+    m13 = {
       type = 'number'
     },
-    {
-      name = 'm23',
+    m23 = {
       type = 'number'
     },
-    {
-      name = 'm33',
+    m33 = {
       type = 'number'
     },
-    {
-      name = 'm43',
+    m43 = {
       type = 'number'
     },
-    {
-      name = 'm14',
+    m14 = {
       type = 'number'
     },
-    {
-      name = 'm24',
+    m24 = {
       type = 'number'
     },
-    {
-      name = 'm34',
+    m34 = {
       type = 'number'
     },
-    {
-      name = 'm44',
+    m44 = {
       type = 'number'
+    },
+    matrix = {
+      type = 'table',
+      description = 'The original table.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'm11', 'm21', 'm31', 'm41', 'm12', 'm22', 'm32', 'm42', 'm13', 'm23', 'm33', 'm43', 'm14',' m24', 'm34', 'm44' }
+    },
+    {
+      arguments = { 't' },
+      returns = { 'matrix' }
     }
   }
 }
