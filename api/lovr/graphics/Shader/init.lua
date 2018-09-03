@@ -10,7 +10,8 @@ return {
     'lovr.graphics.newComputeShader'
   },
   notes = [[
-    The current GLSL version used is 150.
+    The GLSL version used is 430 on systems that support compute shaders and 150 otherwise.  The
+    version used for WebGL is 300 es.
 
     The default vertex shader:
 
