@@ -15,7 +15,10 @@ return {
     and it can be much, much larger than a non-writable ShaderBlock.
   ]],
   constructor = 'lovr.graphics.newShaderBlock',
-  notes = 'A Shader can use up to 8 ShaderBlocks.',
+  notes = [[
+    - A Shader can use up to 8 ShaderBlocks.
+    - ShaderBlocks can not contain textures.
+  ]],
   example = [=[
     function lovr.load()
       -- Create a ShaderBlock to store positions for 1000 models

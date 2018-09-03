@@ -92,6 +92,7 @@ return {
     ]=]
   },
   related = {
-    'lovr.graphics.newShader'
+    'lovr.graphics.newShader',
+    'lovr.graphics.newComputeShader'
   }
 }

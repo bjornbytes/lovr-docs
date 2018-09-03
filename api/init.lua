@@ -8635,7 +8635,8 @@ return {
             }
           },
           related = {
-            "lovr.graphics.newShader"
+            "lovr.graphics.newShader",
+            "lovr.graphics.newComputeShader"
           },
           examples = {
             {
@@ -12941,8 +12942,154 @@ return {
           constructors = {
             "lovr.graphics.newShaderBlock"
           },
-          notes = "A Shader can use up to 8 ShaderBlocks.",
-          methods = {},
+          notes = "- A Shader can use up to 8 ShaderBlocks.\n- ShaderBlocks can not contain textures.",
+          methods = {
+            {
+              name = "getOffset",
+              summary = "Get the byte offset of a variable in the ShaderBlock.",
+              description = "Returns the byte offset of a variable in a ShaderBlock.  This is useful if you want to manually send binary data to the ShaderBlock using a `Blob` in `ShaderBlock:send`.",
+              key = "ShaderBlock:getOffset",
+              module = "lovr.graphics",
+              related = {
+                "ShaderBlock:getSize",
+                "lovr.graphics.newShaderBlock"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "field",
+                      type = "string",
+                      description = "The name of the variable to get the offset of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The byte offset of the variable."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getShaderCode",
+              summary = "Get a GLSL string that defines the ShaderBlock in a Shader.",
+              description = "Before a ShaderBlock can be used in a Shader, the Shader has to have the block's variables defined in its source code.  This can be a tedious process, so you can call this function to return a GLSL string that contains this definition.  Roughly, it will look something like this:\n\n    uniform <label> {\n      <type> <name>[<count>];\n    };",
+              key = "ShaderBlock:getShaderCode",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newShader",
+                "lovr.graphics.newComputeShader"
+              },
+              examples = {
+                {
+                  code = "lovr.graphics.newShader(\n  block:getShaderCode() .. [[\n  // The rest of the shader here\n  ]]\n)"
+                }
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "The label of the block in the shader code.  This will be used to identify it when using Shader:sendBlock."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "code",
+                      type = "string",
+                      description = "The code that can be prepended to a Shader."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSize",
+              summary = "Get the size of the ShaderBlock.",
+              description = "Returns the size of the ShaderBlock's data, in bytes.",
+              key = "ShaderBlock:getSize",
+              module = "lovr.graphics",
+              related = {
+                "ShaderBlock:getOffset",
+                "lovr.graphics.newShaderBlock"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The size of the ShaderBlock, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isWritable",
+              summary = "Check if Shaders can write to the ShaderBlock.",
+              description = "Returns whether or not compute shaders can write to the ShaderBlock data.  This is set when the block is created using `lovr.graphics.newShaderBlock`.",
+              key = "ShaderBlock:isWritable",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newShaderBlock"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "writable",
+                      type = "boolean",
+                      description = "Whether or not the block is writable by Shaders."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "send",
+              summary = "Update a variable in the ShaderBlock.",
+              description = "Updates a variable in the ShaderBlock.",
+              key = "ShaderBlock:send",
+              module = "lovr.graphics",
+              related = {
+                "Shader:send",
+                "Shader:sendBlock",
+                "ShaderBlock:getShaderCode",
+                "ShaderBlock:getOffset",
+                "ShaderBlock:getSize"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob to replace the entire block with."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "bytes",
+                      type = "number",
+                      description = "How many bytes were copied to the block."
+                    }
+                  }
+                }
+              },
+              notes = "For scalar or vector types, use tables of numbers for each vector.\n\nFor matrix types, use tables of numbers or `Transform` objects.\n\n`Blob`s can also be used to pass arbitrary binary data to individual variables."
+            }
+          },
           examples = {
             {
               code = "function lovr.load()\n  -- Create a ShaderBlock to store positions for 1000 models\n  block = lovr.graphics.newShaderBlock({\n    modelPositions = { 'mat4', 1000 }\n  }, { writable = false, usage = 'static' })\n\n  -- Write some random transforms to the block\n  local transforms = {}\n  for i = 1, 1000 do\n    local transform = lovr.math.newTransform()\n\n    local x = lovr.math.randomNormal(10)\n    local y = lovr.math.randomNormal(10)\n    local z = lovr.math.randomNormal(10)\n    transform:translate(x, y, z)\n    local angle = lovr.math.random() * 2 * math.pi\n    local ax, ay, az = lovr.math.random(), lovr.math.random(), lovr.math.random()\n    transform:rotate(angle, ax, ay, az)\n\n    transforms[i] = transform\n  end\n\n  -- Create the shader, injecting the shader code for the block\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('ModelBlock') .. [[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * lovrTransform * modelPositions[gl_InstanceID] * vertex;\n    }\n  ]])\n\n  -- Bind the block to the shader\n  shader:sendBlock('ModelBlock', block)\n\n  model = lovr.graphics.newModel('monkey.obj')\nend\n\n-- Draw the model 1000 times, using positions from the shader block\nfunction lovr.draw()\n  lovr.graphics.setShader(shader)\n  model:drawInstanced(1000)\n  lovr.graphics.setShader()\nend"
