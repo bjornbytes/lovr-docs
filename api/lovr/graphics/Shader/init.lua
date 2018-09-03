@@ -47,6 +47,8 @@ return {
         uniform mat4 lovrPose[48];
         uniform int lovrViewportCount;
         uniform int lovrViewportIndex;
+        const mat4 lovrPoseMatrix; // Bone-weighted pose
+        const int lovrInstanceID; // Current instance ID
 
     Fragment shader header:
 
