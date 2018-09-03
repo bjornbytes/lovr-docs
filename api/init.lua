@@ -8463,7 +8463,7 @@ return {
           description = "Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.\n\nThe following features are not supported yet: animations, materials, vertex colors.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "Models loaded from glTF files do not currently import animations properly.",
+          notes = "- Models loaded from glTF files do not currently import animations properly.\n- Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be\n  loaded as linear.",
           variants = {
             {
               arguments = {

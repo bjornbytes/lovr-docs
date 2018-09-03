@@ -54,6 +54,8 @@ return {
     }
   },
   notes = [[
-    Models loaded from glTF files do not currently import animations properly.
+    - Models loaded from glTF files do not currently import animations properly.
+    - Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be
+      loaded as linear.
   ]]
 }
