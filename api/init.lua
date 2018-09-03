@@ -8636,7 +8636,7 @@ return {
           },
           related = {
             "lovr.graphics.newShader",
-            "lovr.graphics.newComputeShader"
+            "lovr.graphics.newComputeShaderr"
           },
           examples = {
             {

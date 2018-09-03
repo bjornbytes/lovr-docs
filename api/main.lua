@@ -238,10 +238,22 @@ local function processModule(path)
 end
 
 -- Validation
+local function validateRelated(item)
+  for _, key in ipairs(item.related or {}) do
+    warnIf(not lookup[key], 'Related item for %s not found: %s', item.key, key)
+  end
+end
+
+local function validateEnum(enum)
+  validateRelated(enum)
+end
+
 local function validateObject(object)
   for _, constructor in ipairs(object.constructors or {}) do
-    warnIf(not lookup[constructor], 'Constructor not found: %s', constructor)
+    warnIf(not lookup[constructor], 'Constructor for %s not found: %s', object.key, constructor)
   end
+
+  validateRelated(object)
 end
 
 local function validateFunction(fn)
@@ -252,6 +264,8 @@ local function validateFunction(fn)
     end
     warnIf(not found, 'Unknown tag %s for %s', fn.tag, fn.key)
   end
+
+  validateRelated(fn)
 end
 
 local function validateModule(module)
@@ -261,6 +275,10 @@ local function validateModule(module)
 
   for _, fn in ipairs(module.functions) do
     validateFunction(fn)
+  end
+
+  for _, fn in ipairs(module.enums) do
+    validateEnum(fn)
   end
 end
 
