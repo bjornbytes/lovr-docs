@@ -8628,6 +8628,7 @@ return {
               },
               returns = {
                 {
+                  name = "shaderBlock",
                   type = "ShaderBlock",
                   description = "The new ShaderBlock."
                 }

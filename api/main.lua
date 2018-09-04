@@ -265,6 +265,16 @@ local function validateFunction(fn)
     warnIf(not found, 'Unknown tag %s for %s', fn.tag, fn.key)
   end
 
+  for _, variant in ipairs(fn.variants) do
+    for _, arg in ipairs(variant.arguments) do
+      warnIf(not arg.name, 'Nameless argument for variant of %s', fn.key)
+    end
+
+    for _, ret in ipairs(variant.returns) do
+      warnIf(not ret.name, 'Nameless return for variant of %s', fn.key)
+    end
+  end
+
   validateRelated(fn)
 end
 
