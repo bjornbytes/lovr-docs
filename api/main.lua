@@ -267,11 +267,11 @@ local function validateFunction(fn)
 
   for _, variant in ipairs(fn.variants) do
     for _, arg in ipairs(variant.arguments) do
-      warnIf(not arg.name, 'Nameless argument for variant of %s', fn.key)
+      warnIf(not arg or not arg.name, 'Invalid argument for variant of %s', fn.key)
     end
 
     for _, ret in ipairs(variant.returns) do
-      warnIf(not ret.name, 'Nameless return for variant of %s', fn.key)
+      warnIf(not ret or not ret.name, 'Invalid return for variant of %s', fn.key)
     end
   end
 
