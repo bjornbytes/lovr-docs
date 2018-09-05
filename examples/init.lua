@@ -1,10 +1,11 @@
 return {
   'Hello_World',
   'Spinning_Cube',
+  '360_Photo',
   '3D_Model',
   'Animation',
-  '360_Photo',
+  'Physics',
+  'Cubemap',
   'Primitives',
-  'Lighting',
-  'Physics'
+  'Lighting'
 }
