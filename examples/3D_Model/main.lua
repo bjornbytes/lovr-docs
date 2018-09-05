@@ -1,3 +1,5 @@
+-- Note: Wireframe rendering doesn't work in WebGL
+
 function lovr.load()
   model = lovr.graphics.newModel('suzanne.obj')
   lovr.graphics.setWireframe(true)
