@@ -6,6 +6,7 @@ return {
   'Animation',
   'Physics',
   'Cubemap',
+  'Instancing',
   'Primitives',
   'Lighting',
   'Microphone'
