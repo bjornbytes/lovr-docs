@@ -10,5 +10,5 @@ return {
   'Canvas',
   'Instancing',
   'Primitives',
-  'Microphone'
+  'Microphones'
 }
