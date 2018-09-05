@@ -63,6 +63,7 @@ function lovr.load()
   local texture = lovr.graphics.newTexture('eye-chart-test-vintage-cc0.jpg')
   local textureWidth, textureHeight = texture:getDimensions()
   eyechart = {
+    scale = .75,
     aspect = textureHeight / textureWidth,
     material = lovr.graphics.newMaterial( texture )
   }
@@ -83,8 +84,8 @@ function lovr.load()
       lovr.graphics.newCanvas(width, height)
     }
 
-    tempCanvas[1]:setWrap('clamp')
-    tempCanvas[2]:setWrap('clamp')
+    tempCanvas[1]:getTexture():setWrap('clamp')
+    tempCanvas[2]:getTexture():setWrap('clamp')
   end
 end
 
@@ -101,12 +102,7 @@ local function sceneDraw()
     lovr.graphics.pop()
   end
 
-  -- Because the eyechart image is non-square, we must stretch its plane
-  lovr.graphics.push()
-  lovr.graphics.scale(1, eyechart.aspect, 1)
-  lovr.graphics.translate(0, 0.5, -0.75)
-  lovr.graphics.plane(eyechart.material, 0, 0, 0)
-  lovr.graphics.pop()
+  lovr.graphics.plane(eyechart.material, 0, 1.7, -1, eyechart.scale, eyechart.scale * eyechart.aspect)
 end
 
 -- This simple callback is used to draw one canvas onto another
