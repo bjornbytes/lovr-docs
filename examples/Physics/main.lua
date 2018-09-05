@@ -2,15 +2,17 @@ shader = require 'shader'
 
 function lovr.load()
   world = lovr.physics.newWorld()
+  world:setLinearDamping(.01)
+  world:setAngularDamping(.005)
 
   -- Create the ground
-  world:newBoxCollider(0, 0, 0, 10, .01, 10):setKinematic(true)
+  world:newBoxCollider(0, 0, 0, 50, .05, 50):setKinematic(true)
 
   -- Create boxes!
   boxes = {}
   for x = -1, 1, .25 do
-    for y = .125, 2, .25 do
-      local box = world:newBoxCollider(x, y, -2 - y / 10, .25)
+    for y = .125, 2, .24999 do
+      local box = world:newBoxCollider(x, y, -2 - y / 5, .25)
       table.insert(boxes, box)
     end
   end
@@ -21,17 +23,19 @@ function lovr.load()
 end
 
 function lovr.update(dt)
+  -- Update the physics simulation
+  world:update(dt)
+
+  -- Place boxes on controllers
   for i, controller in ipairs(lovr.headset.getControllers()) do
     if not controllerBoxes[i] then
       controllerBoxes[i] = world:newBoxCollider(0, 0, 0, .25)
       controllerBoxes[i]:setKinematic(true)
+      controllerBoxes[i]:setMass(10)
     end
     controllerBoxes[i]:setPosition(controller:getPosition())
     controllerBoxes[i]:setOrientation(controller:getOrientation())
   end
-
-  -- Update the physics simulation
-  world:update(dt)
 end
 
 -- A helper function for drawing boxes
