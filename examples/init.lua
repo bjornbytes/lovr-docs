@@ -7,5 +7,6 @@ return {
   'Physics',
   'Cubemap',
   'Primitives',
-  'Lighting'
+  'Lighting',
+  'Microphone'
 }
