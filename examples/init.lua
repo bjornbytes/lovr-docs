@@ -5,9 +5,9 @@ return {
   '3D_Model',
   'Animation',
   'Physics',
+  'PBR_Materials',
   'Cubemap',
   'Instancing',
   'Primitives',
-  'Lighting',
   'Microphone'
 }

@@ -1,4 +1,4 @@
 function lovr.conf(t)
   t.window.msaa = 4
-  t.gammacorrect = true
+  t.gammacorrect = lovr.getOS() ~= 'Web'
 end
