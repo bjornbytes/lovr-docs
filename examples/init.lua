@@ -6,6 +6,5 @@ return {
   '360_Photo',
   'Primitives',
   'Lighting',
-  'Physics',
-  'Billboard'
+  'Physics'
 }
