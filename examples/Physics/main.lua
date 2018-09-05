@@ -16,6 +16,8 @@ function lovr.load()
   end
 
   controllerBoxes = {}
+
+  lovr.timer.step() -- Reset the timer before the first update
 end
 
 function lovr.update(dt)
