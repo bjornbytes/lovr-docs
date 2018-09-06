@@ -134,14 +134,23 @@ emcmake cmake -G "NMake Makefiles" ..
 emmake nmake
 ```
 
-The above commands will output `lovr.js` and `lovr.wasm`.  To package a game, run:
+The above commands will output `lovr.js`, `lovr.wasm`, and `lovr.html`.  The easiest way to run LÖVR
+from here is to use `emrun`:
+
+```
+emrun --browser firefox lovr.html
+```
+
+To package a game, run:
 
 ```
 python /path/to/emscripten/tools/file_packager.py game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
 ```
 
-Which will output `game.js` and `game.data`.  You can then include `lovr.js` and `game.js` on an
-HTML page with a canvas element.  Check out [`lovr-webvr-server`](https://github.com/bjornbytes/lovr-webvr-server/blob/master/views/index.ejs) for an example.
+Which will output `game.js` and `game.data`.  You can then include the `game.js` script on the HTML
+page (before the lovr.js script tag) to run the project.
+
+For an improved WebVR workflow with live-reloading, check out [`lovr-webvr-server`](https://github.com/bjornbytes/lovr-webvr-server/blob/master/views/index.ejs).
 
 Troubleshooting
 ---
