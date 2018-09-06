@@ -422,7 +422,7 @@ return {
                 {
                   name = "os",
                   type = "string",
-                  description = "Either \"Windows\", \"macOS\", or \"Web\"."
+                  description = "Either \"windows\" or \"macOS\"."
                 }
               }
             }
