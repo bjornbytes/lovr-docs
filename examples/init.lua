@@ -7,7 +7,7 @@ return {
   'Physics',
   'PBR_Materials',
   'Cubemap',
-  'Canvas',
+  'Postprocessing',
   'Instancing',
   'Primitives',
   'Microphones'
