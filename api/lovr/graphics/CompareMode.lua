@@ -38,5 +38,11 @@ return {
         The depth test passes when the new depth value is greater than the existing one.
       ]]
     }
+  },
+  related = {
+    'lovr.graphics.getDepthTest',
+    'lovr.graphics.setDepthTest',
+    'lovr.graphics.getStencilTest',
+    'lovr.graphics.setStencilTest'
   }
 }
