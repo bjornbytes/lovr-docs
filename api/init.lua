@@ -4472,6 +4472,11 @@ return {
                       name = "texturemsaa",
                       type = "number",
                       description = "The maximum MSAA value supported by `lovr.graphics.newTexture`."
+                    },
+                    {
+                      name = "anisotropy",
+                      type = "number",
+                      description = "The maximum anisotropy value supported by `Texture:setFilter`."
                     }
                   }
                 }
