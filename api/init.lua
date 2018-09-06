@@ -4142,7 +4142,7 @@ return {
         {
           name = "TextureData",
           summary = "An object that stores pixel data for Textures.",
-          description = "A TextureData stores raw pixel info for `Texture`s.  It has a width and a height.  Currently, all TextureData is in the RGBA format.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels or load Textures in a background thread.",
+          description = "A TextureData stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The TextureData can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, and `dds`.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels or load Textures in a background thread.",
           key = "TextureData",
           module = "lovr.data",
           methods = {
