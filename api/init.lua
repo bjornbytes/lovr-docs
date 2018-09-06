@@ -555,7 +555,7 @@ return {
                 {
                   name = "os",
                   type = "string",
-                  description = "Either \"windows\", \"macOS\", or \"linux\"."
+                  description = "Either \"Windows\", \"macOS\", \"Linux\", or \"Web\"."
                 }
               }
             }
