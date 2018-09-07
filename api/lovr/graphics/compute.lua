@@ -36,7 +36,7 @@ return {
     }
   },
   returns = {},
-  notes = 'Only compute shaders created with `lovr.graphics.newComputeShaders` can be used here.',
+  notes = 'Only compute shaders created with `lovr.graphics.newComputeShader` can be used here.',
   related = {
     'lovr.graphics.newComputeShader',
     'lovr.graphics.getShader',

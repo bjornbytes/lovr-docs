@@ -6924,7 +6924,7 @@ return {
             "lovr.graphics.setShader",
             "Shader"
           },
-          notes = "Only compute shaders created with `lovr.graphics.newComputeShaders` can be used here."
+          notes = "Only compute shaders created with `lovr.graphics.newComputeShader` can be used here."
         },
         {
           name = "createWindow",
