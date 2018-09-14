@@ -144,7 +144,7 @@ emrun --browser firefox lovr.html
 To package a game, run:
 
 ```
-python /path/to/emscripten/tools/file_packager.py game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
+python "$EMSCRIPTEN/tools/file_packager.py" game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
 ```
 
 Which will output `game.js` and `game.data`.  You can then include the `game.js` script on the HTML
