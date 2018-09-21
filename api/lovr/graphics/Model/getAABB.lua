@@ -34,6 +34,10 @@ return {
       description = 'The maximum z coordinate of the box.'
     }
   },
+  notes = [[
+    Note that currently this function returns the bounding box for the default animation pose, so it
+    won't update based on the current Animator pose.
+  ]],
   related = {
     'Collider:getAABB'
   }
