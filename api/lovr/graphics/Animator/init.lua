@@ -16,12 +16,18 @@ return {
           return projection * transform * lovrPoseMatrix * vertex;
         }
   ]],
-  example = [[
+  example = [=[
     function lovr.load()
       model = lovr.graphics.newModel('model.fbx')
       animator = lovr.graphics.newAnimator(model)
       animator:play(animator:getAnimationNames()[1])
       model:setAnimator(animator)
+
+      shader = lovr.graphics.newShader([[
+        vec4 vertex(mat4 projection, mat4 transform, vec4 vertex) {
+          return projection * transform * lovrPoseMatrix * vertex;
+        }
+      ]], nil)
     end
 
     function lovr.update(dt)
@@ -29,7 +35,8 @@ return {
     end
 
     function lovr.draw()
+      lovr.graphics.setShader(shader)
       model:draw()
     end
-  ]]
+  ]=]
 }
