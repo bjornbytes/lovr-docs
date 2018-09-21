@@ -10291,7 +10291,7 @@ return {
           module = "lovr.graphics",
           examples = {
             {
-              code = "function lovr.load()\n  model = lovr.graphics.newModel('model.fbx')\n  animator = lovr.graphics.newAnimator(model)\n  animator:play(animator:getAnimationNames()[1])\n  model:setAnimator(animator)\nend\n\nfunction lovr.update(dt)\n  animator:update(dt)\nend\n\nfunction lovr.draw()\n  model:draw()\nend"
+              code = "function lovr.load()\n  model = lovr.graphics.newModel('model.fbx')\n  animator = lovr.graphics.newAnimator(model)\n  animator:play(animator:getAnimationNames()[1])\n  model:setAnimator(animator)\n\n  shader = lovr.graphics.newShader([[\n    vec4 vertex(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * lovrPoseMatrix * vertex;\n    }\n  ]], nil)\nend\n\nfunction lovr.update(dt)\n  animator:update(dt)\nend\n\nfunction lovr.draw()\n  lovr.graphics.setShader(shader)\n  model:draw()\nend"
             }
           },
           constructors = {
@@ -12693,7 +12693,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "Note that currently this function returns the bounding box for the default animation pose, so it won't update based on the current Animator pose."
             },
             {
               name = "getAnimator",
