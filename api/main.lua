@@ -193,7 +193,7 @@ local function processObject(path, parent)
 end
 
 local function processModule(path)
-  local module = require(path)
+  local module = require(path .. '.init')
 
   module.key = module.external and path:match('[^/]+$') or path:gsub('/', '.')
   module.name = module.external and module.key or module.key:match('[^%.]+$')
