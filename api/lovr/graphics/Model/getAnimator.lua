@@ -9,7 +9,7 @@ return {
     {
       name = 'animator',
       type = 'Animator',
-      description = 'The Animator attached to the Model, or nil if none is set.'
+      description = 'The Animator attached to the Model, or `nil` if none is set.'
     }
   },
   related = {

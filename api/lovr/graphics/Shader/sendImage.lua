@@ -18,7 +18,7 @@ return {
     slice = {
       type = 'number',
       default = 'nil',
-      description = 'The slice of a cube, array, or volume texture to use, or nil for all slices.'
+      description = 'The slice of a cube, array, or volume texture to use, or `nil` for all slices.'
     },
     mipmap = {
       type = 'number',

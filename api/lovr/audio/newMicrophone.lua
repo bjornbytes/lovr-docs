@@ -42,7 +42,7 @@ return {
     {
       name = 'microphone',
       type = 'Microphone',
-      description = 'The new Microphone, or nil if the capture settings are not supported.'
+      description = 'The new Microphone, or `nil` if the capture settings are not supported.'
     }
   },
   related = {

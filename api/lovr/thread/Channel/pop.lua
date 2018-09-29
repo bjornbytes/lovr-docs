@@ -28,7 +28,7 @@ return {
     {
       name = 'message',
       type = '*',
-      description = 'The received message, or nil if nothing was received.'
+      description = 'The received message, or `nil` if nothing was received.'
     }
   },
   notes = 'Threads can get stuck forever waiting on Channel messages, so be careful.',

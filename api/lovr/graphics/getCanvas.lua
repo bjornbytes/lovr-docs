@@ -11,7 +11,7 @@ return {
     {
       name = 'canvas',
       type = 'Canvas',
-      description = 'The active Canvas, or nil if no canvas is set.'
+      description = 'The active Canvas, or `nil` if no canvas is set.'
     }
   },
   related = {

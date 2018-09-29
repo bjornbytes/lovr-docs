@@ -6,7 +6,7 @@ return {
     {
       name = 'model',
       type = 'Model',
-      description = 'The new Model, or nil if a model could not be loaded.'
+      description = 'The new Model, or `nil` if a model could not be loaded.'
     }
   },
   notes = 'The Model will have a Texture applied.',
