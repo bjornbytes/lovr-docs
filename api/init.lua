@@ -2653,7 +2653,7 @@ return {
               arguments = {
                 {
                   name = "blob",
-                  type = "string",
+                  type = "Blob",
                   description = "The Blob containing image data to decode."
                 }
               },
