@@ -12,7 +12,7 @@ return {
     },
     texture = {
       type = 'Texture',
-      description = 'The texture to apply, or nil to use the default.'
+      description = 'The texture to apply, or `nil` to use the default.'
     },
     canvas = {
       type = 'Canvas',

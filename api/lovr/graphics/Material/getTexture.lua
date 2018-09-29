@@ -16,7 +16,7 @@ return {
     {
       name = 'texture',
       type = 'Texture',
-      description = 'The texture that is set, or nil if no texture is set.'
+      description = 'The texture that is set, or `nil` if no texture is set.'
     }
   },
   related = {

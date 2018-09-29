@@ -946,7 +946,7 @@ return {
                 {
                   name = "microphone",
                   type = "Microphone",
-                  description = "The new Microphone, or nil if the capture settings are not supported."
+                  description = "The new Microphone, or `nil` if the capture settings are not supported."
                 }
               }
             }
@@ -3557,7 +3557,7 @@ return {
                     {
                       name = "parent",
                       type = "number",
-                      description = "The index of the node's parent, or nil if the node is the root node."
+                      description = "The index of the node's parent, or `nil` if the node is the root node."
                     }
                   }
                 }
@@ -7324,7 +7324,7 @@ return {
                 {
                   name = "canvas",
                   type = "Canvas",
-                  description = "The active Canvas, or nil if no canvas is set."
+                  description = "The active Canvas, or `nil` if no canvas is set."
                 }
               }
             }
@@ -7559,7 +7559,7 @@ return {
                 {
                   name = "shader",
                   type = "Shader",
-                  description = "The active shader object, or nil if none is active."
+                  description = "The active shader object, or `nil` if none is active."
                 }
               }
             }
@@ -9414,7 +9414,7 @@ return {
                 {
                   name = "canvas",
                   type = "Canvas",
-                  description = "The new active Canvas object, or nil to just render to the headset."
+                  description = "The new active Canvas object, or `nil` to just render to the headset."
                 }
               },
               returns = {}
@@ -9537,7 +9537,7 @@ return {
                 {
                   name = "compareMode",
                   type = "CompareMode",
-                  description = "The new depth test.  Use nil to disable the depth test.",
+                  description = "The new depth test.  Use `nil` to disable the depth test.",
                   default = "nil"
                 },
                 {
@@ -9568,7 +9568,7 @@ return {
                 {
                   name = "font",
                   type = "Font",
-                  description = "The font to use.  If nil, the default font is set.",
+                  description = "The font to use.  If `nil`, the default font is set.",
                   default = "nil"
                 }
               },
@@ -11454,7 +11454,7 @@ return {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "The texture that is set, or nil if no texture is set."
+                      description = "The texture that is set, or `nil` if no texture is set."
                     }
                   }
                 }
@@ -11619,7 +11619,7 @@ return {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "The texture to apply, or nil to use the default."
+                      description = "The texture to apply, or `nil` to use the default."
                     }
                   },
                   returns = {}
@@ -11629,7 +11629,7 @@ return {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "The texture to apply, or nil to use the default."
+                      description = "The texture to apply, or `nil` to use the default."
                     }
                   },
                   returns = {}
@@ -12712,7 +12712,7 @@ return {
                     {
                       name = "animator",
                       type = "Animator",
-                      description = "The Animator attached to the Model, or nil if none is set."
+                      description = "The Animator attached to the Model, or `nil` if none is set."
                     }
                   }
                 }
@@ -12970,7 +12970,7 @@ return {
                     {
                       name = "slice",
                       type = "number",
-                      description = "The slice of a cube, array, or volume texture to use, or nil for all slices.",
+                      description = "The slice of a cube, array, or volume texture to use, or `nil` for all slices.",
                       default = "nil"
                     },
                     {
@@ -13003,7 +13003,7 @@ return {
                     {
                       name = "slice",
                       type = "number",
-                      description = "The slice of a cube, array, or volume texture to use, or nil for all slices.",
+                      description = "The slice of a cube, array, or volume texture to use, or `nil` for all slices.",
                       default = "nil"
                     },
                     {
@@ -14685,7 +14685,7 @@ return {
                     {
                       name = "model",
                       type = "Model",
-                      description = "The new Model, or nil if a model could not be loaded."
+                      description = "The new Model, or `nil` if a model could not be loaded."
                     }
                   }
                 }
@@ -20985,7 +20985,7 @@ return {
                     {
                       name = "message",
                       type = "*",
-                      description = "The received message, or nil if nothing was received."
+                      description = "The received message, or `nil` if nothing was received."
                     }
                   }
                 }
@@ -21061,7 +21061,7 @@ return {
                     {
                       name = "error",
                       type = "string",
-                      description = "The error message, or nil if no error has occurred on the Thread."
+                      description = "The error message, or `nil` if no error has occurred on the Thread."
                     }
                   }
                 }

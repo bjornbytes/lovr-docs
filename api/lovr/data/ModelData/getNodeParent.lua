@@ -12,7 +12,7 @@ return {
     {
       name = 'parent',
       type = 'number',
-      description = 'The index of the node\'s parent, or nil if the node is the root node.'
+      description = 'The index of the node\'s parent, or `nil` if the node is the root node.'
     }
   },
   notes = 'An error will be thrown if an invalid node index is supplied.',
