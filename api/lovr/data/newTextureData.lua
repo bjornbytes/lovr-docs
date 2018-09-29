@@ -15,7 +15,7 @@ return {
       description = 'The filename of the image to load.'
     },
     blob = {
-      type = 'string',
+      type = 'Blob',
       description = 'The Blob containing image data to decode.'
     }
   },
