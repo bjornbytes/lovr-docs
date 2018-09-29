@@ -30,10 +30,10 @@ From the lovr folder, run these commands to create a build folder and compile th
 CMake:
 
 ```
-mkdir build
-cd build
-cmake ..
-cmake --build .
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake --build .
 ```
 
 The executable will then exist at `/path/to/lovr/build/Debug/lovr.exe`.  A LÖVR project (a folder
@@ -46,16 +46,16 @@ macOS
 Install the dependencies using your package manager of choice:
 
 ```
-brew install assimp glfw3 luajit physfs openal-soft ode libccd
+$ brew install assimp glfw3 luajit physfs openal-soft ode libccd
 ```
 
 Next, build using CMake, as above:
 
 ```
-mkdir build
-cd build
-cmake ..
-cmake --build .
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake --build .
 ```
 
 The lovr executable should exist in `lovr/build` now.  It's recommended to set up an alias or
@@ -63,7 +63,7 @@ symlink so that this executable can be found in your PATH environment variable. 
 you can run a project like this:
 
 ```
-lovr /path/to/myGame
+$ lovr /path/to/myGame
 ```
 
 > You may need to set the `PKG_CONFIG_PATH` environment variable for OpenAL to be located properly.
@@ -77,22 +77,22 @@ First, install the dependencies using your package manager of choice.
 #### Arch Linux
 
 ```
-pacman -S assimp glfw-x11 luajit physfs openal ode
+$ pacman -S assimp glfw-x11 luajit physfs openal ode
 ```
 
 #### Debian/Ubuntu
 
 ```
-sudo apt-get install build-essential cmake libassimp-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev
+$ sudo apt-get install build-essential cmake libassimp-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev
 ```
 
 Then, build with CMake:
 
 ```
-mkdir build
-cd build
-cmake ..
-cmake --build .
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake --build .
 ```
 
 On Linux, LÖVR needs to run within the Steam Runtime.  To do this, first [install
@@ -101,14 +101,14 @@ rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirement
 within the Steam runtime:
 
 ```
-~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
+$ ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
 If you receive errors related to `libstdc++`, set the `LD_PRELOAD` environment variable when running
 the command:
 
 ```
-LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
+$ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
 WebVR
@@ -119,32 +119,32 @@ First, install the Emscripten SDK.
 Unix:
 
 ```
-mkdir build
-cd build
-emcmake cmake ..
-emmake make -j2
+$ mkdir build
+$ cd build
+$ emcmake cmake ..
+$ emmake make -j2
 ```
 
 Windows (from a Visual Studio Command Prompt, make sure the Emscripten SDK is on PATH):
 
 ```
-mkdir build
-cd build
-emcmake cmake -G "NMake Makefiles" ..
-emmake nmake
+$ mkdir build
+$ cd build
+$ emcmake cmake -G "NMake Makefiles" ..
+$ emmake nmake
 ```
 
 The above commands will output `lovr.js`, `lovr.wasm`, and `lovr.html`.  The easiest way to run LÖVR
 from here is to use `emrun`:
 
 ```
-emrun --browser firefox lovr.html
+$ emrun --browser firefox lovr.html
 ```
 
 To package a game, run:
 
 ```
-python "$EMSCRIPTEN/tools/file_packager.py" game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
+$ python "$EMSCRIPTEN/tools/file_packager.py" game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
 ```
 
 Which will output `game.js` and `game.data`.  You can then include the `game.js` script on the HTML

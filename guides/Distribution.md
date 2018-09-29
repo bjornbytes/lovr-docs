@@ -13,7 +13,7 @@ click them, and choose "Send to" -> "Compressed (zip) folder".  On Unix systems,
 can be used:
 
 ```
-zip -9qr .
+$ zip -9qr .
 ```
 
 A zip archive can be run with LÖVR but isn't a standalone executable yet.
@@ -25,7 +25,7 @@ Once you have a project archive, it can be appended to the LÖVR binary to creat
 executable.  On Windows, this can be done using the command prompt:
 
 ```
-copy /b lovr.exe+MyProject.zip MyProject.exe
+$ copy /b lovr.exe+MyProject.zip MyProject.exe
 ```
 
 On Unix systems, the `cat` utility can be used to concatenate the two files.
@@ -40,7 +40,7 @@ To package a game for use in a browser, you can use the `file_packager` script t
 Emscripten SDK:
 
 ```
-python "$EMSCRIPTEN/tools/file_packager.py" game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
+$ python "$EMSCRIPTEN/tools/file_packager.py" game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
 ```
 
 This will output two files: `game.js` and `game.data`.  The `game.js` file downloads the `game.data`
