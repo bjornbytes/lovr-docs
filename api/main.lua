@@ -131,10 +131,10 @@ local function processFunction(path, parent)
 
       for _, field in ipairs(t) do
         field.description = unwrap(field.description)
+        processTable(field.table)
       end
 
       t.description = unwrap(t.description)
-      processTable(t.table)
     end
 
     variant.description = unwrap(variant.description)
