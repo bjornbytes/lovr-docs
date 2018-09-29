@@ -33,7 +33,7 @@ return {
                     {
                       name = "mirror",
                       type = "boolean",
-                      description = "                Whether the desktop window should display a mirror of what's in the headset.\n              "
+                      description = "Whether the desktop window should display a mirror of what's in the headset."
                     },
                     {
                       name = "msaa",
