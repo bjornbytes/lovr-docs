@@ -3,5 +3,6 @@ return {
   'Callbacks_and_Modules',
   'Libraries',
   'Distribution',
-  'Compiling'
+  'Compiling',
+  'FAQ'
 }
