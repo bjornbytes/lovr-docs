@@ -13,9 +13,9 @@ You can also set the `t.modules.headset` flag to false in
 
 > Does LÖVR work with mobile devices (Cardboard, Gear VR, Oculus Go, etc.)?
 
-There isn't official support for mobile hardware yet.  However, you can run projects in a browser
-using WebVR and those will usually work on mobile devices.  An Android port is also in progress but
-isn't available yet.
+No, there isn't official support for mobile hardware yet.  However, you can run projects in a
+browser using WebVR and those will usually work on mobile devices.  An Android port is also in
+progress but isn't available yet.
 
 > Are there macOS binaries available?
 
