@@ -27,6 +27,6 @@ Yes, see `lovr-keyboard` and `lovr-mouse` on the <a data-key="Libraries">Librari
 
 > Does LÖVR work on Linux?
 
-Sorta.  Linux is an officially supported platform and LÖVR compiles on there.  However, not a lot of
-testing is done on Linux, so sometimes you'll run into problems.  If you find anything wrong, please
-open an issue or post in Slack about it so it can be fixed.
+Sorta.  Linux is an officially supported platform and generally works okay, but I don't test on
+Linux very often so you may encounter problems.  If you do run into something, please open an issue
+or post in Slack about it.
