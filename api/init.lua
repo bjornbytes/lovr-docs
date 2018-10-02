@@ -9215,7 +9215,7 @@ return {
             "lovr.graphics.newFont",
             "Font"
           },
-          notes = "Unicode text is supported.\n\nUse `\\n` to add line breaks.\n\nLÖVR uses a fancy technique for font rendering called multichanel signed distance fields.  This leads to crisp text in VR, but requires a special shader to use.  LÖVR internally switches to the appropriate shader, but only when the default shader is already set.  If you see strange font artifacts, make sure you switch back to the default shader by using `lovr.graphics.setShader()` before you draw text."
+          notes = "Unicode text is supported.\n\nUse `\\n` to add line breaks.\n\nLÖVR uses a fancy technique for font rendering called multichannel signed distance fields.  This leads to crisp text in VR, but requires a special shader to use.  LÖVR internally switches to the appropriate shader, but only when the default shader is already set.  If you see strange font artifacts, make sure you switch back to the default shader by using `lovr.graphics.setShader()` before you draw text."
         },
         {
           name = "push",
