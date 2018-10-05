@@ -29,30 +29,23 @@ return {
       -- Write some random transforms to the block
       local transforms = {}
       for i = 1, 1000 do
-        local transform = lovr.math.newTransform()
-
-        local x = lovr.math.randomNormal(10)
-        local y = lovr.math.randomNormal(10)
-        local z = lovr.math.randomNormal(10)
-        transform:translate(x, y, z)
-        local angle = lovr.math.random() * 2 * math.pi
-        local ax, ay, az = lovr.math.random(), lovr.math.random(), lovr.math.random()
-        transform:rotate(angle, ax, ay, az)
-
-        transforms[i] = transform
+        transforms[i] = lovr.math.newTransform()
+        local random, randomNormal = lovr.math.random, lovr.math.randomNormal
+        transforms[i]:translate(randomNormal(8), randomNormal(8), randomNormal(8))
+        transforms[i]:rotate(random(2 * math.pi), random(), random(), random())
       end
+      block:send('modelPositions', transforms)
 
       -- Create the shader, injecting the shader code for the block
       shader = lovr.graphics.newShader(
         block:getShaderCode('ModelBlock') .. [[
         vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-          return projection * lovrTransform * modelPositions[gl_InstanceID] * vertex;
+          return projection * transform * modelPositions[gl_InstanceID] * vertex;
         }
       ]])
 
       -- Bind the block to the shader
       shader:sendBlock('ModelBlock', block)
-
       model = lovr.graphics.newModel('monkey.obj')
     end
 

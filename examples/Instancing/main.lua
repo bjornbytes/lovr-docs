@@ -22,11 +22,10 @@ function lovr.load()
   -- Create the shader, injecting the shader code for the block
   shader = lovr.graphics.newShader(
     block:getShaderCode('ModelBlock') .. [[
-
     out vec3 vNormal;
     vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
       vNormal = lovrNormal;
-      return projection * lovrTransform * modelPositions[lovrInstanceID] * vertex;
+      return projection * transform * modelPositions[lovrInstanceID] * vertex;
     }
   ]], [[
     in vec3 vNormal;
