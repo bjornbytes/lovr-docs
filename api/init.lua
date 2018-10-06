@@ -13040,7 +13040,7 @@ return {
           constructors = {
             "lovr.graphics.newShaderBlock"
           },
-          notes = "- A Shader can use up to 8 ShaderBlocks.\n- ShaderBlocks can not contain textures.",
+          notes = "- A Shader can use up to 8 ShaderBlocks.\n- ShaderBlocks can not contain textures.\n- Some systems have bugs with `vec3` variables in ShaderBlocks.  If you run into strange bugs,\n  try switching to a `vec4` for the variable.",
           methods = {
             {
               name = "getOffset",

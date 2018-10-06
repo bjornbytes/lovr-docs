@@ -18,6 +18,8 @@ return {
   notes = [[
     - A Shader can use up to 8 ShaderBlocks.
     - ShaderBlocks can not contain textures.
+    - Some systems have bugs with `vec3` variables in ShaderBlocks.  If you run into strange bugs,
+      try switching to a `vec4` for the variable.
   ]],
   example = [=[
     function lovr.load()
