@@ -89,6 +89,7 @@ return {
         in uvec3 gl_WorkGroupID;        // The current global work group
         in uvec3 gl_LocalInvocationID;  // The current local work group
         in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs
+        in uint gl_LocalInvocationIndex; // A 1D index of the LocalInvocationID
 
     Compute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s.
     To bind a texture in a way that can be written to a compute shader, declare the uniforms with a
