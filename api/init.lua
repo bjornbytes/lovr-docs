@@ -8129,6 +8129,11 @@ return {
             "lovr.graphics.setShader",
             "lovr.graphics.getShader"
           },
+          examples = {
+            {
+              code = "function lovr.load()\n  computer = lovr.graphics.newComputeShader([[\n    layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;\n\n    void compute() {\n      // compute things!\n    }\n  ]])\n\n  -- Run the shader 4 times\n  local width, height, depth = 4, 1, 1\n\n  -- Dispatch the compute operation\n  lovr.graphics.compute(computer, width, height, depth)\nend"
+            }
+          },
           notes = "Compute shaders are not supported on all hardware, use `lovr.graphics.getSupported` to check if they're available on the current system.\n\nThe source code for a compute shader needs to implement the `void compute();` GLSL function. This function doesn't return anything, but the compute shader is able to write data out to `Texture`s or `ShaderBlock`s.\n\nThe GLSL version used for compute shaders is GLSL 430."
         },
         {
