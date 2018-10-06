@@ -28,6 +28,23 @@ return {
 
     The GLSL version used for compute shaders is GLSL 430.
   ]],
+  example = [=[
+    function lovr.load()
+      computer = lovr.graphics.newComputeShader([[
+        layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+        void compute() {
+          // compute things!
+        }
+      ]])
+
+      -- Run the shader 4 times
+      local width, height, depth = 4, 1, 1
+
+      -- Dispatch the compute operation
+      lovr.graphics.compute(computer, width, height, depth)
+    end
+  ]=],
   related = {
     'lovr.graphics.compute',
     'lovr.graphics.newShader',
