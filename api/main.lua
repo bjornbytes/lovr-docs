@@ -1,10 +1,5 @@
 local serpent = require 'serpent'
 
--- Make sure init.lua can be required
-if not package.path:match('%./?/init%.lua') then
-  package.path = package.path .. ';./?/init.lua'
-end
-
 -- Helpers
 local function copy(t)
   if type(t) ~= 'table' then return t end
@@ -193,7 +188,7 @@ local function processObject(path, parent)
 end
 
 local function processModule(path)
-  local module = require(path)
+  local module = require(path .. '.init') -- So we avoid requiring the module itself
 
   module.key = module.external and path:match('[^/]+$') or path:gsub('/', '.')
   module.name = module.external and module.key or module.key:match('[^%.]+$')
