@@ -4635,7 +4635,13 @@ return {
                   default = "false"
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the archive was successfully mounted."
+                }
+              }
             }
           },
           notes = "The `append` option lets you control the priority of the archive's files in the event of naming collisions.",
