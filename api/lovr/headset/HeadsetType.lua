@@ -11,6 +11,14 @@ return {
       description = 'Oculus Rift.'
     },
     {
+      name = 'go',
+      description = 'Oculus Go.'
+    },
+    {
+      name = 'gear',
+      description = 'Gear VR.'
+    },
+    {
       name = 'windowsmr',
       description = 'A Windows Mixed Reality headset.'
     },
