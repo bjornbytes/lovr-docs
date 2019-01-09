@@ -11,7 +11,7 @@ function lovr.load()
   -- Write some random transforms to the block
   local transforms = {}
   for i = 1, MONKEYS do
-    local transform = lovr.math.newTransform()
+    local transform = lovr.math.mat4()
     local random, randomNormal = lovr.math.random, lovr.math.randomNormal
     transform:translate(randomNormal(8), randomNormal(8), randomNormal(8))
     transform:rotate(random(2 * math.pi), random(), random(), random())
@@ -43,6 +43,6 @@ end
 function lovr.draw()
   lovr.graphics.setCullingEnabled(true)
   lovr.graphics.setShader(shader)
-  model:drawInstanced(MONKEYS)
+  model:draw(lovr.math.mat4(), MONKEYS)
   lovr.graphics.setShader()
 end
