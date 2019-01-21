@@ -5559,35 +5559,6 @@ return {
           }
         },
         {
-          name = "DepthFormat",
-          summary = "Different types of depth maps used by Canvases.",
-          description = "When you create a Canvas, you can give it a depth buffer, which stores the 3D positions of pixels to ensure that the depth of objects is sorted properly.  This depth information can be stored in various formats that differ in size and precision.  Additionally, this depth buffer can also be used for stenciling information.",
-          key = "DepthFormat",
-          module = "lovr.graphics",
-          values = {
-            {
-              name = "d16",
-              description = "A 16 bit depth buffer."
-            },
-            {
-              name = "d32f",
-              description = "A 32 bit floating point depth buffer."
-            },
-            {
-              name = "d24s8",
-              description = "A depth buffer with 24 bits for depth and 8 bits for stencil."
-            }
-          },
-          related = {
-            "lovr.graphics.newCanvas",
-            "Canvas:getDepthFormat",
-            "lovr.graphics.getDepthTest",
-            "lovr.graphics.setDepthTest",
-            "lovr.graphics.stencil",
-            "Canvas"
-          }
-        },
-        {
           name = "DrawMode",
           summary = "Different ways graphics primitives can be drawn.",
           description = "Most graphics primitives can be drawn in one of two modes: a filled mode and a wireframe mode.",
@@ -5913,6 +5884,18 @@ return {
             {
               name = "rg11b10f",
               description = "Each pixel is 32 bits, and packs three color channels into 10 or 11 bits each."
+            },
+            {
+              name = "d16",
+              description = "A 16 bit depth buffer."
+            },
+            {
+              name = "d32f",
+              description = "A 32 bit floating point depth buffer."
+            },
+            {
+              name = "d24s8",
+              description = "A depth buffer with 24 bits for depth and 8 bits for stencil."
             }
           }
         },
@@ -7970,8 +7953,8 @@ return {
                     },
                     {
                       name = "depth",
-                      type = "DepthFormat",
-                      description = "A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.",
+                      type = "TextureFormat",
+                      description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
                       default = "d16"
                     },
                     {
@@ -8025,8 +8008,8 @@ return {
                     },
                     {
                       name = "depth",
-                      type = "DepthFormat",
-                      description = "A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.",
+                      type = "TextureFormat",
+                      description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
                       default = "d16"
                     },
                     {
@@ -8080,8 +8063,8 @@ return {
                     },
                     {
                       name = "depth",
-                      type = "DepthFormat",
-                      description = "A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.",
+                      type = "TextureFormat",
+                      description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
                       default = "d16"
                     },
                     {
@@ -10886,23 +10869,22 @@ return {
           },
           methods = {
             {
-              name = "getDepthFormat",
-              summary = "Get the format of the Canvas depth buffer.",
-              description = "Returns the format of the Canvas depth buffer.",
-              key = "Canvas:getDepthFormat",
+              name = "getDepthTexture",
+              summary = "Get the depth buffer used by the Canvas.",
+              description = "Returns the depth buffer used by the Canvas as a Texture.  If the Canvas was not created with a readable depth buffer (the `depth.readable` flag in `lovr.graphics.newCanvas`), then this function will return `nil`.",
+              key = "Canvas:getDepthTexture",
               module = "lovr.graphics",
               related = {
-                "lovr.graphics.newCanvas",
-                "DepthFormat"
+                "lovr.graphics.newCanvas"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "format",
-                      type = "DepthFormat",
-                      description = "The format of the Canvas depth buffer."
+                      name = "texture",
+                      type = "Texture",
+                      description = "The depth Texture of the Canvas."
                     }
                   }
                 }
@@ -13838,7 +13820,8 @@ return {
           module = "lovr.headset",
           related = {
             "lovr.headset.getBoundsWidth",
-            "lovr.headset.getBoundsDepth"
+            "lovr.headset.getBoundsDepth",
+            "lovr.headset.getBoundsGeometry"
           },
           variants = {
             {
@@ -13853,6 +13836,36 @@ return {
                   name = "depth",
                   type = "number",
                   description = "The depth of the play area, in meters."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getBoundsGeometry",
+          tag = "playArea",
+          summary = "Get a list of points that make up the play area boundary.",
+          description = "Returns a list of points representing the boundaries of the play area, or `nil` if the current headset driver does not expose this information.",
+          key = "lovr.headset.getBoundsGeometry",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getBoundsDimensions"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "t",
+                  type = "table",
+                  description = "A table to fill with the points.  If `nil`, a new table will be created.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "points",
+                  type = "table",
+                  description = "A flat table of 3D points representing the play area boundaries."
                 }
               }
             }

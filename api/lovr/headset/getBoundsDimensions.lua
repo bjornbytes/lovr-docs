@@ -17,6 +17,7 @@ return {
   },
   related = {
     'lovr.headset.getBoundsWidth',
-    'lovr.headset.getBoundsDepth'
+    'lovr.headset.getBoundsDepth',
+    'lovr.headset.getBoundsGeometry'
   }
 }
