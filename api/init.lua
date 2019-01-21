@@ -7921,11 +7921,7 @@ return {
           description = "Creates a new Canvas.  You can specify Textures to attach to it, or just specify a width and height and attach textures later using `Canvas:setTexture`.\n\nOnce created, you can render to the Canvas using `Canvas:renderTo`, or `lovr.graphics.setCanvas`.",
           key = "lovr.graphics.newCanvas",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.setCanvas",
-            "lovr.graphics.getCanvas",
-            "Canvas:renderTo"
-          },
+          notes = "Textures created by this function will have `clamp` as their `TextureWrap`.",
           variants = {
             {
               description = "Create an empty Canvas with no Textures attached.",
@@ -8097,6 +8093,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.setCanvas",
+            "lovr.graphics.getCanvas",
+            "Canvas:renderTo"
           }
         },
         {

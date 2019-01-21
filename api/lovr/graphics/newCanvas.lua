@@ -98,6 +98,7 @@ return {
       returns = { 'canvas' }
     }
   },
+  notes = 'Textures created by this function will have `clamp` as their `TextureWrap`.',
   related = {
     'lovr.graphics.setCanvas',
     'lovr.graphics.getCanvas',
