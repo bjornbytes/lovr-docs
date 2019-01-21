@@ -4,7 +4,7 @@ return {
   description = 'Draws an arc.',
   arguments = {
     mode = {
-      type = 'DrawMode',
+      type = 'DrawStyle',
       description = 'Whether the arc is filled or outlined.'
     },
     arcmode = {

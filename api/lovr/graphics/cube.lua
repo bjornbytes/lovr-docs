@@ -8,7 +8,7 @@ return {
       description = 'The Material to apply to the cube faces.'
     },
     mode = {
-      type = 'DrawMode',
+      type = 'DrawStyle',
       description = 'How to draw the cube.'
     },
     transform = {

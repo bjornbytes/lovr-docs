@@ -4,7 +4,7 @@ return {
   description = 'Draws a triangle from three points.',
   arguments = {
     mode = {
-      type = 'DrawMode',
+      type = 'DrawStyle',
       description = 'How to draw the triangle.'
     },
     material = {

@@ -4,7 +4,7 @@ return {
   description = 'Draws a 2D circle.',
   arguments = {
     mode = {
-      type = 'DrawMode',
+      type = 'DrawStyle',
       description = 'Whether the circle is filled or outlined.'
     },
     material = {

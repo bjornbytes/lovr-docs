@@ -13,7 +13,7 @@ return {
       description = 'The maximum number of vertices the Mesh can store.'
     },
     mode = {
-      type = 'MeshDrawMode',
+      type = 'DrawMode',
       default = [['fan']],
       description = 'How the Mesh will connect its vertices into triangles.'
     },

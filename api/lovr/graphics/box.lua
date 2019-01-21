@@ -11,7 +11,7 @@ return {
       description = 'The Material to apply to the box.'
     },
     mode = {
-      type = 'DrawMode',
+      type = 'DrawStyle',
       description = 'How to draw the box.'
     },
     transform = {

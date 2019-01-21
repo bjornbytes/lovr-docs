@@ -8,7 +8,7 @@ return {
       description = 'The material to apply to the plane.'
     },
     mode = {
-      type = 'DrawMode',
+      type = 'DrawStyle',
       description = 'How to draw the plane.'
     },
     x = {

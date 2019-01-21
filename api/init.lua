@@ -5560,9 +5560,46 @@ return {
         },
         {
           name = "DrawMode",
+          summary = "Different ways Mesh objects can be drawn.",
+          description = "Meshes are lists of arbitrary vertices.  These vertices can be drawn in a few different ways, leading to different results.",
+          key = "DrawMode",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "points",
+              description = "Draw each vertex as a single point."
+            },
+            {
+              name = "lines",
+              description = "The vertices represent a list of line segments. Each pair of vertices will have a line drawn between them."
+            },
+            {
+              name = "linestrip",
+              description = "The first two vertices have a line drawn between them, and each vertex after that will be connected to the previous vertex with a line."
+            },
+            {
+              name = "lineloop",
+              description = "Similar to linestrip, except the last vertex is connected back to the first."
+            },
+            {
+              name = "strip",
+              description = "The first three vertices define a triangle.  Each vertex after that creates a triangle using the new vertex and last two vertices."
+            },
+            {
+              name = "triangles",
+              description = "Each set of three vertices represents a discrete triangle."
+            },
+            {
+              name = "fan",
+              description = "Draws a set of triangles.  Each one shares the first vertex as a common point, leading to a fan-like shape."
+            }
+          }
+        },
+        {
+          name = "DrawStyle",
           summary = "Different ways graphics primitives can be drawn.",
           description = "Most graphics primitives can be drawn in one of two modes: a filled mode and a wireframe mode.",
-          key = "DrawMode",
+          key = "DrawStyle",
           module = "lovr.graphics",
           values = {
             {
@@ -5715,43 +5752,6 @@ return {
             "MaterialColor",
             "MaterialScalar",
             "Material"
-          }
-        },
-        {
-          name = "MeshDrawMode",
-          summary = "Different ways Mesh objects can be drawn.",
-          description = "Meshes are lists of arbitrary vertices.  These vertices can be drawn in a few different ways, leading to different results.",
-          key = "MeshDrawMode",
-          module = "lovr.graphics",
-          values = {
-            {
-              name = "points",
-              description = "Draw each vertex as a single point."
-            },
-            {
-              name = "lines",
-              description = "The vertices represent a list of line segments. Each pair of vertices will have a line drawn between them."
-            },
-            {
-              name = "linestrip",
-              description = "The first two vertices have a line drawn between them, and each vertex after that will be connected to the previous vertex with a line."
-            },
-            {
-              name = "lineloop",
-              description = "Similar to linestrip, except the last vertex is connected back to the first."
-            },
-            {
-              name = "strip",
-              description = "The first three vertices define a triangle.  Each vertex after that creates a triangle using the new vertex and last two vertices."
-            },
-            {
-              name = "triangles",
-              description = "Each set of three vertices represents a discrete triangle."
-            },
-            {
-              name = "fan",
-              description = "Draws a set of triangles.  Each one shares the first vertex as a common point, leading to a fan-like shape."
-            }
           }
         },
         {
@@ -6006,7 +6006,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "Whether the arc is filled or outlined."
                 },
                 {
@@ -6158,7 +6158,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "Whether the arc is filled or outlined."
                 },
                 {
@@ -6224,7 +6224,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "Whether the arc is filled or outlined."
                 },
                 {
@@ -6388,7 +6388,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "Whether the arc is filled or outlined."
                 },
                 {
@@ -6479,7 +6479,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "How to draw the box."
                 },
                 {
@@ -6619,7 +6619,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "How to draw the box."
                 },
                 {
@@ -6660,7 +6660,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "Whether the circle is filled or outlined."
                 },
                 {
@@ -6776,7 +6776,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "Whether the circle is filled or outlined."
                 },
                 {
@@ -6991,7 +6991,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "How to draw the cube."
                 },
                 {
@@ -7107,7 +7107,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "How to draw the cube."
                 },
                 {
@@ -8358,7 +8358,7 @@ return {
                 },
                 {
                   name = "mode",
-                  type = "MeshDrawMode",
+                  type = "DrawMode",
                   description = "How the Mesh will connect its vertices into triangles.",
                   default = "'fan'"
                 },
@@ -8386,7 +8386,7 @@ return {
                 },
                 {
                   name = "mode",
-                  type = "MeshDrawMode",
+                  type = "DrawMode",
                   description = "How the Mesh will connect its vertices into triangles.",
                   default = "'fan'"
                 },
@@ -8420,7 +8420,7 @@ return {
                 },
                 {
                   name = "mode",
-                  type = "MeshDrawMode",
+                  type = "DrawMode",
                   description = "How the Mesh will connect its vertices into triangles.",
                   default = "'fan'"
                 },
@@ -8453,7 +8453,7 @@ return {
                 },
                 {
                   name = "mode",
-                  type = "MeshDrawMode",
+                  type = "DrawMode",
                   description = "How the Mesh will connect its vertices into triangles.",
                   default = "'fan'"
                 },
@@ -8927,7 +8927,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "How to draw the plane."
                 },
                 {
@@ -10180,7 +10180,7 @@ return {
               arguments = {
                 {
                   name = "mode",
-                  type = "DrawMode",
+                  type = "DrawStyle",
                   description = "How to draw the triangle."
                 },
                 {
@@ -12018,7 +12018,7 @@ return {
                   returns = {
                     {
                       name = "mode",
-                      type = "MeshDrawMode",
+                      type = "DrawMode",
                       description = "The draw mode of the Mesh."
                     }
                   }
@@ -12256,7 +12256,7 @@ return {
                   arguments = {
                     {
                       name = "mode",
-                      type = "MeshDrawMode",
+                      type = "DrawMode",
                       description = "The new draw mode for the Mesh."
                     }
                   },

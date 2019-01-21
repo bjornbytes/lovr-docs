@@ -7,7 +7,7 @@ return {
   returns = {
     {
       name = 'mode',
-      type = 'MeshDrawMode',
+      type = 'DrawMode',
       description = 'The draw mode of the Mesh.'
     }
   }

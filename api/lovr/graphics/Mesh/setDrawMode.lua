@@ -4,7 +4,7 @@ return {
   arguments = {
     {
       name = 'mode',
-      type = 'MeshDrawMode',
+      type = 'DrawMode',
       description = 'The new draw mode for the Mesh.'
     }
   },
