@@ -53,6 +53,18 @@ return {
     {
       name = 'rg11b10f',
       description = 'Each pixel is 32 bits, and packs three color channels into 10 or 11 bits each.'
+    },
+    {
+      name = 'd16',
+      description = 'A 16 bit depth buffer.'
+    },
+    {
+      name = 'd32f',
+      description = 'A 32 bit floating point depth buffer.'
+    },
+    {
+      name = 'd24s8',
+      description = 'A depth buffer with 24 bits for depth and 8 bits for stencil.'
     }
   }
 }

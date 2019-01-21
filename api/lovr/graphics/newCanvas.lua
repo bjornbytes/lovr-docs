@@ -41,10 +41,11 @@ return {
         },
         {
           name = 'depth',
-          type = 'DepthFormat',
+          type = 'TextureFormat',
           default = 'd16',
           description = [[
-            A DepthFormat to use for the Canvas depth buffer, or false for no depth buffer.
+            A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer.
+            Note that this can also be a table with `format` and `readable` keys.
           ]]
         },
         {
