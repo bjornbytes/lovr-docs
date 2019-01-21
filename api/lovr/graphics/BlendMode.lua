@@ -40,10 +40,6 @@ return {
         The opposite of multiply: The pixel values are inverted, multiplied, and inverted again,
         resulting in a lightening effect.
       ]]
-    },
-    {
-      name = 'replace',
-      description = 'The incoming pixel replaces the destination pixel.'
     }
   },
   related = {
