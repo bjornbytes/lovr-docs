@@ -1,7 +1,6 @@
 return {
-  tag = 'headset',
-  summary = 'Get the linear velocity of the headset.',
-  description = 'Returns the current linear velocity of the headset, in meters per second.',
+  summary = 'Get the linear velocity of the Controller.',
+  description = 'Returns the current linear velocity of the Controller, in meters per second.',
   arguments = {},
   returns = {
     {
@@ -21,8 +20,8 @@ return {
     }
   },
   related = {
-    'lovr.headset.getPosition',
-    'lovr.headset.getOrientation',
-    'lovr.headset.getAngularVelocity'
+    'Controller:getPosition',
+    'Controller:getOrientation',
+    'Controller:getAngularVelocity'
   }
 }

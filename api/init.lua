@@ -294,7 +294,7 @@ return {
       name = "errhand",
       tag = "callbacks",
       summary = "Called when an error occurs.",
-      description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a single string parameter containing the error message.  It should return a function to run in a loop to show the error screen.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
+      description = "The \"lovr.errhand\" callback is run whenever an error occurs.  It receives two parameters. The first is a string containing the error message. The second is either nil, or a string containing a traceback (as returned by \"debug.traceback()\"); if nil, this means \"lovr.errhand\" is being called in the stack where the error occurred, and it can call \"debug.traceback()\" itself.\n\n\"lovr.errhand\" should return a handler function to run in a loop to show the error screen. This handler function is of the same type as the one returned by \"lovr.run\" and has the same requirements (such as pumping events). If an error occurs while this handler is running, the program will terminate immediately-- \"lovr.errhand\" will not be given a second chance. Errors which occur inside \"lovr.errhand\" or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
       key = "lovr.errhand",
       module = "lovr",
       variants = {
@@ -304,20 +304,32 @@ return {
               name = "message",
               type = "string",
               description = "The error message."
+            },
+            {
+              name = "traceback",
+              type = "string",
+              description = "A traceback string, or nil."
             }
           },
           returns = {
             {
               name = "handler",
               type = "function",
-              description = "The error handler function."
+              description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
+              arguments = {},
+              returns = {
+                {
+                  name = "result",
+                  type = "*"
+                }
+              }
             }
           }
         }
       },
       examples = {
         {
-          code = "function lovr.errhand(message)\n  print('ohh NOOOO!', message)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
+          code = "function lovr.errhand(message, traceback)\n  traceback = traceback or debug.traceback('', 3)\n  print('ohh NOOOO!', message)\n  print(traceback)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
         }
       },
       related = {
@@ -437,7 +449,7 @@ return {
             {
               name = "loop",
               type = "function",
-              description = "The main loop function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
+              description = "The main loop function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.\n\nMost users should overload lovr.load, lovr.update and lovr.draw instead, since if a custom lovr.run does not do everything it is expected to some features may not work. For example, if lovr.run does not respond to \"quit\" events the program will not be able to quit, and if it does not call \"present\" then no graphics will be drawn.",
               arguments = {},
               returns = {
                 {
@@ -596,7 +608,7 @@ return {
                 {
                   name = "os",
                   type = "string",
-                  description = "Either \"Windows\", \"macOS\", \"Linux\", or \"Web\"."
+                  description = "Either \"Windows\", \"macOS\", \"Linux\", \"Android\" or \"Web\"."
                 }
               }
             }
@@ -14321,7 +14333,7 @@ return {
           name = "getVelocity",
           tag = "headset",
           summary = "Get the linear velocity of the headset.",
-          description = "Returns the current linear velocity of the headset, in meters per second",
+          description = "Returns the current linear velocity of the headset, in meters per second.",
           key = "lovr.headset.getVelocity",
           module = "lovr.headset",
           related = {
@@ -14477,6 +14489,40 @@ return {
             }
           },
           methods = {
+            {
+              name = "getAngularVelocity",
+              summary = "Get the angular velocity of the Controller.",
+              description = "Returns the current angular velocity of the Controller.",
+              key = "Controller:getAngularVelocity",
+              module = "lovr.headset",
+              related = {
+                "Controller:getVelocity",
+                "Controller:getOrientation",
+                "Controller:getPosition"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the angular velocity."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the angular velocity."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the angular velocity."
+                    }
+                  }
+                }
+              }
+            },
             {
               name = "getAxis",
               summary = "Get the state of an axis on the Controller.",
@@ -14654,6 +14700,40 @@ return {
                 }
               },
               notes = "Units are in meters."
+            },
+            {
+              name = "getVelocity",
+              summary = "Get the linear velocity of the Controller.",
+              description = "Returns the current linear velocity of the Controller, in meters per second.",
+              key = "Controller:getVelocity",
+              module = "lovr.headset",
+              related = {
+                "Controller:getPosition",
+                "Controller:getOrientation",
+                "Controller:getAngularVelocity"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "vx",
+                      type = "number",
+                      description = "The x component of the linear velocity."
+                    },
+                    {
+                      name = "vy",
+                      type = "number",
+                      description = "The y component of the linear velocity."
+                    },
+                    {
+                      name = "vz",
+                      type = "number",
+                      description = "The z component of the linear velocity."
+                    }
+                  }
+                }
+              }
             },
             {
               name = "isConnected",
