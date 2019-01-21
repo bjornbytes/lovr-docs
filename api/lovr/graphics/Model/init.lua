@@ -2,7 +2,7 @@ return {
   summary = 'An asset imported from a 3D model file.',
   description = [[
     A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are
-    `obj`, `fbx`, and `gltf`.
+    OBJ and glTF.
   ]],
   constructors = {
     'lovr.graphics.newModel',
@@ -12,7 +12,7 @@ return {
     local model
 
     function lovr.load()
-      model = lovr.graphics.newModel('assets/model.fbx', 'assets/texture.png')
+      model = lovr.graphics.newModel('assets/model.gltf', 'assets/texture.png')
     end
 
     function lovr.draw()

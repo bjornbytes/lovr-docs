@@ -378,7 +378,7 @@ return {
       },
       examples = {
         {
-          code = "function lovr.load(args)\n  model = lovr.graphics.newModel('cena.fbx')\n  texture = lovr.graphics.newTexture('cena.png')\n  levelGeometry = lovr.graphics.newMesh(1000)\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
+          code = "function lovr.load(args)\n  model = lovr.graphics.newModel('cena.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  levelGeometry = lovr.graphics.newMesh(1000)\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
         }
       },
       related = {
@@ -2936,7 +2936,7 @@ return {
         {
           name = "ModelData",
           summary = "An object that loads and stores data for 3D models.",
-          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the `VertexData` it contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are `obj`, `fbx`, and `gltf`.  glTF files do not currently load animations.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
+          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the `VertexData` it contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are OBJ and glTF.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
           key = "ModelData",
           module = "lovr.data",
           methods = {
@@ -8474,10 +8474,10 @@ return {
           name = "newModel",
           tag = "graphicsObjects",
           summary = "Create a new Model.",
-          description = "Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.\n\nThe following features are not supported yet: animations, materials, vertex colors.",
+          description = "Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.\n\nThe following features are not supported yet: animations, materials, vertex colors.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "- Models loaded from glTF files do not currently import animations properly.\n- Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be\n  loaded as linear.",
+          notes = "Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be loaded as linear.",
           variants = {
             {
               arguments = {
@@ -10294,7 +10294,7 @@ return {
           module = "lovr.graphics",
           examples = {
             {
-              code = "function lovr.load()\n  model = lovr.graphics.newModel('model.fbx')\n  animator = lovr.graphics.newAnimator(model)\n  animator:play(animator:getAnimationNames()[1])\n  model:setAnimator(animator)\n\n  shader = lovr.graphics.newShader([[\n    vec4 vertex(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * lovrPoseMatrix * vertex;\n    }\n  ]], nil)\nend\n\nfunction lovr.update(dt)\n  animator:update(dt)\nend\n\nfunction lovr.draw()\n  lovr.graphics.setShader(shader)\n  model:draw()\nend"
+              code = "function lovr.load()\n  model = lovr.graphics.newModel('model.gltf')\n  animator = lovr.graphics.newAnimator(model)\n  animator:play(animator:getAnimationNames()[1])\n  model:setAnimator(animator)\n\n  shader = lovr.graphics.newShader([[\n    vec4 vertex(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * lovrPoseMatrix * vertex;\n    }\n  ]], nil)\nend\n\nfunction lovr.update(dt)\n  animator:update(dt)\nend\n\nfunction lovr.draw()\n  lovr.graphics.setShader(shader)\n  model:draw()\nend"
             }
           },
           constructors = {
@@ -12480,12 +12480,12 @@ return {
         {
           name = "Model",
           summary = "An asset imported from a 3D model file.",
-          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.",
+          description = "A Model is a drawable object loaded from a 3D file format.  The supported 3D file formats are OBJ and glTF.",
           key = "Model",
           module = "lovr.graphics",
           examples = {
             {
-              code = "local model\n\nfunction lovr.load()\n  model = lovr.graphics.newModel('assets/model.fbx', 'assets/texture.png')\nend\n\nfunction lovr.draw()\n  model:draw(0, 1, -1, 1, lovr.timer.getTime())\nend"
+              code = "local model\n\nfunction lovr.load()\n  model = lovr.graphics.newModel('assets/model.gltf', 'assets/texture.png')\nend\n\nfunction lovr.draw()\n  model:draw(0, 1, -1, 1, lovr.timer.getTime())\nend"
             }
           },
           constructors = {
@@ -12814,7 +12814,7 @@ return {
           examples = {
             {
               description = "Set a simple shader that colors pixels based on vertex normals.",
-              code = "function lovr.load()\n  lovr.graphics.setShader(lovr.graphics.newShader([[\n    out vec3 vNormal; // This gets passed to the fragment shader\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vNormal = lovrNormal;\n      return projection * transform * vertex;\n    }\n  ]], [[\n    in vec3 vNormal; // This gets passed from the vertex shader\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(vNormal * .5 + .5, 1.0);\n    }\n  ]]))\n\n  model = lovr.graphics.newModel('model.fbx')\nend\n\nfunction lovr.draw()\n  model:draw(x, y, z, 1)\nend"
+              code = "function lovr.load()\n  lovr.graphics.setShader(lovr.graphics.newShader([[\n    out vec3 vNormal; // This gets passed to the fragment shader\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vNormal = lovrNormal;\n      return projection * transform * vertex;\n    }\n  ]], [[\n    in vec3 vNormal; // This gets passed from the vertex shader\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(vNormal * .5 + .5, 1.0);\n    }\n  ]]))\n\n  model = lovr.graphics.newModel('model.gltf')\nend\n\nfunction lovr.draw()\n  model:draw(x, y, z, 1)\nend"
             }
           },
           related = {

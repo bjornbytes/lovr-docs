@@ -5,8 +5,7 @@ return {
     can include a variety of things like the node structure of the asset, the `VertexData` it
     contains, the `TextureData` and `Material` properties, and any included animations.
 
-    The current supported formats are `obj`, `fbx`, and `gltf`.  glTF files do not currently load
-    animations.
+    The current supported formats are OBJ and glTF.
 
     Usually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want
     to load models in a thread or access more low-level information about the Model.

@@ -2,7 +2,7 @@ return {
   tag = 'graphicsObjects',
   summary = 'Create a new Model.',
   description = [[
-    Creates a new Model from a file.  The supported 3D file formats are `obj`, `fbx`, and `gltf`.
+    Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.
 
     The following features are not supported yet: animations, materials, vertex colors.
   ]],
@@ -54,8 +54,7 @@ return {
     }
   },
   notes = [[
-    - Models loaded from glTF files do not currently import animations properly.
-    - Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be
-      loaded as linear.
+    Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be
+    loaded as linear.
   ]]
 }

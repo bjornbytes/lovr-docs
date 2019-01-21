@@ -120,7 +120,7 @@ return {
           }
         ]]))
 
-        model = lovr.graphics.newModel('model.fbx')
+        model = lovr.graphics.newModel('model.gltf')
       end
 
       function lovr.draw()

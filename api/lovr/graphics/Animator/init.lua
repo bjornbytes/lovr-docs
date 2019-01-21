@@ -18,7 +18,7 @@ return {
   ]],
   example = [=[
     function lovr.load()
-      model = lovr.graphics.newModel('model.fbx')
+      model = lovr.graphics.newModel('model.gltf')
       animator = lovr.graphics.newAnimator(model)
       animator:play(animator:getAnimationNames()[1])
       model:setAnimator(animator)

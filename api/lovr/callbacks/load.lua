@@ -15,7 +15,7 @@ return {
   returns = {},
   example = [[
     function lovr.load(args)
-      model = lovr.graphics.newModel('cena.fbx')
+      model = lovr.graphics.newModel('cena.gltf')
       texture = lovr.graphics.newTexture('cena.png')
       levelGeometry = lovr.graphics.newMesh(1000)
       effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')
