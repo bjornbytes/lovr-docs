@@ -59,5 +59,11 @@ return {
       arguments = { 'r', 'g', 'b', 'a' },
       returns = { 'material' }
     }
-  }
+  },
+  notes = [[
+    - Scalar properties will default to `1.0`.
+    - Color properties will default to `(1.0, 1.0, 1.0, 1.0)`, except for `emissive` which will
+      default to `(0.0, 0.0, 0.0, 0.0)`.
+    - Textures will default to `nil` (a single 1x1 white pixel will be used for them).
+  ]]
 }

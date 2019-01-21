@@ -8208,6 +8208,7 @@ return {
           description = "Creates a new Material.  Materials are sets of colors, textures, and other parameters that affect the appearance of objects.  They can be applied to `Model`s, `Mesh`es, and most graphics primitives accept a Material as an optional first argument.",
           key = "lovr.graphics.newMaterial",
           module = "lovr.graphics",
+          notes = "- Scalar properties will default to `1.0`.\n- Color properties will default to `(1.0, 1.0, 1.0, 1.0)`, except for `emissive` which will\n  default to `(0.0, 0.0, 0.0, 0.0)`.\n- Textures will default to `nil` (a single 1x1 white pixel will be used for them).",
           variants = {
             {
               arguments = {},
