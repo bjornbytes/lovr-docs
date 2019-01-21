@@ -15171,6 +15171,81 @@ return {
           }
         },
         {
+          name = "newCurve",
+          summary = "Create a new Curve.",
+          description = "Creates a new `Curve` from a list of control points.",
+          key = "lovr.math.newCurve",
+          module = "lovr.math",
+          variants = {
+            {
+              description = "Create a Curve from a set of initial control points.",
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the first control point."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the first control point."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the first control point."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "Additional control points."
+                }
+              },
+              returns = {
+                {
+                  name = "curve",
+                  type = "Curve",
+                  description = "The new Curve."
+                }
+              }
+            },
+            {
+              description = "Create a Curve from a (flat) table of points.",
+              arguments = {
+                {
+                  name = "points",
+                  type = "table",
+                  description = "A table of points, as above."
+                }
+              },
+              returns = {
+                {
+                  name = "curve",
+                  type = "Curve",
+                  description = "The new Curve."
+                }
+              }
+            },
+            {
+              description = "Create an empty Curve, reserving space ahead of time for a certain number of control points.",
+              arguments = {
+                {
+                  name = "n",
+                  type = "number",
+                  description = "The number of points to reserve for the Curve."
+                }
+              },
+              returns = {
+                {
+                  name = "curve",
+                  type = "Curve",
+                  description = "The new Curve."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newRandomGenerator",
           summary = "Create a new RandomGenerator.",
           description = "Creates a new `RandomGenerator`, which can be used to generate random numbers. If you just want some random numbers, you can use `lovr.math.random`. Individual RandomGenerator objects are useful if you need more control over the random sequence used or need a random generator isolated from other instances.",
@@ -15589,6 +15664,356 @@ return {
       },
       enums = {},
       objects = {
+        {
+          name = "Curve",
+          summary = "A Bézier curve.",
+          description = "A Curve is an object that represents a Bézier curve in three dimensions.  Curves are defined by an arbitrary number of control points (note that the curve only passes through the first and last control point).\n\nOnce a Curve is created with `lovr.math.newCurve`, you can use `Curve:evaluate` to get a point on the curve or `Curve:render` to get a list of all of the points on the curve.  These points can be passed directly to `lovr.graphics.points` or `lovr.graphics.line` to render the curve.\n\nNote that for longer or more complicated curves (like in a drawing application) it can be easier to store the path as several Curve objects.",
+          key = "Curve",
+          module = "lovr.math",
+          methods = {
+            {
+              name = "addPoint",
+              summary = "Add a new control point to the Curve.",
+              description = "Inserts a new control point into the Curve at the specified index.",
+              key = "Curve:addPoint",
+              module = "lovr.math",
+              related = {
+                "Curve:getPointCount",
+                "Curve:getPoint",
+                "Curve:setPoint",
+                "Curve:removePoint"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the control point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the control point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the control point."
+                    },
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index to insert the control point at.  If nil, the control point is added to the end of the list of control points.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+            },
+            {
+              name = "evaluate",
+              summary = "Turn a number from 0 to 1 into a point on the Curve.",
+              description = "Returns a point on the Curve given a parameter `t` from 0 to 1.  0 will return the first control point, 1 will return the last point, .5 will return a point in the \"middle\" of the Curve, etc.",
+              key = "Curve:evaluate",
+              module = "lovr.math",
+              related = {
+                "Curve:getTangent",
+                "Curve:render",
+                "Curve:slice"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The parameter to evaluate the Curve at."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the point."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if `t` is not between 0 and 1, or if the Curve has less than two points."
+            },
+            {
+              name = "getPoint",
+              summary = "Get a control point of the Curve.",
+              description = "Returns a control point of the Curve.",
+              key = "Curve:getPoint",
+              module = "lovr.math",
+              related = {
+                "Curve:getPointCount",
+                "Curve:setPoint",
+                "Curve:addPoint",
+                "Curve:removePoint"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index to retrieve."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the control point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the control point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the control point."
+                    }
+                  }
+                }
+              },
+              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+            },
+            {
+              name = "getPointCount",
+              summary = "Get the number of control points in the Curve.",
+              description = "Returns the number of control points in the Curve.",
+              key = "Curve:getPointCount",
+              module = "lovr.math",
+              related = {
+                "Curve:getPoint",
+                "Curve:setPoint",
+                "Curve:addPoint",
+                "Curve:removePoint"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of control points."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTangent",
+              summary = "Get the direction of the Curve at a point.",
+              description = "Returns a direction vector for the Curve given a parameter `t` from 0 to 1.  0 will return the direction at the first control point, 1 will return the direction at the last point, .5 will return the direction at the \"middle\" of the Curve, etc.",
+              key = "Curve:getTangent",
+              module = "lovr.math",
+              related = {
+                "Curve:evaluate",
+                "Curve:render",
+                "Curve:slice"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "Where on the Curve to compute the direction."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the point."
+                    }
+                  }
+                }
+              },
+              notes = "The direction vector returned by this function will have a length of one."
+            },
+            {
+              name = "removePoint",
+              summary = "Remove a control point from the Curve.",
+              description = "Removes a control point from the Curve.",
+              key = "Curve:removePoint",
+              module = "lovr.math",
+              related = {
+                "Curve:getPointCount",
+                "Curve:getPoint",
+                "Curve:setPoint",
+                "Curve:addPoint"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the control point to remove."
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+            },
+            {
+              name = "render",
+              summary = "Get a list of points on the Curve.",
+              description = "Returns a list of points on the Curve.  The number of points can be specified to get a more or less detailed representation, and it is also possible to render a subsection of the Curve.",
+              key = "Curve:render",
+              module = "lovr.math",
+              related = {
+                "Curve:evaluate",
+                "Curve:slice",
+                "lovr.graphics.points",
+                "lovr.graphics.line"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "n",
+                      type = "number",
+                      description = "The number of points to use.",
+                      default = "32"
+                    },
+                    {
+                      name = "t1",
+                      type = "number",
+                      description = "How far along the curve to start rendering.",
+                      default = "0"
+                    },
+                    {
+                      name = "t2",
+                      type = "number",
+                      description = "How far along the curve to stop rendering.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A (flat) table of 3D points along the curve."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setPoint",
+              summary = "Set a control point of the Curve.",
+              description = "Changes the position of a control point on the Curve.",
+              key = "Curve:setPoint",
+              module = "lovr.math",
+              related = {
+                "Curve:getPointCount",
+                "Curve:getPoint",
+                "Curve:addPoint",
+                "Curve:removePoint"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index to modify."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The new x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The new y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The new z coordinate."
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+            },
+            {
+              name = "slice",
+              summary = "Get a new Curve from a slice of an existing one.",
+              description = "Returns a new Curve created by slicing the Curve at the specified start and end points.",
+              key = "Curve:slice",
+              module = "lovr.math",
+              related = {
+                "Curve:evaluate",
+                "Curve:render"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "t1",
+                      type = "number",
+                      description = "The starting point to slice at."
+                    },
+                    {
+                      name = "t2",
+                      type = "number",
+                      description = "The ending point to slice at."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "curve",
+                      type = "Curve",
+                      description = "A new Curve."
+                    }
+                  }
+                }
+              },
+              notes = "The new Curve will have the same number of control points as the existing curve.\n\nAn error will be thrown if t1 or t2 are not between 0 and 1, or if the Curve has less than two points."
+            }
+          },
+          constructors = {
+            "lovr.math.newCurve",
+            "Curve:slice"
+          }
+        },
         {
           name = "RandomGenerator",
           summary = "A pseudo-random number generator.",
