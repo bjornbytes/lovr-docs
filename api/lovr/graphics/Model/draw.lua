@@ -45,16 +45,21 @@ return {
     transform = {
       type = 'Transform',
       description = 'The transform to apply before drawing.'
+    },
+    instances = {
+      type = 'number',
+      default = '1',
+      description = 'The number of copies of the Model to draw.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'scale', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'x', 'y', 'z', 'scale', 'angle', 'ax', 'ay', 'az', 'instances' },
       returns = {}
     },
     {
-      arguments = { 'transform' },
+      arguments = { 'transform', 'instances' },
       returns = {}
     }
   }

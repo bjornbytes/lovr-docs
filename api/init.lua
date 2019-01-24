@@ -12081,6 +12081,12 @@ return {
                       type = "number",
                       description = "The z component of the axis of rotation.",
                       default = "0"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of copies of the Mesh to draw.",
+                      default = "1"
                     }
                   },
                   returns = {}
@@ -12091,91 +12097,12 @@ return {
                       name = "transform",
                       type = "Transform",
                       description = "The transform to apply before drawing."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "drawInstanced",
-              summary = "Draw multiple copies of the Mesh in an optimized way.",
-              description = "Draw a Mesh multiple times.  This is much faster than calling `Mesh:draw` more than once.",
-              key = "Mesh:drawInstanced",
-              module = "lovr.graphics",
-              notes = "By default, the Meshes will all be drawn on top of each other.  To get the drawn copies to appear in different places, you can use the `gl_InstanceID` variable in a `Shader`.  The first instance will pass 0 as the instance ID, the second instance will pass 1 as the instance ID, etc.  You can use an array of mat4 variables and access the array using the supplied instance ID to specify a list of positions to draw the instances at, or use custom logic to position each instance.",
-              variants = {
-                {
-                  arguments = {
+                    },
                     {
                       name = "instances",
                       type = "number",
-                      description = "The number of copies of the mesh to draw.",
+                      description = "The number of copies of the Mesh to draw.",
                       default = "1"
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate to draw the Mesh at.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate to draw the Mesh at.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate to draw the Mesh at.",
-                      default = "0"
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale to draw the Mesh at.",
-                      default = "1"
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to rotate the Mesh around its axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of copies of the mesh to draw.",
-                      default = "1"
-                    },
-                    {
-                      name = "transform",
-                      type = "Transform",
-                      description = "The transform to apply before drawing."
                     }
                   },
                   returns = {}
@@ -12729,6 +12656,12 @@ return {
                       type = "number",
                       description = "The z component of the axis of rotation.",
                       default = "0"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of copies of the Model to draw.",
+                      default = "1"
                     }
                   },
                   returns = {}
@@ -12739,91 +12672,12 @@ return {
                       name = "transform",
                       type = "Transform",
                       description = "The transform to apply before drawing."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "drawInstanced",
-              summary = "Draw multiple copies of a Model in an optimized way.",
-              description = "Draws a model multiple times.  This is much faster than drawing `Model:draw` more than once.",
-              key = "Model:drawInstanced",
-              module = "lovr.graphics",
-              notes = "By default, the Models will all be drawn on top of each other.  To get the drawn copies to appear in different places, you can use the `gl_InstanceID` variable in a `Shader`.  The first instance will pass 0 as the instance ID, the second instance will pass 1 as the instance ID, etc.  You can use an array of mat4 variables and access the array using the supplied instance ID to specify a list of positions to draw the instances at.",
-              variants = {
-                {
-                  arguments = {
+                    },
                     {
                       name = "instances",
                       type = "number",
-                      description = "The number of copies to draw.",
+                      description = "The number of copies of the Model to draw.",
                       default = "1"
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate to draw the Model at.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate to draw the Model at.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate to draw the Model at.",
-                      default = "0"
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale to draw the Model at.",
-                      default = "1"
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to rotate the Model around its axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of copies to draw.",
-                      default = "1"
-                    },
-                    {
-                      name = "transform",
-                      type = "Transform",
-                      description = "The transform to apply before drawing."
                     }
                   },
                   returns = {}
