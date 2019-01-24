@@ -7293,6 +7293,27 @@ return {
           }
         },
         {
+          name = "getAlphaSampling",
+          tag = "graphicsState",
+          summary = "Get whether alpha sampling (alpha to coverage) is enabled.",
+          description = "Returns whether or not alpha sampling is enabled.  Alpha sampling is also known as alpha-to-coverage.  When it is enabled, the alpha channel of a pixel is factored into how antialiasing is computed, so the edges of a transparent texture will be correctly antialiased.",
+          key = "lovr.graphics.getAlphaSampling",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "enabled",
+                  type = "boolean",
+                  description = "Whether or not alpha sampling is enabled."
+                }
+              }
+            }
+          },
+          notes = "- Alpha sampling is disabled by default.\n- This feature can be used for a cheap transparency effect, pixels with an alpha of zero will\n  have their depth value discarded, allowing things behind them to show through (normally you\n  have to sort objects or write a shader for this)."
+        },
+        {
           name = "getBackgroundColor",
           tag = "graphicsState",
           summary = "Get the background color.",
@@ -9390,6 +9411,27 @@ return {
           notes = "Order matters when scaling, translating, and rotating the coordinate system."
         },
         {
+          name = "setAlphaSampling",
+          tag = "graphicsState",
+          summary = "Enable or disable alpha sampling.",
+          description = "Enables or disables alpha sampling.  Alpha sampling is also known as alpha-to-coverage.  When it is enabled, the alpha channel of a pixel is factored into how antialiasing is computed, so the edges of a transparent texture will be correctly antialiased.",
+          key = "lovr.graphics.setAlphaSampling",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enabled",
+                  type = "boolean",
+                  description = "Whether or not alpha sampling is enabled."
+                }
+              },
+              returns = {}
+            }
+          },
+          notes = "- Alpha sampling is disabled by default.\n- This feature can be used for a cheap transparency effect, pixels with an alpha of zero will\n  have their depth value discarded, allowing things behind them to show through (normally you\n  have to sort objects or write a shader for this)."
+        },
+        {
           name = "setBackgroundColor",
           tag = "graphicsState",
           summary = "Set the background color.",
@@ -9681,6 +9723,27 @@ return {
             "lovr.graphics.points"
           },
           notes = "The default point size is `1.0`."
+        },
+        {
+          name = "setProjection",
+          tag = "graphicsState",
+          summary = "Set the projection matrix.",
+          description = "Sets the projection matrix.",
+          key = "lovr.graphics.setProjection",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "projection",
+                  type = "mat4",
+                  description = "The projection matrix to use."
+                }
+              },
+              returns = {}
+            }
+          },
+          notes = "- The projection matrix will be set for both \"eyes\" of the camera.\n- This state is reset at the beginning and end of `lovr.headset.renderTo`."
         },
         {
           name = "setShader",
@@ -11361,6 +11424,35 @@ return {
                   }
                 }
               }
+            },
+            {
+              name = "hasGlyphs",
+              summary = "Check if a Font has a set of glyphs.",
+              description = "Returns whether the Font has a set of glyphs.  Any combination of strings and numbers (corresponding to character codes) can be specified.  This function will return true if the Font is able to render *all* of the glyphs.",
+              key = "Font:hasGlyphs",
+              module = "lovr.graphics",
+              related = {
+                "Rasterizer:hasGlyphs"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "...",
+                      type = "*",
+                      description = "Strings or numbers to test."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "has",
+                      type = "boolean",
+                      description = "Whether the Font has the glyphs."
+                    }
+                  }
+                }
+              },
+              notes = "It is a good idea to use this function when you're rendering an unknown or user-supplied string to avoid embarrassing crashes."
             },
             {
               name = "setLineHeight",
