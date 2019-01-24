@@ -1,7 +1,7 @@
 return {
   tag = 'graphicsPrimitives',
-  summary = 'Draw a triangle.',
-  description = 'Draws a triangle from three points.',
+  summary = 'Draw triangles.',
+  description = 'Draws triangles from a list of points.',
   arguments = {
     mode = {
       type = 'DrawStyle',
@@ -11,53 +11,33 @@ return {
       type = 'Material',
       description = 'The Material to apply.'
     },
-    x1 = {
+    x = {
       type = 'number',
-      description = 'The x coordinate of the first point.'
+      description = 'The x coordinate of a vertex.'
     },
-    y1 = {
+    y = {
       type = 'number',
-      description = 'The y coordinate of the first point.'
+      description = 'The y coordinate of a vertex.'
     },
-    z1 = {
+    z = {
       type = 'number',
-      description = 'The z coordinate of the first point.'
+      description = 'The z coordinate of a vertex.'
     },
-    x2 = {
+    ['...'] = {
       type = 'number',
-      description = 'The x coordinate of the second point.'
-    },
-    y2 = {
-      type = 'number',
-      description = 'The y coordinate of the second point.'
-    },
-    z2 = {
-      type = 'number',
-      description = 'The z coordinate of the second point.'
-    },
-    x3 = {
-      type = 'number',
-      description = 'The x coordinate of the third point.'
-    },
-    y3 = {
-      type = 'number',
-      description = 'The y coordinate of the third point.'
-    },
-    z3 = {
-      type = 'number',
-      description = 'The z coordinate of the third point.'
+      description = 'More vertices.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'mode', 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'x3', 'y3', 'z3' },
+      arguments = { 'mode', 'x', 'y', 'z', '...' },
       returns = {}
     },
     {
-      arguments = { 'material', 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'x3', 'y3', 'z3' },
+      arguments = { 'material', 'x', 'y', 'z', '...' },
       returns = {}
     }
   },
-  notes = 'Unlike some of the other primitives, exactly 3 points are required here.'
+  notes = 'The number of vertices must be a multiple of three.'
 }

@@ -10367,11 +10367,11 @@ return {
         {
           name = "triangle",
           tag = "graphicsPrimitives",
-          summary = "Draw a triangle.",
-          description = "Draws a triangle from three points.",
+          summary = "Draw triangles.",
+          description = "Draws triangles from a list of points.",
           key = "lovr.graphics.triangle",
           module = "lovr.graphics",
-          notes = "Unlike some of the other primitives, exactly 3 points are required here.",
+          notes = "The number of vertices must be a multiple of three.",
           variants = {
             {
               arguments = {
@@ -10381,49 +10381,24 @@ return {
                   description = "How to draw the triangle."
                 },
                 {
-                  name = "x1",
+                  name = "x",
                   type = "number",
-                  description = "The x coordinate of the first point."
+                  description = "The x coordinate of a vertex."
                 },
                 {
-                  name = "y1",
+                  name = "y",
                   type = "number",
-                  description = "The y coordinate of the first point."
+                  description = "The y coordinate of a vertex."
                 },
                 {
-                  name = "z1",
+                  name = "z",
                   type = "number",
-                  description = "The z coordinate of the first point."
+                  description = "The z coordinate of a vertex."
                 },
                 {
-                  name = "x2",
+                  name = "...",
                   type = "number",
-                  description = "The x coordinate of the second point."
-                },
-                {
-                  name = "y2",
-                  type = "number",
-                  description = "The y coordinate of the second point."
-                },
-                {
-                  name = "z2",
-                  type = "number",
-                  description = "The z coordinate of the second point."
-                },
-                {
-                  name = "x3",
-                  type = "number",
-                  description = "The x coordinate of the third point."
-                },
-                {
-                  name = "y3",
-                  type = "number",
-                  description = "The y coordinate of the third point."
-                },
-                {
-                  name = "z3",
-                  type = "number",
-                  description = "The z coordinate of the third point."
+                  description = "More vertices."
                 }
               },
               returns = {}
@@ -10436,49 +10411,24 @@ return {
                   description = "The Material to apply."
                 },
                 {
-                  name = "x1",
+                  name = "x",
                   type = "number",
-                  description = "The x coordinate of the first point."
+                  description = "The x coordinate of a vertex."
                 },
                 {
-                  name = "y1",
+                  name = "y",
                   type = "number",
-                  description = "The y coordinate of the first point."
+                  description = "The y coordinate of a vertex."
                 },
                 {
-                  name = "z1",
+                  name = "z",
                   type = "number",
-                  description = "The z coordinate of the first point."
+                  description = "The z coordinate of a vertex."
                 },
                 {
-                  name = "x2",
+                  name = "...",
                   type = "number",
-                  description = "The x coordinate of the second point."
-                },
-                {
-                  name = "y2",
-                  type = "number",
-                  description = "The y coordinate of the second point."
-                },
-                {
-                  name = "z2",
-                  type = "number",
-                  description = "The z coordinate of the second point."
-                },
-                {
-                  name = "x3",
-                  type = "number",
-                  description = "The x coordinate of the third point."
-                },
-                {
-                  name = "y3",
-                  type = "number",
-                  description = "The y coordinate of the third point."
-                },
-                {
-                  name = "z3",
-                  type = "number",
-                  description = "The z coordinate of the third point."
+                  description = "More vertices."
                 }
               },
               returns = {}
