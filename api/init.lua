@@ -7277,6 +7277,30 @@ return {
                   name = "texture",
                   type = "Texture",
                   description = "The texture to use."
+                },
+                {
+                  name = "u",
+                  type = "number",
+                  description = "The x component of the uv offset.",
+                  default = "0"
+                },
+                {
+                  name = "v",
+                  type = "number",
+                  description = "The y component of the uv offset.",
+                  default = "0"
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The width of the Texture to render, in uv coordinates.",
+                  default = "1 - u"
+                },
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of the Texture to render, in uv coordinates.",
+                  default = "1 - v"
                 }
               },
               returns = {}
@@ -7288,6 +7312,30 @@ return {
                   name = "canvas",
                   type = "Canvas",
                   description = "The first Texture attached to this Canvas will be used."
+                },
+                {
+                  name = "u",
+                  type = "number",
+                  description = "The x component of the uv offset.",
+                  default = "0"
+                },
+                {
+                  name = "v",
+                  type = "number",
+                  description = "The y component of the uv offset.",
+                  default = "0"
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The width of the Texture to render, in uv coordinates.",
+                  default = "1 - u"
+                },
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of the Texture to render, in uv coordinates.",
+                  default = "1 - v"
                 }
               },
               returns = {}
