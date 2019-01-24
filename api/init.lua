@@ -5541,6 +5541,29 @@ return {
           }
         },
         {
+          name = "BlockType",
+          summary = "Different types of ShaderBlocks.",
+          description = "There are two types of ShaderBlocks that can be used: `uniform` and `compute`.\n\nUniform blocks are read only in shaders, can sometimes be a bit faster than compute blocks, and have a limited size (but the limit will be at least 16KB, you can check `lovr.graphics.getSystemLimits` to check).\n\nCompute blocks can be written to by compute shaders, might be slightly slower than uniform blocks, and have a much, much larger maximum size.",
+          key = "BlockType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "uniform",
+              description = "A uniform block."
+            },
+            {
+              name = "compute",
+              description = "A compute block."
+            }
+          },
+          related = {
+            "ShaderBlock",
+            "lovr.graphics.newShaderBlock",
+            "ShaderBlock:getType",
+            "lovr.graphics.getSystemLimits"
+          }
+        },
+        {
           name = "CompareMode",
           summary = "Different depth test modes.",
           description = "The method used to compare z values when deciding how to overlap rendered objects.  This is called the \"depth test\", and it happens on a pixel-by-pixel basis every time new objects are drawn.  If the depth test \"passes\" for a pixel, then the pixel color will be replaced by the new color and the depth value in the depth buffer will be updated.  Otherwise, the pixel will not be changed and the depth value will not be updated.",
@@ -13160,22 +13183,24 @@ return {
               }
             },
             {
-              name = "isWritable",
-              summary = "Check if Shaders can write to the ShaderBlock.",
-              description = "Returns whether or not compute shaders can write to the ShaderBlock data.  This is set when the block is created using `lovr.graphics.newShaderBlock`.",
-              key = "ShaderBlock:isWritable",
+              name = "getType",
+              summary = "Get the type of the ShaderBlock.",
+              description = "Returns the type of the ShaderBlock.",
+              key = "ShaderBlock:getType",
               module = "lovr.graphics",
               related = {
-                "lovr.graphics.newShaderBlock"
+                "ShaderBlock:getOffset",
+                "lovr.graphics.newShaderBlock",
+                "lovr.graphics.getSystemLimits"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "writable",
-                      type = "boolean",
-                      description = "Whether or not the block is writable by Shaders."
+                      name = "type",
+                      type = "BlockType",
+                      description = "The type of the ShaderBlock."
                     }
                   }
                 }
