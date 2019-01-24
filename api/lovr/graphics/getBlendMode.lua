@@ -4,6 +4,8 @@ return {
   description = [[
     Returns the current blend mode.  The blend mode controls how each pixel's color is blended with
     the previous pixel's color when drawn.
+
+    If blending is disabled, `nil` will be returned.
   ]],
   arguments = {},
   returns = {

@@ -6,18 +6,27 @@ return {
     previous pixel's color when drawn.
   ]],
   arguments = {
-    {
-      name = 'blend',
+    blend = {
       type = 'BlendMode',
       description = 'The blend mode.'
     },
-    {
-      name = 'alphaBlend',
+    alphaBlend = {
       type = 'BlendAlphaMode',
       description = 'The alpha blend mode.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'blend', 'alphaBlend' },
+      returns = {}
+    },
+    {
+      description = 'Disable blending.',
+      arguments = {},
+      returns = {}
+    }
+  },
   related = {
     'BlendMode',
     'BlendAlphaMode'

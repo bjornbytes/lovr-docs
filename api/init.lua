@@ -4783,6 +4783,25 @@ return {
           }
         },
         {
+          name = "getApplicationId",
+          summary = "Get the application ID.",
+          description = "Returns the platform-specific application ID, or `nil` if this does not apply.\n\nCurrently only implemented on Android.",
+          key = "lovr.filesystem.getApplicationId",
+          module = "lovr.filesystem",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "id",
+                  type = "string",
+                  description = "The application ID."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getDirectoryItems",
           summary = "Get a list of files in a directory..",
           description = "Returns an unsorted table containing all files and subfolders in a directory.",
@@ -7353,7 +7372,7 @@ return {
           name = "getBlendMode",
           tag = "graphicsState",
           summary = "Get the blend mode.",
-          description = "Returns the current blend mode.  The blend mode controls how each pixel's color is blended with the previous pixel's color when drawn.",
+          description = "Returns the current blend mode.  The blend mode controls how each pixel's color is blended with the previous pixel's color when drawn.\n\nIf blending is disabled, `nil` will be returned.",
           key = "lovr.graphics.getBlendMode",
           module = "lovr.graphics",
           related = {
@@ -9493,6 +9512,11 @@ return {
                   description = "The alpha blend mode."
                 }
               },
+              returns = {}
+            },
+            {
+              description = "Disable blending.",
+              arguments = {},
               returns = {}
             }
           }
@@ -13293,6 +13317,39 @@ return {
                   }
                 }
               }
+            },
+            {
+              name = "read",
+              summary = "Read a variable from the ShaderBlock.",
+              description = "Returns a variable in the ShaderBlock.",
+              key = "ShaderBlock:read",
+              module = "lovr.graphics",
+              related = {
+                "Shader:send",
+                "Shader:sendBlock",
+                "ShaderBlock:getShaderCode",
+                "ShaderBlock:getOffset",
+                "ShaderBlock:getSize"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the variable to read."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "value",
+                      type = "*",
+                      description = "The value of the variable."
+                    }
+                  }
+                }
+              },
+              notes = "This function is really slow!  Only read back values when you need to.\n\nVectors and matrices will be returned as (flat) tables."
             },
             {
               name = "send",
