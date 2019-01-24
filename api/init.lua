@@ -7275,6 +7275,24 @@ return {
           }
         },
         {
+          name = "flush",
+          tag = "graphicsPrimitives",
+          summary = "Flush any pending batched draw calls.",
+          description = "Flushes the internal queue of draw batches.  Under normal circumstances this is done automatically when needed, but the ability to flush manually may be helpful if you're integrating a LÖVR project with some external rendering code.",
+          key = "lovr.graphics.flush",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.clear",
+            "lovr.graphics.discard"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
           name = "getBackgroundColor",
           tag = "graphicsState",
           summary = "Get the background color.",
