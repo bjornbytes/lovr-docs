@@ -23,6 +23,15 @@ return {
       description = [[
         Whether the archive will be added to the end or the beginning of the search path.
       ]]
+    },
+    {
+      name = 'root',
+      type = 'string',
+      default = 'nil',
+      description = [[
+        A subdirectory inside the archive to use as the root.  If `nil`, the actual root of the
+        archive is used.
+      ]]
     }
   },
   returns = {

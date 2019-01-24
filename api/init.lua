@@ -5188,6 +5188,12 @@ return {
                   type = "boolean",
                   description = "Whether the archive will be added to the end or the beginning of the search path.",
                   default = "false"
+                },
+                {
+                  name = "root",
+                  type = "string",
+                  description = "A subdirectory inside the archive to use as the root.  If `nil`, the actual root of the archive is used.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -7772,14 +7778,19 @@ return {
                   description = "The table of limits.",
                   table = {
                     {
+                      name = "anisotropy",
+                      type = "number",
+                      description = "The maximum anisotropy value supported by `Texture:setFilter`."
+                    },
+                    {
+                      name = "blocksize",
+                      type = "number",
+                      description = "The maximum size of a uniform ShaderBlock, in bytes."
+                    },
+                    {
                       name = "pointsize",
                       type = "number",
                       description = "The maximum size of points, in pixels."
-                    },
-                    {
-                      name = "texturesize",
-                      type = "number",
-                      description = "The maximum width or height of textures, in pixels."
                     },
                     {
                       name = "texturemsaa",
@@ -7787,9 +7798,9 @@ return {
                       description = "The maximum MSAA value supported by `lovr.graphics.newTexture`."
                     },
                     {
-                      name = "anisotropy",
+                      name = "texturesize",
                       type = "number",
-                      description = "The maximum anisotropy value supported by `Texture:setFilter`."
+                      description = "The maximum width or height of textures, in pixels."
                     }
                   }
                 }
