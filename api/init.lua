@@ -15348,6 +15348,42 @@ return {
           }
         },
         {
+          name = "newPool",
+          summary = "Create a new Pool.",
+          description = "Creates a new `Pool`, used for allocating vector and matrix objects efficiently.\n\nNote that `lovr.math` has its own Pool that it uses when you call these functions:\n\n- `lovr.math.vec3`\n- `lovr.math.quat`\n- `lovr.math.mat4`\n\nSo it's usually more convenient to use those functions.  Pools are available to use if you have a need for more control over the memory used for your vectors.",
+          key = "lovr.math.newPool",
+          module = "lovr.math",
+          related = {
+            "lovr.math.vec3",
+            "lovr.math.quat",
+            "lovr.math.mat4"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the Pool, in bytes."
+                },
+                {
+                  name = "resizable",
+                  type = "boolean",
+                  description = "Whether or not the Pool will resize itself.",
+                  default = "false"
+                }
+              },
+              returns = {
+                {
+                  name = "pool",
+                  type = "Pool",
+                  description = "The new Pool."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newRandomGenerator",
           summary = "Create a new RandomGenerator.",
           description = "Creates a new `RandomGenerator`, which can be used to generate random numbers. If you just want some random numbers, you can use `lovr.math.random`. Individual RandomGenerator objects are useful if you need more control over the random sequence used or need a random generator isolated from other instances.",
@@ -16114,6 +16150,111 @@ return {
           constructors = {
             "lovr.math.newCurve",
             "Curve:slice"
+          }
+        },
+        {
+          name = "Pool",
+          summary = "A Pool of vectors objects.",
+          description = "A Pool is an object that is used to allocate vectors, matrices, and quaternions.  Pools exist mainly for efficiency -- allocating tiny bits of memory for every single vector can lead to performance problems related to the Lua garbage collector and other memory managers on the system.  By using a Pool, a single block of memory is used and the Pool keeps track of all of the vectors in the block.\n\nA Pool can be allocated with a fixed size or it can be resizable.  If a fixed size Pool runs out of space, it will overflow and cause an error.  Resizable Pools, on the other hand, will grow as needed.  This can be more convenient to work with but might end up using more memory than expected or lead to delays while the memory is being resized.  It's recommended to use fixed size Pools when you know how many vector objects you'll need.\n\nPools can be drained using `Pool:drain`.  Draining the Pool resets its usage to zero, and clears all vectors allocated from the Pool.  This is helpful for keeping memory usage low when using a lot of temporary vectors, which is common, but can cause unexpected surprises if you have saved a vector into a variable.  If you need a vector to persist across drains, you can call `vec3:save` on it, which creates a copy of the vector that exists outside of any Pool and is instead managed by Lua's garbage collector.\n\n*Important note:* `lovr.math` has its own internal Pool that it uses whenever you call functions like `lovr.math.vec3` or `lovr.math.mat4`.  These vectors are temporary vectors that will be drained at the end of the frame!  The default Pool is resizable.",
+          key = "Pool",
+          module = "lovr.math",
+          methods = {
+            {
+              name = "isResizable",
+              summary = "Check if the Pool is resizable.",
+              description = "Returns whether the Pool was created with the resizable flag.  Resizable Pools will automatically grow their memory block if they overflow, whereas normal Pools will throw an error.  This lets you trade off convenience for predictable performance and memory usage.",
+              key = "Pool:isResizable",
+              module = "lovr.math",
+              related = {
+                "lovr.math.newPool"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "resizable",
+                      type = "boolean",
+                      description = "Whether or not the Pool is resizable."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "vec3",
+              summary = "Get a new vec3.",
+              description = "Allocates a new `vec3` from the Pool and returns it.",
+              key = "Pool:vec3",
+              module = "lovr.math",
+              related = {
+                "Pool:quat",
+                "Pool:mat4",
+                "lovr.math.vec3",
+                "vec3"
+              },
+              variants = {
+                {
+                  description = "Fills the vector with `0`.",
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "The new vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the vector.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the vector.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the vector.",
+                      default = "x"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "The new vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "vec3",
+                      description = "The vector to copy the values from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "The new vector."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.math.newPool"
           }
         },
         {
