@@ -24,5 +24,9 @@ return {
   constructors = {
     'lovr.math.vec3',
     'Pool:vec3'
+  },
+  related = {
+    'quat',
+    'mat4'
   }
 }

@@ -2,7 +2,7 @@ return {
   summary = 'Create a non-temporary copy of the vector.',
   description = [[
     Creates and returns a permanent copy of the vector.  This copy exists as a normal Lua variable
-    instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and will
+    instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will
     be garbage collected when it's no longer in use.
   ]],
   arguments = {},
