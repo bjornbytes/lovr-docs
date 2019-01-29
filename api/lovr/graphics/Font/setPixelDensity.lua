@@ -5,11 +5,21 @@ return {
     a 2D texture, the units are pixels.
   ]],
   arguments = {
-    {
-      name = 'pixelDensity',
+    pixelDensity = {
       type = 'number',
       description = 'The new pixel density.'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'pixelDensity' },
+      returns = {}
+    },
+    {
+      description = 'Reset the pixel density to the default (`font:getRasterizer():getHeight()`).',
+      arguments = {},
+      returns = {}
+    }
+  }
 }

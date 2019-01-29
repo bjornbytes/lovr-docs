@@ -5986,6 +5986,11 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  description = "Reset the pixel density to the default (`font:getRasterizer():getHeight()`).",
+                  arguments = {},
+                  returns = {}
                 }
               }
             }
