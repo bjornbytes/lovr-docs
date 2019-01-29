@@ -22171,6 +22171,33 @@ return {
       }
     },
     {
+      name = "mirror",
+      tag = "callbacks",
+      summary = "Called to render content to the desktop window.",
+      description = "This callback is called every frame after rendering to the headset and is usually used to render a mirror of the headset display onto the desktop window.  It can be overridden for custom mirroring behavior.  For example, you could render a single eye instead of a stereo view, apply postprocessing effects, add 2D UI, or render the scene from an entirely different viewpoint for a third person camera.",
+      key = "lovr.mirror",
+      module = "lovr",
+      examples = {
+        {
+          description = "The default `lovr.mirror` implementation draws the headset mirror texture to the window if the headset is active, or just calls `lovr.draw` if there isn't a headset.",
+          code = "function lovr.mirror()\n  if lovr.headset then\n    local texture = lovr.headset.getMirrorTexture()\n    if texture then\n      lovr.graphics.fill(texture)\n    end\n  else\n    lovr.graphics.clear()\n    lovr.draw()\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.headset.renderTo",
+        "lovr.headset.getMirrorTexture",
+        "lovr.graphics.createWindow",
+        "lovr.graphics.setProjection",
+        "lovr.draw"
+      },
+      variants = {
+        {
+          arguments = {},
+          returns = {}
+        }
+      }
+    },
+    {
       name = "mount",
       tag = "callbacks",
       summary = "Called when the headset is put on or taken off.",
