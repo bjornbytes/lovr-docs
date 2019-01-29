@@ -18,9 +18,9 @@ return {
     },
     rotation = {
       type = 'quat',
-      default = '0, 0, 0, 0'<
+      default = '0, 0, 0, 0',
       description = 'The initial rotation of the matrix.'
-    }
+    },
     ['...'] = {
       type = 'number',
       description = '16 numbers to use as the raw values of the matrix (column-major).'

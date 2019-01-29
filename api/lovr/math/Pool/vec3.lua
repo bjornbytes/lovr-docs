@@ -30,11 +30,6 @@ return {
   },
   variants = {
     {
-      description = 'Fills the vector with `0`.',
-      arguments = {},
-      returns = { 'v' }
-    },
-    {
       arguments = { 'x', 'y', 'z' },
       returns = { 'v' }
     },

@@ -67,15 +67,15 @@ return {
       returns = { 'q' }
     },
     {
-      description = 'Creates a quaternion from a direction vector.'
+      description = 'Creates a quaternion from a direction vector.',
       arguments = { 'v' },
       returns = { 'q' }
-    }<
+    },
     {
-      description = 'Creates a quaternion representing the rotation between two vectors.'
+      description = 'Creates a quaternion representing the rotation between two vectors.',
       arguments = { 'v', 'u' },
       returns = { 'q' }
-    }<
+    },
     {
       arguments = { 'm' },
       returns = { 'q' }
