@@ -43,6 +43,6 @@ return {
     }
   },
   notes = [[
-    Note that `VertexData` and `TextureData` are Blobs and can be cloned using this function.
+    Note that `TextureData` and `SoundData` are Blobs and can be cloned using this function.
   ]]
 }
