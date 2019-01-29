@@ -1,5 +1,5 @@
 return {
-  summary = 'A Pool of vectors objects.',
+  summary = 'A Pool of vector objects.',
   description = [[
     A Pool is an object that is used to allocate vectors, matrices, and quaternions.  Pools exist
     mainly for efficiency -- allocating tiny bits of memory for every single vector can lead to
@@ -24,5 +24,5 @@ return {
     like `lovr.math.vec3` or `lovr.math.mat4`.  These vectors are temporary vectors that will be
     drained at the end of the frame!  The default Pool is resizable.
   ]],
-  constructor = 'lovr.math.newPool',
+  constructor = 'lovr.math.newPool'
 }
