@@ -10,6 +10,10 @@ return {
   ]],
   arguments = {},
   returns = {},
+  notes = [[
+    When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the
+    negative-z axis.
+  ]],
   example = {
     description = [[
       The default `lovr.mirror` implementation draws the headset mirror texture to the window if
