@@ -28,13 +28,6 @@ return {
               description = 'An ordered list of preferred headset drivers.'
             },
             {
-              name = 'mirror',
-              type = 'boolean',
-              description = [[
-                Whether the desktop window should display a mirror of what's in the headset.
-              ]]
-            },
-            {
               name = 'msaa',
               type = 'number',
               description = 'The amount of antialiasing to use when rendering to the headset.'
@@ -174,7 +167,6 @@ return {
 
           -- Headset settings
           t.headset.drivers = { 'openvr', 'webvr', 'fake' }
-          t.headset.mirror = true
           t.headset.msaa = 4
           t.headset.offset = 1.7
 

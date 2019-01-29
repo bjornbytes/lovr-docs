@@ -1,6 +1,5 @@
 function lovr.load()
   lovr.graphics.setBackgroundColor(.7, .7, .7)
-  lovr.headset.setMirrored(false)
 
   -- Create a canvas for the camera
   local w, h = lovr.graphics.getDimensions()

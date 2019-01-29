@@ -14124,26 +14124,6 @@ return {
           }
         },
         {
-          name = "isMirrored",
-          tag = "headset",
-          summary = "Check if the headset is mirrored to the desktop.",
-          description = "Returns whether or not the headset display is mirrored to the desktop window.",
-          key = "lovr.headset.isMirrored",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "mirrored",
-                  type = "boolean",
-                  description = "Whether or not the headset is mirrored to the desktop."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "isMounted",
           tag = "headset",
           summary = "Get whether or not the headset is mounted.",
@@ -14207,26 +14187,6 @@ return {
                   name = "far",
                   type = "number",
                   description = "The distance to the far clipping plane, in meters."
-                }
-              },
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "setMirrored",
-          tag = "headset",
-          summary = "Set whether the headset is mirrored to the desktop.",
-          description = "Returns whether or not the headset display is mirrored to the desktop window.",
-          key = "lovr.headset.setMirrored",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "mirror",
-                  type = "boolean",
-                  description = "Whether or not the headset should be mirrored to the desktop."
                 }
               },
               returns = {}
@@ -21843,7 +21803,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.drivers = { 'openvr', 'webvr', 'fake' }\n  t.headset.mirror = true\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Headset settings\n  t.headset.drivers = { 'openvr', 'webvr', 'fake' }\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
@@ -21869,11 +21829,6 @@ return {
                       name = "drivers",
                       type = "table",
                       description = "An ordered list of preferred headset drivers."
-                    },
-                    {
-                      name = "mirror",
-                      type = "boolean",
-                      description = "Whether the desktop window should display a mirror of what's in the headset."
                     },
                     {
                       name = "msaa",
