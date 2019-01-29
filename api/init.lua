@@ -5889,6 +5889,29 @@ return {
               }
             },
             {
+              name = "getRasterizer",
+              summary = "Get the underlying Rasterizer.",
+              description = "Returns the underyling `Rasterizer` object for a Font.",
+              key = "Font:getRasterizer",
+              module = "lovr.graphics",
+              related = {
+                "Rasterizer",
+                "lovr.data.newRasterizer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "rasterizer",
+                      type = "Rasterizer",
+                      description = "The rasterizer."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getWidth",
               summary = "Get the width of a line of text.",
               description = "Returns the width of a string when rendered using the font, with an optional wrap.  To get the correct units returned, make sure the pixel density is set with `Font:setPixelDensity`.",
