@@ -12,10 +12,19 @@ return {
     }
   },
   returns = {
-    {
-      name = 'v',
+    v = {
       type = 'vec3',
       description = 'The original vector.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'u' },
+      returns = { 'v' }
+    },
+    {
+      arguments = { 'x' },
+      returns = { 'v' }
     }
   },
   notes = [[

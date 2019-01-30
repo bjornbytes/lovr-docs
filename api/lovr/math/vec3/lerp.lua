@@ -1,10 +1,10 @@
 return {
   summary = 'Moves this vector some amount towards another one.',
   description = [[
-    Sets the components of this vector to be somewhere between their current values and the values
-    of the input vector, based on a parameter.  A parameter value of `0` will leave the vector
-    unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a
-    value of `.5` will set the components to be halfway between the two vectors.
+    Performs a linear interpolation between this vector and another one, which can be used to
+    smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will
+    leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the
+    input vector, and a value of `.5` will set the components to be halfway between the two vectors.
   ]],
   arguments = {
     {
@@ -22,7 +22,7 @@ return {
     {
       name = 'v',
       type = 'vec3',
-      description = 'The original vector, with lerped values.'
+      description = 'The original vector, containing the new lerped values.'
     }
   },
   related = {

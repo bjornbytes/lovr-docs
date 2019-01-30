@@ -19,10 +19,19 @@ return {
     }
   },
   returns = {
-    {
-      name = 'out',
+    out = {
       type = 'vec3',
       description = 'The result.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'v', 'u' },
+      returns = { 'out' }
+    },
+    {
+      arguments = { 'v', 'x' },
+      returns = { 'out' }
     }
   },
   related = {

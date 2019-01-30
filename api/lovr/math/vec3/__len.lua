@@ -5,7 +5,7 @@ return {
     {
       name = 'v',
       type = 'vec3',
-      description = 'The first vector.'
+      description = 'The vector.'
     }
   },
   returns = {
@@ -17,6 +17,7 @@ return {
   },
   related = {
     'vec3:length',
+    'vec3:normalize',
     'vec3:distance'
   }
 }
