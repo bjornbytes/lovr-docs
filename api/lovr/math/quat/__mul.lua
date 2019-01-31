@@ -6,6 +6,10 @@ return {
     result.  If the value is a vector, then a new temporary rotated vector is returned.
   ]],
   arguments = {
+    q = {
+      type = 'quat',
+      description = 'A quaternion.'
+    },
     r = {
       type = 'quat',
       description = 'A quaternion to combine with the original.'

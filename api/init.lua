@@ -17608,7 +17608,11 @@ return {
               variants = {
                 {
                   arguments = {
-                    nil,
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "A quaternion."
+                    },
                     {
                       name = "r",
                       type = "quat",
@@ -17625,7 +17629,11 @@ return {
                 },
                 {
                   arguments = {
-                    nil,
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "A quaternion."
+                    },
                     {
                       name = "v",
                       type = "vec3",
