@@ -8,7 +8,7 @@ return {
     {
       name = 'compareMode',
       type = 'CompareMode',
-      default = 'nil',
+      default = [['lequal']],
       description = 'The new depth test.  Use `nil` to disable the depth test.'
     },
     {
