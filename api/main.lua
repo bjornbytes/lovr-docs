@@ -214,13 +214,14 @@ local function processModule(path)
     local childModule = childPath:gsub('%..+$', '')
     local isFile = lovr.filesystem.isFile(childPath)
     local capitalized = file:match('^[A-Z]')
+    local objectSnowflakes = { vec3 = true, quat = true, mat4 = true }
 
     if file ~= 'init.lua' and not capitalized and isFile then
       table.insert(module.functions, processFunction(childModule, module))
-    elseif capitalized and not isFile then
-      table.insert(module.objects, processObject(childModule, module))
     elseif capitalized and isFile then
       table.insert(module.enums, processEnum(childModule, module))
+    elseif not isFile and (capitalized or objectSnowflakes[file]) then
+      table.insert(module.objects, processObject(childModule, module))
     end
   end
 
