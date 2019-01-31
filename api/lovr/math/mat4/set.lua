@@ -9,10 +9,6 @@ return {
       type = 'mat4',
       description = 'An existing matrix to copy the values from.'
     },
-    x = {
-      type = 'number',
-      description = 'A number to set as the diagonal values of the matrix.'
-    },
     position = {
       type = 'vec3',
       default = '0, 0, 0',
@@ -43,11 +39,6 @@ return {
     {
       description = 'Resets the matrix to the identity matrix.',
       arguments = {},
-      returns = { 'm' }
-    },
-    {
-      description = 'Sets the diagonal values of the matrix equal to a number.',
-      arguments = { 'x' },
       returns = { 'm' }
     },
     {
