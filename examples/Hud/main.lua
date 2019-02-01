@@ -4,7 +4,7 @@ local shader = require 'shader'
 lovr.mouse = require 'mouse'
 
 local mirror = lovr.mirror
-local font = lovr.graphics.newFont(48)
+local font = lovr.graphics.newFont(36)
 font:setFlipEnabled(true)
 font:setPixelDensity(1)
 
@@ -29,6 +29,7 @@ local cellspan = cellheight/2
 local bannedcell = math.ceil(cells/2)
 local towerscalexz = 2
 local towerscaley = 3
+local fontscale = height/lovr.graphics.getHeight()
 
 local matrix = lovr.math.mat4():orthographic(-aspect, aspect, -1, 1, -64, 64)
 
@@ -69,12 +70,12 @@ function drawGrid()
 	end end
 
 	lovr.graphics.setColor(1,1,1,1)
-	for _x=0,cells do for _y=0,cells do
-		local x = -gridspan + _x * cellheight
-		local y = -gridspan + _y * cellheight
+	for c=0,cells do
+		local x = -gridspan + c * cellheight
+		local y = -gridspan + c * cellheight
 		lovr.graphics.line(-gridspan, y, 0, gridspan, y, 0)
 		lovr.graphics.line(x, -gridspan, 0, x, gridspan, 0)
-	end end
+	end
 
 	lovr.graphics.push()
 	local x, y, z, angle, ax, ay, az = lovr.headset.getPose()
@@ -99,6 +100,10 @@ function lovr.mirror()
 	lovr.graphics.setDepthTest(nil)
 	lovr.graphics.setProjection(matrix)
 	drawGrid()
+
+	lovr.graphics.setColor(1,1,1,1)
+	lovr.graphics.setFont(font)
+	lovr.graphics.print("Instructions: Click the grid to create or remove blocks.", 0, (gridheight+cellheight)/2, 0, fontscale)
 end
 
 function floorbox(_x,_y,gray)
