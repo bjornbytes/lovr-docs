@@ -6,13 +6,13 @@ return {
     or velocities generally also accept `vec3`s.
 
     `vec3`s are created by allocating them from Pools, by either using `lovr.math.vec3` to allocate
-    from the default pool or creating a new `Pool` and calling `Pool:vec3` on it.  *Note* that
-    vectors created with `lovr.math.vec3` are *temporary*, and will be cleared at the end of a
+    from the default pool or creating a new `Pool` and calling `Pool:vec3` on it.  **Note** that
+    vectors created with `lovr.math.vec3` are **temporary**, and will be cleared at the end of a
     frame!  You can use `vec3:save` to save a permanent copy of the vector that is managed by the
     Lua garbage collector.
 
     `vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the
-    usual binary operators that you would use on numbers.  Note that these create new *temporary*
+    usual binary operators that you would use on numbers.  Note that these create new **temporary**
     vectors to store their results in.  If you want to modify a vector instead of creating new ones,
     you can use the named operator functions like `vec3:add`.
 

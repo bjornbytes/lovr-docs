@@ -7,8 +7,8 @@ return {
     is more concise and improves performance slightly.
 
     `mat4`s are created by allocating them from Pools, by either using `lovr.math.mat4` to allocate
-    from the default pool or creating a new `Pool` and calling `Pool:mat4` on it.  *Note* that
-    matrices created with `lovr.math.mat4` are *temporary*, and will be cleared at the end of a
+    from the default pool or creating a new `Pool` and calling `Pool:mat4` on it.  **Note** that
+    matrices created with `lovr.math.mat4` are **temporary**, and will be cleared at the end of a
     frame!  You can use `mat4:save` to save a permanent copy of the matrix that is managed by the
     Lua garbage collector.
 

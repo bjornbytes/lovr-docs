@@ -5,8 +5,8 @@ return {
     that take rotations also accept quaternions.
 
     `quat`s are created by allocating them from Pools, by either using `lovr.math.quat` to allocate
-    from the default pool or creating a new `Pool` and calling `Pool:quat` on it.  *Note* that
-    quaternions created with `lovr.math.quat` are *temporary*, and will be cleared at the end of a
+    from the default pool or creating a new `Pool` and calling `Pool:quat` on it.  **Note** that
+    quaternions created with `lovr.math.quat` are **temporary**, and will be cleared at the end of a
     frame!  You can use `quat:save` to save a permanent copy of the quaternion that is managed by
     the Lua garbage collector.
 
@@ -21,7 +21,7 @@ return {
     Two quaternions can be multiplied together to combine their rotations into a single new
     quaternion.  The `quat:mul` function can be used to multiply two quaternions "in place",
     modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them,
-    which will create a new *temporary* quaternion to store the result in.
+    which will create a new **temporary** quaternion to store the result in.
 
     A quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and
     the `*` operator can be used for this.

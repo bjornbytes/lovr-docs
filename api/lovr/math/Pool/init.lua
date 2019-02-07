@@ -20,9 +20,9 @@ return {
     `vec3:save` on it, which creates a copy of the vector that exists outside of any Pool and is
     instead managed by Lua's garbage collector.
 
-    *Important note:* `lovr.math` has its own internal Pool that it uses whenever you call functions
-    like `lovr.math.vec3` or `lovr.math.mat4`.  These vectors are temporary vectors that will be
-    drained at the end of the frame!  The default Pool is resizable.
+    **Important note:** `lovr.math` has its own internal Pool that it uses whenever you call
+    functions like `lovr.math.vec3` or `lovr.math.mat4`.  These vectors are temporary vectors that
+    will be drained at the end of the frame!  The default Pool is resizable.
   ]],
   constructor = 'lovr.math.newPool'
 }
