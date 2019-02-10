@@ -35,10 +35,10 @@ return {
     format looks like this:
 
         {
-          { 'lovrPosition', 'float', 3 },
-          { 'lovrNormal',   'float', 3 },
-          { 'lovrTexCoord', 'float', 2 }
-          { 'lovrVertexColor', 'byte', 4 }
+          { 'lovrPosition',    'float', 3 },
+          { 'lovrNormal',      'float', 3 },
+          { 'lovrTexCoord',    'float', 2 }
+          { 'lovrVertexColor', 'byte',  4 }
         }
 
     Great, so why do we go through the trouble of naming everything in our vertex and saying what
