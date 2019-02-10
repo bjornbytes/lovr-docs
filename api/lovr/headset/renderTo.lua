@@ -23,5 +23,10 @@ return {
       ]]
     }
   },
-  returns = {}
+  returns = {},
+  notes = [[
+    On the `web` and `android` platforms (see `lovr.getOS`), headset rendering is asynchronous and
+    the callback passed to `lovr.headset.renderTo` will not be called immediately.  This is due to
+    certain restrictions inherent to these platforms.
+  ]]
 }
