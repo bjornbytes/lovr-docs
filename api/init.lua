@@ -13574,13 +13574,13 @@ return {
         {
           name = "HeadsetOrigin",
           summary = "Different types of coordinate space origins.",
-          description = "Represents the different types of origins for coordinate spaces.  An origin of \"floor\" is common for headsets that support roomscale tracking, and means that the origin is on the floor in the center of the play area.  An origin of \"head\" is common for devices that do not support positional tracking and means the origin is relative to the position of the head.",
+          description = "Represents the different types of origins for coordinate spaces.  An origin of \"floor\" means that the origin is on the floor in the middle of a room-scale play area.  An origin of \"head\" means that no positional tracking is available, and consequently the origin is always at the position of the headset.",
           key = "HeadsetOrigin",
           module = "lovr.headset",
           values = {
             {
               name = "head",
-              description = "The origin is near the head."
+              description = "The origin is at the head."
             },
             {
               name = "floor",
