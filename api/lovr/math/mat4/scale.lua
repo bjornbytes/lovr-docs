@@ -6,16 +6,25 @@ return {
       type = 'vec3',
       description = 'The 3D scale to apply.'
     },
-    x = {
+    s = {
       type = 'number',
       description = 'A uniform scale to apply.'
     }
   },
   returns = {
-    {
-      name = 'm',
+    m = {
       type = 'mat4',
       description = 'The original matrix.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'scale' },
+      returns = { 'm' }
+    },
+    {
+      arguments = { 's' },
+      returns = { 'm' }
     }
   },
   related = {

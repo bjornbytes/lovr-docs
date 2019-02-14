@@ -17370,13 +17370,26 @@ return {
               variants = {
                 {
                   arguments = {
-                    x = {
-                      type = "number",
-                      description = "A uniform scale to apply."
-                    },
-                    scale = {
+                    {
+                      name = "scale",
                       type = "vec3",
                       description = "The 3D scale to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "s",
+                      type = "number",
+                      description = "A uniform scale to apply."
                     }
                   },
                   returns = {
