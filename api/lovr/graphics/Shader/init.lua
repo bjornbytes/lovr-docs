@@ -35,15 +35,17 @@ return {
         in vec2 lovrTexCoord;
         in vec4 lovrVertexColor;
         in vec3 lovrTangent;
-        in ivec4 lovrBones;
+        in uvec4 lovrBones;
         in vec4 lovrBoneWeights;
         out vec2 texCoord;
         out vec4 vertexColor;
+        out vec4 lovrColor;
         uniform mat4 lovrModel;
         uniform mat4 lovrView;
         uniform mat4 lovrProjection;
         uniform mat4 lovrTransform; // Model-View matrix
-        uniform mat4 lovrNormalMatrix;
+        uniform mat3 lovrNormalMatrix;
+        uniform mat3 lovrMaterialTransform;
         uniform float lovrPointSize;
         uniform mat4 lovrPose[48];
         uniform int lovrViewportCount;
@@ -55,8 +57,8 @@ return {
 
         in vec2 texCoord;
         in vec4 vertexColor;
-        in vec4 gl_FragCoord;
-        out vec4 lovrFragColor;
+        in vec4 lovrColor;
+        out vec4 lovrCanvas[gl_MaxDrawBuffers];
         uniform float lovrMetalness;
         uniform float lovrRoughness;
         uniform vec4 lovrColor;
@@ -84,11 +86,11 @@ return {
 
     And the following built in variables can be used:
 
-        in uvec3 gl_NumWorkGroups;      // The size passed to lovr.graphics.compute
-        in uvec3 gl_WorkGroupSize;      // The local work group size
-        in uvec3 gl_WorkGroupID;        // The current global work group
-        in uvec3 gl_LocalInvocationID;  // The current local work group
-        in uvec3 gl_GlobalInvocationID; // A unique ID combining the global and local IDs
+        in uvec3 gl_NumWorkGroups;       // The size passed to lovr.graphics.compute
+        in uvec3 gl_WorkGroupSize;       // The local work group size
+        in uvec3 gl_WorkGroupID;         // The current global work group
+        in uvec3 gl_LocalInvocationID;   // The current local work group
+        in uvec3 gl_GlobalInvocationID;  // A unique ID combining the global and local IDs
         in uint gl_LocalInvocationIndex; // A 1D index of the LocalInvocationID
 
     Compute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s.
