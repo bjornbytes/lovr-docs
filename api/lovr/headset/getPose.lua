@@ -2,51 +2,42 @@ return {
   tag = 'headset',
   summary = 'Get the pose of the headset.',
   description = 'Returns the current position and orientation of the headset.',
-  arguments = {
-    eye = {
-      type = 'HeadsetEye',
-      description = 'The eye to get the pose of.'
-    }
-  },
+  arguments = {},
   returns = {
-    x = {
+    {
+      name = 'x',
       type = 'number',
       description = 'The x position.'
     },
-    y = {
+    {
+      name = 'y',
       type = 'number',
       description = 'The y position.'
     },
-    z = {
+    {
+      name = 'z',
       type = 'number',
       description = 'The z position.'
     },
-    angle = {
+    {
+      name = 'angle',
       type = 'number',
       description = 'The amount of rotation around the axis of rotation, in radians.'
     },
-    ax = {
+    {
+      name = 'ax',
       type = 'number',
       description = 'The x component of the axis of rotation.'
     },
-    ay = {
+    {
+      name = 'ay',
       type = 'number',
       description = 'The y component of the axis of rotation.'
     },
-    az = {
+    {
+      name = 'az',
       type = 'number',
       description = 'The z component of the axis of rotation.'
-    }
-  },
-  variants = {
-    {
-      arguments = {},
-      returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
-    },
-    {
-      description = 'Get the pose of an eye.',
-      arguments = { 'eye' },
-      returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     }
   },
   notes = 'Units are in meters.',

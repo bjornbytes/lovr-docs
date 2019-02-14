@@ -2,39 +2,27 @@ return {
   tag = 'headset',
   summary = 'Get the orientation of the headset.',
   description = 'Returns the current orientation of the headset.',
-  arguments = {
-    eye = {
-      type = 'HeadsetEye',
-      description = 'The eye to get the orientation of.'
-    }
-  },
+  arguments = {},
   returns = {
-    angle = {
+    {
+      name = 'angle',
       type = 'number',
       description = 'The amount of rotation around the axis of rotation.'
     },
-    ax = {
+    {
+      name = 'ax',
       type = 'number',
       description = 'The x component of the axis of rotation.'
     },
-    ay = {
+    {
+      name = 'ay',
       type = 'number',
       description = 'The y component of the axis of rotation.'
     },
-    az = {
+    {
+      name = 'az',
       type = 'number',
       description = 'The z component of the axis of rotation.'
-    }
-  },
-  variants = {
-    {
-      arguments = {},
-      returns = { 'angle', 'ax', 'ay', 'az' }
-    },
-    {
-      description = 'Get the orientation of a single eye.',
-      arguments = { 'eye' },
-      returns = { 'angle', 'ax', 'ay', 'az' }
     }
   },
   related = {

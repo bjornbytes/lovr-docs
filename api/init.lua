@@ -13278,38 +13278,6 @@ return {
                   description = "The z component of the axis of rotation."
                 }
               }
-            },
-            {
-              description = "Get the orientation of a single eye.",
-              arguments = {
-                {
-                  name = "eye",
-                  type = "HeadsetEye",
-                  description = "The eye to get the orientation of."
-                }
-              },
-              returns = {
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "The amount of rotation around the axis of rotation."
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation."
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation."
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation."
-                }
-              }
             }
           }
         },
@@ -13343,57 +13311,9 @@ return {
           description = "Returns the current position and orientation of the headset.",
           key = "lovr.headset.getPose",
           module = "lovr.headset",
-          notes = "Units are in meters.",
           variants = {
             {
               arguments = {},
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z position."
-                },
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "The amount of rotation around the axis of rotation, in radians."
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation."
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation."
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation."
-                }
-              }
-            },
-            {
-              description = "Get the pose of an eye.",
-              arguments = {
-                {
-                  name = "eye",
-                  type = "HeadsetEye",
-                  description = "The eye to get the pose of."
-                }
-              },
               returns = {
                 {
                   name = "x",
@@ -13436,7 +13356,8 @@ return {
           related = {
             "lovr.headset.getPosition",
             "lovr.headset.getOrientation"
-          }
+          },
+          notes = "Units are in meters."
         },
         {
           name = "getPosition",
@@ -13453,33 +13374,6 @@ return {
           variants = {
             {
               arguments = {},
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the headset."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the headset."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z position of the headset."
-                }
-              }
-            },
-            {
-              description = "Get the position of an eye.",
-              arguments = {
-                {
-                  name = "eye",
-                  type = "HeadsetEye",
-                  description = "The eye to get the position of."
-                }
-              },
               returns = {
                 {
                   name = "x",

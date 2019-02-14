@@ -2,35 +2,22 @@ return {
   tag = 'headset',
   summary = 'Get the position of the headset.',
   description = 'Returns the current position of the headset.',
-  arguments = {
-    eye = {
-      type = 'HeadsetEye',
-      description = 'The eye to get the position of.'
-    }
-  },
+  arguments = {},
   returns = {
-    x = {
+    {
+      name = 'x',
       type = 'number',
       description = 'The x position of the headset.'
     },
-    y = {
+    {
+      name = 'y',
       type = 'number',
       description = 'The y position of the headset.'
     },
-    z = {
+    {
+      name = 'z',
       type = 'number',
       description = 'The z position of the headset.'
-    }
-  },
-  variants = {
-    {
-      arguments = {},
-      returns = { 'x', 'y', 'z' }
-    },
-    {
-      description = 'Get the position of an eye.',
-      arguments = { 'eye' },
-      returns = { 'x', 'y', 'z' }
     }
   },
   related = {
