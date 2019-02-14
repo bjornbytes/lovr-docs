@@ -22,11 +22,11 @@ return {
   returns = {
     m = {
       type = 'mat4',
-      description = 'A new temporary matrix containing the multiplied result.'
+      description = 'A new matrix containing the multiplied result.'
     },
     u = {
       type = 'vec3',
-      description = 'A new temporary transformed vector.'
+      description = 'A new transformed vector.'
     }
   },
   variants = {

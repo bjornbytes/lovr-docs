@@ -15900,7 +15900,7 @@ return {
         {
           name = "mat4",
           summary = "A 4x4 matrix.",
-          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4` or by using a `Pool`.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new temporary matrix that will be cleared at the end of the frame, so be sure to use `mat4:save` if you need to hold onto it.\n\nCreating huge numbers of matrices every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects you can use `Pool`s to make things much more efficient.",
+          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4` or by using a `Pool`.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new matrix.\n\nCreating huge numbers of matrices every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects you can use `Pool`s to make things much more efficient.",
           key = "mat4",
           module = "lovr.math",
           methods = {
@@ -15934,7 +15934,7 @@ return {
                     {
                       name = "m",
                       type = "mat4",
-                      description = "A new temporary matrix containing the multiplied result."
+                      description = "A new matrix containing the multiplied result."
                     }
                   }
                 },
@@ -15950,7 +15950,7 @@ return {
                     {
                       name = "u",
                       type = "vec3",
-                      description = "A new temporary transformed vector."
+                      description = "A new transformed vector."
                     }
                   }
                 }
@@ -16393,7 +16393,7 @@ return {
         {
           name = "quat",
           summary = "A quaternion.",
-          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat` or by using a `Pool`.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new **temporary** quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!\n\nCreating huge numbers of quaternions every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of quaternion objects you can use `Pool`s to make things much more efficient.",
+          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat` or by using a `Pool`.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!\n\nCreating huge numbers of quaternions every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of quaternion objects you can use `Pool`s to make things much more efficient.",
           key = "quat",
           module = "lovr.math",
           methods = {
@@ -16429,7 +16429,7 @@ return {
             {
               name = "__mul",
               summary = "Multiply a quaternion by another quaternion or a vector.",
-              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and a new temporary quaternion is returned with the result.  If the value is a vector, then a new temporary rotated vector is returned.",
+              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and a new quaternion is returned with the result.  If the value is a vector, then a new rotated vector is returned.",
               key = "quat:__mul",
               module = "lovr.math",
               related = {
@@ -16453,7 +16453,7 @@ return {
                     {
                       name = "s",
                       type = "quat",
-                      description = "The temporary combined quaternion."
+                      description = "The combined quaternion."
                     }
                   }
                 },
@@ -16474,7 +16474,7 @@ return {
                     {
                       name = "u",
                       type = "vec3",
-                      description = "The temporary rotated vector."
+                      description = "The rotated vector."
                     }
                   }
                 }
@@ -16791,7 +16791,7 @@ return {
             {
               name = "__add",
               summary = "Add two vectors.",
-              description = "Adds two vectors, returning a new temporary vector containing the sum.",
+              description = "Adds two vectors, returning a new vector containing the sum.",
               key = "vec3:__add",
               module = "lovr.math",
               related = {
@@ -16952,7 +16952,7 @@ return {
             {
               name = "__sub",
               summary = "Subtract two vectors.",
-              description = "Subtracts two vectors, returning a new temporary vector containing the difference.",
+              description = "Subtracts two vectors, returning a new vector containing the difference.",
               key = "vec3:__sub",
               module = "lovr.math",
               related = {

@@ -2,8 +2,8 @@ return {
   summary = 'Multiply a quaternion by another quaternion or a vector.',
   description = [[
     Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the
-    two quaternions are applied sequentially and a new temporary quaternion is returned with the
-    result.  If the value is a vector, then a new temporary rotated vector is returned.
+    two quaternions are applied sequentially and a new quaternion is returned with the result.  If
+    the value is a vector, then a new rotated vector is returned.
   ]],
   arguments = {
     q = {
@@ -22,11 +22,11 @@ return {
   returns = {
     s = {
       type = 'quat',
-      description = 'The temporary combined quaternion.'
+      description = 'The combined quaternion.'
     },
     u = {
       type = 'vec3',
-      description = 'The temporary rotated vector.'
+      description = 'The rotated vector.'
     }
   },
   variants = {

@@ -1,7 +1,7 @@
 return {
   summary = 'Subtract two vectors.',
   description = [[
-    Subtracts two vectors, returning a new temporary vector containing the difference.
+    Subtracts two vectors, returning a new vector containing the difference.
   ]],
   arguments = {
     {

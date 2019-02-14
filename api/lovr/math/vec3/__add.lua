@@ -1,6 +1,6 @@
 return {
   summary = 'Add two vectors.',
-  description = 'Adds two vectors, returning a new temporary vector containing the sum.',
+  description = 'Adds two vectors, returning a new vector containing the sum.',
   arguments = {
     {
       name = 'v',
