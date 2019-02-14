@@ -13,6 +13,9 @@ return {
   notes = [[
     When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the
     negative-z axis.
+
+    Note that the usual graphics state applies while `lovr.mirror` is invoked, so you may need to
+    reset graphics state at the end of `lovr.draw` to get the result you want.
   ]],
   example = {
     description = [[

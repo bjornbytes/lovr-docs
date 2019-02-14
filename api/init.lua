@@ -406,7 +406,7 @@ return {
           code = "function lovr.mirror()\n  if lovr.headset then\n    local texture = lovr.headset.getMirrorTexture()\n    if texture then\n      lovr.graphics.fill(texture)\n    end\n  else\n    lovr.graphics.clear()\n    lovr.draw()\n  end\nend"
         }
       },
-      notes = "When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the negative-z axis."
+      notes = "When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the negative-z axis.\n\nNote that the usual graphics state applies while `lovr.mirror` is invoked, so you may need to reset graphics state at the end of `lovr.draw` to get the result you want."
     },
     {
       name = "mount",
