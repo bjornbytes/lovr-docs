@@ -152,6 +152,12 @@ page (before the lovr.js script tag) to run the project.
 
 For an improved WebVR workflow with live-reloading, check out [`lovr-webvr-server`](https://github.com/bjornbytes/lovr-webvr-server/blob/master/views/index.ejs).
 
+Android
+---
+
+See [`lovr-oculus-mobile`](https://github.com/mcclure/lovr-oculus-mobile) for instructions on
+building LÖVR on Android.
+
 Troubleshooting
 ---
 
