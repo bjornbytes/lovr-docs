@@ -17066,7 +17066,7 @@ return {
               name = "__mul",
               summary = "Multiply a matrix with another matrix or a vector.",
               description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
-              key = "lovr.math.mat4.__mul",
+              key = "mat4:__mul",
               module = "lovr.math",
               related = {
                 "mat4:mul",
@@ -17118,7 +17118,7 @@ return {
               name = "identity",
               summary = "Reset the matrix to the identity.",
               description = "Resets the matrix to the identity, effectively setting its translation to zero, its scale to 1, and clearing any rotation.",
-              key = "lovr.math.mat4.identity",
+              key = "mat4:identity",
               module = "lovr.math",
               related = {
                 "lovr.graphics.origin"
@@ -17140,7 +17140,7 @@ return {
               name = "invert",
               summary = "Invert the matrix.",
               description = "Inverts the matrix, causing it to represent the opposite of its old transform.",
-              key = "lovr.math.mat4.invert",
+              key = "mat4:invert",
               module = "lovr.math",
               variants = {
                 {
@@ -17159,7 +17159,7 @@ return {
               name = "mul",
               summary = "Multiply a matrix with another matrix or a vector.",
               description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
-              key = "lovr.math.mat4.mul",
+              key = "mat4:mul",
               module = "lovr.math",
               related = {
                 "mat4:__mul",
@@ -17206,7 +17206,7 @@ return {
               name = "orthographic",
               summary = "Turn the matrix into an orthographic projection.",
               description = "Sets this matrix to represent an orthographic projection, useful for 2D/isometric rendering.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
-              key = "lovr.math.mat4.orthographic",
+              key = "mat4:orthographic",
               module = "lovr.math",
               related = {
                 "mat4:perspective",
@@ -17260,7 +17260,7 @@ return {
               name = "perspective",
               summary = "Turn the matrix into a perspective projection.",
               description = "Sets this matrix to represent a perspective projection.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
-              key = "lovr.math.mat4.perspective",
+              key = "mat4:perspective",
               module = "lovr.math",
               related = {
                 "mat4:orthographic",
@@ -17304,7 +17304,7 @@ return {
               name = "rotate",
               summary = "Rotate the matrix.",
               description = "Rotates the matrix using a quaternion or an angle/axis rotation.",
-              key = "lovr.math.mat4.rotate",
+              key = "mat4:rotate",
               module = "lovr.math",
               related = {
                 "mat4:translate",
@@ -17334,7 +17334,7 @@ return {
               name = "save",
               summary = "Create a non-temporary copy of the matrix.",
               description = "Creates and returns a permanent copy of the matrix.  This copy exists as a normal Lua variable instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will be garbage collected when it's no longer in use.",
-              key = "lovr.math.mat4.save",
+              key = "mat4:save",
               module = "lovr.math",
               related = {
                 "mat4:set",
@@ -17360,7 +17360,7 @@ return {
               name = "scale",
               summary = "Scale the matrix.",
               description = "Scales the matrix.",
-              key = "lovr.math.mat4.scale",
+              key = "mat4:scale",
               module = "lovr.math",
               related = {
                 "mat4:translate",
@@ -17393,7 +17393,7 @@ return {
               name = "set",
               summary = "Set the components of the matrix.",
               description = "Sets the components of the matrix from separate position, rotation, and scale arguments or an existing matrix.",
-              key = "lovr.math.mat4.set",
+              key = "mat4:set",
               module = "lovr.math",
               related = {
                 "mat4:unpack"
@@ -17478,7 +17478,7 @@ return {
               name = "translate",
               summary = "Translate the matrix.",
               description = "Translates the matrix.",
-              key = "lovr.math.mat4.translate",
+              key = "mat4:translate",
               module = "lovr.math",
               related = {
                 "mat4:rotate",
@@ -17508,7 +17508,7 @@ return {
               name = "transpose",
               summary = "Transpose the matrix.",
               description = "Transposes the matrix, mirroring its values along the diagonal.",
-              key = "lovr.math.mat4.transpose",
+              key = "mat4:transpose",
               module = "lovr.math",
               variants = {
                 {
@@ -17527,7 +17527,7 @@ return {
               name = "unpack",
               summary = "Get the individual components of the matrix.",
               description = "Returns the components of matrix, either as 10 separated numbers representing the position, scale, and rotation, or as 16 raw numbers representing the individual components of the matrix in column-major order.",
-              key = "lovr.math.mat4.unpack",
+              key = "mat4:unpack",
               module = "lovr.math",
               related = {
                 "mat4:set"
@@ -17572,7 +17572,7 @@ return {
               name = "__len",
               summary = "Get the length of the quaternion.",
               description = "Returns the length of the quaternion.",
-              key = "lovr.math.quat.__len",
+              key = "quat:__len",
               module = "lovr.math",
               related = {
                 "quat:length",
@@ -17601,7 +17601,7 @@ return {
               name = "__mul",
               summary = "Multiply a quaternion by another quaternion or a vector.",
               description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and a new temporary quaternion is returned with the result.  If the value is a vector, then a new temporary rotated vector is returned.",
-              key = "lovr.math.quat.__mul",
+              key = "quat:__mul",
               module = "lovr.math",
               related = {
                 "quat:mul"
@@ -17655,7 +17655,7 @@ return {
               name = "mul",
               summary = "Multiply a quaternion by another quaternion or a vector.",
               description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the vector is rotated by the quaternion.",
-              key = "lovr.math.quat.mul",
+              key = "quat:mul",
               module = "lovr.math",
               related = {
                 "quat:__mul"
@@ -17699,7 +17699,7 @@ return {
               name = "normalize",
               summary = "Normalize the length of the quaternion to 1.",
               description = "Adjusts the values in the quaternion so that its length becomes 1.",
-              key = "lovr.math.quat.normalize",
+              key = "quat:normalize",
               module = "lovr.math",
               related = {
                 "quat:__len",
@@ -17723,7 +17723,7 @@ return {
               name = "save",
               summary = "Create a non-temporary copy of the quaternion.",
               description = "Creates and returns a permanent copy of the quaternion.  This copy exists as a normal Lua variable instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will be garbage collected when it's no longer in use.",
-              key = "lovr.math.quat.save",
+              key = "quat:save",
               module = "lovr.math",
               related = {
                 "quat:set",
@@ -17749,7 +17749,7 @@ return {
               name = "set",
               summary = "Set the components of the quaternion.",
               description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n  - Alternatively, a `vec3` can be used for the axis.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
-              key = "lovr.math.quat.set",
+              key = "quat:set",
               module = "lovr.math",
               related = {
                 "quat:unpack",
@@ -17895,7 +17895,7 @@ return {
               name = "slerp",
               summary = "Moves this quaternion some amount towards another one.",
               description = "Performs a spherical linear interpolation between this quaternion and another one, which can be used for smoothly animating between two rotations.\n\nThe amount of interpolation is controlled by a parameter `t`.  A `t` value of zero leaves the original quaternion unchanged, whereas a `t` of one sets the original quaternion exactly equal to the target.  A value between `0` and `1` returns a rotation between the two based on the value.",
-              key = "lovr.math.quat.slerp",
+              key = "quat:slerp",
               module = "lovr.math",
               related = {
                 "vec3:lerp"
@@ -17928,7 +17928,7 @@ return {
               name = "unpack",
               summary = "Get the components of the quaternion.",
               description = "Returns the components of the quaternion as numbers, either in an angle/axis representation or as raw quaternion values.",
-              key = "lovr.math.quat.unpack",
+              key = "quat:unpack",
               module = "lovr.math",
               related = {
                 "quat:set"
@@ -17989,7 +17989,7 @@ return {
               name = "__add",
               summary = "Add two vectors.",
               description = "Adds two vectors, returning a new temporary vector containing the sum.",
-              key = "lovr.math.vec3.__add",
+              key = "vec3:__add",
               module = "lovr.math",
               related = {
                 "vec3:add",
@@ -18026,7 +18026,7 @@ return {
               name = "__div",
               summary = "Divide vectors by vectors or numbers.",
               description = "Divides a vector by another vector or a vector by a number.  Returns a new vector that contains the divided values.",
-              key = "lovr.math.vec3.__div",
+              key = "vec3:__div",
               module = "lovr.math",
               related = {
                 "vec3:div",
@@ -18065,7 +18065,7 @@ return {
               name = "__len",
               summary = "Get the length of the vector.",
               description = "Returns the length of the vector.",
-              key = "lovr.math.vec3.__len",
+              key = "vec3:__len",
               module = "lovr.math",
               related = {
                 "vec3:length",
@@ -18095,7 +18095,7 @@ return {
               name = "__mul",
               summary = "Multiply vectors by vectors or numbers.",
               description = "Multiplies a vector by another vector or a vector by a number.  Returns a new vector that contains the multiplied values.",
-              key = "lovr.math.vec3.__mul",
+              key = "vec3:__mul",
               module = "lovr.math",
               related = {
                 "vec3:mul",
@@ -18153,7 +18153,7 @@ return {
               name = "__sub",
               summary = "Subtract two vectors.",
               description = "Subtracts two vectors, returning a new temporary vector containing the difference.",
-              key = "lovr.math.vec3.__sub",
+              key = "vec3:__sub",
               module = "lovr.math",
               related = {
                 "vec3:sub",
@@ -18190,7 +18190,7 @@ return {
               name = "__unm",
               summary = "Negate a vector.",
               description = "Returns a new vector with the negated components of the original.",
-              key = "lovr.math.vec3.__unm",
+              key = "vec3:__unm",
               module = "lovr.math",
               variants = {
                 {
@@ -18215,7 +18215,7 @@ return {
               name = "add",
               summary = "Add a vector to this vector.",
               description = "Adds a vector to this vector.",
-              key = "lovr.math.vec3.add",
+              key = "vec3:add",
               module = "lovr.math",
               related = {
                 "vec3:__add",
@@ -18247,7 +18247,7 @@ return {
               name = "cross",
               summary = "Get the cross product with another vector.",
               description = "Sets this vector to be equal to the cross product between this vector and another one.  The new `v` will be perpendicular to both the old `v` and `u`.",
-              key = "lovr.math.vec3.cross",
+              key = "vec3:cross",
               module = "lovr.math",
               related = {
                 "vec3:dot"
@@ -18276,7 +18276,7 @@ return {
               name = "distance",
               summary = "Get the distance to another vector.",
               description = "Returns the distance to another vector.",
-              key = "lovr.math.vec3.distance",
+              key = "vec3:distance",
               module = "lovr.math",
               related = {
                 "vec3:__len",
@@ -18307,7 +18307,7 @@ return {
               name = "div",
               summary = "Divides the vector by a vector or a number.",
               description = "Divides the vector by a vector or a number.",
-              key = "lovr.math.vec3.div",
+              key = "vec3:div",
               module = "lovr.math",
               related = {
                 "vec3:__div",
@@ -18355,7 +18355,7 @@ return {
               name = "dot",
               summary = "Get the dot product with another vector.",
               description = "Returns the dot product between this vector and another one.",
-              key = "lovr.math.vec3.dot",
+              key = "vec3:dot",
               module = "lovr.math",
               related = {
                 "vec3:cross",
@@ -18387,7 +18387,7 @@ return {
               name = "length",
               summary = "Get the length of the vector.",
               description = "Returns the length of the vector.",
-              key = "lovr.math.vec3.length",
+              key = "vec3:length",
               module = "lovr.math",
               related = {
                 "vec3:__len",
@@ -18412,7 +18412,7 @@ return {
               name = "lerp",
               summary = "Moves this vector some amount towards another one.",
               description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
-              key = "lovr.math.vec3.lerp",
+              key = "vec3:lerp",
               module = "lovr.math",
               related = {
                 "quat:slerp"
@@ -18445,7 +18445,7 @@ return {
               name = "mul",
               summary = "Multiply the vector by a vector or a number.",
               description = "Multiplies the vector by a vector or a number.",
-              key = "lovr.math.vec3.mul",
+              key = "vec3:mul",
               module = "lovr.math",
               related = {
                 "vec3:__mul",
@@ -18493,7 +18493,7 @@ return {
               name = "normalize",
               summary = "Normalize the length of the vector to 1.",
               description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
-              key = "lovr.math.vec3.normalize",
+              key = "vec3:normalize",
               module = "lovr.math",
               related = {
                 "vec3:__len",
@@ -18516,7 +18516,7 @@ return {
               name = "save",
               summary = "Create a non-temporary copy of the vector.",
               description = "Creates and returns a permanent copy of the vector.  This copy exists as a normal Lua variable instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will be garbage collected when it's no longer in use.",
-              key = "lovr.math.vec3.save",
+              key = "vec3:save",
               module = "lovr.math",
               related = {
                 "vec3:set",
@@ -18542,7 +18542,7 @@ return {
               name = "set",
               summary = "Set the components of the vector.",
               description = "Sets the components of the vector, either from numbers or an existing vector.",
-              key = "lovr.math.vec3.set",
+              key = "vec3:set",
               module = "lovr.math",
               related = {
                 "vec3:unpack",
@@ -18601,7 +18601,7 @@ return {
               name = "sub",
               summary = "Subtract a vector from this vector.",
               description = "Subtracts a vector from this vector.",
-              key = "lovr.math.vec3.sub",
+              key = "vec3:sub",
               module = "lovr.math",
               related = {
                 "vec3:__sub",
@@ -18633,7 +18633,7 @@ return {
               name = "unpack",
               summary = "Get the components of the vector.",
               description = "Returns the 3 components of vector as numbers.",
-              key = "lovr.math.vec3.unpack",
+              key = "vec3:unpack",
               module = "lovr.math",
               related = {
                 "vec3:set"
