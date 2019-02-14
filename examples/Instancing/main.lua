@@ -4,9 +4,9 @@ function lovr.load()
   MONKEYS = 1000
 
   -- Create a ShaderBlock to store positions for lots of models
-  block = lovr.graphics.newShaderBlock({
+  block = lovr.graphics.newShaderBlock('uniform', {
     modelPositions = { 'mat4', MONKEYS }
-  }, { writable = false, usage = 'static' })
+  }, { usage = 'static' })
 
   -- Write some random transforms to the block
   local transforms = {}

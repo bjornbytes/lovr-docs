@@ -53,7 +53,7 @@ function lovr.draw()
   -- Cylinder
   local x, y, z = -.6, 2.4, -2
   lovr.graphics.setColor(.4, .73, .42)
-  lovr.graphics.cylinder(x - .2, y, z, x + .2, y, z, .1, .1)
+  lovr.graphics.cylinder(x, y, z, .4, lovr.timer.getTime(), 0, 1, 0, .1)
 
   -- Cone
   local x, y, z = 0, 2.4, -2

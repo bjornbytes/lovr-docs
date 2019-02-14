@@ -3,10 +3,10 @@ function lovr.load()
 
   -- Precompute camera transform (could also be attached to a controller)
   local x, y, z = -5, 5, 5
-  cameraTransform = lovr.math.mat4():save()
-  cameraTransform:translate(x, y, z)
-  cameraTransform:rotate(lovr.math.lookAt(x, y, z, 0, 0, 0))
-  cameraTransform:invert()
+  camera = lovr.math.mat4()
+  camera:translate(x, y, z)
+  camera:rotate(lovr.math.lookAt(x, y, z, 0, 0, 0))
+  view = lovr.math.mat4(camera):invert()
 end
 
 local renderScene
@@ -15,7 +15,7 @@ local renderScene
 function lovr.mirror()
   lovr.graphics.clear()
   lovr.graphics.origin()
-  lovr.graphics.transform(cameraTransform)
+  lovr.graphics.transform(view)
   renderScene(true)
 end
 
@@ -45,7 +45,7 @@ renderScene = function(isCamera)
     lovr.graphics.cube('fill', x, y, z, .2, angle, ax, ay, az)
   else
     lovr.graphics.setColor(1, 1, 1)
-    lovr.graphics.cube('fill', lovr.math.mat4(cameraTransform):invert())
+    lovr.graphics.cube('fill', camera)
   end
 
   -- Always draw the controllers

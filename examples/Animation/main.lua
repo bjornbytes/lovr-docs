@@ -5,7 +5,7 @@
 ]]
 
 function lovr.load()
-  model = lovr.graphics.newModel('scyther/scytha.fbx')
+  model = lovr.graphics.newModel('scytha/scene.gltf')
   animator = lovr.graphics.newAnimator(model)
   animation = animator:getAnimationNames()[1]
   assert(animation, 'No animation found!')
