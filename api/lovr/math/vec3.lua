@@ -1,6 +1,12 @@
 return {
   summary = 'Create a new `vec3`.',
-  description = 'Creates a new `vec3`.',
+  description = [[
+    Creates a new `vec3`.
+
+    Note that this function is also a table containing the `__index` key of the vec3 metatable.
+    This means that you can add your own functions onto the `lovr.math.vec3` table to extend the
+    built-in functionality.
+  ]],
   arguments = {
     x = {
       type = 'number',

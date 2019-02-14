@@ -14534,7 +14534,7 @@ return {
         {
           name = "quat",
           summary = "Create a new `quat`.",
-          description = "Creates a new `quat`.  Have a look at `quat:set` for more information about how all these variants can be used.",
+          description = "Creates a new `quat`.  Have a look at `quat:set` for more information about how all these variants can be used.\n\nNote that this function is also a table containing the `__index` key of the quat metatable. This means that you can add your own functions onto the `lovr.math.quat` table to extend the built-in functionality.",
           key = "lovr.math.quat",
           module = "lovr.math",
           variants = {
@@ -15177,7 +15177,7 @@ return {
         {
           name = "mat4",
           summary = "Create a new `mat4`.",
-          description = "Creates a new `mat4`.",
+          description = "Creates a new `mat4`.\n\nNote that this function is also a table containing the `__index` key of the mat4 metatable. This means that you can add your own functions onto the `lovr.math.mat4` table to extend the built-in functionality.",
           key = "mat4",
           module = "lovr.math",
           related = {
@@ -15743,7 +15743,7 @@ return {
         {
           name = "vec3",
           summary = "Create a new `vec3`.",
-          description = "Creates a new `vec3`.",
+          description = "Creates a new `vec3`.\n\nNote that this function is also a table containing the `__index` key of the vec3 metatable. This means that you can add your own functions onto the `lovr.math.vec3` table to extend the built-in functionality.",
           key = "vec3",
           module = "lovr.math",
           related = {

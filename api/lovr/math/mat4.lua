@@ -1,6 +1,12 @@
 return {
   summary = 'Create a new `mat4`.',
-  description = 'Creates a new `mat4`.',
+  description = [[
+    Creates a new `mat4`.
+
+    Note that this function is also a table containing the `__index` key of the mat4 metatable.
+    This means that you can add your own functions onto the `lovr.math.mat4` table to extend the
+    built-in functionality.
+  ]],
   arguments = {
     n = {
       type = 'mat4',

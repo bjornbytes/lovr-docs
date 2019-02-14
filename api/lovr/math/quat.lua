@@ -3,6 +3,10 @@ return {
   description = [[
     Creates a new `quat`.  Have a look at `quat:set` for more information about how all these
     variants can be used.
+
+    Note that this function is also a table containing the `__index` key of the quat metatable.
+    This means that you can add your own functions onto the `lovr.math.quat` table to extend the
+    built-in functionality.
   ]],
   arguments = {
     angle = {
