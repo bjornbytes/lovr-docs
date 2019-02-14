@@ -10,5 +10,6 @@ return {
   'Postprocessing',
   'Instancing',
   'Primitives',
+  'Spectator_Camera',
   'Microphones'
 }
