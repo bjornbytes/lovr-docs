@@ -7481,6 +7481,34 @@ return {
           notes = "The default line width is `1.0`."
         },
         {
+          name = "getPixelDensity",
+          tag = "window",
+          summary = "Get the pixel density of the window.",
+          description = "Returns the pixel density of the window.  On \"high-dpi\" displays, this will be `2.0`, indicating that there are 2 pixels for every window coordinate.  On a normal display it will be `1.0`, meaning that the pixel to window-coordinate ratio is 1:1.",
+          key = "lovr.graphics.getPixelDensity",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "density",
+                  type = "number",
+                  description = "The pixel density of the window."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.graphics.getWidth",
+            "lovr.graphics.getHeight",
+            "lovr.graphics.getDimensions",
+            "lovr.graphics.createWindow",
+            "lovr.conf"
+          },
+          notes = "If the window isn't created yet, this function will return 0."
+        },
+        {
           name = "getPointSize",
           tag = "graphicsState",
           summary = "Get the point size.",
@@ -7718,6 +7746,30 @@ return {
             "lovr.graphics.isCullingEnabled"
           },
           notes = "Culling is initially disabled and must be enabled using `lovr.graphics.setCullingEnabled`.\n\nThe default winding direction is counterclockwise."
+        },
+        {
+          name = "hasWindow",
+          tag = "window",
+          summary = "Check if the window is created.",
+          description = "Returns whether the desktop window is currently created.",
+          key = "lovr.graphics.hasWindow",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.createWindow",
+            "lovr.conf"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "present",
+                  type = "boolean",
+                  description = "Whether a window is created."
+                }
+              }
+            }
+          }
         },
         {
           name = "isCullingEnabled",
