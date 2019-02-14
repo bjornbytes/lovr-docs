@@ -12,7 +12,7 @@ return {
       description = 'A table of features and whether or not they are supported.',
       table = {
         {
-          name = 'computeshaders',
+          name = 'compute',
           type = 'boolean',
           description = 'Whether compute shaders are available.'
         },
