@@ -15898,7 +15898,7 @@ return {
         {
           name = "Pool",
           summary = "A Pool of vector objects.",
-          description = "A Pool is an object that is used to allocate vectors, matrices, and quaternions.  Pools exist mainly for efficiency -- allocating tiny bits of memory for every single vector can lead to performance problems related to the Lua garbage collector and other memory managers on the system.  By using a Pool, a single block of memory is used and the Pool keeps track of all of the vectors in the block.\n\nA Pool can be allocated with a fixed size or it can be resizable.  If a fixed size Pool runs out of space, it will overflow and cause an error.  Resizable Pools, on the other hand, will grow as needed.  This can be more convenient to work with but might end up using more memory than expected or lead to delays while the memory is being resized.  It's recommended to use fixed size Pools when you know how many vector objects you'll need.\n\nPools can be drained using `Pool:drain`.  Draining the Pool resets its usage to zero, and clears all vectors allocated from the Pool.  This is helpful for keeping memory usage low when using a lot of temporary vectors, which is common, but can cause unexpected surprises if you have saved a vector into a variable.  If you need a vector to persist across drains, you can call `vec3:save` on it, which creates a copy of the vector that exists outside of any Pool and is instead managed by Lua's garbage collector.\n\n**Important note:** `lovr.math` has its own internal Pool that it uses whenever you call functions like `lovr.math.vec3` or `lovr.math.mat4`.  These vectors are temporary vectors that will be drained at the end of the frame!  The default Pool is resizable.",
+          description = "A Pool is an object that is used to allocate vectors, matrices, and quaternions.  Pools exist mainly for efficiency -- allocating tiny bits of memory for every single vector can lead to performance problems related to the Lua garbage collector and other memory managers on the system.  By using a Pool, a single block of memory is used and the Pool keeps track of all of the vectors in the block.\n\nA Pool is allocated with a fixed amount of memory, so there is a limit on the number of objects it can create.  If the Pool runs out of space, it will overflow and cause an error.\n\nPools can be drained using `Pool:drain`.  Draining the Pool resets its usage to zero, and clears all vectors allocated from the Pool.  This is helpful for keeping memory usage low when using a lot of temporary vectors, which is common, but can cause unexpected surprises if you have saved a vector into a variable!",
           key = "Pool",
           module = "lovr.math",
           methods = {
@@ -17058,7 +17058,7 @@ return {
         {
           name = "mat4",
           summary = "A 4x4 matrix.",
-          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.\n\n`mat4`s are created by allocating them from Pools, by either using `lovr.math.mat4` to allocate from the default pool or creating a new `Pool` and calling `Pool:mat4` on it.  **Note** that matrices created with `lovr.math.mat4` are **temporary**, and will be cleared at the end of a frame!  You can use `mat4:save` to save a permanent copy of the matrix that is managed by the Lua garbage collector.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new temporary matrix that will be cleared at the end of the frame, so be sure to use `mat4:save` if you need to hold onto it.",
+          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4` or by using a `Pool`.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new temporary matrix that will be cleared at the end of the frame, so be sure to use `mat4:save` if you need to hold onto it.\n\nCreating huge numbers of matrices every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects you can use `Pool`s to make things much more efficient.",
           key = "mat4",
           module = "lovr.math",
           methods = {
@@ -17331,32 +17331,6 @@ return {
               }
             },
             {
-              name = "save",
-              summary = "Create a non-temporary copy of the matrix.",
-              description = "Creates and returns a permanent copy of the matrix.  This copy exists as a normal Lua variable instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will be garbage collected when it's no longer in use.",
-              key = "mat4:save",
-              module = "lovr.math",
-              related = {
-                "mat4:set",
-                "lovr.math.mat4",
-                "Pool:mat4",
-                "Pool:drain"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The new matrix."
-                    }
-                  }
-                }
-              },
-              notes = "This function should be used only when needed, as creating huge numbers of saved matrices can begin to impact the garbage collector and decrease performance."
-            },
-            {
               name = "scale",
               summary = "Scale the matrix.",
               description = "Scales the matrix.",
@@ -17577,7 +17551,7 @@ return {
         {
           name = "quat",
           summary = "A quaternion.",
-          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.\n\n`quat`s are created by allocating them from Pools, by either using `lovr.math.quat` to allocate from the default pool or creating a new `Pool` and calling `Pool:quat` on it.  **Note** that quaternions created with `lovr.math.quat` are **temporary**, and will be cleared at the end of a frame!  You can use `quat:save` to save a permanent copy of the quaternion that is managed by the Lua garbage collector.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new **temporary** quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!",
+          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat` or by using a `Pool`.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new **temporary** quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!\n\nCreating huge numbers of quaternions every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of quaternion objects you can use `Pool`s to make things much more efficient.",
           key = "quat",
           module = "lovr.math",
           methods = {
@@ -17731,32 +17705,6 @@ return {
                 }
               },
               notes = "A common source of bugs with quaternions is to forget to normalize them after performing a series of operations on them.  Try normalizing a quaternion if some of the calculations aren't working quite right!"
-            },
-            {
-              name = "save",
-              summary = "Create a non-temporary copy of the quaternion.",
-              description = "Creates and returns a permanent copy of the quaternion.  This copy exists as a normal Lua variable instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will be garbage collected when it's no longer in use.",
-              key = "quat:save",
-              module = "lovr.math",
-              related = {
-                "quat:set",
-                "lovr.math.quat",
-                "Pool:quat",
-                "Pool:drain"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                }
-              },
-              notes = "This function should be used only when needed, as creating huge numbers of saved quaternions can begin to impact the garbage collector and decrease performance."
             },
             {
               name = "set",
@@ -17994,7 +17942,7 @@ return {
         {
           name = "vec3",
           summary = "A 3D vector.",
-          description = "A `vec3` is a math type that holds three numbers.  It's very helpful for representing and manipulating 3D positions and directions.  LÖVR functions that accept 3D positions, directions, or velocities generally also accept `vec3`s.\n\n`vec3`s are created by allocating them from Pools, by either using `lovr.math.vec3` to allocate from the default pool or creating a new `Pool` and calling `Pool:vec3` on it.  **Note** that vectors created with `lovr.math.vec3` are **temporary**, and will be cleared at the end of a frame!  You can use `vec3:save` to save a permanent copy of the vector that is managed by the Lua garbage collector.\n\n`vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the usual binary operators that you would use on numbers.  Note that these create new **temporary** vectors to store their results in.  If you want to modify a vector instead of creating new ones, you can use the named operator functions like `vec3:add`.\n\nNote that accessing properties directly (like `v.x`) is not an officially supported feature right now (for performance reasons), though it does happen to work by accident in LuaJIT.  This limitation may be improved in the future.  For now, it is recommended to use `vec3:unpack` and `vec3:set` if you need to work with individual components of a vector.",
+          description = "A `vec3` is a math type that holds three numbers.  It's very helpful for representing and manipulating 3D positions and directions.  LÖVR functions that accept 3D positions, directions, or velocities generally also accept `vec3`s.  `vec3`s are created using `lovr.math.vec3` or from a `Pool`.\n\n`vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the usual binary operators that you would use on numbers.  Note that these create new vectors to store their results in.  If you want to modify a vector instead of creating new ones, you can use the named operator functions like `vec3:add`.\n\nCreating huge numbers of vectors every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of vector objects you can use `Pool`s to make things much more efficient.\n\nNote that accessing properties directly (like `v.x`) is not an officially supported feature right now (for performance reasons), though it does happen to work by accident in LuaJIT.  This limitation may be improved in the future.  For now, it is recommended to use `vec3:unpack` and `vec3:set` if you need to work with individual components of a vector.",
           key = "vec3",
           module = "lovr.math",
           methods = {
@@ -18008,8 +17956,7 @@ return {
                 "vec3:add",
                 "vec3:__sub",
                 "vec3:__mul",
-                "vec3:__div",
-                "vec3:save"
+                "vec3:__div"
               },
               variants = {
                 {
@@ -18045,8 +17992,7 @@ return {
                 "vec3:div",
                 "vec3:__add",
                 "vec3:__sub",
-                "vec3:__mul",
-                "vec3:save"
+                "vec3:__mul"
               },
               variants = {
                 {
@@ -18114,8 +18060,7 @@ return {
                 "vec3:mul",
                 "vec3:__add",
                 "vec3:__sub",
-                "vec3:__div",
-                "vec3:save"
+                "vec3:__div"
               },
               variants = {
                 {
@@ -18172,8 +18117,7 @@ return {
                 "vec3:sub",
                 "vec3:__add",
                 "vec3:__mul",
-                "vec3:__div",
-                "vec3:save"
+                "vec3:__div"
               },
               variants = {
                 {
@@ -18524,32 +18468,6 @@ return {
                   }
                 }
               }
-            },
-            {
-              name = "save",
-              summary = "Create a non-temporary copy of the vector.",
-              description = "Creates and returns a permanent copy of the vector.  This copy exists as a normal Lua variable instead of belonging to a `Pool`, so it won't get destroyed when the Pool is drained and it will be garbage collected when it's no longer in use.",
-              key = "vec3:save",
-              module = "lovr.math",
-              related = {
-                "vec3:set",
-                "lovr.math.vec3",
-                "Pool:vec3",
-                "Pool:drain"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "The new vector."
-                    }
-                  }
-                }
-              },
-              notes = "This function should be used only when needed, as creating huge numbers of saved vectors can begin to impact the garbage collector and decrease performance."
             },
             {
               name = "set",

@@ -24,7 +24,6 @@ return {
     'vec3:add',
     'vec3:__sub',
     'vec3:__mul',
-    'vec3:__div',
-    'vec3:save'
+    'vec3:__div'
   }
 }

@@ -38,7 +38,6 @@ return {
     'vec3:mul',
     'vec3:__add',
     'vec3:__sub',
-    'vec3:__div',
-    'vec3:save'
+    'vec3:__div'
   }
 }

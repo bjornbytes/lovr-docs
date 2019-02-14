@@ -2,13 +2,8 @@ return {
   summary = 'A quaternion.',
   description = [[
     A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions
-    that take rotations also accept quaternions.
-
-    `quat`s are created by allocating them from Pools, by either using `lovr.math.quat` to allocate
-    from the default pool or creating a new `Pool` and calling `Pool:quat` on it.  **Note** that
-    quaternions created with `lovr.math.quat` are **temporary**, and will be cleared at the end of a
-    frame!  You can use `quat:save` to save a permanent copy of the quaternion that is managed by
-    the Lua garbage collector.
+    that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat` or by
+    using a `Pool`.
 
     The four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to
     work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is
@@ -28,6 +23,10 @@ return {
 
     A common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with
     rotations, calling `quat:normalize` on your rotations may fix the issue!
+
+    Creating huge numbers of quaternions every frame can lead to performance problems due to the
+    sheer amount of memory allocation and garbage collection overhead.  If you need lots of
+    quaternion objects you can use `Pool`s to make things much more efficient.
   ]],
   constructors = {
     'lovr.math.quat',

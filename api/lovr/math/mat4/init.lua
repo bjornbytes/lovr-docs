@@ -4,13 +4,8 @@ return {
     A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for
     representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms
     can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which
-    is more concise and improves performance slightly.
-
-    `mat4`s are created by allocating them from Pools, by either using `lovr.math.mat4` to allocate
-    from the default pool or creating a new `Pool` and calling `Pool:mat4` on it.  **Note** that
-    matrices created with `lovr.math.mat4` are **temporary**, and will be cleared at the end of a
-    frame!  You can use `mat4:save` to save a permanent copy of the matrix that is managed by the
-    Lua garbage collector.
+    is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4`
+    or by using a `Pool`.
 
     Explaining the math behind `mat4`s and transforms is outside the scope of these docs, but there
     are some fairly straightforward functions that can be used to move, rotate, and scale the
@@ -28,6 +23,10 @@ return {
     transforms into a more complex one, or creating parent-child relationships between objects.
     Note that the multiplication returns a new temporary matrix that will be cleared at the end of
     the frame, so be sure to use `mat4:save` if you need to hold onto it.
+
+    Creating huge numbers of matrices every frame can lead to performance problems due to the sheer
+    amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects
+    you can use `Pool`s to make things much more efficient.
   ]],
   constructors = {
     'lovr.math.mat4',
