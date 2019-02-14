@@ -17,10 +17,7 @@ return {
       name = 'count',
       type = 'number',
       default = 'nil',
-      description = [[
-        The number of vertices to replace.  If nil, all vertices in the table or VertexData will be
-        used.
-      ]]
+      description = 'The number of vertices to replace.  If nil, all vertices will be used.'
     }
   },
   returns = {},

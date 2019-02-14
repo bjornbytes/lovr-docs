@@ -2927,7 +2927,7 @@ return {
         {
           name = "ModelData",
           summary = "An object that loads and stores data for 3D models.",
-          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the `VertexData` it contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are OBJ and glTF.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
+          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the vertex data it contains, contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are OBJ and glTF.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
           key = "ModelData",
           module = "lovr.data",
           methods = {},
@@ -6890,7 +6890,7 @@ return {
                   description = "A table of features and whether or not they are supported.",
                   table = {
                     {
-                      name = "computeshaders",
+                      name = "compute",
                       type = "boolean",
                       description = "Whether compute shaders are available."
                     },
@@ -11657,7 +11657,7 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of vertices to replace.  If nil, all vertices in the table or VertexData will be used.",
+                      description = "The number of vertices to replace.  If nil, all vertices will be used.",
                       default = "nil"
                     }
                   },
