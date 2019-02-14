@@ -53,12 +53,12 @@ function lovr.draw()
   -- Cylinder
   local x, y, z = -.6, 2.4, -2
   lovr.graphics.setColor(.4, .73, .42)
-  lovr.graphics.cylinder(x, y, z, .4, lovr.timer.getTime(), 0, 1, 0, .1)
+  lovr.graphics.cylinder(x, y, z, .4, lovr.timer.getTime(), 0, 1, 0, .1, .1)
 
   -- Cone
   local x, y, z = 0, 2.4, -2
   lovr.graphics.setColor(1, .95, .46)
-  lovr.graphics.cylinder(x, y + .2, z, x, y - .2, z, 0, .18)
+  lovr.graphics.cylinder(x, y, z, .4, math.pi / 2, 1, 0, 0, 0, .18)
 
   -- Sphere
   local x, y, z = .6, 2.4, -2
