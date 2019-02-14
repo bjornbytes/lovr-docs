@@ -1,5 +1,5 @@
 return {
-  summary = 'Create a new `quat`.',
+  summary = 'Create a new quat.',
   description = [[
     Creates a new `quat`.  Have a look at `quat:set` for more information about how all these
     variants can be used.

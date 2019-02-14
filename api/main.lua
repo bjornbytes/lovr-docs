@@ -159,7 +159,7 @@ local function processFunction(path, parent)
 end
 
 local function processObject(path, parent)
-  local object = require(path)
+  local object = require(path .. '.init')
 
   object.key = path:match('[^/]+$')
   object.name = object.key

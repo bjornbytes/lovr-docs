@@ -1,5 +1,5 @@
 return {
-  summary = 'Create a new `mat4`.',
+  summary = 'Create a new mat4.',
   description = [[
     Creates a new `mat4`.
 
