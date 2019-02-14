@@ -82,7 +82,7 @@ return {
   notes = [[
     Unicode text is supported.
 
-    Use `\n` to add line breaks.
+    Use `\n` to add line breaks.  `\t` will be rendered as four spaces.
 
     LÖVR uses a fancy technique for font rendering called multichannel signed distance fields.  This
     leads to crisp text in VR, but requires a special shader to use.  LÖVR internally switches to
