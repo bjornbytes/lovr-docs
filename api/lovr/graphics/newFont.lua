@@ -33,7 +33,7 @@ return {
       returns = { 'font' }
     },
     {
-      description = 'Creates a new Font from the default font included with LÖVR (Cabin).',
+      description = 'Creates a new Font from the default font included with LÖVR (Varela Round).',
       arguments = { 'size' },
       returns = { 'font' }
     },
