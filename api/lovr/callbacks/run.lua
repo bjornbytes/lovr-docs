@@ -60,9 +60,9 @@ return {
             if lovr.draw then
               if lovr.headset then
                 lovr.headset.renderTo(lovr.draw)
-              else
-                lovr.graphics.clear()
-                lovr.draw()
+              end
+              if lovr.graphics.hasWindow() then
+                lovr.mirror()
               end
             end
             lovr.graphics.present()
