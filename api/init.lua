@@ -11863,28 +11863,6 @@ return {
               }
             },
             {
-              name = "getMesh",
-              summary = "Get the Model's underlying Mesh object.",
-              description = "Returns the underlying `Mesh` object for the Model.",
-              key = "Model:getMesh",
-              module = "lovr.graphics",
-              related = {
-                "Mesh"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "mesh",
-                      type = "Mesh",
-                      description = "The Mesh object for the model, containing all of the raw vertex data."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "setAnimator",
               summary = "Attach an Animator to the Model.",
               description = "Attaches an `Animator` to the Model.  When attached, the animator will alter the pose of the bones of the model based on the set of playing animations.",
