@@ -3,13 +3,9 @@ return {
   summary = 'Draw a sphere.',
   description = 'Draws a sphere.',
   arguments = {
-    texture = {
-      type = 'Texture',
-      description = 'The Texture to apply to the sphere.'
-    },
-    transform = {
-      type = 'Transform',
-      description = 'The sphere\'s transform.'
+    material = {
+      type = 'Material',
+      description = 'The Material to apply to the sphere.'
     },
     x = {
       type = 'number',
@@ -59,15 +55,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'texture', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
-      returns = {}
-    },
-    {
-      arguments = { 'transform' },
-      returns = {}
-    },
-    {
-      arguments = { 'texture', 'transform' },
+      arguments = { 'material', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     }
   }

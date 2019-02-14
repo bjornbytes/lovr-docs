@@ -3,56 +3,66 @@ return {
   summary = 'Draw a cylinder.',
   description = 'Draws a cylinder.',
   arguments = {
-    {
-      name = 'x1',
-      type = 'number',
-      description = 'The x coordinate of the top of the cylinder.'
+    material = {
+      type = 'Material',
+      description = 'The Material to apply to the cylinder.'
     },
-    {
-      name = 'y1',
+    x = {
       type = 'number',
-      description = 'The y coordinate of the top of the cylinder.'
+      default = '0',
+      description = 'The x coordinate of the cylinder.'
     },
-    {
-      name = 'z1',
+    y = {
       type = 'number',
-      description = 'The z coordinate of the top of the cylinder.'
+      default = '0',
+      description = 'The y coordinate of the cylinder.'
     },
-    {
-      name = 'x2',
+    z = {
       type = 'number',
-      description = 'The x coordinate of the bottom of the cylinder.'
+      default = '0',
+      description = 'The z coordinate of the cylinder.'
     },
-    {
-      name = 'y2',
-      type = 'number',
-      description = 'The y coordinate of the bottom of the cylinder.'
-    },
-    {
-      name = 'z2',
-      type = 'number',
-      description = 'The z coordinate of the bottom of the cylinder.'
-    },
-    {
-      name = 'r1',
+    length = {
       type = 'number',
       default = '1',
-      description = 'The radius of the top of the cylinder.'
+      description = 'The length of the cylinder, in meters.'
     },
-    {
-      name = 'r2',
+    angle = {
+      type = 'number',
+      default = '0',
+      description = 'The rotation of the cylinder around its rotation axis, in radians.'
+    },
+    ax = {
+      type = 'number',
+      default = '0',
+      description = 'The x coordinate of the cylinder\'s axis of rotation.'
+    },
+    ay = {
       type = 'number',
       default = '1',
-      description = 'The radius of the bottom of the cylinder.'
+      description = 'The y coordinate of the cylinder\'s axis of rotation.'
     },
-    {
-      name = 'capped',
+    az = {
+      type = 'number',
+      default = '0',
+      description = 'The z coordinate of the cylinder\'s axis of rotation.'
+    },
+    r1 = {
+      type = 'number',
+      default = '1',
+      description = 'The radius of one end of the cylinder.'
+    },
+    r2 = {
+      type = 'number',
+      default = '1',
+      description = 'The radius of the other end of the cylinder.'
+    },
+    capped = {
       type = 'boolean',
       default = 'true',
       description = 'Whether the top and bottom should be rendered.'
     },
-    {
-      name = 'segments',
+    segments = {
       type = 'number',
       default = 'nil',
       description = [[
@@ -61,5 +71,15 @@ return {
       ]]
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'x', 'y', 'z', 'length', 'angle', 'ax', 'ay', 'az', 'r1', 'r2', 'capped', 'segments' },
+      returns = {}
+    },
+    {
+      arguments = { 'material', 'x', 'y', 'z', 'length', 'angle', 'ax', 'ay', 'az', 'r1', 'r2', 'capped', 'segments' },
+      returns = {}
+    }
+  }
 }

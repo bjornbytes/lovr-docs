@@ -6981,45 +6981,145 @@ return {
             {
               arguments = {
                 {
-                  name = "x1",
+                  name = "x",
                   type = "number",
-                  description = "The x coordinate of the top of the cylinder."
+                  description = "The x coordinate of the cylinder.",
+                  default = "0"
                 },
                 {
-                  name = "y1",
+                  name = "y",
                   type = "number",
-                  description = "The y coordinate of the top of the cylinder."
+                  description = "The y coordinate of the cylinder.",
+                  default = "0"
                 },
                 {
-                  name = "z1",
+                  name = "z",
                   type = "number",
-                  description = "The z coordinate of the top of the cylinder."
+                  description = "The z coordinate of the cylinder.",
+                  default = "0"
                 },
                 {
-                  name = "x2",
+                  name = "length",
                   type = "number",
-                  description = "The x coordinate of the bottom of the cylinder."
+                  description = "The length of the cylinder, in meters.",
+                  default = "1"
                 },
                 {
-                  name = "y2",
+                  name = "angle",
                   type = "number",
-                  description = "The y coordinate of the bottom of the cylinder."
+                  description = "The rotation of the cylinder around its rotation axis, in radians.",
+                  default = "0"
                 },
                 {
-                  name = "z2",
+                  name = "ax",
                   type = "number",
-                  description = "The z coordinate of the bottom of the cylinder."
+                  description = "The x coordinate of the cylinder's axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the cylinder's axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the cylinder's axis of rotation.",
+                  default = "0"
                 },
                 {
                   name = "r1",
                   type = "number",
-                  description = "The radius of the top of the cylinder.",
+                  description = "The radius of one end of the cylinder.",
                   default = "1"
                 },
                 {
                   name = "r2",
                   type = "number",
-                  description = "The radius of the bottom of the cylinder.",
+                  description = "The radius of the other end of the cylinder.",
+                  default = "1"
+                },
+                {
+                  name = "capped",
+                  type = "boolean",
+                  description = "Whether the top and bottom should be rendered.",
+                  default = "true"
+                },
+                {
+                  name = "segments",
+                  type = "number",
+                  description = "The number of radial segments to use for the cylinder.  If nil, the segment count is automatically determined from the radii.",
+                  default = "nil"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "material",
+                  type = "Material",
+                  description = "The Material to apply to the cylinder."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the cylinder.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the cylinder.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the cylinder.",
+                  default = "0"
+                },
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the cylinder, in meters.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The rotation of the cylinder around its rotation axis, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x coordinate of the cylinder's axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y coordinate of the cylinder's axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z coordinate of the cylinder's axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "r1",
+                  type = "number",
+                  description = "The radius of one end of the cylinder.",
+                  default = "1"
+                },
+                {
+                  name = "r2",
+                  type = "number",
+                  description = "The radius of the other end of the cylinder.",
                   default = "1"
                 },
                 {
@@ -9946,9 +10046,9 @@ return {
             {
               arguments = {
                 {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The Texture to apply to the sphere."
+                  name = "material",
+                  type = "Material",
+                  description = "The Material to apply to the sphere."
                 },
                 {
                   name = "x",
@@ -9997,31 +10097,6 @@ return {
                   type = "number",
                   description = "The z coordinate of the sphere's axis of rotation.",
                   default = "0"
-                }
-              },
-              returns = {}
-            },
-            {
-              arguments = {
-                {
-                  name = "transform",
-                  type = "Transform",
-                  description = "The sphere's transform."
-                }
-              },
-              returns = {}
-            },
-            {
-              arguments = {
-                {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The Texture to apply to the sphere."
-                },
-                {
-                  name = "transform",
-                  type = "Transform",
-                  description = "The sphere's transform."
                 }
               },
               returns = {}
