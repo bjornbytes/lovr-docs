@@ -15,7 +15,7 @@ return {
       description = 'How to draw the box.'
     },
     transform = {
-      type = 'Transform',
+      type = 'mat4',
       description = 'The transform of the box.'
     },
     x = {

@@ -24,14 +24,14 @@ return {
   example = [=[
     function lovr.load()
       -- Create a ShaderBlock to store positions for 1000 models
-      block = lovr.graphics.newShaderBlock({
+      block = lovr.graphics.newShaderBlock('uniform', {
         modelPositions = { 'mat4', 1000 }
-      }, { writable = false, usage = 'static' })
+      }, { usage = 'static' })
 
       -- Write some random transforms to the block
       local transforms = {}
       for i = 1, 1000 do
-        transforms[i] = lovr.math.newTransform()
+        transforms[i] = lovr.math.mat4()
         local random, randomNormal = lovr.math.random, lovr.math.randomNormal
         transforms[i]:translate(randomNormal(8), randomNormal(8), randomNormal(8))
         transforms[i]:rotate(random(2 * math.pi), random(), random(), random())
@@ -54,7 +54,7 @@ return {
     -- Draw the model 1000 times, using positions from the shader block
     function lovr.draw()
       lovr.graphics.setShader(shader)
-      model:drawInstanced(1000)
+      model:draw(lovr.math.mat4(), 1000)
       lovr.graphics.setShader()
     end
   ]=]

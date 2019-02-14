@@ -17,7 +17,7 @@ return {
       description = 'The Material to apply to the arc.'
     },
     transform = {
-      type = 'Transform',
+      type = 'mat4',
       description = 'The arc\'s transform.'
     },
     x = {

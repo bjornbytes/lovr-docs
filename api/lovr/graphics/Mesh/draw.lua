@@ -43,7 +43,7 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     transform = {
-      type = 'Transform',
+      type = 'mat4',
       description = 'The transform to apply before drawing.'
     },
     instances = {

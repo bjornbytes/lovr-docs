@@ -12,7 +12,7 @@ return {
       description = 'How to draw the cube.'
     },
     transform = {
-      type = 'Transform',
+      type = 'mat4',
       description = 'The cube\'s transform.'
     },
     x = {

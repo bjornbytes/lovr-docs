@@ -18,7 +18,7 @@ return {
     The shader does not need to be active to update its uniforms.  However, the types must match up.
     Uniform variables declared as `float`s must be sent a single number, whereas uniforms declared
     as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s
-    can be sent a `Transform` object.
+    can be sent a `mat4` object.
 
     An error is thrown if the uniform does not exist or is not used in the shader.
 

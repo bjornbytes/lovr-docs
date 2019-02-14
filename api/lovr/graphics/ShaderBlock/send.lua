@@ -32,9 +32,9 @@ return {
     }
   },
   notes = [[
-    For scalar or vector types, use tables of numbers for each vector.
+    For scalar or vector types, use tables of numbers or `vec3`s for each vector.
 
-    For matrix types, use tables of numbers or `Transform` objects.
+    For matrix types, use tables of numbers or `mat4` objects.
 
     `Blob`s can also be used to pass arbitrary binary data to individual variables.
   ]],

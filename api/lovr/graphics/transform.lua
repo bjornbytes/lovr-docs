@@ -3,15 +3,15 @@ return {
   summary = 'Apply a general transform to the coordinate system.',
   description = [[
     Apply a transform to the coordinate system, changing its translation, rotation, and scale using
-    a single function.  A Transform object can also be used.
+    a single function.  A `mat4` can also be used.
 
     The transformation will last until `lovr.draw` returns or the transformation is popped off the
     transformation stack.
   ]],
   arguments = {
     transform = {
-      type = 'Transform',
-      description = 'The Transform to apply to the coordinate system.'
+      type = 'mat4',
+      description = 'The mat4 to apply to the coordinate system.'
     },
     x = {
       type = 'number',
@@ -71,7 +71,7 @@ return {
       returns = {}
     },
     {
-      description = 'Modify the coordinate system using a Transform object.',
+      description = 'Modify the coordinate system using a mat4 object.',
       arguments = { 'transform' },
       returns = {}
     }

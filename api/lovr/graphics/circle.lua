@@ -12,7 +12,7 @@ return {
       description = 'The Material to apply to the circle.'
     },
     transform = {
-      type = 'Transform',
+      type = 'mat4',
       description = 'The circle\'s transform.'
     },
     x = {
