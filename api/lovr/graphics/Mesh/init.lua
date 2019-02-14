@@ -38,7 +38,6 @@ return {
           { 'lovrPosition',    'float', 3 },
           { 'lovrNormal',      'float', 3 },
           { 'lovrTexCoord',    'float', 2 }
-          { 'lovrVertexColor', 'byte',  4 }
         }
 
     Great, so why do we go through the trouble of naming everything in our vertex and saying what
@@ -55,6 +54,16 @@ return {
 
     Specifying custom vertex data is really powerful and is often used for lighting, animation, and
     more!
+
+    The types of attributes that are available are:
+
+    - `byte` (-128 to 127)
+    - `ubyte` (0 to 255)
+    - `short` (-32768 to 32767)
+    - `ushort` (0 to 65535)
+    - `int` (-2147483648 to 2147483647)
+    - `uint` (0 to 4294967295)
+    - `float` (floating point value)
   ]],
   example = {
     description = 'Draw a circle using a Mesh.',
