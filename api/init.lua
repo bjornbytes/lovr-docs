@@ -14360,7 +14360,7 @@ return {
         {
           name = "newPool",
           summary = "Create a new Pool.",
-          description = "Creates a new `Pool`, used for allocating vector and matrix objects efficiently.\n\nNote that `lovr.math` has its own Pool that it uses when you call these functions:\n\n- `lovr.math.vec3`\n- `lovr.math.quat`\n- `lovr.math.mat4`\n\nSo it's usually more convenient to use those functions.  Pools are available to use if you have a need for more control over the memory used for your vectors.",
+          description = "Creates a new `Pool`, used for allocating vector and matrix objects efficiently.  If you just need vectors, you can use the more convenient functions `lovr.math.vec3`, `lovr.math.quat`, and `lovr.math.mat4`.",
           key = "lovr.math.newPool",
           module = "lovr.math",
           related = {
@@ -14375,12 +14375,6 @@ return {
                   name = "size",
                   type = "number",
                   description = "The size of the Pool, in bytes."
-                },
-                {
-                  name = "resizable",
-                  type = "boolean",
-                  description = "Whether or not the Pool will resize itself.",
-                  default = "false"
                 }
               },
               returns = {
@@ -15369,28 +15363,6 @@ return {
                 }
               },
               notes = "`Pool:drain` can be used to reset the usage to zero (and invalidate vectors that have been allocated from the Pool)."
-            },
-            {
-              name = "isResizable",
-              summary = "Check if the Pool is resizable.",
-              description = "Returns whether the Pool was created with the resizable flag.  Resizable Pools will automatically grow their memory block if they overflow, whereas normal Pools will throw an error.  This lets you trade off convenience for predictable performance and memory usage.",
-              key = "Pool:isResizable",
-              module = "lovr.math",
-              related = {
-                "lovr.math.newPool"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "resizable",
-                      type = "boolean",
-                      description = "Whether or not the Pool is resizable."
-                    }
-                  }
-                }
-              }
             },
             {
               name = "mat4",
