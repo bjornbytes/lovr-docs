@@ -12,11 +12,11 @@ LÖVR depends on the following libraries.  They are included as submodules in th
 the repository, so make sure you clone with the `--recursive` flag or run `git submodule update
 --init` in an existing repository.
 
-- Lua or LuaJIT
+- Lua (5.1+) or LuaJIT (2.0+)
 - GLFW (3.2+)
 - OpenGL (3.3, ES3, or WebGL 2)
-- assimp (4+)
 - OpenVR (1.0.9, for `lovr.headset`)
+- Oculus SDK (optional, 1.26+)
 - PhysicsFS (3+)
 - OpenAL (1.17+ recommended for HRTF support)
 - msdfgen
