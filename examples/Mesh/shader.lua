@@ -1,6 +1,7 @@
 return [[
 in vec3 lightDirection;
 in vec3 normalDirection;
+in vec3 vertexPosition;
 
 vec3 cAmbient = vec3(.25);
 vec3 cDiffuse = vec3(1);
@@ -12,7 +13,7 @@ vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
 
   if (diffuse > 0.) {
     vec3 r = reflect(lightDirection, normalDirection);
-    vec3 viewDirection = normalize(-vec3(gl_FragCoord));
+    vec3 viewDirection = normalize(-vertexPosition);
 
     float specularAngle = max(dot(r, viewDirection), 0.);
     specular = pow(specularAngle, 5.);
