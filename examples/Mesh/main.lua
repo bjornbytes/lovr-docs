@@ -18,6 +18,7 @@ local function makeShader(prefix)
   return lovr.graphics.newShader(prefix .. [[
 out vec3 lightDirection;
 out vec3 normalDirection;
+out vec3 vertexPosition;
 
 vec3 lightPosition = vec3(10, 10, 3);
 
@@ -29,6 +30,7 @@ vec4 position(mat4 projection, mat4 transform, vec4 _vertex) {
 
   lightDirection = normalize(vec3(vLight - vVertex));
   normalDirection = normalize(lovrNormalMatrix * lovrNormal);
+  vertexPosition = vVertex.xyz;
 
   return projection * transform * vertex;
 }
