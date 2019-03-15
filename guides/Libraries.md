@@ -27,6 +27,7 @@ List of Libraries
 - [handy](https://github.com/bjornbytes/handy) - Helper utilities for managing controllers.
 - [knife](https://github.com/airstruck/knife) - A collection of useful micromodules for Lua.
 - [lodr](https://github.com/mcclure/lodr) - A live-reloading wrapper for LÖVR.
+- [lovr-ent](https://github.com/mcclure/lovr-ent) - Entity tree library / sample project.
 - [lovr-grid](https://github.com/bjornbytes/lovr-grid) - A library for drawing grids.
 - [lovr-haxe-wrappergen](https://github.com/excessive/lovr-haxe-wrappergen) - Haxe bindings for LÖVR.
 - [lovr-icosphere](https://github.com/bjornbytes/lovr-icosphere) - A library to create icospheres.
