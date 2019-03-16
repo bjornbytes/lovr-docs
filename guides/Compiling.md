@@ -46,7 +46,7 @@ macOS
 Install the dependencies using your package manager of choice:
 
 ```
-$ brew install assimp glfw3 luajit physfs openal-soft ode libccd
+$ brew install glfw3 luajit physfs openal-soft ode libccd
 ```
 
 Next, build using CMake, as above:
@@ -77,13 +77,13 @@ First, install the dependencies using your package manager of choice.
 #### Arch Linux
 
 ```
-$ pacman -S assimp glfw-x11 luajit physfs openal ode
+$ pacman -S glfw-x11 luajit physfs openal ode
 ```
 
 #### Debian/Ubuntu
 
 ```
-$ sudo apt-get install build-essential cmake libassimp-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev
+$ sudo apt-get install build-essential cmake libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev
 ```
 
 Then, build with CMake:
