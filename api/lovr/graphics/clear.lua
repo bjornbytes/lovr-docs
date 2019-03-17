@@ -67,6 +67,8 @@ return {
   notes = [[
     The two variants of this function can be mixed and matched, meaning you can use booleans for
     some of the values and numeric values for others.
+
+    Note that the clear is not affected by the stencil test.
   ]],
   related = {
     'lovr.graphics.setBackgroundColor'
