@@ -68,7 +68,9 @@ return {
     The two variants of this function can be mixed and matched, meaning you can use booleans for
     some of the values and numeric values for others.
 
-    Note that the clear is not affected by the stencil test.
+    If you are using `lovr.graphics.setStencilTest`, it will not affect how the screen gets cleared.
+    Instead, you can use `lovr.graphics.fill` to draw a fullscreen quad, which will get masked by
+    the active stencil.
   ]],
   related = {
     'lovr.graphics.setBackgroundColor'
