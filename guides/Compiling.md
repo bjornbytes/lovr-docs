@@ -83,7 +83,7 @@ $ pacman -S glfw-x11 luajit physfs openal ode
 #### Debian/Ubuntu
 
 ```
-$ sudo apt install build-essential cmake xorg-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev libccd-dev
+$ sudo apt install build-essential cmake xorg-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev libccd-dev libenet-dev
 ```
 
 Then, build with CMake:
