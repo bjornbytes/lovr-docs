@@ -9,6 +9,7 @@ return {
     {
       name = 'canvas',
       type = 'Canvas',
+      default = 'nil',
       description = 'The new active Canvas object, or `nil` to just render to the headset.'
     }
   },
