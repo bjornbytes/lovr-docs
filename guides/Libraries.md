@@ -24,7 +24,6 @@ List of Libraries
 - [30log](https://github.com/Yonaba/30log) - A library for object oriented programming in Lua.
 - [cpml](https://github.com/excessive/cpml) - A 3D math library for Lua.
 - [flux](https://github.com/rxi/flux) - A tweening library for Lua.
-- [handy](https://github.com/bjornbytes/handy) - Helper utilities for managing controllers.
 - [knife](https://github.com/airstruck/knife) - A collection of useful micromodules for Lua.
 - [lodr](https://github.com/mcclure/lodr) - A live-reloading wrapper for LÖVR.
 - [lovr-ent](https://github.com/mcclure/lovr-ent) - Entity tree library / sample project.

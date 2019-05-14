@@ -159,116 +159,6 @@ return {
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
     },
     {
-      name = "controlleradded",
-      tag = "callbacks",
-      summary = "Called when a Controller is connected.",
-      description = "This callback is called when a Controller is connected, discovered, or woken up.",
-      key = "lovr.controlleradded",
-      module = "lovr",
-      related = {
-        "lovr.controllerremoved",
-        "lovr.headset.getControllers",
-        "lovr.headset.getControllerCount"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "controller",
-              type = "Controller",
-              description = "The new controller object."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "controllerpressed",
-      tag = "callbacks",
-      summary = "Called when a Controller button is pressed.",
-      description = "This callback is called when a button on a Controller is pressed.",
-      key = "lovr.controllerpressed",
-      module = "lovr",
-      related = {
-        "lovr.controllerreleased",
-        "Controller:isDown",
-        "ControllerButton"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "controller",
-              type = "Controller",
-              description = "The new controller object."
-            },
-            {
-              name = "button",
-              type = "ControllerButton",
-              description = "The button that was pressed."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "controllerreleased",
-      tag = "callbacks",
-      summary = "Called when a Controller button is released.",
-      description = "This callback is called when a button on a Controller is released.",
-      key = "lovr.controllerreleased",
-      module = "lovr",
-      related = {
-        "lovr.controllerpressed",
-        "Controller:isDown",
-        "ControllerButton"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "controller",
-              type = "Controller",
-              description = "The new controller object."
-            },
-            {
-              name = "button",
-              type = "ControllerButton",
-              description = "The button that was released."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "controllerremoved",
-      tag = "callbacks",
-      summary = "Called when a Controller is disconnected.",
-      description = "This callback is called when a Controller is disconnected or turned off.",
-      key = "lovr.controllerremoved",
-      module = "lovr",
-      related = {
-        "lovr.controlleradded",
-        "lovr.headset.getControllers",
-        "lovr.headset.getControllerCount"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "controller",
-              type = "Controller",
-              description = "The controller that was removed."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
       name = "draw",
       tag = "callbacks",
       summary = "Called continuously to render frames to the display.",
@@ -407,27 +297,6 @@ return {
         }
       },
       notes = "When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the negative-z axis.\n\nNote that the usual graphics state applies while `lovr.mirror` is invoked, so you may need to reset graphics state at the end of `lovr.draw` to get the result you want."
-    },
-    {
-      name = "mount",
-      tag = "callbacks",
-      summary = "Called when the headset is put on or taken off.",
-      description = "The `lovr.mount` callback is called when the headset is put on or taken off.  This hardware feature is sometimes called a \"proximity sensor\" and it not supported by all headsets.  You can use it to pause the app or show a message in the window if the headset isn't put on yet.",
-      key = "lovr.mount",
-      module = "lovr",
-      related = {},
-      variants = {
-        {
-          arguments = {
-            {
-              name = "mounted",
-              type = "boolean",
-              description = "Whether the headset is mounted."
-            }
-          },
-          returns = {}
-        }
-      }
     },
     {
       name = "quit",
@@ -603,7 +472,7 @@ return {
         {
           name = "Callbacks",
           tag = "callbacks",
-          description = "Callbacks are the **when** of the application; you write code inside callbacks which LÖVR then calls at certain points in time.  For example, the `lovr.load` callback is called once at startup and `lovr.controlleradded` is called when controllers are connected."
+          description = "Callbacks are the **when** of the application; you write code inside callbacks which LÖVR then calls at certain points in time.  For example, the `lovr.load` callback is called once at startup, and `lovr.focus` is called when the VR application gains or loses input focus."
         },
         {
           name = "System",

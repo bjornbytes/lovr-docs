@@ -22,7 +22,7 @@ return {
       description = [[
         Callbacks are the **when** of the application; you write code inside callbacks which LÖVR
         then calls at certain points in time.  For example, the `lovr.load` callback is called once
-        at startup and `lovr.controlleradded` is called when controllers are connected.
+        at startup, and `lovr.focus` is called when the VR application gains or loses input focus.
       ]]
     },
     {
