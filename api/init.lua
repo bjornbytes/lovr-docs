@@ -12743,6 +12743,14 @@ return {
               description = "The right controller."
             },
             {
+              name = "left",
+              description = "A shorthand for hand/left."
+            },
+            {
+              name = "right",
+              description = "A shorthand for hand/right."
+            },
+            {
               name = "eye/left",
               description = "The left eye."
             },
