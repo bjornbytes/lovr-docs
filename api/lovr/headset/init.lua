@@ -10,9 +10,13 @@ return {
     {
       name = 'Headset',
       tag = 'headset',
+      description = 'Functions that return information about the active head mounted display (HMD).'
+    },
+    {
+      name = 'Input',
+      tag = 'input',
       description = [[
-        Functions that return information about the head mounted display (HMD) currently strapped to
-        the player's face.
+        Functions for accessing input devices, like controllers, hands, trackers, or gamepads.
       ]]
     },
     {
@@ -22,14 +26,6 @@ return {
         Retrieve information about the size and shape of the room the player is in, and provides
         information about the "chaperone", a visual indicator that appears whenever a player is
         about to run into a wall.
-      ]]
-    },
-    {
-      name = 'Controllers',
-      tag = 'controllers',
-      description = [[
-        Get a list of connected `Controller`s.  Also see `lovr.controlleradded` and
-        `lovr.controllerremoved`.
       ]]
     }
   }

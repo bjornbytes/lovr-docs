@@ -1,8 +1,15 @@
 return {
-  tag = 'headset',
-  summary = 'Get the pose of the headset.',
-  description = 'Returns the current position and orientation of the headset.',
-  arguments = {},
+  tag = 'input',
+  summary = 'Get the pose of a device.',
+  description = 'Returns the current position and orientation of a device.',
+  arguments = {
+    {
+      name = 'device',
+      type = 'Device',
+      default = 'head',
+      description = 'The device to get the pose of.'
+    }
+  },
   returns = {
     {
       name = 'x',
@@ -42,6 +49,7 @@ return {
   },
   notes = 'Units are in meters.',
   related = {
+    'lovr.headset.getBonePose',
     'lovr.headset.getPosition',
     'lovr.headset.getOrientation',
   }

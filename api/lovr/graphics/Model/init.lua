@@ -6,7 +6,7 @@ return {
   ]],
   constructors = {
     'lovr.graphics.newModel',
-    'Controller:newModel'
+    'lovr.headset.newModel'
   },
   example = [[
     local model

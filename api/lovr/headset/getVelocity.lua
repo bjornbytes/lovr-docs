@@ -1,8 +1,15 @@
 return {
-  tag = 'headset',
-  summary = 'Get the linear velocity of the headset.',
-  description = 'Returns the current linear velocity of the headset, in meters per second.',
-  arguments = {},
+  tag = 'input',
+  summary = 'Get the linear velocity of a device.',
+  description = 'Returns the current linear velocity of a device, in meters per second.',
+  arguments = {
+    {
+      name = 'device',
+      type = 'Device',
+      default = 'head',
+      description = 'The device to get the velocity of.'
+    }
+  },
   returns = {
     {
       name = 'vx',
@@ -23,6 +30,8 @@ return {
   related = {
     'lovr.headset.getPosition',
     'lovr.headset.getOrientation',
-    'lovr.headset.getAngularVelocity'
+    'lovr.headset.getAngularVelocity',
+    'lovr.headset.getAcceleration',
+    'lovr.headset.getAngularAcceleration'
   }
 }

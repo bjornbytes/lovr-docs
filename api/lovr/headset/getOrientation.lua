@@ -1,13 +1,20 @@
 return {
-  tag = 'headset',
-  summary = 'Get the orientation of the headset.',
-  description = 'Returns the current orientation of the headset.',
-  arguments = {},
+  tag = 'input',
+  summary = 'Get the orientation of a device.',
+  description = 'Returns the current orientation of a device, in angle/axis form.',
+  arguments = {
+    {
+      name = 'device',
+      type = 'Device',
+      default = 'head',
+      description = 'The device to get the orientation of.'
+    }
+  },
   returns = {
     {
       name = 'angle',
       type = 'number',
-      description = 'The amount of rotation around the axis of rotation.'
+      description = 'The amount of rotation around the axis of rotation, in radians.'
     },
     {
       name = 'ax',
@@ -28,6 +35,8 @@ return {
   related = {
     'lovr.headset.getPosition',
     'lovr.headset.getVelocity',
-    'lovr.headset.getAngularVelocity'
+    'lovr.headset.getAngularVelocity',
+    'lovr.headset.getAcceleration',
+    'lovr.headset.getAngularAcceleration'
   }
 }

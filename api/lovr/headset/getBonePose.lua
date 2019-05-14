@@ -1,27 +1,42 @@
 return {
-  summary = 'Get the pose of the Controller.',
-  description = 'Returns the current position and orientation of the Controller.',
-  arguments = {},
+  tag = 'input',
+  summary = 'Get the pose of a tracked bone.',
+  description = [[
+    Returns the current position and orientation of a bone tracked by a device.  This is mainly used
+    for tracking hands.
+  ]],
+  arguments = {
+    {
+      name = 'device',
+      type = 'Device',
+      description = 'The device.'
+    },
+    {
+      name = 'bone',
+      type = 'DeviceBone',
+      description = 'The bone.'
+    }
+  },
   returns = {
     {
       name = 'x',
       type = 'number',
-      description = 'The x position of the Controller.'
+      description = 'The x position.'
     },
     {
       name = 'y',
       type = 'number',
-      description = 'The y position of the Controller.'
+      description = 'The y position.'
     },
     {
       name = 'z',
       type = 'number',
-      description = 'The z position of the Controller.'
+      description = 'The z position.'
     },
     {
       name = 'angle',
       type = 'number',
-      description = 'The number of radians the Collider is rotated around its axis of rotation.'
+      description = 'The amount of rotation around the axis of rotation, in radians.'
     },
     {
       name = 'ax',
@@ -41,8 +56,6 @@ return {
   },
   notes = 'Units are in meters.',
   related = {
-    'Controller:getPosition',
-    'Controller:getOrientation',
     'lovr.headset.getPose'
   }
 }
