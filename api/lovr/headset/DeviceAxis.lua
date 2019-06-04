@@ -2,6 +2,10 @@ return {
   description = 'Axes on an input device.',
   values = {
     {
+      name = 'primary',
+      description = 'The primary analog axis (usually thumbstick or touchpad).'
+    },
+    {
       name = 'trigger',
       description = 'A trigger (1D).'
     },

@@ -6,13 +6,6 @@ return {
       description = 'The headset.'
     },
     {
-      name = 'hand',
-      description = [[
-        A hand with an unknown handedness, found on systems with a single controller like the Oculus
-        Go.
-      ]]
-    },
-    {
       name = 'hand/left',
       description = 'The left controller.'
     },

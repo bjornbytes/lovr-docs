@@ -12600,10 +12600,6 @@ return {
               description = "The headset."
             },
             {
-              name = "hand",
-              description = "A hand with an unknown handedness, found on systems with a single controller like the Oculus Go."
-            },
-            {
               name = "hand/left",
               description = "The left controller."
             },
@@ -12651,6 +12647,10 @@ return {
           key = "DeviceAxis",
           module = "lovr.headset",
           values = {
+            {
+              name = "primary",
+              description = "The primary analog axis (usually thumbstick or touchpad)."
+            },
             {
               name = "trigger",
               description = "A trigger (1D)."
@@ -12794,6 +12794,10 @@ return {
           key = "DeviceButton",
           module = "lovr.headset",
           values = {
+            {
+              name = "primary",
+              description = "The primary button (usually trigger)."
+            },
             {
               name = "trigger",
               description = "The trigger button."
@@ -13399,6 +13403,32 @@ return {
                   description = "The driver of the headset in use, e.g. \"OpenVR\"."
                 }
               }
+            }
+          }
+        },
+        {
+          name = "getHands",
+          summary = "Get a list of currently tracked hand devices.",
+          description = "Returns a table with all of the currently tracked hand devices.",
+          key = "lovr.headset.getHands",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "hands",
+                  type = "table",
+                  description = "The currently tracked hand devices.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          },
+          examples = {
+            {
+              code = "function lovr.update(dt)\n  for i, hand in ipairs(lovr.headset.getHands()) do\n    print(hand, lovr.headset.getPose(hand))\n  end\nend"
             }
           }
         },
