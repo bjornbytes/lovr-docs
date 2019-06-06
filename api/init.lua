@@ -13408,6 +13408,7 @@ return {
         },
         {
           name = "getHands",
+          tag = "input",
           summary = "Get a list of currently tracked hand devices.",
           description = "Returns a table with all of the currently tracked hand devices.",
           key = "lovr.headset.getHands",
