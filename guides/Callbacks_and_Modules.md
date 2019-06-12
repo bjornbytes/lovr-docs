@@ -50,7 +50,7 @@ end
 By filling in the different callbacks you can start to define the behavior of an app.
 
 To see a list of all the callbacks and read more about their specifics, check out the "Callbacks"
-section on the sidebar to the left.
+section on the sidebar.
 
 Modules
 ---
