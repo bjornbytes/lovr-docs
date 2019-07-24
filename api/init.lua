@@ -3342,12 +3342,12 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the pixel to get (0-indexed)."
+                      description = "The x coordinate of the pixel to set (0-indexed)."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the pixel to get (0-indexed)."
+                      description = "The y coordinate of the pixel to set (0-indexed)."
                     },
                     {
                       name = "r",
