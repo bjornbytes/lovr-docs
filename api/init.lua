@@ -13062,32 +13062,6 @@ return {
           }
         },
         {
-          name = "hands",
-          summary = "Iterate over currently tracked hand devices.",
-          description = "Returns a Lua iterator for all of the currently tracked hand devices.",
-          key = "lovr.headset.hands",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "iterator",
-                  type = "function",
-                  description = "The iterator function, usable in a for loop.  Will return `Device` paths.",
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            }
-          },
-          examples = {
-            {
-              code = "function lovr.update(dt)\n  for hand in lovr.headset.hands() do\n    print(hand, lovr.headset.getPose(hand))\n  end\nend"
-            }
-          }
-        },
-        {
           name = "isDown",
           tag = "input",
           summary = "Get the state of a button on a device.",
