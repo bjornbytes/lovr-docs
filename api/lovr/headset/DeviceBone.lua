@@ -101,7 +101,6 @@ return {
   related = {
     'lovr.headset.getBonePose',
     'DeviceButton',
-    'DeviceAxis',
-    'Animator'
+    'DeviceAxis'
   }
 }
