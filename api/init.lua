@@ -13571,7 +13571,6 @@ return {
           key = "lovr.math.mat4",
           module = "lovr.math",
           related = {
-            "Pool:mat4",
             "lovr.math.vec3",
             "lovr.math.quat"
           },
@@ -13722,36 +13721,6 @@ return {
                   name = "curve",
                   type = "Curve",
                   description = "The new Curve."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "newPool",
-          summary = "Create a new Pool.",
-          description = "Creates a new `Pool`, used for allocating vector and matrix objects efficiently.  If you just need vectors, you can use the more convenient functions `lovr.math.vec3`, `lovr.math.quat`, and `lovr.math.mat4`.",
-          key = "lovr.math.newPool",
-          module = "lovr.math",
-          related = {
-            "lovr.math.vec3",
-            "lovr.math.quat",
-            "lovr.math.mat4"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The size of the Pool, in bytes."
-                }
-              },
-              returns = {
-                {
-                  name = "pool",
-                  type = "Pool",
-                  description = "The new Pool."
                 }
               }
             }
@@ -13990,7 +13959,6 @@ return {
           key = "lovr.math.quat",
           module = "lovr.math",
           related = {
-            "Pool:quat",
             "lovr.math.vec3",
             "lovr.math.mat4"
           },
@@ -14257,7 +14225,6 @@ return {
           key = "lovr.math.vec3",
           module = "lovr.math",
           related = {
-            "Pool:vec3",
             "lovr.math.quat",
             "lovr.math.mat4"
           },
@@ -14664,376 +14631,6 @@ return {
           }
         },
         {
-          name = "Pool",
-          summary = "A Pool of vector objects.",
-          description = "A Pool is an object that is used to allocate vectors, matrices, and quaternions.  Pools exist mainly for efficiency -- allocating tiny bits of memory for every single vector can lead to performance problems related to the Lua garbage collector and other memory managers on the system.  By using a Pool, a single block of memory is used and the Pool keeps track of all of the vectors in the block.\n\nA Pool is allocated with a fixed amount of memory, so there is a limit on the number of objects it can create.  If the Pool runs out of space, it will overflow and cause an error.\n\nPools can be drained using `Pool:drain`.  Draining the Pool resets its usage to zero, and clears all vectors allocated from the Pool.  This is helpful for keeping memory usage low when using a lot of temporary vectors, which is common, but can cause unexpected surprises if you have saved a vector into a variable!",
-          key = "Pool",
-          module = "lovr.math",
-          methods = {
-            {
-              name = "drain",
-              summary = "Drain the Pool.",
-              description = "Drains the Pool, invalidating all vectors that it has allocated and resetting its memory usage.",
-              key = "Pool:drain",
-              module = "lovr.math",
-              related = {
-                "Pool:getUsage",
-                "Pool:getSize"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "getSize",
-              summary = "Get the size of the Pool.",
-              description = "Returns the size of the Pool, in bytes.",
-              key = "Pool:getSize",
-              module = "lovr.math",
-              related = {
-                "Pool:getUsage",
-                "Pool:drain"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "size",
-                      type = "number",
-                      description = "The size of the Pool."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getUsage",
-              summary = "Get the Pool's memory usage.",
-              description = "Returns the amount of memory current in use by the Pool.",
-              key = "Pool:getUsage",
-              module = "lovr.math",
-              related = {
-                "Pool:getSize",
-                "Pool:drain"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "size",
-                      type = "number",
-                      description = "The size of the Pool."
-                    }
-                  }
-                }
-              },
-              notes = "`Pool:drain` can be used to reset the usage to zero (and invalidate vectors that have been allocated from the Pool)."
-            },
-            {
-              name = "mat4",
-              summary = "Get a new mat4.",
-              description = "Allocates a new `mat4` from the Pool and returns it.",
-              key = "Pool:mat4",
-              module = "lovr.math",
-              related = {
-                "Pool:vec3",
-                "Pool:quat",
-                "lovr.math.mat4",
-                "mat4"
-              },
-              variants = {
-                {
-                  description = "Returns an identity matrix.",
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The new matrix."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "n",
-                      type = "mat4",
-                      description = "An existing matrix to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The new matrix."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "position",
-                      type = "vec3",
-                      description = "The initial translation of the matrix.",
-                      default = "0, 0, 0"
-                    },
-                    {
-                      name = "scale",
-                      type = "vec3",
-                      description = "The initial scale of the matrix.",
-                      default = "1, 1, 1"
-                    },
-                    {
-                      name = "rotation",
-                      type = "quat",
-                      description = "The initial rotation of the matrix.",
-                      default = "0, 0, 0, 0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The new matrix."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "16 numbers to use as the raw values of the matrix (column-major)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The new matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "quat",
-              summary = "Get a new quat.",
-              description = "Allocates a new `quat` from the Pool and returns it.",
-              key = "Pool:quat",
-              module = "lovr.math",
-              related = {
-                "Pool:vec3",
-                "Pool:mat4",
-                "lovr.math.quat",
-                "quat"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      description = "The angle to use for the rotation, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "raw",
-                      type = "boolean",
-                      description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
-                      default = "false"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      description = "The angle to use for the rotation, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "axis",
-                      type = "vec3",
-                      description = "The axis of rotation (does not need to be normalized)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "quat",
-                      description = "An existing quaternion to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Creates a quaternion from a direction vector.",
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "A normalized direction vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Creates a quaternion representing the rotation between two vectors.",
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "A normalized direction vector."
-                    },
-                    {
-                      name = "u",
-                      type = "vec3",
-                      description = "Another normalized direction vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "A matrix to use the rotation from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The new quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "vec3",
-              summary = "Get a new vec3.",
-              description = "Allocates a new `vec3` from the Pool and returns it.",
-              key = "Pool:vec3",
-              module = "lovr.math",
-              related = {
-                "Pool:quat",
-                "Pool:mat4",
-                "lovr.math.vec3",
-                "vec3"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the vector.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the vector.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the vector.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "The new vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "vec3",
-                      description = "The vector to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "The new vector."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          constructors = {
-            "lovr.math.newPool"
-          }
-        },
-        {
           name = "RandomGenerator",
           summary = "A pseudo-random number generator.",
           description = "A RandomGenerator is a standalone object that can be used to independently generate pseudo-random numbers. If you just need basic randomness, you can use `lovr.math.random` without needing to create a random generator.",
@@ -15242,7 +14839,7 @@ return {
         {
           name = "mat4",
           summary = "A 4x4 matrix.",
-          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4` or by using a `Pool`.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new matrix.\n\nCreating huge numbers of matrices every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects you can use `Pool`s to make things much more efficient.",
+          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4`.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new matrix.\n\nCreating huge numbers of matrices every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects you can use `Pool`s to make things much more efficient.",
           key = "mat4",
           module = "lovr.math",
           methods = {
@@ -15724,8 +15321,7 @@ return {
             }
           },
           constructors = {
-            "lovr.math.mat4",
-            "Pool:mat4"
+            "lovr.math.mat4"
           },
           related = {
             "vec3",
@@ -15735,7 +15331,7 @@ return {
         {
           name = "quat",
           summary = "A quaternion.",
-          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat` or by using a `Pool`.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!\n\nCreating huge numbers of quaternions every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of quaternion objects you can use `Pool`s to make things much more efficient.",
+          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat`.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!\n\nCreating huge numbers of quaternions every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of quaternion objects you can use `Pool`s to make things much more efficient.",
           key = "quat",
           module = "lovr.math",
           methods = {
@@ -16115,8 +15711,7 @@ return {
             }
           },
           constructors = {
-            "lovr.math.quat",
-            "Pool:quat"
+            "lovr.math.quat"
           },
           related = {
             "vec3",
@@ -16126,7 +15721,7 @@ return {
         {
           name = "vec3",
           summary = "A 3D vector.",
-          description = "A `vec3` is a math type that holds three numbers.  It's very helpful for representing and manipulating 3D positions and directions.  LÖVR functions that accept 3D positions, directions, or velocities generally also accept `vec3`s.  `vec3`s are created using `lovr.math.vec3` or from a `Pool`.\n\n`vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the usual binary operators that you would use on numbers.  Note that these create new vectors to store their results in.  If you want to modify a vector instead of creating new ones, you can use the named operator functions like `vec3:add`.\n\nCreating huge numbers of vectors every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of vector objects you can use `Pool`s to make things much more efficient.\n\nNote that accessing properties directly (like `v.x`) is not an officially supported feature right now (for performance reasons), though it does happen to work by accident in LuaJIT.  This limitation may be improved in the future.  For now, it is recommended to use `vec3:unpack` and `vec3:set` if you need to work with individual components of a vector.",
+          description = "A `vec3` is a math type that holds three numbers.  It's very helpful for representing and manipulating 3D positions and directions.  LÖVR functions that accept 3D positions, directions, or velocities generally also accept `vec3`s.  `vec3`s are created using `lovr.math.vec3`.\n\n`vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the usual binary operators that you would use on numbers.  Note that these create new vectors to store their results in.  If you want to modify a vector instead of creating new ones, you can use the named operator functions like `vec3:add`.\n\nCreating huge numbers of vectors every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of vector objects you can use `Pool`s to make things much more efficient.\n\nNote that accessing properties directly (like `v.x`) is not an officially supported feature right now (for performance reasons), though it does happen to work by accident in LuaJIT.  This limitation may be improved in the future.  For now, it is recommended to use `vec3:unpack` and `vec3:set` if you need to work with individual components of a vector.",
           key = "vec3",
           module = "lovr.math",
           methods = {
@@ -16778,8 +16373,7 @@ return {
             }
           },
           constructors = {
-            "lovr.math.vec3",
-            "Pool:vec3"
+            "lovr.math.vec3"
           },
           related = {
             "quat",

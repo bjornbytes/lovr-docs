@@ -3,8 +3,7 @@ return {
   description = [[
     A `vec3` is a math type that holds three numbers.  It's very helpful for representing and
     manipulating 3D positions and directions.  LÖVR functions that accept 3D positions, directions,
-    or velocities generally also accept `vec3`s.  `vec3`s are created using `lovr.math.vec3` or from
-    a `Pool`.
+    or velocities generally also accept `vec3`s.  `vec3`s are created using `lovr.math.vec3`.
 
     `vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the
     usual binary operators that you would use on numbers.  Note that these create new vectors to
@@ -20,10 +19,7 @@ return {
     limitation may be improved in the future.  For now, it is recommended to use `vec3:unpack` and
     `vec3:set` if you need to work with individual components of a vector.
   ]],
-  constructors = {
-    'lovr.math.vec3',
-    'Pool:vec3'
-  },
+  constructor = 'lovr.math.vec3',
   related = {
     'quat',
     'mat4'

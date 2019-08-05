@@ -2,8 +2,7 @@ return {
   summary = 'A quaternion.',
   description = [[
     A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions
-    that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat` or by
-    using a `Pool`.
+    that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat`.
 
     The four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to
     work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is
@@ -28,10 +27,7 @@ return {
     sheer amount of memory allocation and garbage collection overhead.  If you need lots of
     quaternion objects you can use `Pool`s to make things much more efficient.
   ]],
-  constructors = {
-    'lovr.math.quat',
-    'Pool:quat'
-  },
+  constructor = 'lovr.math.quat',
   related = {
     'vec3',
     'mat4'

@@ -46,7 +46,6 @@ return {
   },
   notes = 'This function takes the same arguments as `vec3:set`.',
   related = {
-    'Pool:vec3',
     'lovr.math.quat',
     'lovr.math.mat4'
   }
