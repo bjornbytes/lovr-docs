@@ -3017,10 +3017,6 @@ return {
             {
               name = "mirroredrepeat",
               description = "The texture will repeat, mirroring its appearance each time it repeats."
-            },
-            {
-              name = "clampzero",
-              description = "Pixels outside of 0-1 will appear black."
             }
           }
         }
