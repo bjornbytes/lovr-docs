@@ -8929,14 +8929,9 @@ return {
           name = "skybox",
           tag = "graphicsPrimitives",
           summary = "Render a skybox.",
-          description = "Render a skybox from a texture.  Two common kinds of skybox textures are supported: A rectangular texture with an equirectangular projection can be used, or a \"cubemap\" texture created from 6 images.",
+          description = "Render a skybox from a texture.  Two common kinds of skybox textures are supported: A 2d equirectangular texture with a spherical coordinates can be used, or a \"cubemap\" texture created from 6 images.",
           key = "lovr.graphics.skybox",
           module = "lovr.graphics",
-          examples = {
-            {
-              code = "function lovr.load()\n  skybox = lovr.graphics.newTexture({\n    'right.png',\n    'left.png',\n    'up.png',\n    'down.png',\n    'back.png',\n    'front.png'\n  }, { type = 'cube' })\n\n  -- or skybox = lovr.graphics.newTexture('equirectangular.png')\nend\n\nfunction lovr.draw()\n  local angle, ax, ay, az = lovr.headset.getOrientation()\n  lovr.graphics.skybox(skybox, -angle, ax, ay, az)\nend"
-            }
-          },
           variants = {
             {
               arguments = {
@@ -8944,67 +8939,14 @@ return {
                   name = "texture",
                   type = "Texture",
                   description = "The texture to use."
-                },
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "How much to rotate the skybox around its axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x coordinate of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y coordinate of the axis of rotation.",
-                  default = "1"
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z coordinate of the axis of rotation.",
-                  default = "0"
                 }
               },
               returns = {}
-            },
+            }
+          },
+          examples = {
             {
-              arguments = {
-                {
-                  name = "canvas",
-                  type = "Canvas",
-                  description = "The canvas to use."
-                },
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "How much to rotate the skybox around its axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x coordinate of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y coordinate of the axis of rotation.",
-                  default = "1"
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z coordinate of the axis of rotation.",
-                  default = "0"
-                }
-              },
-              returns = {}
+              code = "function lovr.load()\n  skybox = lovr.graphics.newTexture({\n    left = 'left.png',\n    right = 'right.png',\n    top = 'up.png',\n    bottom = 'down.png',\n    back = 'back.png',\n    front = 'front.png'\n  })\n\n  -- or skybox = lovr.graphics.newTexture('equirectangular.png')\nend\n\nfunction lovr.draw()\n  lovr.graphics.skybox(skybox)\nend"
             }
           }
         },
