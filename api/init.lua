@@ -12709,6 +12709,36 @@ return {
           }
         },
         {
+          name = "getDisplayMask",
+          tag = "headset",
+          summary = "Get a mesh that masks out the visible display area.",
+          description = "Returns a list of 2D triangle vertices that represents areas of the headset display that will never be seen by the user (due to the circular nature of the lenses).  This area can be masked out by rendering it to the depth buffer or stencil buffer.  Then, Further drawing operations can skip rendering to those pixels using the depth test (`lovr.graphics.setDepthTest`) or stencil test (`lovr.graphics.setStencilTest`), which improves performance.",
+          key = "lovr.headset.getDisplayMask",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "points",
+                  type = "table",
+                  description = "A table of points.  Each point is a table with two numbers between 0 and 1."
+                }
+              }
+            }
+          },
+          examples = {
+            {
+              code = "function lovr.load()\n  lovr.graphics.setBackgroundColor(1, 1, 1)\n\n  shader = lovr.graphics.newShader([[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n\n      // Rescale mesh coordinates from (0,1) to (-1,1)\n      vertex.xy *= 2.;\n      vertex.xy -= 1.;\n\n      // Flip the mesh if it's being drawn in the right eye\n      if (lovrViewID == 1) {\n        vertex.x = -vertex.x;\n      }\n\n      return vertex;\n    }\n  ]], [[\n    // The fragment shader returns solid black for illustration purposes.  It could be transparent.\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(0., 0., 0., 1.);\n    }\n  ]])\n\n  mask = lovr.headset.getDisplayMask()\n\n  if mask then\n    mesh = lovr.graphics.newMesh({ { 'lovrPosition', 'float', 2 } }, mask, 'triangles')\n  end\nend\n\nfunction lovr.draw()\n  if mask then\n    -- Mask out parts of the display that aren't visible to skip rendering those pixels later\n    lovr.graphics.setShader(shader)\n    mesh:draw()\n    lovr.graphics.setShader()\n\n    -- Draw a red cube\n    lovr.graphics.setColor(0xff0000)\n    lovr.graphics.cube('fill', 0, 1.7, -1, .5, lovr.timer.getTime())\n    lovr.graphics.setColor(0xffffff)\n  else\n    lovr.graphics.setColor(0x000000)\n    lovr.graphics.print('No mask found.', 0, 1.7, -3, .2)\n    lovr.graphics.setColor(0xffffff)\n  end\nend"
+            }
+          },
+          related = {
+            "lovr.graphics.newMesh",
+            "lovr.graphics.setDepthTest",
+            "lovr.graphics.setStencilTest"
+          }
+        },
+        {
           name = "getDisplayWidth",
           tag = "headset",
           summary = "Get the width of the headset display.",
