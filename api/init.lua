@@ -3171,7 +3171,7 @@ return {
         {
           name = "TextureData",
           summary = "An object that stores pixel data for Textures.",
-          description = "A TextureData stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The TextureData can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, and `dds`.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels or load Textures in a background thread.",
+          description = "A TextureData stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The TextureData can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, `dds`, `ktx`, and `astc`.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels or load Textures in a background thread.",
           key = "TextureData",
           module = "lovr.data",
           methods = {
@@ -11558,7 +11558,7 @@ return {
         {
           name = "Texture",
           summary = "An image that can be applied to Materials.",
-          description = "A Texture is an image that can be applied to `Material`s.  The supported file formats are `.png`, `.jpg`, and `.hdr`.  Additionally, three compressed formats are supported: DXT1, DXT3, and DXT5 (all have the `.dds` extension).  Compressed textures are generally recommended as they use less video memory and usually improve performance.",
+          description = "A Texture is an image that can be applied to `Material`s.  The supported file formats are `.png`, `.jpg`, `.hdr`, `.dds`, `.ktx`, and `.astc`.  DDS and ASTC are compressed formats, which are recommended because they're smaller and faster.",
           key = "Texture",
           module = "lovr.graphics",
           methods = {
