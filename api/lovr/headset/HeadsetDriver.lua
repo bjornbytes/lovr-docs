@@ -6,8 +6,12 @@ return {
   ]],
   values = {
     {
-      name = 'fake',
+      name = 'desktop',
       description = 'A VR simulator using keyboard/mouse.'
+    },
+    {
+      name = 'leap',
+      description = 'Leap Motion hand tracking driver.'
     },
     {
       name = 'oculus',
@@ -20,6 +24,10 @@ return {
     {
       name = 'openvr',
       description = 'OpenVR.'
+    },
+    {
+      name = 'openxr',
+      description = 'OpenXR.'
     },
     {
       name = 'webvr',

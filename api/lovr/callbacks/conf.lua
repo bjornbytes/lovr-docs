@@ -166,7 +166,7 @@ return {
           t.identity = 'default'
 
           -- Headset settings
-          t.headset.drivers = { 'openvr', 'webvr', 'fake' }
+          t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }
           t.headset.msaa = 4
           t.headset.offset = 1.7
 
