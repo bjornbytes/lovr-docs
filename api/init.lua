@@ -8205,20 +8205,25 @@ return {
                 {
                   name = "u",
                   type = "number",
-                  description = "The u coordinate of the diffuse texture.",
+                  description = "The u coordinate of the texture.",
                   default = "0.0"
                 },
                 {
                   name = "v",
                   type = "number",
-                  description = "The width of the diffuse texture to render.",
+                  description = "The v coordinate of the texture.",
+                  default = "0.0"
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The width of the texture UVs to render.",
                   default = "1.0"
                 },
-                nil,
                 {
                   name = "h",
                   type = "number",
-                  description = "The height of the diffuse texture to render.",
+                  description = "The height of the texture UVs to render.",
                   default = "1.0"
                 }
               },
@@ -8289,20 +8294,25 @@ return {
                 {
                   name = "u",
                   type = "number",
-                  description = "The u coordinate of the diffuse texture.",
+                  description = "The u coordinate of the texture.",
                   default = "0.0"
                 },
                 {
                   name = "v",
                   type = "number",
-                  description = "The width of the diffuse texture to render.",
+                  description = "The v coordinate of the texture.",
+                  default = "0.0"
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The width of the texture UVs to render.",
                   default = "1.0"
                 },
-                nil,
                 {
                   name = "h",
                   type = "number",
-                  description = "The height of the diffuse texture to render.",
+                  description = "The height of the texture UVs to render.",
                   default = "1.0"
                 }
               },

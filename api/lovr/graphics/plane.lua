@@ -60,22 +60,22 @@ return {
     u = {
       type = 'number',
       default = '0.0',
-      description = 'The u coordinate of the diffuse texture.'
+      description = 'The u coordinate of the texture.'
     },
     v = {
       type = 'number',
       default = '0.0',
-      description = 'The v coordinate of the diffuse texture.'
+      description = 'The v coordinate of the texture.'
     },
-    v = {
+    w = {
       type = 'number',
       default = '1.0',
-      description = 'The width of the diffuse texture to render.'
+      description = 'The width of the texture UVs to render.'
     },
     h = {
       type = 'number',
       default = '1.0',
-      description = 'The height of the diffuse texture to render.'
+      description = 'The height of the texture UVs to render.'
     }
   },
   returns = {},
