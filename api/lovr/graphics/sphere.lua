@@ -22,10 +22,10 @@ return {
       default = '0',
       description = 'The z coordinate of the center of the sphere.'
     },
-    size = {
+    radius = {
       type = 'number',
       default = '1',
-      description = 'The size of the sphere, in meters.'
+      description = 'The radius of the sphere, in meters.'
     },
     angle = {
       type = 'number',
@@ -51,11 +51,11 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'x', 'y', 'z', 'radius', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
-      arguments = { 'material', 'x', 'y', 'z', 'size', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'material', 'x', 'y', 'z', 'radius', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     }
   }

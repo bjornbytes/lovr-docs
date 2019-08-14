@@ -9124,9 +9124,9 @@ return {
                   default = "0"
                 },
                 {
-                  name = "size",
+                  name = "radius",
                   type = "number",
-                  description = "The size of the sphere, in meters.",
+                  description = "The radius of the sphere, in meters.",
                   default = "1"
                 },
                 {
@@ -9182,9 +9182,9 @@ return {
                   default = "0"
                 },
                 {
-                  name = "size",
+                  name = "radius",
                   type = "number",
-                  description = "The size of the sphere, in meters.",
+                  description = "The radius of the sphere, in meters.",
                   default = "1"
                 },
                 {
