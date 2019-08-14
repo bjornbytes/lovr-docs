@@ -6937,7 +6937,7 @@ return {
           related = {
             "lovr.graphics.stencil"
           },
-          notes = "Stencil values are between 0 and 255."
+          notes = "Stencil values are between 0 and 255.\n\nBy default, the stencil test is disabled."
         },
         {
           name = "getWidth",
@@ -9009,7 +9009,7 @@ return {
           description = "Sets the stencil test.  The stencil test lets you mask out pixels that meet certain criteria, based on the contents of the stencil buffer.  The stencil buffer can be modified using `lovr.graphics.stencil`.  After rendering to the stencil buffer, the stencil test can be set to control how subsequent drawing functions are masked by the stencil buffer.",
           key = "lovr.graphics.setStencilTest",
           module = "lovr.graphics",
-          notes = "Stencil values are between 0 and 255.",
+          notes = "Stencil values are between 0 and 255.\n\nBy default, the stencil test is disabled.",
           variants = {
             {
               arguments = {

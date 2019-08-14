@@ -32,7 +32,11 @@ return {
       returns = {}
     }
   },
-  notes = 'Stencil values are between 0 and 255.',
+  notes = [[
+    Stencil values are between 0 and 255.
+
+    By default, the stencil test is disabled.
+  ]],
   related = {
     'lovr.graphics.stencil'
   }
