@@ -28,22 +28,6 @@ return {
     {
       name = 'eye/right',
       description = 'The right eye.'
-    },
-    {
-      name = 'tracker/1',
-      description = 'The first tracker.'
-    },
-    {
-      name = 'tracker/2',
-      description = 'The second tracker.'
-    },
-    {
-      name = 'tracker/3',
-      description = 'The third tracker.'
-    },
-    {
-      name = 'tracker/4',
-      description = 'The fourth tracker.'
     }
   }
 }
