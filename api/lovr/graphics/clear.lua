@@ -38,6 +38,10 @@ return {
       type = 'number',
       description = 'The value to clear the alpha channel to, from 0.0 to 1.0.'
     },
+    hex = {
+      type = 'number',
+      description = 'A hexcode to clear the color to, in the form `0xffffff` (alpha unsupported).'
+    },
     z = {
       type = 'number',
       default = '1.0',
@@ -62,11 +66,15 @@ return {
     {
       arguments = { 'r', 'g', 'b', 'a', 'z', 's' },
       returns = {}
+    },
+    {
+      arguments = { 'hex' },
+      returns = {}
     }
   },
   notes = [[
-    The two variants of this function can be mixed and matched, meaning you can use booleans for
-    some of the values and numeric values for others.
+    The first two variants of this function can be mixed and matched, meaning you can use booleans
+    for some of the values and numeric values for others.
 
     If you are using `lovr.graphics.setStencilTest`, it will not affect how the screen gets cleared.
     Instead, you can use `lovr.graphics.fill` to draw a fullscreen quad, which will get masked by

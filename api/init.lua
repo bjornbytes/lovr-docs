@@ -5721,7 +5721,7 @@ return {
           description = "Clears the screen, resetting the color, depth, and stencil information to default values.  This function is called automatically by `lovr.run` at the beginning of each frame to clear out the data from the previous frame.",
           key = "lovr.graphics.clear",
           module = "lovr.graphics",
-          notes = "The two variants of this function can be mixed and matched, meaning you can use booleans for some of the values and numeric values for others.\n\nIf you are using `lovr.graphics.setStencilTest`, it will not affect how the screen gets cleared. Instead, you can use `lovr.graphics.fill` to draw a fullscreen quad, which will get masked by the active stencil.",
+          notes = "The first two variants of this function can be mixed and matched, meaning you can use booleans for some of the values and numeric values for others.\n\nIf you are using `lovr.graphics.setStencilTest`, it will not affect how the screen gets cleared. Instead, you can use `lovr.graphics.fill` to draw a fullscreen quad, which will get masked by the active stencil.",
           variants = {
             {
               description = "Clears the color, depth, and stencil to their default values.  Color will be cleared to the current background color, depth will be cleared to 1.0, and stencil will be cleared to 0.",
@@ -5780,6 +5780,16 @@ return {
                   type = "number",
                   description = "The integer value to clear the stencil buffer to.",
                   default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "hex",
+                  type = "number",
+                  description = "A hexcode to clear the color to, in the form `0xffffff` (alpha unsupported)."
                 }
               },
               returns = {}
@@ -7515,6 +7525,23 @@ return {
                   description = "The new Material."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "hex",
+                  type = "number",
+                  description = "A hexcode to use for the diffuse color (alpha is not supported).",
+                  default = "0xffffff"
+                }
+              },
+              returns = {
+                {
+                  name = "material",
+                  type = "Material",
+                  description = "The new Material."
+                }
+              }
             }
           }
         },
@@ -8544,6 +8571,7 @@ return {
           description = "Sets the background color used to clear the screen.  Color components are from 0.0 to 1.0.",
           key = "lovr.graphics.setBackgroundColor",
           module = "lovr.graphics",
+          notes = "The default background color is `(0, 0, 0, 1)`.",
           variants = {
             {
               arguments = {
@@ -8570,9 +8598,28 @@ return {
                 }
               },
               returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "hex",
+                  type = "number",
+                  description = "A hexcode like `0xffffff` to use for the background (does not support alpha)."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "color",
+                  type = "table",
+                  description = "A table containing 3 or 4 color components."
+                }
+              },
+              returns = {}
             }
-          },
-          notes = "The default background color is black."
+          }
         },
         {
           name = "setBlendMode",
@@ -8640,7 +8687,7 @@ return {
           description = "Sets the color used for drawing objects.  Color components are from 0.0 to 1.0.  Every pixel drawn will be multiplied (i.e. tinted) by this color.  This is a global setting, so it will affect all subsequent drawing operations.",
           key = "lovr.graphics.setColor",
           module = "lovr.graphics",
-          notes = "The default color is white.",
+          notes = "The default color is `(1, 1, 1, 1)`.",
           variants = {
             {
               arguments = {
@@ -8671,9 +8718,19 @@ return {
             {
               arguments = {
                 {
+                  name = "hex",
+                  type = "number",
+                  description = "A hexcode like `0xffffff` to use for the color (does not support alpha)."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
                   name = "color",
                   type = "table",
-                  description = "A table containing the color components."
+                  description = "A table containing 3 or 4 color components."
                 }
               },
               returns = {}
@@ -10108,7 +10165,7 @@ return {
                     {
                       name = "colorType",
                       type = "MaterialColor",
-                      description = "The type of color to get.",
+                      description = "The type of color to set.",
                       default = "'diffuse'"
                     },
                     {
@@ -10157,6 +10214,32 @@ return {
                       type = "number",
                       description = "The alpha component of the color.",
                       default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "colorType",
+                      type = "MaterialColor",
+                      description = "The type of color to set.",
+                      default = "'diffuse'"
+                    },
+                    {
+                      name = "hex",
+                      type = "number",
+                      description = "A hexcode to use for the color (alpha is not supported)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "hex",
+                      type = "number",
+                      description = "A hexcode to use for the color (alpha is not supported)."
                     }
                   },
                   returns = {}

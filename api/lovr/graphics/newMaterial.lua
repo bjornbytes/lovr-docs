@@ -34,6 +34,11 @@ return {
       type = 'number',
       default = '1',
       description = 'The alpha component of the diffuse color.'
+    },
+    hex = {
+      type = 'number',
+      default = '0xffffff',
+      description = 'A hexcode to use for the diffuse color (alpha is not supported).'
     }
   },
   returns = {
@@ -57,6 +62,10 @@ return {
     },
     {
       arguments = { 'r', 'g', 'b', 'a' },
+      returns = { 'material' }
+    },
+    {
+      arguments = { 'hex' },
       returns = { 'material' }
     }
   },

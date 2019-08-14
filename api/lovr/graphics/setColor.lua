@@ -24,9 +24,13 @@ return {
       default = '1.0',
       description = 'The alpha component of the color.'
     },
+    hex = {
+      type = 'number',
+      description = 'A hexcode like `0xffffff` to use for the color (does not support alpha).'
+    },
     color = {
       type = 'table',
-      description = 'A table containing the color components.'
+      description = 'A table containing 3 or 4 color components.'
     }
   },
   returns = {},
@@ -36,11 +40,15 @@ return {
       returns = {}
     },
     {
+      arguments = { 'hex' },
+      returns = {}
+    },
+    {
       arguments = { 'color' },
       returns = {}
     }
   },
-  notes = 'The default color is white.',
+  notes = 'The default color is `(1, 1, 1, 1)`.',
   example = {
     description = 'Draw a red cube.',
     code = [[

@@ -107,10 +107,12 @@ local function processFunction(path, parent)
       }
     }
   else
+    assert(fn.arguments, string.format('Function %q with variants does not have arguments list', fn.key))
     for name, arg in pairs(fn.arguments) do
       arg.name = name
     end
 
+    assert(fn.returns, string.format('Function %q with variants does not have returns list', fn.key))
     for name, ret in pairs(fn.returns) do
       ret.name = name
     end

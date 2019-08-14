@@ -9,7 +9,7 @@ return {
     colorType = {
       type = 'MaterialColor',
       default = [['diffuse']],
-      description = 'The type of color to get.'
+      description = 'The type of color to set.'
     },
     r = {
       type = 'number',
@@ -27,6 +27,10 @@ return {
       type = 'number',
       default = '1.0',
       description = 'The alpha component of the color.'
+    },
+    hex = {
+      type = 'number',
+      description = 'A hexcode to use for the color (alpha is not supported).'
     }
   },
   returns = {},
@@ -37,6 +41,14 @@ return {
     },
     {
       arguments = { 'r', 'g', 'b', 'a' },
+      returns = {}
+    },
+    {
+      arguments = { 'colorType', 'hex' },
+      returns = {}
+    },
+    {
+      arguments = { 'hex' },
       returns = {}
     }
   },
