@@ -2,8 +2,7 @@ return {
   summary = 'Get a color property of the Material.',
   description = [[
     Returns a color property for a Material.  Different types of colors are supported for different
-    lighting parameters.  Colors default to white and are gamma corrected as necessary, see
-    `lovr.graphics.isGammaCorrect` for more info on that.
+    lighting parameters.  Colors default to white and are gamma corrected as necessary.
   ]],
   arguments = {
     {

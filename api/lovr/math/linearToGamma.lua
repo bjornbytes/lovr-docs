@@ -58,7 +58,6 @@ return {
     }
   },
   related = {
-    'lovr.math.gammaToLinear',
-    'lovr.graphics.isGammaCorrect'
+    'lovr.math.gammaToLinear'
   }
 }

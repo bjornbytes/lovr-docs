@@ -2,8 +2,7 @@ return {
   summary = 'Set a color property of the Material.',
   description = [[
     Sets a color property for a Material.  Different types of colors are supported for different
-    lighting parameters.  Color channels should be from 0.0 to 1.0. Colors default to white and are
-    gamma corrected as necessary, see `lovr.graphics.isGammaCorrect` for more info on that.
+    lighting parameters.  Colors default to white and are gamma corrected as necessary.
   ]],
   arguments = {
     colorType = {

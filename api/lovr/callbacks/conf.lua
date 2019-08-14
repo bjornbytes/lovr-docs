@@ -119,11 +119,6 @@ return {
           }
         },
         {
-          name = 'gammacorrect',
-          type = 'boolean',
-          description = 'Whether colors are gamma corrected.'
-        },
-        {
           name = 'window',
           type = 'table',
           description = 'Configuration for the window.',
@@ -209,9 +204,6 @@ return {
           t.modules.physics = true
           t.modules.thread = true
           t.modules.timer = true
-
-          -- Configure gamma correction
-          t.gammacorrect = false
 
           -- Configure the desktop window
           t.window.width = 1080

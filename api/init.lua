@@ -122,11 +122,6 @@ return {
                   }
                 },
                 {
-                  name = "gammacorrect",
-                  type = "boolean",
-                  description = "Whether colors are gamma corrected."
-                },
-                {
                   name = "window",
                   type = "table",
                   description = "Configuration for the window.",
@@ -175,7 +170,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Hotkeys\n  t.hotkeys = true\n\n  -- Headset settings\n  t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Math settings\n  t.math.ffi = true\n  t.math.globals = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure gamma correction\n  t.gammacorrect = false\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Hotkeys\n  t.hotkeys = true\n\n  -- Headset settings\n  t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Math settings\n  t.math.ffi = true\n  t.math.globals = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
@@ -7038,32 +7033,6 @@ return {
           notes = "Culling is disabled by default."
         },
         {
-          name = "isGammaCorrect",
-          tag = "graphicsState",
-          summary = "Get whether wireframe mode is enabled.",
-          description = "Get whether or not gamma correct rendering is supported and enabled.  When enabled, lovr will automatically perform gamma correction on colors set via `lovr.graphics.setColor`, `lovr.graphics.setBackgroundColor`, `Material:setColor`, and textures created without the linear flag set.  Gamma correction will subtly improve lighting quality, especially in darker regions.",
-          key = "lovr.graphics.isGammaCorrect",
-          module = "lovr.graphics",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "isGammaCorrect",
-                  type = "boolean",
-                  description = "Whether or not gamma correction is applied to colors."
-                }
-              }
-            }
-          },
-          related = {
-            "lovr.conf",
-            "lovr.math.gammaToLinear",
-            "lovr.math.linearToGamma"
-          },
-          notes = "Gamma correction must first be enabled in `lovr.conf`."
-        },
-        {
           name = "isWireframe",
           tag = "graphicsState",
           summary = "Get whether wireframe mode is enabled.",
@@ -10076,7 +10045,7 @@ return {
             {
               name = "getColor",
               summary = "Get a color property of the Material.",
-              description = "Returns a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to white and are gamma corrected as necessary, see `lovr.graphics.isGammaCorrect` for more info on that.",
+              description = "Returns a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to white and are gamma corrected as necessary.",
               key = "Material:getColor",
               module = "lovr.graphics",
               related = {
@@ -10217,7 +10186,7 @@ return {
             {
               name = "setColor",
               summary = "Set a color property of the Material.",
-              description = "Sets a color property for a Material.  Different types of colors are supported for different lighting parameters.  Color channels should be from 0.0 to 1.0. Colors default to white and are gamma corrected as necessary, see `lovr.graphics.isGammaCorrect` for more info on that.",
+              description = "Sets a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to white and are gamma corrected as necessary.",
               key = "Material:setColor",
               module = "lovr.graphics",
               related = {
@@ -13470,8 +13439,7 @@ return {
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
           related = {
-            "lovr.math.linearToGamma",
-            "lovr.graphics.isGammaCorrect"
+            "lovr.math.linearToGamma"
           },
           variants = {
             {
@@ -13582,8 +13550,7 @@ return {
           key = "lovr.math.linearToGamma",
           module = "lovr.math",
           related = {
-            "lovr.math.gammaToLinear",
-            "lovr.graphics.isGammaCorrect"
+            "lovr.math.gammaToLinear"
           },
           variants = {
             {
