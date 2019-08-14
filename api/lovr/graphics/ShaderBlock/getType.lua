@@ -12,6 +12,6 @@ return {
   related = {
     'ShaderBlock:getOffset',
     'lovr.graphics.newShaderBlock',
-    'lovr.graphics.getSystemLimits'
+    'lovr.graphics.getLimits'
   }
 }

@@ -2,7 +2,7 @@ return {
   tag = 'window',
   summary = 'Get capabilities of the graphics card.',
   description = [[
-    Returns information about the capabilities of the graphics card, such as the maximum texture
+    Returns information about the maximum limits of the graphics card, such as the maximum texture
     size or the amount of supported antialiasing.
   ]],
   arguments = {},
@@ -41,6 +41,6 @@ return {
     }
   },
   related = {
-    'lovr.graphics.getSupported'
+    'lovr.graphics.getFeatures'
   }
 }

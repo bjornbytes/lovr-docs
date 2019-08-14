@@ -4377,7 +4377,7 @@ return {
         {
           name = "BlockType",
           summary = "Different types of ShaderBlocks.",
-          description = "There are two types of ShaderBlocks that can be used: `uniform` and `compute`.\n\nUniform blocks are read only in shaders, can sometimes be a bit faster than compute blocks, and have a limited size (but the limit will be at least 16KB, you can check `lovr.graphics.getSystemLimits` to check).\n\nCompute blocks can be written to by compute shaders, might be slightly slower than uniform blocks, and have a much, much larger maximum size.",
+          description = "There are two types of ShaderBlocks that can be used: `uniform` and `compute`.\n\nUniform blocks are read only in shaders, can sometimes be a bit faster than compute blocks, and have a limited size (but the limit will be at least 16KB, you can check `lovr.graphics.getLimits` to check).\n\nCompute blocks can be written to by compute shaders, might be slightly slower than uniform blocks, and have a much, much larger maximum size.",
           key = "BlockType",
           module = "lovr.graphics",
           values = {
@@ -4394,7 +4394,7 @@ return {
             "ShaderBlock",
             "lovr.graphics.newShaderBlock",
             "ShaderBlock:getType",
-            "lovr.graphics.getSystemLimits"
+            "lovr.graphics.getLimits"
           }
         },
         {
@@ -6582,6 +6582,56 @@ return {
           }
         },
         {
+          name = "getFeatures",
+          tag = "window",
+          summary = "Check if certain features are supported.",
+          description = "Returns whether certain features are supported by the system\\'s graphics card.",
+          key = "lovr.graphics.getFeatures",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getLimits"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "features",
+                  type = "table",
+                  description = "A table of features and whether or not they are supported.",
+                  table = {
+                    {
+                      name = "astc",
+                      type = "boolean",
+                      description = "Whether ASTC textures are supported."
+                    },
+                    {
+                      name = "compute",
+                      type = "boolean",
+                      description = "Whether compute shaders are available."
+                    },
+                    {
+                      name = "dxt",
+                      type = "boolean",
+                      description = "Whether DXT (.dds) textures are supported."
+                    },
+                    {
+                      name = "instancedstereo",
+                      type = "boolean",
+                      description = "True if the instanced single-pass stereo rendering method is supported."
+                    },
+                    {
+                      name = "multiview",
+                      type = "boolean",
+                      description = "True if the multiview single-pass stereo rendering method is supported."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getFont",
           tag = "graphicsState",
           summary = "Get the active font.",
@@ -6623,6 +6673,56 @@ return {
                   name = "height",
                   type = "number",
                   description = "The height of the window, in pixels."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getLimits",
+          tag = "window",
+          summary = "Get capabilities of the graphics card.",
+          description = "Returns information about the maximum limits of the graphics card, such as the maximum texture size or the amount of supported antialiasing.",
+          key = "lovr.graphics.getLimits",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getFeatures"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "limits",
+                  type = "table",
+                  description = "The table of limits.",
+                  table = {
+                    {
+                      name = "anisotropy",
+                      type = "number",
+                      description = "The maximum anisotropy value supported by `Texture:setFilter`."
+                    },
+                    {
+                      name = "blocksize",
+                      type = "number",
+                      description = "The maximum size of a uniform ShaderBlock, in bytes."
+                    },
+                    {
+                      name = "pointsize",
+                      type = "number",
+                      description = "The maximum size of points, in pixels."
+                    },
+                    {
+                      name = "texturemsaa",
+                      type = "number",
+                      description = "The maximum MSAA value supported by `lovr.graphics.newTexture`."
+                    },
+                    {
+                      name = "texturesize",
+                      type = "number",
+                      description = "The maximum width or height of textures, in pixels."
+                    }
+                  }
                 }
               }
             }
@@ -6784,91 +6884,6 @@ return {
             "lovr.graphics.stencil"
           },
           notes = "Stencil values are between 0 and 255."
-        },
-        {
-          name = "getSupported",
-          tag = "window",
-          summary = "Check if certain features are supported.",
-          description = "Returns whether certain features are supported by the system\\'s graphics card.",
-          key = "lovr.graphics.getSupported",
-          module = "lovr.graphics",
-          related = {
-            "lovr.graphics.getSystemLimits"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "features",
-                  type = "table",
-                  description = "A table of features and whether or not they are supported.",
-                  table = {
-                    {
-                      name = "compute",
-                      type = "boolean",
-                      description = "Whether compute shaders are available."
-                    },
-                    {
-                      name = "singlepass",
-                      type = "boolean",
-                      description = "Whether single pass stereo rendering is supported."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getSystemLimits",
-          tag = "window",
-          summary = "Get capabilities of the graphics card.",
-          description = "Returns information about the capabilities of the graphics card, such as the maximum texture size or the amount of supported antialiasing.",
-          key = "lovr.graphics.getSystemLimits",
-          module = "lovr.graphics",
-          related = {
-            "lovr.graphics.getSupported"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "limits",
-                  type = "table",
-                  description = "The table of limits.",
-                  table = {
-                    {
-                      name = "anisotropy",
-                      type = "number",
-                      description = "The maximum anisotropy value supported by `Texture:setFilter`."
-                    },
-                    {
-                      name = "blocksize",
-                      type = "number",
-                      description = "The maximum size of a uniform ShaderBlock, in bytes."
-                    },
-                    {
-                      name = "pointsize",
-                      type = "number",
-                      description = "The maximum size of points, in pixels."
-                    },
-                    {
-                      name = "texturemsaa",
-                      type = "number",
-                      description = "The maximum MSAA value supported by `lovr.graphics.newTexture`."
-                    },
-                    {
-                      name = "texturesize",
-                      type = "number",
-                      description = "The maximum width or height of textures, in pixels."
-                    }
-                  }
-                }
-              }
-            }
-          }
         },
         {
           name = "getWidth",
@@ -7821,7 +7836,7 @@ return {
               code = "function lovr.load()\n  block = lovr.graphics.newShaderBlock({\n    time = 'float',\n    lightCount = 'int',\n    lightPositions = { 'vec3', 16 },\n    lightColors = { 'vec3', 16 },\n    objectCount = 'int',\n    objectTransforms = { 'mat4', 256 }\n  })\n\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('Block') .. -- Define the block in the shader\n    [[\n      vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n        // ...use the object transforms from the block\n        return projection * transform * vertex;\n      }\n    ]],\n\n    block:getShaderCode('Block') ..\n    [[\n      vec4 color(vec4 gColor, sampler2D image, vec2 uv) {\n        // ...use the lights from the block\n        return gColor * texture(image, uv);\n      }\n    ]]\n  )\n\n  -- Bind the block to the shader\n  shader:sendBlock('Block', block)\nend\n\n-- Update the data in the block every frame\nfunction lovr.update(dt)\n  block:send('time', lovr.timer.getTime())\n  block:send('lightCount', lightCount)\n  block:send('lightPositions', { { x, y, z}, { x, y, z } })\n  -- etc.\nend"
             }
           },
-          notes = "The writable flag can only be true if compute shaders are supported, see `lovr.graphics.getSupported`.  Writable blocks may be slightly slower than non-writable blocks, but they can also be much, much larger.  Non-writable blocks are usually limited to around 16 kilobytes in size, depending on hardware."
+          notes = "The writable flag can only be true if compute shaders are supported, see `lovr.graphics.getFeatures`.  Writable blocks may be slightly slower than non-writable blocks, but they can also be much, much larger.  Non-writable blocks are usually limited to around 16 kilobytes in size, depending on hardware."
         },
         {
           name = "newTexture",
@@ -11455,7 +11470,7 @@ return {
               related = {
                 "ShaderBlock:getOffset",
                 "lovr.graphics.newShaderBlock",
-                "lovr.graphics.getSystemLimits"
+                "lovr.graphics.getLimits"
               },
               variants = {
                 {

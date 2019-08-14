@@ -44,7 +44,7 @@ return {
   },
   notes = [[
     The writable flag can only be true if compute shaders are supported, see
-    `lovr.graphics.getSupported`.  Writable blocks may be slightly slower than non-writable blocks,
+    `lovr.graphics.getFeatures`.  Writable blocks may be slightly slower than non-writable blocks,
     but they can also be much, much larger.  Non-writable blocks are usually limited to around 16
     kilobytes in size, depending on hardware.
   ]],

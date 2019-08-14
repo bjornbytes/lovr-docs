@@ -5,7 +5,7 @@ return {
 
     Uniform blocks are read only in shaders, can sometimes be a bit faster than compute blocks, and
     have a limited size (but the limit will be at least 16KB, you can check
-    `lovr.graphics.getSystemLimits` to check).
+    `lovr.graphics.getLimits` to check).
 
     Compute blocks can be written to by compute shaders, might be slightly slower than uniform
     blocks, and have a much, much larger maximum size.
@@ -24,6 +24,6 @@ return {
     'ShaderBlock',
     'lovr.graphics.newShaderBlock',
     'ShaderBlock:getType',
-    'lovr.graphics.getSystemLimits'
+    'lovr.graphics.getLimits'
   }
 }
