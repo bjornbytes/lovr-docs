@@ -20,6 +20,9 @@ return {
       description = 'The current alpha blend mode.'
     }
   },
+  notes = [[
+    The default blend mode is `alpha` and `alphamultiply`.
+  ]],
   related = {
     'BlendMode',
     'BlendAlphaMode'

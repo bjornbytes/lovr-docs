@@ -6463,10 +6463,6 @@ return {
           description = "Returns the current blend mode.  The blend mode controls how each pixel's color is blended with the previous pixel's color when drawn.\n\nIf blending is disabled, `nil` will be returned.",
           key = "lovr.graphics.getBlendMode",
           module = "lovr.graphics",
-          related = {
-            "BlendMode",
-            "BlendAlphaMode"
-          },
           variants = {
             {
               arguments = {},
@@ -6483,7 +6479,12 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "BlendMode",
+            "BlendAlphaMode"
+          },
+          notes = "The default blend mode is `alpha` and `alphamultiply`."
         },
         {
           name = "getCanvas",
@@ -8689,10 +8690,7 @@ return {
           description = "Sets the blend mode.  The blend mode controls how each pixel's color is blended with the previous pixel's color when drawn.",
           key = "lovr.graphics.setBlendMode",
           module = "lovr.graphics",
-          related = {
-            "BlendMode",
-            "BlendAlphaMode"
-          },
+          notes = "The default blend mode is `alpha` and `alphamultiply`.",
           variants = {
             {
               arguments = {
@@ -8714,6 +8712,10 @@ return {
               arguments = {},
               returns = {}
             }
+          },
+          related = {
+            "BlendMode",
+            "BlendAlphaMode"
           }
         },
         {

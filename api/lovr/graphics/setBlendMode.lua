@@ -27,6 +27,9 @@ return {
       returns = {}
     }
   },
+  notes = [[
+    The default blend mode is `alpha` and `alphamultiply`.
+  ]],
   related = {
     'BlendMode',
     'BlendAlphaMode'
