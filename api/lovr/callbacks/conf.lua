@@ -18,6 +18,11 @@ return {
           description = 'A unique label for this project.'
         },
         {
+          name = 'hotkeys',
+          type = 'boolean',
+          description = 'Whether to enable the default hotkeys (F5 to restart, Esc to quit).'
+        },
+        {
           name = 'headset',
           type = 'table',
           description = 'Configuration for the headset.',
@@ -181,6 +186,9 @@ return {
 
           -- Set the project identity
           t.identity = 'default'
+
+          -- Hotkeys
+          t.hotkeys = true
 
           -- Headset settings
           t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }
