@@ -4109,7 +4109,7 @@ return {
           description = "Read the contents of a file.",
           key = "lovr.filesystem.read",
           module = "lovr.filesystem",
-          notes = "If the file does not exist or cannot be read, an error is thrown.",
+          notes = "If the file does not exist or cannot be read, nil is returned.",
           variants = {
             {
               arguments = {
@@ -4117,6 +4117,12 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The name of the file to read."
+                },
+                {
+                  name = "bytes",
+                  type = "number",
+                  description = "The number of bytes to read (if -1, all bytes will be read).",
+                  default = "-1"
                 }
               },
               returns = {
@@ -4124,6 +4130,11 @@ return {
                   name = "contents",
                   type = "string",
                   description = "The contents of the file."
+                },
+                {
+                  name = "bytes",
+                  type = "number",
+                  description = "The number of bytes read from the file."
                 }
               }
             }
