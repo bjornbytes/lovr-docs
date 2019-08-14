@@ -6624,6 +6624,11 @@ return {
                       name = "multiview",
                       type = "boolean",
                       description = "True if the multiview single-pass stereo rendering method is supported."
+                    },
+                    {
+                      name = "timers",
+                      type = "boolean",
+                      description = "Whether `lovr.graphics.tick` and `lovr.graphics.tock` are supported."
                     }
                   }
                 }
