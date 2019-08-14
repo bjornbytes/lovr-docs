@@ -40,6 +40,23 @@ return {
           }
         },
         {
+          name = 'math',
+          type = 'table',
+          description = 'Configuration for the math module.',
+          table = {
+            {
+              name = 'ffi',
+              type = 'boolean',
+              description = 'Whether vector objects should use an optimized LuaJIT FFI codepath.'
+            },
+            {
+              name = 'globals',
+              type = 'boolean',
+              description = 'Whether vector object functions should be added to the global scope.'
+            }
+          }
+        },
+        {
           name = 'modules',
           type = 'table',
           description = 'The set of enabled modules to use.',
@@ -169,6 +186,10 @@ return {
           t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }
           t.headset.msaa = 4
           t.headset.offset = 1.7
+
+          -- Math settings
+          t.math.ffi = true
+          t.math.globals = true
 
           -- Enable or disable different modules
           t.modules.audio = true
