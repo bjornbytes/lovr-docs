@@ -12432,94 +12432,6 @@ return {
       },
       functions = {
         {
-          name = "getAcceleration",
-          tag = "input",
-          summary = "Get the linear acceleration of a device.",
-          description = "Returns the current linear acceleration of a device, in meters per second per second.",
-          key = "lovr.headset.getAcceleration",
-          module = "lovr.headset",
-          related = {
-            "lovr.headset.getPosition",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getAngularAcceleration"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "device",
-                  type = "Device",
-                  description = "The device to get the acceleration of.",
-                  default = "head"
-                }
-              },
-              returns = {
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the linear acceleration."
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the linear acceleration."
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the linear acceleration."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getAngularAcceleration",
-          tag = "input",
-          summary = "Get the angular acceleration of a device.",
-          description = "Returns the current angular acceleration of a device.",
-          key = "lovr.headset.getAngularAcceleration",
-          module = "lovr.headset",
-          related = {
-            "lovr.headset.getPosition",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getAcceleration"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "device",
-                  type = "Device",
-                  description = "The device to get the acceleration of.",
-                  default = "head"
-                }
-              },
-              returns = {
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the angular acceleration."
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the angular acceleration."
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the angular acceleration."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getAngularVelocity",
           tag = "input",
           summary = "Get the angular velocity of a device.",
@@ -12529,9 +12441,7 @@ return {
           related = {
             "lovr.headset.getPosition",
             "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAcceleration",
-            "lovr.headset.getAngularAcceleration"
+            "lovr.headset.getVelocity"
           },
           variants = {
             {
@@ -13023,9 +12933,7 @@ return {
           related = {
             "lovr.headset.getPosition",
             "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getAcceleration",
-            "lovr.headset.getAngularAcceleration"
+            "lovr.headset.getAngularVelocity"
           },
           variants = {
             {
@@ -13158,9 +13066,7 @@ return {
           related = {
             "lovr.headset.getOrientation",
             "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getAcceleration",
-            "lovr.headset.getAngularAcceleration"
+            "lovr.headset.getAngularVelocity"
           },
           variants = {
             {
@@ -13202,9 +13108,7 @@ return {
           related = {
             "lovr.headset.getPosition",
             "lovr.headset.getOrientation",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getAcceleration",
-            "lovr.headset.getAngularAcceleration"
+            "lovr.headset.getAngularVelocity"
           },
           variants = {
             {

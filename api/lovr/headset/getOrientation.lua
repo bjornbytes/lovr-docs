@@ -35,8 +35,6 @@ return {
   related = {
     'lovr.headset.getPosition',
     'lovr.headset.getVelocity',
-    'lovr.headset.getAngularVelocity',
-    'lovr.headset.getAcceleration',
-    'lovr.headset.getAngularAcceleration'
+    'lovr.headset.getAngularVelocity'
   }
 }
