@@ -56,18 +56,44 @@ return {
       type = 'number',
       default = '0',
       description = 'The z component of the rotation axis.'
+    },
+    u = {
+      type = 'number',
+      default = '0.0',
+      description = 'The u coordinate of the diffuse texture.'
+    },
+    v = {
+      type = 'number',
+      default = '0.0',
+      description = 'The v coordinate of the diffuse texture.'
+    },
+    v = {
+      type = 'number',
+      default = '1.0',
+      description = 'The width of the diffuse texture to render.'
+    },
+    h = {
+      type = 'number',
+      default = '1.0',
+      description = 'The height of the diffuse texture to render.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'mode', 'x', 'y', 'z', 'width', 'height', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'mode', 'x', 'y', 'z', 'width', 'height', 'angle', 'ax', 'ay', 'az', 'u', 'v', 'w', 'h' },
       returns = {}
     },
     {
       description = 'Draw a plane with a custom material.',
-      arguments = { 'material', 'x', 'y', 'z', 'width', 'height', 'angle', 'ax', 'ay', 'az' },
+      arguments = { 'material', 'x', 'y', 'z', 'width', 'height', 'angle', 'ax', 'ay', 'az', 'u', 'v', 'w', 'h' },
       returns = {}
     }
-  }
+  },
+  notes = [[
+    The `u`, `v`, `w`, `h` arguments can be used to select a subregion of the diffuse texture to
+    apply to the plane.  One efficient technique for rendering many planes with different textures
+    is to pack all of the textures into a single image, and then use the uv arguments to select
+    a sub-rectangle to use for each plane.
+  ]]
 }

@@ -8170,6 +8170,7 @@ return {
           description = "Draws a plane with a given position, size, and orientation.",
           key = "lovr.graphics.plane",
           module = "lovr.graphics",
+          notes = "The `u`, `v`, `w`, `h` arguments can be used to select a subregion of the diffuse texture to apply to the plane.  One efficient technique for rendering many planes with different textures is to pack all of the textures into a single image, and then use the uv arguments to select a sub-rectangle to use for each plane.",
           variants = {
             {
               arguments = {
@@ -8231,6 +8232,25 @@ return {
                   type = "number",
                   description = "The z component of the rotation axis.",
                   default = "0"
+                },
+                {
+                  name = "u",
+                  type = "number",
+                  description = "The u coordinate of the diffuse texture.",
+                  default = "0.0"
+                },
+                {
+                  name = "v",
+                  type = "number",
+                  description = "The width of the diffuse texture to render.",
+                  default = "1.0"
+                },
+                nil,
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of the diffuse texture to render.",
+                  default = "1.0"
                 }
               },
               returns = {}
@@ -8296,6 +8316,25 @@ return {
                   type = "number",
                   description = "The z component of the rotation axis.",
                   default = "0"
+                },
+                {
+                  name = "u",
+                  type = "number",
+                  description = "The u coordinate of the diffuse texture.",
+                  default = "0.0"
+                },
+                {
+                  name = "v",
+                  type = "number",
+                  description = "The width of the diffuse texture to render.",
+                  default = "1.0"
+                },
+                nil,
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of the diffuse texture to render.",
+                  default = "1.0"
                 }
               },
               returns = {}
