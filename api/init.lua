@@ -9536,29 +9536,6 @@ return {
               notes = "The dimensions of a Canvas can not be changed after it is created."
             },
             {
-              name = "getFormat",
-              summary = "Get the format of the Canvas texture.",
-              description = "Returns the internal storage format used for the Canvas.",
-              key = "Canvas:getFormat",
-              module = "lovr.graphics",
-              related = {
-                "TextureFormat",
-                "lovr.graphics.newCanvas"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "format",
-                      type = "TextureFormat",
-                      description = "The texture format used by the Canvas."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getHeight",
               summary = "Get the height of the Canvas.",
               description = "Returns the height of the Canvas, its Textures, and its depth buffer.",
