@@ -9952,9 +9952,10 @@ return {
             {
               name = "getWidth",
               summary = "Get the width of a line of text.",
-              description = "Returns the width of a string when rendered using the font, with an optional wrap.  To get the correct units returned, make sure the pixel density is set with `Font:setPixelDensity`.",
+              description = "Returns the width and line count of a string when rendered using the font, with an optional wrap.",
               key = "Font:getWidth",
               module = "lovr.graphics",
+              notes = "To get the correct units returned, make sure the pixel density is set with\n    `Font:setPixelDensity`.",
               variants = {
                 {
                   arguments = {
@@ -9975,6 +9976,11 @@ return {
                       name = "width",
                       type = "number",
                       description = "The maximum width of any line in the text."
+                    },
+                    {
+                      name = "lines",
+                      type = "number",
+                      description = "The number of lines in the wrapped text."
                     }
                   }
                 }
@@ -21225,8 +21231,40 @@ return {
             {
               arguments = {
                 {
-                  name = "body",
+                  name = "code",
                   type = "string",
+                  description = "The code to run in the Thread."
+                }
+              },
+              returns = {
+                {
+                  name = "thread",
+                  type = "Thread",
+                  description = "The new Thread."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "A file containing code to run in the Thread."
+                }
+              },
+              returns = {
+                {
+                  name = "thread",
+                  type = "Thread",
+                  description = "The new Thread."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
                   description = "The code to run in the Thread."
                 }
               },
