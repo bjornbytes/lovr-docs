@@ -35,8 +35,12 @@ return {
     }
   },
   returns = {},
+  notes = [[
+    The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`.
+  ]],
   related = {
     'TextureData:getPixel',
-    'Texture:replacePixels'
+    'Texture:replacePixels',
+    'TextureFormat'
   }
 }

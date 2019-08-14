@@ -35,8 +35,12 @@ return {
       description = 'The alpha component of the pixel, from 0.0 to 1.0.'
     }
   },
+  notes = [[
+    The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`.
+  ]],
   related = {
     'TextureData:setPixel',
-    'Texture:replacePixels'
+    'Texture:replacePixels',
+    'TextureFormat'
   }
 }

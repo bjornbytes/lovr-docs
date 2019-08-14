@@ -3306,7 +3306,8 @@ return {
               module = "lovr.data",
               related = {
                 "TextureData:setPixel",
-                "Texture:replacePixels"
+                "Texture:replacePixels",
+                "TextureFormat"
               },
               variants = {
                 {
@@ -3345,7 +3346,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
             },
             {
               name = "getWidth",
@@ -3379,7 +3381,8 @@ return {
               module = "lovr.data",
               related = {
                 "TextureData:getPixel",
-                "Texture:replacePixels"
+                "Texture:replacePixels",
+                "TextureFormat"
               },
               variants = {
                 {
@@ -3418,7 +3421,8 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
             }
           },
           constructors = {
