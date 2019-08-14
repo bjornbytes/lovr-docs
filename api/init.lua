@@ -3252,6 +3252,29 @@ return {
               }
             },
             {
+              name = "getFormat",
+              summary = "Get the pixel format of the TextureData.",
+              description = "Returns the format of the TextureData.",
+              key = "TextureData:getFormat",
+              module = "lovr.data",
+              related = {
+                "TextureFormat",
+                "Texture:getFormat"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of the TextureData."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getHeight",
               summary = "Get the height of the TextureData.",
               description = "Returns the height of the TextureData, in pixels.",
