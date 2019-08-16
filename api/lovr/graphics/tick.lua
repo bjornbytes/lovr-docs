@@ -18,6 +18,9 @@ return {
     The amount of time elapsed can be accessed from the `timers` field of `lovr.graphics.getStats`.
     Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if
     they are unavailable.
+
+    GPU timers are not supported on all systems.  Check the `timers` feature using
+    `lovr.graphics.getFeatures` to see if it is supported on the current system.
   ]],
   example = [[
     function lovr.draw()
