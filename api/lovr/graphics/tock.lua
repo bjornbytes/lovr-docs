@@ -19,7 +19,7 @@ return {
     they are unavailable.
   ]],
   example = [[
-    function lovr.graphics.draw()
+    function lovr.draw()
       lovr.graphics.tick('mytimer')
 
       -- Draw a bunch of cubes
