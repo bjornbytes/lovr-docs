@@ -6,7 +6,7 @@ return {
     {
       name = 'label',
       type = 'string',
-      description = 'The name of the timer'
+      description = 'The name of the timer.'
     }
   },
   returns = {},
