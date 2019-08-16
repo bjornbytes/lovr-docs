@@ -10776,11 +10776,16 @@ return {
           description = "Starts a named timer on the GPU, which can be stopped using `lovr.graphics.tock`.",
           key = "lovr.graphics.tick",
           module = "lovr.graphics",
-          notes = "The timer can be stopped by calling `lovr.graphics.tock` using the same name.  All drawing commands between the tick and the tock will be timed.  It is not possible to nest calls to tick and tock.\n\nThe amount of time elapsed can be accessed from the `timers` field of `lovr.graphics.getStats`. Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if they are unavailable.",
           related = {
             "lovr.graphics.tock",
             "lovr.graphics.getStats"
           },
+          examples = {
+            {
+              code = "function lovr.graphics.draw()\n  lovr.graphics.tick('mytimer')\n\n  -- Draw a bunch of cubes\n  for x = -4, 4 do\n    for y = -4, 4 do\n      for z = -4, 4 do\n        lovr.graphics.cube('fill', x, y, z, .2)\n      end\n    end\n  end\n\n  lovr.graphics.tock('mytimer')\n\n  local stats = lovr.graphics.getStats()\n  if stats.timers.mytimer then\n    print('rendering took ' .. stats.timers.mytimer .. ' seconds')\n  end\nend"
+            }
+          },
+          notes = "The timer can be stopped by calling `lovr.graphics.tock` using the same name.  All drawing commands between the tick and the tock will be timed.  It is not possible to nest calls to tick and tock.\n\nThe amount of time elapsed can be accessed from the `timers` field of `lovr.graphics.getStats`. Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if they are unavailable.",
           variants = {
             {
               arguments = {
@@ -10801,11 +10806,16 @@ return {
           description = "Stops a named timer on the GPU, previously started with `lovr.graphics.tick`.",
           key = "lovr.graphics.tock",
           module = "lovr.graphics",
-          notes = "All drawing commands between the tick and the tock will be timed.  It is not possible to nest calls to tick and tock.\n\nThe amount of time elapsed can be accessed from the `timers` field of `lovr.graphics.getStats`. Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if they are unavailable.",
           related = {
             "lovr.graphics.tick",
             "lovr.graphics.getStats"
           },
+          examples = {
+            {
+              code = "function lovr.graphics.draw()\n  lovr.graphics.tick('mytimer')\n\n  -- Draw a bunch of cubes\n  for x = -4, 4 do\n    for y = -4, 4 do\n      for z = -4, 4 do\n        lovr.graphics.cube('fill', x, y, z, .2)\n      end\n    end\n  end\n\n  lovr.graphics.tock('mytimer')\n\n  local stats = lovr.graphics.getStats()\n  if stats.timers.mytimer then\n    print('rendering took ' .. stats.timers.mytimer .. ' seconds')\n  end\nend"
+            }
+          },
+          notes = "All drawing commands between the tick and the tock will be timed.  It is not possible to nest calls to tick and tock.\n\nThe amount of time elapsed can be accessed from the `timers` field of `lovr.graphics.getStats`. Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if they are unavailable.",
           variants = {
             {
               arguments = {

@@ -18,6 +18,27 @@ return {
     Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if
     they are unavailable.
   ]],
+  example = [[
+    function lovr.graphics.draw()
+      lovr.graphics.tick('mytimer')
+
+      -- Draw a bunch of cubes
+      for x = -4, 4 do
+        for y = -4, 4 do
+          for z = -4, 4 do
+            lovr.graphics.cube('fill', x, y, z, .2)
+          end
+        end
+      end
+
+      lovr.graphics.tock('mytimer')
+
+      local stats = lovr.graphics.getStats()
+      if stats.timers.mytimer then
+        print('rendering took ' .. stats.timers.mytimer .. ' seconds')
+      end
+    end
+  ]],
   related = {
     'lovr.graphics.tick',
     'lovr.graphics.getStats'
