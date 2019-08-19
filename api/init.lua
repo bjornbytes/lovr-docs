@@ -12134,26 +12134,6 @@ return {
       },
       enums = {
         {
-          name = "ControllerHand",
-          description = "Represents which hand a Controller is thought to be held in.",
-          key = "ControllerHand",
-          module = "lovr.headset",
-          values = {
-            {
-              name = "left",
-              description = "The left hand."
-            },
-            {
-              name = "right",
-              description = "The right hand."
-            },
-            {
-              name = "unknown",
-              description = "Can not be determined."
-            }
-          }
-        },
-        {
           name = "Device",
           description = "Different types of input devices supported by the `lovr.headset` module.",
           key = "Device",
