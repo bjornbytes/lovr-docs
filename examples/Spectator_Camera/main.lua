@@ -3,10 +3,8 @@ function lovr.load()
 
   -- Precompute camera transform (could also be attached to a controller)
   local x, y, z = -5, 5, 5
-  camera = lovr.math.mat4()
-  camera:translate(x, y, z)
-  camera:rotate(lovr.math.lookAt(x, y, z, 0, 0, 0))
-  view = lovr.math.mat4(camera):invert()
+  camera = lovr.math.newMat4():translate(x, y, z)--:lookAt(vec3(x, y, z), vec3(0, 0, 0))
+  view = lovr.math.newMat4(camera):invert()
 end
 
 local renderScene
@@ -49,8 +47,8 @@ renderScene = function(isCamera)
   end
 
   -- Always draw the controllers
-  for i, controller in ipairs(lovr.headset.getControllers()) do
-    local x, y, z, angle, ax, ay, az = controller:getPose()
+  for i, hand in ipairs(lovr.headset.getHands()) do
+    local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)
     lovr.graphics.cube('fill', x, y, z, .06, angle, ax, ay, az)
   end
 end

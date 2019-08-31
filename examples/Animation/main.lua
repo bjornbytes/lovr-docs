@@ -6,22 +6,13 @@
 
 function lovr.load()
   model = lovr.graphics.newModel('scytha/scene.gltf')
-  animator = lovr.graphics.newAnimator(model)
-  animation = animator:getAnimationNames()[1]
-  assert(animation, 'No animation found!')
-  animator:play(animation)
-  animator:setLooping(animation, true)
-  model:setAnimator(animator)
-
-  shader = lovr.graphics.newShader([[
-    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-      return projection * transform * lovrPoseMatrix * vertex;
-    }
-  ]], nil)
+  shader = lovr.graphics.newShader('unlit', {
+    flags = { animated = true }
+  })
 end
 
 function lovr.update(dt)
-  animator:update(dt)
+  model:animate(1, lovr.timer.getTime())
 end
 
 function lovr.draw()

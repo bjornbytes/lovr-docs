@@ -38,7 +38,7 @@ local bannedcell = math.ceil(cells/2)               -- Do not allow clicks at th
 local fontscale = height/lovr.graphics.getHeight()  -- Scale argument to screen-space print() functions
 
 -- Screen-space coordinate system
-local matrix = lovr.math.mat4():orthographic(-aspect, aspect, -1, 1, -64, 64)
+local matrix = lovr.math.newMat4():orthographic(-aspect, aspect, -1, 1, -64, 64)
 
 -- State: We will store the blocks to draw as a 2D array of heights (nil for no block)
 local grid = {}

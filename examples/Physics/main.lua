@@ -1,5 +1,3 @@
-shader = require 'shader'
-
 function lovr.load()
   world = lovr.physics.newWorld()
   world:setLinearDamping(.01)
@@ -20,6 +18,9 @@ function lovr.load()
   controllerBoxes = {}
 
   lovr.timer.step() -- Reset the timer before the first update
+
+  shader = lovr.graphics.newShader('standard')
+  shader:send('lovrExposure', 2)
 end
 
 function lovr.update(dt)
@@ -27,14 +28,13 @@ function lovr.update(dt)
   world:update(dt)
 
   -- Place boxes on controllers
-  for i, controller in ipairs(lovr.headset.getControllers()) do
+  for i, hand in ipairs(lovr.headset.getHands()) do
     if not controllerBoxes[i] then
       controllerBoxes[i] = world:newBoxCollider(0, 0, 0, .25)
       controllerBoxes[i]:setKinematic(true)
       controllerBoxes[i]:setMass(10)
     end
-    controllerBoxes[i]:setPosition(controller:getPosition())
-    controllerBoxes[i]:setOrientation(controller:getOrientation())
+    controllerBoxes[i]:setPose(lovr.headset.getPose(hand))
   end
 end
 
