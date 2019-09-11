@@ -4,7 +4,12 @@
 -- Sample contributed by andi mcc
 
 local shader = require 'shader'
-lovr.mouse = require 'mouse'    -- Note: Requires LuaJIT
+
+-- In order for lovr.mouse to work, and therefore for this example to work,
+-- we must be using LuaJIT and we must be using GLFW (ie: we can't be on Oculus Mobile)
+if type(jit) == 'table' and lovr.headset.getDriver() ~= "oculusmobile" then
+	lovr.mouse = require 'mouse'
+end
 
 local mirror = lovr.mirror              -- Backup lovr.mirror before it is overwritten
 local font = lovr.graphics.newFont(36)  -- Font appropriate for screen-space usage
@@ -136,4 +141,9 @@ function lovr.draw()
 		local gray = grid[x][y]
 		if gray then floorbox(x,y,gray) end
 	end end
+
+	if not lovr.mouse then -- If you can't click, you can't create any blocks
+		lovr.graphics.setShader(nil)
+		lovr.graphics.print('This example only works on a desktop computer.', 0, 1.7, -3, .2)
+	end
 end
