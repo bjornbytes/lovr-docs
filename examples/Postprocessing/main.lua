@@ -1,6 +1,8 @@
 -- This demo renders a scene to a canvas, then renders the canvas to screen filtered through a shader.
--- Set this to false to see the scene with no postprocessing.
-local useCanvas = true
+--
+-- Sample contributed by andi mcc
+
+local useCanvas = true -- Set this to false to see the scene with no postprocessing.
 
 -- A shader program consists of a vertex shader (which describes how to transform polygons)
 -- and a fragment shader (which describes how to color pixels).

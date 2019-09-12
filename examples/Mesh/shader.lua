@@ -1,3 +1,4 @@
+-- Copy of fragment shader from Physics example
 return [[
 in vec3 lightDirection;
 in vec3 normalDirection;
