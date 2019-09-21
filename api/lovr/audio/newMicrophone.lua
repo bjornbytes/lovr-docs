@@ -3,13 +3,18 @@ return {
   summary = 'Create a new Microphone.',
   description = [[
     Creates a new Microphone based on the name of an existing micrphone and a set of capture
-    parameters.  If the specified parameters are not supported, `nil` will be returned.
+    parameters.  If the specified combination of prameters are not supported for audio capture,
+    `nil` will be returned.
   ]],
   arguments = {
     {
       name = 'name',
       type = 'string',
-      description = 'The name of the microphone that this Microphone will record from.'
+      default = 'nil',
+      description = [[
+        The name of the microphone that this Microphone will record from, or `nil` to use the
+        default microphone.
+      ]]
     },
     {
       name = 'samples',

@@ -1,7 +1,7 @@
 return {
   tag = 'microphones',
-  summary = 'Get a table containing the names of all connected microphones.',
-  description = 'Returns a table containing the names of all microphones connected to the system.',
+  summary = 'Get the names of all connected microphones.',
+  description = 'Returns a table with the names of all microphones connected to the system.',
   arguments = {
     t = {
       type = 'table',

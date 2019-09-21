@@ -1,10 +1,7 @@
 return {
   tag = 'listener',
   summary = 'Check if audio is spatialized.',
-  description = [[
-    Returns whether or not audio is currently spatialized with HRTFs.  Spatialized audio is much
-    more immersive.
-  ]],
+  description = 'Returns whether or not audio is currently spatialized with HRTFs.',
   arguments = {},
   returns = {
     {

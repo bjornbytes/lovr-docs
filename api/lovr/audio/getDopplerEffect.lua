@@ -1,10 +1,7 @@
 return {
   tag = 'listener',
   summary = 'Get the doppler effect parameters.',
-  description = [[
-    Returns the parameters that control the simulated doppler effect: The effect intensity and the
-    speed of sound.
-  ]],
+  description = 'Returns the parameters that control the simulated doppler effect.',
   arguments = {},
   returns = {
     {
@@ -18,5 +15,5 @@ return {
       description = 'The speed of sound, in meters per second.'
     }
   },
-  notes = 'The default factor is 1 and the default speed of sound is 343.29.'
+  notes = 'The default factor is 1.0 and the default speed of sound is 343.29.'
 }

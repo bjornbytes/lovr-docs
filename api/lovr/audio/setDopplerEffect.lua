@@ -20,5 +20,5 @@ return {
     }
   },
   returns = {},
-  notes = 'The default factor is 1 and the default speed of sound is 343.29.'
+  notes = 'The default factor is 1.0 and the default speed of sound is 343.29.'
 }

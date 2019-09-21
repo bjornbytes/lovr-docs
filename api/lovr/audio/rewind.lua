@@ -7,5 +7,11 @@ return {
   notes = [[
     Sources that are paused will remain paused. Sources that are currently playing will restart from
     the beginning.
-  ]]
+  ]],
+  related = {
+    'Source:rewind',
+    'lovr.audio.pause',
+    'lovr.audio.resume',
+    'lovr.audio.stop'
+  }
 }

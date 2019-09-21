@@ -4,7 +4,11 @@ return {
   description = 'Stops all audio.',
   arguments = {},
   returns = {},
-  notes = [[
-    If you want to resume the stopped audio later, see `lovr.audio.pause`.
-  ]]
+  notes = 'If you want to resume the stopped audio later, see `lovr.audio.pause`.',
+  related = {
+    'Source:stop',
+    'lovr.audio.pause',
+    'lovr.audio.resume',
+    'lovr.audio.rewind'
+  }
 }
