@@ -16,7 +16,7 @@ return {
   returns = {},
   notes = [[
     - Alpha sampling is disabled by default.
-    - This feature can be used for a cheap transparency effect, pixels with an alpha of zero will
+    - This feature can be used for a simple transparency effect, pixels with an alpha of zero will
       have their depth value discarded, allowing things behind them to show through (normally you
       have to sort objects or write a shader for this).
   ]]

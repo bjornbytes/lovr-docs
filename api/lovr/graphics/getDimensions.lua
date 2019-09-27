@@ -17,6 +17,7 @@ return {
   },
   related = {
     'lovr.graphics.getWidth',
-    'lovr.graphics.getHeight'
+    'lovr.graphics.getHeight',
+    'lovr.graphics.getPixelDensity'
   }
 }

@@ -1,10 +1,7 @@
 return {
   tag = 'graphicsState',
   summary = 'Reset all graphics state.',
-  description = [[
-    Resets the graphics state.  This includes the coordinate transformation, projection, shader,
-    colors, scissor, and culling state.
-  ]],
+  description = 'Resets all graphics state to the initial values.',
   arguments = {},
   returns = {}
 }

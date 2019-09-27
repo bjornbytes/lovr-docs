@@ -7,10 +7,6 @@ return {
       type = 'Texture',
       description = 'The texture to use.'
     },
-    canvas = {
-      type = 'Canvas',
-      description = 'The first Texture attached to this Canvas will be used.'
-    },
     u = {
       type = 'number',
       default = '0',
@@ -35,13 +31,8 @@ return {
   returns = {},
   variants = {
     {
-      description = 'Fills the screen with a Texture.',
+      description = 'Fills the screen with a region of a Texture.',
       arguments = { 'texture', 'u', 'v', 'w', 'h' },
-      returns = {}
-    },
-    {
-      description = 'Fills the screen with the first Texture attached to a Canvas.',
-      arguments = { 'canvas', 'u', 'v', 'w', 'h' },
       returns = {}
     },
     {
@@ -52,6 +43,6 @@ return {
   },
   notes = [[
     This function ignores stereo rendering, so it will stretch the input across the entire Canvas if
-    it's stereo.
+    it's stereo.  Special shaders are currently required for correct stereo fills.
   ]]
 }

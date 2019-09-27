@@ -10,6 +10,7 @@ return {
   arguments = {
     {
       name = 'angle',
+      default = '0',
       type = 'number',
       description = 'The amount to rotate the coordinate system by, in radians.'
     },

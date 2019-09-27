@@ -6278,46 +6278,69 @@ return {
             {
               arguments = {
                 {
-                  name = "width",
-                  type = "number",
-                  description = "The width of the window.",
-                  default = "1080"
-                },
-                {
-                  name = "height",
-                  type = "number",
-                  description = "The height of the window.",
-                  default = "600"
-                },
-                {
-                  name = "fullscreen",
-                  type = "boolean",
-                  description = "Whether the window should be fullscreen.",
-                  default = "false"
-                },
-                {
-                  name = "msaa",
-                  type = "number",
-                  description = "The number of samples to use for multisample antialiasing.",
-                  default = "0"
-                },
-                {
-                  name = "title",
-                  type = "string",
-                  description = "The window title.",
-                  default = "nil"
-                },
-                {
-                  name = "icon",
-                  type = "string",
-                  description = "A path to an image to use for the window icon.",
-                  default = "nil"
+                  name = "flags",
+                  type = "table",
+                  description = "Flags to customize the window's appearance and behavior.",
+                  table = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the window, or 0 to use the size of the monitor.",
+                      default = "1080"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the window, or 0 to use the size of the monitor.",
+                      default = "600"
+                    },
+                    {
+                      name = "fullscreen",
+                      type = "boolean",
+                      description = "Whether the window should be fullscreen.",
+                      default = "false"
+                    },
+                    {
+                      name = "resizable",
+                      type = "boolean",
+                      description = "Whether the window should be resizable.",
+                      default = "false"
+                    },
+                    {
+                      name = "msaa",
+                      type = "number",
+                      description = "The number of samples to use for multisample antialiasing.",
+                      default = "0"
+                    },
+                    {
+                      name = "title",
+                      type = "string",
+                      description = "The window title.",
+                      default = "LÖVR"
+                    },
+                    {
+                      name = "icon",
+                      type = "string",
+                      description = "A path to an image to use for the window icon.",
+                      default = "nil"
+                    },
+                    {
+                      name = "vsync",
+                      type = "number",
+                      description = "0 to disable vsync, 1 to enable.  This is only a hint, and may not be respected if necessary for the current VR display.",
+                      default = "0"
+                    }
+                  }
                 }
               },
               returns = {}
             }
           },
-          notes = "This function can only be called once. It is normally called internally, but you can override this by setting window to `nil` in conf.lua.  See `lovr.conf` for more information."
+          related = {
+            "lovr.graphics.hasWindow",
+            "lovr.conf"
+          },
+          notes = "This function can only be called once.  It is normally called internally, but you can override this by setting window to `nil` in conf.lua.  See `lovr.conf` for more information.\n\nThe window must be created before any `lovr.graphics` functions can be used."
         },
         {
           name = "cube",
@@ -6687,50 +6710,15 @@ return {
           description = "Draws a fullscreen textured quad.",
           key = "lovr.graphics.fill",
           module = "lovr.graphics",
-          notes = "This function ignores stereo rendering, so it will stretch the input across the entire Canvas if it's stereo.",
+          notes = "This function ignores stereo rendering, so it will stretch the input across the entire Canvas if it's stereo.  Special shaders are currently required for correct stereo fills.",
           variants = {
             {
-              description = "Fills the screen with a Texture.",
+              description = "Fills the screen with a region of a Texture.",
               arguments = {
                 {
                   name = "texture",
                   type = "Texture",
                   description = "The texture to use."
-                },
-                {
-                  name = "u",
-                  type = "number",
-                  description = "The x component of the uv offset.",
-                  default = "0"
-                },
-                {
-                  name = "v",
-                  type = "number",
-                  description = "The y component of the uv offset.",
-                  default = "0"
-                },
-                {
-                  name = "w",
-                  type = "number",
-                  description = "The width of the Texture to render, in uv coordinates.",
-                  default = "1 - u"
-                },
-                {
-                  name = "h",
-                  type = "number",
-                  description = "The height of the Texture to render, in uv coordinates.",
-                  default = "1 - v"
-                }
-              },
-              returns = {}
-            },
-            {
-              description = "Fills the screen with the first Texture attached to a Canvas.",
-              arguments = {
-                {
-                  name = "canvas",
-                  type = "Canvas",
-                  description = "The first Texture attached to this Canvas will be used."
                 },
                 {
                   name = "u",
@@ -6787,7 +6775,7 @@ return {
         {
           name = "getAlphaSampling",
           tag = "graphicsState",
-          summary = "Get whether alpha sampling (alpha to coverage) is enabled.",
+          summary = "Get whether alpha sampling is enabled.",
           description = "Returns whether or not alpha sampling is enabled.  Alpha sampling is also known as alpha-to-coverage.  When it is enabled, the alpha channel of a pixel is factored into how antialiasing is computed, so the edges of a transparent texture will be correctly antialiased.",
           key = "lovr.graphics.getAlphaSampling",
           module = "lovr.graphics",
@@ -6803,7 +6791,7 @@ return {
               }
             }
           },
-          notes = "- Alpha sampling is disabled by default.\n- This feature can be used for a cheap transparency effect, pixels with an alpha of zero will\n  have their depth value discarded, allowing things behind them to show through (normally you\n  have to sort objects or write a shader for this)."
+          notes = "- Alpha sampling is disabled by default.\n- This feature can be used for a simple transparency effect, pixels with an alpha of zero will\n  have their depth value discarded, allowing things behind them to show through (normally you\n  have to sort objects or write a shader for this)."
         },
         {
           name = "getBackgroundColor",
@@ -6839,7 +6827,7 @@ return {
               }
             }
           },
-          notes = "The default background color is black."
+          notes = "The default background color is `(0.0, 0.0, 0.0, 1.0)`."
         },
         {
           name = "getBlendMode",
@@ -6929,7 +6917,7 @@ return {
               }
             }
           },
-          notes = "The default color is white."
+          notes = "The default color is `(1.0, 1.0, 1.0, 1.0)`."
         },
         {
           name = "getDefaultFilter",
@@ -6995,7 +6983,8 @@ return {
           module = "lovr.graphics",
           related = {
             "lovr.graphics.getWidth",
-            "lovr.graphics.getHeight"
+            "lovr.graphics.getHeight",
+            "lovr.graphics.getPixelDensity"
           },
           variants = {
             {
@@ -7102,7 +7091,8 @@ return {
           module = "lovr.graphics",
           related = {
             "lovr.graphics.getWidth",
-            "lovr.graphics.getDimensions"
+            "lovr.graphics.getDimensions",
+            "lovr.graphics.getPixelDensity"
           },
           variants = {
             {
@@ -7333,7 +7323,8 @@ return {
           module = "lovr.graphics",
           related = {
             "lovr.graphics.getHeight",
-            "lovr.graphics.getDimensions"
+            "lovr.graphics.getDimensions",
+            "lovr.graphics.getPixelDensity"
           },
           variants = {
             {
@@ -7380,10 +7371,6 @@ return {
           description = "Returns whether the desktop window is currently created.",
           key = "lovr.graphics.hasWindow",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.createWindow",
-            "lovr.conf"
-          },
           variants = {
             {
               arguments = {},
@@ -7395,7 +7382,12 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.graphics.createWindow",
+            "lovr.conf"
+          },
+          notes = "Most of the `lovr.graphics` functionality will only work if a window is created."
         },
         {
           name = "isCullingEnabled",
@@ -8092,34 +8084,6 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The filename of the model to load."
-                },
-                {
-                  name = "texture",
-                  type = "string",
-                  description = "The filename of the texture to apply to the model.",
-                  default = "nil"
-                }
-              },
-              returns = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "The new Model."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the model to load."
-                },
-                {
-                  name = "material",
-                  type = "Material",
-                  description = "The material to apply to the model.  If nil, the materials will be loaded from the model file.",
-                  default = "nil"
                 }
               },
               returns = {
@@ -8135,35 +8099,7 @@ return {
                 {
                   name = "modelData",
                   type = "ModelData",
-                  description = "The ModelData holding the data for the Model."
-                },
-                {
-                  name = "texture",
-                  type = "string",
-                  description = "The filename of the texture to apply to the model.",
-                  default = "nil"
-                }
-              },
-              returns = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "The new Model."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "modelData",
-                  type = "ModelData",
-                  description = "The ModelData holding the data for the Model."
-                },
-                {
-                  name = "material",
-                  type = "Material",
-                  description = "The material to apply to the model.  If nil, the materials will be loaded from the model file.",
-                  default = "nil"
+                  description = "The ModelData containing the data for the Model."
                 }
               },
               returns = {
@@ -8898,7 +8834,7 @@ return {
           name = "reset",
           tag = "graphicsState",
           summary = "Reset all graphics state.",
-          description = "Resets the graphics state.  This includes the coordinate transformation, projection, shader, colors, scissor, and culling state.",
+          description = "Resets all graphics state to the initial values.",
           key = "lovr.graphics.reset",
           module = "lovr.graphics",
           variants = {
@@ -8921,7 +8857,8 @@ return {
                 {
                   name = "angle",
                   type = "number",
-                  description = "The amount to rotate the coordinate system by, in radians."
+                  description = "The amount to rotate the coordinate system by, in radians.",
+                  default = "0"
                 },
                 {
                   name = "ax",
@@ -8965,7 +8902,8 @@ return {
                 {
                   name = "x",
                   type = "number",
-                  description = "The amount to scale on the x axis."
+                  description = "The amount to scale on the x axis.",
+                  default = "1.0"
                 },
                 {
                   name = "y",
@@ -9009,7 +8947,7 @@ return {
               returns = {}
             }
           },
-          notes = "- Alpha sampling is disabled by default.\n- This feature can be used for a cheap transparency effect, pixels with an alpha of zero will\n  have their depth value discarded, allowing things behind them to show through (normally you\n  have to sort objects or write a shader for this)."
+          notes = "- Alpha sampling is disabled by default.\n- This feature can be used for a simple transparency effect, pixels with an alpha of zero will\n  have their depth value discarded, allowing things behind them to show through (normally you\n  have to sort objects or write a shader for this)."
         },
         {
           name = "setBackgroundColor",
@@ -9018,7 +8956,7 @@ return {
           description = "Sets the background color used to clear the screen.  Color components are from 0.0 to 1.0.",
           key = "lovr.graphics.setBackgroundColor",
           module = "lovr.graphics",
-          notes = "The default background color is `(0, 0, 0, 1)`.",
+          notes = "The default background color is `(0.0, 0.0, 0.0, 1.0)`.",
           variants = {
             {
               arguments = {
@@ -9135,7 +9073,7 @@ return {
           description = "Sets the color used for drawing objects.  Color components are from 0.0 to 1.0.  Every pixel drawn will be multiplied (i.e. tinted) by this color.  This is a global setting, so it will affect all subsequent drawing operations.",
           key = "lovr.graphics.setColor",
           module = "lovr.graphics",
-          notes = "The default color is `(1, 1, 1, 1)`.",
+          notes = "The default color is `(1.0, 1.0, 1.0, 1.0)`.",
           variants = {
             {
               arguments = {
@@ -9285,7 +9223,7 @@ return {
                 {
                   name = "font",
                   type = "Font",
-                  description = "The font to use.  If `nil`, the default font is set.",
+                  description = "The font to use.  If `nil`, the default font is used (Varela Round).",
                   default = "nil"
                 }
               },
@@ -9858,17 +9796,20 @@ return {
                 {
                   name = "x",
                   type = "number",
-                  description = "The amount to translate on the x axis."
+                  description = "The amount to translate on the x axis.",
+                  default = "0"
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The amount to translate on the y axis."
+                  description = "The amount to translate on the y axis.",
+                  default = "0"
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The amount to translate on the z axis."
+                  description = "The amount to translate on the z axis.",
+                  default = "0"
                 }
               },
               returns = {}
@@ -14390,68 +14331,6 @@ return {
                   name = "noise",
                   type = "number",
                   description = "The noise value, between 0 and 1."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "orientationToDirection",
-          summary = "Convert an angle/axis orientation to a direction vector.",
-          description = "Converts a rotation in angle/axis representation into a direction vector.",
-          key = "lovr.math.orientationToDirection",
-          module = "lovr.math",
-          related = {
-            "lovr.math.lookAt"
-          },
-          examples = {
-            {
-              description = "Give Controllers laser beams.",
-              code = "function lovr.draw()\n  for i, controller in ipairs(lovr.headset.getControllers()) do\n    local x, y, z = controller:getPosition()\n    local angle, ax, ay, az = controller:getOrientation()\n    local dx, dy, dz = lovr.math.orientationToDirection(angle, ax, ay, az)\n    local length = 2\n    lovr.graphics.line(x, y, z, x + dx * length, y + dy * length, z + dz * length)\n  end\nend"
-            }
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "The angle (in radians)."
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation.",
-                  default = "1"
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation.",
-                  default = "0"
-                }
-              },
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x component of the direction vector."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y component of the direction vector."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z component of the direction vector."
                 }
               }
             }

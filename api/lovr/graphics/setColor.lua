@@ -48,7 +48,7 @@ return {
       returns = {}
     }
   },
-  notes = 'The default color is `(1, 1, 1, 1)`.',
+  notes = 'The default color is `(1.0, 1.0, 1.0, 1.0)`.',
   example = {
     description = 'Draw a red cube.',
     code = [[

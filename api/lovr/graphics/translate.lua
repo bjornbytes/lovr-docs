@@ -12,16 +12,19 @@ return {
     {
       name = 'x',
       type = 'number',
+      default = '0',
       description = 'The amount to translate on the x axis.'
     },
     {
       name = 'y',
       type = 'number',
+      default = '0',
       description = 'The amount to translate on the y axis.'
     },
     {
       name = 'z',
       type = 'number',
+      default = '0',
       description = 'The amount to translate on the z axis.'
     }
   },

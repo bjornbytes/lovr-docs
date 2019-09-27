@@ -46,5 +46,5 @@ return {
       returns = {}
     }
   },
-  notes = 'The default background color is `(0, 0, 0, 1)`.'
+  notes = 'The default background color is `(0.0, 0.0, 0.0, 1.0)`.'
 }

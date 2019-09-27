@@ -10,6 +10,7 @@ return {
       description = 'Whether a window is created.'
     }
   },
+  notes = 'Most of the `lovr.graphics` functionality will only work if a window is created.',
   related = {
     'lovr.graphics.createWindow',
     'lovr.conf'

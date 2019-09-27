@@ -7,22 +7,9 @@ return {
       type = 'string',
       description = 'The filename of the model to load.'
     },
-    texture = {
-      type = 'string',
-      default = 'nil',
-      description = 'The filename of the texture to apply to the model.'
-    },
-    material = {
-      type = 'Material',
-      default = 'nil',
-      description = [[
-        The material to apply to the model.  If nil, the materials will be loaded from
-        the model file.
-      ]]
-    },
     modelData = {
       type = 'ModelData',
-      description = 'The ModelData holding the data for the Model.'
+      description = 'The ModelData containing the data for the Model.'
     }
   },
   returns = {
@@ -33,19 +20,11 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename', 'texture' },
+      arguments = { 'filename' },
       returns = { 'model' }
     },
     {
-      arguments = { 'filename', 'material' },
-      returns = { 'model' }
-    },
-    {
-      arguments = { 'modelData', 'texture' },
-      returns = { 'model' }
-    },
-    {
-      arguments = { 'modelData', 'material' },
+      arguments = { 'modelData' },
       returns = { 'model' }
     }
   },

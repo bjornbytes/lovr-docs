@@ -38,12 +38,12 @@ function lovr.update(dt)
   print('updating', dt)
 end
 
-function lovr.draw(eye)
-  -- This is called twice every frame (once for each eye).
+function lovr.draw()
+  -- This is called once every frame.
   --
   -- You can use it to render the scene.
 
-  print('rendering the ' .. eye .. ' eye')
+  print('rendering')
 end
 ```
 
@@ -101,8 +101,8 @@ You've already seen `lovr.graphics.print`, but here's another example:
 
 ```
 function lovr.load()
-  -- Load a model with a texture
-  model = lovr.graphics.newModel('monkey.obj', 'monkey.png')
+  -- Load a 3D model
+  model = lovr.graphics.newModel('monkey.obj')
 end
 
 function lovr.draw()
@@ -133,17 +133,11 @@ HMD, you can call `lovr.headset.getPosition` which returns 3 numbers correspondi
 position in 3D space.  You can also call `lovr.headset.getOrientation` which returns four numbers
 representing a rotation in angle/axis format.
 
-The `lovr.headset.getControllers` function returns a list of all connected controllers.  You can
-query pose info for controllers using `Controller:getPosition` and `Controller:getOrientation`,
-similar to the HMD.  There are also `Controller:getAxis` and `Controller:isDown` functions for
-determining input state.
+You can also pass the name of a hand to these functions to get the pose of a hand: `hand/left` or
+`hand/right`.  The `lovr.headset.isDown(hand, button)` and `lovr.headset.getAxis(hand, axis)`
+functions can be used to figure out the state of buttons and other controls on the controllers.
 
-Several callbacks are relevant to the headset module.  The `lovr.controlleradded` callback is run
-whenever a new controller is connected, and there is a similar `controllerremoved` callback.  Also,
-there is the `lovr.controllerpressed` callback for when a button on a controller is pressed, with
-a similar callback for `controllerreleased`.
-
-Here's an example that draws a sphere in the "opposite" position of the headset:
+Here's a simple example that draws a sphere in the "opposite" position of the headset:
 
 ```
 function lovr.draw()

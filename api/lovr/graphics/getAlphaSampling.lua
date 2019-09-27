@@ -1,6 +1,6 @@
 return {
   tag = 'graphicsState',
-  summary = 'Get whether alpha sampling (alpha to coverage) is enabled.',
+  summary = 'Get whether alpha sampling is enabled.',
   description = [[
     Returns whether or not alpha sampling is enabled.  Alpha sampling is also known as
     alpha-to-coverage.  When it is enabled, the alpha channel of a pixel is factored into how
@@ -16,7 +16,7 @@ return {
   },
   notes = [[
     - Alpha sampling is disabled by default.
-    - This feature can be used for a cheap transparency effect, pixels with an alpha of zero will
+    - This feature can be used for a simple transparency effect, pixels with an alpha of zero will
       have their depth value discarded, allowing things behind them to show through (normally you
       have to sort objects or write a shader for this).
   ]]

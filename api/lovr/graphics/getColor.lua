@@ -28,5 +28,5 @@ return {
       description = 'The alpha component of the color.'
     }
   },
-  notes = 'The default color is white.'
+  notes = 'The default color is `(1.0, 1.0, 1.0, 1.0)`.'
 }

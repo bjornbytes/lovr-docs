@@ -12,6 +12,7 @@ return {
     {
       name = 'x',
       type = 'number',
+      default = '1.0',
       description = 'The amount to scale on the x axis.'
     },
     {

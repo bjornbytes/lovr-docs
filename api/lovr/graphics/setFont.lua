@@ -7,7 +7,7 @@ return {
       name = 'font',
       type = 'Font',
       default = 'nil',
-      description = 'The font to use.  If `nil`, the default font is set.'
+      description = 'The font to use.  If `nil`, the default font is used (Varela Round).'
     }
   },
   returns = {},
