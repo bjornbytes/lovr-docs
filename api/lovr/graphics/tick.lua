@@ -15,10 +15,6 @@ return {
     commands between the tick and the tock will be timed.  It is not possible to nest calls to tick
     and tock.
 
-    The amount of time elapsed can be accessed from the `timers` field of `lovr.graphics.getStats`.
-    Note that the results are delayed (because the GPU runs asynchronously), and may be `nil` if
-    they are unavailable.
-
     GPU timers are not supported on all systems.  Check the `timers` feature using
     `lovr.graphics.getFeatures` to see if it is supported on the current system.
   ]],
@@ -35,16 +31,11 @@ return {
         end
       end
 
-      lovr.graphics.tock('mytimer')
-
-      local stats = lovr.graphics.getStats()
-      if stats.timers.mytimer then
-        print('rendering took ' .. stats.timers.mytimer .. ' seconds')
-      end
+      print('rendering took ' .. (lovr.graphics.tock('mytimer') or 0) .. ' seconds')
     end
   ]],
   related = {
     'lovr.graphics.tock',
-    'lovr.graphics.getStats'
+    'lovr.graphics.getFeatures'
   }
 }
