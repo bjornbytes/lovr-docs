@@ -48,6 +48,18 @@ return {
       description = 'The new Shader.'
     }
   },
+  variants = {
+    {
+      description = 'Create a Shader with custom GLSL code.',
+      arguments = { 'vertex', 'fragment', 'options' },
+      returns = { 'shader' },
+    },
+    {
+      description = 'Create a new instance of a built-in Shader.',
+      arguments = { 'default', 'options' },
+      returns = { 'shader' },
+    }
+  },
   notes = [[
     The `flags` table should contain string keys, with boolean or numeric values.  These flags can
     be used to customize the behavior of Shaders from Lua, by using the flags in the shader source

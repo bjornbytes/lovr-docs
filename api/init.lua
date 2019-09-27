@@ -8188,18 +8188,23 @@ return {
           description = "Creates a new Shader.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
+          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0.  Any pixels with alpha less than the\n  cutoff will be discarded.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping function.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.",
           variants = {
             {
+              description = "Create a Shader with custom GLSL code.",
               arguments = {
-                vertex = {
+                {
+                  name = "vertex",
                   type = "string",
-                  description = "        The code or filename of the vertex shader.  If nil, the default vertex shader is used.\n      "
+                  description = "The code or filename of the vertex shader.  If nil, the default vertex shader is used."
                 },
-                fragment = {
+                {
+                  name = "fragment",
                   type = "string",
-                  description = "        The code or filename of the fragment shader.  If nil, the default fragment shader is used.\n      "
+                  description = "The code or filename of the fragment shader.  If nil, the default fragment shader is used."
                 },
-                options = {
+                {
+                  name = "options",
                   type = "table",
                   description = "Optional settings for the Shader.",
                   table = {
@@ -8212,24 +8217,45 @@ return {
                     {
                       name = "stereo",
                       type = "boolean",
-                      description = "            Whether the Shader should be configured for stereo rendering (Currently Android-only).\n          ",
+                      description = "Whether the Shader should be configured for stereo rendering (Currently Android-only).",
                       default = "true"
                     }
                   },
                   default = "{}"
-                },
-                default = {
-                  type = "DefaultShader",
-                  description = "A builtin shader to use for the shader code."
                 }
               },
-              returns = {
+              returns = {}
+            },
+            {
+              description = "Create a new instance of a built-in Shader.",
+              arguments = {
                 {
-                  name = "shader",
-                  type = "Shader",
-                  description = "The new Shader."
+                  name = "default",
+                  type = "DefaultShader",
+                  description = "A builtin shader to use for the shader code."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional settings for the Shader.",
+                  table = {
+                    {
+                      name = "flags",
+                      type = "table",
+                      description = "A table of key-value options passed to the Shader.",
+                      default = "{}"
+                    },
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "Whether the Shader should be configured for stereo rendering (Currently Android-only).",
+                      default = "true"
+                    }
+                  },
+                  default = "{}"
                 }
-              }
+              },
+              returns = {}
             }
           },
           related = {
@@ -8237,8 +8263,7 @@ return {
             "lovr.graphics.getShader",
             "lovr.graphics.newComputeShader",
             "Shader"
-          },
-          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0.  Any pixels with alpha less than the\n  cutoff will be discarded.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping function.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases."
+          }
         },
         {
           name = "newShaderBlock",
