@@ -42,8 +42,7 @@ return {
     }
   },
   returns = {
-    {
-      name = 'shader',
+    shader = {
       type = 'Shader',
       description = 'The new Shader.'
     }
