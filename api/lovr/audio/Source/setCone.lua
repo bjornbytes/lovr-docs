@@ -32,6 +32,6 @@ return {
 
     The default `outerVolume` for a Source is `0`.
 
-    Make sure to set the direction of a Source before setting its cone.
+    The direction of the cone can be changed using `Source:setOrientation`.
   ]]
 }

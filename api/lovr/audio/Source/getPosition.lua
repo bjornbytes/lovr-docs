@@ -21,5 +21,11 @@ return {
       type = 'number',
       description = 'The z coordinate.'
     }
+  },
+  related = {
+    'Source:getOrientation',
+    'Source:getPose',
+    'Source:getCone',
+    'lovr.audio.getPosition'
   }
 }

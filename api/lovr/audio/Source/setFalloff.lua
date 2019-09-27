@@ -2,6 +2,9 @@ return {
   summary = 'Set the falloff parameters for the Source.',
   description = [[
     Sets parameters that control how the volume of the Source falls of with distance.
+
+    Only mono sources support positional falloff.  Using this function on a stereo Source will cause
+    an error.
   ]],
   arguments = {
     {

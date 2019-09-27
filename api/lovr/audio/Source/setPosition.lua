@@ -4,7 +4,8 @@ return {
     Sets the position of the Source, in meters.  Setting the position will cause the Source to be
     distorted and attenuated based on its position relative to the listener.
 
-    Only mono sources can be positioned.
+    Only mono sources can be positioned.  Setting the position of a stereo Source will cause an
+    error.
   ]],
   arguments = {
     {

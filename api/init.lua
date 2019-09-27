@@ -620,7 +620,7 @@ return {
           name = "getDopplerEffect",
           tag = "listener",
           summary = "Get the doppler effect parameters.",
-          description = "Returns the parameters that control the simulated doppler effect: The effect intensity and the speed of sound.",
+          description = "Returns the parameters that control the simulated doppler effect.",
           key = "lovr.audio.getDopplerEffect",
           module = "lovr.audio",
           variants = {
@@ -640,13 +640,13 @@ return {
               }
             }
           },
-          notes = "The default factor is 1 and the default speed of sound is 343.29."
+          notes = "The default factor is 1.0 and the default speed of sound is 343.29."
         },
         {
           name = "getMicrophoneNames",
           tag = "microphones",
-          summary = "Get a table containing the names of all connected microphones.",
-          description = "Returns a table containing the names of all microphones connected to the system.",
+          summary = "Get the names of all connected microphones.",
+          description = "Returns a table with the names of all microphones connected to the system.",
           key = "lovr.audio.getMicrophoneNames",
           module = "lovr.audio",
           related = {
@@ -689,10 +689,70 @@ return {
           description = "Returns the orientation of the virtual audio listener in angle/axis representation.",
           key = "lovr.audio.getOrientation",
           module = "lovr.audio",
+          related = {
+            "lovr.audio.getPosition",
+            "lovr.audio.getPose",
+            "Source:getOrientation"
+          },
           variants = {
             {
               arguments = {},
               returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the listener is rotated around its axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getPose",
+          tag = "listener",
+          summary = "Get the pose of the listener.",
+          description = "Returns the position and orientation of the virtual audio listener.",
+          key = "lovr.audio.getPose",
+          module = "lovr.audio",
+          related = {
+            "lovr.audio.getPosition",
+            "lovr.audio.getOrientation",
+            "Source:getPose"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the listener, in meters."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the listener, in meters."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the listener, in meters."
+                },
                 {
                   name = "angle",
                   type = "number",
@@ -803,7 +863,7 @@ return {
           name = "isSpatialized",
           tag = "listener",
           summary = "Check if audio is spatialized.",
-          description = "Returns whether or not audio is currently spatialized with HRTFs.  Spatialized audio is much more immersive.",
+          description = "Returns whether or not audio is currently spatialized with HRTFs.",
           key = "lovr.audio.isSpatialized",
           module = "lovr.audio",
           variants = {
@@ -823,7 +883,7 @@ return {
           name = "newMicrophone",
           tag = "microphones",
           summary = "Create a new Microphone.",
-          description = "Creates a new Microphone based on the name of an existing micrphone and a set of capture parameters.  If the specified parameters are not supported, `nil` will be returned.",
+          description = "Creates a new Microphone based on the name of an existing micrphone and a set of capture parameters.  If the specified combination of prameters are not supported for audio capture, `nil` will be returned.",
           key = "lovr.audio.newMicrophone",
           module = "lovr.audio",
           related = {
@@ -836,7 +896,8 @@ return {
                 {
                   name = "name",
                   type = "string",
-                  description = "The name of the microphone that this Microphone will record from."
+                  description = "The name of the microphone that this Microphone will record from, or `nil` to use the default microphone.",
+                  default = "nil"
                 },
                 {
                   name = "samples",
@@ -969,6 +1030,12 @@ return {
           description = "Pause all playing audio.",
           key = "lovr.audio.pause",
           module = "lovr.audio",
+          related = {
+            "Source:pause",
+            "lovr.audio.resume",
+            "lovr.audio.rewind",
+            "lovr.audio.stop"
+          },
           variants = {
             {
               arguments = {},
@@ -983,6 +1050,13 @@ return {
           description = "Resume all Sources.  Has no effect on Sources that are playing or stopped.",
           key = "lovr.audio.resume",
           module = "lovr.audio",
+          related = {
+            "Source:resume",
+            "Source:resume",
+            "lovr.audio.pause",
+            "lovr.audio.rewind",
+            "lovr.audio.stop"
+          },
           variants = {
             {
               arguments = {},
@@ -1002,6 +1076,12 @@ return {
               arguments = {},
               returns = {}
             }
+          },
+          related = {
+            "Source:rewind",
+            "lovr.audio.pause",
+            "lovr.audio.resume",
+            "lovr.audio.stop"
           },
           notes = "Sources that are paused will remain paused. Sources that are currently playing will restart from the beginning."
         },
@@ -1031,7 +1111,7 @@ return {
               returns = {}
             }
           },
-          notes = "The default factor is 1 and the default speed of sound is 343.29."
+          notes = "The default factor is 1.0 and the default speed of sound is 343.29."
         },
         {
           name = "setOrientation",
@@ -1067,6 +1147,62 @@ return {
               returns = {}
             }
           }
+        },
+        {
+          name = "setPose",
+          tag = "listener",
+          summary = "Set the pose of the listener.",
+          description = "Sets the position and orientation of the virtual audio listener.",
+          key = "lovr.audio.setPose",
+          module = "lovr.audio",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the listener, in meters."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the listener, in meters."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the listener, in meters."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the listener is rotated around its axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.audio.setPosition",
+            "lovr.audio.setOrientation",
+            "Source:setPose"
+          },
+          notes = "The default implementation of `lovr.run` calls this function with the result of `lovr.headset.getPose`, so that the listener automatically tracks the headset."
         },
         {
           name = "setPosition",
@@ -1163,13 +1299,19 @@ return {
               returns = {}
             }
           },
+          related = {
+            "Source:stop",
+            "lovr.audio.pause",
+            "lovr.audio.resume",
+            "lovr.audio.rewind"
+          },
           notes = "If you want to resume the stopped audio later, see `lovr.audio.pause`."
         },
         {
           name = "update",
           tag = "sources",
           summary = "Updates the audio system.",
-          description = "Updates all playing sources. This must be called regularly for audio playback to occur. Normally this is called for you by `lovr.run`.",
+          description = "Updates all playing sources. This must be called regularly for audio playback to occur. This is called automatically by the default implementation of `lovr.run`.",
           key = "lovr.audio.update",
           module = "lovr.audio",
           variants = {

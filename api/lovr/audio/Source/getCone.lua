@@ -3,7 +3,7 @@ return {
   description = [[
     Returns the directional volume cone of the Source.  The cone is specified by three values:
     `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is inside the `innerAngle`, the
-    Source won't have its volume changed.  Otherwise, the volume will start to decrease, reaching a
+    Source won't have its volume reduced.  Otherwise, the volume will start to decrease, reaching a
     minimum volume of `outerVolume` once the listener is `outerAngle` degrees from the direction of
     the Source.
   ]],
@@ -32,6 +32,6 @@ return {
 
     The default `outerVolume` for a Source is `0`.
 
-    Make sure to set the direction of a Source before setting its cone.
+    `Source:setOrientation` can be used to change which way the cone points.
   ]]
 }
