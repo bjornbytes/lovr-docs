@@ -7699,6 +7699,20 @@ return {
                   name = "source",
                   type = "string",
                   description = "The code or filename of the compute shader."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional settings for the Shader.",
+                  default = "{}",
+                  table = {
+                    {
+                      name = "flags",
+                      type = "table",
+                      description = "A table of key-value options passed to the Shader.",
+                      default = "{}"
+                    }
+                  }
                 }
               },
               returns = {
@@ -7718,10 +7732,10 @@ return {
           },
           examples = {
             {
-              code = "function lovr.load()\n  computer = lovr.graphics.newComputeShader([[\n    layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;\n\n    void compute() {\n      // compute things!\n    }\n  ]])\n\n  -- Run the shader 4 times\n  local width, height, depth = 4, 1, 1\n\n  -- Dispatch the compute operation\n  lovr.graphics.compute(computer, width, height, depth)\nend"
+              code = "function lovr.load()\n  computer = lovr.graphics.newComputeShader([[\n    layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;\n\n    void compute() {\n      // compute things!?\n    }\n  ]])\n\n  -- Run the shader 4 times\n  local width, height, depth = 4, 1, 1\n\n  -- Dispatch the compute operation\n  lovr.graphics.compute(computer, width, height, depth)\nend"
             }
           },
-          notes = "Compute shaders are not supported on all hardware, use `lovr.graphics.getSupported` to check if they're available on the current system.\n\nThe source code for a compute shader needs to implement the `void compute();` GLSL function. This function doesn't return anything, but the compute shader is able to write data out to `Texture`s or `ShaderBlock`s.\n\nThe GLSL version used for compute shaders is GLSL 430."
+          notes = "Compute shaders are not supported on all hardware, use `lovr.graphics.getFeatures` to check if they're available on the current system.\n\nThe source code for a compute shader needs to implement the `void compute();` GLSL function. This function doesn't return anything, but the compute shader is able to write data out to `Texture`s or `ShaderBlock`s.\n\nThe GLSL version used for compute shaders is GLSL 430.\n\nCurrently, up to 32 shader flags are supported."
         },
         {
           name = "newFont",
@@ -8188,7 +8202,7 @@ return {
           description = "Creates a new Shader.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
-          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0.  Any pixels with alpha less than the\n  cutoff will be discarded.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping function.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.",
+          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0, representing the alpha treshold.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.\n\nCurrently, up to 32 shader flags are supported.",
           variants = {
             {
               description = "Create a Shader with custom GLSL code.",
@@ -8224,7 +8238,13 @@ return {
                   default = "{}"
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "shader",
+                  type = "Shader",
+                  description = "The new Shader."
+                }
+              }
             },
             {
               description = "Create a new instance of a built-in Shader.",
@@ -8255,14 +8275,19 @@ return {
                   default = "{}"
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "shader",
+                  type = "Shader",
+                  description = "The new Shader."
+                }
+              }
             }
           },
           related = {
             "lovr.graphics.setShader",
             "lovr.graphics.getShader",
-            "lovr.graphics.newComputeShader",
-            "Shader"
+            "lovr.graphics.newComputeShader"
           }
         },
         {
@@ -11797,7 +11822,7 @@ return {
           examples = {
             {
               description = "Set a simple shader that colors pixels based on vertex normals.",
-              code = "function lovr.load()\n  lovr.graphics.setShader(lovr.graphics.newShader([[\n    out vec3 vNormal; // This gets passed to the fragment shader\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vNormal = lovrNormal;\n      return projection * transform * vertex;\n    }\n  ]], [[\n    in vec3 vNormal; // This gets passed from the vertex shader\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(vNormal * .5 + .5, 1.0);\n    }\n  ]]))\n\n  model = lovr.graphics.newModel('model.gltf')\nend\n\nfunction lovr.draw()\n  model:draw(x, y, z, 1)\nend"
+              code = "function lovr.load()\n  lovr.graphics.setShader(lovr.graphics.newShader([[\n    out vec3 vNormal; // This gets passed to the fragment shader\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vNormal = lovrNormal;\n      return projection * transform * vertex;\n    }\n  ]], [[\n    in vec3 vNormal; // This gets passed from the vertex shader\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return vec4(vNormal * .5 + .5, 1.0);\n    }\n  ]]))\n\n  model = lovr.graphics.newModel('model.gltf')\nend\n\nfunction lovr.draw()\n  model:draw(x, y, z)\nend"
             }
           },
           related = {
@@ -12009,7 +12034,7 @@ return {
               }
             }
           },
-          notes = "The GLSL version used is 430 on systems that support compute shaders and 150 otherwise.  The version used for WebGL is 300 es.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    in vec3 lovrPosition;\n    in vec3 lovrNormal;\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in uvec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n    out vec4 lovrColor;\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat3 lovrNormalMatrix;\n    uniform mat3 lovrMaterialTransform;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    uniform int lovrViewportCount;\n    uniform int lovrViewportIndex;\n    const mat4 lovrPoseMatrix; // Bone-weighted pose\n    const int lovrInstanceID; // Current instance ID\n\nFragment shader header:\n\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 lovrColor;\n    out vec4 lovrCanvas[gl_MaxDrawBuffers];\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrColor;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    uniform int lovrViewportCount;\n    uniform int lovrViewportIndex;\n\n### Compute Shaders\n\nCompute shaders can be created with `lovr.graphics.newComputeShader` and run with `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no default compute shader, instead the `void compute();` function must be implemented.\n\nYou can use the `layout` qualifier to specify a local work group size:\n\n    layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;\n\nAnd the following built in variables can be used:\n\n    in uvec3 gl_NumWorkGroups;       // The size passed to lovr.graphics.compute\n    in uvec3 gl_WorkGroupSize;       // The local work group size\n    in uvec3 gl_WorkGroupID;         // The current global work group\n    in uvec3 gl_LocalInvocationID;   // The current local work group\n    in uvec3 gl_GlobalInvocationID;  // A unique ID combining the global and local IDs\n    in uint gl_LocalInvocationIndex; // A 1D index of the LocalInvocationID\n\nCompute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s. To bind a texture in a way that can be written to a compute shader, declare the uniforms with a type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to using assignment syntax.\n\nLÖVR handles synchronization of textures and shader blocks so there is no need to use manual memory barriers to synchronize writes to resources from compute shaders."
+          notes = "The GLSL version used is 430 on systems that support compute shaders and 150 otherwise.  The version used for WebGL is 300 es.\n\nThe default vertex shader:\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return projection * transform * vertex;\n    }\n\nThe default fragment shader:\n\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n\nAdditionally, the following headers are prepended to the shader source, giving you convenient access to a default set of uniform variables and vertex attributes.\n\nVertex shader header:\n\n    in vec3 lovrPosition; // The vertex position\n    in vec3 lovrNormal; // The vertex normal vector\n    in vec2 lovrTexCoord;\n    in vec4 lovrVertexColor;\n    in vec3 lovrTangent;\n    in uvec4 lovrBones;\n    in vec4 lovrBoneWeights;\n    in uint lovrDrawID;\n    out vec2 texCoord;\n    out vec4 vertexColor;\n    out vec4 lovrColor;\n    uniform mat4 lovrModel;\n    uniform mat4 lovrView;\n    uniform mat4 lovrProjection;\n    uniform mat4 lovrTransform; // Model-View matrix\n    uniform mat3 lovrNormalMatrix; // Inverse-transpose of lovrModel\n    uniform mat3 lovrMaterialTransform;\n    uniform float lovrPointSize;\n    uniform mat4 lovrPose[48];\n    uniform int lovrViewportCount;\n    uniform int lovrViewID;\n    const mat4 lovrPoseMatrix; // Bone-weighted pose\n    const int lovrInstanceID; // Current instance ID\n\nFragment shader header:\n\n    in vec2 texCoord;\n    in vec4 vertexColor;\n    in vec4 lovrColor;\n    out vec4 lovrCanvas[gl_MaxDrawBuffers];\n    uniform float lovrMetalness;\n    uniform float lovrRoughness;\n    uniform vec4 lovrDiffuseColor;\n    uniform vec4 lovrEmissiveColor;\n    uniform sampler2D lovrDiffuseTexture;\n    uniform sampler2D lovrEmissiveTexture;\n    uniform sampler2D lovrMetalnessTexture;\n    uniform sampler2D lovrRoughnessTexture;\n    uniform sampler2D lovrOcclusionTexture;\n    uniform sampler2D lovrNormalTexture;\n    uniform samplerCube lovrEnvironmentTexture;\n    uniform int lovrViewportCount;\n    uniform int lovrViewID;\n\n### Compute Shaders\n\nCompute shaders can be created with `lovr.graphics.newComputeShader` and run with `lovr.graphics.compute`.  Currently, compute shaders are written with raw GLSL.  There is no default compute shader, instead the `void compute();` function must be implemented.\n\nYou can use the `layout` qualifier to specify a local work group size:\n\n    layout(local_size_x = X, local_size_y = Y, local_size_z = Z) in;\n\nAnd the following built in variables can be used:\n\n    in uvec3 gl_NumWorkGroups;       // The size passed to lovr.graphics.compute\n    in uvec3 gl_WorkGroupSize;       // The local work group size\n    in uvec3 gl_WorkGroupID;         // The current global work group\n    in uvec3 gl_LocalInvocationID;   // The current local work group\n    in uvec3 gl_GlobalInvocationID;  // A unique ID combining the global and local IDs\n    in uint gl_LocalInvocationIndex; // A 1D index of the LocalInvocationID\n\nCompute shaders don't return anything but they can write data to `Texture`s or `ShaderBlock`s. To bind a texture in a way that can be written to a compute shader, declare the uniforms with a type of `image2D`, `imageCube`, etc. instead of the usual `sampler2D` or `samplerCube`.  Once a texture is bound to an image uniform, you can use the `imageLoad` and `imageStore` GLSL functions to read and write pixels in the image.  Variables in `ShaderBlock`s can be written to using assignment syntax.\n\nLÖVR handles synchronization of textures and shader blocks so there is no need to use manual memory barriers to synchronize writes to resources from compute shaders."
         },
         {
           name = "ShaderBlock",

@@ -72,8 +72,7 @@ return {
       needs a skeleton to work properly and is slower than normal rendering.
     - `alphaCutoff` is a numeric flag that can be used to implement simple "cutout" style
       transparency, where pixels with alpha below a certain threshold will be discarded.  The value
-      of the flag should be a number between 0.0 and 1.0.  Any pixels with alpha less than the
-      cutoff will be discarded.
+      of the flag should be a number between 0.0 and 1.0, representing the alpha treshold.
     - `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be
       used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale
       are all the same number), then this flag can be set to use a faster method to compute the
@@ -99,15 +98,16 @@ return {
         process that maps the high definition physical color values down to a 0 - 1 range for
         display.  There are lots of different tonemapping algorithms that give different artistic
         effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can
-        use this flag to turn off ACES and use your own tonemapping function.
+        use this flag to turn off ACES and use your own tonemapping.
 
     The `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders
     can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.
+
+    Currently, up to 32 shader flags are supported.
   ]],
   related = {
     'lovr.graphics.setShader',
     'lovr.graphics.getShader',
-    'lovr.graphics.newComputeShader',
-    'Shader'
+    'lovr.graphics.newComputeShader'
   }
 }
