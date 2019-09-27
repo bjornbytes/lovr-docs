@@ -9718,7 +9718,7 @@ return {
           },
           examples = {
             {
-              code = "function lovr.draw()\n  lovr.graphics.tick('mytimer')\n\n  -- Draw a bunch of cubes\n  for x = -4, 4 do\n    for y = -4, 4 do\n      for z = -4, 4 do\n        lovr.graphics.cube('fill', x, y, z, .2)\n      end\n    end\n  end\n\n  print('rendering took ' .. (lovr.graphics.tock('mytimer') or 0) .. ' seconds')\nend"
+              code = "function lovr.draw()\n  lovr.graphics.tick('tim')\n\n  -- Draw a bunch of cubes\n  for x = -4, 4 do\n    for y = -4, 4 do\n      for z = -4, 4 do\n        lovr.graphics.cube('fill', x, y, z, .2)\n      end\n    end\n  end\n\n  print('it took ' .. (lovr.graphics.tock('tim') or 0) .. ' seconds')\nend"
             }
           },
           notes = "The timer can be stopped by calling `lovr.graphics.tock` using the same name.  All drawing commands between the tick and the tock will be timed.  It is not possible to nest calls to tick and tock.\n\nGPU timers are not supported on all systems.  Check the `timers` feature using `lovr.graphics.getFeatures` to see if it is supported on the current system."
@@ -9754,7 +9754,7 @@ return {
           },
           examples = {
             {
-              code = "function lovr.draw()\n  lovr.graphics.tick('mytimer')\n\n  -- Draw a bunch of cubes\n  for x = -4, 4 do\n    for y = -4, 4 do\n      for z = -4, 4 do\n        lovr.graphics.cube('fill', x, y, z, .2)\n      end\n    end\n  end\n\n  print('rendering took ' .. (lovr.graphics.tock('mytimer') or 0) .. ' seconds')\nend"
+              code = "function lovr.draw()\n  lovr.graphics.tick('tim')\n\n  -- Draw a bunch of cubes\n  for x = -4, 4 do\n    for y = -4, 4 do\n      for z = -4, 4 do\n        lovr.graphics.cube('fill', x, y, z, .2)\n      end\n    end\n  end\n\n  print('it took ' .. (lovr.graphics.tock('tim') or 0) .. ' seconds')\nend"
             }
           },
           notes = "All drawing commands between tick and tock will be timed.  It is not possible to nest calls to tick and tock.\n\nThe results are delayed, and might be `nil` for the first few frames.  This function returns the most recent available timer value.\n\nGPU timers are not supported on all systems.  Check the `timers` feature using `lovr.graphics.getFeatures` to see if it is supported on the current system."

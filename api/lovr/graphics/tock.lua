@@ -28,7 +28,7 @@ return {
   ]],
   example = [[
     function lovr.draw()
-      lovr.graphics.tick('mytimer')
+      lovr.graphics.tick('tim')
 
       -- Draw a bunch of cubes
       for x = -4, 4 do
@@ -39,7 +39,7 @@ return {
         end
       end
 
-      print('rendering took ' .. (lovr.graphics.tock('mytimer') or 0) .. ' seconds')
+      print('it took ' .. (lovr.graphics.tock('tim') or 0) .. ' seconds')
     end
   ]],
   related = {
