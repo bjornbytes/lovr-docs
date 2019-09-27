@@ -41,7 +41,7 @@ return {
           name = 'linear',
           type = 'boolean',
           default = 'false',
-          description = 'Whether the texture is in linear color space instead of sRGB.'
+          description = 'Whether the texture is in linear color space instead of the usual sRGB.'
         },
         {
           name = 'mipmaps',
@@ -58,6 +58,18 @@ return {
             single image, `array` for a table of images with numeric keys, or `cube` for a table
             of images with string keys.
           ]]
+        },
+        {
+          name = 'format',
+          type = 'TextureFormat',
+          default = 'rgba',
+          description = 'The format used for the Texture (when creating a blank texture).'
+        },
+        {
+          name = 'msaa',
+          type = 'number',
+          default = '0',
+          description = 'The antialiasing level to use (when attaching the Texture to a Canvas).'
         }
       }
     }
@@ -105,7 +117,9 @@ return {
   },
   notes = [[
     The "linear" flag should be set to true for textures that don't contain color information, such
-    as normal maps.  It is ignored if gamma correct rendering is disabled.  See
-    `lovr.graphics.isGammaCorrect` for more info.
+    as normal maps.
+
+    Right now the supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and
+    astc.
   ]]
 }

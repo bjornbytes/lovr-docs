@@ -61,6 +61,7 @@ return {
     }
   },
   notes = [[
-    Right now the supported image file formats are png, jpg, and hdr.
+    Right now the supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and
+    astc.
   ]]
 }

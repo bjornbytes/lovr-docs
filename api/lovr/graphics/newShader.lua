@@ -100,10 +100,10 @@ return {
         effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can
         use this flag to turn off ACES and use your own tonemapping.
 
+    Currently, up to 32 shader flags are supported.
+
     The `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders
     can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.
-
-    Currently, up to 32 shader flags are supported.
   ]],
   related = {
     'lovr.graphics.setShader',
