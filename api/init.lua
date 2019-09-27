@@ -7288,11 +7288,6 @@ return {
                       name = "shaderswitches",
                       type = "number",
                       description = "The number of times the shader has been switched."
-                    },
-                    {
-                      name = "timers",
-                      type = "table",
-                      description = "A table containing the timer results from calls to `lovr.graphics.tick` and `lovr.graphics.tock`.  The results are unreliable and may be `nil`.  The units are in seconds."
                     }
                   }
                 }
