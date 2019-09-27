@@ -9,7 +9,7 @@ return {
     {
       name = 'path',
       type = 'string',
-      description = 'The current working directory.'
+      description = 'The current working directory, or `nil` if it\'s unknown.'
     }
   }
 }

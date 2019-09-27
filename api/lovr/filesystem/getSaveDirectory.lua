@@ -8,5 +8,9 @@ return {
       type = 'string',
       description = 'The absolute path to the save directory.'
     }
+  },
+  related = {
+    'lovr.filesystem.getIdentity',
+    'lovr.filesystem.getAppdataDirectory'
   }
 }

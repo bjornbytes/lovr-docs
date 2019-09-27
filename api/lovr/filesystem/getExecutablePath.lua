@@ -6,7 +6,7 @@ return {
     {
       name = 'path',
       type = 'string',
-      description = 'The absolute path of the LÖVR executable.'
+      description = 'The absolute path of the LÖVR executable, or `nil` if it is unknown.'
     }
   }
 }

@@ -4,8 +4,7 @@ return {
     Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR
     will use to search for files when they are `require`d.  Any question marks in the pattern will
     be replaced with the module that is being required.  It is similar to Lua\'s `package.path`
-    variable, but the main difference is that the patterns are relative to the save directory and
-    the project directory.
+    variable, but the main difference is that the patterns are relative to the virtual filesystem.
 
     For the C require path, double question marks will be replaced by the name of the module with
     the operating system's native extension for shared libraries.  For example, if you do

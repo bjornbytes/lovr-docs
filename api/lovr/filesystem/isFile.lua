@@ -12,7 +12,7 @@ return {
     {
       name = 'isFile',
       type = 'boolean',
-      description = 'Whether or not path is a file.'
+      description = 'Whether or not the path is a file.'
     }
   },
   related = {

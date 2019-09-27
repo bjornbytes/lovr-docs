@@ -3947,7 +3947,7 @@ return {
         {
           name = "append",
           summary = "Append content to the end of a file.",
-          description = "Appends content to the end of the file.",
+          description = "Appends content to the end of a file.",
           key = "lovr.filesystem.append",
           module = "lovr.filesystem",
           notes = "If the file does not exist, it is created.",
@@ -3969,7 +3969,7 @@ return {
                 {
                   name = "bytes",
                   type = "number",
-                  description = "The number of bytes written."
+                  description = "The number of bytes actually written to the file."
                 }
               }
             }
@@ -3978,7 +3978,7 @@ return {
         {
           name = "createDirectory",
           summary = "Create a directory.",
-          description = "Creates a directory in the save directory.",
+          description = "Creates a directory in the save directory.  Any parent directories that don't exist will also be created.",
           key = "lovr.filesystem.createDirectory",
           module = "lovr.filesystem",
           variants = {
@@ -3987,7 +3987,7 @@ return {
                 {
                   name = "path",
                   type = "string",
-                  description = "The directory to create."
+                  description = "The directory to create, recursively."
                 }
               },
               returns = {
@@ -4003,7 +4003,7 @@ return {
         {
           name = "getAppdataDirectory",
           summary = "Get the application data directory.",
-          description = "Returns the application data directory.  This will be something like `C:\\Users\\user\\AppData` on Windows, or `/Users/user/Library/Application Support` on macOS.",
+          description = "Returns the application data directory.  This will be something like:\n\n- `C:\\Users\\user\\AppData\\Roaming` on Windows.\n- `/home/user/.config` on Linux.\n- `/Users/user/Library/Application Support` on macOS.",
           key = "lovr.filesystem.getAppdataDirectory",
           module = "lovr.filesystem",
           variants = {
@@ -4022,7 +4022,7 @@ return {
         {
           name = "getApplicationId",
           summary = "Get the application ID.",
-          description = "Returns the platform-specific application ID, or `nil` if this does not apply.\n\nCurrently only implemented on Android.",
+          description = "Returns the platform-specific application ID, or `nil` if the current platform doesn't have one.\n\nCurrently only implemented on Android, where it returns the package name, e.g. `org.lovr.app`.",
           key = "lovr.filesystem.getApplicationId",
           module = "lovr.filesystem",
           variants = {
@@ -4040,8 +4040,8 @@ return {
         },
         {
           name = "getDirectoryItems",
-          summary = "Get a list of files in a directory..",
-          description = "Returns an unsorted table containing all files and subfolders in a directory.",
+          summary = "Get a list of files in a directory.",
+          description = "Returns an unsorted table containing all files and folders in a single directory.",
           key = "lovr.filesystem.getDirectoryItems",
           module = "lovr.filesystem",
           variants = {
@@ -4076,7 +4076,7 @@ return {
                 {
                   name = "path",
                   type = "string",
-                  description = "The absolute path of the LÖVR executable."
+                  description = "The absolute path of the LÖVR executable, or `nil` if it is unknown."
                 }
               }
             }
@@ -4095,7 +4095,7 @@ return {
                 {
                   name = "identity",
                   type = "string",
-                  description = "The name of the save directory."
+                  description = "The name of the save directory, or `nil` if it isn't set."
                 }
               }
             }
@@ -4104,23 +4104,23 @@ return {
         {
           name = "getLastModified",
           summary = "Get the modification time of a file.",
-          description = "Returns when a file was last modified.",
+          description = "Returns when a file was last modified, since some arbitrary time in the past.",
           key = "lovr.filesystem.getLastModified",
           module = "lovr.filesystem",
           variants = {
             {
               arguments = {
                 {
-                  name = "file",
+                  name = "path",
                   type = "string",
-                  description = "The file."
+                  description = "The file to check."
                 }
               },
               returns = {
                 {
                   name = "time",
                   type = "number",
-                  description = "The time when the file was last modified, in seconds."
+                  description = "The modification time of the file, in seconds, or `nil` if it's unknown."
                 }
               }
             }
@@ -4154,7 +4154,7 @@ return {
         {
           name = "getRequirePath",
           summary = "Get the require path.",
-          description = "Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.\n\nFor the C require path, double question marks will be replaced by the name of the module with the operating system's native extension for shared libraries.  For example, if you do `require('lib')` and the C require path is `??`, LÖVR will try to load `lib.dll` if you're on Windows or `lib.so` if you're on Linux.",
+          description = "Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the virtual filesystem.\n\nFor the C require path, double question marks will be replaced by the name of the module with the operating system's native extension for shared libraries.  For example, if you do `require('lib')` and the C require path is `??`, LÖVR will try to load `lib.dll` if you're on Windows or `lib.so` if you're on Linux.",
           key = "lovr.filesystem.getRequirePath",
           module = "lovr.filesystem",
           notes = "The default reqiure path is '?.lua;?/init.lua;lua_modules/?.lua;lua_modules/?/init.lua'.  The default C require path is '??'.",
@@ -4182,6 +4182,10 @@ return {
           description = "Returns the absolute path to the save directory.",
           key = "lovr.filesystem.getSaveDirectory",
           module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.getIdentity",
+            "lovr.filesystem.getAppdataDirectory"
+          },
           variants = {
             {
               arguments = {},
@@ -4201,6 +4205,7 @@ return {
           description = "Returns the size of a file, in bytes.",
           key = "lovr.filesystem.getSize",
           module = "lovr.filesystem",
+          notes = "If the file does not exist, an error is thrown.",
           variants = {
             {
               arguments = {
@@ -4233,7 +4238,7 @@ return {
                 {
                   name = "path",
                   type = "string",
-                  description = "The absolute path of the project's source."
+                  description = "The absolute path of the project's source, or `nil` if it's unknown."
                 }
               }
             }
@@ -4271,7 +4276,7 @@ return {
                 {
                   name = "path",
                   type = "string",
-                  description = "The current working directory."
+                  description = "The current working directory, or `nil` if it's unknown."
                 }
               }
             }
@@ -4299,7 +4304,7 @@ return {
                 {
                   name = "isDirectory",
                   type = "boolean",
-                  description = "Whether or not path is a directory."
+                  description = "Whether or not the path is a directory."
                 }
               }
             }
@@ -4327,7 +4332,7 @@ return {
                 {
                   name = "isFile",
                   type = "boolean",
-                  description = "Whether or not path is a file."
+                  description = "Whether or not the path is a file."
                 }
               }
             }
@@ -4528,7 +4533,7 @@ return {
                 {
                   name = "path",
                   type = "string",
-                  description = "The file or folder to remove.."
+                  description = "The file or directory to remove."
                 }
               },
               returns = {
@@ -4640,7 +4645,10 @@ return {
           description = "Write to a file.",
           key = "lovr.filesystem.write",
           module = "lovr.filesystem",
-          notes = "If the file does not exist, it is created.",
+          related = {
+            "lovr.filesystem.append",
+            "lovr.filesystem.read"
+          },
           variants = {
             {
               arguments = {
@@ -4663,7 +4671,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "If the file does not exist, it is created.\n\nIf the file already has data in it, it will be replaced with the new content."
         }
       },
       objects = {}

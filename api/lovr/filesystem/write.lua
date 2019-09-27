@@ -20,5 +20,13 @@ return {
       description = 'The number of bytes written.'
     }
   },
-  notes = 'If the file does not exist, it is created.'
+  notes = [[
+    If the file does not exist, it is created.
+
+    If the file already has data in it, it will be replaced with the new content.
+  ]],
+  related = {
+    'lovr.filesystem.append',
+    'lovr.filesystem.read'
+  }
 }

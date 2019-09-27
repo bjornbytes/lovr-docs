@@ -5,7 +5,7 @@ return {
     {
       name = 'path',
       type = 'string',
-      description = 'The file or folder to remove..'
+      description = 'The file or directory to remove.'
     }
   },
   returns = {

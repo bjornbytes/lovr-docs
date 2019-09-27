@@ -1,6 +1,6 @@
 return {
   summary = 'Append content to the end of a file.',
-  description = 'Appends content to the end of the file.',
+  description = 'Appends content to the end of a file.',
   arguments = {
     {
       name = 'filename',
@@ -17,7 +17,7 @@ return {
     {
       name = 'bytes',
       type = 'number',
-      description = 'The number of bytes written.'
+      description = 'The number of bytes actually written to the file.'
     }
   },
   notes = 'If the file does not exist, it is created.'

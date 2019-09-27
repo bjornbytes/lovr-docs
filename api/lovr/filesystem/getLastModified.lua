@@ -1,18 +1,18 @@
 return {
   summary = 'Get the modification time of a file.',
-  description = 'Returns when a file was last modified.',
+  description = 'Returns when a file was last modified, since some arbitrary time in the past.',
   arguments = {
     {
-      name = 'file',
+      name = 'path',
       type = 'string',
-      description = 'The file.'
+      description = 'The file to check.'
     }
   },
   returns = {
     {
       name = 'time',
       type = 'number',
-      description = 'The time when the file was last modified, in seconds.'
+      description = 'The modification time of the file, in seconds, or `nil` if it\'s unknown.'
     }
   }
 }

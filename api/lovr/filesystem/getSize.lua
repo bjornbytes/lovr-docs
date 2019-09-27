@@ -14,5 +14,6 @@ return {
       type = 'number',
       description = 'The size of the file, in bytes.'
     }
-  }
+  },
+  notes = 'If the file does not exist, an error is thrown.'
 }

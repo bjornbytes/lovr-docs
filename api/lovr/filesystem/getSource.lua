@@ -6,7 +6,7 @@ return {
     {
       name = 'path',
       type = 'string',
-      description = 'The absolute path of the project\'s source.'
+      description = 'The absolute path of the project\'s source, or `nil` if it\'s unknown.'
     }
   }
 }

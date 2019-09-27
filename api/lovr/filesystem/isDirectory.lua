@@ -12,7 +12,7 @@ return {
     {
       name = 'isDirectory',
       type = 'boolean',
-      description = 'Whether or not path is a directory.'
+      description = 'Whether or not the path is a directory.'
     }
   },
   related = {
