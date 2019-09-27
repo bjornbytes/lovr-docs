@@ -3826,7 +3826,7 @@ return {
         {
           name = "poll",
           summary = "Iterate over unprocessed events in the queue.",
-          description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  Typically this function is automatically called for you by `lovr.run`.",
+          description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  This function is called in the default implementation of `lovr.run`, so it is normally not necessary to poll for events yourself.",
           key = "lovr.event.poll",
           module = "lovr.event",
           variants = {
@@ -3847,7 +3847,7 @@ return {
         {
           name = "pump",
           summary = "Pump new events into the queue for processing.",
-          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider your application unresponsive.  By default, this function is called automatically by `lovr.run`.",
+          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider the application unresponsive. This function is called in the default implementation of `lovr.run`.",
           key = "lovr.event.pump",
           module = "lovr.event",
           related = {
@@ -3887,12 +3887,12 @@ return {
               returns = {}
             }
           },
-          notes = "Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event payloads."
+          notes = "Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event data."
         },
         {
           name = "quit",
           summary = "Quit the application.",
-          description = "Pushes an event to quit or restart the application.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.",
+          description = "Pushes an event to quit or restart the application.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.  Alternatively, the string 'restart' can be used to cause LÖVR to reload the project.",
           key = "lovr.event.quit",
           module = "lovr.event",
           related = {
@@ -3922,7 +3922,7 @@ return {
               returns = {}
             }
           },
-          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe program won't actually exit until the next time `lovr.event.poll` is called."
+          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe program won't actually exit until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to stop the quitting process."
         }
       },
       examples = {

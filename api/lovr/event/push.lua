@@ -19,7 +19,7 @@ return {
   },
   returns = {},
   notes = [[
-    Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event payloads.
+    Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event data.
   ]],
   related = {
     'lovr.event.poll',
