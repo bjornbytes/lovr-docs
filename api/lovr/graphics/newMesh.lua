@@ -28,6 +28,10 @@ return {
       type = 'table',
       description = 'A table of vertices.  Each vertex is a table containing the vertex data.'
     },
+    blob = {
+      type = 'Blob',
+      description = 'A binary Blob containing vertex data.'
+    },
     format = {
       type = 'table',
       description = 'A table describing the attribute format for the vertices.'
@@ -49,9 +53,12 @@ return {
       returns = { 'mesh' }
     },
     {
+      arguments = { 'blob', 'mode', 'usage' },
+      returns = { 'mesh' }
+    },
+    {
       description = [[
-        These variants accept a custom vertex format.  For more info, see the <a
-        data-key="Mesh">`Mesh`</a> page.
+        These variants accept a custom vertex format.  For more info, see the `Mesh` page.
       ]],
       arguments = { 'format', 'size', 'mode', 'usage' },
       returns = { 'mesh' }
@@ -59,7 +66,11 @@ return {
     {
       arguments = { 'format', 'vertices', 'mode', 'usage' },
       returns = { 'mesh' }
+    },
+    {
+      arguments = { 'format', 'blob', 'mode', 'usage' },
+      returns = { 'mesh' }
     }
   },
-  notes = 'Once created, the size of the Mesh can\'t be changed.'
+  notes = 'Once created, the size and format of the Mesh cannot be changed.'
 }

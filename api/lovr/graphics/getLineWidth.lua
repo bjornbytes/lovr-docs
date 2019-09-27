@@ -13,5 +13,5 @@ return {
   related = {
     'lovr.graphics.line'
   },
-  notes = 'The default line width is `1.0`.'
+  notes = 'The default line width is `1`.'
 }

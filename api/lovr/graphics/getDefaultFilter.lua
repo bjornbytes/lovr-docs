@@ -21,6 +21,7 @@ return {
       ]]
     }
   },
+  notes = 'The default filter is `trilinear`.',
   related = {
     'Texture:getFilter',
     'Texture:setFilter'

@@ -2,7 +2,7 @@ return {
   tag = 'graphicsPrimitives',
   summary = 'Render a skybox.',
   description = [[
-    Render a skybox from a texture.  Two common kinds of skybox textures are supported: A 2d
+    Render a skybox from a texture.  Two common kinds of skybox textures are supported: A 2D
     equirectangular texture with a spherical coordinates can be used, or a "cubemap" texture created
     from 6 images.
   ]],

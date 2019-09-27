@@ -24,5 +24,12 @@ return {
         this filter mode.  Gives the best results but is also slower.
       ]]
     }
+  },
+  related = {
+    'Texture:getFilter',
+    'Texture:setFilter',
+    'lovr.graphics.getDefaultFilter',
+    'lovr.graphics.setDefaultFilter',
+    'WrapMode'
   }
 }

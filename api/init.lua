@@ -4969,6 +4969,13 @@ return {
               name = "anisotropic",
               description = "Anisotropic texture filtering.  The level of anisotropy can also be specified when setting this filter mode.  Gives the best results but is also slower."
             }
+          },
+          related = {
+            "Texture:getFilter",
+            "Texture:setFilter",
+            "lovr.graphics.getDefaultFilter",
+            "lovr.graphics.setDefaultFilter",
+            "WrapMode"
           }
         },
         {
@@ -6926,10 +6933,6 @@ return {
           description = "Returns the default filter mode for new Textures.  This controls how textures are sampled when they are minified, magnified, or stretched.",
           key = "lovr.graphics.getDefaultFilter",
           module = "lovr.graphics",
-          related = {
-            "Texture:getFilter",
-            "Texture:setFilter"
-          },
           variants = {
             {
               arguments = {},
@@ -6946,7 +6949,12 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "Texture:getFilter",
+            "Texture:setFilter"
+          },
+          notes = "The default filter is `trilinear`."
         },
         {
           name = "getDepthTest",
@@ -7179,7 +7187,7 @@ return {
           related = {
             "lovr.graphics.line"
           },
-          notes = "The default line width is `1.0`."
+          notes = "The default line width is `1`."
         },
         {
           name = "getPixelDensity",
@@ -7942,7 +7950,7 @@ return {
           description = "Creates a new Mesh.  Meshes contain the data for an arbitrary set of vertices, and can be drawn. You must specify either the capacity for the Mesh or an initial set of vertex data.  Optionally, a custom format table can be used to specify the set of vertex attributes the mesh will provide to the active shader.  The draw mode and usage hint can also optionally be specified.",
           key = "lovr.graphics.newMesh",
           module = "lovr.graphics",
-          notes = "Once created, the size of the Mesh can't be changed.",
+          notes = "Once created, the size and format of the Mesh cannot be changed.",
           variants = {
             {
               arguments = {
@@ -8001,7 +8009,35 @@ return {
               }
             },
             {
-              description = "These variants accept a custom vertex format.  For more info, see the <a data-key=\"Mesh\">`Mesh`</a> page.",
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A binary Blob containing vertex data."
+                },
+                {
+                  name = "mode",
+                  type = "DrawMode",
+                  description = "How the Mesh will connect its vertices into triangles.",
+                  default = "'fan'"
+                },
+                {
+                  name = "usage",
+                  type = "MeshUsage",
+                  description = "An optimization hint indicating how often the data in the Mesh will be updated.",
+                  default = "'dynamic'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              description = "These variants accept a custom vertex format.  For more info, see the `Mesh` page.",
               arguments = {
                 {
                   name = "format",
@@ -8045,6 +8081,39 @@ return {
                   name = "vertices",
                   type = "table",
                   description = "A table of vertices.  Each vertex is a table containing the vertex data."
+                },
+                {
+                  name = "mode",
+                  type = "DrawMode",
+                  description = "How the Mesh will connect its vertices into triangles.",
+                  default = "'fan'"
+                },
+                {
+                  name = "usage",
+                  type = "MeshUsage",
+                  description = "An optimization hint indicating how often the data in the Mesh will be updated.",
+                  default = "'dynamic'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A table describing the attribute format for the vertices."
+                },
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A binary Blob containing vertex data."
                 },
                 {
                   name = "mode",
@@ -8119,22 +8188,39 @@ return {
           description = "Creates a new Shader.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.setShader",
-            "lovr.graphics.getShader"
-          },
           variants = {
             {
               arguments = {
-                {
-                  name = "vertex",
+                vertex = {
                   type = "string",
-                  description = "The code or filename of the vertex shader.  If nil, the default vertex shader is used."
+                  description = "        The code or filename of the vertex shader.  If nil, the default vertex shader is used.\n      "
                 },
-                {
-                  name = "fragment",
+                fragment = {
                   type = "string",
-                  description = "The code or filename of the fragment shader.  If nil, the default fragment shader is used."
+                  description = "        The code or filename of the fragment shader.  If nil, the default fragment shader is used.\n      "
+                },
+                options = {
+                  type = "table",
+                  description = "Optional settings for the Shader.",
+                  table = {
+                    {
+                      name = "flags",
+                      type = "table",
+                      description = "A table of key-value options passed to the Shader.",
+                      default = "{}"
+                    },
+                    {
+                      name = "stereo",
+                      type = "boolean",
+                      description = "            Whether the Shader should be configured for stereo rendering (Currently Android-only).\n          ",
+                      default = "true"
+                    }
+                  },
+                  default = "{}"
+                },
+                default = {
+                  type = "DefaultShader",
+                  description = "A builtin shader to use for the shader code."
                 }
               },
               returns = {
@@ -8145,7 +8231,14 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.graphics.setShader",
+            "lovr.graphics.getShader",
+            "lovr.graphics.newComputeShader",
+            "Shader"
+          },
+          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0.  Any pixels with alpha less than the\n  cutoff will be discarded.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping function.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases."
         },
         {
           name = "newShaderBlock",
@@ -9157,10 +9250,6 @@ return {
           description = "Sets the default filter mode for new Textures.  This controls how textures are sampled when they are minified, magnified, or stretched.",
           key = "lovr.graphics.setDefaultFilter",
           module = "lovr.graphics",
-          related = {
-            "Texture:getFilter",
-            "Texture:setFilter"
-          },
           variants = {
             {
               arguments = {
@@ -9177,7 +9266,12 @@ return {
               },
               returns = {}
             }
-          }
+          },
+          related = {
+            "Texture:getFilter",
+            "Texture:setFilter"
+          },
+          notes = "The default filter is `trilinear`."
         },
         {
           name = "setDepthTest",
@@ -9244,7 +9338,8 @@ return {
                 {
                   name = "width",
                   type = "number",
-                  description = "The new line width, in pixels."
+                  description = "The new line width, in pixels.",
+                  default = "1"
                 }
               },
               returns = {}
@@ -9253,7 +9348,7 @@ return {
           related = {
             "lovr.graphics.line"
           },
-          notes = "The default line width is `1.0`.\n\nDriver support for line widths is poor.  The actual width of lines may be different from what is set here.  In particular, some graphics drivers only support a line width of `1.0`."
+          notes = "The default line width is `1`.\n\nGPU driver support for line widths is poor.  The actual width of lines may be different from what is set here.  In particular, some graphics drivers only support a line width of `1`.\n\nCurrently this function only supports integer values from 1 to 255."
         },
         {
           name = "setPointSize",
@@ -9268,7 +9363,8 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The new point size."
+                  description = "The new point size.",
+                  default = "1.0"
                 }
               },
               returns = {}
@@ -9409,7 +9505,7 @@ return {
           name = "skybox",
           tag = "graphicsPrimitives",
           summary = "Render a skybox.",
-          description = "Render a skybox from a texture.  Two common kinds of skybox textures are supported: A 2d equirectangular texture with a spherical coordinates can be used, or a \"cubemap\" texture created from 6 images.",
+          description = "Render a skybox from a texture.  Two common kinds of skybox textures are supported: A 2D equirectangular texture with a spherical coordinates can be used, or a \"cubemap\" texture created from 6 images.",
           key = "lovr.graphics.skybox",
           module = "lovr.graphics",
           variants = {

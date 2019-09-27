@@ -6,6 +6,7 @@ return {
     {
       name = 'size',
       type = 'number',
+      default = '1.0',
       description = 'The new point size.'
     }
   },
