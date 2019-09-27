@@ -13,7 +13,10 @@ return {
     size = {
       type = 'number',
       default = '32',
-      description = 'The resolution to render the fonts at, in pixels.'
+      description = [[
+        The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and
+        processing power but may provide better quality results for some fonts/situations.
+      ]]
     }
   },
   returns = {
@@ -23,6 +26,11 @@ return {
     }
   },
   variants = {
+    {
+      description = 'Create a Rasterizer for the default font included with LÖVR (Varela Round).',
+      arguments = { 'size' },
+      returns = { 'rasterizer' }
+    },
     {
       arguments = { 'filename', 'size' },
       returns = { 'rasterizer' }

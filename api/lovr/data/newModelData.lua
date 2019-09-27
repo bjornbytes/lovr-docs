@@ -1,6 +1,6 @@
 return {
   summary = 'Create a new ModelData.',
-  description = 'Creates a new ModelData from a 3D model file.',
+  description = 'Loads a 3D model from a file.  The supported 3D file formats are OBJ and glTF.',
   arguments = {
     filename = {
       type = 'string',
@@ -8,7 +8,7 @@ return {
     },
     blob = {
       type = 'Blob',
-      description = 'The Blob containing model to decode.'
+      description = 'The Blob containing data for a model to decode.'
     }
   },
   returns = {
@@ -19,7 +19,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'string' },
+      arguments = { 'filename' },
       returns = { 'modelData' }
     },
     {

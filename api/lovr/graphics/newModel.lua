@@ -1,11 +1,7 @@
 return {
   tag = 'graphicsObjects',
   summary = 'Create a new Model.',
-  description = [[
-    Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.
-
-    The following features are not supported yet: animations, materials, vertex colors.
-  ]],
+  description = 'Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.',
   arguments = {
     filename = {
       type = 'string',
@@ -56,5 +52,13 @@ return {
   notes = [[
     Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be
     loaded as linear.
+
+    Currently, the following features are not supported by the model importer:
+
+    - OBJ: Quads are not supported (only triangles).
+    - glTF: Sparse accessors are not supported.
+    - glTF: Morph targets are not supported.
+    - glTF: base64 images are not supported (base64 buffer data works though).
+    - glTF: Only the default scene is loaded.
   ]]
 }

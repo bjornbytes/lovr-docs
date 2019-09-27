@@ -1,16 +1,17 @@
 return {
   summary = 'Create a new Blob.',
-  description = 'Creates a new Blob.  A Blob is a piece of binary data.',
+  description = 'Creates a new Blob.',
   arguments = {
     size = {
       type = 'number',
       description = [[
-        The amount of data to allocate for the Blob, in bytes.  Its content will be set to zero.
+        The amount of data to allocate for the Blob, in bytes.  All of the bytes will be filled with
+        zeroes.
       ]]
     },
     contents = {
       type = 'string',
-      description = 'A string containing the Blob\'s contents.'
+      description = 'A string to use for the Blob\'s contents.'
     },
     source = {
       type = 'Blob',
@@ -42,7 +43,7 @@ return {
       returns = { 'blob' }
     }
   },
-  notes = [[
-    Note that `TextureData` and `SoundData` are Blobs and can be cloned using this function.
-  ]]
+  related = {
+    'lovr.filesystem.newBlob'
+  }
 }

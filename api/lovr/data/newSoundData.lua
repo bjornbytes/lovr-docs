@@ -2,13 +2,13 @@ return {
   summary = 'Create a new SoundData.',
   description = [[
     Creates a new SoundData.  You can pass a filename or Blob to decode, an existing AudioStream to
-    decode audio samples from, or you can create an empty SoundData that is able to hold a certain
-    number of samples.
+    decode audio samples from, or you can create an empty SoundData that can hold a certain number
+    of samples.
   ]],
   arguments = {
     samples = {
       type = 'number',
-      description = 'The total number of samples in each channel.'
+      description = 'The total number of samples for each channel.'
     },
     sampleRate = {
       type = 'number',
@@ -31,7 +31,7 @@ return {
     },
     blob = {
       type = 'string',
-      description = 'The Blob containing sound data to decode.'
+      description = 'The Blob containing compressed sound data to decode.'
     }
   },
   returns = {

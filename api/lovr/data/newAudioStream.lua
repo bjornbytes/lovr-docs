@@ -1,6 +1,8 @@
 return {
   summary = 'Create a new AudioStream.',
-  description = 'Creates a new AudioStream from ogg data.',
+  description = [[
+    Creates a new AudioStream.  Right now, the only supported audio format is Ogg Vorbis (.ogg).
+  ]],
   arguments = {
     filename = {
       type = 'string',

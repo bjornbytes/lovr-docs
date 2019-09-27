@@ -1555,7 +1555,7 @@ return {
             {
               name = "getBitDepth",
               summary = "Get the bit depth of the Source.",
-              description = "Returns the number of bits per sample in the Source.  This is a rough indicator of the resolution of the Source, and is usually 16.",
+              description = "Returns the number of bits per sample in the Source.  This is a rough indicator of the \"resolution\" or quality of the Source.  It's usually 16 or 32.",
               key = "Source:getBitDepth",
               module = "lovr.audio",
               related = {
@@ -1601,10 +1601,10 @@ return {
             {
               name = "getCone",
               summary = "Get the Source's volume cone.",
-              description = "Returns the directional volume cone of the Source.  The cone is specified by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is inside the `innerAngle`, the Source won't have its volume changed.  Otherwise, the volume will start to decrease, reaching a minimum volume of `outerVolume` once the listener is `outerAngle` degrees from the direction of the Source.",
+              description = "Returns the directional volume cone of the Source.  The cone is specified by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is inside the `innerAngle`, the Source won't have its volume reduced.  Otherwise, the volume will start to decrease, reaching a minimum volume of `outerVolume` once the listener is `outerAngle` degrees from the direction of the Source.",
               key = "Source:getCone",
               module = "lovr.audio",
-              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `2 * math.pi`.\n\nThe default `outerVolume` for a Source is `0`.\n\nMake sure to set the direction of a Source before setting its cone.",
+              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `2 * math.pi`.\n\nThe default `outerVolume` for a Source is `0`.\n\n`Source:setOrientation` can be used to change which way the cone points.",
               variants = {
                 {
                   arguments = {},
@@ -1721,6 +1721,46 @@ return {
               }
             },
             {
+              name = "getOrientation",
+              summary = "Get the orientation of the Source.",
+              description = "Returns the orientation of the Source, in angle/axis representation.",
+              key = "Source:getOrientation",
+              module = "lovr.audio",
+              related = {
+                "Source:getPosition",
+                "Source:getPose",
+                "Source:getCone",
+                "lovr.audio.getOrientation"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Source is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getPitch",
               summary = "Get the pitch of the Source.",
               description = "Returns the current pitch factor of the Source.  The default is 1.0.",
@@ -1740,11 +1780,72 @@ return {
               }
             },
             {
+              name = "getPose",
+              summary = "Get the pose of the Source.",
+              description = "Returns the position and orientation of the Source.",
+              key = "Source:getPose",
+              module = "lovr.audio",
+              related = {
+                "Source:getPosition",
+                "Source:getOrientation",
+                "Source:getCone",
+                "lovr.audio.getPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Source, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Source, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Source, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Source is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getPosition",
               summary = "Get the position of the Source.",
               description = "Returns the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.",
               key = "Source:getPosition",
               module = "lovr.audio",
+              related = {
+                "Source:getOrientation",
+                "Source:getPose",
+                "Source:getCone",
+                "lovr.audio.getPosition"
+              },
               variants = {
                 {
                   arguments = {},
@@ -1947,7 +2048,7 @@ return {
             {
               name = "isRelative",
               summary = "Check if the Source is relative to the listener.",
-              description = "Returns whether or not the Source is relative to the listener.  If a Source is relative then its position, velocity, cone, and direction are all relative to the audio listener.",
+              description = "Returns whether or not the Source is relative to the listener.  If a Source is relative then its position, velocity, cone, and orientation are all treated as relative to the audio listener, instead of absolute positions in space.",
               key = "Source:isRelative",
               module = "lovr.audio",
               variants = {
@@ -1998,7 +2099,7 @@ return {
             {
               name = "play",
               summary = "Play the Source.",
-              description = "Plays the Source.  This has no effect if the Source is already playing.",
+              description = "Plays the Source.  This doesn't do anything if the Source is already playing.",
               key = "Source:play",
               module = "lovr.audio",
               variants = {
@@ -2065,7 +2166,7 @@ return {
               description = "Sets the directional volume cone of the Source.  The cone is specified by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is inside the `innerAngle`, the Source won't have its volume changed.  Otherwise, the volume will start to decrease, reaching a minimum volume of `outerVolume` once the listener is `outerAngle` degrees from the direction of the Source.",
               key = "Source:setCone",
               module = "lovr.audio",
-              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `2 * math.pi`.\n\nThe default `outerVolume` for a Source is `0`.\n\nMake sure to set the direction of a Source before setting its cone.",
+              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `2 * math.pi`.\n\nThe default `outerVolume` for a Source is `0`.\n\nThe direction of the cone can be changed using `Source:setOrientation`.",
               variants = {
                 {
                   arguments = {
@@ -2121,7 +2222,7 @@ return {
             {
               name = "setFalloff",
               summary = "Set the falloff parameters for the Source.",
-              description = "Sets parameters that control how the volume of the Source falls of with distance.",
+              description = "Sets parameters that control how the volume of the Source falls of with distance.\n\nOnly mono sources support positional falloff.  Using this function on a stereo Source will cause an error.",
               key = "Source:setFalloff",
               module = "lovr.audio",
               related = {
@@ -2171,6 +2272,46 @@ return {
               }
             },
             {
+              name = "setOrientation",
+              summary = "Set the orientation of the Source.",
+              description = "Sets the orientation of the Source in angle/axis representation.",
+              key = "Source:setOrientation",
+              module = "lovr.audio",
+              related = {
+                "Source:setPosition",
+                "Source:setPose",
+                "Source:setCone",
+                "lovr.audio.setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Source should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setPitch",
               summary = "Set the pitch of the Source.",
               description = "Sets the pitch of the Source.  The default is 1.0.",
@@ -2190,9 +2331,63 @@ return {
               }
             },
             {
+              name = "setPose",
+              summary = "Set the pose of the Source.",
+              description = "Sets the position and orientation of the Source.",
+              key = "Source:setPose",
+              module = "lovr.audio",
+              related = {
+                "Source:setPosition",
+                "Source:setOrientation",
+                "lovr.audio.setPose"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Source, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Source, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Source, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Source is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setPosition",
               summary = "Set the position of the Source.",
-              description = "Sets the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.\n\nOnly mono sources can be positioned.",
+              description = "Sets the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.\n\nOnly mono sources can be positioned.  Setting the position of a stereo Source will cause an error.",
               key = "Source:setPosition",
               module = "lovr.audio",
               variants = {
@@ -2221,7 +2416,7 @@ return {
             {
               name = "setRelative",
               summary = "Set whether or not the Source is relative.",
-              description = "Sets whether or not the Source is relative to the listener.  If a Source is relative then its position, velocity, cone, and direction are all relative to the audio listener.",
+              description = "Sets whether or not the Source is relative to the listener.  If a Source is relative then its position, velocity, cone, and orientation are all treated as relative to the audio listener.",
               key = "Source:setRelative",
               module = "lovr.audio",
               variants = {
@@ -2230,7 +2425,7 @@ return {
                     {
                       name = "relative",
                       type = "boolean",
-                      description = "Whether or not the Source is relative."
+                      description = "Whether or not the Source should be relative."
                     }
                   },
                   returns = {}
@@ -2313,7 +2508,7 @@ return {
             {
               name = "stop",
               summary = "Stop the Source.",
-              description = "Stops the source.",
+              description = "Stops the source, also rewinding it to the beginning.",
               key = "Source:stop",
               module = "lovr.audio",
               variants = {
@@ -2366,7 +2561,7 @@ return {
         {
           name = "newAudioStream",
           summary = "Create a new AudioStream.",
-          description = "Creates a new AudioStream from ogg data.",
+          description = "Creates a new AudioStream.  Right now, the only supported audio format is Ogg Vorbis (.ogg).",
           key = "lovr.data.newAudioStream",
           module = "lovr.data",
           variants = {
@@ -2419,17 +2614,19 @@ return {
         {
           name = "newBlob",
           summary = "Create a new Blob.",
-          description = "Creates a new Blob.  A Blob is a piece of binary data.",
+          description = "Creates a new Blob.",
           key = "lovr.data.newBlob",
           module = "lovr.data",
-          notes = "Note that `TextureData` and `SoundData` are Blobs and can be cloned using this function.",
+          related = {
+            "lovr.filesystem.newBlob"
+          },
           variants = {
             {
               arguments = {
                 {
                   name = "size",
                   type = "number",
-                  description = "The amount of data to allocate for the Blob, in bytes.  Its content will be set to zero."
+                  description = "The amount of data to allocate for the Blob, in bytes.  All of the bytes will be filled with zeroes."
                 },
                 {
                   name = "name",
@@ -2451,7 +2648,7 @@ return {
                 {
                   name = "contents",
                   type = "string",
-                  description = "A string containing the Blob's contents."
+                  description = "A string to use for the Blob's contents."
                 },
                 {
                   name = "name",
@@ -2495,12 +2692,18 @@ return {
         {
           name = "newModelData",
           summary = "Create a new ModelData.",
-          description = "Creates a new ModelData from a 3D model file.",
+          description = "Loads a 3D model from a file.  The supported 3D file formats are OBJ and glTF.",
           key = "lovr.data.newModelData",
           module = "lovr.data",
           variants = {
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the model to load."
+                }
+              },
               returns = {
                 {
                   name = "modelData",
@@ -2514,7 +2717,7 @@ return {
                 {
                   name = "blob",
                   type = "Blob",
-                  description = "The Blob containing model to decode."
+                  description = "The Blob containing data for a model to decode."
                 }
               },
               returns = {
@@ -2535,6 +2738,24 @@ return {
           module = "lovr.data",
           variants = {
             {
+              description = "Create a Rasterizer for the default font included with LÖVR (Varela Round).",
+              arguments = {
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            },
+            {
               arguments = {
                 {
                   name = "filename",
@@ -2544,7 +2765,7 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The resolution to render the fonts at, in pixels.",
+                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
               },
@@ -2566,7 +2787,7 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The resolution to render the fonts at, in pixels.",
+                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
               },
@@ -2583,7 +2804,7 @@ return {
         {
           name = "newSoundData",
           summary = "Create a new SoundData.",
-          description = "Creates a new SoundData.  You can pass a filename or Blob to decode, an existing AudioStream to decode audio samples from, or you can create an empty SoundData that is able to hold a certain number of samples.",
+          description = "Creates a new SoundData.  You can pass a filename or Blob to decode, an existing AudioStream to decode audio samples from, or you can create an empty SoundData that can hold a certain number of samples.",
           key = "lovr.data.newSoundData",
           module = "lovr.data",
           variants = {
@@ -2608,7 +2829,7 @@ return {
                 {
                   name = "samples",
                   type = "number",
-                  description = "The total number of samples in each channel."
+                  description = "The total number of samples for each channel."
                 },
                 {
                   name = "sampleRate",
@@ -2646,7 +2867,7 @@ return {
                 {
                   name = "blob",
                   type = "string",
-                  description = "The Blob containing sound data to decode."
+                  description = "The Blob containing compressed sound data to decode."
                 }
               },
               returns = {
@@ -2662,9 +2883,10 @@ return {
         {
           name = "newTextureData",
           summary = "Create a new TextureData.",
-          description = "Creates a new TextureData with a given width and height or from an image file.",
+          description = "Creates a new TextureData.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
           key = "lovr.data.newTextureData",
           module = "lovr.data",
+          notes = "Right now the supported image file formats are png, jpg, and hdr.",
           variants = {
             {
               description = "Load image data from a file.",
@@ -2673,6 +2895,12 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The filename of the image to load."
+                },
+                {
+                  name = "flip",
+                  type = "boolean",
+                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
+                  default = "true"
                 }
               },
               returns = {
@@ -2684,17 +2912,17 @@ return {
               }
             },
             {
-              description = "Create an empty TextureData, initializing all color components to 0.",
+              description = "Create an empty TextureData, initializing all pixel values to 0 (transparent black).",
               arguments = {
                 {
                   name = "width",
                   type = "number",
-                  description = "The width of the texture data."
+                  description = "The width of the texture."
                 },
                 {
                   name = "height",
                   type = "number",
-                  description = "The height of the texture data."
+                  description = "The height of the texture."
                 },
                 {
                   name = "format",
@@ -2718,6 +2946,12 @@ return {
                   name = "blob",
                   type = "Blob",
                   description = "The Blob containing image data to decode."
+                },
+                {
+                  name = "flip",
+                  type = "boolean",
+                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
+                  default = "true"
                 }
               },
               returns = {
@@ -7843,10 +8077,10 @@ return {
           name = "newModel",
           tag = "graphicsObjects",
           summary = "Create a new Model.",
-          description = "Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.\n\nThe following features are not supported yet: animations, materials, vertex colors.",
+          description = "Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be loaded as linear.",
+          notes = "Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be loaded as linear.\n\nCurrently, the following features are not supported by the model importer:\n\n- OBJ: Quads are not supported (only triangles).\n- glTF: Sparse accessors are not supported.\n- glTF: Morph targets are not supported.\n- glTF: base64 images are not supported (base64 buffer data works though).\n- glTF: Only the default scene is loaded.",
           variants = {
             {
               arguments = {
