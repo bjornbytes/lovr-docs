@@ -1,8 +1,8 @@
 return {
-  summary = 'Get the width of a line of text.',
+  summary = 'Measure a line of text.',
   description = [[
-    Returns the width and line count of a string when rendered using the font, with an optional
-    wrap.
+    Returns the width and line count of a string when rendered using the font, taking into account
+    an optional wrap limit.
   ]],
   arguments = {
     {

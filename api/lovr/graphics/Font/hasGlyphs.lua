@@ -21,7 +21,7 @@ return {
   },
   notes = [[
     It is a good idea to use this function when you're rendering an unknown or user-supplied string
-    to avoid embarrassing crashes.
+    to avoid utterly embarrassing crashes.
   ]],
   related = {
     'Rasterizer:hasGlyphs'

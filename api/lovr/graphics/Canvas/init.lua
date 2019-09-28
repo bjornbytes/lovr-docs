@@ -13,10 +13,10 @@ return {
   notes = [[
     Up to four textures can be attached to a Canvas and anything rendered to the Canvas will be
     broadcast to all attached Textures.  If you want to do render different things to different
-    textures, add a `#define MULTICANVAS` line to the top of your fragment shader and implement the
-    `void colors` function instead of the usual `vec4 color` function.  You can then assign
-    different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single
-    color.
+    textures, use the `multicanvas` shader flag when creating your shader and implement the `void
+    colors` function instead of the usual `vec4 color` function.  You can then assign different
+    output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single color.
+    Each color written to the array will end up in the corresponding texture attached to the Canvas.
   ]],
   example = {
     description = 'Apply a postprocessing effect (wave) using a Canvas and a fragment shader.',
@@ -43,7 +43,7 @@ return {
         wave:send('time', lovr.timer.getTime())
       end
 
-      function lovr.draw(eye)
+      function lovr.draw()
         -- Render the scene to the canvas instead of the headset.
         canvas:renderTo(function()
           lovr.graphics.clear()
@@ -62,7 +62,7 @@ return {
         -- Render the canvas to the headset using a shader.
         lovr.graphics.setColor(1, 1, 1)
         lovr.graphics.setShader(wave)
-        lovr.graphics.plane(canvas)
+        lovr.graphics.fill(canvas:getTexture())
         lovr.graphics.setShader()
       end
     ]=]

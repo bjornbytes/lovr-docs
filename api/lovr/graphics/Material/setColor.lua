@@ -2,7 +2,7 @@ return {
   summary = 'Set a color property of the Material.',
   description = [[
     Sets a color property for a Material.  Different types of colors are supported for different
-    lighting parameters.  Colors default to white and are gamma corrected as necessary.
+    lighting parameters.  Colors default to `(1.0, 1.0, 1.0, 1.0)` and are gamma corrected.
   ]],
   arguments = {
     colorType = {

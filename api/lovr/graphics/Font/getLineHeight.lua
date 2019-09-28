@@ -1,6 +1,6 @@
 return {
   summary = 'Get the line height of the Font.',
-  description = 'Returns the current line height of the Font.  The default is 1.0.',
+  description = 'Returns the current line height multiplier of the Font.  The default is 1.0.',
   arguments = {},
   returns = {
     {
@@ -10,6 +10,7 @@ return {
     }
   },
   related = {
+    'Font:getHeight',
     'Rasterizer:getLineHeight'
   }
 }

@@ -13,6 +13,7 @@ return {
   },
   returns = {},
   related = {
+    'Font:getHeight',
     'Rasterizer:getLineHeight'
   }
 }

@@ -1,8 +1,8 @@
 return {
   summary = 'Get a texture for the Material.',
   description = [[
-    Returns a texture for a Material.  Different types of textures are supported for different
-    lighting parameters.  If unset, textures default to a blank white texture.
+    Returns a texture for a Material.  Several predefined `MaterialTexture`s are supported.  Any
+    texture that is `nil` will use a single white pixel as a fallback.
   ]],
   arguments = {
     {

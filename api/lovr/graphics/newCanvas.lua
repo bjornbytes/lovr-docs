@@ -98,7 +98,12 @@ return {
       returns = { 'canvas' }
     }
   },
-  notes = 'Textures created by this function will have `clamp` as their `TextureWrap`.',
+  notes = [[
+    Textures created by this function will have `clamp` as their `TextureWrap`.
+
+    Stereo Canvases will either have their width doubled or use array textures for their
+    attachments, depending on their implementation.
+  ]],
   related = {
     'lovr.graphics.setCanvas',
     'lovr.graphics.getCanvas',

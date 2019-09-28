@@ -1,8 +1,6 @@
 return {
   summary = 'Get a scalar property of the Material.',
-  description = [[
-    Returns a numeric property of a Material.  Scalar properties default to 1.0.
-  ]],
+  description = 'Returns a numeric property of a Material.  Scalar properties default to 1.0.',
   arguments = {
     {
       name = 'scalarType',

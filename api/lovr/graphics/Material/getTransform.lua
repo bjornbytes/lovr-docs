@@ -28,5 +28,10 @@ return {
       type = 'number',
       description = 'The texture coordinate rotation, in radians.'
     }
-  }
+  },
+  notes = [[
+    Although texture coordinates will automatically be transformed by the Material's transform, the
+    material transform is exposed as the `mat3 lovrMaterialTransform` uniform variable in shaders,
+    allowing it to be used for other purposes.
+  ]]
 }
