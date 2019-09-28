@@ -7506,7 +7506,7 @@ return {
           description = "Creates a new Canvas.  You can specify Textures to attach to it, or just specify a width and height and attach textures later using `Canvas:setTexture`.\n\nOnce created, you can render to the Canvas using `Canvas:renderTo`, or `lovr.graphics.setCanvas`.",
           key = "lovr.graphics.newCanvas",
           module = "lovr.graphics",
-          notes = "Textures created by this function will have `clamp` as their `TextureWrap`.",
+          notes = "Textures created by this function will have `clamp` as their `TextureWrap`.\n\nStereo Canvases will either have their width doubled or use array textures for their attachments, depending on their implementation.",
           variants = {
             {
               description = "Create an empty Canvas with no Textures attached.",
@@ -10110,7 +10110,7 @@ return {
           examples = {
             {
               description = "Apply a postprocessing effect (wave) using a Canvas and a fragment shader.",
-              code = "function lovr.load()\n  lovr.graphics.setBackgroundColor(.1, .1, .1)\n  canvas = lovr.graphics.newCanvas(lovr.headset.getDisplayDimensions())\n\n  wave = lovr.graphics.newShader([[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return vertex;\n    }\n  ]], [[\n    uniform float time;\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      uv.x += sin(uv.y * 10 + time * 4) * .01;\n      uv.y += cos(uv.x * 10 + time * 4) * .01;\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n  ]])\nend\n\nfunction lovr.update(dt)\n  wave:send('time', lovr.timer.getTime())\nend\n\nfunction lovr.draw(eye)\n  -- Render the scene to the canvas instead of the headset.\n  canvas:renderTo(function()\n    lovr.graphics.clear()\n    local size = 5\n    for i = 1, size do\n      for j = 1, size do\n        for k = 1, size do\n          lovr.graphics.setColor(i / size, j / size, k / size)\n          local x, y, z = i - size / 2, j - size / 2, k - size / 2\n          lovr.graphics.cube('fill', x, y, z, .5)\n        end\n      end\n    end\n  end)\n\n  -- Render the canvas to the headset using a shader.\n  lovr.graphics.setColor(1, 1, 1)\n  lovr.graphics.setShader(wave)\n  lovr.graphics.plane(canvas)\n  lovr.graphics.setShader()\nend"
+              code = "function lovr.load()\n  lovr.graphics.setBackgroundColor(.1, .1, .1)\n  canvas = lovr.graphics.newCanvas(lovr.headset.getDisplayDimensions())\n\n  wave = lovr.graphics.newShader([[\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      return vertex;\n    }\n  ]], [[\n    uniform float time;\n    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {\n      uv.x += sin(uv.y * 10 + time * 4) * .01;\n      uv.y += cos(uv.x * 10 + time * 4) * .01;\n      return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);\n    }\n  ]])\nend\n\nfunction lovr.update(dt)\n  wave:send('time', lovr.timer.getTime())\nend\n\nfunction lovr.draw()\n  -- Render the scene to the canvas instead of the headset.\n  canvas:renderTo(function()\n    lovr.graphics.clear()\n    local size = 5\n    for i = 1, size do\n      for j = 1, size do\n        for k = 1, size do\n          lovr.graphics.setColor(i / size, j / size, k / size)\n          local x, y, z = i - size / 2, j - size / 2, k - size / 2\n          lovr.graphics.cube('fill', x, y, z, .5)\n        end\n      end\n    end\n  end)\n\n  -- Render the canvas to the headset using a shader.\n  lovr.graphics.setColor(1, 1, 1)\n  lovr.graphics.setShader(wave)\n  lovr.graphics.fill(canvas:getTexture())\n  lovr.graphics.setShader()\nend"
             }
           },
           constructors = {
@@ -10372,11 +10372,11 @@ return {
               }
             }
           },
-          notes = "Up to four textures can be attached to a Canvas and anything rendered to the Canvas will be broadcast to all attached Textures.  If you want to do render different things to different textures, add a `#define MULTICANVAS` line to the top of your fragment shader and implement the `void colors` function instead of the usual `vec4 color` function.  You can then assign different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single color."
+          notes = "Up to four textures can be attached to a Canvas and anything rendered to the Canvas will be broadcast to all attached Textures.  If you want to do render different things to different textures, use the `multicanvas` shader flag when creating your shader and implement the `void colors` function instead of the usual `vec4 color` function.  You can then assign different output colors to `lovrCanvas[0]`, `lovrCanvas[1]`, etc. instead of returning a single color. Each color written to the array will end up in the corresponding texture attached to the Canvas."
         },
         {
           name = "Font",
-          summary = "A loaded font used to render text.",
+          summary = "A font used to render text.",
           description = "A Font is an object created from a TTF file.  It can be used to render text with `lovr.graphics.print`.",
           key = "Font",
           module = "lovr.graphics",
@@ -10445,7 +10445,7 @@ return {
             {
               name = "getHeight",
               summary = "Get the height of a line of text.",
-              description = "Returns the height of a line of text, in meters.  Units are in meters, see `Font:setPixelDensity`.",
+              description = "Returns the height of a line of text.  Units are in meters, see `Font:setPixelDensity`.",
               key = "Font:getHeight",
               module = "lovr.graphics",
               related = {
@@ -10467,10 +10467,11 @@ return {
             {
               name = "getLineHeight",
               summary = "Get the line height of the Font.",
-              description = "Returns the current line height of the Font.  The default is 1.0.",
+              description = "Returns the current line height multiplier of the Font.  The default is 1.0.",
               key = "Font:getLineHeight",
               module = "lovr.graphics",
               related = {
+                "Font:getHeight",
                 "Rasterizer:getLineHeight"
               },
               variants = {
@@ -10530,8 +10531,8 @@ return {
             },
             {
               name = "getWidth",
-              summary = "Get the width of a line of text.",
-              description = "Returns the width and line count of a string when rendered using the font, with an optional wrap.",
+              summary = "Measure a line of text.",
+              description = "Returns the width and line count of a string when rendered using the font, taking into account an optional wrap limit.",
               key = "Font:getWidth",
               module = "lovr.graphics",
               notes = "To get the correct units returned, make sure the pixel density is set with\n    `Font:setPixelDensity`.",
@@ -10592,7 +10593,7 @@ return {
                   }
                 }
               },
-              notes = "It is a good idea to use this function when you're rendering an unknown or user-supplied string to avoid embarrassing crashes."
+              notes = "It is a good idea to use this function when you're rendering an unknown or user-supplied string to avoid utterly embarrassing crashes."
             },
             {
               name = "setLineHeight",
@@ -10601,6 +10602,7 @@ return {
               key = "Font:setLineHeight",
               module = "lovr.graphics",
               related = {
+                "Font:getHeight",
                 "Rasterizer:getLineHeight"
               },
               variants = {
@@ -10655,7 +10657,7 @@ return {
             {
               name = "getColor",
               summary = "Get a color property of the Material.",
-              description = "Returns a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to white and are gamma corrected as necessary.",
+              description = "Returns a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to `(1.0, 1.0, 1.0, 1.0)` and are gamma corrected.",
               key = "Material:getColor",
               module = "lovr.graphics",
               related = {
@@ -10728,7 +10730,7 @@ return {
             {
               name = "getTexture",
               summary = "Get a texture for the Material.",
-              description = "Returns a texture for a Material.  Different types of textures are supported for different lighting parameters.  If unset, textures default to a blank white texture.",
+              description = "Returns a texture for a Material.  Several predefined `MaterialTexture`s are supported.  Any texture that is `nil` will use a single white pixel as a fallback.",
               key = "Material:getTexture",
               module = "lovr.graphics",
               related = {
@@ -10760,6 +10762,7 @@ return {
               description = "Returns the transformation applied to texture coordinates of the Material.",
               key = "Material:getTransform",
               module = "lovr.graphics",
+              notes = "Although texture coordinates will automatically be transformed by the Material's transform, the material transform is exposed as the `mat3 lovrMaterialTransform` uniform variable in shaders, allowing it to be used for other purposes.",
               variants = {
                 {
                   arguments = {},
@@ -10796,7 +10799,7 @@ return {
             {
               name = "setColor",
               summary = "Set a color property of the Material.",
-              description = "Sets a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to white and are gamma corrected as necessary.",
+              description = "Sets a color property for a Material.  Different types of colors are supported for different lighting parameters.  Colors default to `(1.0, 1.0, 1.0, 1.0)` and are gamma corrected.",
               key = "Material:setColor",
               module = "lovr.graphics",
               related = {
@@ -10905,7 +10908,7 @@ return {
                     {
                       name = "scalarType",
                       type = "MaterialScalar",
-                      description = "The type of property to get."
+                      description = "The type of property to set."
                     },
                     {
                       name = "x",
@@ -10920,7 +10923,7 @@ return {
             {
               name = "setTexture",
               summary = "Set a texture for the Material.",
-              description = "Sets a texture for a Material.  Different types of textures are supported for different lighting parameters.  If set to `nil`, textures default to a blank white texture.",
+              description = "Sets a texture for a Material.  Several predefined `MaterialTexture`s are supported.  Any texture that is `nil` will use a single white pixel as a fallback.",
               key = "Material:setTexture",
               module = "lovr.graphics",
               related = {
@@ -10933,7 +10936,7 @@ return {
                     {
                       name = "textureType",
                       type = "MaterialTexture",
-                      description = "The type of texture to get.",
+                      description = "The type of texture to set.",
                       default = "'diffuse'"
                     },
                     {
@@ -10950,32 +10953,6 @@ return {
                       name = "texture",
                       type = "Texture",
                       description = "The texture to apply, or `nil` to use the default."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "textureType",
-                      type = "MaterialTexture",
-                      description = "The type of texture to get.",
-                      default = "'diffuse'"
-                    },
-                    {
-                      name = "canvas",
-                      type = "Canvas",
-                      description = "A Canvas.  The first Texture attached to the Canvas will be used."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "canvas",
-                      type = "Canvas",
-                      description = "A Canvas.  The first Texture attached to the Canvas will be used."
                     }
                   },
                   returns = {}
@@ -10988,6 +10965,7 @@ return {
               description = "Sets the transformation applied to texture coordinates of the Material.  This lets you offset, scale, or rotate textures as they are applied to geometry.",
               key = "Material:setTransform",
               module = "lovr.graphics",
+              notes = "Although texture coordinates will automatically be transformed by the Material's transform, the material transform is exposed as the `mat3 lovrMaterialTransform` uniform variable in shaders, allowing it to be used for other purposes.",
               variants = {
                 {
                   arguments = {
@@ -11953,7 +11931,7 @@ return {
                 "ShaderBlock:sendBlock",
                 "Shader:sendBlock"
               },
-              notes = "The shader does not need to be active to update its uniforms.  However, the types must match up. Uniform variables declared as `float`s must be sent a single number, whereas uniforms declared as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s can be sent a `mat4` object.\n\nAn error is thrown if the uniform does not exist or is not used in the shader.\n\n`Blob`s can be used to pass arbitrary binary data to Shader variables.",
+              notes = "The shader does not need to be active to update its uniforms.\n\nThe following type combinations are supported:\n\n<table>\n  <thead>\n    <tr>\n      <td>Uniform type</td>\n      <td>LÖVR type</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>`float`, `int`</td>\n      <td>`number`</td>\n    </tr>\n    <tr>\n      <td>TODO</td>\n      <td>SORRY</td>\n    </tr>\n  </tbody> </table>\n\nUniform variables declared as `float`s must be sent a single number, whereas uniforms declared as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s can be sent a `mat4` object.\n\nAn error is thrown if the uniform does not exist or is not used in the shader.  The `Shader:hasUniform` function can be used to check if a uniform variable exists.\n\n`Blob`s can be used to pass arbitrary binary data to Shader variables.",
               variants = {
                 {
                   arguments = {
