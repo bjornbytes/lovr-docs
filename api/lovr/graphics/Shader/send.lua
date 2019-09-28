@@ -28,19 +28,49 @@ return {
       </thead>
       <tbody>
         <tr>
-          <td>`float`, `int`</td>
-          <td>`number`</td>
+          <td>float</td>
+          <td>number</td>
         </tr>
         <tr>
-          <td>TODO</td>
-          <td>SORRY</td>
+          <td>int</td>
+          <td>number</td>
+        </tr>
+        <tr>
+          <td>vec2</td>
+          <td>{ x, y }</td>
+        </tr>
+        <tr>
+          <td>vec3</td>
+          <td>{ x, y, z } or vec3</td>
+        </tr>
+        <tr>
+          <td>vec4</td>
+          <td>{ x, y, z, w }</td>
+        </tr>
+        <tr>
+          <td>ivec2, ivec3, ivec4</td>
+          <td>{ ...numbers }</td>
+        </tr>
+        <tr>
+          <td>mat2, mat3</td>
+          <td>{ ...numbers }</td>
+        </tr>
+        <tr>
+          <td>mat4</td>
+          <td>{ x, y, z, w, ... } or mat4</td>
+        </tr>
+        <tr>
+          <td>sampler2D, sampler3D, samplerCube, sampler2DArray</td>
+          <td>Texture</td>
+        </tr>
+        <tr>
+          <td>image2D, image3D, imageCube, image2DArray</td>
+          <td>Texture</td>
         </tr>
       </tbody>
     </table>
 
-    Uniform variables declared as `float`s must be sent a single number, whereas uniforms declared
-    as `vec4`s must be sent a table containing 4 numbers, etc.  Note that uniforms declared as mat4s
-    can be sent a `mat4` object.
+    Uniform arrays can be wrapped in tables or passed as multiple arguments.
 
     An error is thrown if the uniform does not exist or is not used in the shader.  The
     `Shader:hasUniform` function can be used to check if a uniform variable exists.
