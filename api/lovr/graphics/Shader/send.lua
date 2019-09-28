@@ -28,49 +28,62 @@ return {
       </thead>
       <tbody>
         <tr>
-          <td>float</td>
-          <td>number</td>
+          <td><code>float</code></td>
+          <td><code>number</code></td>
         </tr>
         <tr>
-          <td>int</td>
-          <td>number</td>
+          <td><code>int</code></td>
+          <td><code>number</code></td>
         </tr>
         <tr>
-          <td>vec2</td>
-          <td>{ x, y }</td>
+          <td><code>vec2</code></td>
+          <td><code>{ x, y }</code></td>
         </tr>
         <tr>
-          <td>vec3</td>
-          <td>{ x, y, z } or vec3</td>
+          <td><code>vec3</code></td>
+          <td><code>{ x, y, z }</code> or <code>vec3</code></td>
         </tr>
         <tr>
-          <td>vec4</td>
-          <td>{ x, y, z, w }</td>
+          <td><code>vec4</code></td>
+          <td><code>{ x, y, z, w }</code></td>
         </tr>
         <tr>
-          <td>ivec2, ivec3, ivec4</td>
-          <td>{ ...numbers }</td>
+          <td><code>ivec2</code></td>
+          <td><code>{ x, y }</code></td>
         </tr>
         <tr>
-          <td>mat2, mat3</td>
-          <td>{ ...numbers }</td>
+          <td><code>mat2</code></td>
+          <td>{ x, y, ... }</td>
         </tr>
         <tr>
-          <td>mat4</td>
-          <td>{ x, y, z, w, ... } or mat4</td>
+          <td><code>mat3</code></td>
+          <td><code>{ x, y, z, ... }</code></td>
         </tr>
         <tr>
-          <td>sampler2D, sampler3D, samplerCube, sampler2DArray</td>
-          <td>Texture</td>
+          <td><code>mat4</code></td>
+          <td><code>{ x, y, z, w, ... }</code> or <code>mat4</code></td>
         </tr>
         <tr>
-          <td>image2D, image3D, imageCube, image2DArray</td>
-          <td>Texture</td>
+          <td><code>sampler</code></td>
+          <td><code>Texture</code></td>
+        </tr>
+        <tr>
+          <td><code>image</code></td>
+          <td><code>Texture</code></td>
         </tr>
       </tbody>
     </table>
 
     Uniform arrays can be wrapped in tables or passed as multiple arguments.
+
+    Textures must match the type of sampler or image they are being sent to.
+
+    The following sampler (and image) types are currently supported:
+
+    - `sampler2D`
+    - `sampler3D`
+    - `samplerCube`
+    - `sampler2DArray`
 
     An error is thrown if the uniform does not exist or is not used in the shader.  The
     `Shader:hasUniform` function can be used to check if a uniform variable exists.
