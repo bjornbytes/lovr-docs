@@ -28,48 +28,56 @@ return {
       </thead>
       <tbody>
         <tr>
-          <td><code>float</code></td>
-          <td><code>number</code></td>
+          <td>float</td>
+          <td>number</td>
         </tr>
         <tr>
-          <td><code>int</code></td>
-          <td><code>number</code></td>
+          <td>int</td>
+          <td>number</td>
         </tr>
         <tr>
-          <td><code>vec2</code></td>
-          <td><code>{ x, y }</code></td>
+          <td>vec2</td>
+          <td>{ x, y }</td>
         </tr>
         <tr>
-          <td><code>vec3</code></td>
-          <td><code>{ x, y, z }</code> or <code>vec3</code></td>
+          <td>vec3</td>
+          <td>{ x, y, z } or vec3</td>
         </tr>
         <tr>
-          <td><code>vec4</code></td>
-          <td><code>{ x, y, z, w }</code></td>
+          <td>vec4</td>
+          <td>{ x, y, z, w }</td>
         </tr>
         <tr>
-          <td><code>ivec2</code></td>
-          <td><code>{ x, y }</code></td>
+          <td>ivec2</td>
+          <td>{ x, y }</td>
         </tr>
         <tr>
-          <td><code>mat2</code></td>
-          <td>{ x, y, ... }</td>
+          <td>ivec3</td>
+          <td>{ x, y, z }</td>
         </tr>
         <tr>
-          <td><code>mat3</code></td>
-          <td><code>{ x, y, z, ... }</code></td>
+          <td>ivec4</td>
+          <td>{ x, y, z, w }</td>
         </tr>
         <tr>
-          <td><code>mat4</code></td>
-          <td><code>{ x, y, z, w, ... }</code> or <code>mat4</code></td>
+          <td>mat2</td>
+          <td>{ x, ... }</td>
         </tr>
         <tr>
-          <td><code>sampler</code></td>
-          <td><code>Texture</code></td>
+          <td>mat3</td>
+          <td>{ x, ... }</td>
         </tr>
         <tr>
-          <td><code>image</code></td>
-          <td><code>Texture</code></td>
+          <td>mat4</td>
+          <td>{ x, ... } or mat4</td>
+        </tr>
+        <tr>
+          <td>sampler</td>
+          <td>Texture</td>
+        </tr>
+        <tr>
+          <td>image</td>
+          <td>Texture</td>
         </tr>
       </tbody>
     </table>
