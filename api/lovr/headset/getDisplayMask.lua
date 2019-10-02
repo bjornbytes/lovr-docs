@@ -2,11 +2,11 @@ return {
   tag = 'headset',
   summary = 'Get a mesh that masks out the visible display area.',
   description = [[
-    Returns a list of 2D triangle vertices that represents areas of the headset display that will
-    never be seen by the user (due to the circular nature of the lenses).  This area can be masked
-    out by rendering it to the depth buffer or stencil buffer.  Then, Further drawing operations can
-    skip rendering to those pixels using the depth test (`lovr.graphics.setDepthTest`) or stencil
-    test (`lovr.graphics.setStencilTest`), which improves performance.
+    Returns 2D triangle vertices that represent areas of the headset display that will never be seen
+    by the user (due to the circular lenses).  This area can be masked out by rendering it to the
+    depth buffer or stencil buffer.  Then, further drawing operations can skip rendering those
+    pixels using the depth test (`lovr.graphics.setDepthTest`) or stencil test
+    (`lovr.graphics.setStencilTest`), which improves performance.
   ]],
   arguments = {},
   returns = {

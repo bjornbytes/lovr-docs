@@ -4963,6 +4963,25 @@ return {
           }
         },
         {
+          name = "CoordinateSpace",
+          description = "Different coordinate spaces for nodes in a Model.",
+          key = "CoordinateSpace",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "local",
+              description = "The coordinate space relative to the node's parent."
+            },
+            {
+              name = "global",
+              description = "The coordinate space relative to the root node of the Model."
+            }
+          },
+          related = {
+            "Model:pose"
+          }
+        },
+        {
           name = "DefaultShader",
           summary = "The set of builtin shaders.",
           description = "The following shaders are built in to LÖVR, and can be used as an argument to `lovr.graphics.newShader` instead of providing raw GLSL shader code.  The shaders can be further customized by using the `flags` argument.  If you pass in `nil` to `lovr.graphics.setShader`, LÖVR will automatically pick a DefaultShader to use based on whatever is being drawn.",
@@ -13345,117 +13364,7 @@ return {
           },
           related = {
             "lovr.headset.getAxis",
-            "DeviceButton",
-            "DeviceBone"
-          }
-        },
-        {
-          name = "DeviceBone",
-          description = "Bones tracked by input devices.",
-          key = "DeviceBone",
-          module = "lovr.headset",
-          values = {
-            {
-              name = "thumb",
-              description = "The tip of the thumb."
-            },
-            {
-              name = "thumb/1",
-              description = "The metacarpal bone of the thumb."
-            },
-            {
-              name = "thumb/2",
-              description = "The proximal bone of the thumb."
-            },
-            {
-              name = "thumb/3",
-              description = "The distal bone of the thumb."
-            },
-            {
-              name = "index",
-              description = "The tip of the index finger."
-            },
-            {
-              name = "index/1",
-              description = "The metacarpal bone of the index finger."
-            },
-            {
-              name = "index/2",
-              description = "The proximal bone of the index finger."
-            },
-            {
-              name = "index/3",
-              description = "The intermediate bone of the index finger."
-            },
-            {
-              name = "index/4",
-              description = "The distal bone of the index finger."
-            },
-            {
-              name = "middle",
-              description = "The tip of the middle finger."
-            },
-            {
-              name = "middle/1",
-              description = "The metacarpal bone of the middle finger."
-            },
-            {
-              name = "middle/2",
-              description = "The proximal bone of the middle finger."
-            },
-            {
-              name = "middle/3",
-              description = "The intermediate bone of the middle finger."
-            },
-            {
-              name = "middle/4",
-              description = "The distal bone of the middle finger."
-            },
-            {
-              name = "ring",
-              description = "The tip of the ring finger."
-            },
-            {
-              name = "ring/1",
-              description = "The metacarpal bone of the ring finger."
-            },
-            {
-              name = "ring/2",
-              description = "The proximal bone of the ring finger."
-            },
-            {
-              name = "ring/3",
-              description = "The intermediate bone of the ring finger."
-            },
-            {
-              name = "ring/4",
-              description = "The distal bone of the ring finger."
-            },
-            {
-              name = "pinky",
-              description = "The tip of the pinky finger."
-            },
-            {
-              name = "pinky/1",
-              description = "The metacarpal bone of the pinky finger."
-            },
-            {
-              name = "pinky/2",
-              description = "The proximal bone of the pinky finger."
-            },
-            {
-              name = "pinky/3",
-              description = "The intermediate bone of the pinky finger."
-            },
-            {
-              name = "pinky/4",
-              description = "The distal bone of the pinky finger."
-            }
-          },
-          related = {
-            "lovr.headset.getBonePose",
-            "DeviceButton",
-            "DeviceAxis"
+            "DeviceButton"
           }
         },
         {
@@ -13611,9 +13520,9 @@ return {
           key = "lovr.headset.getAngularVelocity",
           module = "lovr.headset",
           related = {
+            "lovr.headset.getVelocity",
             "lovr.headset.getPosition",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity"
+            "lovr.headset.getOrientation"
           },
           variants = {
             {
@@ -13649,7 +13558,7 @@ return {
           name = "getAxis",
           tag = "input",
           summary = "Get the state of an analog axis on a device.",
-          description = "Get the current state of an analog axis on a device.  Axis values are usually between 0 and 1.\n Some axes are multidimensional, for example a 2D touchpad or thumbstick with x/y axes.  For\n multidimensional axes, this function will return multiple values, one number for each axis.",
+          description = "Get the current state of an analog axis on a device.  Axis values are between 0 and 1.  Some axes are multidimensional, for example a 2D touchpad or thumbstick with x/y axes.  For multidimensional axes, this function will return multiple values, one number for each axis.  In these cases, it can be useful to use the `select` function built in to Lua to select a particular axis component.",
           key = "lovr.headset.getAxis",
           module = "lovr.headset",
           related = {
@@ -13681,81 +13590,12 @@ return {
           }
         },
         {
-          name = "getBonePose",
-          tag = "input",
-          summary = "Get the pose of a tracked bone.",
-          description = "Returns the current position and orientation of a bone tracked by a device.  This is mainly used for tracking hands.",
-          key = "lovr.headset.getBonePose",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "device",
-                  type = "Device",
-                  description = "The device."
-                },
-                {
-                  name = "bone",
-                  type = "DeviceBone",
-                  description = "The bone."
-                }
-              },
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z position."
-                },
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "The amount of rotation around the axis of rotation, in radians."
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation."
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation."
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation."
-                }
-              }
-            }
-          },
-          related = {
-            "lovr.headset.getPose"
-          },
-          notes = "Units are in meters."
-        },
-        {
           name = "getBoundsDepth",
           tag = "playArea",
           summary = "Get the depth of the play area.",
           description = "Returns the depth of the play area, in meters.",
           key = "lovr.headset.getBoundsDepth",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getBoundsWidth",
-            "lovr.headset.getBoundsDimensions"
-          },
           variants = {
             {
               arguments = {},
@@ -13767,7 +13607,12 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.headset.getBoundsWidth",
+            "lovr.headset.getBoundsDimensions"
+          },
+          notes = "This currently returns 0 on the Quest."
         },
         {
           name = "getBoundsDimensions",
@@ -13776,11 +13621,6 @@ return {
           description = "Returns the size of the play area, in meters.",
           key = "lovr.headset.getBoundsDimensions",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getBoundsWidth",
-            "lovr.headset.getBoundsDepth",
-            "lovr.headset.getBoundsGeometry"
-          },
           variants = {
             {
               arguments = {},
@@ -13797,7 +13637,13 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.headset.getBoundsWidth",
+            "lovr.headset.getBoundsDepth",
+            "lovr.headset.getBoundsGeometry"
+          },
+          notes = "This currently returns 0 on the Quest."
         },
         {
           name = "getBoundsGeometry",
@@ -13836,10 +13682,6 @@ return {
           description = "Returns the width of the play area, in meters.",
           key = "lovr.headset.getBoundsWidth",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getBoundsDepth",
-            "lovr.headset.getBoundsDimensions"
-          },
           variants = {
             {
               arguments = {},
@@ -13851,7 +13693,12 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.headset.getBoundsDepth",
+            "lovr.headset.getBoundsDimensions"
+          },
+          notes = "This currently returns 0 on the Quest."
         },
         {
           name = "getClipDistance",
@@ -13876,13 +13723,14 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "This is not currently supported by the `oculusmobile` headset driver."
         },
         {
           name = "getDisplayDimensions",
           tag = "headset",
           summary = "Get the dimensions of the headset display.",
-          description = "Returns the dimensions of the headset display (for both eyes), in pixels.",
+          description = "Returns the dimensions of the headset display (for one eye), in pixels.",
           key = "lovr.headset.getDisplayDimensions",
           module = "lovr.headset",
           related = {
@@ -13911,7 +13759,7 @@ return {
           name = "getDisplayHeight",
           tag = "headset",
           summary = "Get the height of the headset display.",
-          description = "Returns the height of the headset display (both eyes), in pixels.",
+          description = "Returns the height of the headset display (for one eye), in pixels.",
           key = "lovr.headset.getDisplayHeight",
           module = "lovr.headset",
           related = {
@@ -13935,7 +13783,7 @@ return {
           name = "getDisplayMask",
           tag = "headset",
           summary = "Get a mesh that masks out the visible display area.",
-          description = "Returns a list of 2D triangle vertices that represents areas of the headset display that will never be seen by the user (due to the circular nature of the lenses).  This area can be masked out by rendering it to the depth buffer or stencil buffer.  Then, Further drawing operations can skip rendering to those pixels using the depth test (`lovr.graphics.setDepthTest`) or stencil test (`lovr.graphics.setStencilTest`), which improves performance.",
+          description = "Returns 2D triangle vertices that represent areas of the headset display that will never be seen by the user (due to the circular lenses).  This area can be masked out by rendering it to the depth buffer or stencil buffer.  Then, further drawing operations can skip rendering those pixels using the depth test (`lovr.graphics.setDepthTest`) or stencil test (`lovr.graphics.setStencilTest`), which improves performance.",
           key = "lovr.headset.getDisplayMask",
           module = "lovr.headset",
           variants = {
@@ -13965,7 +13813,7 @@ return {
           name = "getDisplayWidth",
           tag = "headset",
           summary = "Get the width of the headset display.",
-          description = "Returns the width of the headset display (for both eyes), in pixels.",
+          description = "Returns the width of the headset display (for one eye), in pixels.",
           key = "lovr.headset.getDisplayWidth",
           module = "lovr.headset",
           related = {
@@ -13989,12 +13837,12 @@ return {
           name = "getDriver",
           tag = "headset",
           summary = "Get the VR API currently in use for a device.",
-          description = "Returns the `HeadsetDriver` that is currently in use, optionally for a specific device.  You can change the order of headset drivers using `lovr.conf` to prefer or exclude specific VR APIs.",
+          description = "Returns the `HeadsetDriver` that is currently in use, optionally for a specific device.  The order of headset drivers can be changed using `lovr.conf` to prefer or exclude specific VR APIs.",
           key = "lovr.headset.getDriver",
           module = "lovr.headset",
           variants = {
             {
-              description = "Return the current driver for the headset display.",
+              description = "Get the current headset driver that LÖVR is submitting frames to.",
               arguments = {},
               returns = {
                 {
@@ -14005,13 +13853,12 @@ return {
               }
             },
             {
-              description = "Return the current input driver for a device.",
+              description = "Get the current input driver for a device.",
               arguments = {
                 {
                   name = "device",
                   type = "Device",
-                  description = "The device to get the active driver of.  This will be the first driver that is currently returning a pose for the device.",
-                  default = "head"
+                  description = "The device to get the active driver of.  This will be the first driver that is currently returning a pose for the device."
                 }
               },
               returns = {
@@ -14056,7 +13903,7 @@ return {
           name = "getMirrorTexture",
           tag = "headset",
           summary = "Get the Texture containing a view of what's in the headset.",
-          description = "Returns a Texture that contains whatever is currently rendered to the headset.\n\nSometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which can happen if the driver renders directly to the display.  Currently the `fake`, `webvr`, and `oculusmobile` drivers do not have a mirror texture.\n\nIt also isn't guaranteed that the same Texture will be returned by subsequent calls to this function.  Currently, the `oculus` driver exhibits this behavior.",
+          description = "Returns a Texture that contains whatever is currently rendered to the headset.\n\nSometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which can happen if the driver renders directly to the display.  Currently the `desktop`, `webvr`, and `oculusmobile` drivers do not have a mirror texture.\n\nIt also isn't guaranteed that the same Texture will be returned by subsequent calls to this function.  Currently, the `oculus` driver exhibits this behavior.",
           key = "lovr.headset.getMirrorTexture",
           module = "lovr.headset",
           related = {
@@ -14093,7 +13940,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "- The keyboard and mouse VR simulator is named `VR Simulator`.\n- Oculus headsets will usually contain the string `Oculus`."
         },
         {
           name = "getOrientation",
@@ -14102,11 +13950,6 @@ return {
           description = "Returns the current orientation of a device, in angle/axis form.",
           key = "lovr.headset.getOrientation",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getPosition",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity"
-          },
           variants = {
             {
               arguments = {
@@ -14140,7 +13983,16 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.getPosition",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
+          },
+          notes = "If the device isn't tracked, all zeroes will be returned."
         },
         {
           name = "getOriginType",
@@ -14222,11 +14074,14 @@ return {
             }
           },
           related = {
-            "lovr.headset.getBonePose",
             "lovr.headset.getPosition",
-            "lovr.headset.getOrientation"
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
           },
-          notes = "Units are in meters."
+          notes = "Units are in meters.\n\nIf the device isn't tracked, all zeroes will be returned."
         },
         {
           name = "getPosition",
@@ -14235,11 +14090,6 @@ return {
           description = "Returns the current position of a device, in meters, relative to the play area.",
           key = "lovr.headset.getPosition",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity"
-          },
           variants = {
             {
               arguments = {
@@ -14268,7 +14118,16 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
+          },
+          notes = "If the device isn't tracked, all zeroes will be returned."
         },
         {
           name = "getVelocity",
@@ -14278,9 +14137,10 @@ return {
           key = "lovr.headset.getVelocity",
           module = "lovr.headset",
           related = {
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.getPose",
             "lovr.headset.getPosition",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getAngularVelocity"
+            "lovr.headset.getOrientation"
           },
           variants = {
             {
@@ -14385,11 +14245,11 @@ return {
           }
         },
         {
-          name = "newModel",
+          name = "isTracked",
           tag = "input",
-          summary = "Get a Model for a device.",
-          description = "Returns a new Model for the specified device.",
-          key = "lovr.headset.newModel",
+          summary = "Check if a device is currently tracked.",
+          description = "Returns whether any active headset driver is currently returning pose information for a device.",
+          key = "lovr.headset.isTracked",
           module = "lovr.headset",
           variants = {
             {
@@ -14397,7 +14257,36 @@ return {
                 {
                   name = "device",
                   type = "Device",
-                  description = "The device to get a model for.",
+                  description = "The device to get the pose of.",
+                  default = "head"
+                }
+              },
+              returns = {
+                {
+                  name = "tracked",
+                  type = "boolean",
+                  description = "Whether the device is currently tracked."
+                }
+              }
+            }
+          },
+          notes = "If a device is tracked, it is guaranteed to return a valid pose until the next call to `lovr.headset.update`."
+        },
+        {
+          name = "newModel",
+          tag = "input",
+          summary = "Get a Model for a device.",
+          description = "Returns a new Model for the specified device.",
+          key = "lovr.headset.newModel",
+          module = "lovr.headset",
+          notes = "Generally, this is only supported on the `openvr` driver right now.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to load a model for.",
                   default = "head"
                 }
               },
@@ -14412,7 +14301,7 @@ return {
           },
           examples = {
             {
-              code = "local models = {}\n\nfunction lovr.draw()\n  for hand in lovr.headset.hands() do\n    models[hand] = models[hand] or lovr.headset.newModel(hand)\n\n    if models[hand] then\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)\n      models[hand]:draw(x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend"
+              code = "local models = {}\n\nfunction lovr.draw()\n  for hand in ipairs(lovr.headset.getHands()) do\n    models[hand] = models[hand] or lovr.headset.newModel(hand)\n\n    if models[hand] then\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)\n      models[hand]:draw(x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend"
             }
           }
         },
@@ -14503,12 +14392,12 @@ return {
                 {
                   name = "vibrated",
                   type = "boolean",
-                  description = "Whether the device supports haptics and the vibration was successfully triggered."
+                  description = "Whether the vibration was successfully triggered by an active headset driver."
                 }
               }
             }
           },
-          notes = "When using OpenVR, the value for the `duration` currently must be less than .004 seconds.  Call this function several frames in a row for stronger or prolonged vibration patterns."
+          notes = "When using the `openvr` headset driver on an HTC Vive, the value for the `duration` currently must be less than .004 seconds.  Call this function several frames in a row for stronger or prolonged vibration patterns.\n\nThe `oculus` headset driver does not currently support haptics.\n\nOn the `oculusmobile` driver, devices can only be vibrated once per frame.  Any attempts after the first will return `false`."
         }
       },
       objects = {}

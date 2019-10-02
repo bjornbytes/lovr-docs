@@ -2,13 +2,12 @@ return {
   tag = 'headset',
   summary = 'Get the VR API currently in use for a device.',
   description = [[
-    Returns the `HeadsetDriver` that is currently in use, optionally for a specific device.  You can
-    change the order of headset drivers using `lovr.conf` to prefer or exclude specific VR APIs.
+    Returns the `HeadsetDriver` that is currently in use, optionally for a specific device.  The
+    order of headset drivers can be changed using `lovr.conf` to prefer or exclude specific VR APIs.
   ]],
   arguments = {
     device = {
       type = 'Device',
-      default = 'head',
       description = [[
         The device to get the active driver of.  This will be the first driver that is currently
         returning a pose for the device.
@@ -23,14 +22,14 @@ return {
   },
   variants = {
     {
+      description = 'Get the current headset driver that LÖVR is submitting frames to.',
       arguments = {},
-      returns = { 'driver' },
-      description = 'Return the current driver for the headset display.'
+      returns = { 'driver' }
     },
     {
+      description = 'Get the current input driver for a device.',
       arguments = { 'device' },
-      returns = { 'driver' },
-      description = 'Return the current input driver for a device.'
+      returns = { 'driver' }
     }
   }
 }

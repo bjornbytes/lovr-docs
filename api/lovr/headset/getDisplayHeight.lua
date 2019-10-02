@@ -1,7 +1,7 @@
 return {
   tag = 'headset',
   summary = 'Get the height of the headset display.',
-  description = 'Returns the height of the headset display (both eyes), in pixels.',
+  description = 'Returns the height of the headset display (for one eye), in pixels.',
   arguments = {},
   returns = {
     {

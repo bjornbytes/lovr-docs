@@ -47,10 +47,17 @@ return {
       description = 'The z component of the axis of rotation.'
     }
   },
-  notes = 'Units are in meters.',
+  notes = [[
+    Units are in meters.
+
+    If the device isn't tracked, all zeroes will be returned.
+  ]],
   related = {
-    'lovr.headset.getBonePose',
     'lovr.headset.getPosition',
     'lovr.headset.getOrientation',
+    'lovr.headset.getVelocity',
+    'lovr.headset.getAngularVelocity',
+    'lovr.headset.isTracked',
+    'lovr.headset.getDriver'
   }
 }

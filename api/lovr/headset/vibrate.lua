@@ -34,13 +34,17 @@ return {
     {
       name = 'vibrated',
       type = 'boolean',
-      description = [[
-        Whether the device supports haptics and the vibration was successfully triggered.
-      ]]
+      description = 'Whether the vibration was successfully triggered by an active headset driver.'
     }
   },
   notes = [[
-    When using OpenVR, the value for the `duration` currently must be less than .004 seconds.  Call
-    this function several frames in a row for stronger or prolonged vibration patterns.
+    When using the `openvr` headset driver on an HTC Vive, the value for the `duration` currently
+    must be less than .004 seconds.  Call this function several frames in a row for stronger or
+    prolonged vibration patterns.
+
+    The `oculus` headset driver does not currently support haptics.
+
+    On the `oculusmobile` driver, devices can only be vibrated once per frame.  Any attempts after
+    the first will return `false`.
   ]]
 }

@@ -13,5 +13,8 @@ return {
   related = {
     'lovr.headset.getBoundsWidth',
     'lovr.headset.getBoundsDimensions'
-  }
+  },
+  notes = [[
+    This currently returns 0 on the Quest.
+  ]]
 }

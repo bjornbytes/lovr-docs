@@ -15,6 +15,9 @@ return {
       description = 'The depth of the play area, in meters.'
     }
   },
+  notes = [[
+    This currently returns 0 on the Quest.
+  ]],
   related = {
     'lovr.headset.getBoundsWidth',
     'lovr.headset.getBoundsDepth',

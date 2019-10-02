@@ -28,7 +28,6 @@ return {
   },
   related = {
     'lovr.headset.getAxis',
-    'DeviceButton',
-    'DeviceBone'
+    'DeviceButton'
   }
 }

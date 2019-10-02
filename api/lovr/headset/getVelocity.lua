@@ -28,8 +28,9 @@ return {
     }
   },
   related = {
+    'lovr.headset.getAngularVelocity',
+    'lovr.headset.getPose',
     'lovr.headset.getPosition',
-    'lovr.headset.getOrientation',
-    'lovr.headset.getAngularVelocity'
+    'lovr.headset.getOrientation'
   }
 }

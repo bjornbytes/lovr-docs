@@ -12,5 +12,9 @@ return {
       type = 'string',
       description = 'The name of the headset as a string.'
     }
-  }
+  },
+  notes = [[
+    - The keyboard and mouse VR simulator is named `VR Simulator`.
+    - Oculus headsets will usually contain the string `Oculus`.
+  ]]
 }

@@ -17,5 +17,8 @@ return {
       type = 'number',
       description = 'The distance to the far clipping plane, in meters.'
     }
-  }
+  },
+  notes = [[
+    This is not currently supported by the `oculusmobile` headset driver.
+  ]]
 }

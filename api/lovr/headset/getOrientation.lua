@@ -32,9 +32,13 @@ return {
       description = 'The z component of the axis of rotation.'
     }
   },
+  notes = ' If the device isn\'t tracked, all zeroes will be returned.',
   related = {
+    'lovr.headset.getPose',
     'lovr.headset.getPosition',
     'lovr.headset.getVelocity',
-    'lovr.headset.getAngularVelocity'
+    'lovr.headset.getAngularVelocity',
+    'lovr.headset.isTracked',
+    'lovr.headset.getDriver'
   }
 }

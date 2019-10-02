@@ -7,7 +7,7 @@ return {
       name = 'device',
       type = 'Device',
       default = 'head',
-      description = 'The device to get a model for.'
+      description = 'The device to load a model for.'
     }
   },
   returns = {
@@ -17,11 +17,12 @@ return {
       description = 'The new Model, or `nil` if a model could not be loaded.'
     }
   },
+  notes = 'Generally, this is only supported on the `openvr` driver right now.',
   example = [[
     local models = {}
 
     function lovr.draw()
-      for hand in lovr.headset.hands() do
+      for hand in ipairs(lovr.headset.getHands()) do
         models[hand] = models[hand] or lovr.headset.newModel(hand)
 
         if models[hand] then
