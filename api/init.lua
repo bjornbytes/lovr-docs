@@ -3745,6 +3745,67 @@ return {
               }
             },
             {
+              name = "paste",
+              summary = "Copy pixels from another TextureData to this one.",
+              description = "Copies a rectangle of pixels from one TextureData to this one.",
+              key = "TextureData:paste",
+              module = "lovr.data",
+              related = {
+                "Texture:replacePixels",
+                "TextureData:getPixel",
+                "TextureData:setPixel"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "source",
+                      type = "TextureData",
+                      description = "The TextureData to copy pixels from."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to paste to (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to paste to (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "fromX",
+                      type = "number",
+                      description = "The x coordinate in the source to paste from (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "fromY",
+                      type = "number",
+                      description = "The y coordinate in the source to paste from (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the region to copy.",
+                      default = "source:getWidth()"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the region to copy.",
+                      default = "source:getHeight()"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "The two TextureData must have the same pixel format.\n\nCompressed TextureData cannot be copied.\n\nThe rectangle cannot go outside the dimensions of the source or destination textures."
+            },
+            {
               name = "setPixel",
               summary = "Set the value of a pixel of the TextureData.",
               description = "Sets the value of a pixel of the TextureData.",
