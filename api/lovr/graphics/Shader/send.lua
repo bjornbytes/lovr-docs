@@ -115,7 +115,7 @@ return {
     ]=]
   },
   related = {
-    'ShaderBlock:sendBlock',
+    'ShaderBlock:send',
     'Shader:sendBlock'
   }
 }
