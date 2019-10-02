@@ -1,6 +1,6 @@
 return {
   summary = 'Get an attribute of a single vertex in the Mesh.',
-  description = 'Get the components of a specific attribute of a single vertex in the Mesh.',
+  description = 'Returns the components of a specific attribute of a single vertex in the Mesh.',
   arguments = {
     {
       name = 'index',

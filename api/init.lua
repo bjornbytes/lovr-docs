@@ -3564,7 +3564,7 @@ return {
         {
           name = "TextureData",
           summary = "An object that stores pixel data for Textures.",
-          description = "A TextureData stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The TextureData can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, `dds`, `ktx`, and `astc`.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels or load Textures in a background thread.",
+          description = "A TextureData stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The TextureData can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, `dds`, `ktx`, and `astc`.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels, load Textures in a background thread, or use the FFI to efficiently access the raw image data.",
           key = "TextureData",
           module = "lovr.data",
           methods = {
@@ -4733,6 +4733,48 @@ return {
           }
         },
         {
+          name = "AttributeType",
+          summary = "Different data types for the vertex attributes of a Mesh.",
+          description = "Here are the different data types available for vertex attributes in a Mesh.  The ones that have a smaller range take up less memory, which improves performance a bit.  The \"u\" stands for \"unsigned\", which means it can't hold negative values but instead has a larger positive range.",
+          key = "AttributeType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "byte",
+              description = "A signed 8 bit number, from -128 to 127."
+            },
+            {
+              name = "ubyte",
+              description = "An unsigned 8 bit number, from 0 to 255."
+            },
+            {
+              name = "short",
+              description = "A signed 16 bit number, from -32768 to 32767."
+            },
+            {
+              name = "ushort",
+              description = "An unsigned 16 bit number, from 0 to 65535."
+            },
+            {
+              name = "int",
+              description = "A signed 32 bit number, from -2147483648 to 2147483647."
+            },
+            {
+              name = "uint",
+              description = "An unsigned 32 bit number, from 0 to 4294967295."
+            },
+            {
+              name = "float",
+              description = "A 32 bit floating-point number (large range, but can start to lose precision)."
+            }
+          },
+          related = {
+            "lovr.graphics.newMesh",
+            "Mesh:getVertexFormat",
+            "Mesh"
+          }
+        },
+        {
           name = "BlendAlphaMode",
           summary = "Different ways of blending alpha.",
           description = "Different ways the alpha channel of pixels affects blending.",
@@ -4895,7 +4937,7 @@ return {
         {
           name = "DrawMode",
           summary = "Different ways Mesh objects can be drawn.",
-          description = "Meshes are lists of arbitrary vertices.  These vertices can be drawn in a few different ways, leading to different results.",
+          description = "Meshes are lists of arbitrary vertices.  These vertices can be connected in different ways, leading to different shapes like lines and triangles.",
           key = "DrawMode",
           module = "lovr.graphics",
           values = {
@@ -7961,7 +8003,7 @@ return {
           name = "newMesh",
           tag = "graphicsObjects",
           summary = "Create a new Mesh.",
-          description = "Creates a new Mesh.  Meshes contain the data for an arbitrary set of vertices, and can be drawn. You must specify either the capacity for the Mesh or an initial set of vertex data.  Optionally, a custom format table can be used to specify the set of vertex attributes the mesh will provide to the active shader.  The draw mode and usage hint can also optionally be specified.",
+          description = "Creates a new Mesh.  Meshes contain the data for an arbitrary set of vertices, and can be drawn. You must specify either the capacity for the Mesh or an initial set of vertex data.  Optionally, a custom format table can be used to specify the set of vertex attributes the mesh will provide to the active shader.  The draw mode and usage hint can also optionally be specified.\n\nThe default data type for an attribute is `float`, and the default component count is 1.",
           key = "lovr.graphics.newMesh",
           module = "lovr.graphics",
           notes = "Once created, the size and format of the Mesh cannot be changed.",
@@ -11007,13 +11049,13 @@ return {
         {
           name = "Mesh",
           summary = "A drawable list of vertices.",
-          description = "A Mesh is a low-level graphics object that stores and renders a list of vertices.\n\nMeshes are really flexible since you can pack pretty much whatever you want in them.  This makes them great for rendering arbitrary geometry, but it also makes them kinda difficult to use since you have to place each vertex yourself.\n\nIt's possible to batch geometry with Meshes too.  Instead of drawing a shape 100 times, it's much faster to pack 100 copies of the shape into a Mesh and draw the Mesh once.\n\nMeshes are also a good choice if you have a mesh that changes its shape over time.",
+          description = "A Mesh is a low-level graphics object that stores and renders a list of vertices.\n\nMeshes are really flexible since you can pack pretty much whatever you want in them.  This makes them great for rendering arbitrary geometry, but it also makes them kinda difficult to use since you have to place each vertex yourself.\n\nIt's possible to batch geometry with Meshes too.  Instead of drawing a shape 100 times, it's much faster to pack 100 copies of the shape into a Mesh and draw the Mesh once.  Even storing just one copy in the Mesh and drawing that 100 times is usually faster.\n\nMeshes are also a good choice if you have an object that changes its shape over time.",
           key = "Mesh",
           module = "lovr.graphics",
           constructors = {
             "lovr.graphics.newMesh"
           },
-          notes = "Each vertex in a Mesh can hold several pieces of data.  For example, you might want a vertex to keep track of its position, color, and a weight.  Each one of these pieces of information is called a vertex **attribute**.  A vertex attribute must have a name, a type, and a size.  Here's what the \"position\" attribute would look like as a Lua table:\n\n    { 'vPosition', 'float', 3 } -- 3 floats for x, y, and z\n\nEvery vertex in a Mesh must have the same set of attributes.  We call this set of attributes the **format** of the Mesh, and it's specified as a simple table of attributes.  For example, we could represent the format described above as:\n\n    {\n      { 'vPosition', 'float', 3 },\n      { 'vColor',    'byte',  4 },\n      { 'vWeight',   'int',   1 }\n    }\n\nWhen creating a Mesh, you can give it any format you want, or use the default.  The default Mesh format looks like this:\n\n    {\n      { 'lovrPosition',    'float', 3 },\n      { 'lovrNormal',      'float', 3 },\n      { 'lovrTexCoord',    'float', 2 }\n    }\n\nGreat, so why do we go through the trouble of naming everything in our vertex and saying what type and size it is?  The cool part is that we can access this data in a Shader.  We can write a vertex Shader that has `in` variables for every vertex attribute in our Mesh:\n\n    in vec3 vPosition;\n    in vec4 vColor;\n    in int vWeight;\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      // Here we can access the vPosition, vColor, and vWeight of each vertex in the Mesh!\n    }\n\nSpecifying custom vertex data is really powerful and is often used for lighting, animation, and more!\n\nThe types of attributes that are available are:\n\n- `byte` (-128 to 127)\n- `ubyte` (0 to 255)\n- `short` (-32768 to 32767)\n- `ushort` (0 to 65535)\n- `int` (-2147483648 to 2147483647)\n- `uint` (0 to 4294967295)\n- `float` (floating point value)",
+          notes = "Each vertex in a Mesh can hold several pieces of data.  For example, you might want a vertex to keep track of its position, color, and a weight.  Each one of these pieces of information is called a vertex **attribute**.  A vertex attribute must have a name, a type, and a size.  Here's what the \"position\" attribute would look like as a Lua table:\n\n    { 'vPosition', 'float', 3 } -- 3 floats, one for x, y, and z\n\nEvery vertex in a Mesh must have the same set of attributes.  We call this set of attributes the **format** of the Mesh, and it's specified as a simple table of attributes.  For example, we could represent the format described above as:\n\n    {\n      { 'vPosition', 'float', 3 },\n      { 'vColor',    'byte',  4 },\n      { 'vWeight',   'int',   1 }\n    }\n\nWhen creating a Mesh, you can give it any format you want, or use the default.  The default Mesh format looks like this:\n\n    {\n      { 'lovrPosition',    'float', 3 },\n      { 'lovrNormal',      'float', 3 },\n      { 'lovrTexCoord',    'float', 2 }\n    }\n\nGreat, so why do we go through the trouble of naming everything in our vertex and saying what type and size it is?  The cool part is that we can access this data in a Shader.  We can write a vertex Shader that has `in` variables for every vertex attribute in our Mesh:\n\n    in vec3 vPosition;\n    in vec4 vColor;\n    in int vWeight;\n\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      // Here we can access the vPosition, vColor, and vWeight of each vertex in the Mesh!\n    }\n\nSpecifying custom vertex data is really powerful and is often used for lighting, animation, and more!\n\nFor more on the different data types available for the attributes, see `AttributeType`.",
           methods = {
             {
               name = "attachAttributes",
@@ -11315,7 +11357,7 @@ return {
             {
               name = "getVertexAttribute",
               summary = "Get an attribute of a single vertex in the Mesh.",
-              description = "Get the components of a specific attribute of a single vertex in the Mesh.",
+              description = "Returns the components of a specific attribute of a single vertex in the Mesh.",
               key = "Mesh:getVertexAttribute",
               module = "lovr.graphics",
               notes = "Meshes without a custom format have the vertex position as their first attribute, the normal vector as the second attribute, and the texture coordinate as the third attribute.",
@@ -11349,7 +11391,7 @@ return {
               description = "Returns the maximum number of vertices the Mesh can hold.",
               key = "Mesh:getVertexCount",
               module = "lovr.graphics",
-              notes = "The size can only be set when creating the Mesh, and cannot be changed afterwards.",
+              notes = "The size can only be set when creating the Mesh, and cannot be changed afterwards.\n\nA subset of the Mesh's vertices can be rendered, see `Mesh:setDrawRange`.",
               variants = {
                 {
                   arguments = {},
@@ -11376,7 +11418,7 @@ return {
                     {
                       name = "format",
                       type = "table",
-                      description = "The table of vertex attributes.  Each attribute is a table containing the name of the attribute, the data type, and the number of components."
+                      description = "The table of vertex attributes.  Each attribute is a table containing the name of the attribute, the `AttributeType`, and the number of components."
                     }
                   }
                 }
@@ -11391,7 +11433,13 @@ return {
               variants = {
                 {
                   arguments = {},
-                  returns = {}
+                  returns = {
+                    {
+                      name = "map",
+                      type = "table",
+                      description = "The list of indices in the vertex map, or `nil` if no vertex map is set."
+                    }
+                  }
                 },
                 {
                   arguments = {
@@ -11401,14 +11449,20 @@ return {
                       description = "The table to fill with the vertex map."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "map",
+                      type = "table",
+                      description = "The list of indices in the vertex map, or `nil` if no vertex map is set."
+                    }
+                  }
                 },
                 {
                   arguments = {
                     {
                       name = "blob",
                       type = "Blob",
-                      description = "The Blob to fill with the vertex map data."
+                      description = "The Blob to fill with the vertex map data.  It must be big enough to hold all of the indices."
                     }
                   },
                   returns = {}
@@ -11503,6 +11557,11 @@ return {
                       description = "The number of vertices that will be drawn."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Remove the draw range, causing the Mesh to draw all of its vertices.",
+                  arguments = {},
                   returns = {}
                 }
               }
@@ -11626,7 +11685,7 @@ return {
             {
               name = "setVertices",
               summary = "Update multiple vertices in the Mesh.",
-              description = "Update multiple vertices in the Mesh.",
+              description = "Updates multiple vertices in the Mesh.",
               key = "Mesh:setVertices",
               module = "lovr.graphics",
               notes = "The start index plus the number of vertices in the table should not exceed the maximum size of the Mesh.",
@@ -11679,6 +11738,74 @@ return {
             "lovr.headset.newModel"
           },
           methods = {
+            {
+              name = "animate",
+              summary = "Apply an animation to the pose of the Model.",
+              description = "Applies an animation to the current pose of the Model.\n\nThe animation is evaluated at the specified timestamp, and mixed with the current pose of the Model using the alpha value.  An alpha value of 1.0 will completely override the pose of the Model with the animation's pose.",
+              key = "Model:animate",
+              module = "lovr.graphics",
+              related = {
+                "Model:pose",
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:getAnimationDuration"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The timestamp to evaluate the keyframes at, in seconds."
+                    },
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "How much of the animation to mix in, from 0 to 1.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The timestamp to evaluate the keyframes at, in seconds."
+                    },
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "How much of the animation to mix in, from 0 to 1.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              examples = {
+                {
+                  description = "Render an animated model, with a custom speed.",
+                  code = "function lovr.load()\n  model = lovr.graphics.newModel('model.gltf')\n  shader = lovr.graphics.newShader('unlit', { flags = { animated = true } })\nend\n\nfunction lovr.draw()\n  local speed = 1.0\n  model:animate(1, lovr.timer.getTime() * speed)\n  model:draw()\nend"
+                },
+                {
+                  description = "Mix from one animation to another, as the trigger is pressed.",
+                  code = "function lovr.load()\n  model = lovr.graphics.newModel('model.gltf')\n  shader = lovr.graphics.newShader('unlit', { flags = { animated = true } })\nend\n\nfunction lovr.draw()\n  local t = lovr.timer.getTime()\n  local mix = lovr.headset.getAxis('right', 'trigger')\n\n  model:pose()\n  model:animate(1, t)\n  model:animate(2, t, mix)\n\n  model:draw()\nend"
+                }
+              },
+              notes = "For animations to properly show up, use a Shader created with the `animated` flag set to `true`. See `lovr.graphics.newShader` for more.\n\nAnimations are always mixed in with the current pose, and the pose only ever changes by calling `Model:animate` and `Model:pose`.  To clear the pose of a Model to the default, use `Model:pose(nil)`."
+            },
             {
               name = "draw",
               summary = "Draw the Model.",
@@ -11812,42 +11939,292 @@ return {
             },
             {
               name = "getMaterial",
-              summary = "Get the Material applied to the Model.",
-              description = "Returns the Material applied to the Model.",
+              summary = "Get a Material from the Model.",
+              description = "Returns a Material loaded from the Model, by name or index.\n\nThis includes `Texture` objects and other properties like colors, metalness/roughness, and more.",
               key = "Model:getMaterial",
               module = "lovr.graphics",
+              related = {
+                "Model:getMaterialCount",
+                "Model:getMaterialName",
+                "Material"
+              },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Material to return."
+                    }
+                  },
                   returns = {
                     {
                       name = "material",
                       type = "Material",
-                      description = "The current material applied to the Model."
+                      description = "The material."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the Material to return."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "The material."
                     }
                   }
                 }
               }
             },
             {
-              name = "setMaterial",
-              summary = "Apply a Material to the Model.",
-              description = "Applies a Material to the Model.",
-              key = "Model:setMaterial",
+              name = "getNodePose",
+              summary = "Get the pose of a single node.",
+              description = "Returns the pose of a single node in the Model in a given `CoordinateSpace`.",
+              key = "Model:getNodePose",
               module = "lovr.graphics",
-              notes = "A model's Material will be used when drawing every part of the model.  It will override any materials included in the model file.  It isn't currently possible to apply multiple materials to different pieces of the Model.",
+              related = {
+                "Model:pose",
+                "Model:animate",
+                "Model:getNodeName",
+                "Model:getNodeCount"
+              },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "material",
-                      type = "Material",
-                      description = "The material to apply to the Model."
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "space",
+                      type = "CoordinateSpace",
+                      description = "Whether the pose sould be returned relative to the node's parent or relative to the root node of the Model.",
+                      default = "global"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the node."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the node."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its rotational axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The node index."
+                    },
+                    {
+                      name = "space",
+                      type = "CoordinateSpace",
+                      description = "Whether the pose sould be returned relative to the node's parent or relative to the root node of the Model.",
+                      default = "global"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the node."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the node."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its rotational axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              },
+              notes = "For skinned nodes to render correctly, use a Shader created with the `animated` flag set to `true`.  See `lovr.graphics.newShader` for more."
+            },
+            {
+              name = "pose",
+              summary = "Set the pose of a single node, or clear the pose.",
+              description = "Applies a pose to a single node of the Model.  The input pose is assumed to be relative to the pose of the node's parent.  This is useful for applying inverse kinematics (IK) to a chain of bones in a skeleton.\n\nThe alpha parameter can be used to mix between the node's current pose and the input pose.",
+              key = "Model:pose",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodePose",
+                "Model:animate",
+                "Model:getNodeName",
+                "Model:getNodeCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the orientation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the rotation axis."
+                    },
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "How much of the pose to mix in, from 0 to 1.",
+                      default = "1"
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The node index."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the orientation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the rotation axis."
+                    },
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "How much of the pose to mix in, from 0 to 1.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Clear the pose of the Model.",
+                  arguments = {},
+                  returns = {}
                 }
-              }
+              },
+              notes = "For skinned nodes to render correctly, use a Shader created with the `animated` flag set to `true`.  See `lovr.graphics.newShader` for more."
             }
           }
         },

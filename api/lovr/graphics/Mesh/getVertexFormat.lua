@@ -11,7 +11,7 @@ return {
       type = 'table',
       description = [[
         The table of vertex attributes.  Each attribute is a table containing the name of the
-        attribute, the data type, and the number of components.
+        attribute, the `AttributeType`, and the number of components.
       ]]
     }
   }

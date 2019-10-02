@@ -5,16 +5,25 @@ return {
     will be drawn.
   ]],
   arguments = {
-    {
-      name = 'start',
+    start = {
       type = 'number',
       description = 'The first vertex that will be drawn.'
     },
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of vertices that will be drawn.'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'start', 'count' },
+      returns = {}
+    },
+    {
+      description = 'Remove the draw range, causing the Mesh to draw all of its vertices.',
+      arguments = {},
+      returns = {}
+    }
+  }
 }

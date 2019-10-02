@@ -1,6 +1,6 @@
 return {
   summary = 'Update multiple vertices in the Mesh.',
-  description = 'Update multiple vertices in the Mesh.',
+  description = 'Updates multiple vertices in the Mesh.',
   arguments = {
     {
       name = 'vertices',

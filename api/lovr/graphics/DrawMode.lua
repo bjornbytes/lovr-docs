@@ -1,8 +1,8 @@
 return {
   summary = 'Different ways Mesh objects can be drawn.',
   description = [[
-    Meshes are lists of arbitrary vertices.  These vertices can be drawn in a few different ways,
-    leading to different results.
+    Meshes are lists of arbitrary vertices.  These vertices can be connected in different ways,
+    leading to different shapes like lines and triangles.
   ]],
   values = {
     {

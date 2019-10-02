@@ -7,7 +7,8 @@ return {
     `astc`.
 
     Usually you can just use Textures, but TextureData can be useful if you want to manipulate
-    individual pixels or load Textures in a background thread.
+    individual pixels, load Textures in a background thread, or use the FFI to efficiently access
+    the raw image data.
   ]],
   constructors = {
     'lovr.data.newTextureData',

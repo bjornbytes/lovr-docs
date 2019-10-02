@@ -6,6 +6,8 @@ return {
     You must specify either the capacity for the Mesh or an initial set of vertex data.  Optionally,
     a custom format table can be used to specify the set of vertex attributes the mesh will provide
     to the active shader.  The draw mode and usage hint can also optionally be specified.
+
+    The default data type for an attribute is `float`, and the default component count is 1.
   ]],
   arguments = {
     size = {

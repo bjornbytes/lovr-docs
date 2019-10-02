@@ -9,5 +9,9 @@ return {
       description = 'The number of vertices the Mesh can hold.'
     }
   },
-  notes = 'The size can only be set when creating the Mesh, and cannot be changed afterwards.'
+  notes = [[
+    The size can only be set when creating the Mesh, and cannot be changed afterwards.
+
+    A subset of the Mesh's vertices can be rendered, see `Mesh:setDrawRange`.
+  ]]
 }

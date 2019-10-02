@@ -7,10 +7,11 @@ return {
     them great for rendering arbitrary geometry, but it also makes them kinda difficult to use since
     you have to place each vertex yourself.
 
-    It's possible to batch geometry with Meshes too.  Instead of drawing a shape 100 times, it's much
-    faster to pack 100 copies of the shape into a Mesh and draw the Mesh once.
+    It's possible to batch geometry with Meshes too.  Instead of drawing a shape 100 times, it's
+    much faster to pack 100 copies of the shape into a Mesh and draw the Mesh once.  Even storing
+    just one copy in the Mesh and drawing that 100 times is usually faster.
 
-    Meshes are also a good choice if you have a mesh that changes its shape over time.
+    Meshes are also a good choice if you have an object that changes its shape over time.
   ]],
   constructor = 'lovr.graphics.newMesh',
   notes = [[
@@ -19,7 +20,7 @@ return {
     called a vertex **attribute**.  A vertex attribute must have a name, a type, and a size.  Here's
     what the "position" attribute would look like as a Lua table:
 
-        { 'vPosition', 'float', 3 } -- 3 floats for x, y, and z
+        { 'vPosition', 'float', 3 } -- 3 floats, one for x, y, and z
 
     Every vertex in a Mesh must have the same set of attributes.  We call this set of attributes the
     **format** of the Mesh, and it's specified as a simple table of attributes.  For example, we
@@ -55,15 +56,7 @@ return {
     Specifying custom vertex data is really powerful and is often used for lighting, animation, and
     more!
 
-    The types of attributes that are available are:
-
-    - `byte` (-128 to 127)
-    - `ubyte` (0 to 255)
-    - `short` (-32768 to 32767)
-    - `ushort` (0 to 65535)
-    - `int` (-2147483648 to 2147483647)
-    - `uint` (0 to 4294967295)
-    - `float` (floating point value)
+    For more on the different data types available for the attributes, see `AttributeType`.
   ]],
   example = {
     description = 'Draw a circle using a Mesh.',

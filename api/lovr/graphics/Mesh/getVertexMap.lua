@@ -11,7 +11,10 @@ return {
     },
     blob = {
       type = 'Blob',
-      description = 'The Blob to fill with the vertex map data.'
+      description = [[
+        The Blob to fill with the vertex map data.  It must be big enough to hold all of the
+        indices.
+      ]]
     }
   },
   returns = {
@@ -23,11 +26,11 @@ return {
   variants = {
     {
       arguments = {},
-      returns = { 't' }
+      returns = { 'map' }
     },
     {
       arguments = { 't' },
-      returns = {}
+      returns = { 'map' }
     },
     {
       arguments = { 'blob' },
