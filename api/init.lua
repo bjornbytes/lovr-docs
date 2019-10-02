@@ -11938,6 +11938,93 @@ return {
               }
             },
             {
+              name = "getAnimationCount",
+              summary = "Get the number of animations in the Model.",
+              description = "Returns the number of animations in the Model.",
+              key = "Model:getAnimationCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationName",
+                "Model:getAnimationDuration",
+                "Model:animate"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of animations in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationDuration",
+              summary = "Get the duration of an animation in the Model.",
+              description = "Returns the duration of an animation in the Model, in seconds.",
+              key = "Model:getAnimationDuration",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:animate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    name = {
+                      type = "string",
+                      description = "The name of the animation."
+                    },
+                    index = {
+                      type = "number",
+                      description = "The animation index."
+                    }
+                  },
+                  returns = {
+                    duration = {
+                      type = "number",
+                      description = "The duration of the animation, in seconds."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationName",
+              summary = "Get the name of an animation in the Model.",
+              description = "Returns the name of one of the animations in the Model.",
+              key = "Model:getAnimationName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationCount",
+                "Model:getAnimationDuration",
+                "Model:getMaterialName",
+                "Model:getNodeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the animation to get the name of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the animation."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getMaterial",
               summary = "Get a Material from the Model.",
               description = "Returns a Material loaded from the Model, by name or index.\n\nThis includes `Texture` objects and other properties like colors, metalness/roughness, and more.",
@@ -11978,6 +12065,113 @@ return {
                       name = "material",
                       type = "Material",
                       description = "The material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaterialCount",
+              summary = "Get the number of materials in the Model.",
+              description = "Returns the number of materials in the Model.",
+              key = "Model:getMaterialCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMaterialName",
+                "Model:getMaterial"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of materials in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaterialName",
+              summary = "Get the name of a material in the Model.",
+              description = "Returns the name of one of the materials in the Model.",
+              key = "Model:getMaterialName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMaterialCount",
+                "Model:getAnimationName",
+                "Model:getNodeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the material to get the name of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeCount",
+              summary = "Get the number of nodes in the Model.",
+              description = "Returns the number of nodes (bones) in the Model.",
+              key = "Model:getNodeCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodeName",
+                "Model:getNodePose",
+                "Model:pose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of nodes in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeName",
+              summary = "Get the name of a node in the Model.",
+              description = "Returns the name of one of the nodes (bones) in the Model.",
+              key = "Model:getNodeName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodeCount",
+                "Model:getAnimationName",
+                "Model:getMaterialName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node to get the name of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
                     }
                   }
                 }
