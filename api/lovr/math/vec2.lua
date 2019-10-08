@@ -1,7 +1,7 @@
 return {
-  summary = 'Create a temporary vec3.',
+  summary = 'Create a temporary vec2.',
   description = [[
-    Creates a temporary `vec3`.  This function takes the same arguments as `vec3:set`.
+    Creates a temporary `vec2`.  This function takes the same arguments as `vec2:set`.
   ]],
   arguments = {},
   returns = {},
@@ -11,10 +11,10 @@ return {
     only valid until the next call to `lovr.math.drain`, which is called at the end of every frame
     by default.  Attempting to use a temporary vector after it's been drained will result in an
     error.  If you need permanent vectors that can be saved into variables and survive across
-    multiple frames, see `lovr.math.newVec3`.
+    multiple frames, see `lovr.math.newVec2`.
   ]],
   related = {
-    'lovr.math.newVec3',
-    'Vec3'
+    'lovr.math.newVec2',
+    'Vec2'
   }
 }

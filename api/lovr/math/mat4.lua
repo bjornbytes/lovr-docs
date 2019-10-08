@@ -1,66 +1,20 @@
 return {
-  summary = 'Create a new mat4.',
+  summary = 'Create a temporary mat4.',
   description = [[
-    Creates a new `mat4`.
-
-    Note that this function is also a table containing the `__index` key of the mat4 metatable.
-    This means that you can add your own functions onto the `lovr.math.mat4` table to extend the
-    built-in functionality.
+    Creates a temporary `mat4`.  This function takes the same arguments as `mat4:set`.
   ]],
-  arguments = {
-    n = {
-      type = 'mat4',
-      description = 'An existing matrix to copy the values from.'
-    },
-    position = {
-      type = 'vec3',
-      default = '0, 0, 0',
-      description = 'The translation of the matrix.'
-    },
-    scale = {
-      type = 'vec3',
-      default = '1, 1, 1',
-      description = 'The scale of the matrix.'
-    },
-    rotation = {
-      type = 'quat',
-      default = '0, 0, 0, 0',
-      description = 'The rotation of the matrix.'
-    },
-    ['...'] = {
-      type = 'number',
-      description = '16 numbers to use as the raw values of the matrix (column-major).'
-    }
-  },
-  returns = {
-    m = {
-      type = 'mat4',
-      description = 'The new matrix.'
-    }
-  },
-  variants = {
-    {
-      description = 'Sets the matrix to the identity matrix.',
-      arguments = {},
-      returns = { 'm' }
-    },
-    {
-      description = 'Copies values from an existing matrix.',
-      arguments = { 'n' },
-      returns = { 'm' }
-    },
-    {
-      arguments = { 'position', 'scale', 'rotation' },
-      returns = { 'm' }
-    },
-    {
-      arguments = { '...' },
-      returns = { 'm' }
-    }
-  },
-  notes = 'This function takes the same arguments as `mat4:set`.',
+  arguments = {},
+  returns = {},
+  notes = [[
+    Temporary vector objects do not require any memory allocations or garbage collection, so they
+    can be faster in situations that require lots of vector math.  The downside is that they are
+    only valid until the next call to `lovr.math.drain`, which is called at the end of every frame
+    by default.  Attempting to use a temporary vector after it's been drained will result in an
+    error.  If you need permanent vectors that can be saved into variables and survive across
+    multiple frames, see `lovr.math.newMat4`.
+  ]],
   related = {
-    'lovr.math.vec3',
-    'lovr.math.quat'
+    'lovr.math.newMat4',
+    'Mat4'
   }
 }

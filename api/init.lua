@@ -14627,90 +14627,21 @@ return {
         },
         {
           name = "mat4",
-          summary = "Create a new mat4.",
-          description = "Creates a new `mat4`.\n\nNote that this function is also a table containing the `__index` key of the mat4 metatable. This means that you can add your own functions onto the `lovr.math.mat4` table to extend the built-in functionality.",
+          summary = "Create a temporary mat4.",
+          description = "Creates a temporary `mat4`.  This function takes the same arguments as `mat4:set`.",
           key = "lovr.math.mat4",
           module = "lovr.math",
           related = {
-            "lovr.math.vec3",
-            "lovr.math.quat"
+            "lovr.math.newMat4",
+            "Mat4"
           },
           variants = {
             {
-              description = "Sets the matrix to the identity matrix.",
               arguments = {},
-              returns = {
-                {
-                  name = "m",
-                  type = "mat4",
-                  description = "The new matrix."
-                }
-              }
-            },
-            {
-              description = "Copies values from an existing matrix.",
-              arguments = {
-                {
-                  name = "n",
-                  type = "mat4",
-                  description = "An existing matrix to copy the values from."
-                }
-              },
-              returns = {
-                {
-                  name = "m",
-                  type = "mat4",
-                  description = "The new matrix."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "position",
-                  type = "vec3",
-                  description = "The translation of the matrix.",
-                  default = "0, 0, 0"
-                },
-                {
-                  name = "scale",
-                  type = "vec3",
-                  description = "The scale of the matrix.",
-                  default = "1, 1, 1"
-                },
-                {
-                  name = "rotation",
-                  type = "quat",
-                  description = "The rotation of the matrix.",
-                  default = "0, 0, 0, 0"
-                }
-              },
-              returns = {
-                {
-                  name = "m",
-                  type = "mat4",
-                  description = "The new matrix."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "...",
-                  type = "number",
-                  description = "16 numbers to use as the raw values of the matrix (column-major)."
-                }
-              },
-              returns = {
-                {
-                  name = "m",
-                  type = "mat4",
-                  description = "The new matrix."
-                }
-              }
+              returns = {}
             }
           },
-          notes = "This function takes the same arguments as `mat4:set`."
+          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newMat4`."
         },
         {
           name = "newCurve",
@@ -14788,6 +14719,42 @@ return {
           }
         },
         {
+          name = "newMat4",
+          summary = "Create a new mat4.",
+          description = "Creates a new `mat4`.  This function takes the same arguments as `mat4:set`.",
+          key = "lovr.math.newMat4",
+          module = "lovr.math",
+          related = {
+            "lovr.math.mat4",
+            "Mat4"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "If you need lots of temporary mat4 objects, see `lovr.math.mat4`."
+        },
+        {
+          name = "newQuat",
+          summary = "Create a new quat.",
+          description = "Creates a new `quat`.  This function takes the same arguments as `quat:set`.",
+          key = "lovr.math.newQuat",
+          module = "lovr.math",
+          related = {
+            "lovr.math.quat",
+            "Quat"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "If you need lots of temporary quat objects, see `lovr.math.quat`."
+        },
+        {
           name = "newRandomGenerator",
           summary = "Create a new RandomGenerator.",
           description = "Creates a new `RandomGenerator`, which can be used to generate random numbers. If you just want some random numbers, you can use `lovr.math.random`. Individual RandomGenerator objects are useful if you need more control over the random sequence used or need a random generator isolated from other instances.",
@@ -14844,6 +14811,60 @@ return {
               }
             }
           }
+        },
+        {
+          name = "newVec2",
+          summary = "Create a new vec2.",
+          description = "Creates a new `vec2`.  This function takes the same arguments as `vec2:set`.",
+          key = "lovr.math.newVec2",
+          module = "lovr.math",
+          related = {
+            "lovr.math.vec2",
+            "Vec2"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "If you need lots of temporary vec2 objects, see `lovr.math.vec2`."
+        },
+        {
+          name = "newVec3",
+          summary = "Create a new vec3.",
+          description = "Creates a new `vec3`.  This function takes the same arguments as `vec3:set`.",
+          key = "lovr.math.newVec3",
+          module = "lovr.math",
+          related = {
+            "lovr.math.vec3",
+            "Vec3"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "If you need lots of temporary vec3 objects, see `lovr.math.vec3`."
+        },
+        {
+          name = "newVec4",
+          summary = "Create a new vec4.",
+          description = "Creates a new `vec4`.  This function takes the same arguments as `vec4:set`.",
+          key = "lovr.math.newVec4",
+          module = "lovr.math",
+          related = {
+            "lovr.math.vec4",
+            "Vec4"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "If you need lots of temporary vec4 objects, see `lovr.math.vec4`."
         },
         {
           name = "noise",
@@ -14953,149 +14974,21 @@ return {
         },
         {
           name = "quat",
-          summary = "Create a new quat.",
-          description = "Creates a new `quat`.  Have a look at `quat:set` for more information about how all these variants can be used.\n\nNote that this function is also a table containing the `__index` key of the quat metatable. This means that you can add your own functions onto the `lovr.math.quat` table to extend the built-in functionality.",
+          summary = "Create a temporary quat.",
+          description = "Creates a temporary `quat`.  This function takes the same arguments as `quat:set`.",
           key = "lovr.math.quat",
           module = "lovr.math",
           related = {
-            "lovr.math.vec3",
-            "lovr.math.mat4"
+            "lovr.math.newQuat",
+            "Quat"
           },
           variants = {
             {
-              arguments = {
-                {
-                  name = "angle",
-                  description = "The angle to use for the rotation, in radians.",
-                  default = "0"
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "raw",
-                  type = "boolean",
-                  description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
-                  default = "false"
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "angle",
-                  description = "The angle to use for the rotation, in radians.",
-                  default = "0"
-                },
-                {
-                  name = "axis",
-                  type = "vec3",
-                  description = "The axis of rotation (does not need to be normalized)."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "r",
-                  type = "quat",
-                  description = "An existing quaternion to copy the values from."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Sets the values from a direction vector.",
-              arguments = {
-                {
-                  name = "v",
-                  type = "vec3",
-                  description = "A normalized direction vector."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Sets the values to represent the rotation between two vectors.",
-              arguments = {
-                {
-                  name = "v",
-                  type = "vec3",
-                  description = "A normalized direction vector."
-                },
-                {
-                  name = "u",
-                  type = "vec3",
-                  description = "Another normalized direction vector."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "m",
-                  type = "mat4",
-                  description = "A matrix to use the rotation from."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "quat",
-                  description = "The new quaternion."
-                }
-              }
+              arguments = {},
+              returns = {}
             }
           },
-          notes = "This function takes the same arguments as `quat:set`."
+          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newQuat`."
         },
         {
           name = "random",
@@ -15218,63 +15111,58 @@ return {
           }
         },
         {
-          name = "vec3",
-          summary = "Create a new vec3.",
-          description = "Creates a new `vec3`.\n\nNote that this function is also a table containing the `__index` key of the vec3 metatable. This means that you can add your own functions onto the `lovr.math.vec3` table to extend the built-in functionality.",
-          key = "lovr.math.vec3",
+          name = "vec2",
+          summary = "Create a temporary vec2.",
+          description = "Creates a temporary `vec2`.  This function takes the same arguments as `vec2:set`.",
+          key = "lovr.math.vec2",
           module = "lovr.math",
           related = {
-            "lovr.math.quat",
-            "lovr.math.mat4"
+            "lovr.math.newVec2",
+            "Vec2"
           },
           variants = {
             {
-              arguments = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z value of the vector.",
-                  default = "x"
-                }
-              },
-              returns = {
-                {
-                  name = "v",
-                  type = "vec3",
-                  description = "The new vector."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "u",
-                  type = "vec3",
-                  description = "The vector to copy the values from."
-                }
-              },
-              returns = {
-                {
-                  name = "v",
-                  type = "vec3",
-                  description = "The new vector."
-                }
-              }
+              arguments = {},
+              returns = {}
             }
           },
-          notes = "This function takes the same arguments as `vec3:set`."
+          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newVec2`."
+        },
+        {
+          name = "vec3",
+          summary = "Create a temporary vec3.",
+          description = "Creates a temporary `vec3`.  This function takes the same arguments as `vec3:set`.",
+          key = "lovr.math.vec3",
+          module = "lovr.math",
+          related = {
+            "lovr.math.newVec3",
+            "Vec3"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newVec3`."
+        },
+        {
+          name = "vec4",
+          summary = "Create a temporary vec4.",
+          description = "Creates a temporary `vec4`.  This function takes the same arguments as `vec4:set`.",
+          key = "lovr.math.vec4",
+          module = "lovr.math",
+          related = {
+            "lovr.math.newVec4",
+            "Vec4"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newVec4`."
         }
       },
       enums = {},
@@ -15630,6 +15518,890 @@ return {
           }
         },
         {
+          name = "Mat4",
+          summary = "A 4x4 matrix.",
+          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.",
+          key = "Mat4",
+          module = "lovr.math",
+          methods = {
+            {
+              name = "__mul",
+              summary = "Multiply a matrix with another matrix or a vector.",
+              description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
+              key = "Mat4:__mul",
+              module = "lovr.math",
+              related = {
+                "mat4:mul",
+                "mat4:translate",
+                "mat4:rotate",
+                "mat4:scale"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The matrix."
+                    },
+                    {
+                      name = "n",
+                      type = "mat4",
+                      description = "Another matrix."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "A new matrix containing the multiplied result."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "The vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "u",
+                      type = "vec3",
+                      description = "A new transformed vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "identity",
+              summary = "Reset the matrix to the identity.",
+              description = "Resets the matrix to the identity, effectively setting its translation to zero, its scale to 1, and clearing any rotation.",
+              key = "Mat4:identity",
+              module = "lovr.math",
+              related = {
+                "lovr.graphics.origin"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "invert",
+              summary = "Invert the matrix.",
+              description = "Inverts the matrix, causing it to represent the opposite of its old transform.",
+              key = "Mat4:invert",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "mul",
+              summary = "Multiply a matrix with another matrix or a vector.",
+              description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
+              key = "Mat4:mul",
+              module = "lovr.math",
+              related = {
+                "mat4:__mul",
+                "mat4:translate",
+                "mat4:rotate",
+                "mat4:scale"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "n",
+                      type = "mat4",
+                      description = "The matrix."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix, containing the result."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "The vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "The transformed vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "orthographic",
+              summary = "Turn the matrix into an orthographic projection.",
+              description = "Sets this matrix to represent an orthographic projection, useful for 2D/isometric rendering.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
+              key = "Mat4:orthographic",
+              module = "lovr.math",
+              related = {
+                "mat4:perspective",
+                "lovr.graphics.setProjection"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "left",
+                      type = "number",
+                      description = "The left edge of the projection."
+                    },
+                    {
+                      name = "right",
+                      type = "number",
+                      description = "The right edge of the projection."
+                    },
+                    {
+                      name = "top",
+                      type = "number",
+                      description = "The top edge of the projection."
+                    },
+                    {
+                      name = "bottom",
+                      type = "number",
+                      description = "The bottom edge of the projection."
+                    },
+                    {
+                      name = "near",
+                      type = "number",
+                      description = "The position of the near clipping plane."
+                    },
+                    {
+                      name = "far",
+                      type = "number",
+                      description = "The position of the far clipping plane."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "perspective",
+              summary = "Turn the matrix into a perspective projection.",
+              description = "Sets this matrix to represent a perspective projection.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
+              key = "Mat4:perspective",
+              module = "lovr.math",
+              related = {
+                "mat4:orthographic",
+                "lovr.graphics.setProjection"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "near",
+                      type = "number",
+                      description = "The near plane."
+                    },
+                    {
+                      name = "far",
+                      type = "number",
+                      description = "The far plane."
+                    },
+                    {
+                      name = "fov",
+                      type = "number",
+                      description = "The field of view (in radians)."
+                    },
+                    {
+                      name = "aspect",
+                      type = "number",
+                      description = "The vertical aspect ratio of the projection."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "rotate",
+              summary = "Rotate the matrix.",
+              description = "Rotates the matrix using a quaternion or an angle/axis rotation.",
+              key = "Mat4:rotate",
+              module = "lovr.math",
+              related = {
+                "mat4:translate",
+                "mat4:scale",
+                "mat4:identity"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "rotation",
+                      type = "quat",
+                      description = "The rotation to apply to the matrix."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "scale",
+              summary = "Scale the matrix.",
+              description = "Scales the matrix.",
+              key = "Mat4:scale",
+              module = "lovr.math",
+              related = {
+                "mat4:translate",
+                "mat4:rotate",
+                "mat4:identity"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "vec3",
+                      description = "The 3D scale to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "s",
+                      type = "number",
+                      description = "A uniform scale to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "set",
+              summary = "Set the components of the matrix.",
+              description = "Sets the components of the matrix from separate position, rotation, and scale arguments or an existing matrix.",
+              key = "Mat4:set",
+              module = "lovr.math",
+              related = {
+                "mat4:unpack"
+              },
+              variants = {
+                {
+                  description = "Resets the matrix to the identity matrix.",
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  description = "Copies the values from an existing matrix.",
+                  arguments = {
+                    {
+                      name = "n",
+                      type = "mat4",
+                      description = "An existing matrix to copy the values from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "vec3",
+                      description = "The translation of the matrix.",
+                      default = "0, 0, 0"
+                    },
+                    {
+                      name = "scale",
+                      type = "vec3",
+                      description = "The scale of the matrix.",
+                      default = "1, 1, 1"
+                    },
+                    {
+                      name = "rotation",
+                      type = "quat",
+                      description = "The rotation of the matrix.",
+                      default = "0, 0, 0, 0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "16 numbers to use as the raw values of the matrix (column-major)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "translate",
+              summary = "Translate the matrix.",
+              description = "Translates the matrix.",
+              key = "Mat4:translate",
+              module = "lovr.math",
+              related = {
+                "mat4:rotate",
+                "mat4:scale",
+                "mat4:identity"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "translation",
+                      type = "vec3",
+                      description = "The translation vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "transpose",
+              summary = "Transpose the matrix.",
+              description = "Transposes the matrix, mirroring its values along the diagonal.",
+              key = "Mat4:transpose",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "unpack",
+              summary = "Get the individual components of the matrix.",
+              description = "Returns the components of matrix, either as 10 separated numbers representing the position, scale, and rotation, or as 16 raw numbers representing the individual components of the matrix in column-major order.",
+              key = "Mat4:unpack",
+              module = "lovr.math",
+              related = {
+                "mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "raw",
+                      type = "boolean",
+                      description = "Whether to return the 16 raw components."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The requested components of the matrix."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.math.newMat4",
+            "lovr.math.mat4"
+          },
+          related = {
+            "Vec3",
+            "Quat"
+          }
+        },
+        {
+          name = "Quat",
+          summary = "A quaternion.",
+          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.",
+          key = "Quat",
+          module = "lovr.math",
+          methods = {
+            {
+              name = "__len",
+              summary = "Get the length of the quaternion.",
+              description = "Returns the length of the quaternion.",
+              key = "Quat:__len",
+              module = "lovr.math",
+              related = {
+                "quat:length",
+                "quat:normalize"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The quaternion."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the quaternion."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "__mul",
+              summary = "Multiply a quaternion by another quaternion or a vector.",
+              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and a new quaternion is returned with the result.  If the value is a vector, then a new rotated vector is returned.",
+              key = "Quat:__mul",
+              module = "lovr.math",
+              related = {
+                "quat:mul"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "A quaternion."
+                    },
+                    {
+                      name = "r",
+                      type = "quat",
+                      description = "A quaternion to combine with the original."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "s",
+                      type = "quat",
+                      description = "The combined quaternion."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "A quaternion."
+                    },
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "A vector to rotate."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "u",
+                      type = "vec3",
+                      description = "The rotated vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "mul",
+              summary = "Multiply a quaternion by another quaternion or a vector.",
+              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the vector is rotated by the quaternion.",
+              key = "Quat:mul",
+              module = "lovr.math",
+              related = {
+                "quat:__mul"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "r",
+                      type = "quat",
+                      description = "A quaternion to combine with the original."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "A vector to rotate."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "normalize",
+              summary = "Normalize the length of the quaternion to 1.",
+              description = "Adjusts the values in the quaternion so that its length becomes 1.",
+              key = "Quat:normalize",
+              module = "lovr.math",
+              related = {
+                "quat:__len",
+                "quat:length"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                }
+              },
+              notes = "A common source of bugs with quaternions is to forget to normalize them after performing a series of operations on them.  Try normalizing a quaternion if some of the calculations aren't working quite right!"
+            },
+            {
+              name = "set",
+              summary = "Set the components of the quaternion.",
+              description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n  - Alternatively, a `vec3` can be used for the axis.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
+              key = "Quat:set",
+              module = "lovr.math",
+              related = {
+                "quat:unpack",
+                "lovr.math.quat",
+                "Pool:quat"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      description = "The angle to use for the rotation, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "raw",
+                      type = "boolean",
+                      description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
+                      default = "false"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      description = "The angle to use for the rotation, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "axis",
+                      type = "vec3",
+                      description = "The axis of rotation (does not need to be normalized)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "r",
+                      type = "quat",
+                      description = "An existing quaternion to copy the values from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                },
+                {
+                  description = "Sets the values from a direction vector.",
+                  arguments = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "A normalized direction vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                },
+                {
+                  description = "Sets the values to represent the rotation between two vectors.",
+                  arguments = {
+                    {
+                      name = "v",
+                      type = "vec3",
+                      description = "A normalized direction vector."
+                    },
+                    {
+                      name = "u",
+                      type = "vec3",
+                      description = "Another normalized direction vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "m",
+                      type = "mat4",
+                      description = "A matrix to use the rotation from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "slerp",
+              summary = "Moves this quaternion some amount towards another one.",
+              description = "Performs a spherical linear interpolation between this quaternion and another one, which can be used for smoothly animating between two rotations.\n\nThe amount of interpolation is controlled by a parameter `t`.  A `t` value of zero leaves the original quaternion unchanged, whereas a `t` of one sets the original quaternion exactly equal to the target.  A value between `0` and `1` returns a rotation between the two based on the value.",
+              key = "Quat:slerp",
+              module = "lovr.math",
+              related = {
+                "vec3:lerp"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "r",
+                      type = "quat",
+                      description = "The quaternion to slerp towards."
+                    },
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The lerping parameter."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion, containing the new lerped values."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "unpack",
+              summary = "Get the components of the quaternion.",
+              description = "Returns the components of the quaternion as numbers, either in an angle/axis representation or as raw quaternion values.",
+              key = "Quat:unpack",
+              module = "lovr.math",
+              related = {
+                "quat:set"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "raw",
+                      type = "boolean",
+                      description = "Whether the values should be returned as raw values instead of angle/axis.",
+                      default = "false"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The angle in radians, or the x value."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The x component of the rotation axis or the y value."
+                    },
+                    {
+                      name = "c",
+                      type = "number",
+                      description = "The y component of the rotation axis or the z value."
+                    },
+                    {
+                      name = "d",
+                      type = "number",
+                      description = "The z component of the rotation axis or the w value."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.math.newQuat",
+            "lovr.math.quat"
+          },
+          related = {
+            "Vec3",
+            "Mat4"
+          }
+        },
+        {
           name = "RandomGenerator",
           summary = "A pseudo-random number generator.",
           description = "A RandomGenerator is a standalone object that can be used to independently generate pseudo-random numbers. If you just need basic randomness, you can use `lovr.math.random` without needing to create a random generator.",
@@ -15836,899 +16608,33 @@ return {
           }
         },
         {
-          name = "mat4",
-          summary = "A 4x4 matrix.",
-          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.  They are very useful for representing and manipulating transforms in 3D space.  LÖVR functions that accept 3D transforms can take a single `mat4` instead of 10 numbers or an assortment of `vec3`s and `quat`s, which is more concise and improves performance slightly.  `mat4`s are created using `lovr.math.mat4`.\n\nExplaining the math behind `mat4`s and transforms is outside the scope of these docs, but there are some fairly straightforward functions that can be used to move, rotate, and scale the transform represented by the matrix:\n\n- `mat4:translate`\n- `mat4:rotate`\n- `mat4:scale`\n\nThe \"default\" matrix is called the identity matrix and `mat4:identity` can be used to reset any matrix to the default state.\n\nMatrices can be multiplied together using the normal `*` operator, which combines both of their transformations into a single matrix.  This is really useful for condensing a set of simple transforms into a more complex one, or creating parent-child relationships between objects. Note that the multiplication returns a new matrix.\n\nCreating huge numbers of matrices every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of matrix objects you can use `Pool`s to make things much more efficient.",
-          key = "mat4",
+          name = "Vec2",
+          summary = "A 2D vector.",
+          description = "A vector object that holds two numbers.",
+          key = "Vec2",
           module = "lovr.math",
-          methods = {
-            {
-              name = "__mul",
-              summary = "Multiply a matrix with another matrix or a vector.",
-              description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
-              key = "mat4:__mul",
-              module = "lovr.math",
-              related = {
-                "mat4:mul",
-                "mat4:translate",
-                "mat4:rotate",
-                "mat4:scale"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The matrix."
-                    },
-                    {
-                      name = "n",
-                      type = "mat4",
-                      description = "Another matrix."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "A new matrix containing the multiplied result."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "The vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "u",
-                      type = "vec3",
-                      description = "A new transformed vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "identity",
-              summary = "Reset the matrix to the identity.",
-              description = "Resets the matrix to the identity, effectively setting its translation to zero, its scale to 1, and clearing any rotation.",
-              key = "mat4:identity",
-              module = "lovr.math",
-              related = {
-                "lovr.graphics.origin"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "invert",
-              summary = "Invert the matrix.",
-              description = "Inverts the matrix, causing it to represent the opposite of its old transform.",
-              key = "mat4:invert",
-              module = "lovr.math",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "mul",
-              summary = "Multiply a matrix with another matrix or a vector.",
-              description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
-              key = "mat4:mul",
-              module = "lovr.math",
-              related = {
-                "mat4:__mul",
-                "mat4:translate",
-                "mat4:rotate",
-                "mat4:scale"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "n",
-                      type = "mat4",
-                      description = "The matrix."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix, containing the result."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "The vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "The transformed vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "orthographic",
-              summary = "Turn the matrix into an orthographic projection.",
-              description = "Sets this matrix to represent an orthographic projection, useful for 2D/isometric rendering.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
-              key = "mat4:orthographic",
-              module = "lovr.math",
-              related = {
-                "mat4:perspective",
-                "lovr.graphics.setProjection"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "left",
-                      type = "number",
-                      description = "The left edge of the projection."
-                    },
-                    {
-                      name = "right",
-                      type = "number",
-                      description = "The right edge of the projection."
-                    },
-                    {
-                      name = "top",
-                      type = "number",
-                      description = "The top edge of the projection."
-                    },
-                    {
-                      name = "bottom",
-                      type = "number",
-                      description = "The bottom edge of the projection."
-                    },
-                    {
-                      name = "near",
-                      type = "number",
-                      description = "The position of the near clipping plane."
-                    },
-                    {
-                      name = "far",
-                      type = "number",
-                      description = "The position of the far clipping plane."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "perspective",
-              summary = "Turn the matrix into a perspective projection.",
-              description = "Sets this matrix to represent a perspective projection.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
-              key = "mat4:perspective",
-              module = "lovr.math",
-              related = {
-                "mat4:orthographic",
-                "lovr.graphics.setProjection"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "near",
-                      type = "number",
-                      description = "The near plane."
-                    },
-                    {
-                      name = "far",
-                      type = "number",
-                      description = "The far plane."
-                    },
-                    {
-                      name = "fov",
-                      type = "number",
-                      description = "The field of view (in radians)."
-                    },
-                    {
-                      name = "aspect",
-                      type = "number",
-                      description = "The vertical aspect ratio of the projection."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "rotate",
-              summary = "Rotate the matrix.",
-              description = "Rotates the matrix using a quaternion or an angle/axis rotation.",
-              key = "mat4:rotate",
-              module = "lovr.math",
-              related = {
-                "mat4:translate",
-                "mat4:scale",
-                "mat4:identity"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "rotation",
-                      type = "quat",
-                      description = "The rotation to apply to the matrix."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "scale",
-              summary = "Scale the matrix.",
-              description = "Scales the matrix.",
-              key = "mat4:scale",
-              module = "lovr.math",
-              related = {
-                "mat4:translate",
-                "mat4:rotate",
-                "mat4:identity"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "scale",
-                      type = "vec3",
-                      description = "The 3D scale to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "s",
-                      type = "number",
-                      description = "A uniform scale to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "set",
-              summary = "Set the components of the matrix.",
-              description = "Sets the components of the matrix from separate position, rotation, and scale arguments or an existing matrix.",
-              key = "mat4:set",
-              module = "lovr.math",
-              related = {
-                "mat4:unpack"
-              },
-              variants = {
-                {
-                  description = "Resets the matrix to the identity matrix.",
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                },
-                {
-                  description = "Copies the values from an existing matrix.",
-                  arguments = {
-                    {
-                      name = "n",
-                      type = "mat4",
-                      description = "An existing matrix to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "position",
-                      type = "vec3",
-                      description = "The translation of the matrix.",
-                      default = "0, 0, 0"
-                    },
-                    {
-                      name = "scale",
-                      type = "vec3",
-                      description = "The scale of the matrix.",
-                      default = "1, 1, 1"
-                    },
-                    {
-                      name = "rotation",
-                      type = "quat",
-                      description = "The rotation of the matrix.",
-                      default = "0, 0, 0, 0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "16 numbers to use as the raw values of the matrix (column-major)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "translate",
-              summary = "Translate the matrix.",
-              description = "Translates the matrix.",
-              key = "mat4:translate",
-              module = "lovr.math",
-              related = {
-                "mat4:rotate",
-                "mat4:scale",
-                "mat4:identity"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "translation",
-                      type = "vec3",
-                      description = "The translation vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "transpose",
-              summary = "Transpose the matrix.",
-              description = "Transposes the matrix, mirroring its values along the diagonal.",
-              key = "mat4:transpose",
-              module = "lovr.math",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "unpack",
-              summary = "Get the individual components of the matrix.",
-              description = "Returns the components of matrix, either as 10 separated numbers representing the position, scale, and rotation, or as 16 raw numbers representing the individual components of the matrix in column-major order.",
-              key = "mat4:unpack",
-              module = "lovr.math",
-              related = {
-                "mat4:set"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "raw",
-                      type = "boolean",
-                      description = "Whether to return the 16 raw components."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "The requested components of the matrix."
-                    }
-                  }
-                }
-              }
-            }
-          },
+          methods = {},
           constructors = {
-            "lovr.math.mat4"
+            "lovr.math.newVec2",
+            "lovr.math.vec2"
           },
           related = {
-            "vec3",
-            "quat"
+            "Vec3",
+            "Vec4"
           }
         },
         {
-          name = "quat",
-          summary = "A quaternion.",
-          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.  LÖVR functions that take rotations also accept quaternions.  `quat`s are created using `lovr.math.quat`.\n\nThe four numbers stored in a `quat`, normally called `x, y, z, w`, are not very intuitive to work with.  Instead, rotations in most LÖVR APIs use the angle/axis representation, which is defined by a rotation angle in radians and an axis to rotate around.  Accordingly, the quat functions for getting and setting elements, `quat:unpack` and `quat:set`, don't take the normal `x, y, z, w` elements but instead take four angle/axis values.  If you need to access the raw components, you can pass in `true` as the last argument to signify that you want to work with raw components.\n\nTwo quaternions can be multiplied together to combine their rotations into a single new quaternion.  The `quat:mul` function can be used to multiply two quaternions \"in place\", modifying the first quaternion.  Alternatively, the `*` operator can be used to multiply them, which will create a new quaternion to store the result in.\n\nA quaternion can also be multiplied by a vector.  This rotates the vector.  Both `quat:mul` and the `*` operator can be used for this.\n\nA common source of bugs is to forget to normalize a quaternion.  If you run into weird bugs with rotations, calling `quat:normalize` on your rotations may fix the issue!\n\nCreating huge numbers of quaternions every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of quaternion objects you can use `Pool`s to make things much more efficient.",
-          key = "quat",
-          module = "lovr.math",
-          methods = {
-            {
-              name = "__len",
-              summary = "Get the length of the quaternion.",
-              description = "Returns the length of the quaternion.",
-              key = "quat:__len",
-              module = "lovr.math",
-              related = {
-                "quat:length",
-                "quat:normalize"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The quaternion."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "length",
-                      type = "number",
-                      description = "The length of the quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "__mul",
-              summary = "Multiply a quaternion by another quaternion or a vector.",
-              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and a new quaternion is returned with the result.  If the value is a vector, then a new rotated vector is returned.",
-              key = "quat:__mul",
-              module = "lovr.math",
-              related = {
-                "quat:mul"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "A quaternion."
-                    },
-                    {
-                      name = "r",
-                      type = "quat",
-                      description = "A quaternion to combine with the original."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "s",
-                      type = "quat",
-                      description = "The combined quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "A quaternion."
-                    },
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "A vector to rotate."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "u",
-                      type = "vec3",
-                      description = "The rotated vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "mul",
-              summary = "Multiply a quaternion by another quaternion or a vector.",
-              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the vector is rotated by the quaternion.",
-              key = "quat:mul",
-              module = "lovr.math",
-              related = {
-                "quat:__mul"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "quat",
-                      description = "A quaternion to combine with the original."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "A vector to rotate."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "normalize",
-              summary = "Normalize the length of the quaternion to 1.",
-              description = "Adjusts the values in the quaternion so that its length becomes 1.",
-              key = "quat:normalize",
-              module = "lovr.math",
-              related = {
-                "quat:__len",
-                "quat:length"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                }
-              },
-              notes = "A common source of bugs with quaternions is to forget to normalize them after performing a series of operations on them.  Try normalizing a quaternion if some of the calculations aren't working quite right!"
-            },
-            {
-              name = "set",
-              summary = "Set the components of the quaternion.",
-              description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n  - Alternatively, a `vec3` can be used for the axis.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
-              key = "quat:set",
-              module = "lovr.math",
-              related = {
-                "quat:unpack",
-                "lovr.math.quat",
-                "Pool:quat"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      description = "The angle to use for the rotation, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "raw",
-                      type = "boolean",
-                      description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
-                      default = "false"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      description = "The angle to use for the rotation, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "axis",
-                      type = "vec3",
-                      description = "The axis of rotation (does not need to be normalized)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "quat",
-                      description = "An existing quaternion to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Sets the values from a direction vector.",
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "A normalized direction vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Sets the values to represent the rotation between two vectors.",
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "vec3",
-                      description = "A normalized direction vector."
-                    },
-                    {
-                      name = "u",
-                      type = "vec3",
-                      description = "Another normalized direction vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "mat4",
-                      description = "A matrix to use the rotation from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "slerp",
-              summary = "Moves this quaternion some amount towards another one.",
-              description = "Performs a spherical linear interpolation between this quaternion and another one, which can be used for smoothly animating between two rotations.\n\nThe amount of interpolation is controlled by a parameter `t`.  A `t` value of zero leaves the original quaternion unchanged, whereas a `t` of one sets the original quaternion exactly equal to the target.  A value between `0` and `1` returns a rotation between the two based on the value.",
-              key = "quat:slerp",
-              module = "lovr.math",
-              related = {
-                "vec3:lerp"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "quat",
-                      description = "The quaternion to slerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion, containing the new lerped values."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "unpack",
-              summary = "Get the components of the quaternion.",
-              description = "Returns the components of the quaternion as numbers, either in an angle/axis representation or as raw quaternion values.",
-              key = "quat:unpack",
-              module = "lovr.math",
-              related = {
-                "quat:set"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "raw",
-                      type = "boolean",
-                      description = "Whether the values should be returned as raw values instead of angle/axis.",
-                      default = "false"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "a",
-                      type = "number",
-                      description = "The angle in radians, or the x value."
-                    },
-                    {
-                      name = "b",
-                      type = "number",
-                      description = "The x component of the rotation axis or the y value."
-                    },
-                    {
-                      name = "c",
-                      type = "number",
-                      description = "The y component of the rotation axis or the z value."
-                    },
-                    {
-                      name = "d",
-                      type = "number",
-                      description = "The z component of the rotation axis or the w value."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          constructors = {
-            "lovr.math.quat"
-          },
-          related = {
-            "vec3",
-            "mat4"
-          }
-        },
-        {
-          name = "vec3",
+          name = "Vec3",
           summary = "A 3D vector.",
-          description = "A `vec3` is a math type that holds three numbers.  It's very helpful for representing and manipulating 3D positions and directions.  LÖVR functions that accept 3D positions, directions, or velocities generally also accept `vec3`s.  `vec3`s are created using `lovr.math.vec3`.\n\n`vec3`s have metamethods, allowing you to add, subtract, multiply, and divide them using the usual binary operators that you would use on numbers.  Note that these create new vectors to store their results in.  If you want to modify a vector instead of creating new ones, you can use the named operator functions like `vec3:add`.\n\nCreating huge numbers of vectors every frame can lead to performance problems due to the sheer amount of memory allocation and garbage collection overhead.  If you need lots of vector objects you can use `Pool`s to make things much more efficient.\n\nNote that accessing properties directly (like `v.x`) is not an officially supported feature right now (for performance reasons), though it does happen to work by accident in LuaJIT.  This limitation may be improved in the future.  For now, it is recommended to use `vec3:unpack` and `vec3:set` if you need to work with individual components of a vector.",
-          key = "vec3",
+          description = "A vector object that holds three numbers.",
+          key = "Vec3",
           module = "lovr.math",
           methods = {
             {
               name = "__add",
               summary = "Add two vectors.",
               description = "Adds two vectors, returning a new vector containing the sum.",
-              key = "vec3:__add",
+              key = "Vec3:__add",
               module = "lovr.math",
               related = {
                 "vec3:add",
@@ -16764,7 +16670,7 @@ return {
               name = "__div",
               summary = "Divide vectors by vectors or numbers.",
               description = "Divides a vector by another vector or a vector by a number.  Returns a new vector that contains the divided values.",
-              key = "vec3:__div",
+              key = "Vec3:__div",
               module = "lovr.math",
               related = {
                 "vec3:div",
@@ -16802,7 +16708,7 @@ return {
               name = "__len",
               summary = "Get the length of the vector.",
               description = "Returns the length of the vector.",
-              key = "vec3:__len",
+              key = "Vec3:__len",
               module = "lovr.math",
               related = {
                 "vec3:length",
@@ -16832,7 +16738,7 @@ return {
               name = "__mul",
               summary = "Multiply vectors by vectors or numbers.",
               description = "Multiplies a vector by another vector or a vector by a number.  Returns a new vector that contains the multiplied values.",
-              key = "vec3:__mul",
+              key = "Vec3:__mul",
               module = "lovr.math",
               related = {
                 "vec3:mul",
@@ -16889,7 +16795,7 @@ return {
               name = "__sub",
               summary = "Subtract two vectors.",
               description = "Subtracts two vectors, returning a new vector containing the difference.",
-              key = "vec3:__sub",
+              key = "Vec3:__sub",
               module = "lovr.math",
               related = {
                 "vec3:sub",
@@ -16925,7 +16831,7 @@ return {
               name = "__unm",
               summary = "Negate a vector.",
               description = "Returns a new vector with the negated components of the original.",
-              key = "vec3:__unm",
+              key = "Vec3:__unm",
               module = "lovr.math",
               variants = {
                 {
@@ -16950,7 +16856,7 @@ return {
               name = "add",
               summary = "Add a vector to this vector.",
               description = "Adds a vector to this vector.",
-              key = "vec3:add",
+              key = "Vec3:add",
               module = "lovr.math",
               related = {
                 "vec3:__add",
@@ -16982,7 +16888,7 @@ return {
               name = "cross",
               summary = "Get the cross product with another vector.",
               description = "Sets this vector to be equal to the cross product between this vector and another one.  The new `v` will be perpendicular to both the old `v` and `u`.",
-              key = "vec3:cross",
+              key = "Vec3:cross",
               module = "lovr.math",
               related = {
                 "vec3:dot"
@@ -17011,7 +16917,7 @@ return {
               name = "distance",
               summary = "Get the distance to another vector.",
               description = "Returns the distance to another vector.",
-              key = "vec3:distance",
+              key = "Vec3:distance",
               module = "lovr.math",
               related = {
                 "vec3:__len",
@@ -17042,7 +16948,7 @@ return {
               name = "div",
               summary = "Divides the vector by a vector or a number.",
               description = "Divides the vector by a vector or a number.",
-              key = "vec3:div",
+              key = "Vec3:div",
               module = "lovr.math",
               related = {
                 "vec3:__div",
@@ -17090,7 +16996,7 @@ return {
               name = "dot",
               summary = "Get the dot product with another vector.",
               description = "Returns the dot product between this vector and another one.",
-              key = "vec3:dot",
+              key = "Vec3:dot",
               module = "lovr.math",
               related = {
                 "vec3:cross",
@@ -17122,7 +17028,7 @@ return {
               name = "length",
               summary = "Get the length of the vector.",
               description = "Returns the length of the vector.",
-              key = "vec3:length",
+              key = "Vec3:length",
               module = "lovr.math",
               related = {
                 "vec3:__len",
@@ -17147,7 +17053,7 @@ return {
               name = "lerp",
               summary = "Moves this vector some amount towards another one.",
               description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
-              key = "vec3:lerp",
+              key = "Vec3:lerp",
               module = "lovr.math",
               related = {
                 "quat:slerp"
@@ -17180,7 +17086,7 @@ return {
               name = "mul",
               summary = "Multiply the vector by a vector or a number.",
               description = "Multiplies the vector by a vector or a number.",
-              key = "vec3:mul",
+              key = "Vec3:mul",
               module = "lovr.math",
               related = {
                 "vec3:__mul",
@@ -17228,7 +17134,7 @@ return {
               name = "normalize",
               summary = "Normalize the length of the vector to 1.",
               description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
-              key = "vec3:normalize",
+              key = "Vec3:normalize",
               module = "lovr.math",
               related = {
                 "vec3:__len",
@@ -17251,7 +17157,7 @@ return {
               name = "set",
               summary = "Set the components of the vector.",
               description = "Sets the components of the vector, either from numbers or an existing vector.",
-              key = "vec3:set",
+              key = "Vec3:set",
               module = "lovr.math",
               related = {
                 "vec3:unpack",
@@ -17310,7 +17216,7 @@ return {
               name = "sub",
               summary = "Subtract a vector from this vector.",
               description = "Subtracts a vector from this vector.",
-              key = "vec3:sub",
+              key = "Vec3:sub",
               module = "lovr.math",
               related = {
                 "vec3:__sub",
@@ -17342,7 +17248,7 @@ return {
               name = "unpack",
               summary = "Get the components of the vector.",
               description = "Returns the 3 components of vector as numbers.",
-              key = "vec3:unpack",
+              key = "Vec3:unpack",
               module = "lovr.math",
               related = {
                 "vec3:set"
@@ -17372,11 +17278,28 @@ return {
             }
           },
           constructors = {
+            "lovr.math.newVec3",
             "lovr.math.vec3"
           },
           related = {
-            "quat",
-            "mat4"
+            "Vec2",
+            "Vec4"
+          }
+        },
+        {
+          name = "Vec4",
+          summary = "A 4D vector.",
+          description = "A vector object that holds four numbers.",
+          key = "Vec4",
+          module = "lovr.math",
+          methods = {},
+          constructors = {
+            "lovr.math.newVec4",
+            "lovr.math.vec4"
+          },
+          related = {
+            "Vec2",
+            "Vec3"
           }
         }
       }

@@ -1,96 +1,20 @@
 return {
-  summary = 'Create a new quat.',
+  summary = 'Create a temporary quat.',
   description = [[
-    Creates a new `quat`.  Have a look at `quat:set` for more information about how all these
-    variants can be used.
-
-    Note that this function is also a table containing the `__index` key of the quat metatable.
-    This means that you can add your own functions onto the `lovr.math.quat` table to extend the
-    built-in functionality.
+    Creates a temporary `quat`.  This function takes the same arguments as `quat:set`.
   ]],
-  arguments = {
-    angle = {
-      default = '0',
-      description = 'The angle to use for the rotation, in radians.'
-    },
-    ax = {
-      type = 'number',
-      default = '0',
-      description = 'The x component of the axis of rotation.'
-    },
-    ay = {
-      type = 'number',
-      default = '0',
-      description = 'The y component of the axis of rotation.'
-    },
-    az = {
-      type = 'number',
-      default = '0',
-      description = 'The z component of the axis of rotation.'
-    },
-    axis = {
-      type = 'vec3',
-      description = 'The axis of rotation (does not need to be normalized).'
-    },
-    raw = {
-      type = 'boolean',
-      default = 'false',
-      description = 'Whether the components should be interpreted as raw `(x, y, z, w)` components.'
-    },
-    v = {
-      type = 'vec3',
-      description = 'A normalized direction vector.'
-    },
-    u = {
-      type = 'vec3',
-      description = 'Another normalized direction vector.'
-    },
-    r = {
-      type = 'quat',
-      description = 'An existing quaternion to copy the values from.'
-    },
-    m = {
-      type = 'mat4',
-      description = 'A matrix to use the rotation from.'
-    }
-  },
-  returns = {
-    q = {
-      type = 'quat',
-      description = 'The new quaternion.'
-    }
-  },
-  variants = {
-    {
-      arguments = { 'angle', 'ax', 'ay', 'az', 'raw' },
-      returns = { 'q' }
-    },
-    {
-      arguments = { 'angle', 'axis' },
-      returns = { 'q' }
-    },
-    {
-      arguments = { 'r' },
-      returns = { 'q' }
-    },
-    {
-      description = 'Sets the values from a direction vector.',
-      arguments = { 'v' },
-      returns = { 'q' }
-    },
-    {
-      description = 'Sets the values to represent the rotation between two vectors.',
-      arguments = { 'v', 'u' },
-      returns = { 'q' }
-    },
-    {
-      arguments = { 'm' },
-      returns = { 'q' }
-    }
-  },
-  notes = 'This function takes the same arguments as `quat:set`.',
+  arguments = {},
+  returns = {},
+  notes = [[
+    Temporary vector objects do not require any memory allocations or garbage collection, so they
+    can be faster in situations that require lots of vector math.  The downside is that they are
+    only valid until the next call to `lovr.math.drain`, which is called at the end of every frame
+    by default.  Attempting to use a temporary vector after it's been drained will result in an
+    error.  If you need permanent vectors that can be saved into variables and survive across
+    multiple frames, see `lovr.math.newQuat`.
+  ]],
   related = {
-    'lovr.math.vec3',
-    'lovr.math.mat4'
+    'lovr.math.newQuat',
+    'Quat'
   }
 }
