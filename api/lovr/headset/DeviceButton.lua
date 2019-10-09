@@ -26,10 +26,6 @@ return {
       description = 'The menu button.'
     },
     {
-      name = 'touchpad',
-      description = 'The button on the touchpad.'
-    },
-    {
       name = 'a',
       description = 'The A button.'
     },
