@@ -27,7 +27,7 @@ page](https://github.com/mcclure/lovr-oculus-mobile/releases).
 Install it to the device:
 
 ```
-adb install /path/to/appsample-release.apk
+$ adb install /path/to/appsample-release.apk
 ```
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
@@ -48,7 +48,7 @@ end
 Then use `adb` to sync it to the device:
 
 ```
-adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.test/files/.lodr
+$ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.test/files/.lodr
 ```
 
 You should see the "hello world" message!
