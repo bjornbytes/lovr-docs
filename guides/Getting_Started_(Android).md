@@ -45,13 +45,16 @@ function lovr.draw()
 end
 ```
 
-Then use `adb` to sync it to the device (this can be done while the app is running):
+Then use `adb` to sync it to the device:
 
 ```
-adb push --sync /path/to/hello-world /sdcard/Android/data/org.lovr.test/files/.lodr
+adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.test/files/.lodr
 ```
 
 You should see the "hello world" message!
+
+If the app is already running when a project is pushed, it will reload with the new code.  Also note
+the trailing `.` in the path to the project, it's important!
 
 Tips
 ---
