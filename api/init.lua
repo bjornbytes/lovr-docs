@@ -13398,10 +13398,6 @@ return {
               description = "The menu button."
             },
             {
-              name = "touchpad",
-              description = "The button on the touchpad."
-            },
-            {
               name = "a",
               description = "The A button."
             },
@@ -14397,7 +14393,7 @@ return {
               }
             }
           },
-          notes = "When using the `openvr` headset driver on an HTC Vive, the value for the `duration` currently must be less than .004 seconds.  Call this function several frames in a row for stronger or prolonged vibration patterns.\n\nThe `oculus` headset driver does not currently support haptics.\n\nOn the `oculusmobile` driver, devices can only be vibrated once per frame.  Any attempts after the first will return `false`."
+          notes = "When using the `openvr` headset driver on an HTC Vive, the value for the `duration` currently must be less than .004 seconds.  Call this function several frames in a row for stronger or prolonged vibration patterns.\n\nThe `oculus` headset driver does not currently support haptics.\n\nOn the Oculus Quest, devices can only be vibrated once per frame.  Any attempts after the first will return `false`.  The Oculus Go controller does not support vibration."
         }
       },
       objects = {}

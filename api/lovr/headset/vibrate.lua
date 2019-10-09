@@ -44,7 +44,7 @@ return {
 
     The `oculus` headset driver does not currently support haptics.
 
-    On the `oculusmobile` driver, devices can only be vibrated once per frame.  Any attempts after
-    the first will return `false`.
+    On the Oculus Quest, devices can only be vibrated once per frame.  Any attempts after the first
+    will return `false`.  The Oculus Go controller does not support vibration.
   ]]
 }
