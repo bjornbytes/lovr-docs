@@ -53,6 +53,12 @@ adb push --sync /path/to/hello-world /sdcard/Android/data/org.lovr.test/files/.l
 
 You should see the "hello world" message!
 
+Tips
+---
+
+- If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
+  `adb logcat -s LOVR`.
+
 Next Steps
 ---
 
