@@ -1,4 +1,5 @@
 return {
+  tag = 'mathOther',
   summary = 'Create a new Curve.',
   description = 'Creates a new `Curve` from a list of control points.',
   arguments = {

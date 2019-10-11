@@ -14404,9 +14404,28 @@ return {
       summary = "Contains useful math helpers.",
       description = "The `lovr.math` module provides math helpers commonly used for 3D applications.",
       key = "lovr.math",
+      sections = {
+        {
+          name = "Randomization",
+          tag = "random",
+          description = "Functions for generating random numbers and noise."
+        },
+        {
+          name = "Vectors",
+          tag = "vectors",
+          description = "A collection of vector objects.  Check out the `Vectors` guide for an introduction."
+        },
+        {
+          name = "Other",
+          tag = "mathOther",
+          description = "Other miscellaneous math objects/helpers."
+        }
+      },
+      enums = {},
       functions = {
         {
           name = "drain",
+          tag = "vectors",
           summary = "Drain the temporary vector pool.",
           description = "Drains the temporary vector pool, invalidating existing temporary vectors.\n\nThis is called automatically at the end of each frame.",
           key = "lovr.math.drain",
@@ -14420,6 +14439,7 @@ return {
         },
         {
           name = "gammaToLinear",
+          tag = "mathOther",
           summary = "\9Convert a color from gamma space to linear space.",
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
@@ -14512,6 +14532,7 @@ return {
         },
         {
           name = "getRandomSeed",
+          tag = "random",
           summary = "Get the random seed.",
           description = "Get the seed used to initialize the random generator.",
           key = "lovr.math.getRandomSeed",
@@ -14531,6 +14552,7 @@ return {
         },
         {
           name = "linearToGamma",
+          tag = "mathOther",
           summary = "\9Convert a color from linear space to gamma space.",
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
@@ -14623,8 +14645,9 @@ return {
         },
         {
           name = "mat4",
+          tag = "vectors",
           summary = "Create a temporary mat4.",
-          description = "Creates a temporary `mat4`.  This function takes the same arguments as `mat4:set`.",
+          description = "Creates a temporary 4D matrix.  This function takes the same arguments as `mat4:set`.",
           key = "lovr.math.mat4",
           module = "lovr.math",
           related = {
@@ -14636,11 +14659,11 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newMat4`."
+          }
         },
         {
           name = "newCurve",
+          tag = "mathOther",
           summary = "Create a new Curve.",
           description = "Creates a new `Curve` from a list of control points.",
           key = "lovr.math.newCurve",
@@ -14716,8 +14739,9 @@ return {
         },
         {
           name = "newMat4",
+          tag = "vectors",
           summary = "Create a new mat4.",
-          description = "Creates a new `mat4`.  This function takes the same arguments as `mat4:set`.",
+          description = "Creates a new 4D matrix.  This function takes the same arguments as `mat4:set`.",
           key = "lovr.math.newMat4",
           module = "lovr.math",
           related = {
@@ -14729,13 +14753,13 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "If you need lots of temporary mat4 objects, see `lovr.math.mat4`."
+          }
         },
         {
           name = "newQuat",
+          tag = "vectors",
           summary = "Create a new quat.",
-          description = "Creates a new `quat`.  This function takes the same arguments as `quat:set`.",
+          description = "Creates a new quaternion.  This function takes the same arguments as `quat:set`.",
           key = "lovr.math.newQuat",
           module = "lovr.math",
           related = {
@@ -14747,11 +14771,11 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "If you need lots of temporary quat objects, see `lovr.math.quat`."
+          }
         },
         {
           name = "newRandomGenerator",
+          tag = "random",
           summary = "Create a new RandomGenerator.",
           description = "Creates a new `RandomGenerator`, which can be used to generate random numbers. If you just want some random numbers, you can use `lovr.math.random`. Individual RandomGenerator objects are useful if you need more control over the random sequence used or need a random generator isolated from other instances.",
           key = "lovr.math.newRandomGenerator",
@@ -14810,8 +14834,9 @@ return {
         },
         {
           name = "newVec2",
+          tag = "vectors",
           summary = "Create a new vec2.",
-          description = "Creates a new `vec2`.  This function takes the same arguments as `vec2:set`.",
+          description = "Creates a new 2D vector.  This function takes the same arguments as `vec2:set`.",
           key = "lovr.math.newVec2",
           module = "lovr.math",
           related = {
@@ -14823,13 +14848,13 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "If you need lots of temporary vec2 objects, see `lovr.math.vec2`."
+          }
         },
         {
           name = "newVec3",
+          tag = "vectors",
           summary = "Create a new vec3.",
-          description = "Creates a new `vec3`.  This function takes the same arguments as `vec3:set`.",
+          description = "Creates a new 3D vector.  This function takes the same arguments as `vec3:set`.",
           key = "lovr.math.newVec3",
           module = "lovr.math",
           related = {
@@ -14841,13 +14866,13 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "If you need lots of temporary vec3 objects, see `lovr.math.vec3`."
+          }
         },
         {
           name = "newVec4",
+          tag = "vectors",
           summary = "Create a new vec4.",
-          description = "Creates a new `vec4`.  This function takes the same arguments as `vec4:set`.",
+          description = "Creates a new 4D vector.  This function takes the same arguments as `vec4:set`.",
           key = "lovr.math.newVec4",
           module = "lovr.math",
           related = {
@@ -14859,11 +14884,11 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "If you need lots of temporary vec4 objects, see `lovr.math.vec4`."
+          }
         },
         {
           name = "noise",
+          tag = "random",
           summary = "Generate perlin noise.",
           description = "Returns a 1D, 2D, 3D, or 4D perlin noise value.  The number will be between 0 and 1, and it will always be 0.5 when the inputs are integers.",
           key = "lovr.math.noise",
@@ -14970,8 +14995,9 @@ return {
         },
         {
           name = "quat",
+          tag = "vectors",
           summary = "Create a temporary quat.",
-          description = "Creates a temporary `quat`.  This function takes the same arguments as `quat:set`.",
+          description = "Creates a temporary quaternion.  This function takes the same arguments as `quat:set`.",
           key = "lovr.math.quat",
           module = "lovr.math",
           related = {
@@ -14983,20 +15009,16 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newQuat`."
+          }
         },
         {
           name = "random",
+          tag = "random",
           summary = "Get a random number.",
           description = "Returns a uniformly distributed pseudo-random number.  This function has improved randomness over Lua's `math.random` and also guarantees that the sequence of random numbers will be the same on all platforms (given the same seed).",
           key = "lovr.math.random",
           module = "lovr.math",
-          related = {
-            "lovr.math.randomNormal",
-            "RandomGenerator",
-            "lovr.math.noise"
-          },
+          notes = "You can set the random seed using `lovr.math.setRandomSeed`.",
           variants = {
             {
               description = "Generate a pseudo-random floating point number in the range `[0,1)`",
@@ -15049,10 +15071,15 @@ return {
               }
             }
           },
-          notes = "You can set the random seed using `lovr.math.setRandomSeed`."
+          related = {
+            "lovr.math.randomNormal",
+            "RandomGenerator",
+            "lovr.math.noise"
+          }
         },
         {
           name = "randomNormal",
+          tag = "random",
           summary = "Get a random number from a normal distribution.",
           description = "Returns a pseudo-random number from a normal distribution (a bell curve).  You can control the center of the bell curve (the mean value) and the overall width (sigma, or standard deviation).",
           key = "lovr.math.randomNormal",
@@ -15089,6 +15116,7 @@ return {
         },
         {
           name = "setRandomSeed",
+          tag = "random",
           summary = "Set the random seed.",
           description = "Seed the random generator with a new seed.  Each seed will cause `lovr.math.random` and `lovr.math.randomNormal` to produce a unique sequence of random numbers.  This is done once automatically at startup by `lovr.run`.",
           key = "lovr.math.setRandomSeed",
@@ -15108,8 +15136,9 @@ return {
         },
         {
           name = "vec2",
+          tag = "vectors",
           summary = "Create a temporary vec2.",
-          description = "Creates a temporary `vec2`.  This function takes the same arguments as `vec2:set`.",
+          description = "Creates a temporary 2D vector.  This function takes the same arguments as `vec2:set`.",
           key = "lovr.math.vec2",
           module = "lovr.math",
           related = {
@@ -15121,13 +15150,13 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newVec2`."
+          }
         },
         {
           name = "vec3",
+          tag = "vectors",
           summary = "Create a temporary vec3.",
-          description = "Creates a temporary `vec3`.  This function takes the same arguments as `vec3:set`.",
+          description = "Creates a temporary 3D vector.  This function takes the same arguments as `vec3:set`.",
           key = "lovr.math.vec3",
           module = "lovr.math",
           related = {
@@ -15139,13 +15168,13 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newVec3`."
+          }
         },
         {
           name = "vec4",
+          tag = "vectors",
           summary = "Create a temporary vec4.",
-          description = "Creates a temporary `vec4`.  This function takes the same arguments as `vec4:set`.",
+          description = "Creates a temporary 4D vector.  This function takes the same arguments as `vec4:set`.",
           key = "lovr.math.vec4",
           module = "lovr.math",
           related = {
@@ -15157,11 +15186,9 @@ return {
               arguments = {},
               returns = {}
             }
-          },
-          notes = "Temporary vector objects do not require any memory allocations or garbage collection, so they can be faster in situations that require lots of vector math.  The downside is that they are only valid until the next call to `lovr.math.drain`, which is called at the end of every frame by default.  Attempting to use a temporary vector after it's been drained will result in an error.  If you need permanent vectors that can be saved into variables and survive across multiple frames, see `lovr.math.newVec4`."
+          }
         }
       },
-      enums = {},
       objects = {
         {
           name = "Curve",

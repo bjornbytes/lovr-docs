@@ -1,4 +1,5 @@
 return {
+  tag = 'random',
   summary = 'Get a random number.',
   description = [[
     Returns a uniformly distributed pseudo-random number.  This function has improved randomness

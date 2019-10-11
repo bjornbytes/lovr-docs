@@ -1,4 +1,5 @@
 return {
+  tag = 'vectors',
   summary = 'Drain the temporary vector pool.',
   description = [[
     Drains the temporary vector pool, invalidating existing temporary vectors.

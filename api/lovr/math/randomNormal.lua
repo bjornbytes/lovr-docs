@@ -1,4 +1,5 @@
 return {
+  tag = 'random',
   summary = 'Get a random number from a normal distribution.',
   description = [[
     Returns a pseudo-random number from a normal distribution (a bell curve).  You can control the

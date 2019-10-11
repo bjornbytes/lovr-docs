@@ -1,4 +1,5 @@
 return {
+  tag = 'random',
   summary = 'Generate perlin noise.',
   description = [[
     Returns a 1D, 2D, 3D, or 4D perlin noise value.  The number will be between 0 and 1, and it will

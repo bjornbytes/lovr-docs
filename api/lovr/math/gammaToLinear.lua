@@ -1,4 +1,5 @@
 return {
+  tag = 'mathOther',
   summary = '	Convert a color from gamma space to linear space.',
   description = 'Converts a color from gamma space to linear space.',
   arguments = {

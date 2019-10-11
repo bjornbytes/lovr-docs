@@ -1,4 +1,5 @@
 return {
+  tag = 'random',
   summary = 'Create a new RandomGenerator.',
   description = [[
     Creates a new `RandomGenerator`, which can be used to generate random numbers. If you just want
