@@ -8865,13 +8865,13 @@ return {
                   name = "w",
                   type = "number",
                   description = "The width of the texture UVs to render.",
-                  default = "1.0"
+                  default = "1.0 - u"
                 },
                 {
                   name = "h",
                   type = "number",
                   description = "The height of the texture UVs to render.",
-                  default = "1.0"
+                  default = "1.0 - v"
                 }
               },
               returns = {}
@@ -8954,13 +8954,13 @@ return {
                   name = "w",
                   type = "number",
                   description = "The width of the texture UVs to render.",
-                  default = "1.0"
+                  default = "1.0 - u"
                 },
                 {
                   name = "h",
                   type = "number",
                   description = "The height of the texture UVs to render.",
-                  default = "1.0"
+                  default = "1.0 - v"
                 }
               },
               returns = {}

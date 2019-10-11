@@ -69,12 +69,12 @@ return {
     },
     w = {
       type = 'number',
-      default = '1.0',
+      default = '1.0 - u',
       description = 'The width of the texture UVs to render.'
     },
     h = {
       type = 'number',
-      default = '1.0',
+      default = '1.0 - v',
       description = 'The height of the texture UVs to render.'
     }
   },
