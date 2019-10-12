@@ -1,19 +1,19 @@
 return {
-  summary = 'Add a vector or a number to the vector.',
-  description = 'Adds a vector or a number to the vector.',
+  summary = 'Subtract a vector or a number from the vector.',
+  description = 'Subtracts a vector or a number from the vector.',
   arguments = {
     u = {
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The other vector.'
     },
     x = {
       type = 'number',
-      description = 'A number to add to each component.'
+      description = 'A number to subtract from each component.'
     }
   },
   returns = {
     v = {
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The original vector.'
     }
   },
@@ -28,8 +28,8 @@ return {
     }
   },
   related = {
-    'Vec3:sub',
-    'Vec3:mul',
-    'Vec3:div'
+    'Vec2:add',
+    'Vec2:mul',
+    'Vec2:div'
   }
 }

@@ -9,7 +9,7 @@ return {
   arguments = {
     {
       name = 'u',
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The vector to lerp towards.'
     },
     {
@@ -21,7 +21,7 @@ return {
   returns = {
     {
       name = 'v',
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The original vector, containing the new lerped values.'
     }
   },

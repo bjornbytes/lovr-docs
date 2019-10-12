@@ -15,8 +15,7 @@ return {
         math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
   ]],
   related = {
-    'vec3:__len',
-    'vec3:normalize',
-    'vec3:distance'
+    'Vec3:normalize',
+    'Vec3:distance'
   }
 }

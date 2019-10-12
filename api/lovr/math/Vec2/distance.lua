@@ -4,7 +4,7 @@ return {
   arguments = {
     {
       name = 'u',
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The vector to measure the distance to.'
     }
   },
@@ -16,6 +16,6 @@ return {
     }
   },
   related = {
-    'Vec3:length'
+    'Vec2:length'
   }
 }

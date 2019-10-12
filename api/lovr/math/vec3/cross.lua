@@ -7,19 +7,19 @@ return {
   arguments = {
     {
       name = 'u',
-      type = 'vec3',
+      type = 'Vec3',
       description = 'The vector to compute the cross product with.'
     }
   },
   returns = {
     {
       name = 'v',
-      type = 'vec3',
+      type = 'Vec3',
       description = 'The original vector, with the cross product as its values.'
     }
   },
   notes = 'The vectors are not normalized before or after computing the cross product.',
   related = {
-    'vec3:dot'
+    'Vec3:dot'
   }
 }

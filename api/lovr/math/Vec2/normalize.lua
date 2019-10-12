@@ -7,11 +7,11 @@ return {
   returns = {
     {
       name = 'v',
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The original vector.'
     }
   },
   related = {
-    'Vec3:length'
+    'Vec2:length'
   }
 }

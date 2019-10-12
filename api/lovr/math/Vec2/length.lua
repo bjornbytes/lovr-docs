@@ -1,13 +1,7 @@
 return {
   summary = 'Get the length of the vector.',
   description = 'Returns the length of the vector.',
-  arguments = {
-    {
-      name = 'v',
-      type = 'vec3',
-      description = 'The vector.'
-    }
-  },
+  arguments = {},
   returns = {
     {
       name = 'length',
@@ -15,9 +9,13 @@ return {
       description = 'The length of the vector.'
     }
   },
+  notes = [[
+    The length is equivalent to this:
+
+        math.sqrt(v.x * v.x + v.y * v.y)
+  ]],
   related = {
-    'vec3:length',
-    'vec3:normalize',
-    'vec3:distance'
+    'Vec2:normalize',
+    'Vec2:distance'
   }
 }

@@ -4,7 +4,7 @@ return {
   arguments = {
     {
       name = 'u',
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The vector to compute the dot product with.'
     }
   },
@@ -21,8 +21,5 @@ return {
         dot = v.x * u.x + v.y * u.y + v.z * u.z
 
     The vectors are not normalized before computing the dot product.
-  ]],
-  related = {
-    'Vec3:cross'
-  }
+  ]]
 }

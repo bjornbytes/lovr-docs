@@ -3,7 +3,7 @@ return {
   description = 'Divides the vector by a vector or a number.',
   arguments = {
     u = {
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The other vector to divide the components by.'
     },
     x = {
@@ -13,7 +13,7 @@ return {
   },
   returns = {
     v = {
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The original vector.'
     }
   },
@@ -28,8 +28,8 @@ return {
     }
   },
   related = {
-    'Vec3:add',
-    'Vec3:sub',
-    'Vec3:mul'
+    'Vec2:add',
+    'Vec2:sub',
+    'Vec2:mul'
   }
 }

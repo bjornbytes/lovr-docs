@@ -3,7 +3,7 @@ return {
   description = 'Adds a vector or a number to the vector.',
   arguments = {
     u = {
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The other vector.'
     },
     x = {
@@ -13,7 +13,7 @@ return {
   },
   returns = {
     v = {
-      type = 'Vec3',
+      type = 'Vec2',
       description = 'The original vector.'
     }
   },
@@ -28,8 +28,8 @@ return {
     }
   },
   related = {
-    'Vec3:sub',
-    'Vec3:mul',
-    'Vec3:div'
+    'Vec2:sub',
+    'Vec2:mul',
+    'Vec2:div'
   }
 }

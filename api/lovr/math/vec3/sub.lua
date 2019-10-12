@@ -1,29 +1,35 @@
 return {
-  summary = 'Subtract a vector from this vector.',
-  description = 'Subtracts a vector from this vector.',
+  summary = 'Subtract a vector or a number from the vector.',
+  description = 'Subtracts a vector or a number from the vector.',
   arguments = {
-    {
-      name = 'u',
-      type = 'vec3',
+    u = {
+      type = 'Vec3',
       description = 'The other vector.'
+    },
+    x = {
+      type = 'number',
+      description = 'A number to subtract from each component.'
     }
   },
   returns = {
-    {
-      name = 'v',
-      type = 'vec3',
+    v = {
+      type = 'Vec3',
       description = 'The original vector.'
     }
   },
-  notes = [[
-    This function modifies `v` and sets the values to equal the subtracted values, like this:
-
-        v.x, v.y, v.z = v.x - u.x, v.y - u.y, v.z - u.z
-  ]],
+  variants = {
+    {
+      arguments = { 'u' },
+      returns = { 'v' }
+    },
+    {
+      arguments = { 'x' },
+      returns = { 'v' }
+    }
+  },
   related = {
-    'vec3:__sub',
-    'vec3:add',
-    'vec3:mul',
-    'vec3:div'
+    'Vec3:add',
+    'Vec3:mul',
+    'Vec3:div'
   }
 }
