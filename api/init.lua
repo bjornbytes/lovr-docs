@@ -17364,18 +17364,419 @@ return {
         },
         {
           name = "Vec4",
-          summary = "A 4D vector.",
-          description = "A vector object that holds four numbers.",
+          summary = "A 2D vector.",
+          description = "A vector object that holds two numbers.",
           key = "Vec4",
           module = "lovr.math",
-          methods = {},
+          methods = {
+            {
+              name = "add",
+              summary = "Add a vector or a number to the vector.",
+              description = "Adds a vector or a number to the vector.",
+              key = "Vec4:add",
+              module = "lovr.math",
+              related = {
+                "Vec4:sub",
+                "Vec4:mul",
+                "Vec4:div"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The other vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A number to add to each component."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "distance",
+              summary = "Get the distance to another vector.",
+              description = "Returns the distance to another vector.",
+              key = "Vec4:distance",
+              module = "lovr.math",
+              related = {
+                "Vec4:length"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The vector to measure the distance to."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "distance",
+                      type = "number",
+                      description = "The distance to `u`."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "div",
+              summary = "Divides the vector by a vector or a number.",
+              description = "Divides the vector by a vector or a number.",
+              key = "Vec4:div",
+              module = "lovr.math",
+              related = {
+                "Vec4:add",
+                "Vec4:sub",
+                "Vec4:mul"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The other vector to divide the components by."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The number to divide each component by."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "dot",
+              summary = "Get the dot product with another vector.",
+              description = "Returns the dot product between this vector and another one.",
+              key = "Vec4:dot",
+              module = "lovr.math",
+              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w\n\nThe vectors are not normalized before computing the dot product.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The vector to compute the dot product with."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "dot",
+                      type = "number",
+                      description = "The dot product between `v` and `u`."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "length",
+              summary = "Get the length of the vector.",
+              description = "Returns the length of the vector.",
+              key = "Vec4:length",
+              module = "lovr.math",
+              related = {
+                "Vec4:normalize",
+                "Vec4:distance"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the vector."
+                    }
+                  }
+                }
+              },
+              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y * v.z + v.z + v.w * v.w)"
+            },
+            {
+              name = "lerp",
+              summary = "Moves this vector some amount towards another one.",
+              description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
+              key = "Vec4:lerp",
+              module = "lovr.math",
+              related = {
+                "Quat:slerp"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The vector to lerp towards."
+                    },
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The lerping parameter."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector, containing the new lerped values."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "mul",
+              summary = "Multiply the vector by a vector or a number.",
+              description = "Multiplies the vector by a vector or a number.",
+              key = "Vec4:mul",
+              module = "lovr.math",
+              related = {
+                "Vec4:add",
+                "Vec4:sub",
+                "Vec4:div"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The other vector to multiply the components by."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The number to multiply each component by."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "normalize",
+              summary = "Normalize the length of the vector to 1.",
+              description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
+              key = "Vec4:normalize",
+              module = "lovr.math",
+              related = {
+                "Vec4:length"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "set",
+              summary = "Set the components of the vector.",
+              description = "Sets the components of the vector, either from numbers or an existing vector.",
+              key = "Vec4:set",
+              module = "lovr.math",
+              related = {
+                "Vec4:unpack"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The new x value of the vector.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The new y value of the vector.",
+                      default = "x"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The input vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec4",
+                      description = "The vector to copy the values from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The input vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "sub",
+              summary = "Subtract a vector or a number from the vector.",
+              description = "Subtracts a vector or a number from the vector.",
+              key = "Vec4:sub",
+              module = "lovr.math",
+              related = {
+                "Vec2:add",
+                "Vec2:mul",
+                "Vec2:div"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "u",
+                      type = "Vec2",
+                      description = "The other vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec2",
+                      description = "The original vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A number to subtract from each component."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec2",
+                      description = "The original vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "unpack",
+              summary = "Get the components of the vector.",
+              description = "Returns the 4 components of the vector as numbers.",
+              key = "Vec4:unpack",
+              module = "lovr.math",
+              related = {
+                "Vec4:set"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x value."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y value."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z value."
+                    }
+                  }
+                }
+              }
+            }
+          },
           constructors = {
-            "lovr.math.newVec4",
-            "lovr.math.vec4"
+            "lovr.math.newVec2",
+            "lovr.math.vec2"
           },
           related = {
-            "Vec2",
-            "Vec3"
+            "Vec3",
+            "Vec4"
           }
         }
       }

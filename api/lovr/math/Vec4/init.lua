@@ -1,12 +1,12 @@
 return {
-  summary = 'A 4D vector.',
-  description = 'A vector object that holds four numbers.',
+  summary = 'A 2D vector.',
+  description = 'A vector object that holds two numbers.',
   constructors = {
-    'lovr.math.newVec4',
-    'lovr.math.vec4'
+    'lovr.math.newVec2',
+    'lovr.math.vec2'
   },
   related = {
-    'Vec2',
-    'Vec3'
+    'Vec3',
+    'Vec4'
   }
 }
