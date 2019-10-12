@@ -49,9 +49,6 @@ local function warnIf(cond, s, ...)
   if cond then print(string.format(s, ...)) end
 end
 
--- Objects that are lowercase need to be special-cased
-local objectSnowflakes = { vec3 = true, quat = true, mat4 = true }
-
 -- Processors
 local function processExample(example)
   if type(example) == 'string' then
@@ -86,10 +83,8 @@ end
 local function processFunction(path, parent)
   local fn = require(path)
 
-  local isMethod = parent.name:match('^[A-Z]') or objectSnowflakes[parent.key]
-
   fn.name = path:match('[^/]+$')
-  fn.key = isMethod and (parent.key .. ':' .. fn.name) or (path:gsub('/', '.'):gsub('callbacks%.', ''))
+  fn.key = parent.name:match('^[A-Z]') and (parent.key .. ':' .. fn.name) or (path:gsub('/', '.'):gsub('callbacks%.', ''))
   fn.description = unwrap(fn.description)
   fn.module = parent.module or parent.key
   fn.notes = unwrap(fn.notes)
@@ -225,10 +220,10 @@ local function processModule(path)
 
     if file ~= 'init.lua' and not capitalized and isFile then
       table.insert(module.functions, processFunction(childModule, module))
+    elseif capitalized and not isFile then
+      table.insert(module.objects, processObject(childModule, module))
     elseif capitalized and isFile then
       table.insert(module.enums, processEnum(childModule, module))
-    elseif not isFile and (capitalized or objectSnowflakes[file]) then
-      table.insert(module.objects, processObject(childModule, module))
     end
   end
 
