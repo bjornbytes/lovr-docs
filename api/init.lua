@@ -17364,8 +17364,8 @@ return {
         },
         {
           name = "Vec4",
-          summary = "A 2D vector.",
-          description = "A vector object that holds two numbers.",
+          summary = "A 4D vector.",
+          description = "A vector object that holds four numbers.",
           key = "Vec4",
           module = "lovr.math",
           methods = {
@@ -17771,12 +17771,12 @@ return {
             }
           },
           constructors = {
-            "lovr.math.newVec2",
-            "lovr.math.vec2"
+            "lovr.math.newVec4",
+            "lovr.math.vec4"
           },
           related = {
-            "Vec3",
-            "Vec4"
+            "Vec2",
+            "Vec3"
           }
         }
       }
