@@ -2,22 +2,42 @@ return {
   summary = 'Translate the matrix.',
   description = 'Translates the matrix.',
   arguments = {
-    {
-      name = 'translation',
-      type = 'vec3',
+    v = {
+      type = 'Vec3',
       description = 'The translation vector.'
+    },
+    x = {
+      type = 'number',
+      description = 'The x component of the translation.'
+    },
+    y = {
+      type = 'number',
+      description = 'The y component of the translation.'
+    },
+    z = {
+      type = 'number',
+      description = 'The z component of the translation.'
     }
   },
   returns = {
-    {
-      name = 'm',
-      type = 'mat4',
+    m = {
+      type = 'Mat4',
       description = 'The original matrix.'
     }
   },
+  variants = {
+    {
+      arguments = { 'v' },
+      returns = { 'm' }
+    },
+    {
+      arguments = { 'x', 'y', 'z' },
+      returns = { 'm' }
+    }
+  },
   related = {
-    'mat4:rotate',
-    'mat4:scale',
-    'mat4:identity'
+    'Mat4:rotate',
+    'Mat4:scale',
+    'Mat4:identity'
   }
 }

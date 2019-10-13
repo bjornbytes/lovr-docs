@@ -3,17 +3,27 @@ return {
   description = 'Scales the matrix.',
   arguments = {
     scale = {
-      type = 'vec3',
+      type = 'Vec3',
       description = 'The 3D scale to apply.'
     },
-    s = {
+    sx = {
       type = 'number',
-      description = 'A uniform scale to apply.'
+      description = 'The x component of the scale to apply.'
+    },
+    sy = {
+      type = 'number',
+      default = 'sx',
+      description = 'The y component of the scale to apply.'
+    },
+    sz = {
+      type = 'number',
+      default = 'sx',
+      description = 'The z component of the scale to apply.'
     }
   },
   returns = {
     m = {
-      type = 'mat4',
+      type = 'Mat4',
       description = 'The original matrix.'
     }
   },
@@ -23,13 +33,13 @@ return {
       returns = { 'm' }
     },
     {
-      arguments = { 's' },
+      arguments = { 'sx', 'sy', 'sz' },
       returns = { 'm' }
     }
   },
   related = {
-    'mat4:translate',
-    'mat4:rotate',
-    'mat4:identity'
+    'Mat4:translate',
+    'Mat4:rotate',
+    'Mat4:identity'
   }
 }

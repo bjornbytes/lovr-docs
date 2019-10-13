@@ -41,12 +41,13 @@ return {
   returns = {
     {
       name = 'm',
-      type = 'mat4',
+      type = 'Mat4',
       description = 'The original matrix.'
     }
   },
   related = {
-    'mat4:perspective',
+    'Mat4:perspective',
+    'Mat4:fov',
     'lovr.graphics.setProjection'
   }
 }

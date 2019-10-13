@@ -15548,6 +15548,61 @@ return {
           module = "lovr.math",
           methods = {
             {
+              name = "fov",
+              summary = "Set a projection using raw FoV angles.",
+              description = "Sets a projection matrix using raw projection values.\n\nThis can be used for asymmetric or oblique projections.",
+              key = "Mat4:fov",
+              module = "lovr.math",
+              related = {
+                "Mat4:orthographic",
+                "Mat4:perspective",
+                "lovr.graphics.setProjection"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "left",
+                      type = "number",
+                      description = "The left angle of the projection."
+                    },
+                    {
+                      name = "right",
+                      type = "number",
+                      description = "The right angle of the projection."
+                    },
+                    {
+                      name = "up",
+                      type = "number",
+                      description = "The top angle of the projection."
+                    },
+                    {
+                      name = "bottom",
+                      type = "number",
+                      description = "The bottom angle of the projection."
+                    },
+                    {
+                      name = "near",
+                      type = "number",
+                      description = "The near plane of the projection."
+                    },
+                    {
+                      name = "far",
+                      type = "number",
+                      description = "The far plane of the projection."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "identity",
               summary = "Reset the matrix to the identity.",
               description = "Resets the matrix to the identity, effectively setting its translation to zero, its scale to 1, and clearing any rotation.",
@@ -15562,7 +15617,7 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15581,7 +15636,46 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "lookAt",
+              summary = "Create a transform that makes a viewer look at a target.",
+              description = "Sets a transform matrix that positions a viewer so that it looks at a target point.",
+              key = "Mat4:lookAt",
+              module = "lovr.math",
+              related = {
+                "Quat:direction"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "from",
+                      type = "Vec3",
+                      description = "The position of the viewer."
+                    },
+                    {
+                      name = "to",
+                      type = "Vec3",
+                      description = "The position of the target."
+                    },
+                    {
+                      name = "up",
+                      type = "Vec3",
+                      description = "The up vector of the viewer.",
+                      default = "Vec3(0, 1, 0)"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15595,24 +15689,23 @@ return {
               key = "Mat4:mul",
               module = "lovr.math",
               related = {
-                "mat4:__mul",
-                "mat4:translate",
-                "mat4:rotate",
-                "mat4:scale"
+                "Mat4:translate",
+                "Mat4:rotate",
+                "Mat4:scale"
               },
               variants = {
                 {
                   arguments = {
                     {
                       name = "n",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The matrix."
                     }
                   },
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix, containing the result."
                     }
                   }
@@ -15620,20 +15713,37 @@ return {
                 {
                   arguments = {
                     {
-                      name = "v",
-                      type = "vec3",
-                      description = "The vector."
+                      name = "v3",
+                      type = "Vec3",
+                      description = "A 3D vector, treated as a point."
                     }
                   },
                   returns = {
                     {
-                      name = "v",
-                      type = "vec3",
+                      name = "v3",
+                      type = "Vec3",
+                      description = "The transformed vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v4",
+                      type = "Vec4",
+                      description = "A 4D vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v4",
+                      type = "Vec4",
                       description = "The transformed vector."
                     }
                   }
                 }
-              }
+              },
+              notes = "When multiplying by a vec4, the vector is treated as either a point if its w component is 1, or a direction vector if the w is 0 (the matrix translation won't be applied)."
             },
             {
               name = "orthographic",
@@ -15642,7 +15752,8 @@ return {
               key = "Mat4:orthographic",
               module = "lovr.math",
               related = {
-                "mat4:perspective",
+                "Mat4:perspective",
+                "Mat4:fov",
                 "lovr.graphics.setProjection"
               },
               variants = {
@@ -15682,7 +15793,7 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15696,7 +15807,8 @@ return {
               key = "Mat4:perspective",
               module = "lovr.math",
               related = {
-                "mat4:orthographic",
+                "Mat4:orthographic",
+                "Mat4:fov",
                 "lovr.graphics.setProjection"
               },
               variants = {
@@ -15726,7 +15838,7 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15748,15 +15860,49 @@ return {
                 {
                   arguments = {
                     {
-                      name = "rotation",
-                      type = "quat",
+                      name = "q",
+                      type = "Quat",
                       description = "The rotation to apply to the matrix."
                     }
                   },
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle component of the angle/axis rotation (radians)."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15770,23 +15916,23 @@ return {
               key = "Mat4:scale",
               module = "lovr.math",
               related = {
-                "mat4:translate",
-                "mat4:rotate",
-                "mat4:identity"
+                "Mat4:translate",
+                "Mat4:rotate",
+                "Mat4:identity"
               },
               variants = {
                 {
                   arguments = {
                     {
                       name = "scale",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "The 3D scale to apply."
                     }
                   },
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15794,15 +15940,27 @@ return {
                 {
                   arguments = {
                     {
-                      name = "s",
+                      name = "sx",
                       type = "number",
-                      description = "A uniform scale to apply."
+                      description = "The x component of the scale to apply."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale to apply.",
+                      default = "sx"
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale to apply.",
+                      default = "sx"
                     }
                   },
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15816,7 +15974,7 @@ return {
               key = "Mat4:set",
               module = "lovr.math",
               related = {
-                "mat4:unpack"
+                "Mat4:unpack"
               },
               variants = {
                 {
@@ -15825,8 +15983,8 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
+                      type = "Mat4",
+                      description = "The input matrix."
                     }
                   }
                 },
@@ -15842,8 +16000,8 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
+                      type = "Mat4",
+                      description = "The input matrix."
                     }
                   }
                 },
@@ -15851,28 +16009,28 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "The translation of the matrix.",
                       default = "0, 0, 0"
                     },
                     {
                       name = "scale",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "The scale of the matrix.",
                       default = "1, 1, 1"
                     },
                     {
                       name = "rotation",
-                      type = "quat",
+                      type = "Quat",
                       description = "The rotation of the matrix.",
-                      default = "0, 0, 0, 0"
+                      default = "0, 0, 0, 1"
                     }
                   },
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
+                      type = "Mat4",
+                      description = "The input matrix."
                     }
                   }
                 },
@@ -15887,8 +16045,25 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
-                      description = "The original matrix."
+                      type = "Mat4",
+                      description = "The input matrix."
+                    }
+                  }
+                },
+                {
+                  description = "Sets the diagonal values to a number and everything else to 0.",
+                  arguments = {
+                    {
+                      name = "d",
+                      type = "number",
+                      description = "A number to use for the diagonal elements."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The input matrix."
                     }
                   }
                 }
@@ -15901,23 +16076,49 @@ return {
               key = "Mat4:translate",
               module = "lovr.math",
               related = {
-                "mat4:rotate",
-                "mat4:scale",
-                "mat4:identity"
+                "Mat4:rotate",
+                "Mat4:scale",
+                "Mat4:identity"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "translation",
-                      type = "vec3",
+                      name = "v",
+                      type = "Vec3",
                       description = "The translation vector."
                     }
                   },
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15936,7 +16137,7 @@ return {
                   returns = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "The original matrix."
                     }
                   }
@@ -15950,7 +16151,7 @@ return {
               key = "Mat4:unpack",
               module = "lovr.math",
               related = {
-                "mat4:set"
+                "Mat4:set"
               },
               variants = {
                 {
@@ -16013,6 +16214,9 @@ return {
               description = "Creates a new temporary vec3 facing the forward direction, rotates it by this quaternion, and returns the vector.",
               key = "Quat:direction",
               module = "lovr.math",
+              related = {
+                "Mat4:lookAt"
+              },
               variants = {
                 {
                   arguments = {},

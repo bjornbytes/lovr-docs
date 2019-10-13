@@ -7,21 +7,29 @@ return {
   ]],
   arguments = {
     n = {
-      type = 'mat4',
+      type = 'Mat4',
       description = 'The matrix.'
     },
-    v = {
-      type = 'vec3',
-      description = 'The vector.'
+    v3 = {
+      type = 'Vec3',
+      description = 'A 3D vector, treated as a point.'
+    },
+    v4 = {
+      type = 'Vec4',
+      description = 'A 4D vector.'
     }
   },
   returns = {
     m = {
-      type = 'mat4',
+      type = 'Mat4',
       description = 'The original matrix, containing the result.'
     },
-    v = {
-      type = 'vec3',
+    v3 = {
+      type = 'Vec3',
+      description = 'The transformed vector.'
+    },
+    v4 = {
+      type = 'Vec4',
       description = 'The transformed vector.'
     }
   },
@@ -31,14 +39,21 @@ return {
       returns = { 'm' }
     },
     {
-      arguments = { 'v' },
-      returns = { 'v' }
+      arguments = { 'v3' },
+      returns = { 'v3' }
+    },
+    {
+      arguments = { 'v4' },
+      returns = { 'v4' }
     }
   },
+  notes = [[
+    When multiplying by a vec4, the vector is treated as either a point if its w component is 1, or
+    a direction vector if the w is 0 (the matrix translation won't be applied).
+  ]],
   related = {
-    'mat4:__mul',
-    'mat4:translate',
-    'mat4:rotate',
-    'mat4:scale'
+    'Mat4:translate',
+    'Mat4:rotate',
+    'Mat4:scale'
   }
 }

@@ -20,6 +20,6 @@ return {
     }
   },
   related = {
-    'mat4:set'
+    'Mat4:set'
   }
 }

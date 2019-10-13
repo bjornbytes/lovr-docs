@@ -5,7 +5,7 @@ return {
   returns = {
     {
       name = 'm',
-      type = 'mat4',
+      type = 'Mat4',
       description = 'The original matrix.'
     }
   }

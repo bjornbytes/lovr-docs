@@ -5,23 +5,27 @@ return {
     existing matrix.
   ]],
   arguments = {
+    d = {
+      type = 'number',
+      description = 'A number to use for the diagonal elements.'
+    },
     n = {
       type = 'mat4',
       description = 'An existing matrix to copy the values from.'
     },
     position = {
-      type = 'vec3',
+      type = 'Vec3',
       default = '0, 0, 0',
       description = 'The translation of the matrix.'
     },
     scale = {
-      type = 'vec3',
+      type = 'Vec3',
       default = '1, 1, 1',
       description = 'The scale of the matrix.'
     },
     rotation = {
-      type = 'quat',
-      default = '0, 0, 0, 0',
+      type = 'Quat',
+      default = '0, 0, 0, 1',
       description = 'The rotation of the matrix.'
     },
     ['...'] = {
@@ -31,8 +35,8 @@ return {
   },
   returns = {
     m = {
-      type = 'mat4',
-      description = 'The original matrix.'
+      type = 'Mat4',
+      description = 'The input matrix.'
     }
   },
   variants = {
@@ -53,9 +57,14 @@ return {
     {
       arguments = { '...' },
       returns = { 'm' }
+    },
+    {
+      description = 'Sets the diagonal values to a number and everything else to 0.',
+      arguments = { 'd' },
+      returns = { 'm' }
     }
   },
   related = {
-    'mat4:unpack'
+    'Mat4:unpack'
   }
 }

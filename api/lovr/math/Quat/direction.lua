@@ -11,5 +11,8 @@ return {
       type = 'Vec3',
       description = 'The direction vector.'
     }
+  },
+  related = {
+    'Mat4:lookAt'
   }
 }
