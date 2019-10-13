@@ -12,7 +12,7 @@ return {
   arguments = {
     {
       name = 'r',
-      type = 'quat',
+      type = 'Quat',
       description = 'The quaternion to slerp towards.'
     },
     {
@@ -24,11 +24,11 @@ return {
   returns = {
     {
       name = 'q',
-      type = 'quat',
+      type = 'Quat',
       description = 'The original quaternion, containing the new lerped values.'
     }
   },
   related = {
-    'vec3:lerp'
+    'Vec3:lerp'
   }
 }

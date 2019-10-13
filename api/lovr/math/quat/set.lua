@@ -92,11 +92,14 @@ return {
     {
       arguments = { 'm' },
       returns = { 'q' }
+    },
+    {
+      description = 'Reset the quaternion to the identity (0, 0, 0, 1).',
+      arguments = {},
+      returns = { 'q' }
     }
   },
   related = {
-    'quat:unpack',
-    'lovr.math.quat',
-    'Pool:quat'
+    'Quat:unpack'
   }
 }

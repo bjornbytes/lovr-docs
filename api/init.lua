@@ -15989,14 +15989,71 @@ return {
           module = "lovr.math",
           methods = {
             {
+              name = "conjugate",
+              summary = "Conjugate (invert) the quaternion.",
+              description = "Conjugates the input quaternion in place, returning the input.  If the quaternion is normalized, this is the same as inverting it.  It negates the (x, y, z) components of the quaternion.",
+              key = "Quat:conjugate",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "q",
+                      type = "Quat",
+                      description = "The original quaternion."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "direction",
+              summary = "Get the direction of the quaternion.",
+              description = "Creates a new temporary vec3 facing the forward direction, rotates it by this quaternion, and returns the vector.",
+              key = "Quat:direction",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec3",
+                      description = "The direction vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "length",
+              summary = "Get the length of the quaternion.",
+              description = "Returns the length of the quaternion.",
+              key = "Quat:length",
+              module = "lovr.math",
+              related = {
+                "Quat:normalize"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the quaternion."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "mul",
               summary = "Multiply a quaternion by another quaternion or a vector.",
               description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the vector is rotated by the quaternion.",
               key = "Quat:mul",
               module = "lovr.math",
-              related = {
-                "quat:__mul"
-              },
               variants = {
                 {
                   arguments = {
@@ -16039,8 +16096,7 @@ return {
               key = "Quat:normalize",
               module = "lovr.math",
               related = {
-                "quat:__len",
-                "quat:length"
+                "Quat:length"
               },
               variants = {
                 {
@@ -16048,7 +16104,7 @@ return {
                   returns = {
                     {
                       name = "q",
-                      type = "quat",
+                      type = "Quat",
                       description = "The original quaternion."
                     }
                   }
@@ -16063,9 +16119,7 @@ return {
               key = "Quat:set",
               module = "lovr.math",
               related = {
-                "quat:unpack",
-                "lovr.math.quat",
-                "Pool:quat"
+                "Quat:unpack"
               },
               variants = {
                 {
@@ -16199,6 +16253,17 @@ return {
                       description = "The original quaternion."
                     }
                   }
+                },
+                {
+                  description = "Reset the quaternion to the identity (0, 0, 0, 1).",
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "q",
+                      type = "quat",
+                      description = "The original quaternion."
+                    }
+                  }
                 }
               }
             },
@@ -16209,14 +16274,14 @@ return {
               key = "Quat:slerp",
               module = "lovr.math",
               related = {
-                "vec3:lerp"
+                "Vec3:lerp"
               },
               variants = {
                 {
                   arguments = {
                     {
                       name = "r",
-                      type = "quat",
+                      type = "Quat",
                       description = "The quaternion to slerp towards."
                     },
                     {
@@ -16228,7 +16293,7 @@ return {
                   returns = {
                     {
                       name = "q",
-                      type = "quat",
+                      type = "Quat",
                       description = "The original quaternion, containing the new lerped values."
                     }
                   }

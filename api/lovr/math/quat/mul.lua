@@ -30,8 +30,5 @@ return {
       arguments = { 'v' },
       returns = { 'q' }
     }
-  },
-  related = {
-    'quat:__mul'
   }
 }

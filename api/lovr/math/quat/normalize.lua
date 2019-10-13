@@ -7,7 +7,7 @@ return {
   returns = {
     {
       name = 'q',
-      type = 'quat',
+      type = 'Quat',
       description = 'The original quaternion.'
     }
   },
@@ -17,7 +17,6 @@ return {
     working quite right!
   ]],
   related = {
-    'quat:__len',
-    'quat:length'
+    'Quat:length'
   }
 }
