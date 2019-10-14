@@ -1,8 +1,8 @@
 return {
   tag = 'vectors',
-  summary = 'Create a temporary mat4.',
+  summary = 'Create a temporary Mat4.',
   description = [[
-    Creates a temporary 4D matrix.  This function takes the same arguments as `mat4:set`.
+    Creates a temporary 4D matrix.  This function takes the same arguments as `Mat4:set`.
   ]],
   arguments = {},
   returns = {},

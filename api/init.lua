@@ -14646,8 +14646,8 @@ return {
         {
           name = "mat4",
           tag = "vectors",
-          summary = "Create a temporary mat4.",
-          description = "Creates a temporary 4D matrix.  This function takes the same arguments as `mat4:set`.",
+          summary = "Create a temporary Mat4.",
+          description = "Creates a temporary 4D matrix.  This function takes the same arguments as `Mat4:set`.",
           key = "lovr.math.mat4",
           module = "lovr.math",
           related = {
@@ -14740,8 +14740,8 @@ return {
         {
           name = "newMat4",
           tag = "vectors",
-          summary = "Create a new mat4.",
-          description = "Creates a new 4D matrix.  This function takes the same arguments as `mat4:set`.",
+          summary = "Create a new Mat4.",
+          description = "Creates a new 4D matrix.  This function takes the same arguments as `Mat4:set`.",
           key = "lovr.math.newMat4",
           module = "lovr.math",
           related = {
@@ -14758,8 +14758,8 @@ return {
         {
           name = "newQuat",
           tag = "vectors",
-          summary = "Create a new quat.",
-          description = "Creates a new quaternion.  This function takes the same arguments as `quat:set`.",
+          summary = "Create a new Quat.",
+          description = "Creates a new quaternion.  This function takes the same arguments as `Quat:set`.",
           key = "lovr.math.newQuat",
           module = "lovr.math",
           related = {
@@ -14835,8 +14835,8 @@ return {
         {
           name = "newVec2",
           tag = "vectors",
-          summary = "Create a new vec2.",
-          description = "Creates a new 2D vector.  This function takes the same arguments as `vec2:set`.",
+          summary = "Create a new Vec2.",
+          description = "Creates a new 2D vector.  This function takes the same arguments as `Vec2:set`.",
           key = "lovr.math.newVec2",
           module = "lovr.math",
           related = {
@@ -14853,8 +14853,8 @@ return {
         {
           name = "newVec3",
           tag = "vectors",
-          summary = "Create a new vec3.",
-          description = "Creates a new 3D vector.  This function takes the same arguments as `vec3:set`.",
+          summary = "Create a new Vec3.",
+          description = "Creates a new 3D vector.  This function takes the same arguments as `Vec3:set`.",
           key = "lovr.math.newVec3",
           module = "lovr.math",
           related = {
@@ -14871,8 +14871,8 @@ return {
         {
           name = "newVec4",
           tag = "vectors",
-          summary = "Create a new vec4.",
-          description = "Creates a new 4D vector.  This function takes the same arguments as `vec4:set`.",
+          summary = "Create a new Vec4.",
+          description = "Creates a new 4D vector.  This function takes the same arguments as `Vec4:set`.",
           key = "lovr.math.newVec4",
           module = "lovr.math",
           related = {
@@ -14996,8 +14996,8 @@ return {
         {
           name = "quat",
           tag = "vectors",
-          summary = "Create a temporary quat.",
-          description = "Creates a temporary quaternion.  This function takes the same arguments as `quat:set`.",
+          summary = "Create a temporary Quat.",
+          description = "Creates a temporary quaternion.  This function takes the same arguments as `Quat:set`.",
           key = "lovr.math.quat",
           module = "lovr.math",
           related = {
@@ -15137,8 +15137,8 @@ return {
         {
           name = "vec2",
           tag = "vectors",
-          summary = "Create a temporary vec2.",
-          description = "Creates a temporary 2D vector.  This function takes the same arguments as `vec2:set`.",
+          summary = "Create a temporary Vec2.",
+          description = "Creates a temporary 2D vector.  This function takes the same arguments as `Vec2:set`.",
           key = "lovr.math.vec2",
           module = "lovr.math",
           related = {
@@ -15155,8 +15155,8 @@ return {
         {
           name = "vec3",
           tag = "vectors",
-          summary = "Create a temporary vec3.",
-          description = "Creates a temporary 3D vector.  This function takes the same arguments as `vec3:set`.",
+          summary = "Create a temporary Vec3.",
+          description = "Creates a temporary 3D vector.  This function takes the same arguments as `Vec3:set`.",
           key = "lovr.math.vec3",
           module = "lovr.math",
           related = {
@@ -15173,8 +15173,8 @@ return {
         {
           name = "vec4",
           tag = "vectors",
-          summary = "Create a temporary vec4.",
-          description = "Creates a temporary 4D vector.  This function takes the same arguments as `vec4:set`.",
+          summary = "Create a temporary Vec4.",
+          description = "Creates a temporary 4D vector.  This function takes the same arguments as `Vec4:set`.",
           key = "lovr.math.vec4",
           module = "lovr.math",
           related = {
@@ -17931,6 +17931,18 @@ return {
                       name = "y",
                       type = "number",
                       description = "The new y value of the vector.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The new z value of the vector.",
+                      default = "x"
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The new w value of the vector.",
                       default = "x"
                     }
                   },

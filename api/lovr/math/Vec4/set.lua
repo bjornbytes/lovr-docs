@@ -12,6 +12,16 @@ return {
       default = 'x',
       description = 'The new y value of the vector.'
     },
+    z = {
+      type = 'number',
+      default = 'x',
+      description = 'The new z value of the vector.'
+    },
+    w = {
+      type = 'number',
+      default = 'x',
+      description = 'The new w value of the vector.'
+    },
     u = {
       type = 'Vec4',
       description = 'The vector to copy the values from.'
@@ -25,7 +35,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'x', 'y' },
+      arguments = { 'x', 'y', 'z', 'w' },
       returns = { 'v' }
     },
     {
