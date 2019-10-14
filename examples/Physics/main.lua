@@ -57,4 +57,7 @@ function lovr.draw()
   for i, box in ipairs(controllerBoxes) do
     drawBox(box)
   end
+
+  lovr.graphics.setColor(1, 1, 1)
+  lovr.graphics.setShader()
 end
