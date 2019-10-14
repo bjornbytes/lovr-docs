@@ -1,23 +1,23 @@
--- Surround yourself with 1000 monkeys, efficiently
+-- Surround yourself with monkeys, efficiently
 
 function lovr.load()
   MONKEYS = 1000
 
   -- Create a ShaderBlock to store positions for lots of models
   block = lovr.graphics.newShaderBlock('uniform', {
-    modelPositions = { 'mat4', MONKEYS }
+    modelTransforms = { 'mat4', MONKEYS }
   }, { usage = 'static' })
 
   -- Write some random transforms to the block
   local transforms = {}
+  local random, randomNormal = lovr.math.random, lovr.math.randomNormal
   for i = 1, MONKEYS do
-    local transform = lovr.math.mat4()
-    local random, randomNormal = lovr.math.random, lovr.math.randomNormal
-    transform:translate(randomNormal(8), randomNormal(8), randomNormal(8))
-    transform:rotate(random(2 * math.pi), random(), random(), random())
-    transforms[i] = transform
+    local position = vec3(randomNormal(8), randomNormal(8), randomNormal(8))
+    local orientation = quat(random(2 * math.pi), random(), random(), random())
+    local scale = vec3(.75)
+    transforms[i] = mat4(position, scale, orientation)
   end
-  block:send('modelPositions', transforms)
+  block:send('modelTransforms', transforms)
 
   -- Create the shader, injecting the shader code for the block
   shader = lovr.graphics.newShader(
@@ -25,7 +25,7 @@ function lovr.load()
     out vec3 vNormal;
     vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
       vNormal = lovrNormal;
-      return projection * transform * modelPositions[lovrInstanceID] * vertex;
+      return projection * transform * modelTransforms[lovrInstanceID] * vertex;
     }
   ]], [[
     in vec3 vNormal;
@@ -36,13 +36,15 @@ function lovr.load()
 
   -- Bind the block to the shader
   shader:sendBlock('ModelBlock', block)
+
   model = lovr.graphics.newModel('monkey.obj')
+  lovr.graphics.setCullingEnabled(true)
+  lovr.graphics.setBlendMode(nil)
 end
 
--- Draw the model 1000 times, using positions from the shader block
+-- Draw many copies of the model using instancing, with transforms from the shader block
 function lovr.draw()
-  lovr.graphics.setCullingEnabled(true)
   lovr.graphics.setShader(shader)
-  model:draw(lovr.math.mat4(), MONKEYS)
+  model:draw(mat4(), MONKEYS)
   lovr.graphics.setShader()
 end
