@@ -193,4 +193,7 @@ function lovr.draw(eye)
   lovr.graphics.scale(1/gridSize)
   mesh4:draw(lovr.math.mat4(), gridSizeCubed)
   lovr.graphics.pop()
+
+  lovr.graphics.setColor(1,1,1)
+  lovr.graphics.setShader()
 end
