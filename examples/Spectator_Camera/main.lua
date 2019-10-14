@@ -2,8 +2,8 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(.7, .7, .7)
 
   -- Precompute camera transform (could also be attached to a controller)
-  local x, y, z = -5, 5, 5
-  camera = lovr.math.newMat4():translate(x, y, z)--:lookAt(vec3(x, y, z), vec3(0, 0, 0))
+  local x, y, z = -3, 3, 3
+  camera = lovr.math.newMat4():lookAt(vec3(x, y, z), vec3(0, 0, 0))
   view = lovr.math.newMat4(camera):invert()
 end
 
