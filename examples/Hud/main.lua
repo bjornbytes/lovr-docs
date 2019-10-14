@@ -18,7 +18,6 @@ font:setPixelDensity(1)
 
 -- Simple 2D triangle mesh
 local triangle = lovr.graphics.newMesh(
-	{{ 'lovrPosition', 'float', 3 }, { 'lovrNormal', 'float', 3 }},
 	{{0,-1,0, 0,0,1}, {0.75,1,0, 0,0,1}, {-0.75,1,0, 0,0,1}},
 	'triangles', 'static'
 	)
@@ -96,8 +95,8 @@ function drawGrid()
 	local x, y, z, angle, ax, ay, az = lovr.headset.getPose()
 	-- Flatten the 3-space current rotation of the headset into just its xz axis
 	-- Equation from: http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToEuler/index.htm
-	local s = math.sin(angle);
-	local c = math.cos(angle);
+	local s = math.sin(angle)
+	local c = math.cos(angle)
 	local t = 1-c;
 	local xzangle = math.atan2(ay*s - ax*az*t , 1 - (ay*ay + az*az) * t);
 	lovr.graphics.setColor(1,0,0,1)
@@ -110,8 +109,8 @@ end
 
 -- Draw HUD overlay
 function lovr.mirror()
+	lovr.graphics.clear() -- Move after mirror() to hide headset view in background of window
 	mirror()
-	-- lovr.graphics.clear() -- Uncomment to hide headset view in background of window
 	lovr.graphics.setShader(nil)
 	lovr.graphics.setDepthTest(nil)
 	lovr.graphics.origin()
@@ -141,9 +140,9 @@ function lovr.draw()
 		local gray = grid[x][y]
 		if gray then floorbox(x,y,gray) end
 	end end
+	lovr.graphics.setShader()
 
 	if not lovr.mouse then -- If you can't click, you can't create any blocks
-		lovr.graphics.setShader(nil)
 		lovr.graphics.print('This example only works on a desktop computer.', 0, 1.7, -3, .2)
 	end
 end
