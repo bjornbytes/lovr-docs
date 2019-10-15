@@ -114,7 +114,7 @@ $ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/u
 WebVR
 ---
 
-First, install the Emscripten SDK.
+First, [install the Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html).
 
 Unix:
 
