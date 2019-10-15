@@ -3,7 +3,7 @@ return {
   'Spinning_Cube',
   '360_Photo',
   '3D_Model',
-  'Mesh',
+  'Custom_Mesh',
   'Animation',
   'Physics',
   'PBR_Materials',
