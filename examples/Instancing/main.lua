@@ -3,6 +3,10 @@
 function lovr.load()
   MONKEYS = 1000
 
+  if lovr.headset.getDriver() ~= "oculusmobile" then -- That's too many monkeys!!!
+    MONKEYS = 700
+  end
+
   -- Create a ShaderBlock to store positions for lots of models
   block = lovr.graphics.newShaderBlock('uniform', {
     modelTransforms = { 'mat4', MONKEYS }

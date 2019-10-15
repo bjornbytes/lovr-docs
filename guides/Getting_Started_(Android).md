@@ -21,17 +21,17 @@ but there are lots of other guides on the internet for how to do this.  The key 
 Install the APK
 ---
 
-Download the latest release version of the appsample apk from the [`lovr-oculus-mobile` release
+Download the latest release version of the test apk from the [`lovr-oculus-mobile` release
 page](https://github.com/mcclure/lovr-oculus-mobile/releases).
 
 Install it to the device:
 
 ```
-$ adb install /path/to/appsample-release.apk
+$ adb install /path/to/test-release.apk
 ```
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
-the `org.lovr.test` app.  You should see LÖVR's "no game" screen with the logo.
+the `org.lovr.test` app.  You should see a message about how to upload files.
 
 Running a Project
 ---
