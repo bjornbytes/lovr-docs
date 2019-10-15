@@ -33,6 +33,24 @@ On Unix systems, the `cat` utility can be used to concatenate the two files.
 > Once you have an executable, be sure to distribute it with all the `.dll` files that came with the
 original LÖVR download.
 
+macOS
+---
+
+To create a .app on macOS, first get the stock LÖVR.app, either by downloading it
+[here](https://lovr.org/download/mac) or by setting the `-DLOVR_BUILD_BUNDLE=ON` flag when building
+with CMake.
+
+Then, to get the .app to run a custom project instead of the nogame screen, put a .lovr archive in
+the `LÖVR.app/Contents/Resources` folder (right click and use "Show Package Contents" to get to the
+Contents folder).
+
+Next, the `Contents/Info.plist` should be modified.  The `CFBundleName` entry should be changed from
+"LÖVR" to the name of the project, and the `CFBundleIdentifier` should also be changed to a unique
+ID for the project/studio name.  The `Resources/lovr.icns` file can be replaced with a custom icon
+as well.
+
+Finally, `LÖVR.app` can be renamed to `Awesome VR Project.app` and distributed as a zip.
+
 WebVR
 ---
 
