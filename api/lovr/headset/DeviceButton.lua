@@ -2,10 +2,6 @@ return {
   description = 'Buttons on an input device.',
   values = {
     {
-      name = 'primary',
-      description = 'The primary button (usually trigger).'
-    },
-    {
       name = 'trigger',
       description = 'The trigger button.'
     },

@@ -2,10 +2,6 @@ return {
   description = 'Axes on an input device.',
   values = {
     {
-      name = 'primary',
-      description = 'The primary analog axis (usually thumbstick or touchpad).'
-    },
-    {
       name = 'trigger',
       description = 'A trigger (1D).'
     },
@@ -16,10 +12,6 @@ return {
     {
       name = 'touchpad',
       description = 'A touchpad (2D).'
-    },
-    {
-      name = 'pinch',
-      description = 'A tracked pinch gesture between the thumb and index finger (1D, Leap Motion).'
     },
     {
       name = 'grip',
