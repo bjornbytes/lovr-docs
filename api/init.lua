@@ -13338,10 +13338,6 @@ return {
           module = "lovr.headset",
           values = {
             {
-              name = "primary",
-              description = "The primary analog axis (usually thumbstick or touchpad)."
-            },
-            {
               name = "trigger",
               description = "A trigger (1D)."
             },
@@ -13352,10 +13348,6 @@ return {
             {
               name = "touchpad",
               description = "A touchpad (2D)."
-            },
-            {
-              name = "pinch",
-              description = "A tracked pinch gesture between the thumb and index finger (1D, Leap Motion)."
             },
             {
               name = "grip",
@@ -13373,10 +13365,6 @@ return {
           key = "DeviceButton",
           module = "lovr.headset",
           values = {
-            {
-              name = "primary",
-              description = "The primary button (usually trigger)."
-            },
             {
               name = "trigger",
               description = "The trigger button."
@@ -13554,13 +13542,9 @@ return {
           name = "getAxis",
           tag = "input",
           summary = "Get the state of an analog axis on a device.",
-          description = "Get the current state of an analog axis on a device.  Axis values are between 0 and 1.  Some axes are multidimensional, for example a 2D touchpad or thumbstick with x/y axes.  For multidimensional axes, this function will return multiple values, one number for each axis.  In these cases, it can be useful to use the `select` function built in to Lua to select a particular axis component.",
+          description = "Get the current state of an analog axis on a device.  Some axes are multidimensional, for example a 2D touchpad or thumbstick with x/y axes.  For multidimensional axes, this function will return multiple values, one number for each axis.  In these cases, it can be useful to use the `select` function built in to Lua to select a particular axis component.",
           key = "lovr.headset.getAxis",
           module = "lovr.headset",
-          related = {
-            "DeviceAxis",
-            "lovr.headset.isDown"
-          },
           variants = {
             {
               arguments = {
@@ -13583,7 +13567,12 @@ return {
                 }
               }
             }
-          }
+          },
+          related = {
+            "DeviceAxis",
+            "lovr.headset.isDown"
+          },
+          notes = "The axis values will be between 0 and 1 for 1D axes, and between -1 and 1 for multidimensional axes."
         },
         {
           name = "getBoundsDepth",
