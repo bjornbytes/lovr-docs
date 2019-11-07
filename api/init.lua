@@ -2842,6 +2842,12 @@ return {
                   type = "number",
                   description = "The number of bits stored for each sample.",
                   default = "16"
+                },
+                {
+                  name = "channels",
+                  type = "number",
+                  description = "The number of channels in the sound (1 for mono, 2 for stereo).",
+                  default = "2"
                 }
               },
               returns = {
