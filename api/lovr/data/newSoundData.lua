@@ -36,8 +36,8 @@ return {
   },
   returns = {
     soundData = {
-      type = 'TextureData',
-      description = 'The new TextureData.'
+      type = 'SoundData',
+      description = 'The new SoundData.'
     }
   },
   variants = {

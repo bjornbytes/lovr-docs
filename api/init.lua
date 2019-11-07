@@ -2819,8 +2819,8 @@ return {
               returns = {
                 {
                   name = "soundData",
-                  type = "TextureData",
-                  description = "The new TextureData."
+                  type = "SoundData",
+                  description = "The new SoundData."
                 }
               }
             },
@@ -2853,8 +2853,8 @@ return {
               returns = {
                 {
                   name = "soundData",
-                  type = "TextureData",
-                  description = "The new TextureData."
+                  type = "SoundData",
+                  description = "The new SoundData."
                 }
               }
             },
@@ -2863,8 +2863,8 @@ return {
               returns = {
                 {
                   name = "soundData",
-                  type = "TextureData",
-                  description = "The new TextureData."
+                  type = "SoundData",
+                  description = "The new SoundData."
                 }
               }
             },
@@ -2879,8 +2879,8 @@ return {
               returns = {
                 {
                   name = "soundData",
-                  type = "TextureData",
-                  description = "The new TextureData."
+                  type = "SoundData",
+                  description = "The new SoundData."
                 }
               }
             }
