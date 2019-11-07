@@ -46,7 +46,7 @@ return {
       returns = { 'soundData' }
     },
     {
-      arguments = { 'samples', 'sampleRate', 'bitDepth', 'channelCount' },
+      arguments = { 'samples', 'sampleRate', 'bitDepth', 'channels' },
       returns = { 'soundData' }
     },
     {
