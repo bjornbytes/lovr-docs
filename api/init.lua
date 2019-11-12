@@ -21050,6 +21050,44 @@ return {
               }
             },
             {
+              name = "isEnabled",
+              summary = "Check if the Joint is enabled.",
+              description = "Returns whether the Joint is enabled.",
+              key = "Joint:isEnabled",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the Joint is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setEnabled",
+              summary = "Enable or disable the Joint.",
+              description = "Enable or disable the Joint.",
+              key = "Joint:setEnabled",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the Joint should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setUserData",
               summary = "Set the Joint's user data.",
               description = "Sets the user data associated with the Joint.",
