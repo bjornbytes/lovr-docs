@@ -12,5 +12,9 @@ return {
     }
   },
   returns = {},
-  notes = 'Wireframe rendering is initially disabled.'
+  notes = [[
+    Wireframe rendering is initially disabled.
+
+    Wireframe rendering is not supported on the web or on Android.
+  ]]
 }
