@@ -7565,7 +7565,7 @@ return {
               }
             }
           },
-          notes = "Wireframe rendering is initially disabled.\n\nWireframe rendering is not supported on the web or on Android."
+          notes = "Wireframe rendering is initially disabled.\n\nWireframe rendering is only supported on desktop systems."
         },
         {
           name = "line",
@@ -9737,7 +9737,7 @@ return {
               returns = {}
             }
           },
-          notes = "Wireframe rendering is initially disabled.\n\nWireframe rendering is not supported on the web or on Android."
+          notes = "Wireframe rendering is initially disabled.\n\nWireframe rendering is only supported on desktop systems."
         },
         {
           name = "skybox",
