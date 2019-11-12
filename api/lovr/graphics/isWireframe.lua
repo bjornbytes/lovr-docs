@@ -13,6 +13,6 @@ return {
   notes = [[
     Wireframe rendering is initially disabled.
 
-    Wireframe rendering is not supported on the web or on Android.
+    Wireframe rendering is only supported on desktop systems.
   ]]
 }
