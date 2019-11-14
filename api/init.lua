@@ -8112,6 +8112,12 @@ return {
                   type = "MeshUsage",
                   description = "An optimization hint indicating how often the data in the Mesh will be updated.",
                   default = "'dynamic'"
+                },
+                {
+                  name = "readable",
+                  type = "boolean",
+                  description = "Whether vertices from the Mesh can be read.",
+                  default = "false"
                 }
               },
               returns = {
@@ -8140,6 +8146,12 @@ return {
                   type = "MeshUsage",
                   description = "An optimization hint indicating how often the data in the Mesh will be updated.",
                   default = "'dynamic'"
+                },
+                {
+                  name = "readable",
+                  type = "boolean",
+                  description = "Whether vertices from the Mesh can be read.",
+                  default = "false"
                 }
               },
               returns = {
@@ -8168,6 +8180,12 @@ return {
                   type = "MeshUsage",
                   description = "An optimization hint indicating how often the data in the Mesh will be updated.",
                   default = "'dynamic'"
+                },
+                {
+                  name = "readable",
+                  type = "boolean",
+                  description = "Whether vertices from the Mesh can be read.",
+                  default = "false"
                 }
               },
               returns = {
@@ -8202,6 +8220,12 @@ return {
                   type = "MeshUsage",
                   description = "An optimization hint indicating how often the data in the Mesh will be updated.",
                   default = "'dynamic'"
+                },
+                {
+                  name = "readable",
+                  type = "boolean",
+                  description = "Whether vertices from the Mesh can be read.",
+                  default = "false"
                 }
               },
               returns = {
@@ -8235,6 +8259,12 @@ return {
                   type = "MeshUsage",
                   description = "An optimization hint indicating how often the data in the Mesh will be updated.",
                   default = "'dynamic'"
+                },
+                {
+                  name = "readable",
+                  type = "boolean",
+                  description = "Whether vertices from the Mesh can be read.",
+                  default = "false"
                 }
               },
               returns = {
@@ -8268,6 +8298,12 @@ return {
                   type = "MeshUsage",
                   description = "An optimization hint indicating how often the data in the Mesh will be updated.",
                   default = "'dynamic'"
+                },
+                {
+                  name = "readable",
+                  type = "boolean",
+                  description = "Whether vertices from the Mesh can be read.",
+                  default = "false"
                 }
               },
               returns = {
