@@ -26,6 +26,11 @@ return {
         An optimization hint indicating how often the data in the Mesh will be updated.
       ]]
     },
+    readable = {
+      type = 'boolean',
+      default = 'false',
+      description = 'Whether vertices from the Mesh can be read.'
+    },
     vertices = {
       type = 'table',
       description = 'A table of vertices.  Each vertex is a table containing the vertex data.'
@@ -47,30 +52,30 @@ return {
   },
   variants = {
     {
-      arguments = { 'size', 'mode', 'usage' },
+      arguments = { 'size', 'mode', 'usage', 'readable' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'vertices', 'mode', 'usage' },
+      arguments = { 'vertices', 'mode', 'usage', 'readable' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'blob', 'mode', 'usage' },
+      arguments = { 'blob', 'mode', 'usage', 'readable' },
       returns = { 'mesh' }
     },
     {
       description = [[
         These variants accept a custom vertex format.  For more info, see the `Mesh` page.
       ]],
-      arguments = { 'format', 'size', 'mode', 'usage' },
+      arguments = { 'format', 'size', 'mode', 'usage', 'readable' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'format', 'vertices', 'mode', 'usage' },
+      arguments = { 'format', 'vertices', 'mode', 'usage', 'readable' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'format', 'blob', 'mode', 'usage' },
+      arguments = { 'format', 'blob', 'mode', 'usage', 'readable' },
       returns = { 'mesh' }
     }
   },
