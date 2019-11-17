@@ -41,6 +41,7 @@ List of Libraries
   testing WebVR projects.
 - [lume](https://github.com/rxi/lume) - Lua utility functions geared towards game development.
 - [maf](https://github.com/bjornbytes/maf) - A 3D math library with vectors and quaternions.
+- [pollr](https://github.com/ulydev/pollr) - LÖVR input polling.
 - [tiny-ecs](https://github.com/bakpakin/tiny-ecs) - An entity component system for Lua.
 - [tween.lua](https://github.com/kikito/tween.lua) - A tweening library for Lua.
 - [Vivid](https://github.com/WetDesertRock/vivid) - A Lua library for color manipulations and
