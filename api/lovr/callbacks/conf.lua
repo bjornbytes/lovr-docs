@@ -191,7 +191,6 @@ return {
           t.headset.offset = 1.7
 
           -- Math settings
-          t.math.ffi = true
           t.math.globals = true
 
           -- Enable or disable different modules
