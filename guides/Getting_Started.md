@@ -58,6 +58,13 @@ If you followed the example above, you should see the following in VR:
 
 ![Hello World](https://lovr.org/static/img/helloWorld.png)
 
+Tips
+---
+
+- If you need to use `print` in Lua for debug messages, you can drag and drop the project onto
+  `lovrc.bat` instead of `lovr.exe`, or specify the `--console` flag when running on the command
+  line.
+
 Next Steps
 ---
 
