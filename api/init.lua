@@ -21436,6 +21436,25 @@ return {
               }
             },
             {
+              name = "isSensor",
+              summary = "Check if the Shape is a sensor.",
+              description = "Returns whether the Shape is a sensor.  Sensors do not trigger any collision response, but they still report collisions in `World:collide`.",
+              key = "Shape:isSensor",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sensor",
+                      type = "boolean",
+                      description = "Whether the Shape is a sensor."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "setEnabled",
               summary = "Enable or disable the Shape.",
               description = "Enable or disable the Shape.",
@@ -21520,6 +21539,25 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z offset."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSensor",
+              summary = "Set the sensor status for the Shape.",
+              description = "Sets whether this Shape is a sensor.  Sensors do not trigger any collision response, but they still report collisions in `World:collide`.",
+              key = "Shape:setSensor",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "sensor",
+                      type = "boolean",
+                      description = "Whether the Shape should be a sensor."
                     }
                   },
                   returns = {}
