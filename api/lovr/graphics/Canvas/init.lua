@@ -26,15 +26,15 @@ return {
         canvas = lovr.graphics.newCanvas(lovr.headset.getDisplayDimensions())
 
         wave = lovr.graphics.newShader([[
-          vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-            return vertex;
+          vec4 lovrMain() {
+            return lovrRVertex;
           }
         ]], [[
           uniform float time;
-          vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
+          vec4 lovrMain() {
             uv.x += sin(uv.y * 10 + time * 4) * .01;
             uv.y += cos(uv.x * 10 + time * 4) * .01;
-            return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);
+            return lovrGraphicsColor * lovrDiffuseColor * lovrVertexColor * texture(lovrDiffuseTexture, lovrTexCoord);
           }
         ]])
       end

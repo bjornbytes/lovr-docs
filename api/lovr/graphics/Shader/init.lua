@@ -15,14 +15,14 @@ return {
 
     The default vertex shader:
 
-        vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-          return projection * transform * vertex;
+        vec4 lovrMain() {
+          return lovrProjection * lovrTransform * lovrVertex;
         }
 
     The default fragment shader:
 
-        vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
-          return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);
+        vec4 lovrMain() {
+          return lovrGraphicsColor * lovrDiffuseColor * lovrVertexColor * texture(lovrDiffuseTexture, lovrTexCoord);
         }
 
     Additionally, the following headers are prepended to the shader source, giving you convenient
@@ -38,9 +38,7 @@ return {
         in uvec4 lovrBones;
         in vec4 lovrBoneWeights;
         in uint lovrDrawID;
-        out vec2 texCoord;
-        out vec4 vertexColor;
-        out vec4 lovrColor;
+        out vec4 lovrGraphicsColor;
         uniform mat4 lovrModel;
         uniform mat4 lovrView;
         uniform mat4 lovrProjection;
@@ -56,9 +54,9 @@ return {
 
     Fragment shader header:
 
-        in vec2 texCoord;
-        in vec4 vertexColor;
-        in vec4 lovrColor;
+        in vec2 lovrTexCoord;
+        in vec4 lovrVertexColor;
+        in vec4 lovrGraphicsColor;
         out vec4 lovrCanvas[gl_MaxDrawBuffers];
         uniform float lovrMetalness;
         uniform float lovrRoughness;
@@ -110,14 +108,14 @@ return {
         lovr.graphics.setShader(lovr.graphics.newShader([[
           out vec3 vNormal; // This gets passed to the fragment shader
 
-          vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
+          vec4 lovrMain() {
             vNormal = lovrNormal;
-            return projection * transform * vertex;
+            return lovrProjection * lovrTransform * lovrVertex;
           }
         ]], [[
           in vec3 vNormal; // This gets passed from the vertex shader
 
-          vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
+          vec4 lovrMain() {
             return vec4(vNormal * .5 + .5, 1.0);
           }
         ]]))

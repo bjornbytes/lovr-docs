@@ -59,22 +59,22 @@ return {
           lightColors = { 'vec3', 16 },
           objectCount = 'int',
           objectTransforms = { 'mat4', 256 }
-        })
+        }, 'uniform')
 
         shader = lovr.graphics.newShader(
           block:getShaderCode('Block') .. -- Define the block in the shader
           [[
-            vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
+            vec4 lovrMain() {
               // ...use the object transforms from the block
-              return projection * transform * vertex;
+              return lovrProjection * lovrTransform * lovrVertex;
             }
           ]],
 
           block:getShaderCode('Block') ..
           [[
-            vec4 color(vec4 gColor, sampler2D image, vec2 uv) {
+            vec4 lovrMain() {
               // ...use the lights from the block
-              return gColor * texture(image, uv);
+              return lovrGraphicsColor * texture(lovrDiffuseTexture, lovrTexCoord);
             }
           ]]
         )

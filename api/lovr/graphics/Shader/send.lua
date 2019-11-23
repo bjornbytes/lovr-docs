@@ -104,9 +104,10 @@ return {
       function lovr.load()
         shader = lovr.graphics.newShader [[
           uniform vec3 offset;
-          vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
+          vec4 lovrMain() {
+            vec4 vertex = lovrVertex;
             vertex.xyz += offset;
-            return projection * transform * vertex;
+            return lovrProjection * lovrTransform * vertex;
           }
         ]]
 
