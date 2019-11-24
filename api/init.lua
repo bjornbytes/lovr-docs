@@ -12645,7 +12645,7 @@ return {
               examples = {
                 {
                   description = "Updating a `vec3` uniform:",
-                  code = "function lovr.load()\n  shader = lovr.graphics.newShader [[\n    uniform vec3 offset;\n    vec4 lovrMain() {\n      vec4 vertex = lovrVertex;\n      vertex.xyz += offset;\n      return lovrProjection * lovrTransform * vertex;\n    }\n  ]]\n\n  shader:send('offset', { .3, .7, 0 })\nend"
+                  code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    uniform vec3 offset;\n    vec4 lovrMain() {\n      vec4 vertex = lovrVertex;\n      vertex.xyz += offset;\n      return lovrProjection * lovrTransform * vertex;\n    }\n  ]], nil)\n\n  shader:send('offset', { .3, .7, 0 })\nend"
                 }
               }
             },
