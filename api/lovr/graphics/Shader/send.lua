@@ -102,13 +102,13 @@ return {
     description = 'Updating a `vec3` uniform:',
     code = [=[
       function lovr.load()
-        shader = lovr.graphics.newShader [[
+        shader = lovr.graphics.newShader([[
           uniform vec3 offset;
           vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
             vertex.xyz += offset;
             return projection * transform * vertex;
           }
-        ]]
+        ]], nil)
 
         shader:send('offset', { .3, .7, 0 })
       end
