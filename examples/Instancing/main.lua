@@ -1,7 +1,7 @@
 -- Surround yourself with monkeys, efficiently
 
 function lovr.load()
-  MONKEYS = 700
+  MONKEYS = 500
 
   -- Create a ShaderBlock to store positions for lots of models
   block = lovr.graphics.newShaderBlock('uniform', {
