@@ -144,6 +144,11 @@ return {
               description = 'The number of antialiasing samples to use.'
             },
             {
+              name = 'vsync',
+              type = 'number',
+              description = '0 to disable vsync, 1 to enable.'
+            },
+            {
               name = 'title',
               type = 'string',
               description = 'The window title.'
@@ -209,6 +214,7 @@ return {
           t.window.height = 600
           t.window.fullscreen = false
           t.window.msaa = 0
+          t.window.vsync = 1
           t.window.title = 'LÖVR'
           t.window.icon = nil
         end
