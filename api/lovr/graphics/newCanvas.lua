@@ -99,7 +99,7 @@ return {
     }
   },
   notes = [[
-    Textures created by this function will have `clamp` as their `TextureWrap`.
+    Textures created by this function will have `clamp` as their `WrapMode`.
 
     Stereo Canvases will either have their width doubled or use array textures for their
     attachments, depending on their implementation.
