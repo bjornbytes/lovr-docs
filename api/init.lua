@@ -23086,7 +23086,13 @@ return {
               module = "lovr.thread",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "...arguments",
+                      type = "*",
+                      description = "Up to 4 arguments to pass to the Thread's function."
+                    }
+                  },
                   returns = {}
                 }
               }
