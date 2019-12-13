@@ -35,7 +35,13 @@ return {
       returns = { 'thread' }
     }
   },
-  notes = 'The Thread won\'t start running immediately.  Use `Thread:start` to start it.',
+  notes = [[
+    The Thread won\'t start running immediately.  Use `Thread:start` to start it.
+
+    The string argument is assumed to be a filename if there isn't a newline in the first 1024
+    characters.  For really short thread code, an extra newline can be added to trick LÖVR into
+    loading it properly.
+  ]],
   related = {
     'Thread:start',
     'lovr.threaderror'
