@@ -10,8 +10,8 @@ return {
       type = 'number',
       default = 'false',
       description = [[
-        How long to wait for the message to be popped.  `true` can be used to wait forever and
-        `false` can be used to avoid waiting.
+        How long to wait for a message to be popped, in seconds.  `true` can be used to wait forever
+        and `false` can be used to avoid waiting.
       ]]
     }
   },
