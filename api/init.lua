@@ -22972,7 +22972,7 @@ return {
                     {
                       name = "wait",
                       type = "number",
-                      description = "How long to wait for the message to be popped.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
+                      description = "How long to wait for a message to be popped, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
                       default = "false"
                     }
                   },
