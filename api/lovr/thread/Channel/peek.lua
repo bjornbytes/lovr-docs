@@ -9,9 +9,17 @@ return {
     {
       name = 'message',
       type = '*',
-      description = 'The message.'
+      description = 'The message, or `nil` if there is no message.'
+    },
+    {
+      name = 'present',
+      type = 'boolean',
+      description = 'Whether a message was returned.'
     }
   },
+  notes = [[
+    The second return value can be used to detect if a `nil` message is in the queue.
+  ]],
   related = {
     'Channel:pop'
   }
