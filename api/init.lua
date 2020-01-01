@@ -4269,7 +4269,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "The save directory takes the following form:\n\n``` <appdata>/LOVR/<identity> ```\n\nWhere `<appdata>` is `lovr.filesystem.getAppdataDirectory` and `<identity>` is `lovr.filesystem.getIdentity` and can be customized using `lovr.conf`."
         },
         {
           name = "getSize",
