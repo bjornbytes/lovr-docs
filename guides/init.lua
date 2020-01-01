@@ -5,6 +5,7 @@ return {
   'Vectors',
   'Libraries',
   'Distribution',
+  'Contributing',
   'Compiling',
   'FAQ'
 }
