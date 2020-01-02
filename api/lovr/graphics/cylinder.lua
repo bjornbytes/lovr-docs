@@ -10,17 +10,17 @@ return {
     x = {
       type = 'number',
       default = '0',
-      description = 'The x coordinate of the cylinder.'
+      description = 'The x coordinate of the center of the cylinder.'
     },
     y = {
       type = 'number',
       default = '0',
-      description = 'The y coordinate of the cylinder.'
+      description = 'The y coordinate of the center of the cylinder.'
     },
     z = {
       type = 'number',
       default = '0',
-      description = 'The z coordinate of the cylinder.'
+      description = 'The z coordinate of the center of the cylinder.'
     },
     length = {
       type = 'number',
