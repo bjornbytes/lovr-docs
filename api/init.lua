@@ -6652,19 +6652,19 @@ return {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x coordinate of the cylinder.",
+                  description = "The x coordinate of the center of the cylinder.",
                   default = "0"
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y coordinate of the cylinder.",
+                  description = "The y coordinate of the center of the cylinder.",
                   default = "0"
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z coordinate of the cylinder.",
+                  description = "The z coordinate of the center of the cylinder.",
                   default = "0"
                 },
                 {
@@ -6734,19 +6734,19 @@ return {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x coordinate of the cylinder.",
+                  description = "The x coordinate of the center of the cylinder.",
                   default = "0"
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y coordinate of the cylinder.",
+                  description = "The y coordinate of the center of the cylinder.",
                   default = "0"
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z coordinate of the cylinder.",
+                  description = "The z coordinate of the center of the cylinder.",
                   default = "0"
                 },
                 {
