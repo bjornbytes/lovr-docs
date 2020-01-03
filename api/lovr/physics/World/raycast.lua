@@ -74,8 +74,8 @@ return {
   },
   returns = {},
   notes = [[
-    The callback is passed the shape that was hit, the hit position, and the normal vector of the
-    hit.
+    The callback is passed the shape that was hit, the hit position (in world coordinates), and the
+    normal vector of the hit.
   ]],
   example = [[
     function lovr.load()

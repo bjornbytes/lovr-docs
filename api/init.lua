@@ -22526,7 +22526,7 @@ return {
               description = "Casts a ray through the World, calling a function every time the ray intersects with a Shape.",
               key = "World:raycast",
               module = "lovr.physics",
-              notes = "The callback is passed the shape that was hit, the hit position, and the normal vector of the hit.",
+              notes = "The callback is passed the shape that was hit, the hit position (in world coordinates), and the normal vector of the hit.",
               variants = {
                 {
                   arguments = {
