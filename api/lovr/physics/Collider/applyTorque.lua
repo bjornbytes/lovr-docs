@@ -19,6 +19,10 @@ return {
     }
   },
   returns = {},
+  notes = [[
+    If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this
+    function to have any affect.
+  ]],
   related = {
     'Collider:applyForce'
   }
