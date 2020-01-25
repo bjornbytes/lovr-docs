@@ -95,7 +95,7 @@ function gameReset() -- Reset state completely, as if after a death
 	gameState = {}
 	gameLevel = 1
 	points = 0
-	ballVel:set(vec2(0.0625, 0.0625))
+	ballVel:set(vec2(0.0625 * 60, 0.0625 * 60))
 end
 
 function boardReset() -- Reset board contents, as for death or new-level start
@@ -250,7 +250,7 @@ function lovr.update(dt)
 		end
 
 		-- Move up/down
-		ballAt.y = ballAt.y + ballVel.y
+		ballAt.y = ballAt.y + ballVel.y * dt
 		local cellX, cellY = bCornerGridReverse(ballAt.x, ballAt.y + tie(ballVel.y)*ballMargin)
 		if Board.get(board, cellX, cellY) then -- Vertically collide with block
 			Board.set(board, cellX, cellY, false)
@@ -260,7 +260,7 @@ function lovr.update(dt)
 		end
 
 		-- Move left/right
-		ballAt.x = ballAt.x + ballVel.x
+		ballAt.x = ballAt.x + ballVel.x * dt
 		cellX, cellY = bCornerGridReverse(ballAt.x + tie(ballVel.x)*ballMargin, ballAt.y)
 		if Board.get(board, cellX, cellY) then -- Horizontally collide with block
 			Board.set(board, cellX, cellY, false)
