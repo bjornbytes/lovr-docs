@@ -1,6 +1,6 @@
 return {
   summary = 'Set the playback position of the Source.',
-  description = 'Seeks the Source to the specified position.',
+  description = 'Seeks the Source to the specified position. Note that you may not `seek()` a `Source` backed by a raw `AudioStream`.',
   arguments = {
     {
       name = 'position',
