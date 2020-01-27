@@ -2636,7 +2636,11 @@ return {
                   type = "number",
                   description = "Number of audio channels (1 for mono or 2 for stereo)."
                 },
-                nil,
+                {
+                  name = "sampleRate",
+                  type = "number",
+                  description = "The resolution of the stream, in samples per second (examples of common values: 44100, 48000, 16000)."
+                },
                 {
                   name = "bufferSize",
                   type = "number",
@@ -2646,7 +2650,7 @@ return {
                 {
                   name = "queueLimit",
                   type = "number",
-                  description = "        The maximum number of audio samples that this AudioStream will queue. The default is half a\n        second worth of data. Set to 0 for no limit (but be careful not to use too much RAM).\n      ",
+                  description = "The maximum number of audio samples that this AudioStream will queue. The default is half a second worth of data. Set to 0 for no limit (but be careful not to use too much RAM).",
                   default = "sampleRate * 0.5"
                 }
               },

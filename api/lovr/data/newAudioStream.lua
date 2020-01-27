@@ -17,6 +17,13 @@ return {
       type = 'Blob',
       description = 'The Blob containing audio data to decode.'
     },
+    sampleRate = {
+      type = 'number',
+      description = [[
+        The resolution of the stream, in samples per second (examples of common values: 44100,
+        48000, 16000).
+      ]]
+    },
     bufferSize = {
       type = 'number',
       default = '4096',
