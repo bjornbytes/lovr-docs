@@ -3045,12 +3045,36 @@ return {
               },
               variants = {
                 {
-                  arguments = {},
-                  returns = {}
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob of sound bytes. Since it has no information about the format of the data, `append` blindly trusts that you give it valid data."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "success",
+                      type = "boolean",
+                      description = "Whether this `append` did not exceed the queue limit, and data was thus appended to the queue."
+                    }
+                  }
                 },
                 {
-                  arguments = {},
-                  returns = {}
+                  arguments = {
+                    {
+                      name = "soundData",
+                      type = "SoundData",
+                      description = "A SoundData blob of sound bytes.  The format of the `SoundData` must match the format of the `AudioStream`."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "success",
+                      type = "boolean",
+                      description = "Whether this `append` did not exceed the queue limit, and data was thus appended to the queue."
+                    }
+                  }
                 }
               }
             },

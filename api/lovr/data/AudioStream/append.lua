@@ -22,16 +22,14 @@ return {
     avoid stuttery playback. Having more than 0.2s audio queued at all times is a good guideline.
   ]],
   arguments = {
-    {
-      name = 'blob',
+    blob = {
       type = 'Blob',
       description = [[
         A Blob of sound bytes. Since it has no information about the format of the data,
         `append` blindly trusts that you give it valid data.
       ]]
     },
-    {
-      name = 'soundData',
+    soundData = {
       type = 'SoundData',
       description = [[
         A SoundData blob of sound bytes.  The format of the `SoundData` must match the format
@@ -40,8 +38,7 @@ return {
     }
   },
   returns = {
-    {
-      name = 'success',
+    success = {
       type = 'boolean',
       description = [[
         Whether this `append` did not exceed the queue limit, and data was thus appended to the
