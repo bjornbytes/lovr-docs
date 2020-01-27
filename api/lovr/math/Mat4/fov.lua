@@ -1,7 +1,7 @@
 return {
   summary = 'Set a projection using raw FoV angles.',
   description = [[
-    Sets a projection matrix using raw projection values.
+    Sets a projection matrix using raw projection angles and clipping planes.
 
     This can be used for asymmetric or oblique projections.
   ]],
@@ -9,22 +9,22 @@ return {
     {
       name = 'left',
       type = 'number',
-      description = 'The left angle of the projection.'
+      description = 'The left half-angle of the projection, in radians.'
     },
     {
       name = 'right',
       type = 'number',
-      description = 'The right angle of the projection.'
+      description = 'The right half-angle of the projection, in radians.'
     },
     {
       name = 'up',
       type = 'number',
-      description = 'The top angle of the projection.'
+      description = 'The top half-angle of the projection, in radians.'
     },
     {
-      name = 'bottom',
+      name = 'down',
       type = 'number',
-      description = 'The bottom angle of the projection.'
+      description = 'The bottom half-angle of the projection, in radians.'
     },
     {
       name = 'near',

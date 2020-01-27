@@ -30,7 +30,7 @@ return {
     },
     angle = {
       type = 'number',
-      description = 'The angle of the orientation.'
+      description = 'The angle of rotation around the axis, in radians.'
     },
     ax = {
       type = 'number',

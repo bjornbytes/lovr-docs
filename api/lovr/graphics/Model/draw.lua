@@ -25,7 +25,7 @@ return {
     angle = {
       type = 'number',
       default = '0',
-      description = 'The angle to rotate the Model around its axis of rotation.'
+      description = 'The angle to rotate the Model around the axis of rotation, in radians.'
     },
     ax = {
       type = 'number',

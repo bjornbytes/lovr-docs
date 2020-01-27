@@ -8,12 +8,12 @@ return {
     {
       name = 'lower',
       type = 'number',
-      description = 'The lower limit.'
+      description = 'The lower limit, in radians.'
     },
     {
       name = 'upper',
       type = 'number',
-      description = 'The upper limit.'
+      description = 'The upper limit, in radians.'
     }
   },
   related = {

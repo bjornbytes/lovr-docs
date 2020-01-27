@@ -6,7 +6,7 @@ return {
     {
       name = 'limit',
       type = 'number',
-      description = 'The lower limit.'
+      description = 'The lower limit, in radians.'
     }
   },
   related = {

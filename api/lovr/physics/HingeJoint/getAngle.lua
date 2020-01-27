@@ -9,7 +9,7 @@ return {
     {
       name = 'angle',
       type = 'number',
-      description = 'The hinge angle.'
+      description = 'The hinge angle, in radians.'
     }
   }
 }
