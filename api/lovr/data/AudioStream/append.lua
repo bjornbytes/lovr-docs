@@ -60,7 +60,7 @@ return {
     }
   },
   related = {
-    'lovr.audio.newAudioStream',
+    'lovr.data.newAudioStream',
     'AudioStream:getDuration'
   }
 }

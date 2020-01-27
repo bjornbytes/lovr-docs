@@ -3040,7 +3040,7 @@ return {
               key = "AudioStream:append",
               module = "lovr.data",
               related = {
-                "lovr.audio.newAudioStream",
+                "lovr.data.newAudioStream",
                 "AudioStream:getDuration"
               },
               variants = {
