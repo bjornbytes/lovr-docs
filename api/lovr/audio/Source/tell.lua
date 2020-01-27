@@ -1,6 +1,6 @@
 return {
   summary = 'Get the playback position of the Source.',
-  description = 'Returns the current playback position of the Source. Note that you may not `tell()` a `Source` backed by a raw `AudioStream`.',
+  description = 'Returns the current playback position of the Source.',
   arguments = {
     {
       name = 'unit',
@@ -15,5 +15,6 @@ return {
       type = 'number',
       description = 'The current playback position.'
     }
-  }
+  },
+  notes = 'This function can not be used on a Source backed by a raw `AudioStream`.'
 }

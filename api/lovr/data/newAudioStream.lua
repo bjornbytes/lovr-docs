@@ -3,8 +3,10 @@ return {
   description = [[
     Creates a new AudioStream. AudioStream has two modes:
 
-    1. Constructed with a filename or blob, AudioStream will decode the given file on demand. Right now, the only supported audio format is Ogg Vorbis (.ogg).
-    2. Constructed without, it's a "raw" audiostream that you append data to in real-time. See `AudioStream:append` for usage.
+    - Constructed with a filename or blob, AudioStream will decode the given file on demand. Right
+      now, the only supported audio format is Ogg Vorbis (.ogg).
+    - Constructed without, it's a "raw" audiostream that you append data to in real-time. See
+      `AudioStream:append` for usage.
   ]],
   arguments = {
     filename = {
@@ -22,12 +24,15 @@ return {
     },
     queueLimit = {
       type = 'number',
-      default = 'sampleRate*0.5',
-      description = 'The maximum number of audio samples that this AudioStream will queue. The default is half a second worth of data. Set to 0 for no limit (but be careful not to use too much RAM).'
+      default = 'sampleRate * 0.5',
+      description = [[
+        The maximum number of audio samples that this AudioStream will queue. The default is half a
+        second worth of data. Set to 0 for no limit (but be careful not to use too much RAM).
+      ]]
     },
     channelCount = {
       type = 'number',
-      description = 'Number of audio channels (1 for mono or 2 for stereo)'
+      description = 'Number of audio channels (1 for mono or 2 for stereo).'
     }
   },
   returns = {
@@ -38,17 +43,19 @@ return {
   },
   variants = {
     {
-      description = 'Create an `AudioStream` decoding ogg audio from the file at `filename`',
+      description = 'Create an `AudioStream` decoding ogg audio from the file at `filename`.',
       arguments = { 'filename', 'bufferSize' },
       returns = { 'audioStream' }
     },
     {
-      description = 'Create an `AudioStream` decoding ogg audio from the given blob.',
+      description = 'Create an `AudioStream` decoding ogg audio from the given Blob.',
       arguments = { 'blob', 'bufferSize' },
       returns = { 'audioStream' }
     },
     {
-      description = 'Create a raw `AudioStream`. You must call `append` to give it audio to stream later.',
+      description = [[
+        Create a raw `AudioStream`.  You must call `append` to give it audio to stream later.
+      ]],
       arguments = { 'channelCount', 'sampleRate', 'bufferSize', 'queueLimit'},
       returns = { 'audioStream' }
     }

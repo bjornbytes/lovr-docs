@@ -7,44 +7,59 @@ return {
     {
       name = 'soundData',
       type = 'soundData',
-      description = 'The `SoundData` to fill with audio (instead of this method creating a new one).'
+      description = 'The `SoundData` to fill with audio (instead of creating a new one).'
     },
     {
       name = 'sampleCount',
       type = 'number',
-      description = 'How many samples of audio to get right now, at most. If less is available, you will get less.'
+      description = [[
+        How many samples of audio to get right now, at most. If less is available, you will get
+        less (use `Microphone:getSampleCount` to check the exact number).
+      ]]
     },
     {
       name = 'offset',
       type = 'number',
-      description = 'Index in samples into `soundData` at which to start to overwrite with new audio data from the microphone\'s internal buffer.'
+      description = [[
+        Index in samples into `soundData` at which to start to overwrite with new audio data from
+        the microphone's internal buffer.'
+      ]]
     }
   },
   returns = {
     {
       name = 'soundData',
       type = 'soundData',
-      description = 'A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available.'
+      description = [[
+        A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if
+        sampleCount was not given). Nothing is returned if no data is available.
+      ]]
     }
   },
   variants = {
     {
-        description = "Get all available audio as a newly created `SoundData`",
-        arguments = { },
-        returns = { 'soundData' }
+      description = 'Get all available audio as a newly created `SoundData`.',
+      arguments = {},
+      returns = { 'soundData' }
     },
     {
-      description = "Get at most `sampleCount` samples from the microphone\'s internal queue as a newly created `SoundData`",
+      description = [[
+        Get at most `sampleCount` samples from the microphone's internal queue as a newly created
+        `SoundData`.
+      ]],
       arguments = { 'sampleCount' },
       returns = { 'soundData' }
     },
     {
-      description = "Get at all available audio and write it into `soundData`.",
+      description = 'Get at all available audio and write it into `soundData`.',
       arguments = { 'soundData' },
       returns = { 'soundData' }
     },
     {
-      description = "Get at all available audio and write it into `soundData` starting at 'offset' samples into `soundData`.",
+      description = [[
+        Get at all available audio and write it into `soundData` starting at `offset` samples into
+        `soundData`.
+      ]],
       arguments = { 'soundData', 'offset' },
       returns = { 'soundData' }
     }

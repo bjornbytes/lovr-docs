@@ -1398,14 +1398,24 @@ return {
               },
               variants = {
                 {
+                  description = "Get all available audio as a newly created `SoundData`.",
                   arguments = {},
-                  returns = {
-                    {
-                      name = "channels",
-                      type = "number",
-                      description = "The number of channels recorded."
-                    }
-                  }
+                  returns = {}
+                },
+                {
+                  description = "Get at most `sampleCount` samples from the microphone's internal queue as a newly created `SoundData`.",
+                  arguments = {},
+                  returns = {}
+                },
+                {
+                  description = "Get at all available audio and write it into `soundData`.",
+                  arguments = {},
+                  returns = {}
+                },
+                {
+                  description = "Get at all available audio and write it into `soundData` starting at `offset` samples into `soundData`.",
+                  arguments = {},
+                  returns = {}
                 }
               },
               notes = "There's a limit on the number of samples the Microphone is able to hold, which can be set at creation time in `lovr.audio.newMicrophone`.  While the Microphone is recording, be sure to call this function periodically to get a new chunk of audio in order to make room for more.\n\nYou can use `Microphone:getSampleCount` to figure out how many samples the Microphone is currently holding."
@@ -2146,6 +2156,7 @@ return {
               description = "Seeks the Source to the specified position.",
               key = "Source:seek",
               module = "lovr.audio",
+              notes = "This function can not be used on a Source backed by a raw `AudioStream`.",
               variants = {
                 {
                   arguments = {
@@ -2529,6 +2540,7 @@ return {
               description = "Returns the current playback position of the Source.",
               key = "Source:tell",
               module = "lovr.audio",
+              notes = "This function can not be used on a Source backed by a raw `AudioStream`.",
               variants = {
                 {
                   arguments = {
@@ -2566,11 +2578,12 @@ return {
         {
           name = "newAudioStream",
           summary = "Create a new AudioStream.",
-          description = "Creates a new AudioStream.  Right now, the only supported audio format is Ogg Vorbis (.ogg).",
+          description = "Creates a new AudioStream. AudioStream has two modes:\n\n- Constructed with a filename or blob, AudioStream will decode the given file on demand. Right\n  now, the only supported audio format is Ogg Vorbis (.ogg).\n- Constructed without, it's a \"raw\" audiostream that you append data to in real-time. See\n  `AudioStream:append` for usage.",
           key = "lovr.data.newAudioStream",
           module = "lovr.data",
           variants = {
             {
+              description = "Create an `AudioStream` decoding ogg audio from the file at `filename`.",
               arguments = {
                 {
                   name = "filename",
@@ -2593,6 +2606,7 @@ return {
               }
             },
             {
+              description = "Create an `AudioStream` decoding ogg audio from the given Blob.",
               arguments = {
                 {
                   name = "blob",
@@ -2604,6 +2618,36 @@ return {
                   type = "number",
                   description = "The size of the stream's audio buffer, in samples.",
                   default = "4096"
+                }
+              },
+              returns = {
+                {
+                  name = "audioStream",
+                  type = "AudioStream",
+                  description = "The new AudioStream."
+                }
+              }
+            },
+            {
+              description = "Create a raw `AudioStream`.  You must call `append` to give it audio to stream later.",
+              arguments = {
+                {
+                  name = "channelCount",
+                  type = "number",
+                  description = "Number of audio channels (1 for mono or 2 for stereo)."
+                },
+                nil,
+                {
+                  name = "bufferSize",
+                  type = "number",
+                  description = "The size of the stream's audio buffer, in samples.",
+                  default = "4096"
+                },
+                {
+                  name = "queueLimit",
+                  type = "number",
+                  description = "        The maximum number of audio samples that this AudioStream will queue. The default is half a\n        second worth of data. Set to 0 for no limit (but be careful not to use too much RAM).\n      ",
+                  default = "sampleRate * 0.5"
                 }
               },
               returns = {
@@ -2985,6 +3029,27 @@ return {
           key = "AudioStream",
           module = "lovr.data",
           methods = {
+            {
+              name = "append",
+              summary = "Append raw PCM audio data to this audio stream for playback.",
+              description = "Append audio data that you have constructed yourself (perhaps by generating it in code, or streaming it over the network).  Must only be called on a \"raw\" AudioStream (not one constructed with a file or a blob).\n\nThe data must be 16-bit signed integer, and the sample rate and channel count must match the values the AudioStream was constructed with.\n\nIf a call to `append` would make the internal buffer of this `AudioStream` to become bigger than the `queueLimit` set on this AudioStream when it was constructed, that call to `append` will ignore your blob and return false, queueing no data at all from that call.\n\nAfter you've created a Source with your raw AudioStream, and appended enough audio data, remember to call `Source:play` to make the `Source` start playing your queued data. If the `Source` plays all the audio data you've queued and thus runs out of data to play, it will automatically stop and you'll have to append more sound data and call `Source:play` again. You can use `AudioStream:getDuration` to see how much data has been queued so far.\n\nTry to have more audio queued than the time it will take before you call append() again to avoid stuttery playback. Having more than 0.2s audio queued at all times is a good guideline.",
+              key = "AudioStream:append",
+              module = "lovr.data",
+              related = {
+                "lovr.audio.newAudioStream",
+                "AudioStream:getDuration"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                },
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
             {
               name = "decode",
               summary = "Decode the next chunk of audio in the AudioStream.",
@@ -3412,6 +3477,29 @@ return {
               }
             },
             {
+              name = "getBlob",
+              summary = "Get the bytes backing this SoundData as a `Blob`.",
+              description = "Returns a Blob containing the raw bytes of the SoundData.",
+              key = "SoundData:getBlob",
+              module = "lovr.data",
+              related = {
+                "Blob:getPointer",
+                "TextureData:getBlob"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob instance containing the bytes for the `SoundData`."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getChannelCount",
               summary = "Get the number of channels in the SoundData.",
               description = "Returns the number of channels in the SoundData.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
@@ -3599,6 +3687,29 @@ return {
                       name = "success",
                       type = "boolean",
                       description = "Whether or not the file was successfully written to."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBlob",
+              summary = "Get the bytes backing this TextureData as a `Blob`.",
+              description = "Returns a Blob containing the raw bytes of the TextureData.",
+              key = "TextureData:getBlob",
+              module = "lovr.data",
+              related = {
+                "Blob:getPointer",
+                "SoundData:getBlob"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob instance containing the bytes for the `TextureData`."
                     }
                   }
                 }
