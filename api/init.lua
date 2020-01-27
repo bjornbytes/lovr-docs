@@ -11347,7 +11347,7 @@ return {
                     {
                       name = "angle",
                       type = "number",
-                      description = "The angle to rotate the Mesh around its axis of rotation.",
+                      description = "The angle to rotate the Mesh around the axis of rotation, in radians.",
                       default = "0"
                     },
                     {
@@ -11970,7 +11970,7 @@ return {
                     {
                       name = "angle",
                       type = "number",
-                      description = "The angle to rotate the Model around its axis of rotation.",
+                      description = "The angle to rotate the Model around the axis of rotation, in radians.",
                       default = "0"
                     },
                     {
@@ -12463,7 +12463,7 @@ return {
                     {
                       name = "angle",
                       type = "number",
-                      description = "The angle of the orientation."
+                      description = "The angle of rotation around the axis, in radians."
                     },
                     {
                       name = "ax",
@@ -12514,7 +12514,7 @@ return {
                     {
                       name = "angle",
                       type = "number",
-                      description = "The angle of the orientation."
+                      description = "The angle of rotation around the axis, in radians."
                     },
                     {
                       name = "ax",
@@ -15587,7 +15587,7 @@ return {
             {
               name = "fov",
               summary = "Set a projection using raw FoV angles.",
-              description = "Sets a projection matrix using raw projection values.\n\nThis can be used for asymmetric or oblique projections.",
+              description = "Sets a projection matrix using raw projection angles and clipping planes.\n\nThis can be used for asymmetric or oblique projections.",
               key = "Mat4:fov",
               module = "lovr.math",
               related = {
@@ -15601,22 +15601,22 @@ return {
                     {
                       name = "left",
                       type = "number",
-                      description = "The left angle of the projection."
+                      description = "The left half-angle of the projection, in radians."
                     },
                     {
                       name = "right",
                       type = "number",
-                      description = "The right angle of the projection."
+                      description = "The right half-angle of the projection, in radians."
                     },
                     {
                       name = "up",
                       type = "number",
-                      description = "The top angle of the projection."
+                      description = "The top half-angle of the projection, in radians."
                     },
                     {
-                      name = "bottom",
+                      name = "down",
                       type = "number",
-                      description = "The bottom angle of the projection."
+                      description = "The bottom half-angle of the projection, in radians."
                     },
                     {
                       name = "near",
@@ -20740,7 +20740,7 @@ return {
                     {
                       name = "angle",
                       type = "number",
-                      description = "The hinge angle."
+                      description = "The hinge angle, in radians."
                     }
                   }
                 }
@@ -20795,12 +20795,12 @@ return {
                     {
                       name = "lower",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The lower limit, in radians."
                     },
                     {
                       name = "upper",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The upper limit, in radians."
                     }
                   }
                 }
@@ -20826,7 +20826,7 @@ return {
                     {
                       name = "limit",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The lower limit, in radians."
                     }
                   }
                 }
@@ -20852,7 +20852,7 @@ return {
                     {
                       name = "limit",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The upper limit, in radians."
                     }
                   }
                 }
@@ -20935,12 +20935,12 @@ return {
                     {
                       name = "lower",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The lower limit, in radians."
                     },
                     {
                       name = "upper",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The upper limit, in radians."
                     }
                   },
                   returns = {}
@@ -20966,7 +20966,7 @@ return {
                     {
                       name = "limit",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The lower limit, in radians."
                     }
                   },
                   returns = {}
@@ -20992,7 +20992,7 @@ return {
                     {
                       name = "limit",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The upper limit, in radians."
                     }
                   },
                   returns = {}
