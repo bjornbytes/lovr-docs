@@ -4,21 +4,18 @@ return {
     Returns a new SoundData with all of the buffered audio samples that the Microphone has recorded.
   ]],
   arguments = {
-    {
-      name = 'soundData',
+    soundData = {
       type = 'soundData',
       description = 'The `SoundData` to fill with audio (instead of creating a new one).'
     },
-    {
-      name = 'sampleCount',
+    sampleCount = {
       type = 'number',
       description = [[
         How many samples of audio to get right now, at most. If less is available, you will get
         less (use `Microphone:getSampleCount` to check the exact number).
       ]]
     },
-    {
-      name = 'offset',
+    offset = {
       type = 'number',
       description = [[
         Index in samples into `soundData` at which to start to overwrite with new audio data from
@@ -27,8 +24,7 @@ return {
     }
   },
   returns = {
-    {
-      name = 'soundData',
+    soundData = {
       type = 'soundData',
       description = [[
         A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if

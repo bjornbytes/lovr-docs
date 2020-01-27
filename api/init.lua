@@ -1400,22 +1400,69 @@ return {
                 {
                   description = "Get all available audio as a newly created `SoundData`.",
                   arguments = {},
-                  returns = {}
+                  returns = {
+                    {
+                      name = "soundData",
+                      type = "soundData",
+                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
+                    }
+                  }
                 },
                 {
                   description = "Get at most `sampleCount` samples from the microphone's internal queue as a newly created `SoundData`.",
-                  arguments = {},
-                  returns = {}
+                  arguments = {
+                    {
+                      name = "sampleCount",
+                      type = "number",
+                      description = "How many samples of audio to get right now, at most. If less is available, you will get less (use `Microphone:getSampleCount` to check the exact number)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "soundData",
+                      type = "soundData",
+                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
+                    }
+                  }
                 },
                 {
                   description = "Get at all available audio and write it into `soundData`.",
-                  arguments = {},
-                  returns = {}
+                  arguments = {
+                    {
+                      name = "soundData",
+                      type = "soundData",
+                      description = "The `SoundData` to fill with audio (instead of creating a new one)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "soundData",
+                      type = "soundData",
+                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
+                    }
+                  }
                 },
                 {
                   description = "Get at all available audio and write it into `soundData` starting at `offset` samples into `soundData`.",
-                  arguments = {},
-                  returns = {}
+                  arguments = {
+                    {
+                      name = "soundData",
+                      type = "soundData",
+                      description = "The `SoundData` to fill with audio (instead of creating a new one)."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "Index in samples into `soundData` at which to start to overwrite with new audio data from the microphone's internal buffer.'"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "soundData",
+                      type = "soundData",
+                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
+                    }
+                  }
                 }
               },
               notes = "There's a limit on the number of samples the Microphone is able to hold, which can be set at creation time in `lovr.audio.newMicrophone`.  While the Microphone is recording, be sure to call this function periodically to get a new chunk of audio in order to make room for more.\n\nYou can use `Microphone:getSampleCount` to figure out how many samples the Microphone is currently holding."
