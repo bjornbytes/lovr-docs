@@ -14097,7 +14097,7 @@ return {
           description = "Returns a table with all of the currently tracked hand devices.",
           key = "lovr.headset.getHands",
           module = "lovr.headset",
-          notes = "The hand paths *always* be either `hand/left` or `hand/right`.",
+          notes = "The hand paths will *always* be either `hand/left` or `hand/right`.",
           variants = {
             {
               arguments = {},
