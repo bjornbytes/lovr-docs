@@ -12,7 +12,7 @@ return {
       description = 'The currently tracked hand devices.'
     }
   },
-  notes = 'The hand paths *always* be either `hand/left` or `hand/right`.',
+  notes = 'The hand paths will *always* be either `hand/left` or `hand/right`.',
   example = [[
     function lovr.update(dt)
       for i, hand in ipairs(lovr.headset.getHands()) do
