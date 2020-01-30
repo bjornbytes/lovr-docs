@@ -23,7 +23,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'string', '*' },
+      arguments = { 'variable', 'value' },
       returns = {}
     },
     {
