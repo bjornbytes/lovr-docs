@@ -6,6 +6,11 @@ return {
   ]],
   arguments = {
     {
+      name = 'type',
+      type = 'BlockType',
+      description = 'Whether the block will be used for read-only uniform data or compute shaders.'
+    },
+    {
       name = 'uniforms',
       type = 'table',
       description = [[
@@ -27,10 +32,10 @@ return {
           description = 'How the data in the block will be updated.'
         },
         {
-          name = 'writable',
+          name = 'readable',
           type = 'boolean',
           default = 'false',
-          description = 'Whether Shaders can write to the data in the block.'
+          description = 'Whether the data in the block can be read using `ShaderBlock:read`.'
         }
       }
     }
@@ -43,16 +48,16 @@ return {
     }
   },
   notes = [[
-    The writable flag can only be true if compute shaders are supported, see
-    `lovr.graphics.getFeatures`.  Writable blocks may be slightly slower than non-writable blocks,
-    but they can also be much, much larger.  Non-writable blocks are usually limited to around 16
-    kilobytes in size, depending on hardware.
+    `compute` blocks can only be true if compute shaders are supported, see
+    `lovr.graphics.getFeatures`.  Compute blocks may be slightly slower than uniform blocks, but
+    they can also be much, much larger.  Uniform blocks are usually limited to around 16 kilobytes
+    in size, depending on hardware.
   ]],
   example = {
     description = 'Create a ShaderBlock to hold a block of useful shader data.',
     code = [=[
       function lovr.load()
-        block = lovr.graphics.newShaderBlock({
+        block = lovr.graphics.newShaderBlock('uniform', {
           time = 'float',
           lightCount = 'int',
           lightPositions = { 'vec3', 16 },

@@ -8471,6 +8471,11 @@ return {
             {
               arguments = {
                 {
+                  name = "type",
+                  type = "BlockType",
+                  description = "Whether the block will be used for read-only uniform data or compute shaders."
+                },
+                {
                   name = "uniforms",
                   type = "table",
                   description = "A table where the keys are uniform names and the values are uniform types.  Uniform arrays can be specified by supplying a table as the uniform's value containing the type and the array size."
@@ -8488,9 +8493,9 @@ return {
                       default = "dynamic"
                     },
                     {
-                      name = "writable",
+                      name = "readable",
                       type = "boolean",
-                      description = "Whether Shaders can write to the data in the block.",
+                      description = "Whether the data in the block can be read using `ShaderBlock:read`.",
                       default = "false"
                     }
                   }
@@ -8512,10 +8517,10 @@ return {
           examples = {
             {
               description = "Create a ShaderBlock to hold a block of useful shader data.",
-              code = "function lovr.load()\n  block = lovr.graphics.newShaderBlock({\n    time = 'float',\n    lightCount = 'int',\n    lightPositions = { 'vec3', 16 },\n    lightColors = { 'vec3', 16 },\n    objectCount = 'int',\n    objectTransforms = { 'mat4', 256 }\n  })\n\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('Block') .. -- Define the block in the shader\n    [[\n      vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n        // ...use the object transforms from the block\n        return projection * transform * vertex;\n      }\n    ]],\n\n    block:getShaderCode('Block') ..\n    [[\n      vec4 color(vec4 gColor, sampler2D image, vec2 uv) {\n        // ...use the lights from the block\n        return gColor * texture(image, uv);\n      }\n    ]]\n  )\n\n  -- Bind the block to the shader\n  shader:sendBlock('Block', block)\nend\n\n-- Update the data in the block every frame\nfunction lovr.update(dt)\n  block:send('time', lovr.timer.getTime())\n  block:send('lightCount', lightCount)\n  block:send('lightPositions', { { x, y, z}, { x, y, z } })\n  -- etc.\nend"
+              code = "function lovr.load()\n  block = lovr.graphics.newShaderBlock('uniform', {\n    time = 'float',\n    lightCount = 'int',\n    lightPositions = { 'vec3', 16 },\n    lightColors = { 'vec3', 16 },\n    objectCount = 'int',\n    objectTransforms = { 'mat4', 256 }\n  })\n\n  shader = lovr.graphics.newShader(\n    block:getShaderCode('Block') .. -- Define the block in the shader\n    [[\n      vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n        // ...use the object transforms from the block\n        return projection * transform * vertex;\n      }\n    ]],\n\n    block:getShaderCode('Block') ..\n    [[\n      vec4 color(vec4 gColor, sampler2D image, vec2 uv) {\n        // ...use the lights from the block\n        return gColor * texture(image, uv);\n      }\n    ]]\n  )\n\n  -- Bind the block to the shader\n  shader:sendBlock('Block', block)\nend\n\n-- Update the data in the block every frame\nfunction lovr.update(dt)\n  block:send('time', lovr.timer.getTime())\n  block:send('lightCount', lightCount)\n  block:send('lightPositions', { { x, y, z}, { x, y, z } })\n  -- etc.\nend"
             }
           },
-          notes = "The writable flag can only be true if compute shaders are supported, see `lovr.graphics.getFeatures`.  Writable blocks may be slightly slower than non-writable blocks, but they can also be much, much larger.  Non-writable blocks are usually limited to around 16 kilobytes in size, depending on hardware."
+          notes = "`compute` blocks can only be true if compute shaders are supported, see `lovr.graphics.getFeatures`.  Compute blocks may be slightly slower than uniform blocks, but they can also be much, much larger.  Uniform blocks are usually limited to around 16 kilobytes in size, depending on hardware."
         },
         {
           name = "newTexture",
@@ -12942,7 +12947,18 @@ return {
               },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "variable",
+                      type = "string",
+                      description = "The name of the variable to update."
+                    },
+                    {
+                      name = "value",
+                      type = "*",
+                      description = "The new value of the uniform."
+                    }
+                  },
                   returns = {}
                 },
                 {
