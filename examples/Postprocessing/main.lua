@@ -29,6 +29,9 @@ local screenShaderFragment = [[
   #define OFFSET1 1.3846153846
   #define OFFSET2 3.2307692308
 
+  // The Canvas texture to sample from.
+  uniform sampler2DMultiview canvas;
+
   // UVs are sampled from a texture over the range 0..1.
   // This uniform is set outside the shader so we know what UV distance "one pixel" is.
   uniform vec2 resolution;
@@ -40,11 +43,11 @@ local screenShaderFragment = [[
   vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
     vec2 pixelOff = direction / resolution;
     vec4 color = vec4(0.0);
-    color += texture(image, uv) * WEIGHT0;
-    color += texture(image, uv + pixelOff * OFFSET1) * WEIGHT1;
-    color += texture(image, uv - pixelOff * OFFSET1) * WEIGHT1;
-    color += texture(image, uv + pixelOff * OFFSET2) * WEIGHT2;
-    color += texture(image, uv - pixelOff * OFFSET2) * WEIGHT2;
+    color += textureMultiview(canvas, uv) * WEIGHT0;
+    color += textureMultiview(canvas, uv + pixelOff * OFFSET1) * WEIGHT1;
+    color += textureMultiview(canvas, uv - pixelOff * OFFSET1) * WEIGHT1;
+    color += textureMultiview(canvas, uv + pixelOff * OFFSET2) * WEIGHT2;
+    color += textureMultiview(canvas, uv - pixelOff * OFFSET2) * WEIGHT2;
     return color;
   }
 ]]
@@ -109,7 +112,8 @@ end
 
 -- This simple callback is used to draw one canvas onto another
 local function fullScreenDraw(source)
-  lovr.graphics.fill(source)
+  screenShader:send('canvas', source:getTexture())
+  lovr.graphics.fill()
 end
 
 function lovr.draw()
@@ -122,6 +126,7 @@ function lovr.draw()
 
     -- Start by drawing the scene to one of our temp canvases.
     tempCanvas[1]:renderTo(sceneDraw)
+    tempCanvas[2]:renderTo(function() lovr.graphics.clear() end)
 
     -- We now have the scene in a texture (a canvas), which means we can apply a full-screen effect
     -- by rendering the texture with a shader material. However, because our blur is separable,
@@ -146,6 +151,7 @@ function lovr.draw()
     tempCanvas[2]:renderTo(fullScreenDraw, tempCanvas[1])
 
     screenShader:send("direction", {0, 4})
-    lovr.graphics.fill(tempCanvas[2]) -- On the final pass, render directly to the screen.
+    screenShader:send("canvas", tempCanvas[2]:getTexture())
+    lovr.graphics.fill() -- On the final pass, render directly to the screen.
   end
 end
