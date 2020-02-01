@@ -4936,6 +4936,31 @@ return {
           }
         },
         {
+          name = "BufferUsage",
+          summary = "How the buffer data will be updated.",
+          description = "This acts as a hint to the graphics driver about what kinds of data access should be optimized for.",
+          key = "BufferUsage",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "static",
+              description = "A buffer that you intend to create once and never modify."
+            },
+            {
+              name = "dynamic",
+              description = "A buffer which is modified occasionally."
+            },
+            {
+              name = "stream",
+              description = "A buffer which is entirely replaced on the order of every frame."
+            }
+          },
+          related = {
+            "ShaderBlock",
+            "lovr.graphics.newShaderBlock"
+          }
+        },
+        {
           name = "CompareMode",
           summary = "Different depth test modes.",
           description = "The method used to compare z values when deciding how to overlap rendered objects.  This is called the \"depth test\", and it happens on a pixel-by-pixel basis every time new objects are drawn.  If the depth test \"passes\" for a pixel, then the pixel color will be replaced by the new color and the depth value in the depth buffer will be updated.  Otherwise, the pixel will not be changed and the depth value will not be updated.",
