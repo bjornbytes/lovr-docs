@@ -14,7 +14,7 @@ return {
     {
       name = 'present',
       type = 'boolean',
-      description = 'Whether a message was returned.'
+      description = 'Whether a message was returned (use to detect nil).'
     }
   },
   notes = [[
