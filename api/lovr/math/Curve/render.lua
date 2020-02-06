@@ -31,6 +31,9 @@ return {
       description = 'A (flat) table of 3D points along the curve.'
     }
   },
+  notes = [[
+    This function will always return 2 points if the Curve is a line with only 2 control points.
+  ]],
   related = {
     'Curve:evaluate',
     'Curve:slice',
