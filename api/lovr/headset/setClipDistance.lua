@@ -17,5 +17,6 @@ return {
       description = 'The distance to the far clipping plane, in meters.'
     }
   },
-  returns = {}
+  returns = {},
+  notes = 'The default clip distances are 0.1 and 100.0.'
 }
