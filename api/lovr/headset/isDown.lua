@@ -26,6 +26,8 @@ return {
   },
   related = {
     'DeviceButton',
+    'lovr.headset.wasPressed',
+    'lovr.headset.wasReleased',
     'lovr.headset.isTouched',
     'lovr.headset.getAxis'
   }
