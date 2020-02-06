@@ -7272,6 +7272,24 @@ return {
           notes = "The default color is `(1.0, 1.0, 1.0, 1.0)`."
         },
         {
+          name = "getColorMask",
+          tag = "graphicsState",
+          summary = "Get whether each color channel is enabled.",
+          description = "Returns a boolean for each color channel (red, green, blue, alpha) indiciating whether it is enabled.  When a color channel is enabled, it will be affected by drawing commmands and clear commands.",
+          key = "lovr.graphics.getColorMask",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.stencil"
+          },
+          notes = "By default, all color channels are enabled.\n\nDisabling all of the color channels can be useful if you only want to write to the depth buffer or the stencil buffer."
+        },
+        {
           name = "getDefaultFilter",
           tag = "graphicsState",
           summary = "Get the default filter mode for Textures.",
@@ -9719,6 +9737,45 @@ return {
           }
         },
         {
+          name = "setColorMask",
+          tag = "graphicsState",
+          summary = "Enable or disable color channels.",
+          description = "Enables and disables individual color channels.  When a color channel is enabled, it will be affected by drawing commmands and clear commands.",
+          key = "lovr.graphics.setColorMask",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "r",
+                  type = "boolean",
+                  description = "Whether the red color channel should be enabled."
+                },
+                {
+                  name = "g",
+                  type = "boolean",
+                  description = "Whether the green color channel should be enabled."
+                },
+                {
+                  name = "b",
+                  type = "boolean",
+                  description = "Whether the blue color channel should be enabled."
+                },
+                {
+                  name = "a",
+                  type = "boolean",
+                  description = "Whether the alpha color channel should be enabled."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.stencil"
+          },
+          notes = "By default, all color channels are enabled.\n\nDisabling all of the color channels can be useful if you only want to write to the depth buffer or the stencil buffer."
+        },
+        {
           name = "setCullingEnabled",
           tag = "graphicsState",
           summary = "Enable or disable backface culling.",
@@ -12055,6 +12112,28 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob containing binary vertex data to upload (this is much more efficient)."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the vertex to start replacing at.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to replace.  If nil, all vertices will be used.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
                 }
               }
             }
@@ -13206,6 +13285,28 @@ return {
           module = "lovr.graphics",
           methods = {
             {
+              name = "getCompareMode",
+              summary = "Get the CompareMode for the Texture.",
+              description = "Returns the compare mode for the texture.",
+              key = "Texture:getCompareMode",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.getDepthTest"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "compareMode",
+                      type = "CompareMode",
+                      description = "The current compare mode, or `nil` if none is set."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDepth",
               summary = "Get the depth of the Texture.",
               description = "Returns the depth of the Texture, or the number of images stored in the Texture.",
@@ -13479,6 +13580,29 @@ return {
                       type = "number",
                       description = "The mipmap to replace.",
                       default = "1"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setCompareMode",
+              summary = "Set the CompareMode for the Texture.",
+              description = "Sets the compare mode for a texture.  This is only used for \"shadow samplers\", which are uniform variables in shaders with type `sampler2DShadow`.  Sampling a shadow sampler uses a sort of virtual depth test, and the compare mode of the texture is used to control how the depth test is performed.",
+              key = "Texture:setCompareMode",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.setDepthTest"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "compareMode",
+                      type = "CompareMode",
+                      description = "The new compare mode.  Use `nil` to disable the compare mode.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -14016,6 +14140,26 @@ return {
           }
         },
         {
+          name = "getDisplayFrequency",
+          tag = "headset",
+          summary = "Get the refresh rate of the headset display.",
+          description = "Returns the refresh rate of the headset display, in Hz.",
+          key = "lovr.headset.getDisplayFrequency",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "frequency",
+                  type = "number",
+                  description = "The frequency of the display, or `nil` if I have no idea what it is."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getDisplayHeight",
           tag = "headset",
           summary = "Get the height of the headset display.",
@@ -14441,6 +14585,8 @@ return {
           module = "lovr.headset",
           related = {
             "DeviceButton",
+            "lovr.headset.wasPressed",
+            "lovr.headset.wasReleased",
             "lovr.headset.isTouched",
             "lovr.headset.getAxis"
           },
@@ -14611,7 +14757,8 @@ return {
               },
               returns = {}
             }
-          }
+          },
+          notes = "The default clip distances are 0.1 and 100.0."
         },
         {
           name = "vibrate",
@@ -14658,6 +14805,84 @@ return {
             }
           },
           notes = "When using the `openvr` headset driver on an HTC Vive, the value for the `duration` currently must be less than .004 seconds.  Call this function several frames in a row for stronger or prolonged vibration patterns.\n\nThe `oculus` headset driver does not currently support haptics.\n\nOn the Oculus Quest, devices can only be vibrated once per frame.  Any attempts after the first will return `false`.  The Oculus Go controller does not support vibration."
+        },
+        {
+          name = "wasPressed",
+          tag = "input",
+          summary = "Check if a button was just pressed.",
+          description = "Returns whether a button on a device was pressed this frame.",
+          key = "lovr.headset.wasPressed",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device."
+                },
+                {
+                  name = "button",
+                  type = "DeviceButton",
+                  description = "The button to check."
+                }
+              },
+              returns = {
+                {
+                  name = "pressed",
+                  type = "boolean",
+                  description = "Whether the button on the device was pressed this frame."
+                }
+              }
+            }
+          },
+          related = {
+            "DeviceButton",
+            "lovr.headset.isDown",
+            "lovr.headset.wasReleased",
+            "lovr.headset.isTouched",
+            "lovr.headset.getAxis"
+          },
+          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status."
+        },
+        {
+          name = "wasReleased",
+          tag = "input",
+          summary = "Check if a button was just released.",
+          description = "Returns whether a button on a device was released this frame.",
+          key = "lovr.headset.wasReleased",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device."
+                },
+                {
+                  name = "button",
+                  type = "DeviceButton",
+                  description = "The button to check."
+                }
+              },
+              returns = {
+                {
+                  name = "released",
+                  type = "boolean",
+                  description = "Whether the button on the device was released this frame."
+                }
+              }
+            }
+          },
+          related = {
+            "DeviceButton",
+            "lovr.headset.isDown",
+            "lovr.headset.wasPressed",
+            "lovr.headset.isTouched",
+            "lovr.headset.getAxis"
+          },
+          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status."
         }
       },
       objects = {}
@@ -15720,7 +15945,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "This function will always return 2 points if the Curve is a line with only 2 control points."
             },
             {
               name = "setPoint",
@@ -23179,7 +23405,7 @@ return {
                     {
                       name = "present",
                       type = "boolean",
-                      description = "Whether a message was returned."
+                      description = "Whether a message was returned (use to detect nil)."
                     }
                   }
                 }
