@@ -1,4 +1,4 @@
-eturn {
+return {
   summary = 'Set the CompareMode for the Texture.',
   description = [[
     Sets the compare mode for a texture.  This is only used for "shadow samplers", which are uniform

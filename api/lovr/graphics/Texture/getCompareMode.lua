@@ -1,4 +1,4 @@
-eturn {
+return {
   summary = 'Get the CompareMode for the Texture.',
   description = 'Returns the compare mode for the texture.',
   arguments = {},
