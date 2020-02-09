@@ -11,5 +11,8 @@ return {
       type = 'number',
       description = 'The current time, in seconds.'
     }
+  },
+  related = {
+    'lovr.headset.getTime'
   }
 }
