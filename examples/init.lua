@@ -12,5 +12,6 @@ return {
   'Instancing',
   'Primitives',
   'Spectator_Camera',
-  'Microphones'
+  'Microphones',
+  'Optimization/Mask'
 }
