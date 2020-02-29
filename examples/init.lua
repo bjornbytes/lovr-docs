@@ -1,8 +1,9 @@
 return {
-  'Hello_World',
-  'Spinning_Cube',
-  '360_Photo',
-  '3D_Model',
+  'Intro/Hello_World',
+  'Intro/Spinning_Cube',
+  'Intro/3D_Model',
+  'Intro/360_Photo',
+  'Intro/Tracked_Hands',
   'Custom_Mesh',
   'Animation',
   'Physics',
