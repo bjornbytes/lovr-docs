@@ -4,6 +4,7 @@ return {
   'Intro/3D_Model',
   'Intro/360_Photo',
   'Intro/Tracked_Hands',
+  'Interaction/Pointing',
   'Custom_Mesh',
   'Animation',
   'Physics',
