@@ -5,6 +5,7 @@ return {
   'Intro/360_Photo',
   'Intro/Tracked_Hands',
   'Interaction/Pointing',
+  'Interaction/Selecting:_UI',
   'Custom_Mesh',
   'Animation',
   'Physics',
