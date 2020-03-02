@@ -6,11 +6,7 @@ function lovr.draw()
     lovr.graphics.setColor(1, 1, 1)
     lovr.graphics.sphere(position, .01)
 
-    if lovr.headset.isDown(hand, 'trigger') then
-      lovr.graphics.setColor(0, 1, 0)
-    else
-      lovr.graphics.setColor(1, 0, 0)
-    end
+    lovr.graphics.setColor(1, 0, 0)
     lovr.graphics.line(position, position + direction * 50)
   end
 end
