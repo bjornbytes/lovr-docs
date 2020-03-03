@@ -28,7 +28,7 @@ function lovr.update()
   button.hover, button.active = false, false
 
   for i, hand in ipairs(lovr.headset.getHands()) do
-    tips[hand] = pointers[hand] or lovr.math.newVec3()
+    tips[hand] = tips[hand] or lovr.math.newVec3()
 
     -- Ray info:
     local rayPosition = vec3(lovr.headset.getPosition(hand))
