@@ -15,6 +15,7 @@ end
 local button = {
   text = 'Please click me',
   textSize = .1,
+  count = 0,
   position = lovr.math.newVec3(0, 1, -3),
   width = 1.0,
   height = .4,
@@ -46,12 +47,15 @@ function lovr.update()
     -- If the ray intersects the plane, do a bounds test to make sure the x/y position of the hit
     -- is inside the button, then mark the button as hover/active based on the trigger state.
     if inside then
-      if lovr.headset.wasPressed(hand, 'trigger') then
-        print('ALERT: The button has been pressed')
-      elseif lovr.headset.isDown(hand, 'trigger') then
+      if lovr.headset.isDown(hand, 'trigger') then
         button.active = true
       else
         button.hover = true
+      end
+
+      if lovr.headset.wasReleased(hand, 'trigger') then
+        button.count = button.count + 1
+        print('BOOP')
       end
     end
 
@@ -75,6 +79,7 @@ function lovr.draw()
   -- Button text (add a small amount to the z to put the text slightly in front of button)
   lovr.graphics.setColor(1, 1, 1)
   lovr.graphics.print(button.text, button.position + vec3(0, 0, .001), button.textSize)
+  lovr.graphics.print('Count: ' .. button.count, button.position + vec3(0, .5, 0), .1)
 
   -- Pointers
   for hand, tip in pairs(tips) do
