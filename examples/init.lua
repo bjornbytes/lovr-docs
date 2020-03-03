@@ -6,6 +6,7 @@ return {
   'Intro/Tracked_Hands',
   'Interaction/Pointer',
   'Interaction/Pointer_UI',
+  'Interaction/Physics_Pointer',
   'Custom_Mesh',
   'Animation',
   'Physics',
