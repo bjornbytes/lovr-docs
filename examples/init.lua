@@ -7,6 +7,7 @@ return {
   'Interaction/Pointer',
   'Interaction/Pointer_UI',
   'Interaction/Physics_Pointer',
+  'Interaction/Controller_Models',
   'Custom_Mesh',
   'Animation',
   'Physics',
