@@ -8,6 +8,7 @@ return {
   'Interaction/Pointer_UI',
   'Interaction/Physics_Pointer',
   'Interaction/Controller_Models',
+  'Environment/Grid',
   'Custom_Mesh',
   'Animation',
   'Physics',
