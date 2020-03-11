@@ -8,6 +8,7 @@ return {
   'Interaction/Pointer_UI',
   'Interaction/Physics_Pointer',
   'Interaction/Controller_Models',
+  'Interaction/Hand_Tracking',
   'Environment/Grid',
   'Environment/Skybox',
   'Custom_Mesh',
