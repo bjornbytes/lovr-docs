@@ -20,6 +20,6 @@ return {
   'Primitives',
   'Spectator_Camera',
   'Microphones',
-  'Optimization/Mask'
+  'Optimization/Mask',
   'Debugging/FPS_Controls'
 }
