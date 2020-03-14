@@ -21,4 +21,5 @@ return {
   'Spectator_Camera',
   'Microphones',
   'Optimization/Mask'
+  'Debugging/FPS_Controls'
 }
