@@ -7,6 +7,7 @@ return {
   'Interaction/Pointer',
   'Interaction/Pointer_UI',
   'Interaction/Physics_Pointer',
+  'Interaction/Dragging',
   'Interaction/Controller_Models',
   'Interaction/Hand_Tracking',
   'Environment/Grid',
