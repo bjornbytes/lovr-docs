@@ -1,5 +1,6 @@
 function lovr.load()
   lovr.graphics.setBackgroundColor(.2, 0, .4)
+  lovr.graphics.setShader(lovr.graphics.newShader('unlit', { flags = { animated = true } }))
 
   models = {
     left = lovr.headset.newModel('hand/left'),
