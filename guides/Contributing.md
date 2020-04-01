@@ -30,6 +30,12 @@ submitting.  Try to stick to the existing coding style:
 - 2 space indentation.
 - 100 character wrapping (ish, sometimes it's more readable to just have a long line).
 - Use descriptive, camelCased variable names when possible.
+- Put stars near types: `Texture* texture`.
+- Use curly braces for the bodies of conditionals and loops, and place them on their own line.  An
+  exception can be made for very short blocks -- they can be placed inline without curlies, e.g.
+  `if (data == NULL) return;`.
+- Always use spaces around binary operators.
+- Always use spaces before the parentheses and curlies in control flow: `while (condition) {`.
 
 Organization
 ---
