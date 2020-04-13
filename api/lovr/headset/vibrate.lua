@@ -42,8 +42,6 @@ return {
     must be less than .004 seconds.  Call this function several frames in a row for stronger or
     prolonged vibration patterns.
 
-    The `oculus` headset driver does not currently support haptics.
-
     On the Oculus Quest, devices can only be vibrated once per frame.  Any attempts after the first
     will return `false`.  The Oculus Go controller does not support vibration.
   ]]
