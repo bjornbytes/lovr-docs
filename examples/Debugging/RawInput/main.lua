@@ -9,6 +9,11 @@ local function appendMovement(s, device)
   return s
 end
 
+local lines = {}
+local function lineWidth(i, w)
+  lines[i] = lines[i] and math.max(lines[i], w) or w
+  return lines[i]
+end
 local controllerData = {}
 local function controllerFetch(k)
   if not controllerData[k] then controllerData[k] = {} end
@@ -18,11 +23,11 @@ end
 local function drawText()
   local hands = lovr.headset.getHands()
   -- Head
-  local s = string.format("%d controllers\nhead", #hands)
-  s = appendMovement(s, "head")
-  local i = 0
+  local s = {string.format("%d controllers", #hands),
+             appendMovement("head ", "head")}
   for i,controller in ipairs(hands) do
   	local c = controllerFetch(controller)
+    table.insert(s, false)
     -- Axes
     local axes = ""
     for i2, axis in ipairs{"touchpad", "thumbstick"} do
@@ -33,21 +38,28 @@ local function drawText()
       end
     end
     -- Controller name and axes
-    s = string.format("%s\n\n%d (%s): %strig %1.1f; grip %1.1f", s, i, controller, axes, lovr.headset.getAxis(controller, "trigger") or -999, lovr.headset.getAxis(controller, "grip") or -999)
-    s = appendMovement(s, controller)
+    table.insert(s, string.format("%d (%s): %strig %1.1f; grip %1.1f", i, controller, axes, lovr.headset.getAxis(controller, "trigger") or -999, lovr.headset.getAxis(controller, "grip") or -999))
+    s[#s] = appendMovement(s[#s], controller)
     -- Buttons
-    s = s .. "\nDOWN"
+    table.insert(s, "DOWN")
     for i,name in ipairs({"grip", "trigger", "touchpad", "thumbstick", "menu", "a", "b", "x", "y"}) do
-    	s = s .. string.format(" %s:%d", name, lovr.headset.isDown(controller, name) and 1 or 0)
+    	s[#s] = string.format("%s %s:%d", s[#s], name, lovr.headset.isDown(controller, name) and 1 or 0)
     end
-    s = s .. "\nTOUCH"
+    table.insert(s, "TOUCH")
     for i,name in ipairs({"grip", "trigger", "touchpad", "thumbstick", "menu", "a", "b", "x", "y"}) do
-    	if i ~= 1 then s = s .. " " end
-    	s = s .. string.format(" %s:%d", name, lovr.headset.isTouched(controller, name) and 1 or 0)
+    	s[#s] = string.format("%s %s:%d", s[#s], name, lovr.headset.isTouched(controller, name) and 1 or 0)
     end
   end
   -- Display
-  lovr.graphics.print(s, 0, 2, -3, .5)
+  local font = lovr.graphics.getFont()
+  local fh = font:getHeight()/2 -- Half size render
+  local top = 2 + fh*#s/2
+  for i,line in ipairs(s) do -- Manually center using maximum width of each line so it jiggles less
+    if line then
+      local w = lineWidth(i, font:getWidth(line))
+      lovr.graphics.print(line, -w/2/2, top-fh*i, -3, .5, 0,0,1,0,0, "left")
+    end
+  end
 end
 
 function lovr.draw()
