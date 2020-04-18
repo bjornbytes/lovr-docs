@@ -1,8 +1,8 @@
 return {
   summary = 'Get the absolute path to a file.',
   description = [[
-    Get the absolute path of a directory containing a path in the virtual filesystem.  This can be
-    used to determine if a file is in the game's source directory or the save directory.
+    Get the absolute path of the mounted archive containing a path in the virtual filesystem.  This
+    can be used to determine if a file is in the game's source directory or the save directory.
   ]],
   arguments = {
     {
@@ -15,7 +15,7 @@ return {
     {
       name = 'realpath',
       type = 'string',
-      description = 'The absolute path of the directory containing `path`.'
+      description = 'The absolute path of the mounted archive containing `path`.'
     }
   }
 }
