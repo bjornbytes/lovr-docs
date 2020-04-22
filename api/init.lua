@@ -1634,35 +1634,6 @@ return {
               }
             },
             {
-              name = "getDirection",
-              summary = "Get the direction vector of the Source.",
-              description = "Returns the direction vector of the Source (the direction it's playing in).",
-              key = "Source:getDirection",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the direction vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the direction vector."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the direction vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getDuration",
               summary = "Get the duration of the Source.",
               description = "Returns the duration of the Source.",
@@ -2189,35 +2160,6 @@ return {
                       name = "outerVolume",
                       type = "number",
                       description = "The outer cone angle, in radians."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setDirection",
-              summary = "Set the direction vector of the Source.",
-              description = "Sets the direction vector of the Source (the direction it's playing in).",
-              key = "Source:setDirection",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the direction vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the direction vector."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the direction vector."
                     }
                   },
                   returns = {}
