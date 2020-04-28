@@ -467,7 +467,7 @@ return {
       name = "json",
       tag = "library",
       summary = "Encodes and decodes JSON.",
-      description = "The json module exposes functions for encoding and decoding JSON. You can use it by requiring the `json` module.",
+      description = "The json module exposes functions for encoding and decoding JSON. You can use it by requiring the `cjson` module.",
       key = "json",
       functions = {},
       objects = {},
@@ -475,7 +475,7 @@ return {
       external = true,
       examples = {
         {
-          code = "local json = require 'json'\nlocal data = { health = 10, position = { 1, 2, 3 } }\nlocal encoded = json.encode(data)\nprint(encoded)\nlocal decoded = json.decode(encoded)\nprint(decoded.health, unpack(decoded.position))"
+          code = "local json = require 'cjson'\nlocal data = { health = 10, position = { 1, 2, 3 } }\nlocal encoded = json.encode(data)\nprint(encoded)\nlocal decoded = json.decode(encoded)\nprint(decoded.health, unpack(decoded.position))"
         }
       }
     },

@@ -3,11 +3,11 @@ return {
   summary = 'Encodes and decodes JSON.',
   description = [[
     The json module exposes functions for encoding and decoding JSON. You can use it by requiring
-    the `json` module.
+    the `cjson` module.
   ]],
   external = true,
   example = [[
-    local json = require 'json'
+    local json = require 'cjson'
     local data = { health = 10, position = { 1, 2, 3 } }
     local encoded = json.encode(data)
     print(encoded)
