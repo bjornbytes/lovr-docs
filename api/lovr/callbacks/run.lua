@@ -67,6 +67,7 @@ return {
             end
             lovr.graphics.present()
           end
+          lovr.math.drain()
         end
       end
     ]],
