@@ -8500,7 +8500,7 @@ return {
           description = "Creates a new Model from a file.  The supported 3D file formats are OBJ and glTF.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be loaded as linear.\n\nCurrently, the following features are not supported by the model importer:\n\n- OBJ: Quads are not supported (only triangles).\n- glTF: Sparse accessors are not supported.\n- glTF: Morph targets are not supported.\n- glTF: base64 images are not supported (base64 buffer data works though).\n- glTF: Only the default scene is loaded.\n- glTF: Currently, there is a limit of 48 joints in a skin.",
+          notes = "Diffuse and emissive textures will be loaded in the sRGB encoding, all other textures will be loaded as linear.\n\nCurrently, the following features are not supported by the model importer:\n\n- OBJ: Quads are not supported (only triangles).\n- glTF: Sparse accessors are not supported.\n- glTF: Morph targets are not supported.\n- glTF: base64 images are not supported (base64 buffer data works though).\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 48 joints.",
           variants = {
             {
               arguments = {
