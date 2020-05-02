@@ -39,5 +39,6 @@ return {
     - glTF: Morph targets are not supported.
     - glTF: base64 images are not supported (base64 buffer data works though).
     - glTF: Only the default scene is loaded.
+    - glTF: Currently, there is a limit of 48 joints in a skin.
   ]]
 }
