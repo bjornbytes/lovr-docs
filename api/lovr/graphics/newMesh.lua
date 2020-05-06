@@ -79,5 +79,15 @@ return {
       returns = { 'mesh' }
     }
   },
-  notes = 'Once created, the size and format of the Mesh cannot be changed.'
+  notes = [[
+    Once created, the size and format of the Mesh cannot be changed.'
+
+    The default mesh format is:
+
+        {
+          { 'lovrPosition',    'float', 3 },
+          { 'lovrNormal',      'float', 3 },
+          { 'lovrTexCoord',    'float', 2 }
+        }
+  ]]
 }
