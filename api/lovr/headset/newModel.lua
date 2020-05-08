@@ -22,7 +22,7 @@ return {
     local models = {}
 
     function lovr.draw()
-      for hand in ipairs(lovr.headset.getHands()) do
+      for i, hand in ipairs(lovr.headset.getHands()) do
         models[hand] = models[hand] or lovr.headset.newModel(hand)
 
         if models[hand] then
