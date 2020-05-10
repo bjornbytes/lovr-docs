@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the bytes backing this SoundData as a `Blob`.',
+  summary = 'Get the bytes backing this SoundData as a Blob.',
   description = 'Returns a Blob containing the raw bytes of the SoundData.',
   arguments = {},
   returns = {
