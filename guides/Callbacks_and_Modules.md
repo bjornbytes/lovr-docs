@@ -203,13 +203,13 @@ end
 
 function lovr.update(dt)
   -- Synchronize controllerBoxes with the active controllers
-  for i, controller in ipairs(lovr.headset.getControllers()) do
+  for i, hand in ipairs(lovr.headset.getHands()) do
     if not controllerBoxes[i] then
       controllerBoxes[i] = world:newBoxCollider(0, 0, 0, .25)
       controllerBoxes[i]:setKinematic(true)
     end
-    controllerBoxes[i]:setPosition(controller:getPosition())
-    controllerBoxes[i]:setOrientation(controller:getOrientation())
+    controllerBoxes[i]:setPosition(lovr.headset.getPosition(hand))
+    controllerBoxes[i]:setOrientation(lovr.headset.getOrientation(hand))
   end
 
   -- Update the physics simulation
