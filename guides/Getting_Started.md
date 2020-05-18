@@ -64,6 +64,8 @@ Tips
 - If you need to use `print` in Lua for debug messages, you can drag and drop the project onto
   `lovrc.bat` instead of `lovr.exe`, or specify the `--console` flag when running on the command
   line.
+- If you've disabled the headset module to develop without VR completely, set the Y value of the
+  cube at 0 instead of 1.7, since the camera will be centered at `(0, 0, 0)`.
 
 Next Steps
 ---
