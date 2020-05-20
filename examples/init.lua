@@ -18,10 +18,10 @@ return {
   'Physics',
   'PBR_Materials',
   'Postprocessing',
-  'Instancing',
   'Primitives',
   'Spectator_Camera',
   'Microphones',
+  'Optimization/Instancing',
   'Optimization/Mask',
   'Debugging/FPS_Controls'
 }
