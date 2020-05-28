@@ -55,6 +55,10 @@ return {
       returns = { 'm' }
     },
     {
+      arguments = { 'position', 'rotation' },
+      returns = { 'm' }
+    },
+    {
       arguments = { '...' },
       returns = { 'm' }
     },
