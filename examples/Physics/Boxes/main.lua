@@ -32,7 +32,6 @@ function lovr.update(dt)
     if not controllerBoxes[i] then
       controllerBoxes[i] = world:newBoxCollider(0, 0, 0, .25)
       controllerBoxes[i]:setKinematic(true)
-      controllerBoxes[i]:setMass(10)
     end
     controllerBoxes[i]:setPose(lovr.headset.getPose(hand))
   end
