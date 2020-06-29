@@ -196,7 +196,7 @@ found at `config/default`.  Some android-specific configuration needs to be fill
   - Other: Check `ndk-bundle/prebuilt` folder to see a list of them.
 - Set `CONFIG_ANDROID_KEYSTORE` to the path to the keystore file.  See "Creating a Keystore" below
   for instructions on how to create a keystore.
-- Set `CONFIG_ANDROiD_KEYSTORE_PASS` to the password to the keystore file.  This can be used in
+- Set `CONFIG_ANDROID_KEYSTORE_PASS` to the password to the keystore file.  This can be used in
   multiple ways, described in "Creating a Keystore" below.
 - Optional: To use a custom Android manifest XML, set `CONFIG_ANDROID_MANIFEST`.
 - Optional: To embed assets in the APK (e.g. a project folder), set `CONFIG_ANDROID_ASSETS`.
@@ -216,7 +216,7 @@ the command line:
 
 - Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
   `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
-- Set `ANDROiD_ABI` to `arm64-v8a`.
+- Set `ANDROID_ABI` to `arm64-v8a`.
 - Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use.
 - Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
 - Set `ANDROID_KEYSTORE` to the path to they keystore file.  See "Creating a Keystore" below.
