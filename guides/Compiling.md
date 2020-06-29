@@ -169,14 +169,14 @@ various versions of Android, the Android build tools, and the NDK.
 
 Android Studio isn't required, but can be used to install the SDK and NDK as well.
 
-Note where the SDK is installed.  Some paths in the SDK will need to be specified before building.
+Note where the SDK is installed.  Some paths in the SDK will need to be specified.
 
-Either CMake or tup can be used to build an APK that can be installed on an Android device.
+CMake or tup can be used to build an APK that can be installed on an Android device.
 
 When building for Oculus Android devices, download the latest Oculus Mobile SDK and copy the VrApi
 folder from there into `deps`.
 
-#### tup
+### tup
 
 When using tup, third-party dependencies need to be built with CMake.  Follow the CMake instructions
 below, but add `-DLOVR_BUILD_EXE=OFF` to only build the LÖVR dependencies.
@@ -209,7 +209,7 @@ $ tup
 
 to build the apk.
 
-#### CMake
+### CMake
 
 The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
 the command line:
@@ -225,13 +225,13 @@ the command line:
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
 
-#### Adding Project Code
+### Adding Project Code
 
 To build an apk that runs a LÖVR project, pass the folder path as the `ANDROID_ASSETS` option to
 either CMake or tup.  This will run the LÖVR project when the apk starts, similar to how things work
 when fusing a zip to an exe on desktop systems.
 
-#### Using a Custom Android Manifest
+### Using a Custom Android Manifest
 
 Although LÖVR provides a default `AndroidManifest.xml`, you can also use your own by passing its
 path as the `ANDROID_MANIFEST` option to either CMake or tup.  This can be used to request extra
@@ -239,7 +239,7 @@ permissions, change the package ID or app name, etc.
 
 Any file named `AndroidManifest*.xml` will be ignored in LÖVR's git repository.
 
-#### Creating a Keystore
+### Creating a Keystore
 
 A keystore file needs to be generated, which is used to sign the APK after it's built.
 
