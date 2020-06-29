@@ -155,8 +155,105 @@ For an improved WebVR workflow with live-reloading, check out [`lovr-webvr-serve
 Android
 ---
 
-See [`lovr-oculus-mobile`](https://github.com/mcclure/lovr-oculus-mobile) for instructions on
-building LÖVR on Android.
+First, make sure the Java JDK is installed.
+
+Then, the Android SDK and NDK need to be installed.  The version to install depends on the devices
+being targeted:
+
+- Version 26: Oculus Quest.
+- Version 21: Oculus Quest and Oculus Go.
+
+The Android command line tools can be found on the Android website or installed using a package
+manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
+various versions of Android, the Android build tools, and the NDK.
+
+Android Studio isn't required, but can be used to install the SDK and NDK as well.
+
+Note where the SDK is installed.  Some paths in the SDK will need to be specified before building.
+
+Either CMake or tup can be used to build an APK that can be installed on an Android device.
+
+When building for Oculus Android devices, download the latest Oculus Mobile SDK and copy the VrApi
+folder from there into `deps`.
+
+#### tup
+
+When using tup, third-party dependencies need to be built with CMake.  Follow the CMake instructions
+below, but add `-DLOVR_BUILD_EXE=OFF` to only build the LÖVR dependencies.
+
+Next, make sure you have a `tup.config` file in the repository root.  A sample config file can be
+found at `config/default`.  Some android-specific configuration needs to be filled in there:
+
+- Set `CONFIG_PLATFORM` to `android`.
+- Set `CONFIG_ANDROID_SDK` to the path to the Android SDK.
+- Set `CONFIG_ANDROID_VERSION` to the version of Android to use.  Check the `sdk/platforms` folder
+  to see which Android versions are installed.
+- Set `CONFIG_ANDROID_BUILD_TOOLS_VERSION` to the build tools version.  Check the `sdk/build-tools`
+  folder to see which versions are installed.
+- Set `CONFIG_HOST_TAG` to the type of computer you're using.  Examples:
+  - `windows-x86_64` for 64 bit Windows.
+  - `darwin-x86_64` for 64 bit macOS.
+  - Other: Check `ndk-bundle/prebuilt` folder to see a list of them.
+- Set `CONFIG_ANDROID_KEYSTORE` to the path to the keystore file.  See "Creating a Keystore" below
+  for instructions on how to create a keystore.
+- Set `CONFIG_ANDROiD_KEYSTORE_PASS` to the password to the keystore file.  This can be used in
+  multiple ways, described in "Creating a Keystore" below.
+- Optional: To use a custom Android manifest XML, set `CONFIG_ANDROID_MANIFEST`.
+- Optional: To embed assets in the APK (e.g. a project folder), set `CONFIG_ANDROID_ASSETS`.
+
+Once all of this is set up, run `tup init` if tup hasn't been initialized yet.  Then run
+
+```
+$ tup
+```
+
+to build the apk.
+
+#### CMake
+
+The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
+the command line:
+
+- Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
+  `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
+- Set `ANDROiD_ABI` to `arm64-v8a`.
+- Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use.
+- Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
+- Set `ANDROID_KEYSTORE` to the path to they keystore file.  See "Creating a Keystore" below.
+- Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
+  described in "Creating a Keystore" below.
+- Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
+- Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
+
+#### Adding Project Code
+
+To build an apk that runs a LÖVR project, pass the folder path as the `ANDROID_ASSETS` option to
+either CMake or tup.  This will run the LÖVR project when the apk starts, similar to how things work
+when fusing a zip to an exe on desktop systems.
+
+#### Using a Custom Android Manifest
+
+Although LÖVR provides a default `AndroidManifest.xml`, you can also use your own by passing its
+path as the `ANDROID_MANIFEST` option to either CMake or tup.  This can be used to request extra
+permissions, change the package ID or app name, etc.
+
+Any file named `AndroidManifest*.xml` will be ignored in LÖVR's git repository.
+
+#### Creating a Keystore
+
+A keystore file needs to be generated, which is used to sign the APK after it's built.
+
+To generate a keystore, use Java's `keytool` tool:
+
+```
+$ keytool -genkey -keystore <name>.keystore -alias <name> -keyalg RSA -keysize 2048 -validity 10000
+```
+
+When specifying the password for the keystore, it can be done in multiple ways:
+
+- `pass:<string>` will use `<string>` as the password.
+- `env:<var>` will use the value of the `<var>` environment variable.
+- `file:<file>` will use the contents of `<file>` as the password.
 
 Troubleshooting
 ---
