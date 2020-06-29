@@ -225,6 +225,29 @@ the command line:
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
 
+The usual CMake incantation with all of the above variables set up should produce `lovr.apk`:
+
+```
+$ cmake ..
+$ cmake --build .
+```
+
+### Installing the APK
+
+To install the APK, an Android device needs to be connected.  Run
+
+```
+$ adb devices
+```
+
+to ensure that a device is connected, then run
+
+```
+$ adb install lovr.apk
+```
+
+To install the apk.  The `-r` flag can be used to overwrite an existing apk.
+
 ### Adding Project Code
 
 To build an apk that runs a LÖVR project, pass the folder path as the `ANDROID_ASSETS` option to
