@@ -224,6 +224,7 @@ the command line:
   described in "Creating a Keystore" below.
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
+- Windows: Make sure you add `-G "Unix Makefiles"` so it doesn't try to use Visual Studio.
 
 The usual CMake incantation with all of the above variables set up should produce `lovr.apk`:
 
