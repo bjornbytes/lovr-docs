@@ -100,7 +100,7 @@ Luckily, LÖVR loves you, and makes this very easy. Here's the new vertex shade
 
         vec4 position(mat4 projection, mat4 transform, vec4 vertex) 
         { 
-            Normal = lovrNormal;
+            Normal = lovrNormal * lovrNormalMatrix;
             FragmentPos = vec3(lovrModel * vertex);
             
             return projection * transform * vertex; 
@@ -111,7 +111,7 @@ Luckily, LÖVR loves you, and makes this very easy. Here's the new vertex shade
 
 >Special note: Casting and converting vec3 and vec4 can be annoying. Luckily, GLSL makes this easy by allowing a special .xyz method on vec4 variables that will do this for us, e.g. we could have done: FragmentPos = (lovrModel * vertex).xyz instead and it would perform the same.
 
-In LÖVR, lovrNormal is defined as the vertex's normal, if one exists. Easy - already calculated for us!
+In LÖVR, lovrNormal is defined as the vertex's normal, if one exists. Easy - already calculated for us! The reason why we multiply it by the lovrNormalMatrix is so the lighting is applied to the final transform value - i.e. the rotation and position as well.
 
 FragmentPos is less self-explanatory, but what we need to know is that this represents the xyz component of the current vertex of the currently being rendered model (of type lovrModel). In other words, a single visible point on the model. 
 
@@ -221,6 +221,8 @@ And that's it! With any luck, you'll have a properly-lit model like so (lightPos
 There's lots of playing around you can do - experiment with multiple lights, new shaders that are variants on the theme, and explore GLSL. 
 
 >Special Note 3: For factorization purposes, you can keep the vertex and fragment shader code in seperate files (default extension for them is .vs and .fs). You can use the lovr.filesystem.read() command to load them in as strings just like above. The advantage of this is using syntax highlighting or linting when coding your shaders i.e. in VS Code.
+
+>Final Note: If you are having issues with some faces on your models not being lit properly, make sure it is built with a uniform scale. This can easily be done in Blender by selecting a properly scaled piece, then A to select the entire model, then Cmd+A (Apply) -> Scale. There is also the uniformScale shader flag, which gives a small speed boost - you should be developing everything in uniform scale in VR anyway!
 
 [Complete source code for this tutorial can be found here.](https://barelyconsciousgames.com/lovr-phong.zip)
 
