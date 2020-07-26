@@ -72,7 +72,7 @@ Here's the new fragment shader:
     ]]
     shader:send('ambience', { 0.2, 0.2, 0.2, 1.0 })
 
-We changed a bit here. First, we added a new 'uniform' variable to represent the ambient light color. Uniform is a keyword that allows us to expose values through the LÖVR / Lua interface, so we can change them freely. We do this with the shader's :send method. Assigning a value to the uniform variable in this way is 'safe' programming - if you try to assign a value to a uniform variable on Android, the game will crash and complain. I set this value to a dark grey. The values correspond to R, G, B, A - though for this case you generally want the alpha value to be 1.0, otherwise anything drawn with this shader will be rendered as transparent.
+We changed a bit here. First, we added a new 'uniform' variable to represent the ambient light color. Uniform is a keyword that allows us to expose values through the LÖVR / Lua interface, so we can change them freely. We do this with the shader's :send method. Assigning a value to the uniform variable in this way is 'safe' programming - if you try to assign a value to a uniform variable in it's declaration on Android, the game will crash and complain. I set the color to a 20% grey. The values correspond to R, G, B, A - though for this case you generally want the alpha value to be 1.0, otherwise anything drawn with this shader will be rendered as transparent.
 
 Second, we are changing a lot about the value being returned.
 
@@ -144,7 +144,7 @@ The math and reasoning for this is explained in the LearnOpenGL tutorial, so her
 
 - liteColor is a new uniform vec4, of values RGBA, that represents the individual light's emissive color
 - lightPos is the position in world space the individual light emits light from 
-- in is used here to indicate the variables we want from the vertex shader
+- 'in' is used here to indicate the variables we want from the vertex shader
 - normalize() is an OpenGL function to make operations like this easier
 - we are now returning the baseColor of the fragment times ambience PLUS diffuse - be sure these are added, not multiplied together
 
