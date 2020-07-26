@@ -116,6 +116,7 @@ In LÖVR, lovrNormal is defined as the vertex's normal, if one exists. Easy - al
 FragmentPos is less self-explanatory, but what we need to know is that this represents the xyz component of the current vertex of the currently being rendered model (of type lovrModel). In other words, a single visible point on the model. 
 
 Now the important part, using that data on our fragment shader:
+
     defaultFragment = [[
         uniform vec4 ambience;
         
