@@ -222,7 +222,8 @@ There's lots of playing around you can do - experiment with multiple lights, new
 
 >Special Note 3: For factorization purposes, you can keep the vertex and fragment shader code in seperate files (default extension for them is .vs and .fs). You can use the lovr.filesystem.read() command to load them in as strings just like above. The advantage of this is using syntax highlighting or linting when coding your shaders i.e. in VS Code.
 
-[COMPLETE SOURCE HERE](https://barelyconsciousgames.com/lovr-phong.zip)
-This will work on your Quest or Go as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Android)). A moving, unlit sphere was added in the example to represent the light source to better visualize it.
+[Complete source code for this tutorial can be found here.](https://barelyconsciousgames.com/lovr-phong.zip)
+
+This should work on your Quest, Go, or GearVR as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Android)). A moving, unlit sphere was added in the example to represent the light source to better visualize it.
 
 Have fun with LÖVR!
