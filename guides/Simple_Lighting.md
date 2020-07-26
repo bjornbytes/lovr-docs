@@ -22,10 +22,10 @@ Our First Shaders
 Assuming you already have a project set up and are loading and displaying a model, let's try initializing a custom shader first. To do that, we write a slightly modified OpenGL .vs (vertex shader) which we store as a multi-line string in Lua:
 
     customVertex = [[
-        vec4 position(mat4 projection, mat4 transform, vec4 vertex)
-        {
-            return projection * transform * vertex;
-        }
+        vec4 position(mat4 projection, mat4 transform, vec4 vertex)
+        {
+            return projection * transform * vertex;
+        }
     ]]
 
 Note for now this is just the default LÖVR vertex shader as listed in the [Shader page of the manual](https://lovr.org/docs/Shader).
@@ -42,10 +42,10 @@ For the newShader method, passing nil as an argument will use the default fragme
 If you run this as-is, it should perform exactly as if you had the default shader. Let's do the same thing for the fragment shader:
 
     customFragment = [[
-        vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) 
-        {
-            return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);
-        }
+        vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) 
+        {
+            return graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);
+            }
     ]]
 
 Changing nil in the newShader line to customFragment should again run with no issues.
@@ -72,11 +72,11 @@ Here's the new fragment shader:
     ]]
     shader:send('ambience', { 0.2, 0.2, 0.2, 1.0 })
 
-We changed a bit here. First, we added a new 'uniform' variable to represent the ambient light color. Uniform is a keyword that allows us to expose values through the LÖVR / Lua interface, so we can change them freely. We do this with the shader's :send method. Assigning a value to the uniform variable in this way is 'safe' programming - if you try to assign a value to a uniform variable in it's declaration on Android, the game will crash and complain. I set the color to a 20% grey. The values correspond to R, G, B, A - though for this case you generally want the alpha value to be 1.0, otherwise anything drawn with this shader will be rendered as transparent.
+We changed a bit here. First, we added a new 'uniform' variable to represent the ambient light color. Uniform is a keyword that allows us to expose values through the LÖVR / Lua interface, so we can change them freely. We do this with the shader's :send method. Assigning a value to the uniform variable in this way is 'safe' programming - if you try to assign a value to a uniform variable in it's declaration on Android, the game will crash and complain. The color is set to a 20% grey, but you can pick any color. The values correspond to R, G, B, A - though for this case you generally want the alpha value to be 1.0, otherwise anything drawn with this shader will be rendered as transparent.
 
 Second, we are changing a lot about the value being returned.
 
-The original code has graphicsColor (the value of lovr.graphics.setColor()) being multiplied by lovrDiffuseColor - this is a value of { 1.0, 1.0, 1.0, 1.0 }, but for simplicities' sake, I figured let's just not use this value (it's stored in a hidden shader header) and use our own.
+The original code has graphicsColor (the value of lovr.graphics.setColor()) being multiplied by lovrDiffuseColor - this is a value of { 1.0, 1.0, 1.0, 1.0 }, but for simplicities' sake, let's just not use this value (it's stored in a hidden shader header) and use our own!
 
 Also, we don't need the vertexColor. This is another value which defaults to 1 that is separate from our draw color, and the texture color, and our new ambience color.
 
@@ -146,7 +146,7 @@ The math and reasoning for this is explained in the LearnOpenGL tutorial, so her
 - lightPos is the position in world space the individual light emits light from 
 - 'in' is used here to indicate the variables we want from the vertex shader
 - normalize() is an OpenGL function to make operations like this easier
-- we are now returning the baseColor of the fragment times ambience PLUS diffuse - be sure these are added, not multiplied together
+- We are now returning the baseColor of the fragment times ambience PLUS diffuse - be sure these are added, not multiplied together
 
 If you compile and run now, you should notice a bright light illuminating your scene. Experiment with variables and using the 'send' method (shader:send('liteColor', <new color table>) or shader:send('lightPos', <new position>)) in your draw() loops.
 
@@ -205,7 +205,7 @@ viewPos at (0, 0, 0) is fine for a static camera, but we're doing VR, after all!
         end
     end
 
->Special Note 2: The viewing position (not as much angle) is very important for the effectiveness of specular light. If you move the camera with the WASD keys in the desktop version of lovr (as in, you are running without a headset) then the lighting effect won't look very good. For testing without a headset, in this example, it's best to keep the camera in one position, and rotate it. 
+>Special Note 2: The viewing position (not as much angle) is very important for the effectiveness of specular light. Moving the camera in the desktop mirror of lovr does not change the view position, so you might get lighting artifacts if you move the camera without updating the view position. Try this with a headset on!
 
 specularStrength is the 'harshness' of the light. This generally amounts to how sharp or bright the light's reflection can look.
 
@@ -222,6 +222,6 @@ There's lots of playing around you can do - experiment with multiple lights, new
 >Special Note 3: For factorization purposes, you can keep the vertex and fragment shader code in seperate files (default extension for them is .vs and .fs). You can use the lovr.filesystem.read() command to load them in as strings just like above. The advantage of this is using syntax highlighting or linting when coding your shaders i.e. in VS Code.
 
 [COMPLETE SOURCE HERE](https://barelyconsciousgames.com/lovr-phong.zip)
-This will work on your Quest or Go as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Android)). I added a moving, unlit sphere in the example to represent the light source to better visualize it.
+This will work on your Quest or Go as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Android)). A moving, unlit sphere was added in the example to represent the light source to better visualize it.
 
 Have fun with LÖVR!
