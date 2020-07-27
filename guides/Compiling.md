@@ -157,11 +157,12 @@ Android
 
 First, make sure the Java JDK is installed.
 
-Then, the Android SDK and NDK need to be installed.  The version to install depends on the devices
-being targeted:
+Then, the Android SDK and NDK need to be installed.  The SDK version to install depends on the
+devices being targeted:
 
 - Version 26: Oculus Quest.
 - Version 21: Oculus Quest and Oculus Go.
+- Version 29: Pico Neo 2.
 
 The Android command line tools can be found on the Android website or installed using a package
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
@@ -217,7 +218,7 @@ the command line:
 - Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
   `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
 - Set `ANDROID_ABI` to `arm64-v8a`.
-- Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use.
+- Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use (e.g. `26`).
 - Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
 - Set `ANDROID_KEYSTORE` to the path to they keystore file.  See "Creating a Keystore" below.
 - Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
