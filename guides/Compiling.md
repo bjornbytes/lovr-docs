@@ -162,7 +162,7 @@ devices being targeted:
 
 - Version 26: Oculus Quest.
 - Version 21: Oculus Quest and Oculus Go.
-- Version 29: Pico Neo 2.
+- Version 27: Pico Neo 2.
 
 The Android command line tools can be found on the Android website or installed using a package
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
