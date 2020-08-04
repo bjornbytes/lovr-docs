@@ -155,7 +155,7 @@ For an improved WebVR workflow with live-reloading, check out [`lovr-webvr-serve
 Android
 ---
 
-First, make sure the Java JDK is installed.
+First, make sure the Java JDK is installed (version 8 is known to work).
 
 Then, the Android SDK and NDK need to be installed.  The SDK version to install depends on the
 devices being targeted:
@@ -168,7 +168,7 @@ The Android command line tools can be found on the Android website or installed 
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
 various versions of Android, the Android build tools, and the NDK.
 
-Android Studio isn't required, but can be used to install the SDK and NDK as well.
+Android Studio isn't required, but can be used to install the SDK, NDK, and Java as well.
 
 Note where the SDK is installed.  Some paths in the SDK will need to be specified.
 
@@ -217,6 +217,7 @@ the command line:
 
 - Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
   `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
+- Set `ANDROID_SDK` to the path to the Android SDK.
 - Set `ANDROID_ABI` to `arm64-v8a`.
 - Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use (e.g. `26`).
 - Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
