@@ -5367,6 +5367,27 @@ return {
           }
         },
         {
+          name = "UniformAccess",
+          summary = "Different access hints for shader resources.",
+          description = "When binding writable resources to shaders using `Shader:sendBlock` and `Shader:sendImage`, an access pattern can be specified as a hint that says whether you plan to read or write to the resource (or both).  Sometimes, LÖVR or the GPU driver can use this hint to get better performance or avoid stalling.",
+          key = "UniformAccess",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "read",
+              description = "The Shader will use the resource in a read-only fashion."
+            },
+            {
+              name = "write",
+              description = "The Shader will use the resource in a write-only fashion."
+            },
+            {
+              name = "readwrite",
+              description = "The resource will be available for reading and writing."
+            }
+          }
+        },
+        {
           name = "VerticalAlign",
           summary = "Different ways to vertically align text.",
           description = "Different ways to vertically align text when using `lovr.graphics.print`.",
@@ -13603,7 +13624,7 @@ return {
             "DeviceAxis",
             "lovr.headset.isDown"
           },
-          notes = "The axis values will be between 0 and 1 for 1D axes, and between -1 and 1 for multidimensional axes."
+          notes = "The axis values will be between 0 and 1 for 1D axes, and between -1 and 1 for each component of a multidimensional axis."
         },
         {
           name = "getBoundsDepth",
@@ -16038,6 +16059,29 @@ return {
                       type = "Vec3",
                       description = "The scale of the matrix.",
                       default = "1, 1, 1"
+                    },
+                    {
+                      name = "rotation",
+                      type = "Quat",
+                      description = "The rotation of the matrix.",
+                      default = "0, 0, 0, 1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The input matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The translation of the matrix.",
+                      default = "0, 0, 0"
                     },
                     {
                       name = "rotation",
