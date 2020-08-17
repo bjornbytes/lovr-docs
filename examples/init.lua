@@ -1,6 +1,7 @@
 return {
   'Intro/Hello_World',
   'Intro/Spinning_Cube',
+  'Intro/Shapes',
   'Intro/3D_Model',
   'Intro/360_Photo',
   'Intro/Tracked_Hands',
@@ -24,7 +25,6 @@ return {
   'Custom_Mesh',
   'PBR_Materials',
   'Postprocessing',
-  'Primitives',
   'Spectator_Camera',
   'Microphones',
   'Thread',
