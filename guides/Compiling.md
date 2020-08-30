@@ -155,6 +155,8 @@ For an improved WebVR workflow with live-reloading, check out [`lovr-webvr-serve
 Android
 ---
 
+Here be dragons.
+
 First, make sure the Java JDK is installed (version 8 is known to work).
 
 Then, the Android SDK and NDK need to be installed.  The SDK version to install depends on the
