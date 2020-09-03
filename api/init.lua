@@ -6355,6 +6355,12 @@ return {
                   type = "number",
                   description = "The z coordinate of the circle's axis of rotation.",
                   default = "0"
+                },
+                {
+                  name = "segments",
+                  type = "number",
+                  description = "The number of segments to use for the circle geometry.  Higher numbers increase smoothness but increase rendering cost slightly.",
+                  default = "32"
                 }
               },
               returns = {}
@@ -6413,6 +6419,12 @@ return {
                   type = "number",
                   description = "The z coordinate of the circle's axis of rotation.",
                   default = "0"
+                },
+                {
+                  name = "segments",
+                  type = "number",
+                  description = "The number of segments to use for the circle geometry.  Higher numbers increase smoothness but increase rendering cost slightly.",
+                  default = "32"
                 }
               },
               returns = {}
@@ -6428,6 +6440,12 @@ return {
                   name = "transform",
                   type = "mat4",
                   description = "The circle's transform."
+                },
+                {
+                  name = "segments",
+                  type = "number",
+                  description = "The number of segments to use for the circle geometry.  Higher numbers increase smoothness but increase rendering cost slightly.",
+                  default = "32"
                 }
               },
               returns = {}
@@ -6443,6 +6461,12 @@ return {
                   name = "transform",
                   type = "mat4",
                   description = "The circle's transform."
+                },
+                {
+                  name = "segments",
+                  type = "number",
+                  description = "The number of segments to use for the circle geometry.  Higher numbers increase smoothness but increase rendering cost slightly.",
+                  default = "32"
                 }
               },
               returns = {}
