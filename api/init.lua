@@ -12694,6 +12694,30 @@ return {
               notes = "For skinned nodes to render correctly, use a Shader created with the `animated` flag set to `true`.  See `lovr.graphics.newShader` for more."
             },
             {
+              name = "hasJoints",
+              summary = "Check if a Model has joints.",
+              description = "Returns whether the Model has any nodes associated with animated joints.  This can be used to approximately determine whether an animated shader needs to be used with an arbitrary Model.",
+              key = "Model:hasJoints",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationCount",
+                "lovr.graphics.newShader"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "skeletal",
+                      type = "boolean",
+                      description = "Whether the Model has any nodes that use skeletal animation."
+                    }
+                  }
+                }
+              },
+              notes = "A model can still be animated even if this function returns false, since node transforms can still be animated with keyframes without skinning.  These types of animations don't need to use a Shader with the `animated = true` flag, though."
+            },
+            {
               name = "pose",
               summary = "Set the pose of a single node, or clear the pose.",
               description = "Applies a pose to a single node of the Model.  The input pose is assumed to be relative to the pose of the node's parent.  This is useful for applying inverse kinematics (IK) to a chain of bones in a skeleton.\n\nThe alpha parameter can be used to mix between the node's current pose and the input pose.",
