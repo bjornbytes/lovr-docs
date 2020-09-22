@@ -47,8 +47,6 @@ return {
 
         // vertex shader goes here,
         // it can access sizeBlock.sizes
-
-        ]]
       #endif
 
       #ifdef PIXEL

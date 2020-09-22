@@ -13132,7 +13132,7 @@ return {
               },
               examples = {
                 {
-                  code = "block = lovr.graphics.newShaderBlock('uniform', {\n  sizes = { 'float', 10 }\n})\n\ncode = [[\n  #ifdef VERTEX\n    ]] .. block:getShaderCode('MyBlock', 'sizeBlock') .. [[\n\n    // vertex shader goes here,\n    // it can access sizeBlock.sizes\n\n    ]]\n  #endif\n\n  #ifdef PIXEL\n    // fragment shader goes here\n  #endif\n]]\n\nshader = lovr.graphics.newShader(code, code)\nshader:sendBlock('MyBlock', block)"
+                  code = "block = lovr.graphics.newShaderBlock('uniform', {\n  sizes = { 'float', 10 }\n})\n\ncode = [[\n  #ifdef VERTEX\n    ]] .. block:getShaderCode('MyBlock', 'sizeBlock') .. [[\n\n    // vertex shader goes here,\n    // it can access sizeBlock.sizes\n  #endif\n\n  #ifdef PIXEL\n    // fragment shader goes here\n  #endif\n]]\n\nshader = lovr.graphics.newShader(code, code)\nshader:sendBlock('MyBlock', block)"
                 }
               },
               variants = {
