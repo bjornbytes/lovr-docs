@@ -354,7 +354,7 @@ return {
       name = "restart",
       tag = "callbacks",
       summary = "Called when restarting.",
-      description = "This callback is called right before the application is about to restart.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
+      description = "This callback is called when a restart from `lovr.event.restart` is happening.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
       key = "lovr.restart",
       module = "lovr",
       variants = {
