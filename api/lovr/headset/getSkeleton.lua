@@ -42,17 +42,17 @@ return {
     <table>
       <thead>
         <tr>
-          <td>Joint</td>
+          <td colspan="2">Joint</td>
           <td>Index</td>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Palm</td>
+          <td colspan="2">Palm</td>
           <td>1</td>
         </tr>
         <tr>
-          <td>Wrist</td>
+          <td colspan="2">Wrist</td>
           <td>2</td>
         </tr>
         <tr>
