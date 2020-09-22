@@ -5,7 +5,7 @@ return {
     Returns a Texture that contains whatever is currently rendered to the headset.
 
     Sometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which
-    can happen if the driver renders directly to the display.  Currently the `desktop`, `webvr`, and
+    can happen if the driver renders directly to the display.  Currently the `desktop`, `webxr`, and
     `vrapi` drivers do not have a mirror texture.
 
     It also isn't guaranteed that the same Texture will be returned by subsequent calls to this

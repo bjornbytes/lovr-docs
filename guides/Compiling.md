@@ -111,7 +111,7 @@ the command:
 $ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
-WebVR
+WebXR
 ---
 
 First, [install the Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html).
@@ -141,16 +141,21 @@ from here is to use `emrun`:
 $ emrun --browser firefox lovr.html
 ```
 
-To package a game, run:
+To add a project, create a .zip of its contents and serve it alongside the HTML and JS files.  The
+following JS can be added to the page to download the zip file, add it to the emscripten virtual
+filesystem, and add it as a command line argument:
 
 ```
-$ python "$EMSCRIPTEN/tools/file_packager.py" game.data --no-heap-copy --preload /path/to/game@/ --js-output=game.js
+var filename = 'game.zip';
+var url = '/game.zip';
+Module.arguments.push(filename);
+Module.preRun.push(function() {
+  Module.FS_createPreloadedFile('/', filename, url, true, false);
+});
 ```
 
-Which will output `game.js` and `game.data`.  You can then include the `game.js` script on the HTML
-page (before the lovr.js script tag) to run the project.
-
-For an improved WebVR workflow with live-reloading, check out [`lovr-webvr-server`](https://github.com/bjornbytes/lovr-webvr-server/blob/master/views/index.ejs).
+See `lovr.html` (or `src/resources/lovr.html`) for a full example page, including a button that
+can be used to enter/exit immersive mode.
 
 Android
 ---

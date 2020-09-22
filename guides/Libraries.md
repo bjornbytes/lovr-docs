@@ -37,8 +37,6 @@ List of Libraries
   tools for LÖVR.
 - [lovr-pointer](https://github.com/bjornbytes/lovr-pointer) - A general pointer system that can be
   used to select objects or create teleporters.
-- [lovr-webvr-server](https://github.com/bjornbytes/lovr-webvr-server) - A local development server for
-  testing WebVR projects.
 - [lovr-window](https://github.com/Papaew/lovr-window) - A window module for LÖVR.
 - [lume](https://github.com/rxi/lume) - Lua utility functions geared towards game development.
 - [maf](https://github.com/bjornbytes/maf) - A 3D math library with vectors and quaternions.

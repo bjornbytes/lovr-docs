@@ -65,6 +65,4 @@ This will output two files: `game.js` and `game.data` (note that the `@/` suffix
 `game.js` file downloads the `game.data` contents and mounts it into the Emscripten filesystem,
 which LÖVR will then run at startup.
 
-For full instructions on creating a web-enabled build of LÖVR, see the [Compiling guide](Compiling#webvr).
-You can also use [lovr-webvr-server](https://github.com/bjornbytes/lovr-webvr-server) to develop a
-WebVR project locally with live-reloading support.
+For full instructions on creating a web-enabled build of LÖVR, see the [Compiling guide](Compiling#webxr).
