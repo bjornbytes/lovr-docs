@@ -2966,7 +2966,7 @@ return {
           description = "Creates a new TextureData.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
           key = "lovr.data.newTextureData",
           module = "lovr.data",
-          notes = "Right now the supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.",
+          notes = "The supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.\n\nOnly 2D textures are supported for DXT/ASTC.\n\nCurrently textures loaded as KTX need to be in DXT/ASTC formats.",
           variants = {
             {
               description = "Load image data from a file.",
@@ -2992,7 +2992,7 @@ return {
               }
             },
             {
-              description = "Create an empty TextureData, initializing all pixel values to 0 (transparent black).",
+              description = "Create a TextureData with a given size and pixel format.",
               arguments = {
                 {
                   name = "width",
@@ -3009,6 +3009,29 @@ return {
                   type = "TextureFormat",
                   description = "The format of the texture's pixels.",
                   default = "rgba"
+                },
+                {
+                  name = "data",
+                  type = "Blob",
+                  description = "Raw pixel values to use as the TextureData contents.  If `nil`, the data will all be zero.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "TextureData",
+                  description = "The new TextureData."
+                }
+              }
+            },
+            {
+              description = "Clone an existing TextureData.",
+              arguments = {
+                {
+                  name = "source",
+                  type = "TextureData",
+                  description = "The TextureData to clone."
                 }
               },
               returns = {
@@ -4283,7 +4306,7 @@ return {
         {
           name = "getDirectoryItems",
           summary = "Get a list of files in a directory.",
-          description = "Returns an unsorted table containing all files and folders in a single directory.",
+          description = "Returns a sorted table containing all files and folders in a single directory.",
           key = "lovr.filesystem.getDirectoryItems",
           module = "lovr.filesystem",
           variants = {
@@ -13009,10 +13032,11 @@ return {
               key = "Shader:send",
               module = "lovr.graphics",
               related = {
+                "Shader:hasUniform",
                 "ShaderBlock:send",
                 "Shader:sendBlock"
               },
-              notes = "The shader does not need to be active to update its uniforms.\n\nThe following type combinations are supported:\n\n<table>\n  <thead>\n    <tr>\n      <td>Uniform type</td>\n      <td>LÖVR type</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>float</td>\n      <td>number</td>\n    </tr>\n    <tr>\n      <td>int</td>\n      <td>number</td>\n    </tr>\n    <tr>\n      <td>vec2</td>\n      <td>{ x, y }</td>\n    </tr>\n    <tr>\n      <td>vec3</td>\n      <td>{ x, y, z } or vec3</td>\n    </tr>\n    <tr>\n      <td>vec4</td>\n      <td>{ x, y, z, w }</td>\n    </tr>\n    <tr>\n      <td>ivec2</td>\n      <td>{ x, y }</td>\n    </tr>\n    <tr>\n      <td>ivec3</td>\n      <td>{ x, y, z }</td>\n    </tr>\n    <tr>\n      <td>ivec4</td>\n      <td>{ x, y, z, w }</td>\n    </tr>\n    <tr>\n      <td>mat2</td>\n      <td>{ x, ... }</td>\n    </tr>\n    <tr>\n      <td>mat3</td>\n      <td>{ x, ... }</td>\n    </tr>\n    <tr>\n      <td>mat4</td>\n      <td>{ x, ... } or mat4</td>\n    </tr>\n    <tr>\n      <td>sampler</td>\n      <td>Texture</td>\n    </tr>\n    <tr>\n      <td>image</td>\n      <td>Texture</td>\n    </tr>\n  </tbody> </table>\n\nUniform arrays can be wrapped in tables or passed as multiple arguments.\n\nTextures must match the type of sampler or image they are being sent to.\n\nThe following sampler (and image) types are currently supported:\n\n- `sampler2D`\n- `sampler3D`\n- `samplerCube`\n- `sampler2DArray`\n\nAn error is thrown if the uniform does not exist or is not used in the shader.  The `Shader:hasUniform` function can be used to check if a uniform variable exists.\n\n`Blob`s can be used to pass arbitrary binary data to Shader variables.",
+              notes = "The shader does not need to be active to update its uniforms.\n\nThe following type combinations are supported:\n\n<table>\n  <thead>\n    <tr>\n      <td>Uniform type</td>\n      <td>LÖVR type</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>float</td>\n      <td>number</td>\n    </tr>\n    <tr>\n      <td>int</td>\n      <td>number</td>\n    </tr>\n    <tr>\n      <td>vec2</td>\n      <td>{ x, y }</td>\n    </tr>\n    <tr>\n      <td>vec3</td>\n      <td>{ x, y, z } or vec3</td>\n    </tr>\n    <tr>\n      <td>vec4</td>\n      <td>{ x, y, z, w }</td>\n    </tr>\n    <tr>\n      <td>ivec2</td>\n      <td>{ x, y }</td>\n    </tr>\n    <tr>\n      <td>ivec3</td>\n      <td>{ x, y, z }</td>\n    </tr>\n    <tr>\n      <td>ivec4</td>\n      <td>{ x, y, z, w }</td>\n    </tr>\n    <tr>\n      <td>mat2</td>\n      <td>{ x, ... }</td>\n    </tr>\n    <tr>\n      <td>mat3</td>\n      <td>{ x, ... }</td>\n    </tr>\n    <tr>\n      <td>mat4</td>\n      <td>{ x, ... } or mat4</td>\n    </tr>\n    <tr>\n      <td>sampler</td>\n      <td>Texture</td>\n    </tr>\n    <tr>\n      <td>image</td>\n      <td>Texture</td>\n    </tr>\n  </tbody> </table>\n\nUniform arrays can be wrapped in tables or passed as multiple arguments.\n\nTextures must match the type of sampler or image they are being sent to.\n\nThe following sampler (and image) types are currently supported:\n\n- `sampler2D`\n- `sampler3D`\n- `samplerCube`\n- `sampler2DArray`\n\n`Blob`s can be used to pass arbitrary binary data to Shader variables.",
               variants = {
                 {
                   arguments = {
@@ -13027,13 +13051,19 @@ return {
                       description = "The new value of the uniform."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "success",
+                      type = "boolean",
+                      description = "Whether the uniform exists and was updated."
+                    }
+                  }
                 }
               },
               examples = {
                 {
                   description = "Updating a `vec3` uniform:",
-                  code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    uniform vec3 offset;\n    vec4 lovrMain() {\n      vec4 vertex = lovrVertex;\n      vertex.xyz += offset;\n      return lovrProjection * lovrTransform * vertex;\n    }\n  ]], nil)\n\n  shader:send('offset', { .3, .7, 0 })\nend"
+                  code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    uniform vec3 offset;\n    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {\n      vertex.xyz += offset;\n      return projection * transform * vertex;\n    }\n  ]], nil)\n\n  shader:send('offset', { .3, .7, 0 })\nend"
                 }
               }
             },
