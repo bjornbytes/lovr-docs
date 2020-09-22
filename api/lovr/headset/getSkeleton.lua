@@ -73,7 +73,7 @@ return {
           <td>6</td>
         </tr>
         <tr>
-          <td rowspan="4">Index</td>
+          <td rowspan="5">Index</td>
           <td>Metacarpal</td>
           <td>7</td>
         </tr>
@@ -94,7 +94,7 @@ return {
           <td>11</td>
         </tr>
         <tr>
-          <td rowspan="4">Middle</td>
+          <td rowspan="5">Middle</td>
           <td>Metacarpal</td>
           <td>12</td>
         </tr>
@@ -115,7 +115,7 @@ return {
           <td>16</td>
         </tr>
         <tr>
-          <td rowspan="4">Ring</td>
+          <td rowspan="5">Ring</td>
           <td>Metacarpal</td>
           <td>17</td>
         </tr>
@@ -136,7 +136,7 @@ return {
           <td>21</td>
         </tr>
         <tr>
-          <td rowspan="4">Pinky</td>
+          <td rowspan="5">Pinky</td>
           <td>Metacarpal</td>
           <td>22</td>
         </tr>
