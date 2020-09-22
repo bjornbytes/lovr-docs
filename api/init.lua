@@ -283,14 +283,15 @@ return {
           returns = {}
         }
       },
+      related = {
+        "lovr.quit"
+      },
       examples = {
         {
           code = "function lovr.load(args)\n  model = lovr.graphics.newModel('cena.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  levelGeometry = lovr.graphics.newMesh(1000)\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
         }
       },
-      related = {
-        "lovr.quit"
-      }
+      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `args` table."
     },
     {
       name = "mirror",
@@ -324,7 +325,7 @@ return {
       name = "quit",
       tag = "callbacks",
       summary = "Called before quitting.",
-      description = "This callback is called right before the game is about to quit.  Use it to perform any cleanup you need to do.  You can also return a \"truthy\" value from this callback to abort quitting.",
+      description = "This callback is called right before the application is about to quit.  Use it to perform any necessary cleanup work.  A truthy value can be returned from this callback to abort quitting.",
       key = "lovr.quit",
       module = "lovr",
       variants = {
@@ -348,6 +349,37 @@ return {
         "lovr.event.quit",
         "lovr.load"
       }
+    },
+    {
+      name = "restart",
+      tag = "callbacks",
+      summary = "Called when restarting.",
+      description = "This callback is called right before the application is about to restart.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
+      key = "lovr.restart",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "abort",
+              type = "*",
+              description = "Whether quitting should be aborted."
+            }
+          }
+        }
+      },
+      related = {
+        "lovr.event.restart",
+        "lovr.load",
+        "lovr.quit"
+      },
+      examples = {
+        {
+          code = "function lovr.restart()\n  return currentLevel:getName()\nend"
+        }
+      },
+      notes = "Only nil, booleans, numbers, and strings are supported types for the return value."
     },
     {
       name = "run",
@@ -4092,12 +4124,13 @@ return {
         {
           name = "quit",
           summary = "Quit the application.",
-          description = "Pushes an event to quit or restart the application.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.  Alternatively, the string 'restart' can be used to cause LÖVR to reload the project.",
+          description = "Pushes an event to quit.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.",
           key = "lovr.event.quit",
           module = "lovr.event",
           related = {
             "lovr.quit",
-            "lovr.event.poll"
+            "lovr.event.poll",
+            "lovr.event.restart"
           },
           variants = {
             {
@@ -4110,19 +4143,28 @@ return {
                 }
               },
               returns = {}
-            },
+            }
+          },
+          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to abort the quitting process."
+        },
+        {
+          name = "restart",
+          summary = "Restart the application.",
+          description = "Pushes an event to restart the framework.",
+          key = "lovr.event.restart",
+          module = "lovr.event",
+          related = {
+            "lovr.restart",
+            "lovr.event.poll",
+            "lovr.event.quit"
+          },
+          variants = {
             {
-              arguments = {
-                {
-                  name = "'restart'",
-                  type = "string",
-                  description = "Restart instead of quitting."
-                }
-              },
+              arguments = {},
               returns = {}
             }
           },
-          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe program won't actually exit until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to stop the quitting process."
+          notes = "The event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.restart` callback can be used to persist a value between restarts."
         }
       },
       examples = {
