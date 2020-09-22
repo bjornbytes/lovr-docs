@@ -13199,7 +13199,7 @@ return {
             {
               name = "getShaderCode",
               summary = "Get a GLSL string that defines the ShaderBlock in a Shader.",
-              description = "Before a ShaderBlock can be used in a Shader, the Shader has to have the block's variables defined in its source code.  This can be a tedious process, so you can call this function to return a GLSL string that contains this definition.  Roughly, it will look something like this:\n\n    uniform <label> {\n      <type> <name>[<count>];\n    };",
+              description = "Before a ShaderBlock can be used in a Shader, the Shader has to have the block's variables defined in its source code.  This can be a tedious process, so you can call this function to return a GLSL string that contains this definition.  Roughly, it will look something like this:\n\n    layout(std140) uniform <label> {\n      <type> <name>[<count>];\n    } <namespace>;",
               key = "ShaderBlock:getShaderCode",
               module = "lovr.graphics",
               related = {
@@ -13208,7 +13208,7 @@ return {
               },
               examples = {
                 {
-                  code = "lovr.graphics.newShader(\n  block:getShaderCode() .. [[\n  // The rest of the shader here\n  ]]\n)"
+                  code = "block = lovr.graphics.newShaderBlock('uniform', {\n  sizes = { 'float', 10 }\n})\n\ncode = [[\n  #ifdef VERTEX\n    ]] .. block:getShaderCode('MyBlock', 'sizeBlock') .. [[\n\n    // vertex shader goes here,\n    // it can access sizeBlock.sizes\n\n    ]]\n  #endif\n\n  #ifdef PIXEL\n    // fragment shader goes here\n  #endif\n]]\n\nshader = lovr.graphics.newShader(code, code)\nshader:sendBlock('MyBlock', block)"
                 }
               },
               variants = {
@@ -13217,14 +13217,20 @@ return {
                     {
                       name = "label",
                       type = "string",
-                      description = "The label of the block in the shader code.  This will be used to identify it when using Shader:sendBlock."
+                      description = "The label of the block in the shader code.  This will be used to identify it when using `Shader:sendBlock`."
+                    },
+                    {
+                      name = "namespace",
+                      type = "string",
+                      description = "The namespace to use when accessing the block's variables in the shader code.  This can be used to prevent naming conflicts if two blocks have variables with the same name.  If the namespace is nil, the block's variables will be available in the global scope.",
+                      default = "nil"
                     }
                   },
                   returns = {
                     {
                       name = "code",
                       type = "string",
-                      description = "The code that can be prepended to a Shader."
+                      description = "The code that can be prepended to `Shader` code."
                     }
                   }
                 }
