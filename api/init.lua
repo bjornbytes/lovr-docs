@@ -4174,25 +4174,6 @@ return {
           }
         },
         {
-          name = "getApplicationId",
-          summary = "Get the application ID.",
-          description = "Returns the platform-specific application ID, or `nil` if the current platform doesn't have one.\n\nCurrently only implemented on Android, where it returns the package name, e.g. `org.lovr.app`.",
-          key = "lovr.filesystem.getApplicationId",
-          module = "lovr.filesystem",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "id",
-                  type = "string",
-                  description = "The application ID."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getDirectoryItems",
           summary = "Get a list of files in a directory.",
           description = "Returns a sorted table containing all files and folders in a single directory.",
@@ -4239,9 +4220,10 @@ return {
         {
           name = "getIdentity",
           summary = "Get the name of the save directory.",
-          description = "Returns the identity of the game, which is used as the name of the save directory.  The default is `default`.",
+          description = "Returns the identity of the game, which is used as the name of the save directory.  The default is `default`.  It can be changed using `t.identity` in `lovr.conf`.",
           key = "lovr.filesystem.getIdentity",
           module = "lovr.filesystem",
+          notes = "On Android, this is always the package id (like `org.lovr.app`).",
           variants = {
             {
               arguments = {},
