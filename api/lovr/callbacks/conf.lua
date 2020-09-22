@@ -191,7 +191,7 @@ return {
           t.hotkeys = true
 
           -- Headset settings
-          t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }
+          t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'openvr', 'webxr', 'desktop' }
           t.headset.msaa = 4
           t.headset.offset = 1.7
 

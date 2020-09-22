@@ -6,7 +6,7 @@ return {
 
     Sometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which
     can happen if the driver renders directly to the display.  Currently the `desktop`, `webvr`, and
-    `oculusmobile` drivers do not have a mirror texture.
+    `vrapi` drivers do not have a mirror texture.
 
     It also isn't guaranteed that the same Texture will be returned by subsequent calls to this
     function.  Currently, the `oculus` driver exhibits this behavior.
