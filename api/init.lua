@@ -12946,12 +12946,42 @@ return {
               }
             },
             {
+              name = "hasBlock",
+              summary = "Check if a Shader has a block.",
+              description = "Returns whether a Shader has a block.\n\nA block is added to the Shader code at creation time using `ShaderBlock:getShaderCode`.  The block name (not the namespace) is used to link up the ShaderBlock object to the Shader.  This function can be used to check if a Shader was created with a block using the given name.",
+              key = "Shader:hasBlock",
+              module = "lovr.graphics",
+              related = {
+                "Shader:sendBlock"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "block",
+                      type = "string",
+                      description = "The name of the block."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "present",
+                      type = "boolean",
+                      description = "Whether the shader has the specified block."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "hasUniform",
               summary = "Check if a Shader has a uniform variable.",
               description = "Returns whether a Shader has a particular uniform variable.",
               key = "Shader:hasUniform",
               module = "lovr.graphics",
-              notes = "If a uniform variable is defined but unused in the shader, the shader compiler will optimize it out and the uniform will not report itself as present.",
+              related = {
+                "Shader:send"
+              },
               variants = {
                 {
                   arguments = {
@@ -12969,7 +12999,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "If a uniform variable is defined but unused in the shader, the shader compiler will optimize it out and the uniform will not report itself as present."
             },
             {
               name = "send",
@@ -13013,6 +13044,7 @@ return {
               key = "Shader:sendBlock",
               module = "lovr.graphics",
               related = {
+                "Shader:hasBlock",
                 "Shader:send",
                 "ShaderBlock:send",
                 "ShaderBlock:getShaderCode",
