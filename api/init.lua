@@ -1064,13 +1064,10 @@ return {
           name = "pause",
           tag = "sources",
           summary = "Pause all Sources.",
-          description = "Pause all playing audio.",
+          description = "Pause all playing audio Sources.",
           key = "lovr.audio.pause",
           module = "lovr.audio",
           related = {
-            "Source:pause",
-            "lovr.audio.resume",
-            "lovr.audio.rewind",
             "lovr.audio.stop"
           },
           variants = {
@@ -1079,48 +1076,6 @@ return {
               returns = {}
             }
           }
-        },
-        {
-          name = "resume",
-          tag = "sources",
-          summary = "Resume all Sources.",
-          description = "Resume all Sources.  Has no effect on Sources that are playing or stopped.",
-          key = "lovr.audio.resume",
-          module = "lovr.audio",
-          related = {
-            "Source:resume",
-            "Source:resume",
-            "lovr.audio.pause",
-            "lovr.audio.rewind",
-            "lovr.audio.stop"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "rewind",
-          tag = "sources",
-          summary = "Rewind all Sources.",
-          description = "Rewind all playing audio.",
-          key = "lovr.audio.rewind",
-          module = "lovr.audio",
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          },
-          related = {
-            "Source:rewind",
-            "lovr.audio.pause",
-            "lovr.audio.resume",
-            "lovr.audio.stop"
-          },
-          notes = "Sources that are paused will remain paused. Sources that are currently playing will restart from the beginning."
         },
         {
           name = "setDopplerEffect",
@@ -1338,9 +1293,7 @@ return {
           },
           related = {
             "Source:stop",
-            "lovr.audio.pause",
-            "lovr.audio.resume",
-            "lovr.audio.rewind"
+            "lovr.audio.pause"
           },
           notes = "If you want to resume the stopped audio later, see `lovr.audio.pause`."
         },
@@ -1642,7 +1595,7 @@ return {
         {
           name = "Source",
           summary = "A playable sound object.",
-          description = "A Source is an object representing a single sound.  Currently, only ogg sounds are supported. Sources can be in three different states:\n\n<table>\n  <tr>\n    <td>Playing</td>\n    <td>The source is currently playing. It can be stopped, paused, or rewound.</td>\n  </tr>\n  <tr>\n    <td>Paused</td>\n    <td>The source is paused. It can be stopped, played/resumed, or rewound.</td>\n  </tr>\n  <tr>\n    <td>Stopped</td>\n    <td>The source has been stopped. It can be played.</td>\n  </tr> </table>",
+          description = "A Source is an object representing a single sound.  Currently, only ogg sounds are supported.\n\nWhen a Source is playing, it will send audio to the speakers.  Sources do not play automatically when they are created.  Instead, the `play`, `pause`, and `stop` functions can be used to control when they should play.\n\n`Source:seek` and `Source:tell` can be used to control the playback position of the Source.  A Source can be set to loop when it reaches the end using `Source:setLooping`.",
           key = "Source",
           module = "lovr.audio",
           methods = {
@@ -2073,25 +2026,6 @@ return {
               }
             },
             {
-              name = "isPaused",
-              summary = "Check if the Source is paused.",
-              description = "Returns whether or not the Source is paused.",
-              key = "Source:isPaused",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "paused",
-                      type = "boolean",
-                      description = "Whether the Source is paused."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "isPlaying",
               summary = "Check if the Source is playing.",
               description = "Returns whether or not the Source is playing.",
@@ -2130,25 +2064,6 @@ return {
               }
             },
             {
-              name = "isStopped",
-              summary = "Check if the Source is stopped.",
-              description = "Returns whether or not the Source is stopped.",
-              key = "Source:isStopped",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "stopped",
-                      type = "boolean",
-                      description = "Whether the Source is stopped."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "pause",
               summary = "Pause the Source.",
               description = "Pauses the source.  It can be resumed with `Source:resume` or `Source:play`. If a paused source is rewound, it will remain paused.",
@@ -2166,32 +2081,6 @@ return {
               summary = "Play the Source.",
               description = "Plays the Source.  This doesn't do anything if the Source is already playing.",
               key = "Source:play",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "resume",
-              summary = "Resume the Source.",
-              description = "Resumes the Source.",
-              key = "Source:resume",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "rewind",
-              summary = "Rewind the Source.",
-              description = "Rewinds the Source, starting it over at the beginning.  Paused Sources will remain paused.",
-              key = "Source:rewind",
               module = "lovr.audio",
               variants = {
                 {
@@ -2548,6 +2437,11 @@ return {
               description = "Stops the source, also rewinding it to the beginning.",
               key = "Source:stop",
               module = "lovr.audio",
+              related = {
+                "Source:play",
+                "Source:pause",
+                "Source:isPlaying"
+              },
               variants = {
                 {
                   arguments = {},

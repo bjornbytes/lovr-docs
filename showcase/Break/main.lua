@@ -156,7 +156,7 @@ local screen = {}
 local lastSound
 local pendingSound = 1
 local function nextSound(at, forceSound) -- Play a sound at a position. If forceSound is nil, assume the next "note"
-	if lastSound then lastSound:stop() lastSound:rewind() end -- Don't let sounds overlap
+	if lastSound then lastSound:stop() end -- Don't let sounds overlap
 	lastSound = forceSound or sounds[pendingSound]
 	pendingSound = pendingSound + 1
 	if pendingSound > #sounds then pendingSound = 1 end
