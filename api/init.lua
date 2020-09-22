@@ -175,7 +175,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Hotkeys\n  t.hotkeys = true\n\n  -- Headset settings\n  t.headset.drivers = { 'leap', 'openxr', 'oculus', 'oculusmobile', 'openvr', 'webvr', 'desktop' }\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.vsync = 1\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Hotkeys\n  t.hotkeys = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'openvr', 'webxr', 'desktop' }\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.vsync = 1\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
@@ -5251,10 +5251,6 @@ return {
             {
               name = "trilinear",
               description = "Smooth pixel sampling, with smooth sampling across mipmap levels."
-            },
-            {
-              name = "anisotropic",
-              description = "Anisotropic texture filtering.  The level of anisotropy can also be specified when setting this filter mode.  Gives the best results but is also slower."
             }
           },
           related = {
@@ -6604,7 +6600,7 @@ return {
             "lovr.graphics.setShader",
             "Shader"
           },
-          notes = "Only compute shaders created with `lovr.graphics.newComputeShader` can be used here."
+          notes = "Only compute shaders created with `lovr.graphics.newComputeShader` can be used here.\n\nThere are GPU-specific limits on the `x`, `y`, and `z` values which can be queried in the `compute` entry of `lovr.graphics.getLimits`."
         },
         {
           name = "createWindow",
@@ -7295,7 +7291,7 @@ return {
                 {
                   name = "anisotropy",
                   type = "number",
-                  description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
+                  description = "The level of anisotropy."
                 }
               }
             }
@@ -7508,6 +7504,11 @@ return {
                       name = "texturesize",
                       type = "number",
                       description = "The maximum width or height of textures, in pixels."
+                    },
+                    {
+                      name = "compute",
+                      type = "table",
+                      description = "A table of three numbers indicating the maximum number of compute threads that can be run with `lovr.graphics.compute`."
                     }
                   }
                 }
@@ -7633,9 +7634,34 @@ return {
                       description = "The number of draw calls."
                     },
                     {
+                      name = "renderpasses",
+                      type = "number",
+                      description = "The number of times the canvas has been switched."
+                    },
+                    {
                       name = "shaderswitches",
                       type = "number",
                       description = "The number of times the shader has been switched."
+                    },
+                    {
+                      name = "buffers",
+                      type = "number",
+                      description = "The number of buffers."
+                    },
+                    {
+                      name = "textures",
+                      type = "number",
+                      description = "The number of textures."
+                    },
+                    {
+                      name = "buffermemory",
+                      type = "number",
+                      description = "The amount of memory used by buffers, in bytes."
+                    },
+                    {
+                      name = "texturememory",
+                      type = "number",
+                      description = "The amount of memory used by textures, in bytes."
                     }
                   }
                 }
@@ -9801,7 +9827,7 @@ return {
                 {
                   name = "anisotropy",
                   type = "number",
-                  description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
+                  description = "The level of anisotropy to use."
                 }
               },
               returns = {}
@@ -9809,9 +9835,10 @@ return {
           },
           related = {
             "Texture:getFilter",
-            "Texture:setFilter"
+            "Texture:setFilter",
+            "lovr.graphics.getLimits"
           },
-          notes = "The default filter is `trilinear`."
+          notes = "The default filter is `trilinear`.\n\nThe maximum supported anisotropy level can be queried using `lovr.graphics.getLimits`."
         },
         {
           name = "setDepthTest",
@@ -13373,7 +13400,7 @@ return {
                     {
                       name = "anisotropy",
                       type = "number",
-                      description = "If the filtering mode is \"anisotropic\", returns the level of anisotropy.  Otherwise, this will be nil."
+                      description = "The level of anisotropic filtering."
                     }
                   }
                 }
@@ -13604,7 +13631,8 @@ return {
               module = "lovr.graphics",
               related = {
                 "lovr.graphics.getDefaultFilter",
-                "lovr.graphics.setDefaultFilter"
+                "lovr.graphics.setDefaultFilter",
+                "lovr.graphics.getLimits"
               },
               variants = {
                 {
@@ -13617,13 +13645,13 @@ return {
                     {
                       name = "anisotropy",
                       type = "number",
-                      description = "The level of anisotropy to use when using anisotropic filtering."
+                      description = "The level of anisotropy to use."
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "The default setting for new textures can be set with `lovr.graphics.setDefaultFilter`."
+              notes = "The default setting for new textures can be set with `lovr.graphics.setDefaultFilter`.\n\nThe maximum supported anisotropy level can be queried using `lovr.graphics.getLimits`."
             },
             {
               name = "setWrap",
@@ -13805,16 +13833,8 @@ return {
               description = "A VR simulator using keyboard/mouse."
             },
             {
-              name = "leap",
-              description = "Leap Motion hand tracking driver."
-            },
-            {
               name = "oculus",
               description = "Oculus Desktop SDK."
-            },
-            {
-              name = "oculusmobile",
-              description = "Oculus Mobile SDK."
             },
             {
               name = "openvr",
@@ -13825,8 +13845,16 @@ return {
               description = "OpenXR."
             },
             {
-              name = "webvr",
-              description = "WebVR."
+              name = "vrapi",
+              description = "Oculus Mobile SDK."
+            },
+            {
+              name = "pico",
+              description = "Pico."
+            },
+            {
+              name = "webxr",
+              description = "WebXR."
             }
           }
         },
@@ -14095,7 +14123,7 @@ return {
               }
             }
           },
-          notes = "This is not currently supported by the `oculusmobile` headset driver."
+          notes = "The default near and far clipping planes are 0.1 meters and 100.0 meters.\n\nThis is not currently supported by the `vrapi` headset driver."
         },
         {
           name = "getDisplayDimensions",
@@ -14294,7 +14322,7 @@ return {
           name = "getMirrorTexture",
           tag = "headset",
           summary = "Get the Texture containing a view of what's in the headset.",
-          description = "Returns a Texture that contains whatever is currently rendered to the headset.\n\nSometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which can happen if the driver renders directly to the display.  Currently the `desktop`, `webvr`, and `oculusmobile` drivers do not have a mirror texture.\n\nIt also isn't guaranteed that the same Texture will be returned by subsequent calls to this function.  Currently, the `oculus` driver exhibits this behavior.",
+          description = "Returns a Texture that contains whatever is currently rendered to the headset.\n\nSometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which can happen if the driver renders directly to the display.  Currently the `desktop`, `webxr`, and `vrapi` drivers do not have a mirror texture.\n\nIt also isn't guaranteed that the same Texture will be returned by subsequent calls to this function.  Currently, the `oculus` driver exhibits this behavior.",
           key = "lovr.headset.getMirrorTexture",
           module = "lovr.headset",
           related = {
@@ -14469,6 +14497,7 @@ return {
             "lovr.headset.getOrientation",
             "lovr.headset.getVelocity",
             "lovr.headset.getAngularVelocity",
+            "lovr.headset.getSkeleton",
             "lovr.headset.isTracked",
             "lovr.headset.getDriver"
           },
@@ -14519,6 +14548,63 @@ return {
             "lovr.headset.getDriver"
           },
           notes = "If the device isn't tracked, all zeroes will be returned."
+        },
+        {
+          name = "getSkeleton",
+          tag = "input",
+          summary = "Get skeletal joint poses tracked by a device.",
+          description = "Returns a list of joint poses tracked by a device.  Currently, only hand devices are able to track joints.",
+          key = "lovr.headset.getSkeleton",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The Device to query."
+                }
+              },
+              returns = {
+                {
+                  name = "poses",
+                  type = "table",
+                  description = "A list of joint poses for the device.  Each pose is a table with 3 numbers for the position of the joint followed by 4 numbers for the angle/axis orientation of the joint."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The Device to query."
+                },
+                {
+                  name = "t",
+                  type = "table",
+                  description = "A table to fill with the joint poses, instead of allocating a new one."
+                }
+              },
+              returns = {
+                {
+                  name = "poses",
+                  type = "table",
+                  description = "A list of joint poses for the device.  Each pose is a table with 3 numbers for the position of the joint followed by 4 numbers for the angle/axis orientation of the joint."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.animate"
+          },
+          examples = {
+            {
+              code = "function lovr.draw()\n  for _, hand in ipairs({ 'left', 'right' }) do\n    for _, joint in ipairs(lovr.headset.getSkeleton(hand) or {}) do\n      lovr.graphics.points(unpack(joint, 1, 3))\n    end\n  end\nend"
+            }
+          },
+          notes = "If the Device does not support tracking joints or the poses are unavailable, `nil` is returned.\n\nHand joints are returned in the following order:\n\n<table>\n  <thead>\n    <tr>\n      <td>Joint</td>\n      <td>Index</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Palm</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <td>Wrist</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Thumb</td>\n      <td>Metacarpal</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Index</td>\n      <td>Metacarpal</td>\n      <td>7</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>9</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Middle</td>\n      <td>Metacarpal</td>\n      <td>12</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>13</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>16</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Ring</td>\n      <td>Metacarpal</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>19</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>20</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Pinky</td>\n      <td>Metacarpal</td>\n      <td>22</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>23</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>26</td>\n    </tr>\n  </tbody> </table>"
         },
         {
           name = "getTime",
@@ -14587,6 +14673,51 @@ return {
           }
         },
         {
+          name = "getViewAngles",
+          tag = "headset",
+          summary = "Get the field of view angles of a view.",
+          description = "Returns the view angles of one of the headset views.\n\nThese can be used with `Mat4:fov` to create a projection matrix.\n\nIf tracking data is unavailable for the view or the index is invalid, `nil` is returned.",
+          key = "lovr.headset.getViewAngles",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getViewCount",
+            "lovr.headset.getViewPose"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                }
+              },
+              returns = {
+                {
+                  name = "left",
+                  type = "number",
+                  description = "The left view angle, in radians."
+                },
+                {
+                  name = "right",
+                  type = "number",
+                  description = "The right view angle, in radians."
+                },
+                {
+                  name = "top",
+                  type = "number",
+                  description = "The top view angle, in radians."
+                },
+                {
+                  name = "bottom",
+                  type = "number",
+                  description = "The bottom view angle, in radians."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getViewCount",
           tag = "headset",
           summary = "Get the number of views used for rendering.",
@@ -14605,6 +14736,66 @@ return {
                   name = "count",
                   type = "number",
                   description = "The number of views."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getViewPose",
+          tag = "headset",
+          summary = "Get the pose of one of the views.",
+          description = "Returns the pose of one of the headset views.  This info can be used to create view matrices or do other eye-dependent calculations.\n\nIf tracking data is unavailable for the view or the index is invalid, `nil` is returned.",
+          key = "lovr.headset.getViewPose",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getViewCount",
+            "lovr.headset.getViewAngles"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the view position, in meters."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the view position, in meters."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z coordinate of the view position, in meters."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount of rotation around the rotation axis, in radians."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
                 }
               }
             }
@@ -18078,6 +18269,22 @@ return {
                       name = "u",
                       type = "Vec3",
                       description = "The vector to copy the values from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec3",
+                      description = "The input vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The matrix to use the position of."
                     }
                   },
                   returns = {
