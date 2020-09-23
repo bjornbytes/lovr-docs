@@ -23043,6 +23043,34 @@ return {
               notes = "A linear damping of 0 means colliders won't slow down over time.\n\nLinear damping can also be set on individual colliders."
             },
             {
+              name = "getResponseTime",
+              tag = "worldProperties",
+              summary = "Get the response time of the World.",
+              description = "Returns the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
+              key = "World:getResponseTime",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "responseTime",
+                      type = "number",
+                      description = "The response time setting for the World."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isCollisionEnabledBetween",
               tag = "worldCollision",
               summary = "Check if two tags can collide.",
@@ -23594,6 +23622,34 @@ return {
                 "Collider:setLinearDamping"
               },
               notes = "A linear damping of 0 means colliders won't slow down over time.\n\nLinear damping can also be set on individual colliders."
+            },
+            {
+              name = "setResponseTime",
+              tag = "worldProperties",
+              summary = "Set the response time of the World.",
+              description = "Sets the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
+              key = "World:setResponseTime",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "responseTime",
+                      type = "number",
+                      description = "The new response time setting for the World."
+                    }
+                  },
+                  returns = {}
+                }
+              }
             },
             {
               name = "setSleepingAllowed",
