@@ -3,7 +3,7 @@ function lovr.load()
 
   shader = lovr.graphics.newShader('standard', {
     flags = {
-      normalTexture = false,
+      normalMap = false,
       indirectLighting = true,
       occlusion = true,
       emissive = true,
