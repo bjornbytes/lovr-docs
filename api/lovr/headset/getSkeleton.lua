@@ -158,8 +158,6 @@ return {
         </tr>
       </tbody>
     </table>
-
-    <a href="https://lovr.org/static/img/hands.png"><img src="https://lovr.org/static/img/hands.png" class="wide" alt="Hand Skeleton"></a>
   ]],
   example = [[
     function lovr.draw()
