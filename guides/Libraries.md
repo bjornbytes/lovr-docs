@@ -33,6 +33,7 @@ List of Libraries
 - [lovr-keyboard](https://github.com/bjornbytes/lovr-keyboard) - Keyboard input
 - [lovr-lighting](https://github.com/bjornbytes/lovr-lighting) - Simple lighting shaders to add to
 - [lovr-mouse](https://github.com/bjornbytes/lovr-mouse) - Mouse input
+- [lovr-joystick](https://github.com/Rabios/lovr-joystick) - Joystick input
 - [lovr-oculus-mobile](https://github.com/mcclure/lovr-oculus-mobile) - Android information and
   tools for LÖVR.
 - [lovr-pointer](https://github.com/bjornbytes/lovr-pointer) - A general pointer system that can be
