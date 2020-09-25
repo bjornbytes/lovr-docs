@@ -145,7 +145,7 @@ To add a project, create a .zip of its contents and serve it alongside the HTML 
 following JS can be added to the page to download the zip file, add it to the emscripten virtual
 filesystem, and add it as a command line argument:
 
-```
+```js
 var filename = 'game.zip';
 var url = '/game.zip';
 Module.arguments.push(filename);
