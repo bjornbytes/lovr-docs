@@ -39,7 +39,7 @@ Running a Project
 Now we can create a LÖVR project, which is a folder with some code and assets in it.  Create a
 folder called `hello-world` and add this code to a file named `main.lua` in there:
 
-```
+```lua
 function lovr.draw()
   lovr.graphics.print('hello world', 0, 1.7, -3, .5)
 end
