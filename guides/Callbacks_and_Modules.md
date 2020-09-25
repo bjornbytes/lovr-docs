@@ -20,7 +20,7 @@ Callbacks
 There are various callbacks that can be used for interesting things.  Three of the most used ones
 are `lovr.load`, `lovr.update`, and `lovr.draw`.  A simple project skeleton might look like this:
 
-```
+```lua
 function lovr.load()
   -- This is called once on load.
   --
@@ -99,7 +99,7 @@ play area, so the origin is on the ground in the middle of the play space.
 
 You've already seen `lovr.graphics.print`, but here's another example:
 
-```
+```lua
 function lovr.load()
   -- Load a 3D model
   model = lovr.graphics.newModel('monkey.obj')
@@ -139,7 +139,7 @@ functions can be used to figure out the state of buttons and other controls on t
 
 Here's a simple example that draws a sphere in the "opposite" position of the headset:
 
-```
+```lua
 function lovr.draw()
   local x, y, z = lovr.headset.getPosition()
   lovr.graphics.sphere(-x, y, -z, .1)
@@ -155,7 +155,7 @@ directions, which are used to make things sound realistic as the headset moves a
 Each instance of a sound is called a `Source`.  To create a sources, use `lovr.audio.newSource` and
 pass it an ogg file.  You can then call `play` on the source to play it.
 
-```
+```lua
 function lovr.load()
   ambience = lovr.audio.newSource('background.ogg')
   ambience:setLooping(true)
@@ -181,7 +181,7 @@ forces applied it.  The world should be updated in `lovr.update` using the `dt` 
 
 Here's an example that makes a tower of boxes that you can knock down with controllers:
 
-```
+```lua
 function lovr.load()
   world = lovr.physics.newWorld()
 
