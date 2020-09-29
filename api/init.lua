@@ -9503,6 +9503,75 @@ return {
           }
         },
         {
+          name = "getProjection",
+          tag = "graphicsState",
+          summary = "Get the field of view.",
+          description = "Returns the projection for a single view.",
+          key = "lovr.graphics.getProjection",
+          module = "lovr.graphics",
+          notes = "Non-stereo rendering will only use the first view.\n\nThe projection matrices are available as the `mat4 lovrProjections[2]` variable in shaders.  The current projection matrix is available as `lovrProjection`.",
+          related = {
+            "lovr.headset.getViewPose",
+            "lovr.headset.getViewCount",
+            "lovr.graphics.getViewPose",
+            "lovr.graphics.setViewPose"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                }
+              },
+              returns = {
+                {
+                  name = "left",
+                  type = "number",
+                  description = "The left field of view angle, in radians."
+                },
+                {
+                  name = "right",
+                  type = "number",
+                  description = "The right field of view angle, in radians."
+                },
+                {
+                  name = "up",
+                  type = "number",
+                  description = "The top field of view angle, in radians."
+                },
+                {
+                  name = "down",
+                  type = "number",
+                  description = "The bottom field of view angle, in radians."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                },
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The matrix to fill with the projection."
+                }
+              },
+              returns = {
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The original matrix."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getShader",
           tag = "graphicsState",
           summary = "Get the active shader.",
@@ -9617,7 +9686,6 @@ return {
           module = "lovr.graphics",
           related = {
             "lovr.headset.getViewPose",
-            "lovr.headset.setViewPose",
             "lovr.headset.getViewCount",
             "lovr.graphics.getProjection",
             "lovr.graphics.setProjection"
@@ -11944,18 +12012,59 @@ return {
         {
           name = "setProjection",
           tag = "graphicsState",
-          summary = "Set the projection matrix.",
-          description = "Sets the projection matrix.",
+          summary = "Set the field of view.",
+          description = "Sets the projection for a single view.  4 field of view angles can be used, similar to the field of view returned by `lovr.headset.getViewAngles`.  Alternatively, a projection matrix can be used for other types of projections like orthographic, oblique, etc.\n\nTwo views are supported, one for each eye.  When rendering to the headset, both projections are changed to match the ones used by the headset.",
           key = "lovr.graphics.setProjection",
           module = "lovr.graphics",
-          notes = "- The projection matrix will be set for both \"eyes\" of the camera.\n- This state is reset at the beginning and end of `lovr.headset.renderTo`.",
+          notes = "Non-stereo rendering will only use the first view.\n\nThe projection matrices are available as the `mat4 lovrProjections[2]` variable in shaders.  The current projection matrix is available as `lovrProjection`.",
+          related = {
+            "lovr.headset.getViewAngles",
+            "lovr.headset.getViewCount",
+            "lovr.graphics.getViewPose",
+            "lovr.graphics.setViewPose"
+          },
           variants = {
             {
               arguments = {
                 {
-                  name = "projection",
-                  type = "mat4",
-                  description = "The projection matrix to use."
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "left",
+                  type = "number",
+                  description = "The left field of view angle, in radians."
+                },
+                {
+                  name = "right",
+                  type = "number",
+                  description = "The right field of view angle, in radians."
+                },
+                {
+                  name = "up",
+                  type = "number",
+                  description = "The top field of view angle, in radians."
+                },
+                {
+                  name = "down",
+                  type = "number",
+                  description = "The bottom field of view angle, in radians."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The projection matrix for the view."
                 }
               },
               returns = {}
@@ -12031,7 +12140,6 @@ return {
           notes = "Non-stereo rendering will only use the first view.\n\nThe inverted view poses (view matrices) are available as the `mat4 lovrViews[2]` variable in shaders.  The current view matrix is available as `lovrView`.",
           related = {
             "lovr.headset.getViewPose",
-            "lovr.headset.setViewPose",
             "lovr.headset.getViewCount",
             "lovr.graphics.getProjection",
             "lovr.graphics.setProjection"

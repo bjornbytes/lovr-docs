@@ -1,19 +1,18 @@
 return {
   tag = 'graphicsState',
-  summary = 'Set the field of view.',
-  description = [[
-    Sets the projection for a single view.  4 field of view angles can be used, similar to the field
-    of view returned by `lovr.headset.getViewAngles`.  Alternatively, a projection matrix can be
-    used for other types of projections like orthographic, oblique, etc.
-
-    Two views are supported, one for each eye.  When rendering to the headset, both projections are
-    changed to match the ones used by the headset.
-  ]],
+  summary = 'Get the field of view.',
+  description = 'Returns the projection for a single view.',
   arguments = {
     view = {
       type = 'number',
-      description = 'The index of the view to update.'
+      description = 'The view index.'
     },
+    matrix = {
+      type = 'Mat4',
+      description = 'The matrix to fill with the projection.'
+    }
+  },
+  returns = {
     left = {
       type = 'number',
       description = 'The left field of view angle, in radians.'
@@ -32,18 +31,17 @@ return {
     },
     matrix = {
       type = 'Mat4',
-      description = 'The projection matrix for the view.'
+      description = 'The original matrix.'
     }
   },
-  returns = {},
   variants = {
     {
-      arguments = { 'view', 'left', 'right', 'up', 'down' },
-      returns = {}
+      arguments = { 'view' },
+      returns = { 'left', 'right', 'up', 'down' }
     },
     {
       arguments = { 'view', 'matrix' },
-      returns = {}
+      returns = { 'matrix' }
     }
   },
   notes = [[
@@ -53,7 +51,7 @@ return {
     current projection matrix is available as `lovrProjection`.
   ]],
   related = {
-    'lovr.headset.getViewAngles',
+    'lovr.headset.getViewPose',
     'lovr.headset.getViewCount',
     'lovr.graphics.getViewPose',
     'lovr.graphics.setViewPose'
