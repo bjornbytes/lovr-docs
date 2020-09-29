@@ -12028,7 +12028,7 @@ return {
           description = "Sets the pose for a single view.  Objects rendered in this view will appear as though the camera is positioned using the given pose.\n\nTwo views are supported, one for each eye.  When rendering to the headset, both views are changed to match the estimated eye positions.  These view poses are also available using `lovr.headset.getViewPose`.",
           key = "lovr.graphics.setViewPose",
           module = "lovr.graphics",
-          notes = "Non-stereo rendering will only use the first view.\n\nThe inverted view pose (view matrix) is available as a `mat4 lovrViews[2]` variable in shaders.",
+          notes = "Non-stereo rendering will only use the first view.\n\nThe inverted view poses (view matrices) are available as the `mat4 lovrViews[2]` variable in shaders.  The current view matrix is available as `lovrView`.",
           related = {
             "lovr.headset.getViewPose",
             "lovr.headset.setViewPose",

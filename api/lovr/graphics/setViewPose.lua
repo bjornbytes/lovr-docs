@@ -65,7 +65,8 @@ return {
   notes = [[
     Non-stereo rendering will only use the first view.
 
-    The inverted view pose (view matrix) is available as a `mat4 lovrViews[2]` variable in shaders.
+    The inverted view poses (view matrices) are available as the `mat4 lovrViews[2]` variable in
+    shaders.  The current view matrix is available as `lovrView`.
   ]],
   related = {
     'lovr.headset.getViewPose',
