@@ -14,7 +14,7 @@ local mesh1Program, mesh3Program, mesh4Program
 local gridSize = 8
 local gridSizeCubed = gridSize*gridSize*gridSize
 
--- This reproduces the simple shader from the Physics example, but in the vertex shader
+-- This reproduces a simple lighting shader, but in the vertex shader
 -- the mesh coordinate is run through a customized function first.
 -- Call this function with a string containing a glsl function preTransform()
 -- which maps world space coordinates to world space coordinates to construct a shader.
@@ -46,7 +46,7 @@ local animate = 0
 function lovr.load()
   lovr.graphics.setCullingEnabled(true)
 
-  -- This "standard" program is the same as the standard light shader from the other examples-- it does nothing.
+  -- This "standard" program is the same as the lighting shader from the other examples-- it does nothing.
   mesh1Program = makeShader("vec4 preTransform(vec4 v) { return v; }")
 
   -- This mesh is a single triangle

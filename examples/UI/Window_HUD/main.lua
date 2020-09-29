@@ -114,7 +114,8 @@ function lovr.mirror()
 	lovr.graphics.setShader(nil)
 	lovr.graphics.setDepthTest(nil)
 	lovr.graphics.origin()
-	lovr.graphics.setProjection(matrix) -- Switch to screen space coordinates
+  lovr.graphics.setViewPose(1, mat4())
+	lovr.graphics.setProjection(1, matrix) -- Switch to screen space coordinates
 	drawGrid()
 
 	-- Draw instructions

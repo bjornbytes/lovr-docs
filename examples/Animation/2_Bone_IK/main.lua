@@ -24,10 +24,10 @@ local function solve(root, target, control, lengths)
 end
 
 function lovr.load()
-  boneLengths = { .6, .6 }
-  root = lovr.math.newVec3(0, 1.5, -.5)
-  target = lovr.math.newVec3(1.0, 1.5, -.7)
-  control = lovr.math.newVec3(.5, 2, -.6)
+  boneLengths = { .3, .3 }
+  root = lovr.math.newVec3(-.2, 1.5, -.5)
+  target = lovr.math.newVec3(.2, 1.5, -.7)
+  control = lovr.math.newVec3(0, 1.8, -.6)
   pointSize = .04
   drags = {}
 end
@@ -55,11 +55,15 @@ function lovr.update(dt)
 end
 
 function lovr.draw()
+
+  -- Draw the joints and the control point
   lovr.graphics.setColor(0xff80ff)
   lovr.graphics.sphere(root, pointSize / 2)
   lovr.graphics.sphere(target, pointSize / 2)
+  lovr.graphics.setColor(0x80ffff)
   lovr.graphics.sphere(control, pointSize / 2)
 
+  -- Draw the hand
   lovr.graphics.setColor(0xffffff)
   for _, hand in ipairs({ 'left', 'right' }) do
     if lovr.headset.isTracked(hand) then

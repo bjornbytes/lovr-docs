@@ -1,10 +1,9 @@
 function lovr.load()
   -- This holds the thread code
-  -- This must be wrapped with [[]] or "" to
-  -- allow the engine to run it as a .lua file
-  thread_code = [[
+  -- This must be wrapped with [[]] or '' to allow the engine to run it as Lua
+  threadCode = [[
     local lovr = { thread = require 'lovr.thread' }
-    local channel = lovr.thread.getChannel("test")
+    local channel = lovr.thread.getChannel('test')
     local x = 0
     while true do
       x = x + 1
@@ -15,9 +14,8 @@ function lovr.load()
   -- Create a new test channel
   channel = lovr.thread.getChannel('test')
 
-  -- Create a new thread called "thread" using
-  -- the code above
-  thread = lovr.thread.newThread(thread_code)
+  -- Create a new thread called 'thread' using the code above
+  thread = lovr.thread.newThread(threadCode)
 
   -- Start the thread
   thread:start()
