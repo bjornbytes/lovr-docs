@@ -51,7 +51,7 @@ return {
     current projection matrix is available as `lovrProjection`.
   ]],
   related = {
-    'lovr.headset.getViewPose',
+    'lovr.headset.getViewAngles',
     'lovr.headset.getViewCount',
     'lovr.graphics.getViewPose',
     'lovr.graphics.setViewPose'

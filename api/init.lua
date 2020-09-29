@@ -9511,7 +9511,7 @@ return {
           module = "lovr.graphics",
           notes = "Non-stereo rendering will only use the first view.\n\nThe projection matrices are available as the `mat4 lovrProjections[2]` variable in shaders.  The current projection matrix is available as `lovrProjection`.",
           related = {
-            "lovr.headset.getViewPose",
+            "lovr.headset.getViewAngles",
             "lovr.headset.getViewCount",
             "lovr.graphics.getViewPose",
             "lovr.graphics.setViewPose"
