@@ -18786,6 +18786,56 @@ return {
               }
             },
             {
+              name = "getResponseTime",
+              summary = "Get the response time of the joint.",
+              description = "Returns the response time of the joint.  See `World:setResponseTime` for more info.",
+              key = "BallJoint:getResponseTime",
+              module = "lovr.physics",
+              related = {
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "responseTime",
+                      type = "number",
+                      description = "The response time setting for the joint."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTightness",
+              summary = "Get the joint tightness.",
+              description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
+              key = "BallJoint:getTightness",
+              module = "lovr.physics",
+              related = {
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "tightness",
+                      type = "number",
+                      description = "The tightness of the joint."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "setAnchor",
               summary = "Set the anchor point of the BallJoint.",
               description = "Sets a new anchor point for the BallJoint.",
@@ -18808,6 +18858,56 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z coordinate of the anchor point, in world coordinates."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setResponseTime",
+              summary = "Set the response time of the joint.",
+              description = "Sets the response time of the joint.  See `World:setResponseTime` for more info.",
+              key = "BallJoint:setResponseTime",
+              module = "lovr.physics",
+              related = {
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "responseTime",
+                      type = "number",
+                      description = "The new response time setting for the joint."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setTightness",
+              summary = "Set the joint tightness.",
+              description = "Sets the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
+              key = "BallJoint:setTightness",
+              module = "lovr.physics",
+              related = {
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "tightness",
+                      type = "number",
+                      description = "The tightness of the joint."
                     }
                   },
                   returns = {}
@@ -20681,6 +20781,56 @@ return {
               }
             },
             {
+              name = "getResponseTime",
+              summary = "Get the response time of the joint.",
+              description = "Returns the response time of the joint.  See `World:setResponseTime` for more info.",
+              key = "DistanceJoint:getResponseTime",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "responseTime",
+                      type = "number",
+                      description = "The response time setting for the joint."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTightness",
+              summary = "Get the joint tightness.",
+              description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
+              key = "DistanceJoint:getTightness",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getTightness",
+                "BallJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "tightness",
+                      type = "number",
+                      description = "The tightness of the joint."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "setAnchors",
               summary = "Set the anchor points of the DistanceJoint.",
               description = "Sets the anchor points of the DistanceJoint.",
@@ -20737,6 +20887,56 @@ return {
                       name = "distance",
                       type = "number",
                       description = "The new target distance."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setResponseTime",
+              summary = "Set the response time of the joint.",
+              description = "Sets the response time of the joint.  See `World:setResponseTime` for more info.",
+              key = "DistanceJoint:setResponseTime",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "responseTime",
+                      type = "number",
+                      description = "The new response time setting for the joint."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setTightness",
+              summary = "Set the joint tightness.",
+              description = "Sets the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
+              key = "DistanceJoint:setTightness",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getTightness",
+                "BallJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "tightness",
+                      type = "number",
+                      description = "The tightness of the joint."
                     }
                   },
                   returns = {}
@@ -22181,6 +22381,42 @@ return {
               }
             },
             {
+              name = "getColliders",
+              tag = "colliders",
+              summary = "Get a table of all Colliders in the World.",
+              description = "Returns a table of all Colliders in the World.",
+              key = "World:getColliders",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "colliders",
+                      type = "table",
+                      description = "A table of `Collider` objects."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table to fill with Colliders and return."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "colliders",
+                      type = "table",
+                      description = "A table of `Collider` objects."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getGravity",
               tag = "worldProperties",
               summary = "Get the gravity of the World.",
@@ -22264,6 +22500,31 @@ return {
               }
             },
             {
+              name = "getTightness",
+              summary = "Get the joint tightness.",
+              description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
+              key = "World:getTightness",
+              module = "lovr.physics",
+              related = {
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "tightness",
+                      type = "number",
+                      description = "The tightness of the joint."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isCollisionEnabledBetween",
               tag = "worldCollision",
               summary = "Check if two tags can collide.",
@@ -22340,6 +22601,7 @@ return {
                 "World:newCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
+                "World:newMeshCollider",
                 "World:newSphereCollider"
               },
               variants = {
@@ -22405,6 +22667,7 @@ return {
                 "World:newCollider",
                 "World:newBoxCollider",
                 "World:newCylinderCollider",
+                "World:newMeshCollider",
                 "World:newSphereCollider"
               },
               variants = {
@@ -22462,6 +22725,7 @@ return {
                 "World:newBoxCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
+                "World:newMeshCollider",
                 "World:newSphereCollider",
                 "Collider",
                 "Shape"
@@ -22518,6 +22782,7 @@ return {
                 "World:newCollider",
                 "World:newBoxCollider",
                 "World:newCapsuleCollider",
+                "World:newMeshCollider",
                 "World:newSphereCollider"
               },
               variants = {
@@ -22565,6 +22830,45 @@ return {
               }
             },
             {
+              name = "newMeshCollider",
+              tag = "colliders",
+              summary = "Add a Collider with a MeshShape to the World.",
+              description = "Adds a new Collider to the World with a MeshShape already attached.",
+              key = "World:newMeshCollider",
+              module = "lovr.physics",
+              related = {
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newSphereCollider"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "The table of vertices in the mesh.  Each vertex is a table with 3 numbers."
+                    },
+                    {
+                      name = "indices",
+                      type = "table",
+                      description = "A table of triangle indices representing how the vertices are connected in the Mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "newSphereCollider",
               tag = "colliders",
               summary = "Add a Collider with a SphereShape to the World.",
@@ -22577,7 +22881,8 @@ return {
                 "World:newCollider",
                 "World:newBoxCollider",
                 "World:newCapsuleCollider",
-                "World:newCylinderCollider"
+                "World:newCylinderCollider",
+                "World:newMeshCollider"
               },
               variants = {
                 {
@@ -22865,6 +23170,34 @@ return {
                       name = "allowed",
                       type = "boolean",
                       description = "Whether colliders can sleep."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setTightness",
+              tag = "worldProperties",
+              summary = "Set the tightness of joints in the World.",
+              description = "Sets the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
+              key = "World:setTightness",
+              module = "lovr.physics",
+              related = {
+                "BallJoint:getTightness",
+                "BallJoint:setTightness",
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getResponseTime",
+                "World:setResponseTime"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "tightness",
+                      type = "number",
+                      description = "The new tightness for the World."
                     }
                   },
                   returns = {}
@@ -24301,6 +24634,39 @@ return {
       }
     },
     {
+      name = "log",
+      tag = "callbacks",
+      summary = "Called when a message is logged.",
+      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GL`).  It is also possible to emit your own log messages using `lovr.event.push`.",
+      key = "lovr.log",
+      module = "lovr",
+      related = {
+        "lovr.graphics.print"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "message",
+              type = "string",
+              description = "The log message.  It may end in a newline."
+            },
+            {
+              name = "level",
+              type = "string",
+              description = "The log level (`debug`, `info`, `warn`, or `error`)."
+            },
+            {
+              name = "tag",
+              type = "string",
+              description = "The log tag."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
       name = "mirror",
       tag = "callbacks",
       summary = "Called to render content to the desktop window.",
@@ -24358,6 +24724,38 @@ return {
       }
     },
     {
+      name = "resize",
+      tag = "callbacks",
+      summary = "Called when the window is resized.",
+      description = "This callback is called when the desktop window is resized.",
+      key = "lovr.resize",
+      module = "lovr",
+      related = {
+        "lovr.graphics.getDimensions",
+        "lovr.graphics.getWidth",
+        "lovr.graphics.getHeight",
+        "lovr.headset.getDisplayDimensions",
+        "lovr.conf"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "width",
+              type = "number",
+              description = "The new width of the window."
+            },
+            {
+              name = "height",
+              type = "number",
+              description = "The new height of the window."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
       name = "restart",
       tag = "callbacks",
       summary = "Called when restarting.",
@@ -24382,7 +24780,7 @@ return {
             {
               name = "abort",
               type = "*",
-              description = "Whether quitting should be aborted."
+              description = "The value to send to the next `lovr.load`."
             }
           }
         }

@@ -12,7 +12,7 @@ return {
     {
       type = '*',
       name = 'abort',
-      description = 'Whether quitting should be aborted.'
+      description = 'The value to send to the next `lovr.load`.'
     }
   },
   notes = [[
