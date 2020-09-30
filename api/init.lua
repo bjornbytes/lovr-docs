@@ -19762,12 +19762,67 @@ return {
                 "Collider:getAngularVelocity",
                 "Collider:setAngularVelocity",
                 "Collider:getPosition",
-                "Collider:setPosition"
+                "Collider:setPosition",
+                "Collider:getPose",
+                "Collider:setPose"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPose",
+              summary = "Get the pose of the Collider.",
+              description = "Returns the position and orientation of the Collider.",
+              key = "Collider:getPose",
+              module = "lovr.physics",
+              related = {
+                "Collider:getPosition",
+                "Collider:getOrientation"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Collider, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Collider, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Collider, in meters."
+                    },
                     {
                       name = "angle",
                       type = "number",
@@ -19803,7 +19858,9 @@ return {
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
                 "Collider:getOrientation",
-                "Collider:setOrientation"
+                "Collider:setOrientation",
+                "Collider:getPose",
+                "Collider:setPose"
               },
               variants = {
                 {
@@ -20449,11 +20506,66 @@ return {
                 "Collider:getAngularVelocity",
                 "Collider:setAngularVelocity",
                 "Collider:getPosition",
-                "Collider:setPosition"
+                "Collider:setPosition",
+                "Collider:getPose",
+                "Collider:setPose"
               },
               variants = {
                 {
                   arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPose",
+              summary = "Set the pose of the Collider.",
+              description = "Sets the position and orientation of the Collider.",
+              key = "Collider:setPose",
+              module = "lovr.physics",
+              related = {
+                "Collider:setPosition",
+                "Collider:setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Collider, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Collider, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Collider, in meters."
+                    },
                     {
                       name = "angle",
                       type = "number",
@@ -20490,7 +20602,9 @@ return {
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
                 "Collider:getOrientation",
-                "Collider:setOrientation"
+                "Collider:setOrientation",
+                "Collider:getPose",
+                "Collider:setPose"
               },
               variants = {
                 {
