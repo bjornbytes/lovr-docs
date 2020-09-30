@@ -1,8 +1,23 @@
 return {
-  summary = 'Get the orientation of the Collider.',
-  description = 'Returns the orientation of the Collider in angle/axis representation.',
+  summary = 'Get the pose of the Collider.',
+  description = 'Returns the position and orientation of the Collider.',
   arguments = {},
   returns = {
+    {
+      name = 'x',
+      type = 'number',
+      description = 'The x position of the Collider, in meters.'
+    },
+    {
+      name = 'y',
+      type = 'number',
+      description = 'The y position of the Collider, in meters.'
+    },
+    {
+      name = 'z',
+      type = 'number',
+      description = 'The z position of the Collider, in meters.'
+    },
     {
       name = 'angle',
       type = 'number',
@@ -25,12 +40,7 @@ return {
     }
   },
   related = {
-    'Collider:applyTorque',
-    'Collider:getAngularVelocity',
-    'Collider:setAngularVelocity',
     'Collider:getPosition',
-    'Collider:setPosition',
-    'Collider:getPose',
-    'Collider:setPose'
+    'Collider:getOrientation'
   }
 }
