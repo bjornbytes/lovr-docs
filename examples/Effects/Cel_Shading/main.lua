@@ -27,13 +27,13 @@ function lovr.draw()
   lovr.graphics.setShader(shader)
 
   lovr.graphics.setColor(0, 0, 1)
-  lovr.graphics.sphere(0, 1.7, -1, .2)
+  lovr.graphics.sphere(0, 1.7, -1, .15)
 
   lovr.graphics.setColor(0, 1, 0)
-  lovr.graphics.sphere(-.5, 1.7, -1, .2)
+  lovr.graphics.sphere(-.4, 1.7, -1, .15)
 
   lovr.graphics.setColor(1, 0, 0)
-  lovr.graphics.sphere(.5, 1.7, -1, .2)
+  lovr.graphics.sphere(.4, 1.7, -1, .15)
 
   lovr.graphics.setShader()
 end
