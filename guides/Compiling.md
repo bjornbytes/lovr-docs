@@ -222,6 +222,8 @@ to build the apk.
 The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
 the command line:
 
+- Set `ANDROID` to `1`
+- Set `LOVR_USE_VRAPI` to `ON` for Oculus Android devices, otherwise `LOVR_USE_PICO` to `ON` for Pico.
 - Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
   `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
 - Set `ANDROID_SDK` to the path to the Android SDK.
@@ -238,7 +240,19 @@ the command line:
 The usual CMake incantation with all of the above variables set up should produce `lovr.apk`:
 
 ```
-$ cmake ..
+$ mkdir build
+$ cd build
+$ cmake \
+    -D ANDROID=1 \
+    -D LOVR_USE_VRAPI=... \
+    -D CMAKE_TOOLCHAIN_FILE=... \
+    -D ANDROID_SDK=... \
+    -D ANDROID_ABI=... \
+    -D ANDROID_NATIVE_API_LEVEL=... \
+    -D ANDROID_BUILD_TOOLS_VERSION=... \
+    -D ANDROID_KEYSTORE=... \
+    -D ANDROID_KEYSTORE_PASS=... \
+    ..
 $ cmake --build .
 ```
 
