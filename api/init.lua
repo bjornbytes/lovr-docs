@@ -7288,6 +7288,7 @@ return {
           description = "Draws a cylinder.",
           key = "lovr.graphics.cylinder",
           module = "lovr.graphics",
+          notes = "Currently, cylinders don't have UVs.",
           variants = {
             {
               arguments = {
