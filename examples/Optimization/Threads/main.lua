@@ -11,8 +11,7 @@ local messageCount = 0
 
 while true do 
     local msg = toThread:pop()
-    if msg ~= nil then 
-        print(msg) 
+    if msg ~= nil then
         messageCount = messageCount + 1
         fromThread:push(messageCount)
     end 
