@@ -17,8 +17,8 @@ function scene.load()
 	scene.cubeSize = 0.2
 	scene.cubes = {}
 
-	scene.sphereCenter = lovr.math.newVec3(0, 1.5, -2)
-	scene.sphereRad = 1
+	scene.sphereCenter = lovr.math.newVec3(0, 1.5, -0.5)
+	scene.sphereRad = 0.125
 
 	for i=1,scene.cubeCount do
 		scene.generate(i, true)
