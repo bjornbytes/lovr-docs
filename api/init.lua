@@ -8098,7 +8098,7 @@ return {
                 {
                   name = "matrix",
                   type = "Mat4",
-                  description = "The original matrix."
+                  description = "The matrix containing the projection."
                 }
               }
             }
@@ -8298,7 +8298,7 @@ return {
                 {
                   name = "matrix",
                   type = "Mat4",
-                  description = "The original matrix."
+                  description = "The matrix containing the view pose."
                 }
               }
             }
