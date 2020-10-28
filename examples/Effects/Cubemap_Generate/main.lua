@@ -89,7 +89,7 @@ end
 
 local cubemap = {}
 
-local unitX = lovr.math.newVec3(0,0,1)
+local unitX = lovr.math.newVec3(1,0,0)
 local unitY = lovr.math.newVec3(0,1,0)
 local unitZ = lovr.math.newVec3(0,0,1)
 
