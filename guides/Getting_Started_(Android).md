@@ -4,8 +4,7 @@ Getting Started
 This guide explains how to start using LÖVR on Android devices like the Oculus Go and Oculus Quest.
 
 After setting the device up for development, the LÖVR Android .apk is "sideloaded" onto the device.
-From there, a LÖVR project on a PC can be sync'd to the device, and will automatically reload
-whenever the files are changed.
+From there, a LÖVR project on a PC can be sync'd to the device.
 
 Device Setup
 ---
@@ -21,17 +20,16 @@ but there are lots of other guides on the internet for how to do this.  The key 
 Install the APK
 ---
 
-Download the latest release version of the test apk from the [`lovr-oculus-mobile` release
-page](https://github.com/mcclure/lovr-oculus-mobile/releases).
+Download the latest Android APK from the [Downloads page](https://lovr.org/downloads).
 
 Install it to the device:
 
 ```
-$ adb install /path/to/test-release.apk
+$ adb install lovr.apk
 ```
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
-the `org.lovr.test` app.  You should see a message about how to upload files.
+the `org.lovr.app` app.  You should see the no game screen.
 
 Running a Project
 ---
@@ -48,21 +46,23 @@ end
 Then use `adb` to sync it to the device:
 
 ```
-$ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.test/files/.lodr
+$ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.app/files
 ```
 
-You should see the "hello world" message!
+Note the trailing `.` in the path to the project, it's important.
 
-If the app is already running when a project is pushed, it will reload with the new code.  Also note
-the trailing `.` in the path to the project, it's important!
+Restart the app.  You should see the "hello world" message!
 
 Tips
 ---
 
+- It is possible to restart the app from the command line by running:
+
+```
+adb shell am force-stop org.lovr.app
+adb shell am start org.lovr.app/org.lovr.app.Activity
+```
+
+- For even faster restarts, use [`lodr`](https://github.com/mcclure/lodr) for live reloading.
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
   `adb logcat -s LOVR`.
-
-Next Steps
----
-
-The next guide will teach you how to make fancier projects using <a data-key="Callbacks_and_Modules">Callbacks and Modules</a>.
