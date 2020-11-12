@@ -1073,7 +1073,7 @@ return {
           name = "newMicrophone",
           tag = "microphones",
           summary = "Create a new Microphone.",
-          description = "Creates a new Microphone based on the name of an existing micrphone and a set of capture parameters.  If the specified combination of prameters are not supported for audio capture, `nil` will be returned.",
+          description = "Creates a new Microphone based on the name of an existing microphone and a set of capture parameters.  If the specified combination of parameters are not supported for audio capture, `nil` will be returned.",
           key = "lovr.audio.newMicrophone",
           module = "lovr.audio",
           related = {
@@ -3127,7 +3127,7 @@ return {
             {
               name = "append",
               summary = "Append raw PCM audio data to this audio stream for playback.",
-              description = "Append audio data that you have constructed yourself (perhaps by generating it in code, or streaming it over the network).  Must only be called on a \"raw\" AudioStream (not one constructed with a file or a blob).\n\nThe data must be 16-bit signed integer, and the sample rate and channel count must match the values the AudioStream was constructed with.\n\nIf a call to `append` would make the internal buffer of this `AudioStream` to become bigger than the `queueLimit` set on this AudioStream when it was constructed, that call to `append` will ignore your blob and return false, queueing no data at all from that call.\n\nAfter you've created a Source with your raw AudioStream, and appended enough audio data, remember to call `Source:play` to make the `Source` start playing your queued data. If the `Source` plays all the audio data you've queued and thus runs out of data to play, it will automatically stop and you'll have to append more sound data and call `Source:play` again. You can use `AudioStream:getDuration` to see how much data has been queued so far.\n\nTry to have more audio queued than the time it will take before you call append() again to avoid stuttery playback. Having more than 0.2s audio queued at all times is a good guideline.",
+              description = "Append audio data that you have constructed yourself (perhaps by generating it in code, or streaming it over the network).  Must only be called on a \"raw\" AudioStream (not one constructed with a file or a blob).\n\nThe data must be 16-bit signed integer, and the sample rate and channel count must match the values the AudioStream was constructed with.\n\nIf a call to `append` would make the internal buffer of this `AudioStream` to become bigger than the `queueLimit` set on this AudioStream when it was constructed, that call to `append` will ignore your blob and return false, queuing no data at all from that call.\n\nAfter you've created a Source with your raw AudioStream, and appended enough audio data, remember to call `Source:play` to make the `Source` start playing your queued data. If the `Source` plays all the audio data you've queued and thus runs out of data to play, it will automatically stop and you'll have to append more sound data and call `Source:play` again. You can use `AudioStream:getDuration` to see how much data has been queued so far.\n\nTry to have more audio queued than the time it will take before you call append() again to avoid stuttery playback. Having more than 0.2s audio queued at all times is a good guideline.",
               key = "AudioStream:append",
               module = "lovr.data",
               related = {
@@ -7707,7 +7707,7 @@ return {
           name = "getColorMask",
           tag = "graphicsState",
           summary = "Get whether each color channel is enabled.",
-          description = "Returns a boolean for each color channel (red, green, blue, alpha) indiciating whether it is enabled.  When a color channel is enabled, it will be affected by drawing commmands and clear commands.",
+          description = "Returns a boolean for each color channel (red, green, blue, alpha) indicating whether it is enabled.  When a color channel is enabled, it will be affected by drawing commands and clear commands.",
           key = "lovr.graphics.getColorMask",
           module = "lovr.graphics",
           variants = {
@@ -9220,7 +9220,7 @@ return {
           description = "Creates a new Shader.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
-          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0, representing the alpha treshold.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- `highp` is a boolean flag specific to mobile GPUs that changes the default precision for\n  fragment shaders to use high precision instead of the default medium precision.  This can fix\n  visual issues caused by a lack of precision, but isn't guaranteed to be supported on some\n  lower-end systems.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping.\n\nCurrently, up to 32 shader flags are supported.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.",
+          notes = "The `flags` table should contain string keys, with boolean or numeric values.  These flags can be used to customize the behavior of Shaders from Lua, by using the flags in the shader source code.  Numeric flags will be available as constants named `FLAG_<flagName>`.  Boolean flags can be used with `#ifdef` and will only be defined if the value in the Lua table was `true`.\n\nThe following flags are used by shaders provided by LÖVR:\n\n- `animated` is a boolean flag that will cause the shader to position vertices based on the pose\n  of an animated skeleton.  This should usually only be used for animated `Model`s, since it\n  needs a skeleton to work properly and is slower than normal rendering.\n- `alphaCutoff` is a numeric flag that can be used to implement simple \"cutout\" style\n  transparency, where pixels with alpha below a certain threshold will be discarded.  The value\n  of the flag should be a number between 0.0 and 1.0, representing the alpha threshold.\n- `uniformScale` is a boolean flag used for optimization.  If the Shader is only going to be\n  used with objects that have a *uniform* scale (i.e. the x, y, and z components of the scale\n  are all the same number), then this flag can be set to use a faster method to compute the\n  `lovrNormalMatrix` uniform variable.\n- `multicanvas` is a boolean flag that should be set when rendering to multiple Textures\n  attached to a `Canvas`.  When set, the fragment shader should implement the `colors` function\n  instead of the `color` function, and can write color values to the `lovrCanvas` array instead\n  of returning a single color.  Each color in the array gets written to the corresponding\n  texture attached to the canvas.\n- `highp` is a boolean flag specific to mobile GPUs that changes the default precision for\n  fragment shaders to use high precision instead of the default medium precision.  This can fix\n  visual issues caused by a lack of precision, but isn't guaranteed to be supported on some\n  lower-end systems.\n- The following flags are used only by the `standard` PBR shader:\n  - `normalMap` should be set to `true` to render objects with a normal map, providing a more\n  detailed, bumpy appearance.  Currently, this requires the model to have vertex tangents.\n  - `emissive` should be set to `true` to apply emissive maps to rendered objects.  This is\n    usually used to apply glowing lights or screens to objects, since the emissive texture is\n    not affected at all by lighting.\n  - `indirectLighting` is an *awesome* boolean flag that will apply realistic reflections and\n    lighting to the surface of an object, based on a specially-created skybox.  See the\n    `Standard Shader` guide for more information.\n  - `occlusion` is a boolean flag that uses the ambient occlusion texture in the model.  It only\n    affects indirect lighting, so it will only have an effect if the `indirectLighting` flag is\n    also enabled.\n  - `skipTonemap` is a flag that will skip the tonemapping process.  Tonemapping is an important\n    process that maps the high definition physical color values down to a 0 - 1 range for\n    display.  There are lots of different tonemapping algorithms that give different artistic\n    effects.  The default tonemapping in the standard shader is the ACES algorithm, but you can\n    use this flag to turn off ACES and use your own tonemapping.\n\nCurrently, up to 32 shader flags are supported.\n\nThe `stereo` option is only necessary for Android.  Currently on Android, only stereo shaders can be used with stereo Canvases, and mono Shaders can only be used with mono Canvases.",
           variants = {
             {
               description = "Create a Shader with custom GLSL code.",
@@ -10359,7 +10359,7 @@ return {
           name = "setColorMask",
           tag = "graphicsState",
           summary = "Enable or disable color channels.",
-          description = "Enables and disables individual color channels.  When a color channel is enabled, it will be affected by drawing commmands and clear commands.",
+          description = "Enables and disables individual color channels.  When a color channel is enabled, it will be affected by drawing commands and clear commands.",
           key = "lovr.graphics.setColorMask",
           module = "lovr.graphics",
           variants = {
@@ -11695,7 +11695,7 @@ return {
             {
               name = "getRasterizer",
               summary = "Get the underlying Rasterizer.",
-              description = "Returns the underyling `Rasterizer` object for a Font.",
+              description = "Returns the underlying `Rasterizer` object for a Font.",
               key = "Font:getRasterizer",
               module = "lovr.graphics",
               related = {
@@ -13366,7 +13366,7 @@ return {
                     {
                       name = "space",
                       type = "CoordinateSpace",
-                      description = "Whether the pose sould be returned relative to the node's parent or relative to the root node of the Model.",
+                      description = "Whether the pose should be returned relative to the node's parent or relative to the root node of the Model.",
                       default = "global"
                     }
                   },
@@ -13418,7 +13418,7 @@ return {
                     {
                       name = "space",
                       type = "CoordinateSpace",
-                      description = "Whether the pose sould be returned relative to the node's parent or relative to the root node of the Model.",
+                      description = "Whether the pose should be returned relative to the node's parent or relative to the root node of the Model.",
                       default = "global"
                     }
                   },
@@ -23918,7 +23918,7 @@ return {
               name = "disableCollisionBetween",
               tag = "worldCollision",
               summary = "Disable collision between two tags.",
-              description = "Disables collision between two collison tags.",
+              description = "Disables collision between two collision tags.",
               key = "World:disableCollisionBetween",
               module = "lovr.physics",
               variants = {
@@ -23949,7 +23949,7 @@ return {
               name = "enableCollisionBetween",
               tag = "worldCollision",
               summary = "Enable collision between two tags.",
-              description = "Enables collision between two collison tags.",
+              description = "Enables collision between two collision tags.",
               key = "World:enableCollisionBetween",
               module = "lovr.physics",
               variants = {
@@ -24838,7 +24838,7 @@ return {
                     {
                       name = "dt",
                       type = "number",
-                      description = "The amount of time to advance the simultion forward."
+                      description = "The amount of time to advance the simulation forward."
                     },
                     {
                       name = "resolver",

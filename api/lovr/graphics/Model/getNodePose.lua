@@ -14,7 +14,7 @@ return {
       type = 'CoordinateSpace',
       default = 'global',
       description = [[
-        Whether the pose sould be returned relative to the node's parent or relative to the root
+        Whether the pose should be returned relative to the node's parent or relative to the root
         node of the Model.
       ]]
     }

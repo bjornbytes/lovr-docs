@@ -10,7 +10,7 @@ return {
 
     If a call to `append` would make the internal buffer of this `AudioStream` to become bigger
     than the `queueLimit` set on this AudioStream when it was constructed, that call to `append`
-    will ignore your blob and return false, queueing no data at all from that call.
+    will ignore your blob and return false, queuing no data at all from that call.
 
     After you've created a Source with your raw AudioStream, and appended enough audio data,
     remember to call `Source:play` to make the `Source` start playing your queued data. If the

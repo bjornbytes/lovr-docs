@@ -2,8 +2,8 @@ return {
   tag = 'microphones',
   summary = 'Create a new Microphone.',
   description = [[
-    Creates a new Microphone based on the name of an existing micrphone and a set of capture
-    parameters.  If the specified combination of prameters are not supported for audio capture,
+    Creates a new Microphone based on the name of an existing microphone and a set of capture
+    parameters.  If the specified combination of parameters are not supported for audio capture,
     `nil` will be returned.
   ]],
   arguments = {
