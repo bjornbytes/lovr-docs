@@ -1,7 +1,7 @@
 return {
   summary = 'Get the linear damping of the Collider.',
   description = [[
-    Returns the Collider's linear damping parameter.  Linear damping is similar to drag or air
+    Returns the Collider's linear damping parameters.  Linear damping is similar to drag or air
     resistance, slowing the Collider down over time.
   ]],
   arguments = {},
@@ -10,6 +10,11 @@ return {
       name = 'damping',
       type = 'number',
       description = 'The linear damping.'
+    },
+    {
+      name = 'threshold',
+      type = 'number',
+      description = 'Velocity limit below which the damping is not applied.'
     }
   },
   notes = [[
