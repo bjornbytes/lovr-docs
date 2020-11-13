@@ -3,13 +3,20 @@ return {
   summary = 'Set the linear damping of the World.',
   description = [[
     Sets the linear damping of the World.  Linear damping is similar to drag or air resistance,
-    slowing down colliders over time as they move.
+    slowing down colliders over time as they move. Damping is only applied when linear velocity
+    is over the threshold value.
   ]],
   arguments = {
     {
       name = 'damping',
       type = 'number',
       description = 'The linear damping.'
+    },
+    {
+      name = 'threshold',
+      type = 'number',
+      default = '0',
+      description = 'Velocity limit below which the damping is not applied.'
     }
   },
   returns = {},

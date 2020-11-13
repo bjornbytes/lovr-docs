@@ -2,8 +2,8 @@ return {
   tag = 'worldProperties',
   summary = 'Get the linear damping of the World.',
   description = [[
-    Returns the linear damping of the World.  Linear damping is similar to drag or air resistance,
-    slowing down colliders over time as they move.
+    Returns the linear damping parameters of the World.  Linear damping is similar to drag or air
+    resistance, slowing down colliders over time as they move.
   ]],
   arguments = {},
   returns = {
@@ -11,6 +11,11 @@ return {
       name = 'damping',
       type = 'number',
       description = 'The linear damping.'
+    },
+    {
+      name = 'threshold',
+      type = 'number',
+      description = 'Velocity limit below which the damping is not applied.'
     }
   },
   notes = [[
