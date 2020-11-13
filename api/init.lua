@@ -17862,7 +17862,7 @@ return {
             {
               name = "mul",
               summary = "Multiply a quaternion by another quaternion or a vector.",
-              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the vector is rotated by the quaternion.",
+              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the input vector is rotated by the quaternion and returned.",
               key = "Quat:mul",
               module = "lovr.math",
               variants = {
@@ -17885,16 +17885,16 @@ return {
                 {
                   arguments = {
                     {
-                      name = "v",
+                      name = "v3",
                       type = "vec3",
                       description = "A vector to rotate."
                     }
                   },
                   returns = {
                     {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
+                      name = "v3",
+                      type = "vec3",
+                      description = "Vector rotated by quaternion."
                     }
                   }
                 }
@@ -17926,7 +17926,7 @@ return {
             {
               name = "set",
               summary = "Set the components of the quaternion.",
-              description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n  - Alternatively, a `vec3` can be used for the axis.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
+              description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
               key = "Quat:set",
               module = "lovr.math",
               related = {
@@ -17963,27 +17963,6 @@ return {
                       type = "boolean",
                       description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
                       default = "false"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "q",
-                      type = "quat",
-                      description = "The original quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      description = "The angle to use for the rotation, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "axis",
-                      type = "vec3",
-                      description = "The axis of rotation (does not need to be normalized)."
                     }
                   },
                   returns = {
