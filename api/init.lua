@@ -13816,6 +13816,11 @@ return {
                       description = "The name of the image uniform."
                     },
                     {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The Texture to assign."
+                    },
+                    {
                       name = "slice",
                       type = "number",
                       description = "The slice of a cube, array, or volume texture to use, or `nil` for all slices.",
@@ -13847,6 +13852,11 @@ return {
                       name = "index",
                       type = "number",
                       description = "The array index to set."
+                    },
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The Texture to assign."
                     },
                     {
                       name = "slice",
@@ -20790,7 +20800,7 @@ return {
             {
               name = "getAngularDamping",
               summary = "Get the angular damping of the Collider.",
-              description = "Returns the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them them slow down their angular velocity over time.",
+              description = "Returns the angular damping parameters of the Collider.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "Collider:getAngularDamping",
               module = "lovr.physics",
               related = {
@@ -20805,6 +20815,11 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -20896,7 +20911,7 @@ return {
             {
               name = "getLinearDamping",
               summary = "Get the linear damping of the Collider.",
-              description = "Returns the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
+              description = "Returns the Collider's linear damping parameters.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:getLinearDamping",
               module = "lovr.physics",
               related = {
@@ -20911,6 +20926,11 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -21724,7 +21744,7 @@ return {
             {
               name = "setAngularDamping",
               summary = "Set the angular damping of the Collider.",
-              description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them them slow down their angular velocity over time.",
+              description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them to slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "Collider:setAngularDamping",
               module = "lovr.physics",
               related = {
@@ -21738,6 +21758,12 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -21872,7 +21898,7 @@ return {
             {
               name = "setLinearDamping",
               summary = "Set the linear damping of the Collider.",
-              description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
+              description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time. Damping is only applied when linear velocity is over the threshold value.",
               key = "Collider:setLinearDamping",
               module = "lovr.physics",
               related = {
@@ -21886,6 +21912,12 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -23959,7 +23991,7 @@ return {
               name = "getAngularDamping",
               tag = "worldProperties",
               summary = "Get the angular damping of the World.",
-              description = "Returns the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
+              description = "Returns the angular damping parameters of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:getAngularDamping",
               module = "lovr.physics",
               variants = {
@@ -23970,6 +24002,11 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -24050,7 +24087,7 @@ return {
               name = "getLinearDamping",
               tag = "worldProperties",
               summary = "Get the linear damping of the World.",
-              description = "Returns the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
+              description = "Returns the linear damping parameters of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:getLinearDamping",
               module = "lovr.physics",
               variants = {
@@ -24061,6 +24098,11 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -24645,7 +24687,7 @@ return {
               name = "setAngularDamping",
               tag = "worldProperties",
               summary = "Set the angular damping of the World.",
-              description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
+              description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "World:setAngularDamping",
               module = "lovr.physics",
               variants = {
@@ -24655,6 +24697,12 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -24700,7 +24748,7 @@ return {
               name = "setLinearDamping",
               tag = "worldProperties",
               summary = "Set the linear damping of the World.",
-              description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
+              description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move. Damping is only applied when linear velocity is over the threshold value.",
               key = "World:setLinearDamping",
               module = "lovr.physics",
               variants = {
@@ -24710,6 +24758,12 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
+                    },
+                    {
+                      name = "threshold",
+                      type = "number",
+                      description = "Velocity limit below which the damping is not applied.",
+                      default = "0"
                     }
                   },
                   returns = {}
