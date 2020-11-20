@@ -7,13 +7,16 @@ return {
   ]],
   arguments = {
     name = {
-      name = 'name',
       type = 'string',
       description = 'The name of the image uniform.'
     },
     index = {
       type = 'number',
       description = 'The array index to set.'
+    },
+    texture = {
+      type = 'Texture',
+      description = 'The Texture to assign.'
     },
     slice = {
       type = 'number',
@@ -34,11 +37,11 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'name', 'slice', 'mipmap', 'access' },
+      arguments = { 'name', 'texture', 'slice', 'mipmap', 'access' },
       returns = {}
     },
     {
-      arguments = { 'name', 'index', 'slice', 'mipmap', 'access' },
+      arguments = { 'name', 'index', 'texture', 'slice', 'mipmap', 'access' },
       returns = {}
     }
   },
