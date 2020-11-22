@@ -15780,13 +15780,6 @@ return {
                   type = "Device",
                   description = "The device to load a model for.",
                   default = "head"
-                }
-              },
-              returns = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "The new Model, or `nil` if a model could not be loaded."
                 },
                 {
                   name = "options",
@@ -15801,6 +15794,13 @@ return {
                       default = "false"
                     }
                   }
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model, or `nil` if a model could not be loaded."
                 }
               }
             }
