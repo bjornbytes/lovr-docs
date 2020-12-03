@@ -160,7 +160,7 @@ return {
   },
   returns = {},
   notes = [[
-    Disabling the `headset` module can improve startup time a lot if you aren't intending to use
+    Disabling the headset module can improve startup time a lot if you aren't intending to use
     `lovr.headset`.
 
     You can set `t.window` to nil to avoid creating the window. You can do it yourself later by
