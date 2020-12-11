@@ -30,7 +30,7 @@ return {
     },
     access = {
       type = 'UniformAccess',
-      default = 'readwrite',
+      default = [['readwrite']],
       description = 'Whether the image will be read from, written to, or both.'
     }
   },

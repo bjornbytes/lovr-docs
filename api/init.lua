@@ -8518,7 +8518,7 @@ return {
                       name = "depth",
                       type = "TextureFormat",
                       description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
-                      default = "d16"
+                      default = "'d16'"
                     },
                     {
                       name = "stereo",
@@ -8573,7 +8573,7 @@ return {
                       name = "depth",
                       type = "TextureFormat",
                       description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
-                      default = "d16"
+                      default = "'d16'"
                     },
                     {
                       name = "stereo",
@@ -8628,7 +8628,7 @@ return {
                       name = "depth",
                       type = "TextureFormat",
                       description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
-                      default = "d16"
+                      default = "'d16'"
                     },
                     {
                       name = "stereo",
@@ -9338,7 +9338,7 @@ return {
                       name = "usage",
                       type = "BufferUsage",
                       description = "How the data in the block will be updated.",
-                      default = "dynamic"
+                      default = "'dynamic'"
                     },
                     {
                       name = "readable",
@@ -9413,7 +9413,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9468,7 +9468,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9533,7 +9533,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9588,7 +9588,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9643,7 +9643,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -13367,7 +13367,7 @@ return {
                       name = "space",
                       type = "CoordinateSpace",
                       description = "Whether the pose sould be returned relative to the node's parent or relative to the root node of the Model.",
-                      default = "global"
+                      default = "'global'"
                     }
                   },
                   returns = {
@@ -13419,7 +13419,7 @@ return {
                       name = "space",
                       type = "CoordinateSpace",
                       description = "Whether the pose sould be returned relative to the node's parent or relative to the root node of the Model.",
-                      default = "global"
+                      default = "'global'"
                     }
                   },
                   returns = {
@@ -13786,7 +13786,7 @@ return {
                       name = "access",
                       type = "UniformAccess",
                       description = "How the Shader will use this block (used as an optimization hint).",
-                      default = "readwrite"
+                      default = "'readwrite'"
                     }
                   },
                   returns = {}
@@ -13836,7 +13836,7 @@ return {
                       name = "access",
                       type = "UniformAccess",
                       description = "Whether the image will be read from, written to, or both.",
-                      default = "readwrite"
+                      default = "'readwrite'"
                     }
                   },
                   returns = {}
@@ -13874,7 +13874,7 @@ return {
                       name = "access",
                       type = "UniformAccess",
                       description = "Whether the image will be read from, written to, or both.",
-                      default = "readwrite"
+                      default = "'readwrite'"
                     }
                   },
                   returns = {}
@@ -14748,7 +14748,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to use for the animation data.",
-                  default = "head"
+                  default = "'head'"
                 },
                 {
                   name = "model",
@@ -14791,7 +14791,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the velocity of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15238,7 +15238,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the orientation of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15312,7 +15312,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the pose of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15379,7 +15379,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the position of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15511,7 +15511,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the velocity of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15751,7 +15751,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the pose of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15779,7 +15779,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to load a model for.",
-                  default = "head"
+                  default = "'head'"
                 },
                 {
                   name = "options",
@@ -15878,7 +15878,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to vibrate.",
-                  default = "head"
+                  default = "'head'"
                 },
                 {
                   name = "strength",
@@ -20821,7 +20821,7 @@ return {
             {
               name = "getAngularDamping",
               summary = "Get the angular damping of the Collider.",
-              description = "Returns the angular damping parameters of the Collider.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
+              description = "Returns the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them them slow down their angular velocity over time.",
               key = "Collider:getAngularDamping",
               module = "lovr.physics",
               related = {
@@ -20836,11 +20836,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -20932,7 +20927,7 @@ return {
             {
               name = "getLinearDamping",
               summary = "Get the linear damping of the Collider.",
-              description = "Returns the Collider's linear damping parameters.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
+              description = "Returns the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:getLinearDamping",
               module = "lovr.physics",
               related = {
@@ -20947,11 +20942,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -21765,7 +21755,7 @@ return {
             {
               name = "setAngularDamping",
               summary = "Set the angular damping of the Collider.",
-              description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them to slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
+              description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them them slow down their angular velocity over time.",
               key = "Collider:setAngularDamping",
               module = "lovr.physics",
               related = {
@@ -21779,12 +21769,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied.",
-                      default = "0"
                     }
                   },
                   returns = {}
@@ -21919,7 +21903,7 @@ return {
             {
               name = "setLinearDamping",
               summary = "Set the linear damping of the Collider.",
-              description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time. Damping is only applied when linear velocity is over the threshold value.",
+              description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:setLinearDamping",
               module = "lovr.physics",
               related = {
@@ -21933,12 +21917,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied.",
-                      default = "0"
                     }
                   },
                   returns = {}
@@ -24012,7 +23990,7 @@ return {
               name = "getAngularDamping",
               tag = "worldProperties",
               summary = "Get the angular damping of the World.",
-              description = "Returns the angular damping parameters of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
+              description = "Returns the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:getAngularDamping",
               module = "lovr.physics",
               variants = {
@@ -24023,11 +24001,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -24108,7 +24081,7 @@ return {
               name = "getLinearDamping",
               tag = "worldProperties",
               summary = "Get the linear damping of the World.",
-              description = "Returns the linear damping parameters of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
+              description = "Returns the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:getLinearDamping",
               module = "lovr.physics",
               variants = {
@@ -24119,11 +24092,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -24708,7 +24676,7 @@ return {
               name = "setAngularDamping",
               tag = "worldProperties",
               summary = "Set the angular damping of the World.",
-              description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
+              description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:setAngularDamping",
               module = "lovr.physics",
               variants = {
@@ -24718,12 +24686,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied.",
-                      default = "0"
                     }
                   },
                   returns = {}
@@ -24769,7 +24731,7 @@ return {
               name = "setLinearDamping",
               tag = "worldProperties",
               summary = "Set the linear damping of the World.",
-              description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move. Damping is only applied when linear velocity is over the threshold value.",
+              description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:setLinearDamping",
               module = "lovr.physics",
               variants = {
@@ -24779,12 +24741,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied.",
-                      default = "0"
                     }
                   },
                   returns = {}
