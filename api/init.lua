@@ -173,7 +173,7 @@ return {
           code = "function lovr.conf(t)\n\n  -- Set the project identity\n  t.identity = 'default'\n\n  -- Graphics\n  t.graphics.debug = false\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'openvr', 'webxr', 'desktop' }\n  t.headset.msaa = 4\n  t.headset.offset = 1.7\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.vsync = 1\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
-      notes = "Disabling the `headset` module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
+      notes = "Disabling the headset module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
     },
     {
       name = "draw",
@@ -8518,7 +8518,7 @@ return {
                       name = "depth",
                       type = "TextureFormat",
                       description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
-                      default = "d16"
+                      default = "'d16'"
                     },
                     {
                       name = "stereo",
@@ -8573,7 +8573,7 @@ return {
                       name = "depth",
                       type = "TextureFormat",
                       description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
-                      default = "d16"
+                      default = "'d16'"
                     },
                     {
                       name = "stereo",
@@ -8628,7 +8628,7 @@ return {
                       name = "depth",
                       type = "TextureFormat",
                       description = "A depth TextureFormat to use for the Canvas depth buffer, or false for no depth buffer. Note that this can also be a table with `format` and `readable` keys.",
-                      default = "d16"
+                      default = "'d16'"
                     },
                     {
                       name = "stereo",
@@ -9338,7 +9338,7 @@ return {
                       name = "usage",
                       type = "BufferUsage",
                       description = "How the data in the block will be updated.",
-                      default = "dynamic"
+                      default = "'dynamic'"
                     },
                     {
                       name = "readable",
@@ -9413,7 +9413,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9468,7 +9468,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9533,7 +9533,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9588,7 +9588,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -9643,7 +9643,7 @@ return {
                       name = "format",
                       type = "TextureFormat",
                       description = "The format used for the Texture (when creating a blank texture).",
-                      default = "rgba"
+                      default = "'rgba'"
                     },
                     {
                       name = "msaa",
@@ -13367,7 +13367,7 @@ return {
                       name = "space",
                       type = "CoordinateSpace",
                       description = "Whether the pose should be returned relative to the node's parent or relative to the root node of the Model.",
-                      default = "global"
+                      default = "'global'"
                     }
                   },
                   returns = {
@@ -13419,7 +13419,7 @@ return {
                       name = "space",
                       type = "CoordinateSpace",
                       description = "Whether the pose should be returned relative to the node's parent or relative to the root node of the Model.",
-                      default = "global"
+                      default = "'global'"
                     }
                   },
                   returns = {
@@ -13786,7 +13786,7 @@ return {
                       name = "access",
                       type = "UniformAccess",
                       description = "How the Shader will use this block (used as an optimization hint).",
-                      default = "readwrite"
+                      default = "'readwrite'"
                     }
                   },
                   returns = {}
@@ -13836,7 +13836,7 @@ return {
                       name = "access",
                       type = "UniformAccess",
                       description = "Whether the image will be read from, written to, or both.",
-                      default = "readwrite"
+                      default = "'readwrite'"
                     }
                   },
                   returns = {}
@@ -13874,7 +13874,7 @@ return {
                       name = "access",
                       type = "UniformAccess",
                       description = "Whether the image will be read from, written to, or both.",
-                      default = "readwrite"
+                      default = "'readwrite'"
                     }
                   },
                   returns = {}
@@ -14748,7 +14748,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to use for the animation data.",
-                  default = "head"
+                  default = "'head'"
                 },
                 {
                   name = "model",
@@ -14791,7 +14791,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the velocity of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15238,7 +15238,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the orientation of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15312,7 +15312,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the pose of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15379,7 +15379,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the position of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15511,7 +15511,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the velocity of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15751,7 +15751,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to get the pose of.",
-                  default = "head"
+                  default = "'head'"
                 }
               },
               returns = {
@@ -15779,7 +15779,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to load a model for.",
-                  default = "head"
+                  default = "'head'"
                 },
                 {
                   name = "options",
@@ -15878,7 +15878,7 @@ return {
                   name = "device",
                   type = "Device",
                   description = "The device to vibrate.",
-                  default = "head"
+                  default = "'head'"
                 },
                 {
                   name = "strength",

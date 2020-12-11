@@ -12,7 +12,7 @@ return {
     },
     space = {
       type = 'CoordinateSpace',
-      default = 'global',
+      default = [['global']],
       description = [[
         Whether the pose should be returned relative to the node's parent or relative to the root
         node of the Model.
