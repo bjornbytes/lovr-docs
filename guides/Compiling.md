@@ -276,6 +276,8 @@ To build an apk that runs a LÖVR project, pass the folder path as the `ANDROID_
 either CMake or tup.  This will run the LÖVR project when the apk starts, similar to how things work
 when fusing a zip to an exe on desktop systems.
 
+Note: By default the Android packager ignores directories that begin with underscores.
+
 ### Using a Custom Android Manifest
 
 Although LÖVR provides a default `AndroidManifest.xml`, you can also use your own by passing its
