@@ -1,12 +1,12 @@
 return {
-  summary = 'Create a view transform that looks from a position to target position.',
+  summary = 'Create a model transform that targets from a position to target position.',
   description = [[
-    Sets a view transform matrix that moves and orients camera to look at a target point.
+    Sets a model transform matrix that moves to `from` and orients model towards `to` point.
 
-    This is useful for changing camera position and orientation. The resulting Mat4 matrix can be
-    passed to `lovr.graphics.transform()` directly (without inverting) before rendering the scene.
+    This is used when rendered model should always point torwards a point of interest. The
+    resulting Mat4 object can be used as model pose.
 
-    The lookAt() function produces same result as target() after matrix inversion.
+    The target() function produces same result as lookAt() after matrix inversion.
   ]],
   arguments = {
     {
@@ -34,7 +34,7 @@ return {
     }
   },
   related = {
-    'Mat4:target',
+    'Mat4:lookAt',
     'Quat:direction'
   }
 }
