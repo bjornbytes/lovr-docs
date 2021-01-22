@@ -34,7 +34,7 @@ return {
     }
   },
   related = {
-    'Mat4:target'
+    'Mat4:target',
     'Quat:direction'
   }
 }
