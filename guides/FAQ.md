@@ -11,18 +11,14 @@ if there isn't any VR hardware detected.
 You can also set the `t.modules.headset` flag to false in
 `lovr.conf` to disable VR completely and develop a traditional 3D desktop application.
 
-> Does LÖVR work with mobile devices (Cardboard, Gear VR, Oculus Go, etc.)?
-
-Yes, LÖVR officially supports the Oculus Go and Oculus Quest.  WebVR also works well on mobile
-devices.
-
 > Are there macOS binaries available?
 
 Yes, you can download them from <https://lovr.org/download/mac>.
 
 > Is there any way to access keyboard/mouse input?
 
-Yes, see `lovr-keyboard` and `lovr-mouse` on the <a data-key="Libraries">Libraries</a> page.
+Yes, there are `lovr.keypressed`, `lovr.keyreleased`, and `lovr.textinput` callbacks.  For mouse
+input, see `lovr-mouse` on the <a data-key="Libraries">Libraries</a> page.
 
 > Does LÖVR work on Linux?
 
