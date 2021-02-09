@@ -145,7 +145,7 @@ function lovr.draw()
   lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
   lovr.graphics.transform(mat4(motion.pose):invert())
   -- Render hands
-  lovr.graphics.setColor(1,1,1)
+  lovr.graphics.setColor(1, 1, 1)
   local radius = 0.04
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
@@ -163,4 +163,5 @@ function lovr.draw()
   end
   -- Teleportation curve and target, rendering of blinking overlay
   motion.drawTeleport()
+  lovr.graphics.setColor(1, 1, 1)
 end
