@@ -1,7 +1,7 @@
 return {
   summary = 'Get the falloff parameters for the Source.',
   description = [[
-    Returns parameters that control how the volume of the Source falls of with distance.
+    Returns parameters that control how the volume of the Source falls off with distance.
   ]],
   arguments = {},
   returns = {
