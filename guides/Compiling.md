@@ -8,20 +8,16 @@ and compiling the code on various types of systems.
 Dependencies
 ---
 
-LÖVR depends on the following libraries.  They are included as submodules in the `deps` directory of
-the repository, so make sure you clone with the `--recursive` flag or run `git submodule update
---init` in an existing repository.
+LÖVR uses the following libraries.  They are included as submodules in the `deps` directory of the
+repository, so make sure you clone with the `--recursive` flag or run `git submodule update --init`
+in an existing repository.
 
-- Lua (5.1+) or LuaJIT (2.0+)
-- GLFW (3.2+)
+- Lua (5.1+) or LuaJIT (2.1+)
+- GLFW (3.3+)
 - OpenGL (3.3, ES3, or WebGL 2)
-- OpenVR (1.0.9, for `lovr.headset`)
-- Oculus SDK (optional, 1.26+)
-- PhysicsFS (3+)
-- OpenAL (1.17+ recommended for HRTF support)
+- OpenVR
 - msdfgen
-- ODE (for `lovr.physics`)
-- Emscripten (optional, for compiling for web)
+- ODE
 
 Windows
 ---
@@ -43,13 +39,7 @@ via the command line as `lovr.exe path/to/project`.
 macOS
 ---
 
-Install the dependencies using your package manager of choice:
-
-```
-$ brew install glfw3 luajit physfs openal-soft ode libccd
-```
-
-Next, build using CMake, as above:
+Build using CMake, as above:
 
 ```
 $ mkdir build
@@ -66,27 +56,10 @@ you can run a project like this:
 $ lovr /path/to/myGame
 ```
 
-> You may need to set the `PKG_CONFIG_PATH` environment variable for OpenAL to be located properly.
-> If you run into this, see [Troubleshooting](#troubleshooting) below for more info.
-
 Linux
 ---
 
-First, install the dependencies using your package manager of choice.
-
-#### Arch Linux
-
-```
-$ pacman -S glfw-x11 luajit physfs openal ode
-```
-
-#### Debian/Ubuntu
-
-```
-$ sudo apt install build-essential cmake xorg-dev libglfw3-dev libluajit-5.1-dev libphysfs-dev libopenal-dev libode-dev libccd-dev libenet-dev
-```
-
-Then, build with CMake:
+Install a C compiler and CMake, then run:
 
 ```
 $ mkdir build
@@ -308,7 +281,3 @@ Troubleshooting
 - If you get "CMake no CMAKE_CXX_COMPILER found" on Windows, then install Visual Studio and create a
   blank C++ project, which will prompt you to install the compilers and tools necessary to compile
   LÖVR.
-- On macOS, if you run into an error message about not being able to find OpenAL, make sure you've
-  added the proper OpenAL directory (usually something like
-  `/usr/local/opt/openal-soft/lib/pkgconfig`) to your `PKG_CONFIG_PATH` environment variable.
-  Installing openal-soft with brew will print out a message telling you how to do this.

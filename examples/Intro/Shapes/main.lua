@@ -13,27 +13,19 @@ function lovr.draw()
   local x, y, z
 
   -- Point
-  x, y, z = -.6, 1.1, -1
+  x, y, z = -.3, 1.1, -1
   lovr.graphics.setPointSize(5)
   lovr.graphics.setColor(1, 1, 1)
   lovr.graphics.points(x, y, z)
 
   -- Line
-  x, y, z = 0, 1.1, -1
+  x, y, z = .3, 1.1, -1
   local points = {
     x - .1, y, z,
     x + .1, y, z
   }
   lovr.graphics.setColor(1, 1, 1)
   lovr.graphics.line(points)
-
-  -- Triangle
-  local x, y, z = .6, 1.1, -1
-  local p1 = { x, y + .2, z }
-  local p2 = { x - .2, y - .2, z }
-  local p3 = { x + .2, y - .2, z }
-  lovr.graphics.setColor(.36, .41, .75)
-  lovr.graphics.triangle('fill', p1[1], p1[2], p1[3], p2[1], p2[2], p2[3], p3[1], p3[2], p3[3])
 
   -- Plane
   local x, y, z = -.6, 1.7, -1.5
@@ -66,9 +58,8 @@ function lovr.draw()
   lovr.graphics.sphere(x, y, z, .2)
 
   lovr.graphics.setShader()
-  drawLabel('Point', -.6, 1.4, -1)
-  drawLabel('Line', 0, 1.4, -1)
-  drawLabel('Triangle', .6, 1.4, -1)
+  drawLabel('Point', -.3, 1.4, -1)
+  drawLabel('Line', .3, 1.4, -1)
   drawLabel('Plane', -.6, 2.0, -1.5)
   drawLabel('Cube', 0, 2.0, -1.5)
   drawLabel('Box', .6, 2.0, -1.5)

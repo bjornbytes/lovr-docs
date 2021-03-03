@@ -21,7 +21,6 @@ return {
     number 5, since samples start at zero and `(sample * channelCount) + channelIndex = 5`.
   ]],
   related = {
-    'AudioStream:getChannelCount',
     'Source:getChannelCount'
   }
 }

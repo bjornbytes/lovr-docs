@@ -6,7 +6,6 @@ return {
   ]],
   constructors = {
     'lovr.data.newSoundData',
-    'AudioStream:decode',
     'Microphone:getData'
   }
 }

@@ -21,7 +21,7 @@ return {
   },
   returns = {},
   notes = [[
-    A linear damping of 0 means colliders won't slow down over time.
+    A linear damping of 0 means colliders won't slow down over time.  This is the default.
 
     Linear damping can also be set on individual colliders.
   ]],

@@ -11,7 +11,6 @@ return {
   },
   related = {
     'SoundData:getSampleCount',
-    'AudioStream:getDuration',
     'Source:getDuration'
   }
 }

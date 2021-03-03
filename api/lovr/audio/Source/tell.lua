@@ -15,6 +15,5 @@ return {
       type = 'number',
       description = 'The current playback position.'
     }
-  },
-  notes = 'This function can not be used on a Source backed by a raw `AudioStream`.'
+  }
 }

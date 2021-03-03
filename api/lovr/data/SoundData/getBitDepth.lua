@@ -13,7 +13,6 @@ return {
     }
   },
   related = {
-    'AudioStream:getBitDepth',
     'Source:getBitDepth'
   }
 }
