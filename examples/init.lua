@@ -31,6 +31,7 @@ return {
   'Physics/Wrecking_Ball',
   'Physics/Zip_Line',
   'Audio/Playback',
+  'Audio/Spatialization',
   'Effects/Blur',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
