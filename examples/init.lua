@@ -32,6 +32,7 @@ return {
   'Physics/Zip_Line',
   'Audio/Playback',
   'Audio/Spatialization',
+  'Audio/Directivity',
   'Effects/Blur',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
