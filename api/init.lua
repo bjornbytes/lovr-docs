@@ -9669,6 +9669,18 @@ return {
                   type = "number",
                   description = "The size of the font, in pixels.",
                   default = "32"
+                },
+                {
+                  name = "padding",
+                  type = "number",
+                  description = "The number of pixels of padding around each glyph.",
+                  default = "2"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "The range of the distance field, in pixels.",
+                  default = "4.0"
                 }
               },
               returns = {
@@ -9687,6 +9699,18 @@ return {
                   type = "number",
                   description = "The size of the font, in pixels.",
                   default = "32"
+                },
+                {
+                  name = "padding",
+                  type = "number",
+                  description = "The number of pixels of padding around each glyph.",
+                  default = "2"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "The range of the distance field, in pixels.",
+                  default = "4.0"
                 }
               },
               returns = {
@@ -9703,6 +9727,18 @@ return {
                   name = "rasterizer",
                   type = "Rasterizer",
                   description = "The existing Rasterizer object used to render the glyphs."
+                },
+                {
+                  name = "padding",
+                  type = "number",
+                  description = "The number of pixels of padding around each glyph.",
+                  default = "2"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "The range of the distance field, in pixels.",
+                  default = "4.0"
                 }
               },
               returns = {
