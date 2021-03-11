@@ -6583,7 +6583,19 @@ return {
                     {
                       name = "blob",
                       type = "Blob",
-                      description = "A Blob to replace the entire block with."
+                      description = "A Blob to replace the block data with."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset into the Blob to start writing from.",
+                      default = "0"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "The number of bytes to write.  If `nil`, writes as many bytes as possible.",
+                      default = "nil"
                     }
                   },
                   returns = {
