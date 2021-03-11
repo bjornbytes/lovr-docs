@@ -1013,6 +1013,29 @@ return {
           }
         },
         {
+          name = "getSpatializer",
+          tag = "listener",
+          summary = "Get the name of the active spatializer",
+          description = "Returns the name of the active spatializer (`simple`, `oculus`, or `phonon`).",
+          key = "lovr.audio.getSpatializer",
+          module = "lovr.audio",
+          related = {
+            "lovr.conf"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "spatializer",
+                  type = "string",
+                  description = "The name of the active spatializer."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getVelocity",
           tag = "listener",
           summary = "Get the velocity of the audio listener.",
@@ -1059,26 +1082,6 @@ return {
                   name = "volume",
                   type = "number",
                   description = "The master volume."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "isSpatialized",
-          tag = "listener",
-          summary = "Check if audio is spatialized.",
-          description = "Returns whether or not audio is currently spatialized with HRTFs.",
-          key = "lovr.audio.isSpatialized",
-          module = "lovr.audio",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "spatialized",
-                  type = "boolean",
-                  description = "Whether or not audio is spatialized."
                 }
               }
             }
