@@ -1,8 +1,8 @@
 return {
-  summary = 'Create a new SoundData.',
+  summary = 'Create a new Sound.',
   description = [[
-    Creates a new SoundData.  You can pass a filename or Blob to decode or you can create an empty
-    SoundData that can hold a certain number of samples.
+    Creates a new Sound, which holds audio data.  Audio can be stored as raw samples, compressed and
+    decoded on the fly, or as a stream that can have audio written and read.
   ]],
   arguments = {
     samples = {
@@ -34,27 +34,27 @@ return {
     }
   },
   returns = {
-    soundData = {
-      type = 'SoundData',
-      description = 'The new SoundData.'
+    sound = {
+      type = 'Sound',
+      description = 'The new Sound.'
     }
   },
   variants = {
     {
       arguments = { 'filename' },
-      returns = { 'soundData' }
+      returns = { 'sound' }
     },
     {
       arguments = { 'samples', 'sampleRate', 'bitDepth', 'channels' },
-      returns = { 'soundData' }
+      returns = { 'sound' }
     },
     {
       arguments = { 'audioStream' },
-      returns = { 'soundData' }
+      returns = { 'sound' }
     },
     {
       arguments = { 'blob' },
-      returns = { 'soundData' }
+      returns = { 'sound' }
     }
   }
 }

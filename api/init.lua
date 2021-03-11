@@ -61,292 +61,13 @@ return {
       name = "audio",
       tag = "modules",
       summary = "Plays sound.",
-      description = "The `lovr.audio` module is responsible for playing sound effects and music.  Currently, the only supported audio format is .ogg (Vorbis).  Playing a sound involves creating a `Source` object for the sound and calling `Source:play` on it.",
+      description = "The `lovr.audio` module is responsible for playing sound effects and music.  To play a sound, create a `Source` object and call `Source:play` on it.  Currently ogg, wav, and mp3 audio formats are supported.",
       key = "lovr.audio",
       objects = {
         {
-          name = "Microphone",
-          summary = "An object that records audio.",
-          description = "A Microphone object provides audio input by recording sounds.",
-          key = "Microphone",
-          module = "lovr.audio",
-          constructors = {
-            "lovr.audio.newMicrophone"
-          },
-          related = {
-            "lovr.audio.getMicrophoneNames",
-            "SoundData"
-          },
-          methods = {
-            {
-              name = "getBitDepth",
-              summary = "Get the bit depth of the Microphone.",
-              description = "Returns the number of bits occupied for each recorded sample.  This is a rough indicator of the quality of the recording, and is 16 by default.",
-              key = "Microphone:getBitDepth",
-              module = "lovr.audio",
-              related = {
-                "Microphone:getChannelCount",
-                "Microphone:getSampleRate",
-                "lovr.audio.newMicrophone"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "bits",
-                      type = "number",
-                      description = "The number of bits per sample."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getChannelCount",
-              summary = "Get the number of channels recorded by the Microphone.",
-              description = "Returns the number of channels recorded by the Microphone.  One recorded channel will result in a mono sound, and there will be two channels for a stereo sound.  Most microphones only support recording a single channel.",
-              key = "Microphone:getChannelCount",
-              module = "lovr.audio",
-              related = {
-                "Microphone:getBitDepth",
-                "Microphone:getSampleRate",
-                "lovr.audio.newMicrophone"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "channels",
-                      type = "number",
-                      description = "The number of channels recorded."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getData",
-              summary = "Get a new SoundData with recorded audio.",
-              description = "Returns a new SoundData with all of the buffered audio samples that the Microphone has recorded.",
-              key = "Microphone:getData",
-              module = "lovr.audio",
-              notes = "There's a limit on the number of samples the Microphone is able to hold, which can be set at creation time in `lovr.audio.newMicrophone`.  While the Microphone is recording, be sure to call this function periodically to get a new chunk of audio in order to make room for more.\n\nYou can use `Microphone:getSampleCount` to figure out how many samples the Microphone is currently holding.",
-              variants = {
-                {
-                  description = "Get all available audio as a newly created `SoundData`.",
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "soundData",
-                      type = "soundData",
-                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
-                    }
-                  }
-                },
-                {
-                  description = "Get at most `sampleCount` samples from the microphone's internal queue as a newly created `SoundData`.",
-                  arguments = {
-                    {
-                      name = "sampleCount",
-                      type = "number",
-                      description = "How many samples of audio to get right now, at most. If less is available, you will get less (use `Microphone:getSampleCount` to check the exact number)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "soundData",
-                      type = "soundData",
-                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
-                    }
-                  }
-                },
-                {
-                  description = "Get at all available audio and write it into `soundData`.",
-                  arguments = {
-                    {
-                      name = "soundData",
-                      type = "soundData",
-                      description = "The `SoundData` to fill with audio (instead of creating a new one)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "soundData",
-                      type = "soundData",
-                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
-                    }
-                  }
-                },
-                {
-                  description = "Get at all available audio and write it into `soundData` starting at `offset` samples into `soundData`.",
-                  arguments = {
-                    {
-                      name = "soundData",
-                      type = "soundData",
-                      description = "The `SoundData` to fill with audio (instead of creating a new one)."
-                    },
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "Index in samples into `soundData` at which to start to overwrite with new audio data from the microphone's internal buffer.'"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "soundData",
-                      type = "soundData",
-                      description = "A `SoundData` with `sampleCount` of samples in it (or less if less was available; or all if sampleCount was not given). Nothing is returned if no data is available."
-                    }
-                  }
-                }
-              },
-              related = {
-                "Microphone:getSampleCount",
-                "Microphone:startRecording",
-                "Microphone:stopRecording",
-                "Microphone:isRecording",
-                "SoundData"
-              }
-            },
-            {
-              name = "getName",
-              summary = "Get the name of the Microphone.",
-              description = "Returns the name of the Microphone.",
-              key = "Microphone:getName",
-              module = "lovr.audio",
-              related = {
-                "lovr.audio.getMicrophoneNames",
-                "lovr.audio.newMicrophone"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the Microphone."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getSampleCount",
-              summary = "Get the number of recorded audio samples.",
-              description = "Returns the number of audio samples the Microphone has recorded so far.  This will be zero if the Microphone hasn't started recording yet, see `Microphone:startRecording`.\n\nThere's a limit on the number of samples the Microphone is able to hold, which can be set at creation time in `lovr.audio.newMicrophone`.  While the Microphone is recording, be sure to call `Microphone:getData` periodically to get a new chunk of audio in order to make room for more.",
-              key = "Microphone:getSampleCount",
-              module = "lovr.audio",
-              related = {
-                "Microphone:getData",
-                "Microphone:isRecording",
-                "Microphone:startRecording",
-                "Microphone:stopRecording",
-                "lovr.audio.newMicrophone"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "samples",
-                      type = "number",
-                      description = "The number of recorded samples."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getSampleRate",
-              summary = "Get the sample rate of the Microphone.",
-              description = "Returns the number of samples recorded each second.  Higher sample rates lead to higher quality audio, but they can reduce performance and may not be supported by all microphones.",
-              key = "Microphone:getSampleRate",
-              module = "lovr.audio",
-              related = {
-                "Microphone:getBitDepth",
-                "Microphone:getChannelCount",
-                "lovr.audio.newMicrophone"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "sampleRate",
-                      type = "number",
-                      description = "The number of samples recorded every second."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "isRecording",
-              summary = "Get whether the Microphone is recording.",
-              description = "Returns whether or not the Microphone is currently recording.",
-              key = "Microphone:isRecording",
-              module = "lovr.audio",
-              related = {
-                "Microphone:startRecording",
-                "Microphone:stopRecording"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "recording",
-                      type = "boolean",
-                      description = "Whether the Microphone is recording."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "startRecording",
-              summary = "Start recording.",
-              description = "Starts recording audio samples from the Microphone.  You can use `Microphone:getData` to periodically read the captured audio samples, and use `Microphone:stopRecording` when you're done.",
-              key = "Microphone:startRecording",
-              module = "lovr.audio",
-              related = {
-                "Microphone:getData",
-                "Microphone:stopRecording",
-                "Microphone:isRecording"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "stopRecording",
-              summary = "Stop recording.",
-              description = "Stops recording from the Microphone.",
-              key = "Microphone:stopRecording",
-              module = "lovr.audio",
-              related = {
-                "Microphone:startRecording",
-                "Microphone:isRecording"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            }
-          }
-        },
-        {
           name = "Source",
           summary = "A playable sound object.",
-          description = "A Source is an object representing a single sound.  Currently, only ogg sounds are supported.\n\nWhen a Source is playing, it will send audio to the speakers.  Sources do not play automatically when they are created.  Instead, the `play`, `pause`, and `stop` functions can be used to control when they should play.\n\n`Source:seek` and `Source:tell` can be used to control the playback position of the Source.  A Source can be set to loop when it reaches the end using `Source:setLooping`.",
+          description = "A Source is an object representing a single sound.  Currently ogg, wav, and mp3 formats are supported.\n\nWhen a Source is playing, it will send audio to the speakers.  Sources do not play automatically when they are created.  Instead, the `play`, `pause`, and `stop` functions can be used to control when they should play.\n\n`Source:seek` and `Source:tell` can be used to control the playback position of the Source.  A Source can be set to loop when it reaches the end using `Source:setLooping`.",
           key = "Source",
           module = "lovr.audio",
           constructors = {
@@ -390,8 +111,7 @@ return {
               key = "Source:getDuration",
               module = "lovr.audio",
               related = {
-                "AudioStream:getDuration",
-                "SoundData:getDuration"
+                "Sound:getDuration"
               },
               variants = {
                 {
@@ -1168,46 +888,6 @@ return {
           }
         },
         {
-          name = "getMicrophoneNames",
-          tag = "microphones",
-          summary = "Get the names of all connected microphones.",
-          description = "Returns a table with the names of all microphones connected to the system.",
-          key = "lovr.audio.getMicrophoneNames",
-          module = "lovr.audio",
-          related = {
-            "lovr.audio.newMicrophone",
-            "Microphone"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "names",
-                  type = "table",
-                  description = "The list of microphone names as strings."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "t",
-                  type = "table",
-                  description = "A table to fill with the microphone names."
-                }
-              },
-              returns = {
-                {
-                  name = "t",
-                  type = "table",
-                  description = "The original table that was passed in."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getOrientation",
           tag = "listener",
           summary = "Get the orientation of the listener.",
@@ -1405,65 +1085,10 @@ return {
           }
         },
         {
-          name = "newMicrophone",
-          tag = "microphones",
-          summary = "Create a new Microphone.",
-          description = "Creates a new Microphone based on the name of an existing microphone and a set of capture parameters.  If the specified combination of parameters are not supported for audio capture, `nil` will be returned.",
-          key = "lovr.audio.newMicrophone",
-          module = "lovr.audio",
-          related = {
-            "lovr.audio.getMicrophoneNames",
-            "Microphone"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "name",
-                  type = "string",
-                  description = "The name of the microphone that this Microphone will record from, or `nil` to use the default microphone.",
-                  default = "nil"
-                },
-                {
-                  name = "samples",
-                  type = "number",
-                  description = "The maximum number of samples that will be stored in the Microphone's internal buffer.",
-                  default = "1024"
-                },
-                {
-                  name = "sampleRate",
-                  type = "number",
-                  description = "The number of audio samples to record each second.",
-                  default = "8000"
-                },
-                {
-                  name = "bitDepth",
-                  type = "number",
-                  description = "The number of bits occupied by each sample.  Usually 8 or 16.",
-                  default = "16"
-                },
-                {
-                  name = "channelCount",
-                  type = "number",
-                  description = "The number of channels to record (1 for mono, 2 for stereo).",
-                  default = "1"
-                }
-              },
-              returns = {
-                {
-                  name = "microphone",
-                  type = "Microphone",
-                  description = "The new Microphone, or `nil` if the capture settings are not supported."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "newSource",
           tag = "sources",
           summary = "Create a new Source.",
-          description = "Creates a new Source from an ogg file.",
+          description = "Creates a new Source from an ogg, wav, or mp3 file.",
           key = "lovr.audio.newSource",
           module = "lovr.audio",
           variants = {
@@ -1500,13 +1125,7 @@ return {
               }
             },
             {
-              arguments = {
-                {
-                  name = "soundData",
-                  type = "SoundData",
-                  description = "The SoundData containing raw audio samples to play."
-                }
-              },
+              arguments = {},
               returns = {
                 {
                   name = "source",
@@ -1797,12 +1416,7 @@ return {
         {
           name = "Listener",
           tag = "listener",
-          description = "The listener is a virtual object in 3D space that \"hears\" all the sounds that are playing. The listener can be positioned and oriented in 3D space, which controls how Sources in the world are heard.  For example, sounds further away from the listener will be more quiet, and sounds to the left of the listener will be heard from the left speaker.  By default, the listener will be synchronized with any connected headset so audio is positioned properly as the headset is moved around and rotated."
-        },
-        {
-          name = "Microphones",
-          tag = "microphones",
-          description = "Microphones can be used to receive audio input."
+          description = "The listener is a virtual object in 3D space that \"hears\" all the sounds that are playing. It can be positioned and oriented in 3D space, which controls how Sources in the world are heard."
         }
       }
     },
@@ -2093,47 +1707,24 @@ return {
           }
         },
         {
-          name = "SoundData",
+          name = "Sound",
           summary = "An object that holds raw audio samples.",
-          description = "A SoundData stores raw audio samples that make up a sound file.  You can use `Source` objects to play SoundData.",
-          key = "SoundData",
+          description = "A Sound stores raw audio samples that make up a sound file.  You can use `Source` objects to play them.",
+          key = "Sound",
           module = "lovr.data",
           constructors = {
-            "lovr.data.newSoundData",
-            "Microphone:getData"
+            "lovr.data.newSound"
           },
           methods = {
             {
-              name = "getBitDepth",
-              summary = "Get the bit depth of the SoundData.",
-              description = "Returns the number of bits taken up by each sample in the SoundData.  Higher bit depths mean the sound is higher quality and takes up more space.  This is usually 8 or 16.",
-              key = "SoundData:getBitDepth",
-              module = "lovr.data",
-              related = {
-                "Source:getBitDepth"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "bitDepth",
-                      type = "number",
-                      description = "The size of each sample, in bits."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getBlob",
-              summary = "Get the bytes backing this SoundData as a Blob.",
-              description = "Returns a Blob containing the raw bytes of the SoundData.",
-              key = "SoundData:getBlob",
+              summary = "Get the bytes backing this Sound as a Blob.",
+              description = "Returns a Blob containing the raw bytes of the Sound.",
+              key = "Sound:getBlob",
               module = "lovr.data",
               related = {
                 "Blob:getPointer",
-                "TextureData:getBlob"
+                "Image:getBlob"
               },
               variants = {
                 {
@@ -2142,7 +1733,7 @@ return {
                     {
                       name = "blob",
                       type = "Blob",
-                      description = "The Blob instance containing the bytes for the `SoundData`."
+                      description = "The Blob instance containing the bytes for the `Sound`."
                     }
                   }
                 }
@@ -2150,11 +1741,10 @@ return {
             },
             {
               name = "getChannelCount",
-              summary = "Get the number of channels in the SoundData.",
-              description = "Returns the number of channels in the SoundData.  Mono sounds have 1 channel and stereo sounds have 2 channels.",
-              key = "SoundData:getChannelCount",
+              summary = "Get the number of channels in the Sound.",
+              description = "Returns the number of channels in the Sound.  Mono sounds have 1 channel, stereo sounds have 2 channels, and ambisonic sounds have 4 channels.",
+              key = "Sound:getChannelCount",
               module = "lovr.data",
-              notes = "It's important to keep in mind the channel count if you're using `SoundData:getSample` and `SoundData:setSample`.  The SoundData stores its samples in an \"interleaved\" manner, meaning the samples from different channels are stored next to each other.\n\nIf you want to get the 3rd sample of the second channel of a stereo sound, you would use sample number 5, since samples start at zero and `(sample * channelCount) + channelIndex = 5`.",
               variants = {
                 {
                   arguments = {},
@@ -2162,23 +1752,20 @@ return {
                     {
                       name = "channels",
                       type = "number",
-                      description = "The number of channels."
+                      description = "The number of channels in the sound."
                     }
                   }
                 }
-              },
-              related = {
-                "Source:getChannelCount"
               }
             },
             {
               name = "getDuration",
-              summary = "Get the duration of the SoundData.",
-              description = "Returns the duration of the sound data in seconds.",
-              key = "SoundData:getDuration",
+              summary = "Get the duration of the Sound.",
+              description = "Returns the duration of the sound in seconds.",
+              key = "Sound:getDuration",
               module = "lovr.data",
               related = {
-                "SoundData:getSampleCount",
+                "Sound:getSampleCount",
                 "Source:getDuration"
               },
               variants = {
@@ -2188,51 +1775,20 @@ return {
                     {
                       name = "duration",
                       type = "number",
-                      description = "The duration of the sound."
+                      description = "The duration of the Sound."
                     }
                   }
                 }
-              }
-            },
-            {
-              name = "getSample",
-              summary = "Get a sample from the SoundData.",
-              description = "Returns a single sample from the SoundData.  Sample indices start at 0, and the returned value will be between -1 and 1.",
-              key = "SoundData:getSample",
-              module = "lovr.data",
-              notes = "Note that samples for individual channels in stereo sounds are stored next to each other.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the sample to get."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "value",
-                      type = "number",
-                      description = "A number indicating the value of the sample at the given index."
-                    }
-                  }
-                }
-              },
-              related = {
-                "SoundData:getSampleCount",
-                "SoundData:getSampleRate"
               }
             },
             {
               name = "getSampleCount",
-              summary = "Get the number of samples stored in the SoundData.",
-              description = "Returns the number of samples in the SoundData (per channel).",
-              key = "SoundData:getSampleCount",
+              summary = "Get the number of samples stored in the Sound.",
+              description = "Returns the total number of samples in the Sound.",
+              key = "Sound:getSampleCount",
               module = "lovr.data",
               related = {
-                "SoundData:getSample",
-                "SoundData:getChannelCount",
+                "Sound:getChannelCount",
                 "Source:getDuration"
               },
               variants = {
@@ -2242,7 +1798,7 @@ return {
                     {
                       name = "samples",
                       type = "number",
-                      description = "The total number of channels per channel."
+                      description = "The total number of samples in the Sound."
                     }
                   }
                 }
@@ -2250,13 +1806,10 @@ return {
             },
             {
               name = "getSampleRate",
-              summary = "Get the sample rate of the SoundData.",
-              description = "Returns the number of samples per second in the SoundData.  This is usually a high number like 44100.",
-              key = "SoundData:getSampleRate",
+              summary = "Get the sample rate of the Sound.",
+              description = "Returns the number of samples per second in the Sound.  This is usually a high number like 48000.",
+              key = "Sound:getSampleRate",
               module = "lovr.data",
-              related = {
-                "Source:getSampleRate"
-              },
               variants = {
                 {
                   arguments = {},
@@ -2264,39 +1817,10 @@ return {
                     {
                       name = "frequency",
                       type = "number",
-                      description = "The number of samples per second in the SoundData."
+                      description = "The number of samples per second in the Sound."
                     }
                   }
                 }
-              }
-            },
-            {
-              name = "setSample",
-              summary = "Modify a sample in the SoundData.",
-              description = "Modify a single sample in the SoundData.  Sample indices start at zero, and samples should be between -1 and 1.",
-              key = "SoundData:setSample",
-              module = "lovr.data",
-              notes = "Note that samples for individual channels in stereo sounds are stored next to each other.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the sample to set."
-                    },
-                    {
-                      name = "value",
-                      type = "number",
-                      description = "The new value of the sample."
-                    }
-                  },
-                  returns = {}
-                }
-              },
-              related = {
-                "SoundData:getSampleCount",
-                "SoundData:getSampleRate"
               }
             }
           }
@@ -2342,7 +1866,7 @@ return {
               module = "lovr.data",
               related = {
                 "Blob:getPointer",
-                "SoundData:getBlob"
+                "Sound:getBlob"
               },
               variants = {
                 {
@@ -2815,10 +2339,10 @@ return {
           }
         },
         {
-          name = "newSoundData",
-          summary = "Create a new SoundData.",
-          description = "Creates a new SoundData.  You can pass a filename or Blob to decode or you can create an empty SoundData that can hold a certain number of samples.",
-          key = "lovr.data.newSoundData",
+          name = "newSound",
+          summary = "Create a new Sound.",
+          description = "Creates a new Sound, which holds audio data.  Audio can be stored as raw samples, compressed and decoded on the fly, or as a stream that can have audio written and read.",
+          key = "lovr.data.newSound",
           module = "lovr.data",
           variants = {
             {
@@ -2831,9 +2355,9 @@ return {
               },
               returns = {
                 {
-                  name = "soundData",
-                  type = "SoundData",
-                  description = "The new SoundData."
+                  name = "sound",
+                  type = "Sound",
+                  description = "The new Sound."
                 }
               }
             },
@@ -2865,9 +2389,9 @@ return {
               },
               returns = {
                 {
-                  name = "soundData",
-                  type = "SoundData",
-                  description = "The new SoundData."
+                  name = "sound",
+                  type = "Sound",
+                  description = "The new Sound."
                 }
               }
             },
@@ -2875,9 +2399,9 @@ return {
               arguments = {},
               returns = {
                 {
-                  name = "soundData",
-                  type = "SoundData",
-                  description = "The new SoundData."
+                  name = "sound",
+                  type = "Sound",
+                  description = "The new Sound."
                 }
               }
             },
@@ -2891,9 +2415,9 @@ return {
               },
               returns = {
                 {
-                  name = "soundData",
-                  type = "SoundData",
-                  description = "The new SoundData."
+                  name = "sound",
+                  type = "Sound",
+                  description = "The new Sound."
                 }
               }
             }
@@ -24451,6 +23975,23 @@ return {
                   name = "identity",
                   type = "string",
                   description = "A unique label for this project."
+                },
+                {
+                  name = "audio",
+                  type = "table",
+                  description = "Configuration for the audio module.",
+                  table = {
+                    {
+                      name = "spatializer",
+                      type = "string",
+                      description = "An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of them are attempted.'"
+                    },
+                    {
+                      name = "start",
+                      type = "boolean",
+                      description = "Whether the playback device should be automatically started."
+                    }
+                  }
                 },
                 {
                   name = "headset",

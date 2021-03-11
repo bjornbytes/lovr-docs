@@ -1,7 +1,8 @@
 return {
   summary = 'A playable sound object.',
   description = [[
-    A Source is an object representing a single sound.  Currently, only ogg sounds are supported.
+    A Source is an object representing a single sound.  Currently ogg, wav, and mp3 formats are
+    supported.
 
     When a Source is playing, it will send audio to the speakers.  Sources do not play automatically
     when they are created.  Instead, the `play`, `pause`, and `stop` functions can be used to

@@ -18,6 +18,26 @@ return {
           description = 'A unique label for this project.'
         },
         {
+          name = 'audio',
+          type = 'table',
+          description = 'Configuration for the audio module.',
+          table = {
+            {
+              name = 'spatializer',
+              type = 'string',
+              description = [[
+                An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of
+                them are attempted.'
+              ]]
+            },
+            {
+              name = 'start',
+              type = 'boolean',
+              description = 'Whether the playback device should be automatically started.'
+            }
+          }
+        },
+        {
           name = 'headset',
           type = 'table',
           description = 'Configuration for the headset.',

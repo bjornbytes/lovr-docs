@@ -1,7 +1,7 @@
 return {
   tag = 'sources',
   summary = 'Create a new Source.',
-  description = 'Creates a new Source from an ogg file.',
+  description = 'Creates a new Source from an ogg, wav, or mp3 file.',
   arguments = {
     filename = {
       type = 'string',
@@ -12,8 +12,8 @@ return {
       description = 'The Blob containing the Source data.'
     },
     soundData = {
-      type = 'SoundData',
-      description = 'The SoundData containing raw audio samples to play.'
+      type = 'Sound',
+      description = 'The Sound containing raw audio samples to play.'
     }
   },
   returns = {
@@ -32,7 +32,7 @@ return {
       returns = { 'source' }
     },
     {
-      arguments = { 'soundData' },
+      arguments = { 'sound' },
       returns = { 'source' }
     }
   }
