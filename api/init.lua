@@ -75,36 +75,6 @@ return {
           },
           methods = {
             {
-              name = "getCone",
-              summary = "Get the Source's volume cone.",
-              description = "Returns the directional volume cone of the Source.  The cone is specified by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is inside the `innerAngle`, the Source won't have its volume reduced.  Otherwise, the volume will start to decrease, reaching a minimum volume of `outerVolume` once the listener is `outerAngle` degrees from the direction of the Source.",
-              key = "Source:getCone",
-              module = "lovr.audio",
-              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `2 * math.pi`.\n\nThe default `outerVolume` for a Source is `0`.\n\n`Source:setOrientation` can be used to change which way the cone points.",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "innerAngle",
-                      type = "number",
-                      description = "The inner cone angle, in radians."
-                    },
-                    {
-                      name = "outerAngle",
-                      type = "number",
-                      description = "The outer cone angle, in radians."
-                    },
-                    {
-                      name = "outerVolume",
-                      type = "number",
-                      description = "The outer cone angle, in radians."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getDuration",
               summary = "Get the duration of the Source.",
               description = "Returns the duration of the Source.",
@@ -128,39 +98,6 @@ return {
                       name = "duration",
                       type = "number",
                       description = "The duration of the Source."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getFalloff",
-              summary = "Get the falloff parameters for the Source.",
-              description = "Returns parameters that control how the volume of the Source falls of with distance.",
-              key = "Source:getFalloff",
-              module = "lovr.audio",
-              related = {
-                "Source:getVolumeLimits",
-                "Source:setVolumeLimits"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "reference",
-                      type = "number",
-                      description = "The distance at which the volume will start to decrease."
-                    },
-                    {
-                      name = "max",
-                      type = "number",
-                      description = "The distance at which the Source will be its quietest."
-                    },
-                    {
-                      name = "rolloff",
-                      type = "number",
-                      description = "How quickly the sound falls off between the reference and max distances (1.0 is the default)."
                     }
                   }
                 }
@@ -201,25 +138,6 @@ return {
                       name = "az",
                       type = "number",
                       description = "The z component of the axis of rotation."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getPitch",
-              summary = "Get the pitch of the Source.",
-              description = "Returns the current pitch factor of the Source.  The default is 1.0.",
-              key = "Source:getPitch",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "pitch",
-                      type = "number",
-                      description = "The current pitch."
                     }
                   }
                 }
@@ -316,36 +234,6 @@ return {
               }
             },
             {
-              name = "getVelocity",
-              summary = "Get the velocity of the Source.",
-              description = "Returns the velocity of the Source, in meters per second.  This affects the doppler effect.",
-              key = "Source:getVelocity",
-              module = "lovr.audio",
-              notes = "The Source does not move based on its velocity.",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x velocity."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y velocity."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z velocity."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getVolume",
               summary = "Get the volume of the Source.",
               description = "Returns the current volume factor for the Source.  1.0 is the default and the maximum.",
@@ -359,30 +247,6 @@ return {
                       name = "volume",
                       type = "number",
                       description = "The volume of the Source."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getVolumeLimits",
-              summary = "Get the volume limits of the Source.",
-              description = "Returns the minimum and maximum volume of the Source.  These limits have priority over the parameters set by `Source:setFalloff` and `Source:setCone`, so they can be used to make sure a Source can always be heard even if it's far away.",
-              key = "Source:getVolumeLimits",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "min",
-                      type = "number",
-                      description = "The minimum volume of the Source."
-                    },
-                    {
-                      name = "max",
-                      type = "number",
-                      description = "The maximum volume of the Source."
                     }
                   }
                 }
@@ -421,25 +285,6 @@ return {
                       name = "playing",
                       type = "boolean",
                       description = "Whether the Source is playing."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "isRelative",
-              summary = "Check if the Source is relative to the listener.",
-              description = "Returns whether or not the Source is relative to the listener.  If a Source is relative then its position, velocity, cone, and orientation are all treated as relative to the audio listener, instead of absolute positions in space.",
-              key = "Source:isRelative",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "relative",
-                      type = "boolean",
-                      description = "Whether or not the Source is relative."
                     }
                   }
                 }
@@ -491,69 +336,6 @@ return {
                       type = "TimeUnit",
                       description = "The units for the seek position.",
                       default = "'seconds'"
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setCone",
-              summary = "Set the Source's volume cone.",
-              description = "Sets the directional volume cone of the Source.  The cone is specified by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is inside the `innerAngle`, the Source won't have its volume changed.  Otherwise, the volume will start to decrease, reaching a minimum volume of `outerVolume` once the listener is `outerAngle` degrees from the direction of the Source.",
-              key = "Source:setCone",
-              module = "lovr.audio",
-              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `2 * math.pi`.\n\nThe default `outerVolume` for a Source is `0`.\n\nThe direction of the cone can be changed using `Source:setOrientation`.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "innerAngle",
-                      type = "number",
-                      description = "The inner cone angle, in radians."
-                    },
-                    {
-                      name = "outerAngle",
-                      type = "number",
-                      description = "The outer cone angle, in radians."
-                    },
-                    {
-                      name = "outerVolume",
-                      type = "number",
-                      description = "The outer cone angle, in radians."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setFalloff",
-              summary = "Set the falloff parameters for the Source.",
-              description = "Sets parameters that control how the volume of the Source falls of with distance.\n\nOnly mono sources support positional falloff.  Using this function on a stereo Source will cause an error.",
-              key = "Source:setFalloff",
-              module = "lovr.audio",
-              related = {
-                "Source:getVolumeLimits",
-                "Source:setVolumeLimits"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "reference",
-                      type = "number",
-                      description = "The distance at which the volume will start to decrease."
-                    },
-                    {
-                      name = "max",
-                      type = "number",
-                      description = "The distance at which the Source will be its quietest."
-                    },
-                    {
-                      name = "rolloff",
-                      type = "number",
-                      description = "How quickly the sound falls off between the reference and max distances (1.0 is the default)."
                     }
                   },
                   returns = {}
@@ -613,25 +395,6 @@ return {
                       name = "az",
                       type = "number",
                       description = "The z component of the axis of rotation."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setPitch",
-              summary = "Set the pitch of the Source.",
-              description = "Sets the pitch of the Source.  The default is 1.0.",
-              key = "Source:setPitch",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "pitch",
-                      type = "number",
-                      description = "The new pitch."
                     }
                   },
                   returns = {}
@@ -722,55 +485,6 @@ return {
               }
             },
             {
-              name = "setRelative",
-              summary = "Set whether or not the Source is relative.",
-              description = "Sets whether or not the Source is relative to the listener.  If a Source is relative then its position, velocity, cone, and orientation are all treated as relative to the audio listener.",
-              key = "Source:setRelative",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "relative",
-                      type = "boolean",
-                      description = "Whether or not the Source should be relative."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setVelocity",
-              summary = "Set the velocity of the Source.",
-              description = "Sets the velocity of the Source, in meters per second.  This affects the doppler effect.",
-              key = "Source:setVelocity",
-              module = "lovr.audio",
-              notes = "The Source does not move based on its velocity.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x velocity."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y velocity."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z velocity."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "setVolume",
               summary = "Set the volume of the Source.",
               description = "Sets the current volume factor for the Source.  1.0 is the default and the maximum.",
@@ -783,30 +497,6 @@ return {
                       name = "volume",
                       type = "number",
                       description = "The new volume."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setVolumeLimits",
-              summary = "Set the volume limits of the Source.",
-              description = "Sets the minimum and maximum volume of the Source.  These limits have priority over the parameters set by `Source:setFalloff` and `Source:setCone`, so they can be used to make sure a Source can always be heard even if it's far away.",
-              key = "Source:setVolumeLimits",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "min",
-                      type = "number",
-                      description = "The minimum volume of the Source."
-                    },
-                    {
-                      name = "max",
-                      type = "number",
-                      description = "The maximum volume of the Source."
                     }
                   },
                   returns = {}
@@ -861,32 +551,6 @@ return {
         }
       },
       functions = {
-        {
-          name = "getDopplerEffect",
-          tag = "listener",
-          summary = "Get the doppler effect parameters.",
-          description = "Returns the parameters that control the simulated doppler effect.",
-          key = "lovr.audio.getDopplerEffect",
-          module = "lovr.audio",
-          notes = "The default factor is 1.0 and the default speed of sound is 343.29.",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "factor",
-                  type = "number",
-                  description = "The doppler effect scaling factor."
-                },
-                {
-                  name = "speedOfSound",
-                  type = "number",
-                  description = "The speed of sound, in meters per second."
-                }
-              }
-            }
-          }
-        },
         {
           name = "getOrientation",
           tag = "listener",
@@ -1036,37 +700,6 @@ return {
           }
         },
         {
-          name = "getVelocity",
-          tag = "listener",
-          summary = "Get the velocity of the audio listener.",
-          description = "Returns the velocity of the audio listener, in meters per second.  This affects the doppler effect.",
-          key = "lovr.audio.getVelocity",
-          module = "lovr.audio",
-          notes = "The audio listener does not move based on its velocity.",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x velocity."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y velocity."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z velocity."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getVolume",
           tag = "listener",
           summary = "Get the master volume.",
@@ -1136,51 +769,6 @@ return {
                   description = "The new Source."
                 }
               }
-            }
-          }
-        },
-        {
-          name = "pause",
-          tag = "sources",
-          summary = "Pause all Sources.",
-          description = "Pause all playing audio Sources.",
-          key = "lovr.audio.pause",
-          module = "lovr.audio",
-          related = {
-            "lovr.audio.stop"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "setDopplerEffect",
-          tag = "listener",
-          summary = "Set the doppler effect parameters.",
-          description = "Sets the parameters that control the simulated doppler effect: The effect intensity and the speed of sound.",
-          key = "lovr.audio.setDopplerEffect",
-          module = "lovr.audio",
-          notes = "The default factor is 1.0 and the default speed of sound is 343.29.",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "factor",
-                  type = "number",
-                  description = "The doppler effect scaling factor.",
-                  default = "1.0"
-                },
-                {
-                  name = "speedOfSound",
-                  type = "number",
-                  description = "The speed of sound, in meters per second.",
-                  default = "343.29"
-                }
-              },
-              returns = {}
             }
           }
         },
@@ -1306,37 +894,6 @@ return {
           }
         },
         {
-          name = "setVelocity",
-          tag = "listener",
-          summary = "Set the velocity of the audio listener.",
-          description = "Sets the velocity of the audio listener, in meters per second.  This affects the doppler effect.",
-          key = "lovr.audio.setVelocity",
-          module = "lovr.audio",
-          notes = "The audio listener does not move based on its velocity.",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x velocity."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y velocity."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z velocity."
-                }
-              },
-              returns = {}
-            }
-          }
-        },
-        {
           name = "setVolume",
           tag = "listener",
           summary = "Set the master volume.",
@@ -1354,39 +911,6 @@ return {
                   description = "The master volume."
                 }
               }
-            }
-          }
-        },
-        {
-          name = "stop",
-          tag = "sources",
-          summary = "Stop all Sources.",
-          description = "Stops all audio.",
-          key = "lovr.audio.stop",
-          module = "lovr.audio",
-          notes = "If you want to resume the stopped audio later, see `lovr.audio.pause`.",
-          related = {
-            "Source:stop",
-            "lovr.audio.pause"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "update",
-          tag = "sources",
-          summary = "Updates the audio system.",
-          description = "Updates all playing sources. This must be called regularly for audio playback to occur. This is called automatically by the default implementation of `lovr.run`.",
-          key = "lovr.audio.update",
-          module = "lovr.audio",
-          variants = {
-            {
-              arguments = {},
-              returns = {}
             }
           }
         }
