@@ -758,6 +758,59 @@ return {
       },
       enums = {
         {
+          name = "AudioMaterial",
+          summary = "Different types of audio materials.",
+          description = "Different types of audio material presets, for use with `lovr.audio.setGeometry`.",
+          key = "AudioMaterial",
+          module = "lovr.audio",
+          values = {
+            {
+              name = "generic",
+              description = "Generic default audio material."
+            },
+            {
+              name = "brick",
+              description = "Brick."
+            },
+            {
+              name = "carpet",
+              description = "Carpet."
+            },
+            {
+              name = "ceramic",
+              description = "Ceramic."
+            },
+            {
+              name = "concrete",
+              description = "Concrete."
+            },
+            {
+              name = "glass",
+              descripion = "Glass."
+            },
+            {
+              name = "gravel",
+              descripion = "Gravel."
+            },
+            {
+              name = "metal",
+              descripion = "Metal."
+            },
+            {
+              name = "plaster",
+              descripion = "Plaster."
+            },
+            {
+              name = "rock",
+              descripion = "Rock."
+            },
+            {
+              name = "wood",
+              descripion = "Wood."
+            }
+          }
+        },
+        {
           name = "AudioShareMode",
           summary = "How audio devices are shared on the system.",
           description = "Audio devices can be created in shared mode or exclusive mode.  In exclusive mode, the audio device is the only one active on the system, which gives better performance and lower latency. However, exclusive devices aren't always supported and might not be allowed, so there is a higher chance that creating one will fail.",
@@ -795,6 +848,39 @@ return {
           }
         },
         {
+          name = "Effect",
+          summary = "Different types of Source effects.",
+          description = "Different types of effects that can be applied with `Source:setEffectEnabled`.",
+          key = "Effect",
+          module = "lovr.audio",
+          values = {
+            {
+              name = "absorption",
+              description = "Models absorption as sound travels through the air, water, etc."
+            },
+            {
+              name = "falloff",
+              description = "Decreases audio volume with distance (1 / max(distance, 1))."
+            },
+            {
+              name = "occlusion",
+              description = "Causes audio to drop off when the Source is occluded by geometry."
+            },
+            {
+              name = "reverb",
+              description = "Models reverb caused by audio bouncing off of geometry."
+            },
+            {
+              name = "spatialization",
+              description = "Spatializes the Source using either simple panning or an HRTF."
+            },
+            {
+              name = "transmission",
+              descripion = "Causes audio to be heard through walls when occluded, based on audio materials."
+            }
+          }
+        },
+        {
           name = "TimeUnit",
           summary = "Time units for sound samples.",
           description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of samples.",
@@ -810,9 +896,56 @@ return {
               description = "Samples."
             }
           }
+        },
+        {
+          name = "VolumeUnit",
+          summary = "Different units of volume.",
+          description = "When accessing the volume of Sources or the audio listener, this can be done in linear units with a 0 to 1 range, or in decibels with a range of -∞ to 0.",
+          key = "VolumeUnit",
+          module = "lovr.audio",
+          values = {
+            {
+              name = "linear",
+              description = "Linear volume range."
+            },
+            {
+              name = "db",
+              description = "Decibels."
+            }
+          }
         }
       },
       functions = {
+        {
+          name = "getAbsorption",
+          summary = "Get the absorption coefficients.",
+          description = "Returns the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and falloff is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones.  This can be used to apply \"underwater\" effects and stuff.",
+          key = "lovr.audio.getAbsorption",
+          module = "lovr.audio",
+          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high.",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "low",
+                  type = "number",
+                  description = "The absorption coefficient for the low frequency band."
+                },
+                {
+                  name = "mid",
+                  type = "number",
+                  description = "The absorption coefficient for the mid frequency band."
+                },
+                {
+                  name = "high",
+                  type = "number",
+                  description = "The absorption coefficient for the high frequency band."
+                }
+              }
+            }
+          }
+        },
         {
           name = "getDevices",
           tag = "devices",
@@ -842,17 +975,17 @@ return {
                   description = "The list of devices.",
                   table = {
                     {
-                      name = "id",
+                      name = "[].id",
                       type = "userdata",
                       description = "A unique, opaque id for the device."
                     },
                     {
-                      name = "name",
+                      name = "[].name",
                       type = "string",
                       description = "A human readable name for the device."
                     },
                     {
-                      name = "default",
+                      name = "[].default",
                       type = "boolean",
                       description = "Whether the device is the default audio device."
                     }
@@ -1014,12 +1147,19 @@ return {
           name = "getVolume",
           tag = "listener",
           summary = "Get the master volume.",
-          description = "Returns the master volume.  All Source objects have their volume multiplied by this factor.",
+          description = "Returns the master volume.  All audio sent to the playback device has its volume multiplied by this factor.",
           key = "lovr.audio.getVolume",
           module = "lovr.audio",
           variants = {
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "units",
+                  type = "VolumeUnit",
+                  description = "The units to return (linear or db).",
+                  default = "'linear'"
+                }
+              },
               returns = {
                 {
                   name = "volume",
@@ -1029,7 +1169,7 @@ return {
               }
             }
           },
-          notes = "The default is 1.0."
+          notes = "The default volume is 1.0 (0 dB)."
         },
         {
           name = "isStarted",
@@ -1114,6 +1254,36 @@ return {
                   description = "The new Source."
                 }
               }
+            }
+          }
+        },
+        {
+          name = "setAbsorption",
+          summary = "Set the absorption coefficients.",
+          description = "Sets the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and falloff is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones.  This can be used to apply \"underwater\" effects and stuff.",
+          key = "lovr.audio.setAbsorption",
+          module = "lovr.audio",
+          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "low",
+                  type = "number",
+                  description = "The absorption coefficient for the low frequency band."
+                },
+                {
+                  name = "mid",
+                  type = "number",
+                  description = "The absorption coefficient for the mid frequency band."
+                },
+                {
+                  name = "high",
+                  type = "number",
+                  description = "The absorption coefficient for the high frequency band."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -1292,22 +1462,28 @@ return {
           name = "setVolume",
           tag = "listener",
           summary = "Set the master volume.",
-          description = "Sets the master volume.  The volume of all Sources will be multiplied by this factor.",
+          description = "Sets the master volume.  All audio sent to the playback device has its volume multiplied by this factor.",
           key = "lovr.audio.setVolume",
           module = "lovr.audio",
           variants = {
             {
-              arguments = {},
-              returns = {
+              arguments = {
                 {
                   name = "volume",
                   type = "number",
                   description = "The master volume."
+                },
+                {
+                  name = "units",
+                  type = "VolumeUnit",
+                  description = "The units of the value.",
+                  default = "'linear'"
                 }
-              }
+              },
+              returns = {}
             }
           },
-          notes = "The default is 1.0."
+          notes = "The volume will be clamped to a 0-1 range (0 dB)."
         },
         {
           name = "start",
@@ -1570,14 +1746,40 @@ return {
               }
             },
             {
-              name = "getVolume",
-              summary = "Get the volume of the Source.",
-              description = "Returns the current volume factor for the Source.  1.0 is the default and the maximum.",
-              key = "Source:getVolume",
+              name = "getRadius",
+              summary = "Get the radius of the Source.",
+              description = "Returns the radius of the Source, in meters.\n\nThis does not control falloff or attenuation.  It is only used for smoothing out occlusion.  If a Source doesn't have a radius, then when it becomes occluded by a wall its volume will instantly drop.  Giving the Source a radius that approximates its emitter's size will result in a smooth transition between audible and occluded, improving realism.",
+              key = "Source:getRadius",
               module = "lovr.audio",
               variants = {
                 {
                   arguments = {},
+                  returns = {
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the Source, in meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVolume",
+              summary = "Get the volume of the Source.",
+              description = "Returns the current volume factor for the Source.",
+              key = "Source:getVolume",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "units",
+                      type = "VolumeUnit",
+                      description = "The units to return (linear or db).",
+                      default = "'linear'"
+                    }
+                  },
                   returns = {
                     {
                       name = "volume",
@@ -1821,11 +2023,31 @@ return {
               }
             },
             {
+              name = "setRadius",
+              summary = "Set the radius of the Source.",
+              description = "Sets the radius of the Source, in meters.\n\nThis does not control falloff or attenuation.  It is only used for smoothing out occlusion.  If a Source doesn't have a radius, then when it becomes occluded by a wall its volume will instantly drop.  Giving the Source a radius that approximates its emitter's size will result in a smooth transition between audible and occluded, improving realism.",
+              key = "Source:setRadius",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The new radius of the Source, in meters."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setVolume",
               summary = "Set the volume of the Source.",
-              description = "Sets the current volume factor for the Source.  1.0 is the default and the maximum.",
+              description = "Sets the current volume factor for the Source.",
               key = "Source:setVolume",
               module = "lovr.audio",
+              notes = "The volume will be clamped to a 0-1 range (0 dB).",
               variants = {
                 {
                   arguments = {
@@ -1833,6 +2055,12 @@ return {
                       name = "volume",
                       type = "number",
                       description = "The new volume."
+                    },
+                    {
+                      name = "units",
+                      type = "VolumeUnit",
+                      description = "The units of the value.",
+                      default = "'linear'"
                     }
                   },
                   returns = {}

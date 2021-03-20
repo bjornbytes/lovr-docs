@@ -22,17 +22,17 @@ return {
       description = 'The list of devices.',
       table = {
         {
-          name = 'id',
+          name = '[].id',
           type = 'userdata',
           description = 'A unique, opaque id for the device.'
         },
         {
-          name = 'name',
+          name = '[].name',
           type = 'string',
           description = 'A human readable name for the device.'
         },
         {
-          name = 'default',
+          name = '[].default',
           type = 'boolean',
           description = 'Whether the device is the default audio device.'
         }
