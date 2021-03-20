@@ -57,7 +57,7 @@ return {
 
     The `Effect`s that use geometry are:
 
-    - `occlusion`,
+    - `occlusion`
     - `reverb`
     - `transmission`
 
