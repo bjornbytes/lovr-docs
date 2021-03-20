@@ -24,7 +24,7 @@ return {
     },
     {
       name = 'transmission',
-      descripion = 'Causes audio to be heard through walls when occluded, based on audio materials.'
+      description = 'Causes audio to be heard through walls when occluded, based on audio materials.'
     }
   },
   notes = [[
