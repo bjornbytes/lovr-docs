@@ -833,7 +833,7 @@ return {
         {
           name = "AudioType",
           summary = "Different types of audio devices",
-          description = "When referencing audio devices, this type indicates whether it's the playback or capture device.",
+          description = "When referencing audio devices, this indicates whether it's the playback or capture device.",
           key = "AudioType",
           module = "lovr.audio",
           values = {
@@ -845,6 +845,13 @@ return {
               name = "capture",
               description = "The capture device (microphone)."
             }
+          },
+          related = {
+            "lovr.audio.getDevices",
+            "lovr.audio.setDevice",
+            "lovr.audio.start",
+            "lovr.audio.stop",
+            "lovr.audio.isStarted"
           }
         },
         {
@@ -1306,7 +1313,7 @@ return {
                 {
                   name = "type",
                   type = "AudioType",
-                  description = "The device to switch (playback or capture).",
+                  description = "The device to switch.",
                   default = "'playback'"
                 },
                 {
@@ -1324,7 +1331,7 @@ return {
                 {
                   name = "mode",
                   type = "AudioShareMode",
-                  description = "The sharing mode for the device (exclusive or shared).",
+                  description = "The sharing mode for the device.",
                   default = "shared"
                 }
               },

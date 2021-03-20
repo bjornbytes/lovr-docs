@@ -28,7 +28,7 @@ return {
       name = 'type',
       type = 'AudioType',
       default = [['playback']],
-      description = 'The device to switch (playback or capture).'
+      description = 'The device to switch.'
     },
     {
       name = 'id',
@@ -46,7 +46,7 @@ return {
       name = 'mode',
       type = 'AudioShareMode',
       default = 'shared',
-      description = 'The sharing mode for the device (exclusive or shared).'
+      description = 'The sharing mode for the device.'
     }
   },
   returns = {
