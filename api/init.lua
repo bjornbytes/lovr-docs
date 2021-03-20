@@ -1306,7 +1306,7 @@ return {
                 {
                   name = "type",
                   type = "AudioType",
-                  description = "The type of devices to query (playback or capture).",
+                  description = "The device to switch (playback or capture).",
                   default = "'playback'"
                 },
                 {

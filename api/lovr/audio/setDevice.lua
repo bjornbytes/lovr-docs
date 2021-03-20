@@ -28,7 +28,7 @@ return {
       name = 'type',
       type = 'AudioType',
       default = [['playback']],
-      description = 'The type of devices to query (playback or capture).'
+      description = 'The device to switch (playback or capture).'
     },
     {
       name = 'id',
