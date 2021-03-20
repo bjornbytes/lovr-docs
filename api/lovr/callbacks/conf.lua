@@ -206,6 +206,10 @@ return {
           -- Set the project identity
           t.identity = 'default'
 
+          -- Audio
+          t.audio.spatializer = nil
+          t.audio.start = true
+
           -- Graphics
           t.graphics.debug = false
 

@@ -35,5 +35,8 @@ return {
       arguments = { 'sound' },
       returns = { 'source' }
     }
+  },
+  related = {
+    'Source:clone'
   }
 }
