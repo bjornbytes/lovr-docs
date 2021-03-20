@@ -2040,6 +2040,7 @@ return {
               description = "Sets whether or not the Source loops.",
               key = "Source:setLooping",
               module = "lovr.audio",
+              notes = "Attempting to loop a Source backed by a stream `Sound` will cause an error.",
               variants = {
                 {
                   arguments = {
