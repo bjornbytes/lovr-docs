@@ -1125,7 +1125,7 @@ return {
           name = "getSpatializer",
           tag = "listener",
           summary = "Get the name of the active spatializer",
-          description = "Returns the name of the active spatializer (`simple`, `oculus`, or `phonon`).",
+          description = "Returns the name of the active spatializer (`simple`, `oculus`, or `phonon`).\n\nThe `t.audio.spatializer` setting in `lovr.conf` can be used to express a preference for a particular spatializer.  If it's `nil`, all spatializers will be tried in the following order: `phonon`, `oculus`, `simple`.",
           key = "lovr.audio.getSpatializer",
           module = "lovr.audio",
           related = {
