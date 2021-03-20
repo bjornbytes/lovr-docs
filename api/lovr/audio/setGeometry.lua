@@ -12,8 +12,8 @@ return {
     vertices = {
       type = 'table',
       description = [[
-        A flat table of vertices.  Each vertex is represented by 3 numbers representing its x, y,
-        and z coordinates.  The units are up to you, but meters are recommended.
+        A flat table of vertices.  Each vertex is 3 numbers representing its x, y, and z position.
+        The units used for audio coordinates are up to you, but meters are recommended.
       ]]
     },
     indices = {
