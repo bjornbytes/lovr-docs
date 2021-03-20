@@ -1937,6 +1937,11 @@ return {
               description = "Returns whether or not the Source is playing.",
               key = "Source:isPlaying",
               module = "lovr.audio",
+              related = {
+                "Source:play",
+                "Source:pause",
+                "Source:stop"
+              },
               variants = {
                 {
                   arguments = {},
