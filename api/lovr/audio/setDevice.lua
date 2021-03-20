@@ -20,8 +20,8 @@ return {
 
     Audio devices can be started in `shared` or `exclusive` mode.  Exclusive devices may have lower
     latency than shared devices, but there's a higher chance that requesting exclusive access to an
-    audio device will fail (either because it isn't supported or not allowed).  You can first try to
-    use the device in exclusive mode, switching to shared mode if it doesn't work.
+    audio device will fail (either because it isn't supported or allowed).  One strategy is to first
+    try the device in exclusive mode, switching to shared if it doesn't work.
   ]],
   arguments = {
     {
