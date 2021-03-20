@@ -891,7 +891,7 @@ return {
         {
           name = "TimeUnit",
           summary = "Time units for sound samples.",
-          description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of samples.",
+          description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of frames.  A frame is one set of samples for each channel (one sample for mono, two samples for stereo).",
           key = "TimeUnit",
           module = "lovr.audio",
           values = {
@@ -900,8 +900,8 @@ return {
               description = "Seconds."
             },
             {
-              name = "samples",
-              description = "Samples."
+              name = "frames",
+              description = "Frames."
             }
           }
         },
@@ -1989,7 +1989,7 @@ return {
               description = "Seeks the Source to the specified position.",
               key = "Source:seek",
               module = "lovr.audio",
-              notes = "This function can not be used on a Source backed by a raw `AudioStream`.",
+              notes = "Seeking a Source backed by a stream `Sound` has no meaningful effect.",
               variants = {
                 {
                   arguments = {
@@ -2245,6 +2245,7 @@ return {
               description = "Returns the current playback position of the Source.",
               key = "Source:tell",
               module = "lovr.audio",
+              notes = "The return value for Sources backed by a stream `Sound` has no meaning.",
               variants = {
                 {
                   arguments = {

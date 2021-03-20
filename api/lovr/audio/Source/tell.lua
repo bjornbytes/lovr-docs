@@ -15,5 +15,6 @@ return {
       type = 'number',
       description = 'The current playback position.'
     }
-  }
+  },
+  notes = 'The return value for Sources backed by a stream `Sound` has no meaning.'
 }
