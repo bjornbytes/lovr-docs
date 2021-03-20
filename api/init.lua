@@ -1342,7 +1342,7 @@ return {
           name = "setGeometry",
           tag = "listener",
           summary = "Set the geometry for audio effects.",
-          description = "Sets a mesh of triangles to use for modeling audio effects, using a table or a Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls and bounce around to create realistic reverb.\n\nAn optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.",
+          description = "Sets a mesh of triangles to use for modeling audio effects, using a table of vertices or a Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls and bounce around to create realistic reverb.\n\nAn optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.",
           key = "lovr.audio.setGeometry",
           module = "lovr.audio",
           notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`,\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.",

@@ -2,9 +2,9 @@ return {
   tag = 'listener',
   summary = 'Set the geometry for audio effects.',
   description = [[
-    Sets a mesh of triangles to use for modeling audio effects, using a table or a Model.  When the
-    appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls
-    and bounce around to create realistic reverb.
+    Sets a mesh of triangles to use for modeling audio effects, using a table of vertices or a
+    Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be
+    occluded by walls and bounce around to create realistic reverb.
 
     An optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.
   ]],
