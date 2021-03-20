@@ -853,6 +853,7 @@ return {
           description = "Different types of effects that can be applied with `Source:setEffectEnabled`.",
           key = "Effect",
           module = "lovr.audio",
+          notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua.",
           values = {
             {
               name = "absorption",
@@ -1338,6 +1339,70 @@ return {
           }
         },
         {
+          name = "setGeometry",
+          tag = "listener",
+          summary = "Set the geometry for audio effects.",
+          description = "Sets a mesh of triangles to use for modeling audio effects, using a table or a Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls and bounce around to create realistic reverb.\n\nAn optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.",
+          key = "lovr.audio.setGeometry",
+          module = "lovr.audio",
+          notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`,\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "vertices",
+                  type = "table",
+                  description = "A flat table of vertices.  Each vertex is represented by 3 numbers representing its x, y, and z coordinates.  The units are up to you, but meters are recommended."
+                },
+                {
+                  name = "indices",
+                  type = "table",
+                  description = "A list of indices, indicating how the vertices are connected into triangles.  Indices are 1-indexed and are 32 bits (they can be bigger than 65535)."
+                },
+                {
+                  name = "material",
+                  type = "AudioMaterial",
+                  description = "The acoustic material to use.",
+                  default = "'generic'"
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether audio geometry is supported by the current spatializer and the geometry was loaded successfully."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "A model to use for the audio geometry."
+                },
+                {
+                  name = "material",
+                  type = "AudioMaterial",
+                  description = "The acoustic material to use.",
+                  default = "'generic'"
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether audio geometry is supported by the current spatializer and the geometry was loaded successfully."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.audio.getSpatializer",
+            "Source:setEffectEnabled"
+          }
+        },
+        {
           name = "setOrientation",
           tag = "listener",
           summary = "Set the orientation of the listener.",
@@ -1587,6 +1652,30 @@ return {
               notes = "This is a good way to create multiple Sources that play the same sound, since the audio data won't be loaded multiple times and can just be reused.  You can also create multiple `Source` objects and pass in the same `Sound` object for each one, which will have the same effect."
             },
             {
+              name = "getDirectivity",
+              summary = "Get the directivity of the Source.",
+              description = "Returns the directivity settings for the Source.\n\nThe directivity is controlled by two parameters: the weight and the power.\n\nThe weight is a number between 0 and 1 controlling the general \"shape\" of the sound emitted. 0.0 results in a completely omnidirectional shape that can be heard from all directions.  1.0 results in a full dipole shape that can be heard only from the front and back.  0.5 results in a cardioid shape that can only be heard from one direction.  Numbers in between will smoothly transition between these.\n\nThe power is a number that controls how \"focused\" or sharp the shape is.  Lower power values can be heard from a wider set of angles.  It is an exponent, so it can get arbitrarily large.  Note that a power of zero will still result in an omnidirectional source, regardless of the weight.",
+              key = "Source:getDirectivity",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "weight",
+                      type = "number",
+                      description = "The dipole weight.  0.0 is omnidirectional, 1.0 is a dipole, 0.5 is cardioid."
+                    },
+                    {
+                      name = "power",
+                      type = "number",
+                      description = "The dipole power, controlling how focused the directivity shape is."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDuration",
               summary = "Get the duration of the Source.",
               description = "Returns the duration of the Source.",
@@ -1791,6 +1880,32 @@ return {
               }
             },
             {
+              name = "isEffectEnabled",
+              summary = "Check if an effect is enabled.",
+              description = "Returns whether a given `Effect` is enabled for the Source.",
+              key = "Source:isEffectEnabled",
+              module = "lovr.audio",
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored (this function will still report it as enabled).\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "effect",
+                      type = "Effect",
+                      description = "The effect."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the effect is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isLooping",
               summary = "Check if the Source is looping.",
               description = "Returns whether or not the Source will loop when it finishes.",
@@ -1874,6 +1989,31 @@ return {
                       type = "TimeUnit",
                       description = "The units for the seek position.",
                       default = "'seconds'"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setEffectEnabled",
+              summary = "Enable or disable an effect.",
+              description = "Enables or disables an effect on the Source.",
+              key = "Source:setEffectEnabled",
+              module = "lovr.audio",
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "effect",
+                      type = "Effect",
+                      description = "The effect."
+                    },
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether the effect should be enabled."
                     }
                   },
                   returns = {}

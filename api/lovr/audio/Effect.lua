@@ -26,5 +26,11 @@ return {
       name = 'transmission',
       descripion = 'Causes audio to be heard through walls when occluded, based on audio materials.'
     }
-  }
+  },
+  notes = [[
+    The active spatializer will determine which effects are supported.  If an unsupported effect is
+    enabled on a Source, no error will be reported.  Instead, it will be silently ignored.
+
+    TODO: expose a table of supported effects for spatializers in docs or from Lua.
+  ]]
 }
