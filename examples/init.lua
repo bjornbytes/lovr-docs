@@ -33,6 +33,7 @@ return {
   'Audio/Playback',
   'Audio/Spatialization',
   'Audio/Directivity',
+  'Audio/Mute',
   'Effects/Blur',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
