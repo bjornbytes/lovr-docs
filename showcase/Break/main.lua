@@ -104,6 +104,8 @@ function boardReset() -- Reset board contents, as for death or new-level start
 end
 
 function lovr.load()
+	print("Spatializer", lovr.audio.getSpatializer())
+
 	lovr.graphics.setBackgroundColor(.1, .1, .1)
 	lovr.headset.setClipDistance(0.1, 3000)
 
@@ -112,10 +114,10 @@ function lovr.load()
 	sounds = {}
 	if lovr.audio then
 		for i=0,5 do
-			table.insert(sounds, lovr.audio.newSource(string.format("break-bwomp-song-1-split-%d.ogg", i), 'static'))
-			sounds.fail = lovr.audio.newSource("break-buzzer.ogg", 'static')
-			sounds.restart = lovr.audio.newSource("break-countdown.ogg", 'static')
+			table.insert(sounds, lovr.audio.newSource(string.format("break-bwomp-song-1-split-%d.ogg", i)))
 		end
+		sounds.fail = lovr.audio.newSource("break-buzzer.ogg", {spatial=false})
+		sounds.restart = lovr.audio.newSource("break-countdown.ogg", {spatial=false})
 	end
 end
 
@@ -161,7 +163,7 @@ local function nextSound(at, forceSound) -- Play a sound at a position. If force
 	pendingSound = pendingSound + 1
 	if pendingSound > #sounds then pendingSound = 1 end
 	if lastSound then
-		lastSound:setPosition(at.x, at.y, at.z)
+		lastSound:setPose(at.x, at.y, at.z)
 		lastSound:play()
 	end
 end
@@ -344,6 +346,8 @@ function lovr.update(dt)
 			end
 		end -- Then let the tone play out until "reset"
 	end
+
+	lovr.audio.setPose(lovr.headset.getPose())
 end
 
 local function drawLed(root, character) -- Draw one digit of the LED screen
@@ -360,7 +364,7 @@ local function drawLed(root, character) -- Draw one digit of the LED screen
 	end
 end
 
-function lovr.draw(eye)
+function lovr.draw()
 	lovr.graphics.clear()
 	
 	if fixedCamera then
