@@ -113,9 +113,23 @@ function lovr.load()
 	boardReset()
 	sounds = {}
 	if lovr.audio then
+		lovr.audio.setGeometry({}, {})
+		--lovr.audio.setGeometry({0,0,0, 0,1,0, 1,0,0}, {1,2,3}) -- Alternate
+
 		for i=0,5 do
-			table.insert(sounds, lovr.audio.newSource(string.format("break-bwomp-song-1-split-%d.ogg", i)))
+			-- Create sound source from file for synthesizer
+			local source = lovr.audio.newSource(string.format("break-bwomp-song-1-split-%d.ogg", i))
+			
+			-- Add to this list of "notes" we will play from later
+			table.insert(sounds, source)
+
+			-- Add effects that make spatialization possible
+			for _,effect in ipairs{"absorption","attenuation","occlusion","reverb","spatialization","transmission"} do
+				source:setEffectEnabled(effect, true)
+			end
 		end
+
+		-- "Game system" sound effects are not spatialized
 		sounds.fail = lovr.audio.newSource("break-buzzer.ogg", {spatial=false})
 		sounds.restart = lovr.audio.newSource("break-countdown.ogg", {spatial=false})
 	end
