@@ -32,7 +32,7 @@ issues or Slack before submitting.  Try to stick to the existing coding style:
 - 100 character wrapping (ish, sometimes it's more readable to just have a long line).
 - Use descriptive, camelCased variable names when possible.
 - Put stars near types: `Texture* texture`.
-- Use curly braces for the bodies of conditionals and loops, and place them on their own line.  An
+- Use curly braces for the bodies of conditionals and loops, and place them on the same line.  An
   exception can be made for very short blocks -- they can be placed inline without curlies, e.g.
   `if (data == NULL) return;`.
 - Always use spaces around binary operators.
