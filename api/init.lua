@@ -1352,7 +1352,7 @@ return {
           description = "Sets a mesh of triangles to use for modeling audio effects, using a table of vertices or a Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls and bounce around to create realistic reverb.\n\nAn optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.",
           key = "lovr.audio.setGeometry",
           module = "lovr.audio",
-          notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.",
+          notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.\n\nThe triangles must use counterclockwise winding.",
           variants = {
             {
               arguments = {
@@ -16834,9 +16834,9 @@ return {
               key = "Mat4:rotate",
               module = "lovr.math",
               related = {
-                "mat4:translate",
-                "mat4:scale",
-                "mat4:identity"
+                "Mat4:translate",
+                "Mat4:scale",
+                "Mat4:identity"
               },
               variants = {
                 {
@@ -17535,7 +17535,7 @@ return {
               key = "Quat:unpack",
               module = "lovr.math",
               related = {
-                "quat:set"
+                "Quat:set"
               },
               variants = {
                 {
