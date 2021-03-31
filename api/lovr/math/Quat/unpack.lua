@@ -35,6 +35,6 @@ return {
     }
   },
   related = {
-    'quat:set'
+    'Quat:set'
   }
 }
