@@ -2996,7 +2996,7 @@ return {
         {
           name = "Sound",
           summary = "An object that holds raw audio samples.",
-          description = "A Sound stores raw audio samples that make up a sound file.  You can use `Source` objects to play them.",
+          description = "A Sound stores the data for a sound.  The supported sound formats are OGG, WAV, and MP3.  Sounds cannot be played directly.  Instead, there are `Source` objects in `lovr.audio` that are used for audio playback.  All Source objects are backed by one of these Sounds, and multiple Sources can share a single Sound to reduce memory usage.\n\nMetadata\n---\n\nSounds hold a fixed number of frames.  Each frame contains one audio sample for each channel. The `SampleFormat` of the Sound is the data type used for each sample (floating point, integer, etc.).  The Sound has a `ChannelLayout`, representing the number of audio channels and how they map to speakers (mono, stereo, etc.).  The sample rate of the Sound indicates how many frames should be played per second.  The duration of the sound (in seconds) is the number of frames divided by the sample rate.\n\nCompression\n---\n\nSounds can be compressed.  Compressed sounds are stored compressed in memory and are decoded as they are played.  This uses a lot less memory but increases CPU usage during playback.  OGG and MP3 are compressed audio formats.  When creating a sound from a compressed format, there is an option to immediately decode it, storing it uncompressed in memory.  This can be a good idea for short sounds, since they won't use very much memory even when they're decoded.\n\nStreams\n---\n\nSounds can be created as a stream by passing `'stream'` as their contents when creating them. Audio frames can be written to the end of the stream, and read from the beginning.  This works well for situations where data is being generated in real time or streamed in from some other data source.\n\nSources can be backed by a stream and they'll just play whatever audio is pushed to the stream. The audio module also lets you use a stream as a \"sink\" for an audio device.  For playback devices, this works like loopback, so the mixed audio from all playing Sources will get written to the stream.  For capture devices, all the microphone input will get written to the stream. Conversion between sample formats, channel layouts, and sample rates will happen automatically.\n\nKeep in mind that streams can still only hold a fixed number of frames.  If too much data is written before it is read, older frames will start to get overwritten.  Similary, it's possible to read too much data without writing fast enough.",
           key = "Sound",
           module = "lovr.data",
           methods = {
@@ -13954,6 +13954,24 @@ return {
               name = "beacon/4",
               description = "The fourth tracking device (i.e. lighthouse)."
             }
+          },
+          related = {
+            "DeviceAxis",
+            "DeviceButton",
+            "lovr.headset.getPose",
+            "lovr.headset.getPosition",
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.getSkeleton",
+            "lovr.headset.isTracked",
+            "lovr.headset.isDown",
+            "lovr.headset.isTouched",
+            "lovr.headset.wasPressed",
+            "lovr.headset.wasReleased",
+            "lovr.headset.getAxis",
+            "lovr.headset.vibrate",
+            "lovr.headset.animate"
           }
         },
         {

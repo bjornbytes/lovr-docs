@@ -31,7 +31,6 @@ List of Libraries
 - [lovr-haxe-wrappergen](https://github.com/excessive/lovr-haxe-wrappergen) - Haxe bindings for LÖVR.
 - [lovr-icosphere](https://github.com/bjornbytes/lovr-icosphere) - A library to create icospheres.
 - [lovr-keyboard](https://github.com/bjornbytes/lovr-keyboard) - Keyboard input
-- [lovr-lighting](https://github.com/bjornbytes/lovr-lighting) - Simple lighting shaders to add to
 - [lovr-mouse](https://github.com/bjornbytes/lovr-mouse) - Mouse input
 - [lovr-joystick](https://github.com/Rabios/lovr-joystick) - Joystick input
 - [lovr-clipboard](https://github.com/Rabios/lovr-clipboard) - Clipboard module (To copy and get text from clipboard)

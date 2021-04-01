@@ -93,5 +93,23 @@ return {
       name = 'beacon/4',
       description = 'The fourth tracking device (i.e. lighthouse).'
     }
+  },
+  related = {
+    'DeviceAxis',
+    'DeviceButton',
+    'lovr.headset.getPose',
+    'lovr.headset.getPosition',
+    'lovr.headset.getOrientation',
+    'lovr.headset.getVelocity',
+    'lovr.headset.getAngularVelocity',
+    'lovr.headset.getSkeleton',
+    'lovr.headset.isTracked',
+    'lovr.headset.isDown',
+    'lovr.headset.isTouched',
+    'lovr.headset.wasPressed',
+    'lovr.headset.wasReleased',
+    'lovr.headset.getAxis',
+    'lovr.headset.vibrate',
+    'lovr.headset.animate'
   }
 }
