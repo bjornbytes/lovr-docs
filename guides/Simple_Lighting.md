@@ -229,6 +229,6 @@ There's lots of playing around you can do - experiment with multiple lights, new
 
 [Complete source code for this tutorial can be found here.](https://barelyconsciousgames.com/lovr-phong.zip)
 
-This should work on your Quest, Go, or GearVR as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Android)). A moving, unlit sphere was added in the example to represent the light source to better visualize it.
+This should work on your Quest, Go, or GearVR as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Quest)). A moving, unlit sphere was added in the example to represent the light source to better visualize it.
 
 Have fun with LÖVR!
