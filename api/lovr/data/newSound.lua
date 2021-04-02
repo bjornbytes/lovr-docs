@@ -45,7 +45,7 @@ return {
       description = 'The filename of a sound to load.'
     },
     blob = {
-      type = 'string',
+      type = 'Blob',
       description = 'The Blob containing audio file data to load.'
     },
     decode = {
@@ -61,7 +61,7 @@ return {
   },
   variants = {
     {
-      description = 'Create a raw or stream Sound from a frame count and format info.',
+      description = 'Create a raw or stream Sound from a frame count and format info:',
       arguments = { 'frames', 'format', 'channels', 'sampleRate', 'contents' },
       returns = { 'sound' }
     },
