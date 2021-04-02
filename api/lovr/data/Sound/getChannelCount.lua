@@ -11,5 +11,8 @@ return {
       type = 'number',
       description = 'The number of channels in the sound.'
     }
+  },
+  related = {
+    'Sound:getChannelLayout'
   }
 }

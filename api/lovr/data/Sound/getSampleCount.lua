@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the number of samples stored in the Sound.',
+  summary = 'Get the number of samples in the Sound.',
   description = 'Returns the total number of samples in the Sound.',
   arguments = {},
   returns = {
@@ -9,8 +9,10 @@ return {
       description = 'The total number of samples in the Sound.'
     }
   },
+  notes = 'For streams, this returns the number of samples in the stream\'s buffer.',
   related = {
-    'Sound:getChannelCount',
-    'Source:getDuration'
+    'Sound:getDuration',
+    'Sound:getFrameCount',
+    'Sound:getChannelCount'
   }
 }

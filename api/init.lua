@@ -3068,6 +3068,9 @@ return {
               description = "Returns the number of channels in the Sound.  Mono sounds have 1 channel, stereo sounds have 2 channels, and ambisonic sounds have 4 channels.",
               key = "Sound:getChannelCount",
               module = "lovr.data",
+              related = {
+                "Sound:getChannelLayout"
+              },
               variants = {
                 {
                   arguments = {},
@@ -3082,13 +3085,37 @@ return {
               }
             },
             {
+              name = "getChannelLayout",
+              summary = "Get the channel layout of the Sound.",
+              description = "Returns the channel layout of the Sound.",
+              key = "Sound:getChannelLayout",
+              module = "lovr.data",
+              related = {
+                "Sound:getChannelCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "ChannelLayout",
+                      description = "The channel layout."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDuration",
               summary = "Get the duration of the Sound.",
-              description = "Returns the duration of the sound in seconds.",
+              description = "Returns the duration of the Sound, in seconds.",
               key = "Sound:getDuration",
               module = "lovr.data",
               related = {
+                "Sound:getFrameCount",
                 "Sound:getSampleCount",
+                "Sound:getSampleRate",
                 "Source:getDuration"
               },
               variants = {
@@ -3098,11 +3125,12 @@ return {
                     {
                       name = "duration",
                       type = "number",
-                      description = "The duration of the Sound."
+                      description = "The duration of the Sound, in seconds."
                     }
                   }
                 }
-              }
+              },
+              notes = "This can be computed as `(frameCount / sampleRate)`."
             },
             {
               name = "getFormat",
@@ -3128,14 +3156,40 @@ return {
               }
             },
             {
+              name = "getFrameCount",
+              summary = "Get the number of frames in the Sound.",
+              description = "Returns the number of frames in the Sound.  A frame stores one sample for each channel.",
+              key = "Sound:getFrameCount",
+              module = "lovr.data",
+              related = {
+                "Sound:getDuration",
+                "Sound:getSampleCount",
+                "Sound:getChannelCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frames",
+                      type = "number",
+                      description = "The number of frames in the Sound."
+                    }
+                  }
+                }
+              },
+              notes = "For streams, this returns the number of frames in the stream's buffer."
+            },
+            {
               name = "getSampleCount",
-              summary = "Get the number of samples stored in the Sound.",
+              summary = "Get the number of samples in the Sound.",
               description = "Returns the total number of samples in the Sound.",
               key = "Sound:getSampleCount",
               module = "lovr.data",
               related = {
-                "Sound:getChannelCount",
-                "Source:getDuration"
+                "Sound:getDuration",
+                "Sound:getFrameCount",
+                "Sound:getChannelCount"
               },
               variants = {
                 {
@@ -3148,12 +3202,13 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "For streams, this returns the number of samples in the stream's buffer."
             },
             {
               name = "getSampleRate",
               summary = "Get the sample rate of the Sound.",
-              description = "Returns the number of samples per second in the Sound.  This is usually a high number like 48000.",
+              description = "Returns the sample rate of the Sound, in Hz.  This is the number of frames that are played every second.  It's usually a high number like 48000.",
               key = "Sound:getSampleRate",
               module = "lovr.data",
               variants = {
@@ -3163,7 +3218,53 @@ return {
                     {
                       name = "frequency",
                       type = "number",
-                      description = "The number of samples per second in the Sound."
+                      description = "The number of frames per second in the Sound."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isCompressed",
+              summary = "Check if the Sound is compressed.",
+              description = "Returns whether the Sound is compressed.  Compressed sounds are loaded from compressed audio formats like MP3 and OGG.  They use a lot less memory but require some extra CPU work during playback.",
+              key = "Sound:isCompressed",
+              module = "lovr.data",
+              related = {
+                "Sound:isStream",
+                "lovr.data.newSound"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "compressed",
+                      type = "boolean",
+                      description = "Whether the Sound is compressed."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isStream",
+              summary = "Check if the Sound is a stream.",
+              description = "Returns whether the Sound is a stream.",
+              key = "Sound:isStream",
+              module = "lovr.data",
+              related = {
+                "Sound:isCompressed",
+                "lovr.data.newSound"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "stream",
+                      type = "boolean",
+                      description = "Whether the Sound is a stream."
                     }
                   }
                 }
