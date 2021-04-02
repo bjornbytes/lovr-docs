@@ -72,5 +72,25 @@ return {
       arguments = { 'blob', 'decode' },
       returns = { 'sound' }
     }
-  }
+  },
+  notes = [[
+    It is highly recommended to use an audio format that matches the format of the audio module:
+    `f32` sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2
+    channels for unspatialized sources.  This will avoid the need to convert audio during playback,
+    which boosts performance of the audio thread.
+
+    The WAV importer supports 16, 24, and 32 bit integer data and 32 bit floating point data.  The
+    data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE`
+    extension is supported.
+
+    Ambisonic channel layouts are supported for import (but not yet for playback).  Ambisonic data
+    can be loaded from WAV files.  It must be first-order full-sphere ambisonic data with 4
+    channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an `AMBISONIC_B_FORMAT` format
+    GUID, then the data is understood as using the AMB format with Furse-Malham channel ordering and
+    normalization.  *All other* 4-channel files are assumed to be using the AmbiX format with ACN
+    channel ordering and SN3D normalization.  AMB files will get automatically converted to AmbiX on
+    import, so ambisonic Sounds will always be in a consistent format.
+
+    OGG and MP3 files will always have the `f32` format when loaded.
+  ]]
 }

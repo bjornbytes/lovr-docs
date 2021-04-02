@@ -42,6 +42,14 @@ return {
     Keep in mind that streams can still only hold a fixed number of frames.  If too much data is
     written before it is read, older frames will start to get overwritten.  Similary, it's possible
     to read too much data without writing fast enough.
+
+    Ambisonics
+    ---
+
+    Ambisonic sounds can be imported from WAVs, but can not yet be played.  Sounds with a
+    `ChannelLayout` of `ambisonic` are stored as first-order full-sphere ambisonics using the AmbiX
+    format (ACN channel ordering and SN3D channel normalization).  The AMB format is supported for
+    import and will automatically get converted to AmbiX.  See `lovr.data.newSound` for more info.
   ]],
   constructor = 'lovr.data.newSound'
 }
