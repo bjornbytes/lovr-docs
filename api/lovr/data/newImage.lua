@@ -1,8 +1,8 @@
 return {
-  summary = 'Create a new TextureData.',
+  summary = 'Create a new Image.',
   description = [[
-    Creates a new TextureData.  Image data can be loaded and decoded from an image file, or a raw
-    block of pixels with a specified width, height, and format can be created.
+    Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of
+    pixels with a specified width, height, and format can be created.
   ]],
   arguments = {
     width = {
@@ -29,11 +29,11 @@ return {
     data = {
       type = 'Blob',
       default = 'nil',
-      description = 'Raw pixel values to use as the TextureData contents.  If `nil`, the data will all be zero.'
+      description = 'Raw pixel values to use as the contents.  If `nil`, the data will all be zero.'
     },
     source = {
-      type = 'TextureData',
-      description = 'The TextureData to clone.'
+      type = 'Image',
+      description = 'The Image to clone.'
     },
     flip = {
       type = 'boolean',
@@ -46,8 +46,8 @@ return {
   },
   returns = {
     textureData = {
-      type = 'TextureData',
-      description = 'The new TextureData.'
+      type = 'Image',
+      description = 'The new Image.'
     }
   },
   variants = {
@@ -57,12 +57,12 @@ return {
       returns = { 'textureData' }
     },
     {
-      description = 'Create a TextureData with a given size and pixel format.',
+      description = 'Create an Image with a given size and pixel format.',
       arguments = { 'width', 'height', 'format', 'data' },
       returns = { 'textureData' }
     },
     {
-      description = 'Clone an existing TextureData.',
+      description = 'Clone an existing Image.',
       arguments = { 'source' },
       returns = { 'textureData' }
     },

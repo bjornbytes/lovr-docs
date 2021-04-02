@@ -1,13 +1,13 @@
 return {
-  summary = 'Replace pixels in the Texture using a TextureData object.',
-  description = 'Replaces pixels in the Texture, sourcing from a `TextureData` object.',
+  summary = 'Replace pixels in the Texture using an Image object.',
+  description = 'Replaces pixels in the Texture, sourcing from an `Image` object.',
   arguments = {
     {
-      name = 'textureData',
-      type = 'TextureData',
+      name = 'image',
+      type = 'Image',
       description = [[
-        The TextureData containing the pixels to use.  Currently, the TextureData needs to have the
-        same dimensions as the source Texture.
+        The Image containing the pixels to use.  Currently, the Image needs to have the same
+        dimensions as the source Texture.
       ]]
     },
     {
@@ -37,7 +37,7 @@ return {
   },
   returns = {},
   related = {
-    'TextureData:setPixel',
-    'TextureData'
+    'Image:setPixel',
+    'Image'
   }
 }

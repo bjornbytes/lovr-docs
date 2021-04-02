@@ -1,17 +1,19 @@
 return {
-  summary = 'Set the value of a pixel of the TextureData.',
-  description = 'Sets the value of a pixel of the TextureData.',
+  summary = 'Get the value of a pixel of the Image.',
+  description = 'Returns the value of a pixel of the Image.',
   arguments = {
     {
       name = 'x',
       type = 'number',
-      description = 'The x coordinate of the pixel to set (0-indexed).'
+      description = 'The x coordinate of the pixel to get (0-indexed).'
     },
     {
       name = 'y',
       type = 'number',
-      description = 'The y coordinate of the pixel to set (0-indexed).'
-    },
+      description = 'The y coordinate of the pixel to get (0-indexed).'
+    }
+  },
+  returns = {
     {
       name = 'r',
       type = 'number',
@@ -30,16 +32,14 @@ return {
     {
       name = 'a',
       type = 'number',
-      default = '1.0',
       description = 'The alpha component of the pixel, from 0.0 to 1.0.'
     }
   },
-  returns = {},
   notes = [[
     The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`.
   ]],
   related = {
-    'TextureData:getPixel',
+    'Image:setPixel',
     'Texture:replacePixels',
     'TextureFormat'
   }

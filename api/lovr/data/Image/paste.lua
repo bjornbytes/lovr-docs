@@ -1,11 +1,11 @@
 return {
-  summary = 'Copy pixels from another TextureData to this one.',
-  description = 'Copies a rectangle of pixels from one TextureData to this one.',
+  summary = 'Copy pixels from another Image to this one.',
+  description = 'Copies a rectangle of pixels from one Image to this one.',
   arguments = {
     {
       name = 'source',
-      type = 'TextureData',
-      description = 'The TextureData to copy pixels from.'
+      type = 'Image',
+      description = 'The Image to copy pixels from.'
     },
     {
       name = 'x',
@@ -46,15 +46,15 @@ return {
   },
   returns = {},
   notes = [[
-    The two TextureData must have the same pixel format.
+    The two Images must have the same pixel format.
 
-    Compressed TextureData cannot be copied.
+    Compressed images cannot be copied.
 
     The rectangle cannot go outside the dimensions of the source or destination textures.
   ]],
   related = {
     'Texture:replacePixels',
-    'TextureData:getPixel',
-    'TextureData:setPixel'
+    'Image:getPixel',
+    'Image:setPixel'
   }
 }

@@ -105,9 +105,9 @@ end
 
 function mouse.newCursor(source, hotx, hoty)
   if type(source) == 'string' or tostring(source) == 'Blob' then
-    source = lovr.data.newTextureData(source, false)
+    source = lovr.data.newImage(source, false)
   else
-    assert(tostring(source) == 'TextureData', 'Bad argument #1 to newCursor (TextureData expected)')
+    assert(tostring(source) == 'Image', 'Bad argument #1 to newCursor (Image expected)')
   end
   local image = ffi.new('GLFWimage', source:getWidth(), source:getHeight(), source:getPointer())
   return C.glfwCreateCursor(image, hotx or 0, hoty or 0)

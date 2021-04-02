@@ -23,9 +23,9 @@ return {
       type = 'Blob',
       description = 'The Blob containing encoded image data used to create the Texture.'
     },
-    textureData = {
-      type = 'TextureData',
-      description = 'The TextureData to create the Texture from.'
+    image = {
+      type = 'Image',
+      description = 'The Image to create the Texture from.'
     },
     images = {
       type = 'table',
@@ -87,7 +87,7 @@ return {
     },
     {
       description = [[
-        Create a Texture from a table of filenames, Blobs, or TextureData.  For cube textures, the
+        Create a Texture from a table of filenames, Blobs, or Images.  For cube textures, the
         individual faces can be specified using the string keys "right", "left", "top", "bottom",
         "back", "front".
       ]],
@@ -109,8 +109,8 @@ return {
       returns = { 'texture' }
     },
     {
-      description = 'Create a texture from a single TextureData.',
-      arguments = { 'textureData', 'flags' },
+      description = 'Create a texture from a single Image.',
+      arguments = { 'image', 'flags' },
       returns = { 'texture' }
     }
   },

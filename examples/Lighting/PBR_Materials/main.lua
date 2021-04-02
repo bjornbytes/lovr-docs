@@ -24,7 +24,7 @@ function lovr.load()
   for mipmap = 1, environmentMap:getMipmapCount() do
     for face, dir in ipairs({ 'px', 'nx', 'py', 'ny', 'pz', 'nz' }) do
       local filename = ('env/m%d_%s.png'):format(mipmap - 1, dir)
-      local image = lovr.data.newTextureData(filename, false)
+      local image = lovr.data.newImage(filename, false)
       environmentMap:replacePixels(image, 0, 0, face, mipmap)
     end
   end

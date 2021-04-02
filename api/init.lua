@@ -2390,6 +2390,113 @@ return {
           }
         },
         {
+          name = "newImage",
+          summary = "Create a new Image.",
+          description = "Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
+          key = "lovr.data.newImage",
+          module = "lovr.data",
+          notes = "The supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.\n\nOnly 2D textures are supported for DXT/ASTC.\n\nCurrently textures loaded as KTX need to be in DXT/ASTC formats.",
+          variants = {
+            {
+              description = "Load image data from a file.",
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the image to load."
+                },
+                {
+                  name = "flip",
+                  type = "boolean",
+                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
+                  default = "true"
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            },
+            {
+              description = "Create an Image with a given size and pixel format.",
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the texture."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the texture."
+                },
+                {
+                  name = "format",
+                  type = "TextureFormat",
+                  description = "The format of the texture's pixels.",
+                  default = "rgba"
+                },
+                {
+                  name = "data",
+                  type = "Blob",
+                  description = "Raw pixel values to use as the contents.  If `nil`, the data will all be zero.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            },
+            {
+              description = "Clone an existing Image.",
+              arguments = {
+                {
+                  name = "source",
+                  type = "Image",
+                  description = "The Image to clone."
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            },
+            {
+              description = "Decode image data from a Blob.",
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing image data to decode."
+                },
+                {
+                  name = "flip",
+                  type = "boolean",
+                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
+                  default = "true"
+                }
+              },
+              returns = {
+                {
+                  name = "textureData",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newModelData",
           summary = "Create a new ModelData.",
           description = "Loads a 3D model from a file.  The supported 3D file formats are OBJ and glTF.",
@@ -2595,113 +2702,6 @@ return {
               }
             }
           }
-        },
-        {
-          name = "newTextureData",
-          summary = "Create a new TextureData.",
-          description = "Creates a new TextureData.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
-          key = "lovr.data.newTextureData",
-          module = "lovr.data",
-          notes = "The supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.\n\nOnly 2D textures are supported for DXT/ASTC.\n\nCurrently textures loaded as KTX need to be in DXT/ASTC formats.",
-          variants = {
-            {
-              description = "Load image data from a file.",
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the image to load."
-                },
-                {
-                  name = "flip",
-                  type = "boolean",
-                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
-                  default = "true"
-                }
-              },
-              returns = {
-                {
-                  name = "textureData",
-                  type = "TextureData",
-                  description = "The new TextureData."
-                }
-              }
-            },
-            {
-              description = "Create a TextureData with a given size and pixel format.",
-              arguments = {
-                {
-                  name = "width",
-                  type = "number",
-                  description = "The width of the texture."
-                },
-                {
-                  name = "height",
-                  type = "number",
-                  description = "The height of the texture."
-                },
-                {
-                  name = "format",
-                  type = "TextureFormat",
-                  description = "The format of the texture's pixels.",
-                  default = "rgba"
-                },
-                {
-                  name = "data",
-                  type = "Blob",
-                  description = "Raw pixel values to use as the TextureData contents.  If `nil`, the data will all be zero.",
-                  default = "nil"
-                }
-              },
-              returns = {
-                {
-                  name = "textureData",
-                  type = "TextureData",
-                  description = "The new TextureData."
-                }
-              }
-            },
-            {
-              description = "Clone an existing TextureData.",
-              arguments = {
-                {
-                  name = "source",
-                  type = "TextureData",
-                  description = "The TextureData to clone."
-                }
-              },
-              returns = {
-                {
-                  name = "textureData",
-                  type = "TextureData",
-                  description = "The new TextureData."
-                }
-              }
-            },
-            {
-              description = "Decode image data from a Blob.",
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing image data to decode."
-                },
-                {
-                  name = "flip",
-                  type = "boolean",
-                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
-                  default = "true"
-                }
-              },
-              returns = {
-                {
-                  name = "textureData",
-                  type = "TextureData",
-                  description = "The new TextureData."
-                }
-              }
-            }
-          }
         }
       },
       enums = {
@@ -2849,9 +2849,330 @@ return {
           }
         },
         {
+          name = "Image",
+          summary = "An object that stores pixel data for Textures.",
+          description = "An Image stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The Image can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, `dds`, `ktx`, and `astc`.\n\nUsually you can just use Textures, but Image can be useful if you want to manipulate individual pixels, load Textures in a background thread, or use the FFI to efficiently access the raw image data.",
+          key = "Image",
+          module = "lovr.data",
+          methods = {
+            {
+              name = "encode",
+              summary = "Encode the Image as png.",
+              description = "Encodes the Image to an uncompressed png.  This intended mainly for debugging.",
+              key = "Image:encode",
+              module = "lovr.data",
+              related = {
+                "lovr.filesystem.write"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A new Blob containing the PNG image data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBlob",
+              summary = "Get the bytes backing this Image as a `Blob`.",
+              description = "Returns a Blob containing the raw bytes of the Image.",
+              key = "Image:getBlob",
+              module = "lovr.data",
+              related = {
+                "Blob:getPointer",
+                "Sound:getBlob"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob instance containing the bytes for the `Image`."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDimensions",
+              summary = "Get the dimensions of the Image.",
+              description = "Returns the dimensions of the Image, in pixels.",
+              key = "Image:getDimensions",
+              module = "lovr.data",
+              related = {
+                "Image:getWidth",
+                "Image:getHeight",
+                "Texture:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the Image, in pixels."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the Image, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFormat",
+              summary = "Get the pixel format of the Image.",
+              description = "Returns the format of the Image.",
+              key = "Image:getFormat",
+              module = "lovr.data",
+              related = {
+                "TextureFormat",
+                "Texture:getFormat"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of the pixels in the Image."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getHeight",
+              summary = "Get the height of the Image.",
+              description = "Returns the height of the Image, in pixels.",
+              key = "Image:getHeight",
+              module = "lovr.data",
+              related = {
+                "Image:getWidth",
+                "Image:getDimensions",
+                "Texture:getHeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the Image, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPixel",
+              summary = "Get the value of a pixel of the Image.",
+              description = "Returns the value of a pixel of the Image.",
+              key = "Image:getPixel",
+              module = "lovr.data",
+              related = {
+                "Image:setPixel",
+                "Texture:replacePixels",
+                "TextureFormat"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the pixel to get (0-indexed)."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the pixel to get (0-indexed)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the pixel, from 0.0 to 1.0."
+                    }
+                  }
+                }
+              },
+              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
+            },
+            {
+              name = "getWidth",
+              summary = "Get the width of the Image.",
+              description = "Returns the width of the Image, in pixels.",
+              key = "Image:getWidth",
+              module = "lovr.data",
+              related = {
+                "Image:getHeight",
+                "Image:getDimensions",
+                "Texture:getWidth"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the Image, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "paste",
+              summary = "Copy pixels from another Image to this one.",
+              description = "Copies a rectangle of pixels from one Image to this one.",
+              key = "Image:paste",
+              module = "lovr.data",
+              related = {
+                "Texture:replacePixels",
+                "Image:getPixel",
+                "Image:setPixel"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "source",
+                      type = "Image",
+                      description = "The Image to copy pixels from."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to paste to (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to paste to (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "fromX",
+                      type = "number",
+                      description = "The x coordinate in the source to paste from (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "fromY",
+                      type = "number",
+                      description = "The y coordinate in the source to paste from (0-indexed).",
+                      default = "0"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the region to copy.",
+                      default = "source:getWidth()"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the region to copy.",
+                      default = "source:getHeight()"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "The two Images must have the same pixel format.\n\nCompressed images cannot be copied.\n\nThe rectangle cannot go outside the dimensions of the source or destination textures."
+            },
+            {
+              name = "setPixel",
+              summary = "Set the value of a pixel of the Image.",
+              description = "Sets the value of a pixel of the Image.",
+              key = "Image:setPixel",
+              module = "lovr.data",
+              related = {
+                "Image:getPixel",
+                "Texture:replacePixels",
+                "TextureFormat"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the pixel to set (0-indexed)."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the pixel to set (0-indexed)."
+                    },
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the pixel, from 0.0 to 1.0."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the pixel, from 0.0 to 1.0.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
+            }
+          },
+          constructors = {
+            "lovr.data.newImage",
+            "Canvas:newImage"
+          }
+        },
+        {
           name = "ModelData",
           summary = "An object that loads and stores data for 3D models.",
-          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the vertex data it contains, contains, the `TextureData` and `Material` properties, and any included animations.\n\nThe current supported formats are OBJ, glTF, and STL.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
+          description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the vertex data it contains, contains, the `Image` and `Material` properties, and any included animations.\n\nThe current supported formats are OBJ, glTF, and STL.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
           key = "ModelData",
           module = "lovr.data",
           methods = {},
@@ -3273,327 +3594,6 @@ return {
           },
           constructors = {
             "lovr.data.newSound"
-          }
-        },
-        {
-          name = "TextureData",
-          summary = "An object that stores pixel data for Textures.",
-          description = "A TextureData stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The TextureData can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, `dds`, `ktx`, and `astc`.\n\nUsually you can just use Textures, but TextureData can be useful if you want to manipulate individual pixels, load Textures in a background thread, or use the FFI to efficiently access the raw image data.",
-          key = "TextureData",
-          module = "lovr.data",
-          methods = {
-            {
-              name = "encode",
-              summary = "Encode the TextureData as png.",
-              description = "Encodes the TextureData to a png.",
-              key = "TextureData:encode",
-              module = "lovr.data",
-              related = {
-                "lovr.filesystem.write"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "blob",
-                      type = "Blob",
-                      description = "A new Blob containing the PNG image data."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlob",
-              summary = "Get the bytes backing this TextureData as a `Blob`.",
-              description = "Returns a Blob containing the raw bytes of the TextureData.",
-              key = "TextureData:getBlob",
-              module = "lovr.data",
-              related = {
-                "Blob:getPointer",
-                "Sound:getBlob"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "blob",
-                      type = "Blob",
-                      description = "The Blob instance containing the bytes for the `TextureData`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getDimensions",
-              summary = "Get the dimensions of the TextureData.",
-              description = "Returns the dimensions of the TextureData, in pixels.",
-              key = "TextureData:getDimensions",
-              module = "lovr.data",
-              related = {
-                "TextureData:getWidth",
-                "TextureData:getHeight",
-                "Texture:getDimensions"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the TextureData, in pixels."
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the TextureData, in pixels."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getFormat",
-              summary = "Get the pixel format of the TextureData.",
-              description = "Returns the format of the TextureData.",
-              key = "TextureData:getFormat",
-              module = "lovr.data",
-              related = {
-                "TextureFormat",
-                "Texture:getFormat"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "format",
-                      type = "TextureFormat",
-                      description = "The format of the TextureData."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getHeight",
-              summary = "Get the height of the TextureData.",
-              description = "Returns the height of the TextureData, in pixels.",
-              key = "TextureData:getHeight",
-              module = "lovr.data",
-              related = {
-                "TextureData:getWidth",
-                "TextureData:getDimensions",
-                "Texture:getHeight"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the TextureData, in pixels."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getPixel",
-              summary = "Get the value of a pixel of the TextureData.",
-              description = "Returns the value of a pixel of the TextureData.",
-              key = "TextureData:getPixel",
-              module = "lovr.data",
-              related = {
-                "TextureData:setPixel",
-                "Texture:replacePixels",
-                "TextureFormat"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the pixel to get (0-indexed)."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the pixel to get (0-indexed)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "r",
-                      type = "number",
-                      description = "The red component of the pixel, from 0.0 to 1.0."
-                    },
-                    {
-                      name = "g",
-                      type = "number",
-                      description = "The green component of the pixel, from 0.0 to 1.0."
-                    },
-                    {
-                      name = "b",
-                      type = "number",
-                      description = "The blue component of the pixel, from 0.0 to 1.0."
-                    },
-                    {
-                      name = "a",
-                      type = "number",
-                      description = "The alpha component of the pixel, from 0.0 to 1.0."
-                    }
-                  }
-                }
-              },
-              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
-            },
-            {
-              name = "getWidth",
-              summary = "Get the width of the TextureData.",
-              description = "Returns the width of the TextureData, in pixels.",
-              key = "TextureData:getWidth",
-              module = "lovr.data",
-              related = {
-                "TextureData:getHeight",
-                "TextureData:getDimensions",
-                "Texture:getWidth"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the TextureData, in pixels."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "paste",
-              summary = "Copy pixels from another TextureData to this one.",
-              description = "Copies a rectangle of pixels from one TextureData to this one.",
-              key = "TextureData:paste",
-              module = "lovr.data",
-              related = {
-                "Texture:replacePixels",
-                "TextureData:getPixel",
-                "TextureData:setPixel"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "source",
-                      type = "TextureData",
-                      description = "The TextureData to copy pixels from."
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate to paste to (0-indexed).",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate to paste to (0-indexed).",
-                      default = "0"
-                    },
-                    {
-                      name = "fromX",
-                      type = "number",
-                      description = "The x coordinate in the source to paste from (0-indexed).",
-                      default = "0"
-                    },
-                    {
-                      name = "fromY",
-                      type = "number",
-                      description = "The y coordinate in the source to paste from (0-indexed).",
-                      default = "0"
-                    },
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the region to copy.",
-                      default = "source:getWidth()"
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the region to copy.",
-                      default = "source:getHeight()"
-                    }
-                  },
-                  returns = {}
-                }
-              },
-              notes = "The two TextureData must have the same pixel format.\n\nCompressed TextureData cannot be copied.\n\nThe rectangle cannot go outside the dimensions of the source or destination textures."
-            },
-            {
-              name = "setPixel",
-              summary = "Set the value of a pixel of the TextureData.",
-              description = "Sets the value of a pixel of the TextureData.",
-              key = "TextureData:setPixel",
-              module = "lovr.data",
-              related = {
-                "TextureData:getPixel",
-                "Texture:replacePixels",
-                "TextureFormat"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the pixel to set (0-indexed)."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the pixel to set (0-indexed)."
-                    },
-                    {
-                      name = "r",
-                      type = "number",
-                      description = "The red component of the pixel, from 0.0 to 1.0."
-                    },
-                    {
-                      name = "g",
-                      type = "number",
-                      description = "The green component of the pixel, from 0.0 to 1.0."
-                    },
-                    {
-                      name = "b",
-                      type = "number",
-                      description = "The blue component of the pixel, from 0.0 to 1.0."
-                    },
-                    {
-                      name = "a",
-                      type = "number",
-                      description = "The alpha component of the pixel, from 0.0 to 1.0.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                }
-              },
-              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
-            }
-          },
-          constructors = {
-            "lovr.data.newTextureData",
-            "Canvas:newTextureData"
           }
         }
       }
@@ -8995,7 +8995,7 @@ return {
               }
             },
             {
-              description = "Create a Texture from a table of filenames, Blobs, or TextureData.  For cube textures, the individual faces can be specified using the string keys \"right\", \"left\", \"top\", \"bottom\", \"back\", \"front\".",
+              description = "Create a Texture from a table of filenames, Blobs, or Images.  For cube textures, the individual faces can be specified using the string keys \"right\", \"left\", \"top\", \"bottom\", \"back\", \"front\".",
               arguments = {
                 {
                   name = "images",
@@ -9170,12 +9170,12 @@ return {
               }
             },
             {
-              description = "Create a texture from a single TextureData.",
+              description = "Create a texture from a single Image.",
               arguments = {
                 {
-                  name = "textureData",
-                  type = "TextureData",
-                  description = "The TextureData to create the Texture from."
+                  name = "image",
+                  type = "Image",
+                  description = "The Image to create the Texture from."
                 },
                 {
                   name = "flags",
@@ -10960,14 +10960,14 @@ return {
               }
             },
             {
-              name = "newTextureData",
-              summary = "Create a new TextureData from a Canvas texture.",
-              description = "Returns a new TextureData containing the contents of a Texture attached to the Canvas.",
-              key = "Canvas:newTextureData",
+              name = "newImage",
+              summary = "Create a new Image from a Canvas texture.",
+              description = "Returns a new Image containing the contents of a Texture attached to the Canvas.",
+              key = "Canvas:newImage",
               module = "lovr.graphics",
               related = {
-                "lovr.data.newTextureData",
-                "TextureData"
+                "lovr.data.newImage",
+                "Image"
               },
               variants = {
                 {
@@ -10981,9 +10981,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "textureData",
-                      type = "TextureData",
-                      description = "The new TextureData."
+                      name = "image",
+                      type = "Image",
+                      description = "The new Image."
                     }
                   }
                 }
@@ -13865,21 +13865,21 @@ return {
             },
             {
               name = "replacePixels",
-              summary = "Replace pixels in the Texture using a TextureData object.",
-              description = "Replaces pixels in the Texture, sourcing from a `TextureData` object.",
+              summary = "Replace pixels in the Texture using an Image object.",
+              description = "Replaces pixels in the Texture, sourcing from an `Image` object.",
               key = "Texture:replacePixels",
               module = "lovr.graphics",
               related = {
-                "TextureData:setPixel",
-                "TextureData"
+                "Image:setPixel",
+                "Image"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "textureData",
-                      type = "TextureData",
-                      description = "The TextureData containing the pixels to use.  Currently, the TextureData needs to have the same dimensions as the source Texture."
+                      name = "image",
+                      type = "Image",
+                      description = "The Image containing the pixels to use.  Currently, the Image needs to have the same dimensions as the source Texture."
                     },
                     {
                       name = "x",
@@ -24632,7 +24632,7 @@ return {
       name = "thread",
       tag = "modules",
       summary = "Allows the creation of background threads.",
-      description = "The `lovr.thread` module provides functions for creating threads and communicating between them.\n\nThese are operating system level threads, which are different from Lua coroutines.\n\nThreads are useful for performing expensive background computation without affecting the framerate or performance of the main thread.  Some examples of this include asset loading, networking and network requests, and physics simulation.\n\nThreads come with some caveats:\n\n- Threads run in a bare Lua environment.  The `lovr` module (and any of lovr's modules) need to\n  be required before they can be used.\n- Threads are completely isolated from other threads.  They do not have access to the variables\n  or functions of other threads, and communication between threads must be coordinated through\n  `Channel` objects.\n- The graphics module (or any functions that perform rendering) cannot be used in a thread.\n  Note that this includes creating graphics objects like Models and Textures.  There are \"data\"\n  equivalent `ModelData` and `TextureData` objects that can be used in threads though.\n- `lovr.event.pump` cannot be called from a thread.\n- Crashes or problems can happen if two threads access the same object at the same time, so\n  special care must be taken to coordinate access to objects from multiple threads.",
+      description = "The `lovr.thread` module provides functions for creating threads and communicating between them.\n\nThese are operating system level threads, which are different from Lua coroutines.\n\nThreads are useful for performing expensive background computation without affecting the framerate or performance of the main thread.  Some examples of this include asset loading, networking and network requests, and physics simulation.\n\nThreads come with some caveats:\n\n- Threads run in a bare Lua environment.  The `lovr` module (and any of lovr's modules) need to\n  be required before they can be used.\n- Threads are completely isolated from other threads.  They do not have access to the variables\n  or functions of other threads, and communication between threads must be coordinated through\n  `Channel` objects.\n- The graphics module (or any functions that perform rendering) cannot be used in a thread.\n  Note that this includes creating graphics objects like Models and Textures.  There are \"data\"\n  equivalent `ModelData` and `Image` objects that can be used in threads though.\n- `lovr.event.pump` cannot be called from a thread.\n- Crashes or problems can happen if two threads access the same object at the same time, so\n  special care must be taken to coordinate access to objects from multiple threads.",
       key = "lovr.thread",
       related = {
         "lovr.system.getCoreCount"
