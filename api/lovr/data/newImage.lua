@@ -45,7 +45,7 @@ return {
     }
   },
   returns = {
-    textureData = {
+    image = {
       type = 'Image',
       description = 'The new Image.'
     }
@@ -54,22 +54,22 @@ return {
     {
       description = 'Load image data from a file.',
       arguments = { 'filename', 'flip' },
-      returns = { 'textureData' }
+      returns = { 'image' }
     },
     {
       description = 'Create an Image with a given size and pixel format.',
       arguments = { 'width', 'height', 'format', 'data' },
-      returns = { 'textureData' }
+      returns = { 'image' }
     },
     {
       description = 'Clone an existing Image.',
       arguments = { 'source' },
-      returns = { 'textureData' }
+      returns = { 'image' }
     },
     {
       description = 'Decode image data from a Blob.',
       arguments = { 'blob', 'flip' },
-      returns = { 'textureData' }
+      returns = { 'image' }
     }
   },
   notes = [[

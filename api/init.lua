@@ -2414,7 +2414,7 @@ return {
               },
               returns = {
                 {
-                  name = "textureData",
+                  name = "image",
                   type = "Image",
                   description = "The new Image."
                 }
@@ -2448,7 +2448,7 @@ return {
               },
               returns = {
                 {
-                  name = "textureData",
+                  name = "image",
                   type = "Image",
                   description = "The new Image."
                 }
@@ -2465,7 +2465,7 @@ return {
               },
               returns = {
                 {
-                  name = "textureData",
+                  name = "image",
                   type = "Image",
                   description = "The new Image."
                 }
@@ -2488,7 +2488,7 @@ return {
               },
               returns = {
                 {
-                  name = "textureData",
+                  name = "image",
                   type = "Image",
                   description = "The new Image."
                 }
