@@ -2504,50 +2504,41 @@ return {
         {
           name = "newSound",
           summary = "Create a new Sound.",
-          description = "Creates a new Sound, which holds audio data.  Audio can be stored as raw samples, compressed and decoded on the fly, or as a stream that can have audio written and read.",
+          description = "Creates a new Sound.",
           key = "lovr.data.newSound",
           module = "lovr.data",
           variants = {
             {
+              description = "Create a raw or stream Sound from a frame count and format info.",
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the sound to decode."
-                }
-              },
-              returns = {
-                {
-                  name = "sound",
-                  type = "Sound",
-                  description = "The new Sound."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "samples",
+                  name = "frames",
                   type = "number",
-                  description = "The total number of samples for each channel."
+                  description = "The number of frames the Sound can hold."
+                },
+                {
+                  name = "format",
+                  type = "SampleFormat",
+                  description = "The sample data type.",
+                  default = "'f32'"
+                },
+                {
+                  name = "channels",
+                  type = "ChannelLayout",
+                  description = "The channel layout.",
+                  default = "'stereo'"
                 },
                 {
                   name = "sampleRate",
                   type = "number",
-                  description = "The number of samples per second.",
-                  default = "44100"
+                  description = "The sample rate, in Hz.",
+                  default = "48000"
                 },
                 {
-                  name = "bitDepth",
-                  type = "number",
-                  description = "The number of bits stored for each sample.",
-                  default = "16"
-                },
-                {
-                  name = "channels",
-                  type = "number",
-                  description = "The number of channels in the sound (1 for mono, 2 for stereo).",
-                  default = "2"
+                  name = "contents",
+                  type = "*",
+                  description = "A Blob containing raw audio samples to use as the initial contents, 'stream' to create an audio stream, or `nil` to leave the data initialized to zero.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -2559,7 +2550,19 @@ return {
               }
             },
             {
-              arguments = {},
+              description = "Load a sound from a file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.",
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of a sound to load."
+                },
+                {
+                  name = "decode",
+                  type = "boolean",
+                  description = "Whether compressed audio files should be immediately decoded."
+                }
+              },
               returns = {
                 {
                   name = "sound",
@@ -2569,11 +2572,17 @@ return {
               }
             },
             {
+              description = "Load a sound from a Blob containing the data of an audio file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.\n\nIf the Blob contains raw audio samples, use the first variant instead of this one.",
               arguments = {
                 {
                   name = "blob",
                   type = "string",
-                  description = "The Blob containing compressed sound data to decode."
+                  description = "The Blob containing audio file data to load."
+                },
+                {
+                  name = "decode",
+                  type = "boolean",
+                  description = "Whether compressed audio files should be immediately decoded."
                 }
               },
               returns = {

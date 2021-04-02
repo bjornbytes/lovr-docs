@@ -1,36 +1,45 @@
 return {
   summary = 'Create a new Sound.',
-  description = [[
-    Creates a new Sound, which holds audio data.  Audio can be stored as raw samples, compressed and
-    decoded on the fly, or as a stream that can have audio written and read.
-  ]],
+  description = 'Creates a new Sound.',
   arguments = {
-    samples = {
+    frames = {
       type = 'number',
-      description = 'The total number of samples for each channel.'
+      description = 'The number of frames the Sound can hold.'
+    },
+    format = {
+      type = 'SampleFormat',
+      default = [['f32']],
+      description = 'The sample data type.'
+    },
+    channels = {
+      type = 'ChannelLayout',
+      default = [['stereo']],
+      description = 'The channel layout.'
     },
     sampleRate = {
       type = 'number',
-      default = '44100',
-      description = 'The number of samples per second.'
+      default = '48000',
+      description = 'The sample rate, in Hz.'
     },
-    bitDepth = {
-      type = 'number',
-      default = '16',
-      description = 'The number of bits stored for each sample.'
-    },
-    channels = {
-      type = 'number',
-      default = '2',
-      description = 'The number of channels in the sound (1 for mono, 2 for stereo).'
+    contents = {
+      type = '*',
+      default = 'nil',
+      description = [[
+        A Blob containing raw audio samples to use as the initial contents, 'stream' to create an
+        audio stream, or `nil` to leave the data initialized to zero.
+      ]]
     },
     filename = {
       type = 'string',
-      description = 'The filename of the sound to decode.'
+      description = 'The filename of a sound to load.'
     },
     blob = {
       type = 'string',
-      description = 'The Blob containing compressed sound data to decode.'
+      description = 'The Blob containing audio file data to load.'
+    },
+    decode = {
+      type = 'boolean',
+      description = 'Whether compressed audio files should be immediately decoded.'
     }
   },
   returns = {
@@ -41,19 +50,26 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename' },
+      description = 'Create a raw or stream Sound from a frame count and format info.',
+      arguments = { 'frames', 'format', 'channels', 'sampleRate', 'contents' },
       returns = { 'sound' }
     },
     {
-      arguments = { 'samples', 'sampleRate', 'bitDepth', 'channels' },
+      description = [[
+        Load a sound from a file.  Compressed audio formats (OGG, MP3) can optionally be decoded
+        into raw sounds.
+      ]],
+      arguments = { 'filename', 'decode' },
       returns = { 'sound' }
     },
     {
-      arguments = { 'audioStream' },
-      returns = { 'sound' }
-    },
-    {
-      arguments = { 'blob' },
+      description = [[
+        Load a sound from a Blob containing the data of an audio file.  Compressed audio formats
+        (OGG, MP3) can optionally be decoded into raw sounds.
+
+        If the Blob contains raw audio samples, use the first variant instead of this one.
+      ]],
+      arguments = { 'blob', 'decode' },
       returns = { 'sound' }
     }
   }
