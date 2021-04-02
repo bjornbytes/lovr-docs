@@ -1,6 +1,17 @@
 return {
   summary = 'Create a new Sound.',
-  description = 'Creates a new Sound.',
+  description = [[
+    Creates a new Sound.  A sound can be loaded from an audio file, or it can be created empty with
+    capacity for a certain number of audio frames.
+
+    When loading audio from a file, use the `decode` option to control whether compressed audio
+    should remain compressed or immediately get decoded to raw samples.
+
+    When creating an empty sound, the `contents` parameter can be set to `'stream'` to create an
+    audio stream.  On streams, `Sound:setFrames` will always write to the end of the stream, and
+    `Sound:getFrames` will always read the oldest samples from the beginning.  The number of frames
+    in the sound is the total capacity of the stream's buffer.
+  ]],
   arguments = {
     frames = {
       type = 'number',
