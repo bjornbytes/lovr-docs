@@ -56,7 +56,7 @@ return {
   returns = {
     sound = {
       type = 'Sound',
-      description = 'The new Sound.'
+      description = 'Sounds good.'
     }
   },
   variants = {

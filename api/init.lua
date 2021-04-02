@@ -2546,7 +2546,7 @@ return {
                 {
                   name = "sound",
                   type = "Sound",
-                  description = "The new Sound."
+                  description = "Sounds good."
                 }
               }
             },
@@ -2568,7 +2568,7 @@ return {
                 {
                   name = "sound",
                   type = "Sound",
-                  description = "The new Sound."
+                  description = "Sounds good."
                 }
               }
             },
@@ -2590,7 +2590,7 @@ return {
                 {
                   name = "sound",
                   type = "Sound",
-                  description = "The new Sound."
+                  description = "Sounds good."
                 }
               }
             }
