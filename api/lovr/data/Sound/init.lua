@@ -22,8 +22,9 @@ return {
     Sounds can be compressed.  Compressed sounds are stored compressed in memory and are decoded as
     they are played.  This uses a lot less memory but increases CPU usage during playback.  OGG and
     MP3 are compressed audio formats.  When creating a sound from a compressed format, there is an
-    option to immediately decode it, storing it uncompressed in memory.  This can be a good idea for
-    short sounds, since they won't use very much memory even when they're decoded.
+    option to immediately decode it, storing it uncompressed in memory.  It can be a good idea to
+    decode short sound effects, since they won't use very much memory even when uncompressed and it
+    will improve CPU usage.
 
     Streams
     ---
