@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Set the orientation of the Source.',
   description = 'Sets the orientation of the Source in angle/axis representation.',
   arguments = {

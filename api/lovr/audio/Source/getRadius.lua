@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Get the radius of the Source.',
   description = [[
     Returns the radius of the Source, in meters.

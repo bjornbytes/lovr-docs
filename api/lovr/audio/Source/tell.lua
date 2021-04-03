@@ -1,4 +1,5 @@
 return {
+  tag = 'sourcePlayback',
   summary = 'Get the playback position of the Source.',
   description = 'Returns the current playback position of the Source.',
   arguments = {

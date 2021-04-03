@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Get the position of the Source.',
   description = [[
     Returns the position of the Source, in meters.  Setting the position will cause the Source to

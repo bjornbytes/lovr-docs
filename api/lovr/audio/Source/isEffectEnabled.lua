@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Check if an effect is enabled.',
   description = 'Returns whether a given `Effect` is enabled for the Source.',
   arguments = {

@@ -1,4 +1,5 @@
 return {
+  tag = 'sourcePlayback',
   summary = 'Set whether or not the Source loops.',
   description = 'Sets whether or not the Source loops.',
   arguments = {

@@ -1,4 +1,5 @@
 return {
+  tag = 'sourcePlayback',
   summary = 'Get the volume of the Source.',
   description = 'Returns the current volume factor for the Source.',
   arguments = {

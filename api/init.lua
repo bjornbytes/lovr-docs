@@ -1217,8 +1217,10 @@ return {
           description = "Creates a new Source from an ogg, wav, or mp3 file.",
           key = "lovr.audio.newSource",
           module = "lovr.audio",
-          related = {
-            "Source:clone"
+          examples = {
+            {
+              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', {\n    decode = false,\n    effects = { 'spatialization', attenuation = false, reverb = true }\n  })\n\n  sandstorm:play()\nend"
+            }
           },
           variants = {
             {
@@ -1263,6 +1265,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "Source:clone"
           }
         },
         {
@@ -1634,16 +1639,32 @@ return {
           description = "A Source is an object representing a single sound.  Currently ogg, wav, and mp3 formats are supported.\n\nWhen a Source is playing, it will send audio to the speakers.  Sources do not play automatically when they are created.  Instead, the `play`, `pause`, and `stop` functions can be used to control when they should play.\n\n`Source:seek` and `Source:tell` can be used to control the playback position of the Source.  A Source can be set to loop when it reaches the end using `Source:setLooping`.",
           key = "Source",
           module = "lovr.audio",
+          sections = {
+            {
+              name = "Playback",
+              tag = "sourcePlayback"
+            },
+            {
+              name = "Spatial Effects",
+              tag = "sourceEffects"
+            },
+            {
+              name = "Utility",
+              tag = "sourceUtility"
+            }
+          },
+          constructors = {
+            "lovr.audio.newSource",
+            "Source:clone"
+          },
           methods = {
             {
               name = "clone",
+              tag = "sourceUtility",
               summary = "Create an identical copy of the Source.",
               description = "Creates a copy of the Source, referencing the same `Sound` object and inheriting all of the settings of this Source.  However, it will be created in the stopped state and will be rewound to the beginning.",
               key = "Source:clone",
               module = "lovr.audio",
-              related = {
-                "lovr.audio.newSource"
-              },
               variants = {
                 {
                   arguments = {},
@@ -1656,10 +1677,14 @@ return {
                   }
                 }
               },
+              related = {
+                "lovr.audio.newSource"
+              },
               notes = "This is a good way to create multiple Sources that play the same sound, since the audio data won't be loaded multiple times and can just be reused.  You can also create multiple `Source` objects and pass in the same `Sound` object for each one, which will have the same effect."
             },
             {
               name = "getDirectivity",
+              tag = "sourceEffects",
               summary = "Get the directivity of the Source.",
               description = "Returns the directivity settings for the Source.\n\nThe directivity is controlled by two parameters: the weight and the power.\n\nThe weight is a number between 0 and 1 controlling the general \"shape\" of the sound emitted. 0.0 results in a completely omnidirectional sound that can be heard from all directions.  1.0 results in a full dipole shape that can be heard only from the front and back.  0.5 results in a cardioid shape that can only be heard from one direction.  Numbers in between will smoothly transition between these.\n\nThe power is a number that controls how \"focused\" or sharp the shape is.  Lower power values can be heard from a wider set of angles.  It is an exponent, so it can get arbitrarily large.  Note that a power of zero will still result in an omnidirectional source, regardless of the weight.",
               key = "Source:getDirectivity",
@@ -1684,6 +1709,7 @@ return {
             },
             {
               name = "getDuration",
+              tag = "sourcePlayback",
               summary = "Get the duration of the Source.",
               description = "Returns the duration of the Source.",
               key = "Source:getDuration",
@@ -1713,6 +1739,7 @@ return {
             },
             {
               name = "getOrientation",
+              tag = "sourceEffects",
               summary = "Get the orientation of the Source.",
               description = "Returns the orientation of the Source, in angle/axis representation.",
               key = "Source:getOrientation",
@@ -1753,6 +1780,7 @@ return {
             },
             {
               name = "getPose",
+              tag = "sourceEffects",
               summary = "Get the pose of the Source.",
               description = "Returns the position and orientation of the Source.",
               key = "Source:getPose",
@@ -1808,6 +1836,7 @@ return {
             },
             {
               name = "getPosition",
+              tag = "sourceEffects",
               summary = "Get the position of the Source.",
               description = "Returns the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.",
               key = "Source:getPosition",
@@ -1843,6 +1872,7 @@ return {
             },
             {
               name = "getRadius",
+              tag = "sourceEffects",
               summary = "Get the radius of the Source.",
               description = "Returns the radius of the Source, in meters.\n\nThis does not control falloff or attenuation.  It is only used for smoothing out occlusion.  If a Source doesn't have a radius, then when it becomes occluded by a wall its volume will instantly drop.  Giving the Source a radius that approximates its emitter's size will result in a smooth transition between audible and occluded, improving realism.",
               key = "Source:getRadius",
@@ -1862,6 +1892,7 @@ return {
             },
             {
               name = "getVolume",
+              tag = "sourcePlayback",
               summary = "Get the volume of the Source.",
               description = "Returns the current volume factor for the Source.",
               key = "Source:getVolume",
@@ -1888,11 +1919,11 @@ return {
             },
             {
               name = "isEffectEnabled",
+              tag = "sourceEffects",
               summary = "Check if an effect is enabled.",
               description = "Returns whether a given `Effect` is enabled for the Source.",
               key = "Source:isEffectEnabled",
               module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored (this function will still report it as enabled).\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua.",
               variants = {
                 {
                   arguments = {
@@ -1910,10 +1941,12 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored (this function will still report it as enabled).\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua."
             },
             {
               name = "isLooping",
+              tag = "sourcePlayback",
               summary = "Check if the Source is looping.",
               description = "Returns whether or not the Source will loop when it finishes.",
               key = "Source:isLooping",
@@ -1933,6 +1966,7 @@ return {
             },
             {
               name = "isPlaying",
+              tag = "sourcePlayback",
               summary = "Check if the Source is playing.",
               description = "Returns whether or not the Source is playing.",
               key = "Source:isPlaying",
@@ -1957,6 +1991,7 @@ return {
             },
             {
               name = "pause",
+              tag = "sourcePlayback",
               summary = "Pause the Source.",
               description = "Pauses the source.  It can be resumed with `Source:resume` or `Source:play`. If a paused source is rewound, it will remain paused.",
               key = "Source:pause",
@@ -1970,11 +2005,11 @@ return {
             },
             {
               name = "play",
+              tag = "sourcePlayback",
               summary = "Play the Source.",
               description = "Plays the Source.  This doesn't do anything if the Source is already playing.",
               key = "Source:play",
               module = "lovr.audio",
-              notes = "There is a maximum of 64 Sources that can be playing at once.  If 64 Sources are already playing, this function will return `false`.",
               variants = {
                 {
                   arguments = {},
@@ -1986,15 +2021,16 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "There is a maximum of 64 Sources that can be playing at once.  If 64 Sources are already playing, this function will return `false`."
             },
             {
               name = "seek",
+              tag = "sourcePlayback",
               summary = "Set the playback position of the Source.",
               description = "Seeks the Source to the specified position.",
               key = "Source:seek",
               module = "lovr.audio",
-              notes = "Seeking a Source backed by a stream `Sound` has no meaningful effect.",
               variants = {
                 {
                   arguments = {
@@ -2012,10 +2048,12 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "Seeking a Source backed by a stream `Sound` has no meaningful effect."
             },
             {
               name = "setDirectivity",
+              tag = "sourceEffects",
               summary = "Set the directivity of the Source.",
               description = "Sets the directivity settings for the Source.\n\nThe directivity is controlled by two parameters: the weight and the power.\n\nThe weight is a number between 0 and 1 controlling the general \"shape\" of the sound emitted. 0.0 results in a completely omnidirectional sound that can be heard from all directions.  1.0 results in a full dipole shape that can be heard only from the front and back.  0.5 results in a cardioid shape that can only be heard from one direction.  Numbers in between will smoothly transition between these.\n\nThe power is a number that controls how \"focused\" or sharp the shape is.  Lower power values can be heard from a wider set of angles.  It is an exponent, so it can get arbitrarily large.  Note that a power of zero will still result in an omnidirectional source, regardless of the weight.",
               key = "Source:setDirectivity",
@@ -2040,11 +2078,11 @@ return {
             },
             {
               name = "setEffectEnabled",
+              tag = "sourceEffects",
               summary = "Enable or disable an effect.",
               description = "Enables or disables an effect on the Source.",
               key = "Source:setEffectEnabled",
               module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua.",
               variants = {
                 {
                   arguments = {
@@ -2061,15 +2099,16 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua."
             },
             {
               name = "setLooping",
+              tag = "sourcePlayback",
               summary = "Set whether or not the Source loops.",
               description = "Sets whether or not the Source loops.",
               key = "Source:setLooping",
               module = "lovr.audio",
-              notes = "Attempting to loop a Source backed by a stream `Sound` will cause an error.",
               variants = {
                 {
                   arguments = {
@@ -2081,10 +2120,12 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "Attempting to loop a Source backed by a stream `Sound` will cause an error."
             },
             {
               name = "setOrientation",
+              tag = "sourceEffects",
               summary = "Set the orientation of the Source.",
               description = "Sets the orientation of the Source in angle/axis representation.",
               key = "Source:setOrientation",
@@ -2125,6 +2166,7 @@ return {
             },
             {
               name = "setPose",
+              tag = "sourceEffects",
               summary = "Set the pose of the Source.",
               description = "Sets the position and orientation of the Source.",
               key = "Source:setPose",
@@ -2179,6 +2221,7 @@ return {
             },
             {
               name = "setPosition",
+              tag = "sourceEffects",
               summary = "Set the position of the Source.",
               description = "Sets the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.\n\nOnly mono sources can be positioned.  Setting the position of a stereo Source will cause an error.",
               key = "Source:setPosition",
@@ -2208,6 +2251,7 @@ return {
             },
             {
               name = "setRadius",
+              tag = "sourceEffects",
               summary = "Set the radius of the Source.",
               description = "Sets the radius of the Source, in meters.\n\nThis does not control falloff or attenuation.  It is only used for smoothing out occlusion.  If a Source doesn't have a radius, then when it becomes occluded by a wall its volume will instantly drop.  Giving the Source a radius that approximates its emitter's size will result in a smooth transition between audible and occluded, improving realism.",
               key = "Source:setRadius",
@@ -2227,11 +2271,11 @@ return {
             },
             {
               name = "setVolume",
+              tag = "sourcePlayback",
               summary = "Set the volume of the Source.",
               description = "Sets the current volume factor for the Source.",
               key = "Source:setVolume",
               module = "lovr.audio",
-              notes = "The volume will be clamped to a 0-1 range (0 dB).",
               variants = {
                 {
                   arguments = {
@@ -2249,10 +2293,12 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "The volume will be clamped to a 0-1 range (0 dB)."
             },
             {
               name = "stop",
+              tag = "sourcePlayback",
               summary = "Stop the Source.",
               description = "Stops the source, also rewinding it to the beginning.",
               key = "Source:stop",
@@ -2271,11 +2317,11 @@ return {
             },
             {
               name = "tell",
+              tag = "sourcePlayback",
               summary = "Get the playback position of the Source.",
               description = "Returns the current playback position of the Source.",
               key = "Source:tell",
               module = "lovr.audio",
-              notes = "The return value for Sources backed by a stream `Sound` has no meaning.",
               variants = {
                 {
                   arguments = {
@@ -2294,12 +2340,9 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "The return value for Sources backed by a stream `Sound` has no meaning."
             }
-          },
-          constructors = {
-            "lovr.audio.newSource",
-            "Source:clone"
           }
         }
       }
@@ -3356,7 +3399,7 @@ return {
         {
           name = "Sound",
           summary = "An object that holds raw audio samples.",
-          description = "A Sound stores the data for a sound.  The supported sound formats are OGG, WAV, and MP3.  Sounds cannot be played directly.  Instead, there are `Source` objects in `lovr.audio` that are used for audio playback.  All Source objects are backed by one of these Sounds, and multiple Sources can share a single Sound to reduce memory usage.\n\nMetadata\n---\n\nSounds hold a fixed number of frames.  Each frame contains one audio sample for each channel. The `SampleFormat` of the Sound is the data type used for each sample (floating point, integer, etc.).  The Sound has a `ChannelLayout`, representing the number of audio channels and how they map to speakers (mono, stereo, etc.).  The sample rate of the Sound indicates how many frames should be played per second.  The duration of the sound (in seconds) is the number of frames divided by the sample rate.\n\nCompression\n---\n\nSounds can be compressed.  Compressed sounds are stored compressed in memory and are decoded as they are played.  This uses a lot less memory but increases CPU usage during playback.  OGG and MP3 are compressed audio formats.  When creating a sound from a compressed format, there is an option to immediately decode it, storing it uncompressed in memory.  This can be a good idea for short sounds, since they won't use very much memory even when they're decoded.\n\nStreams\n---\n\nSounds can be created as a stream by passing `'stream'` as their contents when creating them. Audio frames can be written to the end of the stream, and read from the beginning.  This works well for situations where data is being generated in real time or streamed in from some other data source.\n\nSources can be backed by a stream and they'll just play whatever audio is pushed to the stream. The audio module also lets you use a stream as a \"sink\" for an audio device.  For playback devices, this works like loopback, so the mixed audio from all playing Sources will get written to the stream.  For capture devices, all the microphone input will get written to the stream. Conversion between sample formats, channel layouts, and sample rates will happen automatically.\n\nKeep in mind that streams can still only hold a fixed number of frames.  If too much data is written before it is read, older frames will start to get overwritten.  Similary, it's possible to read too much data without writing fast enough.\n\nAmbisonics\n---\n\nAmbisonic sounds can be imported from WAVs, but can not yet be played.  Sounds with a `ChannelLayout` of `ambisonic` are stored as first-order full-sphere ambisonics using the AmbiX format (ACN channel ordering and SN3D channel normalization).  The AMB format is supported for import and will automatically get converted to AmbiX.  See `lovr.data.newSound` for more info.",
+          description = "A Sound stores the data for a sound.  The supported sound formats are OGG, WAV, and MP3.  Sounds cannot be played directly.  Instead, there are `Source` objects in `lovr.audio` that are used for audio playback.  All Source objects are backed by one of these Sounds, and multiple Sources can share a single Sound to reduce memory usage.\n\nMetadata\n---\n\nSounds hold a fixed number of frames.  Each frame contains one audio sample for each channel. The `SampleFormat` of the Sound is the data type used for each sample (floating point, integer, etc.).  The Sound has a `ChannelLayout`, representing the number of audio channels and how they map to speakers (mono, stereo, etc.).  The sample rate of the Sound indicates how many frames should be played per second.  The duration of the sound (in seconds) is the number of frames divided by the sample rate.\n\nCompression\n---\n\nSounds can be compressed.  Compressed sounds are stored compressed in memory and are decoded as they are played.  This uses a lot less memory but increases CPU usage during playback.  OGG and MP3 are compressed audio formats.  When creating a sound from a compressed format, there is an option to immediately decode it, storing it uncompressed in memory.  It can be a good idea to decode short sound effects, since they won't use very much memory even when uncompressed and it will improve CPU usage.  Compressed sounds can not be written to using `Sound:setFrames`.\n\nStreams\n---\n\nSounds can be created as a stream by passing `'stream'` as their contents when creating them. Audio frames can be written to the end of the stream, and read from the beginning.  This works well for situations where data is being generated in real time or streamed in from some other data source.\n\nSources can be backed by a stream and they'll just play whatever audio is pushed to the stream. The audio module also lets you use a stream as a \"sink\" for an audio device.  For playback devices, this works like loopback, so the mixed audio from all playing Sources will get written to the stream.  For capture devices, all the microphone input will get written to the stream. Conversion between sample formats, channel layouts, and sample rates will happen automatically.\n\nKeep in mind that streams can still only hold a fixed number of frames.  If too much data is written before it is read, older frames will start to get overwritten.  Similary, it's possible to read too much data without writing fast enough.\n\nAmbisonics\n---\n\nAmbisonic sounds can be imported from WAVs, but can not yet be played.  Sounds with a `ChannelLayout` of `ambisonic` are stored as first-order full-sphere ambisonics using the AmbiX format (ACN channel ordering and SN3D channel normalization).  The AMB format is supported for import and will automatically get converted to AmbiX.  See `lovr.data.newSound` for more info.",
           key = "Sound",
           module = "lovr.data",
           methods = {
@@ -3548,7 +3591,7 @@ return {
             {
               name = "isCompressed",
               summary = "Check if the Sound is compressed.",
-              description = "Returns whether the Sound is compressed.  Compressed sounds are loaded from compressed audio formats like MP3 and OGG.  They use a lot less memory but require some extra CPU work during playback.",
+              description = "Returns whether the Sound is compressed.  Compressed sounds are loaded from compressed audio formats like MP3 and OGG.  They use a lot less memory but require some extra CPU work during playback.  Compressed sounds can not be modified using `Sound:setFrames`.",
               key = "Sound:isCompressed",
               module = "lovr.data",
               related = {

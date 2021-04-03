@@ -1,4 +1,5 @@
 return {
+  tag = 'sourcePlayback',
   summary = 'Get the duration of the Source.',
   description = 'Returns the duration of the Source.',
   arguments = {

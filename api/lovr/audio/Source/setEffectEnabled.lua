@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Enable or disable an effect.',
   description = 'Enables or disables an effect on the Source.',
   arguments = {

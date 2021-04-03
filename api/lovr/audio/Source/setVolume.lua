@@ -1,4 +1,5 @@
 return {
+  tag = 'sourcePlayback',
   summary = 'Set the volume of the Source.',
   description = 'Sets the current volume factor for the Source.',
   arguments = {

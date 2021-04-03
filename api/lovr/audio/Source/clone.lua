@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceUtility',
   summary = 'Create an identical copy of the Source.',
   description = [[
     Creates a copy of the Source, referencing the same `Sound` object and inheriting all of the

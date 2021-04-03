@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Get the directivity of the Source.',
   description = [[
     Returns the directivity settings for the Source.

@@ -1,4 +1,5 @@
 return {
+  tag = 'sourcePlayback',
   summary = 'Check if the Source is playing.',
   description = 'Returns whether or not the Source is playing.',
   arguments = {},

@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Get the pose of the Source.',
   description = 'Returns the position and orientation of the Source.',
   arguments = {},
