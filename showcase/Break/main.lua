@@ -116,8 +116,8 @@ function lovr.load()
 		for i=0,5 do
 			table.insert(sounds, lovr.audio.newSource(string.format("break-bwomp-song-1-split-%d.ogg", i)))
 		end
-		sounds.fail = lovr.audio.newSource("break-buzzer.ogg", {spatial=false})
-		sounds.restart = lovr.audio.newSource("break-countdown.ogg", {spatial=false})
+		sounds.fail = lovr.audio.newSource("break-buzzer.ogg", {effects=false})
+		sounds.restart = lovr.audio.newSource("break-countdown.ogg", {effects=false})
 	end
 end
 
