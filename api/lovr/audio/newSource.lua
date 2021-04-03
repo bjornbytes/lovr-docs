@@ -14,6 +14,26 @@ return {
     soundData = {
       type = 'Sound',
       description = 'The Sound containing raw audio samples to play.'
+    },
+    options = {
+      type = 'table',
+      description = 'Optional options.',
+      table = {
+        {
+          name = 'decode',
+          type = 'boolean',
+          description = 'Whether to immediately decode compressed sounds.'
+        },
+        {
+          name = 'effects',
+          type = 'table',
+          description = [[
+            A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a
+            combination of both.  The special value `false` can be used to completely disable
+            effects, bypassing the spatializer entirely.
+          ]]
+        }
+      }
     }
   },
   returns = {
@@ -36,6 +56,16 @@ return {
       returns = { 'source' }
     }
   },
+  example = [[
+    function lovr.load()
+      sandstorm = lovr.audio.newSource('darude.ogg', {
+        decode = false,
+        effects = { 'spatialization', attenuation = false, reverb = true }
+      })
+
+      sandstorm:play()
+    end
+  ]],
   related = {
     'Source:clone'
   }
