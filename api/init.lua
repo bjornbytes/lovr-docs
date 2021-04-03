@@ -1891,6 +1891,30 @@ return {
               }
             },
             {
+              name = "getSound",
+              tag = "sourceUtility",
+              summary = "Get the `Sound` object backing the Source.",
+              description = "Returns the `Sound` object backing the Source.  Multiple Sources can share one Sound, allowing its data to only be loaded once.  An easy way to do this sharing is by using `Source:clone`.",
+              key = "Source:getSound",
+              module = "lovr.audio",
+              related = {
+                "Source:clone",
+                "lovr.audio.newSource"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sound",
+                      type = "Sound",
+                      description = "The Sound object."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getVolume",
               tag = "sourcePlayback",
               summary = "Get the volume of the Source.",
