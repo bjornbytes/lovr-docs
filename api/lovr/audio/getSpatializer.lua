@@ -21,17 +21,17 @@ return {
       <thead>
         <tr>
           <td>Feature</td>
-          <td>`simple`</td>
-          <td>`phonon`</td>
-          <td>`oculus`</td>
+          <td>simple</td>
+          <td>phonon</td>
+          <td>oculus</td>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Effect: Spatialization</td>
-          <td>x (pan)</td>
-          <td>x (HRTF)</td>
-          <td>x (HRTF)</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x</td>
         </tr>
         <tr>
           <td>Effect: Attenuation</td>
@@ -64,27 +64,21 @@ return {
           <td></td>
         </tr>
         <tr>
-          <td>setGeometry</td>
+          <td>lovr.audio.setGeometry</td>
           <td></td>
           <td>x</td>
           <td></td>
         </tr>
         <tr>
-          <td>Source Directivity</td>
+          <td>Source:setDirectivity</td>
           <td>x</td>
           <td>x</td>
           <td></td>
         </tr>
         <tr>
-          <td>Source Radius</td>
+          <td>Source:setRadius</td>
           <td></td>
           <td>x</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Ambisonics</td>
-          <td></td>
-          <td></td>
           <td></td>
         </tr>
       </tbody>
