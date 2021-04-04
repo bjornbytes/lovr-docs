@@ -55,3 +55,9 @@ function lovr.mousemoved(x, y, dx, dy)
   camera.pitch = camera.pitch - dy * .001
   camera.yaw = camera.yaw - dx * .001
 end
+
+function lovr.keypressed(key)
+  if key == 'escape' then
+    lovr.event.quit()
+  end
+end

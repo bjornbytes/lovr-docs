@@ -52,9 +52,11 @@ function lovr.draw()
     drawBox(box)
   end
 
-  lovr.graphics.setColor(0, 0, 1)
-  for i, box in ipairs(controllerBoxes) do
-    drawBox(box)
+  if lovr.headset.getDriver() ~= 'desktop' then
+    lovr.graphics.setColor(0, 0, 1)
+    for i, box in ipairs(controllerBoxes) do
+      drawBox(box)
+    end
   end
 
   lovr.graphics.setColor(1, 1, 1)

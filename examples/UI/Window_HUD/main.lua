@@ -109,8 +109,8 @@ end
 
 -- Draw HUD overlay
 function lovr.mirror()
-	lovr.graphics.clear() -- Move after mirror() to hide headset view in background of window
 	mirror()
+	--lovr.graphics.clear() -- Uncomment to hide headset view in background of window
 	lovr.graphics.setShader(nil)
 	lovr.graphics.setDepthTest(nil)
 	lovr.graphics.origin()
