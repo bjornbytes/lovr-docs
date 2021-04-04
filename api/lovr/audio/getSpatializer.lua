@@ -16,6 +16,80 @@ return {
       description = 'The name of the active spatializer.'
     }
   },
+  notes = [[
+    <table>
+      <thead>
+        <tr>
+          <td>Feature</td>
+          <td>`simple`</td>
+          <td>`phonon`</td>
+          <td>`oculus`</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Effect: Spatialization</td>
+          <td>x (pan)</td>
+          <td>x (HRTF)</td>
+          <td>x (HRTF)</td>
+        </tr>
+        <tr>
+          <td>Effect: Attenuation</td>
+          <td>x</td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Effect: Absorption</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Effect: Occlusion</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Effect: Transmission</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Effect: Reverb</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>setGeometry</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Source Directivity</td>
+          <td>x</td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Source Radius</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Ambisonics</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  ]],
   related = {
     'lovr.conf'
   }

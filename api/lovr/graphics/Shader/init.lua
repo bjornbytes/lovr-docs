@@ -10,8 +10,7 @@ return {
     'lovr.graphics.newComputeShader'
   },
   notes = [[
-    The GLSL version used is 430 on systems that support compute shaders and 150 otherwise.  The
-    version used for WebGL is 300 es.
+    GLSL version `330` is used on desktop systems, and `300 es` on WebGL/Android.
 
     The default vertex shader:
 
