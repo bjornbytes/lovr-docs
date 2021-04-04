@@ -17,6 +17,9 @@ return {
     }
   },
   notes = [[
+    Using a feature or effect that is not supported by the current spatializer will not error, it
+    just won't do anything.
+
     <table>
       <thead>
         <tr>
