@@ -117,6 +117,11 @@ return {
               description = 'Whether the physics module should be enabled.'
             },
             {
+              name = 'system',
+              type = 'boolean',
+              description = 'Whether the system module should be enabled.'
+            },
+            {
               name = 'thread',
               type = 'boolean',
               description = 'Whether the thread module should be enabled.'
@@ -224,6 +229,7 @@ return {
           t.modules.headset = true
           t.modules.math = true
           t.modules.physics = true
+          t.modules.system = true
           t.modules.thread = true
           t.modules.timer = true
 
