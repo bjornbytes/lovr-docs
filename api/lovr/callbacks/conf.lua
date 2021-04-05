@@ -102,7 +102,7 @@ return {
               type = 'string',
               description = [[
                 An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of
-                them are attempted.'
+                them are attempted.
               ]]
             },
             {
