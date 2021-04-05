@@ -45,11 +45,6 @@ return {
           description = 'Configuration for the math module.',
           table = {
             {
-              name = 'ffi',
-              type = 'boolean',
-              description = 'Whether vector objects should use an optimized LuaJIT FFI codepath.'
-            },
-            {
               name = 'globals',
               type = 'boolean',
               description = 'Whether vector object functions should be added to the global scope.'
