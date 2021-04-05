@@ -3570,6 +3570,150 @@ return {
               notes = "For streams, this returns the number of frames in the stream's buffer."
             },
             {
+              name = "getFrames",
+              summary = "Read frames from the Sound.",
+              description = "Reads frames from the Sound into a table, Blob, or another Sound.",
+              key = "Sound:getFrames",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      default = "nil"
+                    },
+                    {
+                      name = "srcOffset",
+                      type = "number",
+                      description = "A frame offset to apply to the sound when reading frames.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table containing audio frames."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames read."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "An existing table to read frames into."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      default = "nil"
+                    },
+                    {
+                      name = "srcOffset",
+                      type = "number",
+                      description = "A frame offset to apply to the sound when reading frames.",
+                      default = "0"
+                    },
+                    {
+                      name = "dstOffset",
+                      type = "number",
+                      description = "An offset to apply to the destination when writing frames (indices for tables, bytes for Blobs, frames for Sounds).",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table containing audio frames."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames read."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob to read frames into."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      default = "nil"
+                    },
+                    {
+                      name = "srcOffset",
+                      type = "number",
+                      description = "A frame offset to apply to the sound when reading frames.",
+                      default = "0"
+                    },
+                    {
+                      name = "dstOffset",
+                      type = "number",
+                      description = "An offset to apply to the destination when writing frames (indices for tables, bytes for Blobs, frames for Sounds).",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames read."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "sound",
+                      type = "Sound",
+                      description = "Another Sound to copy frames into ."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      default = "nil"
+                    },
+                    {
+                      name = "srcOffset",
+                      type = "number",
+                      description = "A frame offset to apply to the sound when reading frames.",
+                      default = "0"
+                    },
+                    {
+                      name = "dstOffset",
+                      type = "number",
+                      description = "An offset to apply to the destination when writing frames (indices for tables, bytes for Blobs, frames for Sounds).",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames read."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getSampleCount",
               summary = "Get the number of samples in the Sound.",
               description = "Returns the total number of samples in the Sound.",
