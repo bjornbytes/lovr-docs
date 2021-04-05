@@ -12,7 +12,7 @@ return {
     },
     sound = {
       type = 'Sound',
-      description = 'Another Sound to copy frames into .'
+      description = 'Another Sound to copy frames into.'
     },
     count = {
       type = 'number',
