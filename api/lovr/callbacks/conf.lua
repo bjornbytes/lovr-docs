@@ -13,63 +13,22 @@ return {
       description = 'The table to edit the configuration settings on.',
       table = {
         {
+          name = 'version',
+          type = 'string',
+          description = 'The version of LÖVR this project targets (not used yet).'
+        },
+        {
           name = 'identity',
           type = 'string',
           description = 'A unique label for this project.'
         },
         {
-          name = 'audio',
-          type = 'table',
-          description = 'Configuration for the audio module.',
-          table = {
-            {
-              name = 'spatializer',
-              type = 'string',
-              description = [[
-                An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of
-                them are attempted.'
-              ]]
-            },
-            {
-              name = 'start',
-              type = 'boolean',
-              description = 'Whether the playback device should be automatically started.'
-            }
-          }
-        },
-        {
-          name = 'headset',
-          type = 'table',
-          description = 'Configuration for the headset.',
-          table = {
-            {
-              name = 'drivers',
-              type = 'table',
-              description = 'An ordered list of preferred headset drivers.'
-            },
-            {
-              name = 'msaa',
-              type = 'number',
-              description = 'The amount of antialiasing to use when rendering to the headset.'
-            },
-            {
-              name = 'offset',
-              type = 'number',
-              description = 'The vertical offset for seated experiences.'
-            }
-          }
-        },
-        {
-          name = 'math',
-          type = 'table',
-          description = 'Configuration for the math module.',
-          table = {
-            {
-              name = 'globals',
-              type = 'boolean',
-              description = 'Whether vector object functions should be added to the global scope.'
-            }
-          }
+          name = 'saveprecedence',
+          type = 'boolean',
+          description = [[
+            Whether the files in the save directory should have precedence over files in the source
+            archive.
+          ]]
         },
         {
           name = 'modules',
@@ -134,6 +93,80 @@ return {
           }
         },
         {
+          name = 'audio',
+          type = 'table',
+          description = 'Configuration for the audio module.',
+          table = {
+            {
+              name = 'spatializer',
+              type = 'string',
+              description = [[
+                An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of
+                them are attempted.'
+              ]]
+            },
+            {
+              name = 'start',
+              type = 'boolean',
+              description = 'Whether the playback device should be automatically started.'
+            }
+          }
+        },
+        {
+          name = 'graphics',
+          type = 'table',
+          description = 'Configuration for the graphics module.',
+          table = {
+            {
+              name = 'debug',
+              type = 'boolean',
+              description = 'Whether debug messages from the GPU should get sent to lovr.log.'
+            }
+          }
+        },
+        {
+          name = 'headset',
+          type = 'table',
+          description = 'Configuration for the headset.',
+          table = {
+            {
+              name = 'drivers',
+              type = 'table',
+              description = 'An ordered list of preferred headset drivers.'
+            },
+            {
+              name = 'supersample',
+              type = 'number',
+              description = [[
+                A scaling factor to apply to the headset texture.  Improves visual quality but
+                reduces performance.  Can also be a boolean.
+              ]]
+            },
+            {
+              name = 'offset',
+              type = 'number',
+              description = 'The vertical offset for seated experiences.'
+            },
+            {
+              name = 'msaa',
+              type = 'number',
+              description = 'The amount of antialiasing to use when rendering to the headset.'
+            }
+          }
+        },
+        {
+          name = 'math',
+          type = 'table',
+          description = 'Configuration for the math module.',
+          table = {
+            {
+              name = 'globals',
+              type = 'boolean',
+              description = 'Whether vector object functions should be added to the global scope.'
+            }
+          }
+        },
+        {
           name = 'window',
           type = 'table',
           description = 'Configuration for the window.',
@@ -154,14 +187,14 @@ return {
               description = 'Whether the window is fullscreen.'
             },
             {
+              name = 'resizable',
+              type = 'boolean',
+              description = 'Whether the window is fullscreen.'
+            },
+            {
               name = 'msaa',
               type = 'number',
               description = 'The number of antialiasing samples to use.'
-            },
-            {
-              name = 'vsync',
-              type = 'number',
-              description = '0 to disable vsync, 1 to enable.'
             },
             {
               name = 'title',
@@ -172,6 +205,11 @@ return {
               name = 'icon',
               type = 'string',
               description = 'The path to the window icon file.'
+            },
+            {
+              name = 'vsync',
+              type = 'number',
+              description = '0 to disable vsync, 1 to enable.'
             }
           }
         }
@@ -203,23 +241,12 @@ return {
     code = [[
         function lovr.conf(t)
 
-          -- Set the project identity
+          -- Set the project version and identity
+          t.version = '0.14.0'
           t.identity = 'default'
 
-          -- Audio
-          t.audio.spatializer = nil
-          t.audio.start = true
-
-          -- Graphics
-          t.graphics.debug = false
-
-          -- Headset settings
-          t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'openvr', 'webxr', 'desktop' }
-          t.headset.msaa = 4
-          t.headset.offset = 1.7
-
-          -- Math settings
-          t.math.globals = true
+          -- Set save directory precedence
+          t.saveprecedence = true
 
           -- Enable or disable different modules
           t.modules.audio = true
@@ -232,6 +259,22 @@ return {
           t.modules.system = true
           t.modules.thread = true
           t.modules.timer = true
+
+          -- Audio
+          t.audio.spatializer = nil
+          t.audio.start = true
+
+          -- Graphics
+          t.graphics.debug = false
+
+          -- Headset settings
+          t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'pico', 'openvr', 'webxr', 'desktop' }
+          t.headset.supersample = false
+          t.headset.offset = 1.7
+          t.headset.msaa = 4
+
+          -- Math settings
+          t.math.globals = true
 
           -- Configure the desktop window
           t.window.width = 1080
