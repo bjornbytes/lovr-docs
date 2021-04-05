@@ -3682,7 +3682,7 @@ return {
                     {
                       name = "sound",
                       type = "Sound",
-                      description = "Another Sound to copy frames into ."
+                      description = "Another Sound to copy frames into."
                     },
                     {
                       name = "count",
@@ -3800,6 +3800,58 @@ return {
                       description = "Whether the Sound is a stream."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setFrames",
+              summary = "Write frames to the Sound.",
+              description = "Writes frames to the Sound.",
+              key = "Sound:setFrames",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    t = {
+                      type = "table",
+                      description = "A table containing frames to write."
+                    },
+                    sound = {
+                      type = "Sound",
+                      description = "Another Sound to copy frames from."
+                    },
+                    count = {
+                      type = "number",
+                      description = "How many frames to write.  If nil, writes as many as possible.",
+                      default = "nil"
+                    },
+                    dstOffset = {
+                      type = "number",
+                      description = "A frame offset to apply when writing the frames.",
+                      default = "0"
+                    },
+                    blob = {
+                      type = "Blob",
+                      description = "A Blob containing frames to write."
+                    },
+                    srcOffset = {
+                      type = "number",
+                      description = "A frame, byte, or index offset to apply when reading frames from the source.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    count = {
+                      type = "number",
+                      description = "The number of frames written."
+                    }
+                  }
+                }
+              },
+              examples = {
+                {
+                  description = "Generate a sine wave.",
+                  code = "function lovr.load()\n  local length = 1\n  local rate = 48000\n  local frames = length * rate\n  local frequency = 440\n  local volume = 1.0\n\n  sound = lovr.data.newSound(frames, 'f32', 'stereo', rate)\n\n  local data = {}\n  for i = 1, frames do\n    local amplitude = math.sin((i - 1) * frequency / rate * (2 * math.pi)) * volume\n    data[2 * i - 1] = amplitude\n    data[2 * i - 0] = amplitude\n  end\n\n  sound:setFrames(data)\n\n  source = lovr.audio.newSource(sound)\n  source:setLooping(true)\n  source:play()\nend"
                 }
               }
             }
