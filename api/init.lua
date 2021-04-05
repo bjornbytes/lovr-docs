@@ -3812,36 +3812,101 @@ return {
               variants = {
                 {
                   arguments = {
-                    t = {
+                    {
+                      name = "t",
                       type = "table",
                       description = "A table containing frames to write."
                     },
-                    sound = {
-                      type = "Sound",
-                      description = "Another Sound to copy frames from."
-                    },
-                    count = {
+                    {
+                      name = "count",
                       type = "number",
                       description = "How many frames to write.  If nil, writes as many as possible.",
                       default = "nil"
                     },
-                    dstOffset = {
+                    {
+                      name = "dstOffset",
                       type = "number",
                       description = "A frame offset to apply when writing the frames.",
                       default = "0"
                     },
-                    blob = {
-                      type = "Blob",
-                      description = "A Blob containing frames to write."
-                    },
-                    srcOffset = {
+                    {
+                      name = "srcOffset",
                       type = "number",
                       description = "A frame, byte, or index offset to apply when reading frames from the source.",
                       default = "0"
                     }
                   },
                   returns = {
-                    count = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames written."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob containing frames to write."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "How many frames to write.  If nil, writes as many as possible.",
+                      default = "nil"
+                    },
+                    {
+                      name = "dstOffset",
+                      type = "number",
+                      description = "A frame offset to apply when writing the frames.",
+                      default = "0"
+                    },
+                    {
+                      name = "srcOffset",
+                      type = "number",
+                      description = "A frame, byte, or index offset to apply when reading frames from the source.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames written."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "sound",
+                      type = "Sound",
+                      description = "Another Sound to copy frames from."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "How many frames to write.  If nil, writes as many as possible.",
+                      default = "nil"
+                    },
+                    {
+                      name = "dstOffset",
+                      type = "number",
+                      description = "A frame offset to apply when writing the frames.",
+                      default = "0"
+                    },
+                    {
+                      name = "srcOffset",
+                      type = "number",
+                      description = "A frame, byte, or index offset to apply when reading frames from the source.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
                       type = "number",
                       description = "The number of frames written."
                     }

@@ -36,6 +36,20 @@ return {
       description = 'The number of frames written.'
     }
   },
+  variants = {
+    {
+      arguments = { 't', 'count', 'dstOffset', 'srcOffset' },
+      returns = { 'count' }
+    },
+    {
+      arguments = { 'blob', 'count', 'dstOffset', 'srcOffset' },
+      returns = { 'count' }
+    },
+    {
+      arguments = { 'sound', 'count', 'dstOffset', 'srcOffset' },
+      returns = { 'count' }
+    }
+  },
   example = {
     description = 'Generate a sine wave.',
     code = [[
