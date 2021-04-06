@@ -44,15 +44,15 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename' },
+      arguments = { 'filename', 'options' },
       returns = { 'source' }
     },
     {
-      arguments = { 'blob' },
+      arguments = { 'blob', 'options' },
       returns = { 'source' }
     },
     {
-      arguments = { 'sound' },
+      arguments = { 'sound', 'options' },
       returns = { 'source' }
     }
   },

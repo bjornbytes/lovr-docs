@@ -1262,6 +1262,23 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The filename of the sound to load."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "decode",
+                      type = "boolean",
+                      description = "Whether to immediately decode compressed sounds."
+                    },
+                    {
+                      name = "effects",
+                      type = "table",
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely."
+                    }
+                  }
                 }
               },
               returns = {
@@ -1278,6 +1295,23 @@ return {
                   name = "blob",
                   type = "Blob",
                   description = "The Blob containing the Source data."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "decode",
+                      type = "boolean",
+                      description = "Whether to immediately decode compressed sounds."
+                    },
+                    {
+                      name = "effects",
+                      type = "table",
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely."
+                    }
+                  }
                 }
               },
               returns = {
@@ -1289,7 +1323,26 @@ return {
               }
             },
             {
-              arguments = {},
+              arguments = {
+                nil,
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "decode",
+                      type = "boolean",
+                      description = "Whether to immediately decode compressed sounds."
+                    },
+                    {
+                      name = "effects",
+                      type = "table",
+                      description = "            A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a\n            combination of both.  The special value `false` can be used to completely disable\n            effects, bypassing the spatializer entirely.\n          "
+                    }
+                  }
+                }
+              },
               returns = {
                 {
                   name = "source",
