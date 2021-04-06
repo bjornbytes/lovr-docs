@@ -1,7 +1,6 @@
 function lovr.load()
-  source = lovr.audio.newSource('sine.wav', { spatial = true })
-  source:setEffectEnabled('spatialization', true)
-  source:setEffectEnabled('falloff', true)
+  effects = { 'spatialization', 'attenuation' }
+  source = lovr.audio.newSource('sine.wav', effects = effects)
   source:setLooping(true)
   source:play()
 end
