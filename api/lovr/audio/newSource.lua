@@ -22,15 +22,17 @@ return {
         {
           name = 'decode',
           type = 'boolean',
+          default = 'false',
           description = 'Whether to immediately decode compressed sounds.'
         },
         {
           name = 'effects',
           type = 'table',
+          default = 'true',
           description = [[
             A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a
             combination of both.  The special value `false` can be used to completely disable
-            effects, bypassing the spatializer entirely.
+            effects, bypassing the spatializer entirely.  `true` will enable all effects.
           ]]
         }
       }

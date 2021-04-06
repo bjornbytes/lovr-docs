@@ -1271,12 +1271,14 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds."
+                      description = "Whether to immediately decode compressed sounds.",
+                      default = "false"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely."
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely.  `true` will enable all effects.",
+                      default = "true"
                     }
                   }
                 }
@@ -1304,12 +1306,14 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds."
+                      description = "Whether to immediately decode compressed sounds.",
+                      default = "false"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely."
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely.  `true` will enable all effects.",
+                      default = "true"
                     }
                   }
                 }
@@ -1337,12 +1341,14 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds."
+                      description = "Whether to immediately decode compressed sounds.",
+                      default = "false"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely."
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely.  `true` will enable all effects.",
+                      default = "true"
                     }
                   }
                 }
