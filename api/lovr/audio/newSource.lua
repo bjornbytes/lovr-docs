@@ -11,7 +11,7 @@ return {
       type = 'Blob',
       description = 'The Blob containing the Source data.'
     },
-    soundData = {
+    sound = {
       type = 'Sound',
       description = 'The Sound containing raw audio samples to play.'
     },
