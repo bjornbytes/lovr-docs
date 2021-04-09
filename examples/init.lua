@@ -34,6 +34,7 @@ return {
   'Audio/Spatialization',
   'Audio/Directivity',
   'Audio/Mute',
+  'Audio/Sine_Wave_Generator',
   'Effects/Blur',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
