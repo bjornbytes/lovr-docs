@@ -52,11 +52,5 @@ return {
         </tr>
       </tbody>
     </table>
-
-    - `Simulator` when using `desktop` driver.
-    - `Pico` when using `pico` driver.
-    - When using the `openvr`
-    - The keyboard and mouse VR simulator is named `VR Simulator`.
-    - Oculus headsets will usually contain the string `Oculus`.
   ]]
 }
