@@ -140,8 +140,7 @@ First, make sure the Java JDK is installed (version 8 is known to work).
 Then, the Android SDK and NDK need to be installed.  The SDK version to install depends on the
 devices being targeted:
 
-- Version 26: Oculus Quest.
-- Version 21: Oculus Quest and Oculus Go.
+- Version 26: Oculus Quest, Oculus Quest 2.
 - Version 27: Pico Neo 2.
 
 The Android command line tools can be found on the Android website or installed using a package

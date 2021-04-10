@@ -1,7 +1,7 @@
 Getting Started
 ===
 
-This guide explains how to start using LÖVR on Android devices like the Oculus Go and Oculus Quest.
+This guide explains how to start using LÖVR on Oculus Android devices like the Oculus Quest.
 
 After setting the device up for development, the LÖVR Android .apk is "sideloaded" onto the device.
 From there, a LÖVR project on a PC can be sync'd to the device.
@@ -9,9 +9,8 @@ From there, a LÖVR project on a PC can be sync'd to the device.
 Device Setup
 ---
 
-First, make sure your device is set up for development.  Oculus has official device setup guides
-for both the [Oculus Quest](https://developer.oculus.com/documentation/quest/latest/concepts/mobile-device-setup-quest/)
-and [Oculus Go](https://developer.oculus.com/documentation/mobilesdk/latest/concepts/mobile-device-setup-go/),
+First, make sure your device is set up for development.  Oculus has an official device setup guide
+for the [Oculus Quest](https://developer.oculus.com/documentation/quest/latest/concepts/mobile-device-setup-quest/),
 but there are lots of other guides on the internet for how to do this.  The key things are:
 
 - Enabling development mode on the device.

@@ -43,6 +43,6 @@ return {
     prolonged vibration patterns.
 
     On the Oculus Quest, devices can only be vibrated once per frame.  Any attempts after the first
-    will return `false`.  The Oculus Go controller does not support vibration.
+    will return `false`.
   ]]
 }
