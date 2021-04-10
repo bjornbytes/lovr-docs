@@ -40,10 +40,6 @@ return {
     }
   },
   returns = {},
-  notes = [[
-    The default implementation of `lovr.run` calls this function with the result of
-    `lovr.headset.getPose`, so that the listener automatically tracks the headset.
-  ]],
   related = {
     'lovr.audio.setPosition',
     'lovr.audio.setOrientation',
