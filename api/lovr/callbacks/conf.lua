@@ -242,7 +242,7 @@ return {
         function lovr.conf(t)
 
           -- Set the project version and identity
-          t.version = '0.14.0'
+          t.version = '0.15.0'
           t.identity = 'default'
 
           -- Set save directory precedence
