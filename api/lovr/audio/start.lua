@@ -2,12 +2,8 @@ return {
   tag = 'devices',
   summary = 'Start an audio device.',
   description = [[
-    Starts the active playback or capture device.  This may fail if:
-
-    - The device is already started
-    - No device was initialized with `lovr.audio.setDevice`
-    - Lack of `audiocapture` permission on Android (see `lovr.system.requestPermission`)
-    - Some other problem accessing the audio device
+    Starts the active playback or capture device.  By default the playback device is initialized
+    and started, but this can be controlled using the `t.audio.start` flag in `lovr.conf`.
   ]],
   arguments = {
     {
@@ -24,6 +20,14 @@ return {
       description = 'Whether the device was successfully started.'
     }
   },
+  notes = [[
+    Starting an audio device may fail if:
+
+    - The device is already started
+    - No device was initialized with `lovr.audio.setDevice`
+    - Lack of `audiocapture` permission on Android (see `lovr.system.requestPermission`)
+    - Some other problem accessing the audio device
+  ]],
   related = {
     'lovr.audio.getDevices',
     'lovr.audio.setDevice',
