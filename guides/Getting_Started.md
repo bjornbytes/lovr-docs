@@ -74,5 +74,5 @@ The next guide will teach you how to make fancier projects using <a data-key="Ca
 
 If you want to learn more about Lua, some good resources are:
 
-1. [Learn Lua in 15 Minutes](http://tylerneylon.com/a/learn-lua/)
-2. [Lua for Programmers](http://nova-fusion.com/2012/08/27/lua-for-programmers-part-1/)
+1. [Programming in Lua](https://www.lua.org/pil/contents.html)
+2. [Learn Lua in 15 Minutes](http://tylerneylon.com/a/learn-lua/)
