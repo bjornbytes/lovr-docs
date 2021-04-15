@@ -28,6 +28,9 @@ return {
     When using the `pico` headset driver, headset rendering is asynchronous and the callback passed
     to `lovr.headset.renderTo` will not be called immediately.
 
+    At the beginning of the callback, the display is cleared to the background color.  The
+    background color can be changed using `lovr.graphics.setBackgroundColor`.
+
     If the callback is `nil`, an empty frame cleared to current graphics background color will be
     submitted to the headset.
   ]]
