@@ -22,6 +22,7 @@ List of Libraries
 ---
 
 - [30log](https://github.com/Yonaba/30log) - A library for object oriented programming in Lua.
+- [classic](https://github.com/rxi/classic) - Class library.
 - [cpml](https://github.com/excessive/cpml) - A 3D math library for Lua.
 - [flux](https://github.com/rxi/flux) - A tweening library for Lua.
 - [knife](https://github.com/airstruck/knife) - A collection of useful micromodules for Lua.
@@ -41,6 +42,7 @@ List of Libraries
 - [lovr-window](https://github.com/Papaew/lovr-window) - A window module for LÖVR.
 - [lume](https://github.com/rxi/lume) - Lua utility functions geared towards game development.
 - [maf](https://github.com/bjornbytes/maf) - A 3D math library with vectors and quaternions.
+- [penlight](https://github.com/lunarmodules/Penlight) - Miscellaneous helpers.
 - [pollr](https://github.com/ulydev/pollr) - LÖVR input polling.
 - [tiny-ecs](https://github.com/bakpakin/tiny-ecs) - An entity component system for Lua.
 - [tween.lua](https://github.com/kikito/tween.lua) - A tweening library for Lua.
