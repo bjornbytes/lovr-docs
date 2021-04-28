@@ -14,6 +14,7 @@ return {
 
     - Threads run in a bare Lua environment.  The `lovr` module (and any of lovr's modules) need to
       be required before they can be used.
+      - To get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.
     - Threads are completely isolated from other threads.  They do not have access to the variables
       or functions of other threads, and communication between threads must be coordinated through
       `Channel` objects.
