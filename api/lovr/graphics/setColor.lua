@@ -19,14 +19,14 @@ return {
       type = 'number',
       description = 'The blue component of the color.'
     },
+    hex = {
+      type = 'number',
+      description = 'A hexcode like `0xffffff` to use for the color.'
+    },
     a = {
       type = 'number',
       default = '1.0',
       description = 'The alpha component of the color.'
-    },
-    hex = {
-      type = 'number',
-      description = 'A hexcode like `0xffffff` to use for the color (does not support alpha).'
     },
     color = {
       type = 'table',
@@ -40,7 +40,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'hex' },
+      arguments = { 'hex', 'a' },
       returns = {}
     },
     {
