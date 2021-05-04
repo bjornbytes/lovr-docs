@@ -9,6 +9,10 @@ return {
       description = 'The Blob instance containing the bytes for the `Sound`.'
     }
   },
+  notes = [[
+    Samples for each channel are stored interleaved.  The data type of each sample is given by
+    `Sound:getFormat`.
+  ]],
   related = {
     'Blob:getPointer',
     'Image:getBlob'
