@@ -11,6 +11,11 @@ if there isn't any VR hardware detected.
 You can also set the `t.modules.headset` flag to false in
 `lovr.conf` to disable VR completely and develop a traditional 3D desktop application.
 
+> How do I get LÖVR to work with OpenXR?
+
+Currently, OpenXR support is not included by default.  You can compile from source and add the
+`-DLOVR_USE_OPENXR=ON` CMake option.  There are upcoming plans to include OpenXR by default.
+
 > Are there macOS binaries available?
 
 Yes, you can download them from <https://lovr.org/download/mac>.
