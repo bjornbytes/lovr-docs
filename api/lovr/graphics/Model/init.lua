@@ -12,7 +12,7 @@ return {
     local model
 
     function lovr.load()
-      model = lovr.graphics.newModel('assets/model.gltf', 'assets/texture.png')
+      model = lovr.graphics.newModel('assets/model.gltf')
     end
 
     function lovr.draw()
