@@ -40,6 +40,10 @@ List of Libraries
 - [lovr-pointer](https://github.com/bjornbytes/lovr-pointer) - A general pointer system that can be
   used to select objects or create teleporters.
 - [lovr-window](https://github.com/Papaew/lovr-window) - A window module for LÖVR.
+- [lua-cjson](https://github.com/bjornbytes/lua-cjson) - High performance plugin for JSON
+  encoding/decoding.
+- [lua-deepspeech](https://github.com/bjornbytes/lua-deepspeech) - Plugin for speech recognition.
+- [lua-enet](https://github.com/bjornbytes/lua-enet) - Plugin for multiplayer using enet.
 - [lume](https://github.com/rxi/lume) - Lua utility functions geared towards game development.
 - [maf](https://github.com/bjornbytes/maf) - A 3D math library with vectors and quaternions.
 - [penlight](https://github.com/lunarmodules/Penlight) - Miscellaneous helpers.
