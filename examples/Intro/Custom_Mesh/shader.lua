@@ -4,11 +4,11 @@ in vec3 lightDirection;
 in vec3 normalDirection;
 in vec3 vertexPosition;
 
-vec3 cAmbient = vec3(.25);
-vec3 cDiffuse = vec3(1);
-vec3 cSpecular = vec3(.35);
-
 vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
+  vec3 cAmbient = vec3(.25);
+  vec3 cDiffuse = vec3(1.);
+  vec3 cSpecular = vec3(.35);
+
   float diffuse = max(dot(normalDirection, lightDirection), 0.);
   float specular = 0.;
 
