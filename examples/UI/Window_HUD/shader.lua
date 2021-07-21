@@ -2,9 +2,9 @@ return lovr.graphics.newShader([[
 out vec3 lightDirection;
 out vec3 normalDirection;
 
-vec3 lightPosition = vec3(0, 10, 3);
-
 vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
+  vec3 lightPosition = vec3(0., 10., 3.);
+
   vec4 vVertex = transform * vec4(lovrPosition, 1.);
   vec4 vLight = lovrView * vec4(lightPosition, 1.);
 
@@ -17,11 +17,11 @@ vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
 in vec3 lightDirection;
 in vec3 normalDirection;
 
-vec3 cAmbient = vec3(.25);
-vec3 cDiffuse = vec3(.75);
-vec3 cSpecular = vec3(.35);
-
 vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
+  vec3 cAmbient = vec3(.25);
+  vec3 cDiffuse = vec3(.75);
+  vec3 cSpecular = vec3(.35);
+
   float diffuse = max(dot(normalDirection, lightDirection), 0.);
   float specular = 0.;
 
