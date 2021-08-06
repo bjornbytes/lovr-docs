@@ -54,6 +54,9 @@ command line and pass the path to the project as the first argument.
 
 ![Drag and Drop](https://lovr.org/static/img/dragonDrop.png)
 
+On macOS and Linux, the project can be run by running the `lovr` executable with the path to the
+project as an argument (on macOS, the executable is located at `LÖVR.app/Contents/MacOS/lovr`).
+
 If you followed the example above, you should see the following in VR:
 
 ![Hello World](https://lovr.org/static/img/helloWorld.png)
