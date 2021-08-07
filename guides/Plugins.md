@@ -31,12 +31,6 @@ List of Plugins
 ---
 
 <table>
-  <thead>
-    <tr>
-      <td>Link</td>
-      <td>Notes</td>
-    </tr>
-  </thead>
   <tbody>
     <tr>
       <td><a href="https://github.com/bjornbytes/lua-cjson">lua-cjson</a></td>
