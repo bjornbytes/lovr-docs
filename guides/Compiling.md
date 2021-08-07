@@ -5,6 +5,17 @@ Compiling the LÖVR code yourself lets you create a custom LÖVR build so you ca
 features or run it on other operating systems.  Below is a guide for setting up all the dependencies
 and compiling the code on various types of systems.
 
+System Requirements
+---
+
+LÖVR is currently known to work with (and optimized for)
+
+- CPU: 64 bit, little endian, x86 or ARM
+- OS: Windows (Vista+), macOS (11+), Linux (libc 2.29+), Android (10)
+- GPU: supports OpenGL 3.3+ or OpenGL ES 3.1+
+
+Other systems and hardware may work, but are not frequently tested and may fail to build/run.
+
 Dependencies
 ---
 
