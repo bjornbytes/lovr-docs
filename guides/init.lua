@@ -5,6 +5,7 @@ return {
   'Simple_Lighting',
   'Vectors',
   'Libraries',
+  'Plugins',
   'Distribution',
   'Contributing',
   'Compiling',
