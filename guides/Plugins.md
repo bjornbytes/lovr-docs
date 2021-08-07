@@ -3,7 +3,7 @@ Plugins
 
 LÖVR has a small core.  Extra features can be provided by <a data-key="Libraries">Libraries</a>
 written in Lua, or by plugins.  Plugins are similar to libraries -- they can be `require`d from Lua
-to access their features.  However, instead of `.lua` files in a project folder, plugins are system
+to access their features.  However, instead of Lua files in a project folder, plugins are native
 libraries (`.dll` or `.so` files) that are placed next to the lovr executable.
 
 Using Plugins
@@ -20,10 +20,10 @@ function lovr.load()
 end
 ```
 
-> Note: On Unix systems, some plugin files might be prefixed with `lib` (e.g. `liblovr-plugin.so`).
+> On Unix systems, some plugin files might be prefixed with `lib` (e.g. `liblovr-plugin.so`).
 > In this case, be sure to require the plugin with the lib prefix: `require 'liblovr-plugin'`.
 
-> Note: On Android, plugins are searched for in the `lib/arm64-v8a` folder of the APK.
+> On Android, plugins are searched for in the `lib/arm64-v8a` folder of the APK.
 
 Plugins are not officially supported in WebAssembly yet, but this is theoretically possible.
 
@@ -69,9 +69,9 @@ as git submodules.  A fork of lovr can be created that has this custom plugins f
 easy to quickly get a set of plugins on multiple machines.  Version control also means that the
 plugins are versioned and tied to a known version of lovr.
 
-> Note: By default, the libraries from all CMake targets in the plugin's build script will be moved
+> By default, the libraries from all CMake targets in the plugin's build script will be moved
 > to the executable folder.  Plugins can override this by setting the `LOVR_PLUGIN_TARGETS` variable
-> to a semicolon-separated list of targets to use.
+> to a semicolon-separated list of targets.
 
 Creating Plugins
 ---
