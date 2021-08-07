@@ -30,12 +30,32 @@ Plugins are not officially supported in WebAssembly yet, but this is theoretical
 List of Plugins
 ---
 
-- [lua-cjson](https://github.com/bjornbytes/lua-cjson) -- Fast native JSON encoder/decoder.
-- [lua-enet](https://github.com/bjornbytes/lua-enet) -- enet for UDP multiplayer servers/clients.
-- [lovr-luasocket](https://github.com/brainrom/lovr-luasocket) -- HTTP and socket support via
-  luasocket.
-- [lua-deepspeech](https://github.com/bjornbytes/lua-deepspeech) -- Speech recognition using
-  Mozilla's DeepSpeech library.
+<table>
+  <thead>
+    <tr>
+      <td>Link</td>
+      <td>Notes</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/bjornbytes/lua-cjson">lua-cjson</a></td>
+      <td>Fast native JSON encoder/decoder</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/bjornbytes/lua-enet">lua-enet</a></td>
+      <td>enet for UDP multiplayer servers/clients</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/brainrom/lovr-luasocket">lovr-luasocket</a></td>
+      <td>HTTP and socket support via luasocket</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/bjornbytes/lua-deepspeech">lua-deepspeech</a></td>
+      <td>Speech recognition using Mozilla's DeepSpeech library</td>
+    </tr>
+  </tbody>
+</table>
 
 Building Plugins with CMake
 ---
