@@ -19,6 +19,7 @@ return {
   'Locomotion/Walking_In_Place',
   'Environment/Grid',
   'Environment/Skybox',
+  'Environment/Terrain',
   'Lighting/Cel_Shading',
   'Lighting/PBR_Materials',
   'Animation/Playback',
