@@ -39,6 +39,8 @@ List of Libraries
   tools for LÖVR.
 - [lovr-pointer](https://github.com/bjornbytes/lovr-pointer) - A general pointer system that can be
   used to select objects or create teleporters.
+- [lovr-procmesh](http://github.com/jmiskovic/lovr-procmesh) - Generation of mesh primitives and
+  constructive solid geometry (CSG) operations.
 - [lovr-window](https://github.com/Papaew/lovr-window) - A window module for LÖVR.
 - [lua-cjson](https://github.com/bjornbytes/lua-cjson) - High performance plugin for JSON
   encoding/decoding.
