@@ -32,8 +32,7 @@ return {
           description = [[
             A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a
             combination of both.  The special value `false` can be used to completely disable
-            effects, bypassing the spatializer entirely and throwing an error when trying to enable
-            effects.  `true` will enable all effects.
+            effects, bypassing the spatializer entirely.  `true` will enable all effects.
           ]]
         }
       }

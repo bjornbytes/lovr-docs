@@ -20,7 +20,7 @@ return {
     enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See
     `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.
 
-    Calling this function on a Source that was created with `{ effects = false }` will throw an
-    error.
+    v0.15.0 has a bug where this function can be called on Sources that were created with the
+    `{ effects = false }` option, causing confusing issues.
   ]]
 }

@@ -379,7 +379,7 @@ return {
               description = "Returns whether a given `Effect` is enabled for the Source.",
               key = "Source:isEffectEnabled",
               module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a Source that was created with `{ effects = false }` will always return false.",
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.",
               variants = {
                 {
                   arguments = {
@@ -538,7 +538,7 @@ return {
               description = "Enables or disables an effect on the Source.",
               key = "Source:setEffectEnabled",
               module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a Source that was created with `{ effects = false }` will throw an error.",
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nv0.15.0 has a bug where this function can be called on Sources that were created with the `{ effects = false }` option, causing confusing issues.",
               variants = {
                 {
                   arguments = {
@@ -1126,7 +1126,7 @@ return {
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely and throwing an error when trying to enable effects.  `true` will enable all effects.",
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely.  `true` will enable all effects.",
                       default = "true"
                     }
                   }
@@ -1161,7 +1161,7 @@ return {
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely and throwing an error when trying to enable effects.  `true` will enable all effects.",
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely.  `true` will enable all effects.",
                       default = "true"
                     }
                   }
@@ -1196,7 +1196,7 @@ return {
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely and throwing an error when trying to enable effects.  `true` will enable all effects.",
+                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely.  `true` will enable all effects.",
                       default = "true"
                     }
                   }
