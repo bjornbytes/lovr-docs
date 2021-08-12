@@ -32,8 +32,9 @@ Yes, you can download them from <https://lovr.org/download/mac>.
 
 > Does LÖVR work on Linux?
 
-Yes.  Linux is an officially supported platform.  LÖVR is compatible with Steam's OpenXR runtime and
-monado, an open source OpenXR runtime.  There are precompiled binaries distributed as AppImages.
+Yes, Linux is an officially supported platform and there are precompiled binaries distributed as
+AppImages.  LÖVR is compatible with Steam's OpenXR runtime and monado, an open source OpenXR
+runtime.
 
 > Does LÖVR support AR?
 
