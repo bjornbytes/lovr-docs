@@ -7,7 +7,7 @@ out vec4 fragmentView;
 vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
   fragmentView = projection * transform * vertex;
   return fragmentView;
-} ]], [[ 
+} ]], [[
 /* FRAGMENT shader */
 #define PI 3.1415926538
 in vec4 fragmentView;
@@ -63,10 +63,10 @@ function lovr.draw()
   lovr.graphics.setShader(shader)
   lovr.graphics.rotate(math.pi/2, 1, 0, 0)
   lovr.graphics.scale(100)
-  lovr.graphics.setWireframe(false)
   lovr.graphics.setColor(0.565, 0.404, 0.463)
   terrain:draw()
   lovr.graphics.setWireframe(true)
   lovr.graphics.setColor(0.388, 0.302, 0.412, 0.1)
   terrain:draw()
+  lovr.graphics.setWireframe(false)
 end
