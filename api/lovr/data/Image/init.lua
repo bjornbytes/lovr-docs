@@ -11,7 +11,6 @@ return {
     the raw image data.
   ]],
   constructors = {
-    'lovr.data.newImage',
-    'Canvas:newImage'
+    'lovr.data.newImage'
   }
 }

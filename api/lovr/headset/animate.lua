@@ -42,8 +42,6 @@ return {
     be set up carefully to have the same structure as the models provided by the headset SDK.
   ]],
   related = {
-    'lovr.headset.newModel',
-    'Model:animate',
-    'Model:pose'
+    'lovr.headset.newModel'
   }
 }
