@@ -4573,8 +4573,238 @@ return {
       summary = "Renders graphics using the GPU.",
       description = "The graphics module renders graphics or performs computation using the GPU.\n\nWork Submission\n---\n\nThe GPU is a separate device that runs asynchronously from the main system.  Work is sent to the GPU in chunks.  A chunk of work is started using `lovr.graphics.begin`, and a chunk is submitted to the GPU using `lovr.graphics.submit`.  All graphics work must happen between these two calls.  Normally they are called automatically by the default main loop provided by `lovr.run`, but it's possible to call them yourself to do graphics work at different times, like in `lovr.update` or some other callback.\n\nAlthough it's common to use a single chunk for all work in a frame, chunks do not correspond to frames and the work for a frame can be submitted in multiple chunks.  The advantage of this is that the GPU can start processing work for earlier chunks while more chunks are being recorded.  Overlapping CPU and GPU work like this can improve performance.\n\nThere are only 3 types of work that happen within a chunk: **render**, **compute**, and **transfer**.\n\nRendering\n---\n\nThe only way to render graphics is to call `lovr.graphics.render`.  This function takes a render target and a set of `Batch` objects that define what should be drawn.\n\nA render target consists of up to 4 color textures and an optional depth buffer.\n\nRendering to array textures with multiple layers will broadcast draws to each layer, using a different camera for each view.  This can be used to efficiently render stereo, cubemaps, splitscreen, or anything where the same objects need to be rendered from mulitple views.\n\nThe content to render can be provided as prerecorded `Batch` objects or as a callback function that records a new temporary batch.\n\nCompute\n---\n\nCompute shaders can only be dispatched inside `lovr.graphics.compute`.  This function takes a list of `Batch` objects, similar to `lovr.graphics.render`.\n\nInside of a call to `lovr.graphics.compute`, there is no synchronization, meaning that the Batches and their compute dispatches can run in any order and are not expected to depend on each other.  If a compute shader relies on results from a previous compute dispatch, they should go in distinct calls to `compute`.\n\nTransfer\n---\n\nTransfer operations do not happen in a dedicated scope but are functions on the 2 GPU resources, `Buffer` and `Texture` objects.  An important aspect of transfers is that they always run before render and compute work in the chunk.  To interleave transfers with other work, multiple chunks must be used.\n\nHardware Info\n---\n\nThere are a wide variety of GPUs, each with their own set of capabilities and limitations.  The graphics module exposes information about the current GPU using 3 functions:\n\n- `lovr.graphics.getHardware` exposes general hardware info (e.g. model number).\n- `lovr.graphics.getFeatures` exposes features, (e.g. extra functions in shaders).\n- `lovr.graphics.getLimits` exposes limits (e.g. maximum texture size).\n\nThreading\n---\n\nThe graphics module supports multithreaded rendering.  There are some important rules to follow to ensure thread safety and avoid crashes or corrupted data.\n\nOnly one chunk can be recorded at a time.  During `lovr.graphics.begin` and `lovr.graphics.submit`, no other graphics work may occur on other threads.  Within a chunk, graphics and compute work can be recorded on multiple threads.\n\nWithin a chunk, any number of `lovr.graphics.render` and `lovr.graphics.compute` calls can be running on threads simultaneously.  Use the `order` parameter to these functions to define the order that they will run in, so threads don't need to wait for each other.\n\nA `Batch` object can only be recorded on a single thread at a time, but multiple batches can be recorded in parallel and later passed to a render/compute call.\n\nTransfers will run in any order, before all of the render and compute for the chunk.",
       key = "lovr.graphics",
-      objects = {},
-      functions = {},
+      objects = {
+        {
+          name = "Buffer",
+          summary = "A block of memory on the GPU.",
+          description = "Put dispenser here.",
+          key = "Buffer",
+          module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newBuffer",
+            "lovr.graphics.getBuffer"
+          },
+          methods = {}
+        }
+      },
+      functions = {
+        {
+          name = "begin",
+          summary = "Begin a chunk of work.",
+          description = "",
+          key = "lovr.graphics.begin",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.submit"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "compute",
+          summary = "Run compute shaders.",
+          description = "Runs compute shaders.",
+          key = "lovr.graphics.compute",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.render"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "getFeatures",
+          summary = "Get the set of supported GPU features.",
+          description = "",
+          key = "lovr.graphics.getFeatures",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getHardware",
+            "lovr.graphics.getLimits"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "features",
+                  type = "table",
+                  description = "GPU features."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getHardware",
+          summary = "Get information about the current GPU.",
+          description = "",
+          key = "lovr.graphics.getHardware",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getFeatures",
+            "lovr.graphics.getLimits"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "hardware",
+                  type = "table",
+                  description = "GPU info."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getLimits",
+          summary = "Get the limits of the current GPU.",
+          description = "",
+          key = "lovr.graphics.getLimits",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getHardware",
+            "lovr.graphics.getFeatures"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "limits",
+                  type = "table",
+                  description = "GPU limits."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "render",
+          summary = "Render to a set of textures.",
+          description = "Renders to a set of textures.  Up to 4 color textures may be provided, as well as an optional depth buffer.\n\nThe content to render can be provided by a callback function or a set of prerecorded `Batch` objects.  When using a callback, its first argument will be a temporary Batch to fill out, which will get immediately rendered.",
+          key = "lovr.graphics.render",
+          module = "lovr.graphics",
+          notes = "This function must be called between `lovr.graphics.begin` and `lovr.graphics.submit`.\n\nThe special value `'window'` can be used instead of a Texture to render to the window.\n\nThe default clear for color textures will be the background color, which can be set using `lovr.graphics.setBackgroundColor`.\n\nSetting clear to `true` for either color or depth textures will leave garbage data in the textures, which is the fastest way to initialize them.  Setting clear to `false` will load the old data from the texture, which is very slow on mobile GPUs.\n\nThe stencil buffer is currently always cleared to zero.\n\nA depth format can be provided instead of a Texture.  In this case, an internal temporary depth buffer will be used.\n\nIt's valid to have zero color textures, but in that case a depth texture must be provided.\n\nAll textures must be created with the 'render' usage flag.  The textures must have the same dimensions and sample counts, and array textures must have the same number of layers.  Textures can have any renderable format and any number of mipmap levels.  It is valid to render to a view of a texture.\n\nIf the textures have a single sample and the `samples` option is set to a number bigger than 1, internal multisampled buffers will be used and the antialiased result will be copied to the color textures once rendering is complete.\n\nThe topmost mipmap level of each texture will be rendered to.  If the `mipmaps` flag is `true`, mipmaps will be regenerated for each texture once rendering is complete.\n\nIf the textures are array textures with multiple layers, draws get broadcasted to every layer. Each layer can use its own camera.  The first layer uses the first camera view of the Batch, the second layer uses the second view, and so on.  The maximum number of views is given by the `renderViews` limit, and is currently always 6.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "A texture to render to."
+                },
+                {
+                  name = "callback",
+                  type = "function",
+                  description = "A callback function used to record rendering work.  It will be passed a temporary Batch as its single argument.  The Batch becomes invalid at the end of the callback."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number from 1 to 100 used to sequence this rendering work with other work in the frame. Smaller order values will run before larger values, and any render/compute work with the same value will run in the order it was submitted.  This is intended to be used to order work across multiple threads.",
+                  default = "50"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "table",
+                  description = "A set of textures and other rendering settings.",
+                  table = {}
+                },
+                {
+                  name = "callback",
+                  type = "function",
+                  description = "A callback function used to record rendering work.  It will be passed a temporary Batch as its single argument.  The Batch becomes invalid at the end of the callback."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number from 1 to 100 used to sequence this rendering work with other work in the frame. Smaller order values will run before larger values, and any render/compute work with the same value will run in the order it was submitted.  This is intended to be used to order work across multiple threads.",
+                  default = "50"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "A texture to render to."
+                },
+                {
+                  name = "...batches",
+                  type = "Batch",
+                  description = "One or more batches to render."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number from 1 to 100 used to sequence this rendering work with other work in the frame. Smaller order values will run before larger values, and any render/compute work with the same value will run in the order it was submitted.  This is intended to be used to order work across multiple threads.",
+                  default = "50"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "table",
+                  description = "A set of textures and other rendering settings.",
+                  table = {}
+                },
+                {
+                  name = "...batches",
+                  type = "Batch",
+                  description = "One or more batches to render."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number from 1 to 100 used to sequence this rendering work with other work in the frame. Smaller order values will run before larger values, and any render/compute work with the same value will run in the order it was submitted.  This is intended to be used to order work across multiple threads.",
+                  default = "50"
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.compute"
+          }
+        },
+        {
+          name = "submit",
+          summary = "Submit a chunk of work.",
+          description = "",
+          key = "lovr.graphics.submit",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.begin"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        }
+      },
       enums = {}
     },
     {
