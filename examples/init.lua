@@ -38,6 +38,7 @@ return {
   'Audio/Mute',
   'Audio/Sine_Wave_Generator',
   'Effects/Blur',
+  'Effects/Stereo_Image',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
   'Optimization/Instancing',
