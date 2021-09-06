@@ -39,6 +39,7 @@ return {
   'Audio/Sine_Wave_Generator',
   'Effects/Blur',
   'Effects/Stereo_Image',
+  'Effects/Cubemap_Texturing',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
   'Optimization/Instancing',
