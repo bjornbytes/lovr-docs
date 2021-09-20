@@ -5,7 +5,31 @@ return {
       summary = "In the beginning, there was nothing.",
       description = "`lovr` is the single global table that is exposed to every LÖVR app. It contains a set of **modules** and a set of **callbacks**.",
       key = "lovr",
-      objects = {},
+      objects = {
+        {
+          name = "Object",
+          summary = "The base object.",
+          description = "This is not a real object, but describes the behavior shared by all objects.  Think of it as the superclass of all LÖVR objects.\n\nIn addition to the methods here, all objects have a `__tostring` metamethod that returns the name of the object's type.  So to check if a LÖVR object is an instance of \"Blob\", you can do `tostring(object) == 'Blob'`.",
+          key = "Object",
+          module = "lovr",
+          methods = {
+            {
+              name = "release",
+              summary = "Immediately release the Lua reference to an object.",
+              description = "Immediately destroys Lua's reference to the object it's called on.  After calling this function on an object, it is an error to do anything with the object from Lua (call methods on it, pass it to other functions, etc.).  If nothing else is using the object, it will be destroyed immediately, which can be used to destroy something earlier than it would normally be garbage collected in order to reduce memory.",
+              key = "Object:release",
+              module = "lovr",
+              notes = "The object may not be destroyed immediately if something else is referring to it (e.g. it is pushed to a Channel or exists in the payload of a pending event).",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          }
+        }
+      },
       sections = {
         {
           name = "Modules",
@@ -25140,7 +25164,7 @@ return {
               description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
             },
             {
-              name = "repeat",
+              name = "repeating",
               type = "boolean",
               description = "Whether the event is the result of a key repeat instead of an actual press."
             }
