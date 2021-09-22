@@ -12,6 +12,14 @@ return {
       type = 'Vec2',
       description = 'The vector to lerp towards.'
     },
+    x = {
+      type = 'number',
+      description = 'A value of x component to lerp towards.'
+    },
+    y = {
+      type = 'number',
+      description = 'A value of y component to lerp towards.'
+    },
     {
       name = 't',
       type = 'number',
@@ -19,10 +27,19 @@ return {
     }
   },
   returns = {
-    {
-      name = 'v',
+    v = {
       type = 'Vec2',
       description = 'The original vector, containing the new lerped values.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'u', 't' },
+      returns = { 'v' }
+    },
+    {
+      arguments = { 'x', 'y', 't' },
+      returns = { 'v' }
     }
   },
   related = {
