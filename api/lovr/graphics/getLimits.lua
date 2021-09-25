@@ -116,12 +116,6 @@ return {
       }
     }
   },
-  variants = {
-    {
-      arguments = {},
-      returns = { 'limits' }
-    }
-  },
   related = {
     'lovr.graphics.isFormatSupported',
     'lovr.graphics.getHardware',
