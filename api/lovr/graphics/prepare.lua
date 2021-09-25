@@ -1,6 +1,6 @@
 return {
-  summary = 'Begin a chunk of work.',
-  description = '',
+  summary = 'Start recording graphics work.',
+  description = 'TODO',
   arguments = {},
   returns = {},
   related = {

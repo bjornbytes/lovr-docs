@@ -1,10 +1,10 @@
 return {
-  summary = 'Submit recorded graphics work to the GPU.',
+  summary = 'Wait for the GPU to finish all submitted work.',
   description = 'TODO',
   arguments = {},
   returns = {},
   related = {
     'lovr.graphics.prepare',
-    'lovr.graphics.wait'
+    'lovr.graphics.submit'
   }
 }
