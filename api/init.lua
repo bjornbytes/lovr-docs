@@ -5068,6 +5068,51 @@ return {
           }
         },
         {
+          name = "origin",
+          summary = "Reset the transform to the origin.",
+          description = "Resets the transform to the origin.  This is called automatically at the beginning of each render pass.",
+          key = "lovr.graphics.origin",
+          module = "lovr.graphics",
+          notes = "At the beginning of a render pass or a batch pass, the transform will be at the origin, as though this function was just called.",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
+          }
+        },
+        {
+          name = "pop",
+          summary = "Restore original state from a stack.",
+          description = "Restores the original state from one of the stacks.",
+          key = "lovr.graphics.pop",
+          module = "lovr.graphics",
+          notes = "Currently, 16 levels of nesting are supported for the transform stack and 4 levels of nesting are supported for the pipeline stack.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "stack",
+                  type = "StackType",
+                  description = "The type of stack to pop.",
+                  default = "'transform'"
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.push",
+            "StackType"
+          }
+        },
+        {
           name = "prepare",
           summary = "Start recording graphics work.",
           description = "TODO",
@@ -5081,6 +5126,31 @@ return {
               arguments = {},
               returns = {}
             }
+          }
+        },
+        {
+          name = "push",
+          summary = "Push state onto a stack.",
+          description = "Pushes a copy of the current state onto a stack.  Further modifications to the state will operate on the copy, and the original state can be restored using `lovr.graphics.pop`.  Every push operation must be followed by a corresponding pop to keep the stack balanced.  The calls can be nested to create hierarchies of nested state.\n\nThe types of state that can be saved and restored in this way are given by `StackType`. Currently, the `transform` stack can be used to save coordinate spaces, the `pipeline` stack can be used to save pipeline states, and the `label` stack can be used to create named scopes for graphics debugging tools.",
+          key = "lovr.graphics.push",
+          module = "lovr.graphics",
+          notes = "Currently, 16 levels of nesting are supported for the transform stack and 4 levels of nesting are supported for the pipeline stack.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "stack",
+                  type = "StackType",
+                  description = "The type of stack to push.",
+                  default = "'transform'"
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.pop",
+            "StackType"
           }
         },
         {
