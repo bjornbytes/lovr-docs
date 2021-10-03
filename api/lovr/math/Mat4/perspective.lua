@@ -20,12 +20,12 @@ return {
     {
       name = 'fov',
       type = 'number',
-      description = 'The field of view (in radians).'
+      description = 'The vertical field of view (in radians).'
     },
     {
       name = 'aspect',
       type = 'number',
-      description = 'The vertical aspect ratio of the projection.'
+      description = 'The horizontal aspect ratio of the projection (width / height).'
     }
   },
   returns = {
