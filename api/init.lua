@@ -4589,6 +4589,154 @@ return {
       },
       functions = {
         {
+          name = "begin",
+          summary = "Begin a pass of graphics work.",
+          description = "TODO",
+          key = "lovr.graphics.begin",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.finish"
+          },
+          variants = {
+            {
+              description = "TODO (compute and transfer pass)",
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "The type of pass to start."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number between 1 and 100 used to define the order passes run in.  Passes with a smaller order run before passes with a larger order.  Passes with the same order may run in any order.  If `nil`, an autoincrementing number will be used, causing passes to run in the order they are started.",
+                  default = "nil"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "TODO",
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "The type of pass to start."
+                },
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The texture to render to."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number between 1 and 100 used to define the order passes run in.  Passes with a smaller order run before passes with a larger order.  Passes with the same order may run in any order.  If `nil`, an autoincrementing number will be used, causing passes to run in the order they are started.",
+                  default = "nil"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "TODO",
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "The type of pass to start."
+                },
+                {
+                  name = "canvas",
+                  type = "table",
+                  description = "The set of textures to render to, along with other rendering options."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number between 1 and 100 used to define the order passes run in.  Passes with a smaller order run before passes with a larger order.  Passes with the same order may run in any order.  If `nil`, an autoincrementing number will be used, causing passes to run in the order they are started.",
+                  default = "nil"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "TODO (batch pass)",
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "The type of pass to start."
+                },
+                {
+                  name = "batch",
+                  type = "Batch",
+                  description = "The Batch to record commands to."
+                },
+                {
+                  name = "order",
+                  type = "number",
+                  description = "A number between 1 and 100 used to define the order passes run in.  Passes with a smaller order run before passes with a larger order.  Passes with the same order may run in any order.  If `nil`, an autoincrementing number will be used, causing passes to run in the order they are started.",
+                  default = "nil"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "finish",
+          summary = "Finish a pass.",
+          description = "TODO",
+          key = "lovr.graphics.finish",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.begin"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "getBackground",
+          summary = "Get the background color.",
+          description = "TODO",
+          key = "lovr.graphics.getBackground",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.begin"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "r",
+                  type = "number",
+                  description = "The red component of the background color."
+                },
+                {
+                  name = "g",
+                  type = "number",
+                  description = "The green component of the background color."
+                },
+                {
+                  name = "b",
+                  type = "number",
+                  description = "The blue component of the background color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "The alpha component of the background color."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getFeatures",
           summary = "Get the set of supported GPU features.",
           description = "TODO",
@@ -4869,6 +5017,73 @@ return {
           }
         },
         {
+          name = "getProjection",
+          summary = "Get the field of view.",
+          description = "Returns the projection for a single view.",
+          key = "lovr.graphics.getProjection",
+          module = "lovr.graphics",
+          related = {
+            "lovr.headset.getViewAngles",
+            "lovr.headset.getViewCount",
+            "lovr.graphics.getViewPose",
+            "lovr.graphics.setViewPose"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                }
+              },
+              returns = {
+                {
+                  name = "left",
+                  type = "number",
+                  description = "The left field of view angle, in radians."
+                },
+                {
+                  name = "right",
+                  type = "number",
+                  description = "The right field of view angle, in radians."
+                },
+                {
+                  name = "up",
+                  type = "number",
+                  description = "The top field of view angle, in radians."
+                },
+                {
+                  name = "down",
+                  type = "number",
+                  description = "The bottom field of view angle, in radians."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                },
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The matrix to fill with the projection."
+                }
+              },
+              returns = {
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The matrix containing the projection."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getStats",
           summary = "Get graphics-related statistics.",
           description = "TODO",
@@ -5033,6 +5248,93 @@ return {
           }
         },
         {
+          name = "getViewPose",
+          summary = "Get the camera pose.",
+          description = "Get the pose of a single view.",
+          key = "lovr.graphics.getViewPose",
+          module = "lovr.graphics",
+          related = {
+            "lovr.headset.getViewPose",
+            "lovr.headset.getViewCount",
+            "lovr.graphics.getProjection",
+            "lovr.graphics.setProjection"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the viewer, in meters."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the viewer, in meters."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the viewer, in meters."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the viewer is rotated around its axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The view index."
+                },
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The matrix to fill with the view pose."
+                },
+                {
+                  name = "invert",
+                  type = "boolean",
+                  description = "Whether the matrix should be inverted."
+                }
+              },
+              returns = {
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The matrix containing the view pose."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isFormatSupported",
           summary = "Check if a Texture format is supported.",
           description = "TODO",
@@ -5070,30 +5372,29 @@ return {
         {
           name = "origin",
           summary = "Reset the transform to the origin.",
-          description = "Resets the transform to the origin.  This is called automatically at the beginning of each render pass.",
+          description = "TODO",
           key = "lovr.graphics.origin",
           module = "lovr.graphics",
-          notes = "At the beginning of a render pass or a batch pass, the transform will be at the origin, as though this function was just called.",
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          },
           related = {
             "lovr.graphics.translate",
             "lovr.graphics.rotate",
             "lovr.graphics.scale",
             "lovr.graphics.transform"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
           }
         },
         {
           name = "pop",
           summary = "Restore original state from a stack.",
-          description = "Restores the original state from one of the stacks.",
+          description = "TODO",
           key = "lovr.graphics.pop",
           module = "lovr.graphics",
-          notes = "Currently, 16 levels of nesting are supported for the transform stack and 4 levels of nesting are supported for the pipeline stack.",
+          notes = "TODO stack balancing/error",
           variants = {
             {
               arguments = {
@@ -5131,10 +5432,10 @@ return {
         {
           name = "push",
           summary = "Push state onto a stack.",
-          description = "Pushes a copy of the current state onto a stack.  Further modifications to the state will operate on the copy, and the original state can be restored using `lovr.graphics.pop`.  Every push operation must be followed by a corresponding pop to keep the stack balanced.  The calls can be nested to create hierarchies of nested state.\n\nThe types of state that can be saved and restored in this way are given by `StackType`. Currently, the `transform` stack can be used to save coordinate spaces, the `pipeline` stack can be used to save pipeline states, and the `label` stack can be used to create named scopes for graphics debugging tools.",
+          description = "TODO",
           key = "lovr.graphics.push",
           module = "lovr.graphics",
-          notes = "Currently, 16 levels of nesting are supported for the transform stack and 4 levels of nesting are supported for the pipeline stack.",
+          notes = "TODO stack balancing/error",
           variants = {
             {
               arguments = {
@@ -5154,6 +5455,341 @@ return {
           }
         },
         {
+          name = "setBackgroundColor",
+          summary = "Set the background color.",
+          description = "TODO",
+          key = "lovr.graphics.setBackgroundColor",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.begin"
+          },
+          variants = {
+            {
+              description = "TODO",
+              arguments = {
+                {
+                  name = "r",
+                  type = "number",
+                  description = "The red component of the background color."
+                },
+                {
+                  name = "g",
+                  type = "number",
+                  description = "The green component of the background color."
+                },
+                {
+                  name = "b",
+                  type = "number",
+                  description = "The blue component of the background color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "The alpha component of the background color.",
+                  default = "1.0"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "TODO",
+              arguments = {
+                {
+                  name = "hex",
+                  type = "number",
+                  description = "A hexcode (like `0xffffff`) to use for the background color (does not support alpha)."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "TODO",
+              arguments = {
+                {
+                  name = "color",
+                  type = "table",
+                  description = "A table containing 3 or 4 color components."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setProjection",
+          tag = "graphicsState",
+          summary = "Set the field of view.",
+          description = "Sets the projection for a single view.  4 field of view angles can be used, similar to the field of view returned by `lovr.headset.getViewAngles`.  Alternatively, a projection matrix can be used for other types of projections like orthographic, oblique, etc.  There is also a shorthand string \"orthographic\" that can be used to configure an orthographic projection.\n\nUp to 6 views are supported, one for each eye.  When rendering to the headset, both projections are changed to match the ones used by the headset.",
+          key = "lovr.graphics.setProjection",
+          module = "lovr.graphics",
+          related = {
+            "lovr.headset.getViewAngles",
+            "lovr.headset.getViewCount",
+            "lovr.graphics.getViewPose",
+            "lovr.graphics.setViewPose"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "left",
+                  type = "number",
+                  description = "The left field of view angle, in radians."
+                },
+                {
+                  name = "right",
+                  type = "number",
+                  description = "The right field of view angle, in radians."
+                },
+                {
+                  name = "up",
+                  type = "number",
+                  description = "The top field of view angle, in radians."
+                },
+                {
+                  name = "down",
+                  type = "number",
+                  description = "The bottom field of view angle, in radians."
+                },
+                {
+                  name = "near",
+                  type = "number",
+                  description = "The near clipping plane distance, in meters.",
+                  default = ".01"
+                },
+                {
+                  name = "far",
+                  type = "number",
+                  description = "The far clipping plane distance, in meters.",
+                  default = "100.0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "The projection matrix for the view."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "orthographic",
+                  type = "string",
+                  description = "The shortcut string 'orthographic'."
+                },
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the orthographic projection."
+                },
+                nil,
+                {
+                  name = "clipNear",
+                  type = "number",
+                  description = "The height of the orthographic projection.",
+                  default = "-1.0"
+                },
+                {
+                  name = "clipFar",
+                  type = "number",
+                  description = "The height of the orthographic projection.",
+                  default = "1.0"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setScissor",
+          summary = "Set the scissor.",
+          description = "TODO",
+          key = "lovr.graphics.setScissor",
+          module = "lovr.graphics",
+          notes = "TODO not floating point, negative, limits, not pipeline, initial pass state",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the upper-left corner of the scissor rectangle."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the upper-left corner of the scissor rectangle."
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The width of the scissor rectangle."
+                },
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of the scissor rectangle."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.setViewport"
+          }
+        },
+        {
+          name = "setViewPose",
+          summary = "Set the camera pose.",
+          description = "Sets the pose for a single view.  Objects rendered in this view will appear as though the camera is positioned using the given pose.\n\nUp to 6 views are supported, one for each eye.  When rendering to the headset, both views are changed to match the estimated eye positions.  These view poses are also available using `lovr.headset.getViewPose`.",
+          key = "lovr.graphics.setViewPose",
+          module = "lovr.graphics",
+          related = {
+            "lovr.headset.getViewPose",
+            "lovr.headset.getViewCount",
+            "lovr.graphics.getProjection",
+            "lovr.graphics.setProjection"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the viewer, in meters."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the viewer, in meters."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the viewer, in meters."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the viewer is rotated around its axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "view",
+                  type = "number",
+                  description = "The index of the view to update."
+                },
+                {
+                  name = "matrix",
+                  type = "Mat4",
+                  description = "A matrix containing the viewer pose."
+                },
+                {
+                  name = "inverted",
+                  type = "boolean",
+                  description = "Whether the matrix is an inverted pose (a view matrix)."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setViewport",
+          summary = "Set the viewport.",
+          description = "TODO",
+          key = "lovr.graphics.setViewport",
+          module = "lovr.graphics",
+          notes = "TODO floating point, negative, flipped depth range, limits, not pipeline, initial pass state, what the hell is depth range",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x coordinate of the upper-left corner of the viewport."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y coordinate of the upper-left corner of the viewport."
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The width of the viewport."
+                },
+                {
+                  name = "h",
+                  type = "number",
+                  description = "The height of the viewport."
+                },
+                {
+                  name = "minDepth",
+                  type = "number",
+                  description = "The min component of the depth range.",
+                  default = "0.0"
+                },
+                {
+                  name = "maxDepth",
+                  type = "number",
+                  description = "The max component of the depth range.",
+                  default = "1.0"
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.setScissor"
+          }
+        },
+        {
           name = "submit",
           summary = "Submit recorded graphics work to the GPU.",
           description = "TODO",
@@ -5168,6 +5804,54 @@ return {
               arguments = {},
               returns = {}
             }
+          }
+        },
+        {
+          name = "translate",
+          summary = "Translate the coordinate system.",
+          description = "Applies a translation to the coordinate space.  All objects drawn will have their position offset by this value.\n\nThe effect will last until the active pass is finished or the transformation is popped off the stack using `lovr.graphics.pop`.",
+          key = "lovr.graphics.translate",
+          module = "lovr.graphics",
+          notes = "Order matters when scaling, translating, and rotating the coordinate system.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The amount to translate on the x axis.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The amount to translate on the y axis.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The amount to translate on the z axis.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "A vector to translate by."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
           }
         },
         {

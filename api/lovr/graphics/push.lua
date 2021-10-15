@@ -10,6 +10,9 @@ return {
     }
   },
   returns = {},
+  notes = [[
+    TODO stack balancing/error
+  ]],
   related = {
     'lovr.graphics.pop',
     'StackType'
