@@ -5609,17 +5609,21 @@ return {
                   type = "number",
                   description = "The width of the orthographic projection."
                 },
-                nil,
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the orthographic projection."
+                },
                 {
                   name = "clipNear",
                   type = "number",
-                  description = "The height of the orthographic projection.",
+                  description = "The near clipping plane.",
                   default = "-1.0"
                 },
                 {
                   name = "clipFar",
                   type = "number",
-                  description = "The height of the orthographic projection.",
+                  description = "The far clipping plane.",
                   default = "1.0"
                 }
               },
