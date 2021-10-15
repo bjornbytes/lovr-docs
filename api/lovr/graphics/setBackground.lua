@@ -39,7 +39,7 @@ return {
     },
     {
       description = 'TODO',
-      arguments = { 'hex', 'alpha' },
+      arguments = { 'hex', 'a' },
       returns = {}
     },
     {

@@ -5455,10 +5455,10 @@ return {
           }
         },
         {
-          name = "setBackgroundColor",
+          name = "setBackground",
           summary = "Set the background color.",
           description = "TODO",
-          key = "lovr.graphics.setBackgroundColor",
+          key = "lovr.graphics.setBackground",
           module = "lovr.graphics",
           related = {
             "lovr.graphics.begin"
@@ -5498,6 +5498,12 @@ return {
                   name = "hex",
                   type = "number",
                   description = "A hexcode (like `0xffffff`) to use for the background color (does not support alpha)."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "The alpha component of the background color.",
+                  default = "1.0"
                 }
               },
               returns = {}
