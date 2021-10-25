@@ -100,7 +100,7 @@ Luckily, LÖVR loves you, and makes this very easy. Here's the new vertex shade
 
         vec4 position(mat4 projection, mat4 transform, vec4 vertex) 
         { 
-            Normal = lovrNormal * lovrNormalMatrix;
+            Normal = lovrNormalMatrix * lovrNormal;
             FragmentPos = vec3(lovrModel * vertex);
             
             return projection * transform * vertex; 
