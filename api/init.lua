@@ -6776,6 +6776,35 @@ return {
               }
             },
             {
+              name = "getTriangles",
+              summary = "Get a list of the triangles in the Model.",
+              description = "Returns 2 tables containing mesh data for the Model.\n\nThe first table is a list of vertex positions and contains 3 numbers for the x, y, and z coordinate of each vertex.  The second table is a list of triangles and contains 1-based indices into the first table representing the first, second, and third vertices that make up each triangle.\n\nThe vertex positions will be affected by node transforms.",
+              key = "Model:getTriangles",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAABB",
+                "World:newMeshCollider",
+                "lovr.audio.setGeometry"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "A flat table of numbers containing vertex positions."
+                    },
+                    {
+                      name = "indices",
+                      type = "table",
+                      description = "A flat table of numbers containing triangle vertex indices."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "hasJoints",
               summary = "Check if a Model has joints.",
               description = "Returns whether the Model has any nodes associated with animated joints.  This can be used to approximately determine whether an animated shader needs to be used with an arbitrary Model.",
@@ -16940,7 +16969,13 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "A number to add to each component."
+                      description = "A value to add to x component."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to add to y component.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -16969,6 +17004,27 @@ return {
                       name = "u",
                       type = "Vec2",
                       description = "The vector to measure the distance to."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "distance",
+                      type = "number",
+                      description = "The distance to `u`."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to measure distance to."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to measure distance to."
                     }
                   },
                   returns = {
@@ -17014,7 +17070,13 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The number to divide each component by."
+                      description = "A value to divide x component by."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to divide y component by.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17033,7 +17095,7 @@ return {
               description = "Returns the dot product between this vector and another one.",
               key = "Vec2:dot",
               module = "lovr.math",
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z\n\nThe vectors are not normalized before computing the dot product.",
+              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y\n\nThe vectors are not normalized before computing the dot product.",
               variants = {
                 {
                   arguments = {
@@ -17041,6 +17103,27 @@ return {
                       name = "u",
                       type = "Vec2",
                       description = "The vector to compute the dot product with."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "dot",
+                      type = "number",
+                      description = "The dot product between `v` and `u`."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to compute the dot product with."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to compute the dot product with."
                     }
                   },
                   returns = {
@@ -17088,16 +17171,26 @@ return {
               },
               variants = {
                 {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec2",
+                      description = "The original vector, containing the new lerped values."
+                    }
+                  }
+                },
+                {
                   arguments = {
                     {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The vector to lerp towards."
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to lerp towards."
                     },
                     {
-                      name = "t",
+                      name = "y",
                       type = "number",
-                      description = "The lerping parameter."
+                      description = "A value of y component to lerp towards."
                     }
                   },
                   returns = {
@@ -17143,7 +17236,13 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The number to multiply each component by."
+                      description = "A value to multiply x component by."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to multiply y component by.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17262,7 +17361,13 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "A number to subtract from each component."
+                      description = "A value to subtract from x component."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to subtract from y component.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17352,7 +17457,19 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "A number to add to each component."
+                      description = "A value to add to x component."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to add to y component.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to add to z component.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17388,6 +17505,32 @@ return {
                       description = "The original vector, with the cross product as its values."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to compute cross product with."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to compute cross product with."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to compute cross product with."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec3",
+                      description = "The original vector, with the cross product as its values."
+                    }
+                  }
                 }
               },
               related = {
@@ -17410,6 +17553,32 @@ return {
                       name = "u",
                       type = "Vec3",
                       description = "The vector to measure the distance to."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "distance",
+                      type = "number",
+                      description = "The distance to `u`."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to measure distance to."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to measure distance to."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to measure distance to."
                     }
                   },
                   returns = {
@@ -17455,7 +17624,19 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The number to divide each component by."
+                      description = "A value to divide x component by."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to divide y component by.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to divide z component by.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17482,6 +17663,32 @@ return {
                       name = "u",
                       type = "Vec3",
                       description = "The vector to compute the dot product with."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "dot",
+                      type = "number",
+                      description = "The dot product between `v` and `u`."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to compute the dot product with."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to compute the dot product with."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to compute the dot product with."
                     }
                   },
                   returns = {
@@ -17551,6 +17758,37 @@ return {
                       description = "The original vector, containing the new lerped values."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to lerp towards."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to lerp towards."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to lerp towards."
+                    },
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The lerping parameter."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec3",
+                      description = "The original vector, containing the new lerped values."
+                    }
+                  }
                 }
               }
             },
@@ -17587,7 +17825,19 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The number to multiply each component by."
+                      description = "A value to multiply x component by."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to multiply y component by.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to multiply z component by.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17728,7 +17978,19 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "A number to subtract from each component."
+                      description = "A value to subtract from x component."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to subtract from y component.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to subtract from z component.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17823,7 +18085,25 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "A number to add to each component."
+                      description = "A value to add to x component."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to add to y component.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to add to z component.",
+                      default = "x"
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value to add to w component.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17852,6 +18132,37 @@ return {
                       name = "u",
                       type = "Vec4",
                       description = "The vector to measure the distance to."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "distance",
+                      type = "number",
+                      description = "The distance to `u`."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to measure distance to."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to measure distance to."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to measure distance to."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value of w component to measure distance to."
                     }
                   },
                   returns = {
@@ -17897,7 +18208,25 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The number to divide each component by."
+                      description = "A value to divide x component by."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to divide y component by.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to divide z component by.",
+                      default = "x"
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value to divide w component by.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -17924,6 +18253,37 @@ return {
                       name = "u",
                       type = "Vec4",
                       description = "The vector to compute the dot product with."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "dot",
+                      type = "number",
+                      description = "The dot product between `v` and `u`."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to compute the dot product with."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to compute the dot product with."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to compute the dot product with."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value of w component to compute the dot product with."
                     }
                   },
                   returns = {
@@ -17990,6 +18350,42 @@ return {
                       description = "The original vector, containing the new lerped values."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "A value of x component to lerp towards."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value of y component to lerp towards."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value of z component to lerp towards."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value of w component to lerp towards."
+                    },
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The lerping parameter."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec4",
+                      description = "The original vector, containing the new lerped values."
+                    }
+                  }
                 }
               }
             },
@@ -18026,7 +18422,25 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The number to multiply each component by."
+                      description = "A value to multiply x component by."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to multiply y component by.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to multiply z component by.",
+                      default = "x"
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value to multiply w component by.",
+                      default = "x"
                     }
                   },
                   returns = {
@@ -18131,23 +18545,23 @@ return {
               key = "Vec4:sub",
               module = "lovr.math",
               related = {
-                "Vec2:add",
-                "Vec2:mul",
-                "Vec2:div"
+                "Vec4:add",
+                "Vec4:mul",
+                "Vec4:div"
               },
               variants = {
                 {
                   arguments = {
                     {
                       name = "u",
-                      type = "Vec2",
+                      type = "Vec4",
                       description = "The other vector."
                     }
                   },
                   returns = {
                     {
                       name = "v",
-                      type = "Vec2",
+                      type = "Vec4",
                       description = "The original vector."
                     }
                   }
@@ -18157,13 +18571,31 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "A number to subtract from each component."
+                      description = "A value to subtract from x component."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "A value to subtract from y component.",
+                      default = "x"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "A value to subtract from z component.",
+                      default = "x"
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "A value to subtract from w component.",
+                      default = "x"
                     }
                   },
                   returns = {
                     {
                       name = "v",
-                      type = "Vec2",
+                      type = "Vec4",
                       description = "The original vector."
                     }
                   }
@@ -23282,7 +23714,8 @@ return {
                 "World:newBoxCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
-                "World:newSphereCollider"
+                "World:newSphereCollider",
+                "Model:getTriangles"
               },
               variants = {
                 {
@@ -23296,6 +23729,22 @@ return {
                       name = "indices",
                       type = "table",
                       description = "A table of triangle indices representing how the vertices are connected in the Mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "A Model to use for the mesh data.  Similar to calling `Model:getTriangles` and passing it to this function, but has better performance."
                     }
                   },
                   returns = {
