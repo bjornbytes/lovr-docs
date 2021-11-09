@@ -229,13 +229,13 @@ $ mkdir build
 $ cd build
 $ cmake \
     -D LOVR_USE_VRAPI=ON \
-    -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
-    -D ANDROID_SDK=/path/to/android \
+    -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk-bundle/build/cmake/android.toolchain.cmake \
+    -D ANDROID_SDK=/path/to/android/sdk \
     -D ANDROID_ABI=arm64-v8a \
     -D ANDROID_NATIVE_API_LEVEL=26 \
     -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
     -D ANDROID_KEYSTORE=/path/to/test.keystore \
-    -D ANDROID_KEYSTORE_PASS=PASS:hunter2 \
+    -D ANDROID_KEYSTORE_PASS=pass:hunter2 \
     ..
 $ cmake --build .
 ```
