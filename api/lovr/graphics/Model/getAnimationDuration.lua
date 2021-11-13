@@ -17,6 +17,16 @@ return {
       description = 'The duration of the animation, in seconds.'
     }
   },
+  variants = {
+    {
+      arguments = { 'name' },
+      returns = { 'duration' }
+    },
+    {
+      arguments = { 'index' },
+      returns = { 'duration' }
+    }
+  },
   related = {
     'Model:getAnimationCount',
     'Model:getAnimationName',
