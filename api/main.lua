@@ -95,6 +95,8 @@ local function processFunction(path, parent)
   end
 
   if not fn.variants then
+    local missingVariants = (not fn.arguments[1] and next(fn.arguments)) or (not fn.returns[1] and next(fn.returns))
+    warnIf(missingVariants, 'Function %q is missing variants', fn.key)
     fn.variants = {
       {
         arguments = fn.arguments,
