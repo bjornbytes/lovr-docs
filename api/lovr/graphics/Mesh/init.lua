@@ -49,7 +49,7 @@ return {
         in vec4 vColor;
         in int vWeight;
 
-        vec4 lovrMain() {
+        vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
           // Here we can access the vPosition, vColor, and vWeight of each vertex in the Mesh!
         }
 

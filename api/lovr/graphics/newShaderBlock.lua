@@ -69,17 +69,17 @@ return {
         shader = lovr.graphics.newShader(
           block:getShaderCode('Block') .. -- Define the block in the shader
           [[
-            vec4 lovrMain() {
+            vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
               // ...use the object transforms from the block
-              return lovrProjection * lovrTransform * lovrVertex;
+              return projection * transform * vertex;
             }
           ]],
 
           block:getShaderCode('Block') ..
           [[
-            vec4 lovrMain() {
+            vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
               // ...use the lights from the block
-              return lovrGraphicsColor * texture(lovrDiffuseTexture, lovrTexCoord);
+              return graphicsColor * texture(lovrDiffuseTexture, lovrTexCoord);
             }
           ]]
         )

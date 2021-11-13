@@ -21,8 +21,7 @@ return {
       lovr.graphics.setBackgroundColor(1, 1, 1)
 
       shader = lovr.graphics.newShader([[
-        vec4 lovrMain() {
-          vec4 vertex = lovrVertex;
+        vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
 
           // Rescale mesh coordinates from (0,1) to (-1,1)
           vertex.xy *= 2.;
@@ -37,7 +36,7 @@ return {
         }
       ]], [[
         // The fragment shader returns solid black for illustration purposes.  It could be transparent.
-        vec4 lovrMain() {
+        vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
           return vec4(0., 0., 0., 1.);
         }
       ]])
