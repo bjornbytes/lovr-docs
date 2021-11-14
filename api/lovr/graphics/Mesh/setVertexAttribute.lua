@@ -15,7 +15,7 @@ return {
     {
       name = '...',
       type = 'number',
-      description = 'Thew new components for the attribute.'
+      description = 'The new components for the attribute.'
     }
   },
   returns = {},
