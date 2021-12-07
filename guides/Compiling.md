@@ -158,9 +158,6 @@ The Android command line tools can be found on the Android website or installed 
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
 various versions of Android, the Android build tools, and the NDK.
 
-> Note: Currently version 31 of the build tools does not work properly (it is missing `dx`).  Use
-> version 30.0.3 or older.
-
 Android Studio isn't required, but can be used to install the SDK, NDK, and Java as well.
 
 Note where the SDK is installed.  Some paths in the SDK will need to be specified.
