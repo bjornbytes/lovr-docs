@@ -5572,6 +5572,26 @@ return {
           }
         },
         {
+          name = "setAlphaToCoverage",
+          tag = "pipeline",
+          summary = "Enable or disable \"alpha to coverage\".",
+          description = "TODO",
+          key = "lovr.graphics.setAlphaToCoverage",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enable",
+                  type = "boolean",
+                  description = "Whether alpha to coverage should be enabled."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setBackground",
           tag = "camera",
           summary = "Set the background color.",
@@ -5633,6 +5653,208 @@ return {
                   name = "color",
                   type = "table",
                   description = "A table containing 3 or 4 color components."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setBlendMode",
+          tag = "pipeline",
+          summary = "Set the blend mode.",
+          description = "TODO",
+          key = "lovr.graphics.setBlendMode",
+          module = "lovr.graphics",
+          notes = "TODO",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "blend",
+                  type = "BlendMode",
+                  description = "The blend mode."
+                },
+                {
+                  name = "alphaBlend",
+                  type = "BlendAlphaMode",
+                  description = "The alpha blend mode."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setColorMask",
+          tag = "pipeline",
+          summary = "Change the color components affected by drawing.",
+          description = "TODO",
+          key = "lovr.graphics.setColorMask",
+          module = "lovr.graphics",
+          notes = "TODO",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "r",
+                  type = "boolean",
+                  description = "Whether the red component should be affected by drawing."
+                },
+                {
+                  name = "g",
+                  type = "boolean",
+                  description = "Whether the green component should be affected by drawing."
+                },
+                {
+                  name = "b",
+                  type = "boolean",
+                  description = "Whether the blue component should be affected by drawing."
+                },
+                {
+                  name = "a",
+                  type = "boolean",
+                  description = "Whether the alpha component should be affected by drawing."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setCullMode",
+          tag = "pipeline",
+          summary = "Control triangle face culling.",
+          description = "TODO",
+          key = "lovr.graphics.setCullMode",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setWinding"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "mode",
+                  type = "CullMode",
+                  description = "Whether `front` faces, `back` faces, or `none` of the faces should be culled.",
+                  default = "'none'"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setDepthClamp",
+          tag = "pipeline",
+          summary = "Enable or disable depth clamp.",
+          description = "TODO",
+          key = "lovr.graphics.setDepthClamp",
+          module = "lovr.graphics",
+          notes = "TODO depthClamp feature!",
+          related = {
+            "lovr.graphics.setDepthTest",
+            "lovr.graphics.setDepthWrite",
+            "lovr.graphics.setDepthOffset"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enable",
+                  type = "boolean",
+                  description = "Whether depth clamp should be enabled."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setDepthOffset",
+          tag = "pipeline",
+          summary = "Configure the depth offset.",
+          description = "TODO",
+          key = "lovr.graphics.setDepthOffset",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setDepthTest",
+            "lovr.graphics.setDepthWrite"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "offset",
+                  type = "number",
+                  description = "The depth offset.",
+                  default = "0.0"
+                },
+                {
+                  name = "sloped",
+                  type = "number",
+                  description = "The sloped depth offset.",
+                  default = "0.0"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setDepthTest",
+          tag = "pipeline",
+          summary = "Configure the depth test.",
+          description = "TODO",
+          key = "lovr.graphics.setDepthTest",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setDepthWrite",
+            "lovr.graphics.setDepthOffset",
+            "lovr.graphics.setDepthClamp",
+            "lovr.graphics.setStencilTest"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "test",
+                  type = "CompareMode",
+                  description = "The new depth test to use."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Disable the depth test.",
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setDepthWrite",
+          tag = "pipeline",
+          summary = "Set whether draws write to the depth buffer.",
+          description = "TODO",
+          key = "lovr.graphics.setDepthWrite",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setDepthTest",
+            "lovr.graphics.setStencilWrite"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "write",
+                  type = "boolean",
+                  description = "The new depth write setting."
                 }
               },
               returns = {}
@@ -5789,6 +6011,147 @@ return {
           }
         },
         {
+          name = "setShader",
+          tag = "pipeline",
+          summary = "Set the active Shader.",
+          description = "TODO",
+          key = "lovr.graphics.setShader",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "shader",
+                  type = "boolean",
+                  description = "A custom Shader object to use for rendering."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Use one of the default shaders for drawing.",
+              arguments = {
+                {
+                  name = "default",
+                  type = "DefaultShader",
+                  description = "One of the default shaders to use."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Switch back to using an automatic shader for drawing.",
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setStencilTest",
+          tag = "pipeline",
+          summary = "Configure the stencil test.",
+          description = "TODO",
+          key = "lovr.graphics.setStencilTest",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setStencilWrite",
+            "lovr.graphics.setDepthTest"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "test",
+                  type = "CompareMode",
+                  description = "The new stencil test to use."
+                },
+                {
+                  name = "value",
+                  type = "number",
+                  description = "The stencil value to compare against."
+                },
+                {
+                  name = "mask",
+                  type = "number",
+                  description = "An optional mask to apply to stencil values before the comparison.",
+                  default = "0xff"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Disable the stencil test.",
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setStencilWrite",
+          tag = "pipeline",
+          summary = "Set whether draws write to the stencil buffer.",
+          description = "TODO",
+          key = "lovr.graphics.setStencilWrite",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setStencilTest",
+            "lovr.graphics.setDepthTest"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "action",
+                  type = "StencilAction",
+                  description = "How pixels drawn will update the stencil buffer."
+                },
+                {
+                  name = "value",
+                  type = "number",
+                  description = "When using the 'replace' action, this is the value to replace with.",
+                  default = "1"
+                },
+                {
+                  name = "mask",
+                  type = "number",
+                  description = "An optional mask to apply to stencil values before writing.",
+                  default = "0xff"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "actions",
+                  type = "table",
+                  description = "A list of 3 stencil actions, used when a pixel fails the stencil test, fails the depth test, or passes the stencil test, respectively."
+                },
+                {
+                  name = "value",
+                  type = "number",
+                  description = "When using the 'replace' action, this is the value to replace with.",
+                  default = "1"
+                },
+                {
+                  name = "mask",
+                  type = "number",
+                  description = "An optional mask to apply to stencil values before writing.",
+                  default = "0xff"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Disables stencil writing.",
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setViewPose",
           tag = "camera",
           summary = "Set the camera pose.",
@@ -5914,6 +6277,51 @@ return {
                   type = "number",
                   description = "The max component of the depth range.",
                   default = "1.0"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setWinding",
+          tag = "pipeline",
+          summary = "Set the winding direction of triangle vertices.",
+          description = "TODO",
+          key = "lovr.graphics.setWinding",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.setCullMode"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "winding",
+                  type = "Winding",
+                  description = "Whether triangle vertices are ordered `clockwise` or `counterclockwise`."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setWireframe",
+          tag = "pipeline",
+          summary = "Enable or disable wireframe rendering.",
+          description = "TODO",
+          key = "lovr.graphics.setWireframe",
+          module = "lovr.graphics",
+          notes = "TODO",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enable",
+                  type = "boolean",
+                  description = "Whether wireframe rendering should be enabled."
                 }
               },
               returns = {}
@@ -6100,13 +6508,38 @@ return {
       enums = {},
       sections = {
         {
+          name = "Drawing",
+          tag = "drawing",
+          description = "TODO"
+        },
+        {
+          name = "Objects",
+          tag = "graphics-objects",
+          description = "TODO"
+        },
+        {
+          name = "Coordinate System",
+          tag = "transform",
+          description = "TODO"
+        },
+        {
+          name = "Render States",
+          tag = "pipeline",
+          description = "TODO"
+        },
+        {
+          name = "Shader Inputs",
+          tag = "shader-inputs",
+          description = "TODO"
+        },
+        {
           name = "Camera",
           tag = "camera",
           description = "TODO"
         },
         {
-          name = "Transform",
-          tag = "transform",
+          name = "Compute",
+          tag = "compute",
           description = "TODO"
         },
         {
