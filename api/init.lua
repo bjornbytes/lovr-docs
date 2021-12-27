@@ -4685,6 +4685,61 @@ return {
           }
         },
         {
+          name = "compute",
+          tag = "compute",
+          summary = "Dispatch a compute shader.",
+          description = "TODO",
+          key = "lovr.graphics.compute",
+          module = "lovr.graphics",
+          notes = "TODO",
+          related = {
+            "lovr.graphics.prepare",
+            "lovr.graphics.submit"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "How many workgroups to dispatch in the x dimension.",
+                  default = "1"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "How many workgroups to dispatch in the y dimension.",
+                  default = "1"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "How many workgroups to dispatch in the z dimension.",
+                  default = "1"
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Perform an \"indirect\" dispatch, sourcing workgroup counts from a Buffer.",
+              arguments = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "A Buffer object containing the x, y, and z workgroup counts, stored as 4 byte unsigned integers."
+                },
+                {
+                  name = "offset",
+                  type = "number",
+                  description = "The byte offset to read the workgroup counts from in the Buffer.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "finish",
           tag = "work-submission",
           summary = "Finish a pass.",
