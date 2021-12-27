@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-misc',
   summary = 'Check if a Texture format is supported.',
   description = 'TODO',
   arguments = {

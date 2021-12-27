@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-misc',
   summary = 'Get the set of supported GPU features.',
   description = 'TODO',
   arguments = {},

@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-misc',
   summary = 'Get the limits of the current GPU.',
   description = 'TODO',
   arguments = {},

@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-misc',
   summary = 'Get information about the current GPU.',
   description = 'TODO',
   arguments = {},

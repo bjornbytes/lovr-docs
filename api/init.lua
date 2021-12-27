@@ -4741,6 +4741,7 @@ return {
         },
         {
           name = "getFeatures",
+          tag = "graphics-misc",
           summary = "Get the set of supported GPU features.",
           description = "TODO",
           key = "lovr.graphics.getFeatures",
@@ -4828,6 +4829,7 @@ return {
         },
         {
           name = "getHardware",
+          tag = "graphics-misc",
           summary = "Get information about the current GPU.",
           description = "TODO",
           key = "lovr.graphics.getHardware",
@@ -4889,6 +4891,7 @@ return {
         },
         {
           name = "getLimits",
+          tag = "graphics-misc",
           summary = "Get the limits of the current GPU.",
           description = "TODO",
           key = "lovr.graphics.getLimits",
@@ -5089,6 +5092,7 @@ return {
         },
         {
           name = "getStats",
+          tag = "graphics-misc",
           summary = "Get graphics-related statistics.",
           description = "TODO",
           key = "lovr.graphics.getStats",
@@ -5341,6 +5345,7 @@ return {
         },
         {
           name = "isFormatSupported",
+          tag = "graphics-misc",
           summary = "Check if a Texture format is supported.",
           description = "TODO",
           key = "lovr.graphics.isFormatSupported",

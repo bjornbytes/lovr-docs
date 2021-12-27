@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-misc',
   summary = 'Get graphics-related statistics.',
   description = 'TODO',
   arguments = {},
