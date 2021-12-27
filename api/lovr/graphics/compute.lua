@@ -43,9 +43,5 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO',
-  related = {
-    'lovr.graphics.prepare',
-    'lovr.graphics.submit'
-  }
+  notes = 'TODO'
 }

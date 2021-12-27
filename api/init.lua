@@ -4692,10 +4692,6 @@ return {
           key = "lovr.graphics.compute",
           module = "lovr.graphics",
           notes = "TODO",
-          related = {
-            "lovr.graphics.prepare",
-            "lovr.graphics.submit"
-          },
           variants = {
             {
               arguments = {
