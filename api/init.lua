@@ -4590,6 +4590,7 @@ return {
       functions = {
         {
           name = "begin",
+          tag = "work-submission",
           summary = "Begin a pass of graphics work.",
           description = "TODO",
           key = "lovr.graphics.begin",
@@ -4685,6 +4686,7 @@ return {
         },
         {
           name = "finish",
+          tag = "work-submission",
           summary = "Finish a pass.",
           description = "TODO",
           key = "lovr.graphics.finish",
@@ -4701,6 +4703,7 @@ return {
         },
         {
           name = "getBackground",
+          tag = "camera",
           summary = "Get the background color.",
           description = "TODO",
           key = "lovr.graphics.getBackground",
@@ -5018,6 +5021,7 @@ return {
         },
         {
           name = "getProjection",
+          tag = "camera",
           summary = "Get the field of view.",
           description = "Returns the projection for a single view.",
           key = "lovr.graphics.getProjection",
@@ -5249,6 +5253,7 @@ return {
         },
         {
           name = "getViewPose",
+          tag = "camera",
           summary = "Get the camera pose.",
           description = "Get the pose of a single view.",
           key = "lovr.graphics.getViewPose",
@@ -5371,6 +5376,7 @@ return {
         },
         {
           name = "origin",
+          tag = "transform",
           summary = "Reset the transform to the origin.",
           description = "TODO",
           key = "lovr.graphics.origin",
@@ -5390,11 +5396,16 @@ return {
         },
         {
           name = "pop",
+          tag = "transform",
           summary = "Restore original state from a stack.",
           description = "TODO",
           key = "lovr.graphics.pop",
           module = "lovr.graphics",
           notes = "TODO stack balancing/error",
+          related = {
+            "lovr.graphics.push",
+            "StackType"
+          },
           variants = {
             {
               arguments = {
@@ -5407,14 +5418,11 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.push",
-            "StackType"
           }
         },
         {
           name = "prepare",
+          tag = "work-submission",
           summary = "Start recording graphics work.",
           description = "TODO",
           key = "lovr.graphics.prepare",
@@ -5431,11 +5439,16 @@ return {
         },
         {
           name = "push",
+          tag = "transform",
           summary = "Push state onto a stack.",
           description = "TODO",
           key = "lovr.graphics.push",
           module = "lovr.graphics",
           notes = "TODO stack balancing/error",
+          related = {
+            "lovr.graphics.pop",
+            "StackType"
+          },
           variants = {
             {
               arguments = {
@@ -5448,19 +5461,21 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.pop",
-            "StackType"
           }
         },
         {
           name = "rotate",
+          tag = "transform",
           summary = "Rotate the coordinate system.",
           description = "TODO",
           key = "lovr.graphics.rotate",
           module = "lovr.graphics",
           notes = "TODO axis does not need to be normalized TODO order matters",
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
+          },
           variants = {
             {
               arguments = {
@@ -5501,15 +5516,11 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.translate",
-            "lovr.graphics.scale",
-            "lovr.graphics.transform"
           }
         },
         {
           name = "scale",
+          tag = "transform",
           summary = "Scale the coordinate system.",
           description = "TODO",
           key = "lovr.graphics.scale",
@@ -5557,6 +5568,7 @@ return {
         },
         {
           name = "setBackground",
+          tag = "camera",
           summary = "Set the background color.",
           description = "TODO",
           key = "lovr.graphics.setBackground",
@@ -5624,7 +5636,7 @@ return {
         },
         {
           name = "setProjection",
-          tag = "graphicsState",
+          tag = "camera",
           summary = "Set the field of view.",
           description = "Sets the projection for a single view.  4 field of view angles can be used, similar to the field of view returned by `lovr.headset.getViewAngles`.  Alternatively, a projection matrix can be used for other types of projections like orthographic, oblique, etc.  There is also a shorthand string \"orthographic\" that can be used to configure an orthographic projection.\n\nUp to 6 views are supported, one for each eye.  When rendering to the headset, both projections are changed to match the ones used by the headset.",
           key = "lovr.graphics.setProjection",
@@ -5734,11 +5746,15 @@ return {
         },
         {
           name = "setScissor",
+          tag = "camera",
           summary = "Set the scissor.",
           description = "TODO",
           key = "lovr.graphics.setScissor",
           module = "lovr.graphics",
           notes = "TODO not floating point, negative, limits, not pipeline, initial pass state",
+          related = {
+            "lovr.graphics.setViewport"
+          },
           variants = {
             {
               arguments = {
@@ -5765,13 +5781,11 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.setViewport"
           }
         },
         {
           name = "setViewPose",
+          tag = "camera",
           summary = "Set the camera pose.",
           description = "Sets the pose for a single view.  Objects rendered in this view will appear as though the camera is positioned using the given pose.\n\nUp to 6 views are supported, one for each eye.  When rendering to the headset, both views are changed to match the estimated eye positions.  These view poses are also available using `lovr.headset.getViewPose`.",
           key = "lovr.graphics.setViewPose",
@@ -5852,11 +5866,15 @@ return {
         },
         {
           name = "setViewport",
+          tag = "camera",
           summary = "Set the viewport.",
           description = "TODO",
           key = "lovr.graphics.setViewport",
           module = "lovr.graphics",
           notes = "TODO floating point, negative, flipped depth range, limits, not pipeline, initial pass state, what the hell is depth range",
+          related = {
+            "lovr.graphics.setScissor"
+          },
           variants = {
             {
               arguments = {
@@ -5895,13 +5913,11 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.setScissor"
           }
         },
         {
           name = "submit",
+          tag = "work-submission",
           summary = "Submit recorded graphics work to the GPU.",
           description = "TODO",
           key = "lovr.graphics.submit",
@@ -5919,11 +5935,17 @@ return {
         },
         {
           name = "transform",
+          tag = "transform",
           summary = "Apply a general transform to the coordinate system.",
           description = "TODO",
           key = "lovr.graphics.transform",
           module = "lovr.graphics",
           notes = "TODO you can use combos of numbers/vectors/quats too (or use meta Transform type to explain)",
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale"
+          },
           variants = {
             {
               arguments = {
@@ -6000,20 +6022,21 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.translate",
-            "lovr.graphics.rotate",
-            "lovr.graphics.scale"
           }
         },
         {
           name = "translate",
+          tag = "transform",
           summary = "Translate the coordinate system.",
           description = "TODO",
           key = "lovr.graphics.translate",
           module = "lovr.graphics",
           notes = "Order matters when scaling, translating, and rotating the coordinate system.",
+          related = {
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
+          },
           variants = {
             {
               arguments = {
@@ -6048,15 +6071,11 @@ return {
               },
               returns = {}
             }
-          },
-          related = {
-            "lovr.graphics.rotate",
-            "lovr.graphics.scale",
-            "lovr.graphics.transform"
           }
         },
         {
           name = "wait",
+          tag = "work-submission",
           summary = "Wait for the GPU to finish all submitted work.",
           description = "TODO",
           key = "lovr.graphics.wait",
@@ -6073,7 +6092,29 @@ return {
           }
         }
       },
-      enums = {}
+      enums = {},
+      sections = {
+        {
+          name = "Camera",
+          tag = "camera",
+          description = "TODO"
+        },
+        {
+          name = "Transform",
+          tag = "transform",
+          description = "TODO"
+        },
+        {
+          name = "Work Submission",
+          tag = "work-submission",
+          description = "TODO"
+        },
+        {
+          name = "Miscellaneous",
+          tag = "graphics-misc",
+          description = "Hardware info and statistics."
+        }
+      }
     },
     {
       name = "headset",
