@@ -5455,6 +5455,107 @@ return {
           }
         },
         {
+          name = "rotate",
+          summary = "Rotate the coordinate system.",
+          description = "TODO",
+          key = "lovr.graphics.rotate",
+          module = "lovr.graphics",
+          notes = "TODO axis does not need to be normalized TODO order matters",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians to rotate around the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "Quat",
+                  description = "A quaternion containing the rotation to apply."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.scale",
+            "lovr.graphics.transform"
+          }
+        },
+        {
+          name = "scale",
+          summary = "Scale the coordinate system.",
+          description = "TODO",
+          key = "lovr.graphics.scale",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.rotate",
+            "lovr.graphics.transform"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The amount to scale the x axis.",
+                  default = "1"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The amount to scale the y axis.",
+                  default = "1"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The amount to scale the z axis.",
+                  default = "1"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "A vector to translate by."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setBackground",
           summary = "Set the background color.",
           description = "TODO",
@@ -5817,9 +5918,99 @@ return {
           }
         },
         {
+          name = "transform",
+          summary = "Apply a general transform to the coordinate system.",
+          description = "TODO",
+          key = "lovr.graphics.transform",
+          module = "lovr.graphics",
+          notes = "TODO you can use combos of numbers/vectors/quats too (or use meta Transform type to explain)",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the translation.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the translation.",
+                  default = "0"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the translation.",
+                  default = "0"
+                },
+                {
+                  name = "sx",
+                  type = "number",
+                  description = "The x scale factor.",
+                  default = "1"
+                },
+                {
+                  name = "sy",
+                  type = "number",
+                  description = "The y scale factor.",
+                  default = "1"
+                },
+                {
+                  name = "sz",
+                  type = "number",
+                  description = "The z scale factor.",
+                  default = "1"
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians to rotate around the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = "1"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "transform",
+                  type = "Mat4",
+                  description = "The matrix holding the transform to apply."
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.graphics.translate",
+            "lovr.graphics.rotate",
+            "lovr.graphics.scale"
+          }
+        },
+        {
           name = "translate",
           summary = "Translate the coordinate system.",
-          description = "Applies a translation to the coordinate space.  All objects drawn will have their position offset by this value.\n\nThe effect will last until the active pass is finished or the transformation is popped off the stack using `lovr.graphics.pop`.",
+          description = "TODO",
           key = "lovr.graphics.translate",
           module = "lovr.graphics",
           notes = "Order matters when scaling, translating, and rotating the coordinate system.",

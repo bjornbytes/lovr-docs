@@ -1,21 +1,21 @@
 return {
-  summary = 'Translate the coordinate system.',
+  summary = 'Scale the coordinate system.',
   description = 'TODO',
   arguments = {
     x = {
       type = 'number',
-      default = '0',
-      description = 'The amount to translate on the x axis.'
+      default = '1',
+      description = 'The amount to scale the x axis.'
     },
     y = {
       type = 'number',
-      default = '0',
-      description = 'The amount to translate on the y axis.'
+      default = '1',
+      description = 'The amount to scale the y axis.'
     },
     z = {
       type = 'number',
-      default = '0',
-      description = 'The amount to translate on the z axis.'
+      default = '1',
+      description = 'The amount to scale the z axis.'
     },
     v = {
       type = 'Vec3',
@@ -33,10 +33,9 @@ return {
       returns = {}
     }
   },
-  notes = 'Order matters when scaling, translating, and rotating the coordinate system.',
   related = {
+    'lovr.graphics.translate',
     'lovr.graphics.rotate',
-    'lovr.graphics.scale',
     'lovr.graphics.transform'
   }
 }
