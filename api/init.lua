@@ -6219,6 +6219,39 @@ return {
             {
               arguments = {
                 {
+                  name = "text",
+                  type = "string",
+                  description = "The text to render."
+                },
+                {
+                  name = "transform",
+                  type = "transform",
+                  description = "The transform of the text."
+                },
+                {
+                  name = "wrap",
+                  type = "number",
+                  description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                  default = "0"
+                },
+                {
+                  name = "halign",
+                  type = "HorizontalAlign",
+                  description = "The horizontal alignment.",
+                  default = "'center'"
+                },
+                {
+                  name = "valign",
+                  type = "VerticalAlign",
+                  description = "The vertical alignment.",
+                  default = "'middle'"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
                   name = "font",
                   type = "Font",
                   description = "The Font to use."
@@ -6236,7 +6269,7 @@ return {
                 {
                   name = "wrap",
                   type = "number",
-                  description = "[\n        The maximum width of each line in meters (before scale is applied).  When zero, the text\n        will not wrap.",
+                  description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                   default = "0"
                 },
                 {
