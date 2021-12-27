@@ -1,4 +1,5 @@
 return {
+  tag = 'transform',
   summary = 'Translate the coordinate system.',
   description = 'TODO',
   arguments = {

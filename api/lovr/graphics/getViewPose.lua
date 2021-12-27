@@ -1,4 +1,5 @@
 return {
+  tag = 'camera',
   summary = 'Get the camera pose.',
   description = 'Get the pose of a single view.',
   arguments = {

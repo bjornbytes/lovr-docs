@@ -1,4 +1,5 @@
 return {
+  tag = 'work-submission',
   summary = 'Wait for the GPU to finish all submitted work.',
   description = 'TODO',
   arguments = {},

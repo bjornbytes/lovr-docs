@@ -1,4 +1,5 @@
 return {
+  tag = 'work-submission',
   summary = 'Begin a pass of graphics work.',
   description = 'TODO',
   arguments = {

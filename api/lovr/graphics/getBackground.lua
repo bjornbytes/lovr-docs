@@ -1,4 +1,5 @@
 return {
+  tag = 'camera',
   summary = 'Get the background color.',
   description = 'TODO',
   arguments = {},

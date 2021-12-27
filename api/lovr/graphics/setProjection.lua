@@ -1,5 +1,5 @@
 return {
-  tag = 'graphicsState',
+  tag = 'camera',
   summary = 'Set the field of view.',
   description = [[
     Sets the projection for a single view.  4 field of view angles can be used, similar to the field

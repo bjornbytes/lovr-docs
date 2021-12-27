@@ -1,4 +1,5 @@
 return {
+  tag = 'transform',
   summary = 'Restore original state from a stack.',
   description = 'TODO',
   arguments = {

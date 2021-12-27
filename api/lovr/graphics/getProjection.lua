@@ -1,4 +1,5 @@
 return {
+  tag = 'camera',
   summary = 'Get the field of view.',
   description = 'Returns the projection for a single view.',
   arguments = {

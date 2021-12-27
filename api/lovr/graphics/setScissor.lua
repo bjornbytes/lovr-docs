@@ -1,4 +1,5 @@
 return {
+  tag = 'camera',
   summary = 'Set the scissor.',
   description = 'TODO',
   arguments = {

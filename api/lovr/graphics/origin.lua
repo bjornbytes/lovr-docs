@@ -1,4 +1,5 @@
 return {
+  tag = 'transform',
   summary = 'Reset the transform to the origin.',
   description = 'TODO',
   arguments = {},

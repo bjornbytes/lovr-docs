@@ -1,4 +1,5 @@
 return {
+  tag = 'camera',
   summary = 'Set the camera pose.',
   description = [[
     Sets the pose for a single view.  Objects rendered in this view will appear as though the camera
