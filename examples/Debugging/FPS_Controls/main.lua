@@ -43,7 +43,7 @@ end
 
 function lovr.draw()
   lovr.graphics.push()
-  lovr.graphics.transform(mat4(camera.transform):invert())
+  lovr.graphics.setViewPose(1, camera.transform)
   lovr.graphics.setColor(0xff0000)
   lovr.graphics.cube('fill', 0, 1.7, -3, .5, lovr.timer.getTime())
   lovr.graphics.setColor(0xffffff)
