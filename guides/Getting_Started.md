@@ -50,12 +50,13 @@ Running a Project
 ---
 
 To run a LÖVR project, drop its folder onto `lovr.exe`.  You can also run `lovr.exe` from the
-command line and pass the path to the project as the first argument.
+command line and pass the path to the project folder as the first argument.
 
 ![Drag and Drop](https://lovr.org/static/img/dragonDrop.png)
 
 On macOS and Linux, the project can be run by running the `lovr` executable with the path to the
-project as an argument (on macOS, the executable is located at `LÖVR.app/Contents/MacOS/lovr`).
+project folder as an argument (on macOS, the executable is located at
+`LÖVR.app/Contents/MacOS/lovr`).
 
 If you followed the example above, you should see the following in VR:
 
