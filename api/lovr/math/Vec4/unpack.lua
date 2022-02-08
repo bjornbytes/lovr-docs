@@ -17,6 +17,11 @@ return {
       name = 'z',
       type = 'number',
       description = 'The z value.'
+    },
+    {
+      name = 'w',
+      type = 'number',
+      description = 'The w value.'
     }
   },
   related = {
