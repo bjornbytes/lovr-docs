@@ -17,6 +17,7 @@ return {
   'Locomotion/Teleportation_Flat',
   'Locomotion/Teleportation_Colliders',
   'Locomotion/Walking_In_Place',
+  'Locomotion/Space_Stretch',
   'Environment/Grid',
   'Environment/Skybox',
   'Environment/Terrain_-_Heightmap',
