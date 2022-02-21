@@ -30,8 +30,9 @@ return {
 
     Vectors can be created in two different ways: **permanent** and **temporary**.
 
-    **Permanent** vectors behave like normal LÖVR objects.  They are individual objects that are garbage
-    collected when no longer needed.  They're created using the usual `lovr.math.new<Type>` syntax:
+    **Permanent** vectors behave like normal Lua values.  They are individual objects that are
+    garbage collected when no longer needed.  They're created using the usual `lovr.math.new<Type>`
+    syntax:
 
         self.position = lovr.math.newVec3(x, y, z)
 

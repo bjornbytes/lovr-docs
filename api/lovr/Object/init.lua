@@ -7,5 +7,6 @@ return {
     In addition to the methods here, all objects have a `__tostring` metamethod that returns the
     name of the object's type.  So to check if a LÖVR object is an instance of "Blob", you can do
     `tostring(object) == 'Blob'`.
-  ]]
+  ]],
+  notes = 'Note that the functions here don\'t apply to any vector objects, see `Vectors`.'
 }
