@@ -4657,6 +4657,7 @@ return {
           description = "Returns a sorted table containing all files and folders in a single directory.",
           key = "lovr.filesystem.getDirectoryItems",
           module = "lovr.filesystem",
+          notes = "This function calls `table.sort` to sort the results, so if `table.sort` is not available in the global scope the results are not guaranteed to be sorted.",
           variants = {
             {
               arguments = {
