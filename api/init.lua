@@ -11458,7 +11458,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "The Image will have the same pixel format as the Texture that is read from."
             },
             {
               name = "renderTo",

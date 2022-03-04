@@ -18,6 +18,9 @@ return {
       description = 'The new Image.'
     }
   },
+  notes = [[
+    The Image will have the same pixel format as the Texture that is read from.
+  ]],
   related = {
     'lovr.data.newImage',
     'Image'
