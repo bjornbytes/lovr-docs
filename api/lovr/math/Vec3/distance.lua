@@ -37,6 +37,7 @@ return {
     }
   },
   related = {
+    'Vec3:angle',
     'Vec3:length'
   }
 }
