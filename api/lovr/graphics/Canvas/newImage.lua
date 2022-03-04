@@ -18,6 +18,7 @@ return {
       description = 'The new Image.'
     }
   },
+  notes = 'The Image will always have the `rgba` format.',
   related = {
     'lovr.data.newImage',
     'Image'

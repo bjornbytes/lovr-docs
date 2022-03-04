@@ -11439,7 +11439,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "The Image will always have the `rgba` format."
             },
             {
               name = "renderTo",
