@@ -85,7 +85,7 @@ rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirement
 within the Steam runtime:
 
 ```
-$ ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
+$ ~/.local/share/Steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
 If you receive errors related to `libstdc++`, set the `LD_PRELOAD` environment variable when running
