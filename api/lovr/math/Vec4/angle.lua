@@ -1,5 +1,5 @@
 return {
-  summary = 'Get angle between this and another vector.',
+  summary = 'Get the angle to another vector.',
   description = 'Returns the angle between vectors.',
   arguments = {
     u = {
@@ -8,19 +8,19 @@ return {
     },
     x = {
       type = 'number',
-      description = 'A value of x component of other vector.'
+      description = 'The x component of the other vector.'
     },
     y = {
       type = 'number',
-      description = 'A value of y component of other vector.'
+      description = 'The y component of the other vector.'
     },
     z = {
       type = 'number',
-      description = 'A value of z component of other vector.'
+      description = 'The z component of the other vector.'
     },
     w = {
       type = 'number',
-      description = 'A value of w component of other vector.'
+      description = 'The w component of the other vector.'
     }
   },
   returns = {
@@ -40,8 +40,8 @@ return {
     }
   },
   notes = [[
-    If any of two vectors has length of zero, the angle between them is not
-    well defined. In this case the function returns `math.pi / 2` angle.
+    If any of the two vectors have a length of zero, the angle between them is not well defined.  In
+    this case the function returns `math.pi / 2`.
   ]],
   related = {
     'Vec4:distance',
