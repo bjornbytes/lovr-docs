@@ -63,7 +63,7 @@ return {
     },
     {
       name = 'camera',
-      description = 'A device used as a camera in the scene.'
+      description = 'A camera device, often used for recording "mixed reality" footage.'
     },
     {
       name = 'keyboard',
