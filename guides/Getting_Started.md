@@ -70,6 +70,7 @@ Tips
   line.
 - If you have the headset module disabled, be sure to set the y value of the cube to 0 instead of
   1.7.
+- If you want and IDE with LÖVR intellisense. You can use VSCode + LUA server. [Setup guide](https://gist.github.com/ussaohelcim/9eca6eaa903eefff07b4f3e2019de915)
 
 Next Steps
 ---
