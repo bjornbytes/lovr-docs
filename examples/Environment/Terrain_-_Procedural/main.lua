@@ -69,4 +69,6 @@ function lovr.draw()
   lovr.graphics.setColor(0.388, 0.302, 0.412, 0.1)
   terrain:draw()
   lovr.graphics.setWireframe(false)
+  lovr.graphics.setColor(1, 1, 1)
+  lovr.graphics.setShader()
 end
