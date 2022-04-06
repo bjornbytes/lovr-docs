@@ -14,10 +14,15 @@ return {
       type = 'Blob',
       description = 'A Blob to replace the block data with.'
     },
-    offset = {
+    srcOffset = {
       type = 'number',
       default = '0',
-      description = 'A byte offset into the Blob to start writing from.'
+      description = 'A byte offset into the Blob to start reading from.'
+    },
+    dstOffset = {
+      type = 'number',
+      default = '0',
+      description = 'A byte offset into the ShaderBlock to start writing to.'
     },
     extent = {
       type = 'number',
@@ -37,7 +42,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'blob', 'offset', 'extent' },
+      arguments = { 'blob', 'srcOffset', 'dstOffset', 'extent' },
       returns = { 'bytes' }
     }
   },
