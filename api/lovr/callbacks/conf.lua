@@ -151,6 +151,11 @@ return {
               name = 'msaa',
               type = 'number',
               description = 'The amount of antialiasing to use when rendering to the headset.'
+            },
+            {
+              name = 'overlay',
+              type = 'boolean',
+              description = 'Whether the project should run as an overlay.'
             }
           }
         },
@@ -272,6 +277,7 @@ return {
           t.headset.supersample = false
           t.headset.offset = 1.7
           t.headset.msaa = 4
+          t.headset.overlay = false
 
           -- Math settings
           t.math.globals = true
