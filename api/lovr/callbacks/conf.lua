@@ -106,6 +106,11 @@ return {
               ]]
             },
             {
+              name = 'samplerate',
+              type = 'number',
+              description = 'The sample rate to use for audio playback.'
+            },
+            {
               name = 'start',
               type = 'boolean',
               description = 'Whether the playback device should be automatically started.'
@@ -267,6 +272,7 @@ return {
 
           -- Audio
           t.audio.spatializer = nil
+          t.audio.samplerate = 48000
           t.audio.start = true
 
           -- Graphics
