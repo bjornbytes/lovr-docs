@@ -26,6 +26,7 @@ return {
       returns = {}
     }
   },
+  notes = 'Textures must have a `TextureType` of `2d` to be used with Materials.',
   related = {
     'MaterialTexture',
     'lovr.graphics.newTexture'
