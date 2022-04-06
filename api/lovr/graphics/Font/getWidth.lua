@@ -27,6 +27,11 @@ return {
       name = 'lines',
       type = 'number',
       description = 'The number of lines in the wrapped text.'
+    },
+    {
+      name = 'lastwidth',
+      type = 'number',
+      description = 'The width of the last line of text (to assist in text layout).'
     }
   },
   notes = [[
