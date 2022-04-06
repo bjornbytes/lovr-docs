@@ -22,7 +22,8 @@ There are five main types of documentation here:
 - The **`guides`** folder contains markdown files that explain LÖVR-related concepts in depth.
   - Similarly, `init.lua` contains a manifest used to populate the sidebar on the website.
 - The **`tests`** folder contains small test cases, to make sure bugs stay fixed.
-  - Each folder is a project which should throw a Lua error or crash if it fails when run with LÖVR.
+  - Each folder is a LÖVR project.
+  - The test is considered failed if it throws a Lua error or crashes when run with LÖVR.
   - There isn't a runner yet.
 
 Note that each release of LÖVR has its own branch.  Cherry picks are used to propagate fixes to
