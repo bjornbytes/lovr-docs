@@ -40,7 +40,7 @@ return {
           <td>Effect: Attenuation</td>
           <td>x</td>
           <td>x</td>
-          <td></td>
+          <td>x</td>
         </tr>
         <tr>
           <td>Effect: Absorption</td>
