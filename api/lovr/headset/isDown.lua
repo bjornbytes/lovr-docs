@@ -24,6 +24,7 @@ return {
       ]]
     }
   },
+  notes = 'When hand tracking is active, pinching will be mapped to the `trigger` button.',
   related = {
     'DeviceButton',
     'lovr.headset.wasPressed',

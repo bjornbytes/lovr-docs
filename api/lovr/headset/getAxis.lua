@@ -32,6 +32,8 @@ return {
   notes = [[
     The axis values will be between 0 and 1 for 1D axes, and between -1 and 1 for each component of
     a multidimensional axis.
+
+    When hand tracking is active, pinch strength will be mapped to the `trigger` axis.
   ]],
   related = {
     'DeviceAxis',
