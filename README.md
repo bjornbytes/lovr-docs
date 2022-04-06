@@ -3,7 +3,7 @@ lovr-docs
 
 This repository contains the documentation for [LÖVR](https://github.com/bjornbytes/lovr).
 
-There are four main types of documentation here:
+There are five main types of documentation here:
 
 - The **`api`** folder contains a Lua table with metadata for all LÖVR functions and objects.
   - This is used to generate documentation, but is also useful for integrating with other tools
@@ -21,6 +21,9 @@ There are four main types of documentation here:
   Currently, this can contain an `author` table with `name` and `link` strings.
 - The **`guides`** folder contains markdown files that explain LÖVR-related concepts in depth.
   - Similarly, `init.lua` contains a manifest used to populate the sidebar on the website.
+- The `tests` folder contains small test cases, to make sure bugs stay fixed.
+  - Each folder is a project which should throw a Lua error or crash if it fails when run with LÖVR.
+  - There isn't a runner yet.
 
 Note that each release of LÖVR has its own branch.  Cherry picks are used to propagate fixes to
 relevant branches as needed.  Which will totally scale.
