@@ -57,7 +57,7 @@ WebXR
 To package a project for running a browser, first follow the steps in the "Creating an Archive"
 section above to get a zip file of the project.
 
-Next, you'll need an HTML file to visit in the browser.  See [`lovr.html`](https://github.com/bjornbytes/lovr/blob/master/src/resources/lovr.html)
+Next, you'll need an HTML file to visit in the browser.  See [`lovr.html`](https://github.com/bjornbytes/lovr/blob/master/etc/lovr.html)
 for a small example file that can be customized.  You can also create your own page, but at a
 minimum it should:
 
