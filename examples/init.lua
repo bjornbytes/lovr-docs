@@ -22,6 +22,7 @@ return {
   'Environment/Terrain_-_Heightmap',
   'Environment/Terrain_-_Procedural',
   'Lighting/Cel_Shading',
+  'Lighting/Circular_Shadows',
   'Lighting/PBR_Materials',
   'Animation/Playback',
   'Animation/2_Bone_IK',
