@@ -58,8 +58,12 @@ To package a project for running a browser, first follow the steps in the "Creat
 section above to get a zip file of the project.
 
 Next, you'll need an HTML file to visit in the browser.  See [`lovr.html`](https://github.com/bjornbytes/lovr/blob/master/etc/lovr.html)
-for a small example file that can be customized.  You can also create your own page, but at a
-minimum it should:
+for a small example file that can be customized.
+
+> Note: When using the lovr.html file from the repo, be sure to replace `{{{ SCRIPT }}}` with a
+> script tag pointing to lovr.js, like `<script type="text/javascript" src="lovr.js"></script>`.
+
+You can also create your own page, but at a minimum it should:
 
 - Have a `<canvas>` element with an id of `canvas`.
 - Declare a `Module` global in JavaScript to configure various settings.
@@ -67,7 +71,8 @@ minimum it should:
 - Include a `<script>` tag with a web build of LÖVR.
   - The latest web build is hosted at `https://lovr.org/static/f/lovr.js`.
   - Versioned web builds are hosted at `https://lovr.org/static/f/<version>/lovr.js`.
-  - You can also use a custom web build, see the Compiling guide for more on that.
+  - You can also use your own `lovr.js` and `lovr.wasm` files (see Compiling guide for instructions
+    on building those).
 
 The `Module.preRun` array contains functions to run before starting up LÖVR.  One of the functions
 in this array should use emscripten's `Module.FS_createPreloadedFile` function to download the
@@ -131,4 +136,5 @@ if (navigator.xr) {
 }
 ```
 
-The HTML file and zip file can then be distributed on a web server.
+The HTML file, the zip file, and the `lovr.js` and `lovr.wasm` files (if being served directly)
+can then be distributed on a web server.
