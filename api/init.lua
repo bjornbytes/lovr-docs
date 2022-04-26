@@ -1,714 +1,4 @@
 return {
-  callbacks = {
-    {
-      name = "conf",
-      tag = "callbacks",
-      summary = "Called to read configuration settings at startup.",
-      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.  Make sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes.",
-      key = "lovr.conf",
-      module = "lovr",
-      examples = {
-        {
-          description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.14.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'pico', 'openvr', 'webxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.msaa = 4\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.vsync = 1\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
-        }
-      },
-      notes = "Disabling the headset module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "t",
-              type = "table",
-              description = "The table to edit the configuration settings on.",
-              table = {
-                {
-                  name = "version",
-                  type = "string",
-                  description = "The version of LÖVR this project targets (not used yet)."
-                },
-                {
-                  name = "identity",
-                  type = "string",
-                  description = "A unique label for this project."
-                },
-                {
-                  name = "saveprecedence",
-                  type = "boolean",
-                  description = "Whether the files in the save directory should have precedence over files in the source archive."
-                },
-                {
-                  name = "modules",
-                  type = "table",
-                  description = "The set of enabled modules to use.",
-                  table = {
-                    {
-                      name = "audio",
-                      type = "boolean",
-                      description = "Whether the audio module should be enabled."
-                    },
-                    {
-                      name = "data",
-                      type = "boolean",
-                      description = "Whether the data module should be enabled."
-                    },
-                    {
-                      name = "event",
-                      type = "boolean",
-                      description = "Whether the event module should be enabled."
-                    },
-                    {
-                      name = "filesystem",
-                      type = "boolean",
-                      description = "Whether the filesystem module should be enabled."
-                    },
-                    {
-                      name = "graphics",
-                      type = "boolean",
-                      description = "Whether the graphics module should be enabled."
-                    },
-                    {
-                      name = "headset",
-                      type = "boolean",
-                      description = "Whether the headset module should be enabled."
-                    },
-                    {
-                      name = "math",
-                      type = "boolean",
-                      description = "Whether the math module should be enabled."
-                    },
-                    {
-                      name = "physics",
-                      type = "boolean",
-                      description = "Whether the physics module should be enabled."
-                    },
-                    {
-                      name = "system",
-                      type = "boolean",
-                      description = "Whether the system module should be enabled."
-                    },
-                    {
-                      name = "thread",
-                      type = "boolean",
-                      description = "Whether the thread module should be enabled."
-                    },
-                    {
-                      name = "timer",
-                      type = "boolean",
-                      description = "Whether the timer module should be enabled."
-                    }
-                  }
-                },
-                {
-                  name = "audio",
-                  type = "table",
-                  description = "Configuration for the audio module.",
-                  table = {
-                    {
-                      name = "spatializer",
-                      type = "string",
-                      description = "An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of them are attempted."
-                    },
-                    {
-                      name = "start",
-                      type = "boolean",
-                      description = "Whether the playback device should be automatically started."
-                    }
-                  }
-                },
-                {
-                  name = "graphics",
-                  type = "table",
-                  description = "Configuration for the graphics module.",
-                  table = {
-                    {
-                      name = "debug",
-                      type = "boolean",
-                      description = "Whether debug messages from the GPU should get sent to lovr.log."
-                    }
-                  }
-                },
-                {
-                  name = "headset",
-                  type = "table",
-                  description = "Configuration for the headset.",
-                  table = {
-                    {
-                      name = "drivers",
-                      type = "table",
-                      description = "An ordered list of preferred headset drivers."
-                    },
-                    {
-                      name = "supersample",
-                      type = "number",
-                      description = "A scaling factor to apply to the headset texture.  Improves visual quality but reduces performance.  Can also be a boolean."
-                    },
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "The vertical offset for seated experiences."
-                    },
-                    {
-                      name = "msaa",
-                      type = "number",
-                      description = "The amount of antialiasing to use when rendering to the headset."
-                    }
-                  }
-                },
-                {
-                  name = "math",
-                  type = "table",
-                  description = "Configuration for the math module.",
-                  table = {
-                    {
-                      name = "globals",
-                      type = "boolean",
-                      description = "Whether vector object functions should be added to the global scope."
-                    }
-                  }
-                },
-                {
-                  name = "window",
-                  type = "table",
-                  description = "Configuration for the window.",
-                  table = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the window."
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the window."
-                    },
-                    {
-                      name = "fullscreen",
-                      type = "boolean",
-                      description = "Whether the window is fullscreen."
-                    },
-                    {
-                      name = "resizable",
-                      type = "boolean",
-                      description = "Whether the window is fullscreen."
-                    },
-                    {
-                      name = "msaa",
-                      type = "number",
-                      description = "The number of antialiasing samples to use."
-                    },
-                    {
-                      name = "title",
-                      type = "string",
-                      description = "The window title."
-                    },
-                    {
-                      name = "icon",
-                      type = "string",
-                      description = "The path to the window icon file."
-                    },
-                    {
-                      name = "vsync",
-                      type = "number",
-                      description = "0 to disable vsync, 1 to enable."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.load"
-      }
-    },
-    {
-      name = "draw",
-      tag = "callbacks",
-      summary = "Called continuously to render frames to the display.",
-      description = "This callback is called every frame.  Use it to render the scene.  If a VR headset is connected, anything rendered by this function will appear in the headset display.  The display is cleared to the background color before this function is called.",
-      key = "lovr.draw",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.mirror",
-        "lovr.headset.renderTo",
-        "lovr.graphics.setBackgroundColor"
-      }
-    },
-    {
-      name = "errhand",
-      tag = "callbacks",
-      summary = "Called when an error occurs.",
-      description = "The \"lovr.errhand\" callback is run whenever an error occurs.  It receives two parameters. The first is a string containing the error message. The second is either nil, or a string containing a traceback (as returned by \"debug.traceback()\"); if nil, this means \"lovr.errhand\" is being called in the stack where the error occurred, and it can call \"debug.traceback()\" itself.\n\n\"lovr.errhand\" should return a handler function to run in a loop to show the error screen. This handler function is of the same type as the one returned by \"lovr.run\" and has the same requirements (such as pumping events). If an error occurs while this handler is running, the program will terminate immediately-- \"lovr.errhand\" will not be given a second chance. Errors which occur inside \"lovr.errhand\" or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
-      key = "lovr.errhand",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "message",
-              type = "string",
-              description = "The error message."
-            },
-            {
-              name = "traceback",
-              type = "string",
-              description = "A traceback string, or nil."
-            }
-          },
-          returns = {
-            {
-              name = "handler",
-              type = "function",
-              description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
-              arguments = {},
-              returns = {
-                {
-                  name = "result",
-                  type = "*"
-                }
-              }
-            }
-          }
-        }
-      },
-      examples = {
-        {
-          code = "function lovr.errhand(message, traceback)\n  traceback = traceback or debug.traceback('', 3)\n  print('ohh NOOOO!', message)\n  print(traceback)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
-        }
-      },
-      related = {
-        "lovr.quit"
-      }
-    },
-    {
-      name = "focus",
-      tag = "callbacks",
-      summary = "Called when the application gets or loses focus.",
-      description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
-      key = "lovr.focus",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "focused",
-              type = "boolean",
-              description = "Whether the program is now focused."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {}
-    },
-    {
-      name = "keypressed",
-      tag = "callbacks",
-      summary = "Called when a key is pressed.",
-      description = "This callback is called when a key is pressed.",
-      key = "lovr.keypressed",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "key",
-              type = "KeyCode",
-              description = "The key that was pressed."
-            },
-            {
-              name = "scancode",
-              type = "number",
-              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
-            },
-            {
-              name = "repeat",
-              type = "boolean",
-              description = "Whether the event is the result of a key repeat instead of an actual press."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.keyreleased",
-        "lovr.textinput"
-      }
-    },
-    {
-      name = "keyreleased",
-      tag = "callbacks",
-      summary = "Called when a key is released.",
-      description = "This callback is called when a key is released.",
-      key = "lovr.keyreleased",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "key",
-              type = "KeyCode",
-              description = "The key that was released."
-            },
-            {
-              name = "scancode",
-              type = "number",
-              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.keypressed",
-        "lovr.textinput"
-      }
-    },
-    {
-      name = "load",
-      tag = "callbacks",
-      summary = "Called once at startup.",
-      description = "This callback is called once when the app starts.  It should be used to perform initial setup work, like loading resources and initializing classes and variables.",
-      key = "lovr.load",
-      module = "lovr",
-      examples = {
-        {
-          code = "function lovr.load(args)\n  model = lovr.graphics.newModel('cena.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  levelGeometry = lovr.graphics.newMesh(1000)\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
-        }
-      },
-      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `args` table.\n\nThe `args` table follows the [Lua standard](https://en.wikibooks.org/wiki/Lua_Programming/command_line_parameter).  The arguments passed in from the shell are put into a global table named `arg` and passed to `lovr.load`, but with indices offset such that the \"script\" (the project path) is at index 0.  So all arguments (if any) intended for the project are at successive indices starting with 1, and the executable and its \"internal\" arguments are in normal order but stored in negative indices.",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "args",
-              type = "table",
-              description = "The command line arguments provided to the program."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.quit"
-      }
-    },
-    {
-      name = "log",
-      tag = "callbacks",
-      summary = "Called when a message is logged.",
-      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GL`).  It is also possible to emit your own log messages using `lovr.event.push`.",
-      key = "lovr.log",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "message",
-              type = "string",
-              description = "The log message.  It may end in a newline."
-            },
-            {
-              name = "level",
-              type = "string",
-              description = "The log level (`debug`, `info`, `warn`, or `error`)."
-            },
-            {
-              name = "tag",
-              type = "string",
-              description = "The log tag."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.graphics.print"
-      }
-    },
-    {
-      name = "mirror",
-      tag = "callbacks",
-      summary = "Called to render content to the desktop window.",
-      description = "This callback is called every frame after rendering to the headset and is usually used to render a mirror of the headset display onto the desktop window.  It can be overridden for custom mirroring behavior.  For example, you could render a single eye instead of a stereo view, apply postprocessing effects, add 2D UI, or render the scene from an entirely different viewpoint for a third person camera.",
-      key = "lovr.mirror",
-      module = "lovr",
-      examples = {
-        {
-          description = "The default `lovr.mirror` implementation draws the headset mirror texture to the window if the headset is active, or just calls `lovr.draw` if there isn't a headset.",
-          code = "function lovr.mirror()\n  if lovr.headset then\n    local texture = lovr.headset.getMirrorTexture()\n    if texture then\n      lovr.graphics.fill(texture)\n    end\n  else\n    lovr.graphics.clear()\n    lovr.draw()\n  end\nend"
-        }
-      },
-      notes = "When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the negative-z axis.\n\nNote that the usual graphics state applies while `lovr.mirror` is invoked, so you may need to reset graphics state at the end of `lovr.draw` to get the result you want.",
-      variants = {
-        {
-          arguments = {},
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.headset.renderTo",
-        "lovr.headset.getMirrorTexture",
-        "lovr.graphics.createWindow",
-        "lovr.graphics.setProjection",
-        "lovr.draw"
-      }
-    },
-    {
-      name = "permission",
-      tag = "callbacks",
-      summary = "Called when a permission request is answered.",
-      description = "This callback contains a permission response previously requested with `lovr.system.requestPermission`.  The callback contains information on whether permission was granted or denied.",
-      key = "lovr.permission",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "permission",
-              type = "Permission",
-              description = "The type of permission."
-            },
-            {
-              name = "granted",
-              type = "boolean",
-              description = "Whether permission was granted or denied."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.system.requestPermission"
-      }
-    },
-    {
-      name = "quit",
-      tag = "callbacks",
-      summary = "Called before quitting.",
-      description = "This callback is called right before the application is about to quit.  Use it to perform any necessary cleanup work.  A truthy value can be returned from this callback to abort quitting.",
-      key = "lovr.quit",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {
-            {
-              name = "abort",
-              type = "boolean",
-              description = "Whether quitting should be aborted."
-            }
-          }
-        }
-      },
-      examples = {
-        {
-          code = "function lovr.quit()\n  if shouldQuit() then\n    return false\n  else\n    return true\n  end\nend"
-        }
-      },
-      related = {
-        "lovr.event.quit",
-        "lovr.load"
-      }
-    },
-    {
-      name = "resize",
-      tag = "callbacks",
-      summary = "Called when the window is resized.",
-      description = "This callback is called when the desktop window is resized.",
-      key = "lovr.resize",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "width",
-              type = "number",
-              description = "The new width of the window."
-            },
-            {
-              name = "height",
-              type = "number",
-              description = "The new height of the window."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.graphics.getDimensions",
-        "lovr.graphics.getWidth",
-        "lovr.graphics.getHeight",
-        "lovr.headset.getDisplayDimensions",
-        "lovr.conf"
-      }
-    },
-    {
-      name = "restart",
-      tag = "callbacks",
-      summary = "Called when restarting.",
-      description = "This callback is called when a restart from `lovr.event.restart` is happening.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
-      key = "lovr.restart",
-      module = "lovr",
-      examples = {
-        {
-          code = "function lovr.restart()\n  return currentLevel:getName()\nend"
-        }
-      },
-      notes = "Only nil, booleans, numbers, and strings are supported types for the return value.",
-      variants = {
-        {
-          arguments = {},
-          returns = {
-            {
-              name = "cookie",
-              type = "*",
-              description = "The value to send to the next `lovr.load`."
-            }
-          }
-        }
-      },
-      related = {
-        "lovr.event.restart",
-        "lovr.load",
-        "lovr.quit"
-      }
-    },
-    {
-      name = "run",
-      tag = "callbacks",
-      summary = "The main entry point.",
-      description = "This callback is the main entry point for a LÖVR program.  It is responsible for calling `lovr.load` and returning the main loop function.",
-      key = "lovr.run",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {
-            {
-              name = "loop",
-              type = "function",
-              description = "The main loop function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.\n\nMost users should overload lovr.load, lovr.update and lovr.draw instead, since if a custom lovr.run does not do everything it is expected that some features may not work. For example, if lovr.run does not respond to \"quit\" events the program will not be able to quit, and if it does not call \"present\" then no graphics will be drawn.",
-              arguments = {},
-              returns = {
-                {
-                  name = "result",
-                  type = "*"
-                }
-              }
-            }
-          }
-        }
-      },
-      examples = {
-        {
-          description = "The default `lovr.run`:",
-          code = "function lovr.run()\n  lovr.timer.step()\n  if lovr.load then lovr.load() end\n  return function()\n    lovr.event.pump()\n    for name, a, b, c, d in lovr.event.poll() do\n      if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n        return a or 0\n      end\n      if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n    end\n    local dt = lovr.timer.step()\n    if lovr.headset then\n      lovr.headset.update(dt)\n    end\n    if lovr.audio then\n      lovr.audio.update()\n      if lovr.headset then\n        lovr.audio.setOrientation(lovr.headset.getOrientation())\n        lovr.audio.setPosition(lovr.headset.getPosition())\n        lovr.audio.setVelocity(lovr.headset.getVelocity())\n      end\n    end\n    if lovr.update then lovr.update(dt) end\n    if lovr.graphics then\n      lovr.graphics.origin()\n      if lovr.draw then\n        if lovr.headset then\n          lovr.headset.renderTo(lovr.draw)\n        end\n        if lovr.graphics.hasWindow() then\n          lovr.mirror()\n        end\n      end\n      lovr.graphics.present()\n    end\n    lovr.math.drain()\n  end\nend"
-        }
-      },
-      related = {
-        "lovr.load",
-        "lovr.quit"
-      }
-    },
-    {
-      name = "textinput",
-      tag = "callbacks",
-      summary = "Called when text has been entered.",
-      description = "This callback is called when text has been entered.\n\nFor example, when `shift + 1` is pressed on an American keyboard, `lovr.textinput` will be called with `!`.",
-      key = "lovr.textinput",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "text",
-              type = "string",
-              description = "The UTF-8 encoded character."
-            },
-            {
-              name = "code",
-              type = "number",
-              description = "The integer codepoint of the character."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.keypressed",
-        "lovr.keyreleased"
-      },
-      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `lovr.graphics.print` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings."
-    },
-    {
-      name = "threaderror",
-      tag = "callbacks",
-      summary = "Called when an error occurs in a thread.",
-      description = "The `lovr.threaderror` callback is called whenever an error occurs in a Thread.  It receives the Thread object where the error occurred and an error message.\n\nThe default implementation of this callback will call `lovr.errhand` with the error.",
-      key = "lovr.threaderror",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "thread",
-              type = "Thread",
-              description = "The Thread that errored."
-            },
-            {
-              name = "message",
-              type = "string",
-              description = "The error message."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "Thread",
-        "Thread:getError",
-        "lovr.errhand"
-      }
-    },
-    {
-      name = "update",
-      tag = "callbacks",
-      summary = "Called every frame to update the application logic.",
-      description = "The `lovr.update` callback should be used to update your game's logic.  It receives a single parameter, `dt`, which represents the amount of elapsed time between frames.  You can use this value to scale timers, physics, and animations in your game so they play at a smooth, consistent speed.",
-      key = "lovr.update",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "dt",
-              type = "number",
-              description = "The number of seconds elapsed since the last update."
-            }
-          },
-          returns = {}
-        }
-      },
-      examples = {
-        {
-          code = "function lovr.update(dt)\n  ball.vy = ball.vy + ball.gravity * dt\n  ball.y = ball.y + ball.vy * dt\nend"
-        }
-      },
-      related = {
-        "lovr.timer.getDelta"
-      }
-    }
-  },
   modules = {
     {
       name = "lovr",
@@ -780,6 +70,10 @@ return {
           description = "A Source is an object representing a single sound.  Currently ogg, wav, and mp3 formats are supported.\n\nWhen a Source is playing, it will send audio to the speakers.  Sources do not play automatically when they are created.  Instead, the `play`, `pause`, and `stop` functions can be used to control when they should play.\n\n`Source:seek` and `Source:tell` can be used to control the playback position of the Source.  A Source can be set to loop when it reaches the end using `Source:setLooping`.",
           key = "Source",
           module = "lovr.audio",
+          constructors = {
+            "lovr.audio.newSource",
+            "Source:clone"
+          },
           sections = {
             {
               name = "Playback",
@@ -793,10 +87,6 @@ return {
               name = "Utility",
               tag = "sourceUtility"
             }
-          },
-          constructors = {
-            "lovr.audio.newSource",
-            "Source:clone"
           },
           methods = {
             {
@@ -1823,6 +1113,11 @@ return {
           description = "Creates a new Source from an ogg, wav, or mp3 file.",
           key = "lovr.audio.newSource",
           module = "lovr.audio",
+          examples = {
+            {
+              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', {\n    decode = false,\n    effects = { 'spatialization', attenuation = false, reverb = true }\n  })\n\n  sandstorm:play()\nend"
+            }
+          },
           variants = {
             {
               arguments = {
@@ -1928,11 +1223,6 @@ return {
                   description = "The new Source."
                 }
               }
-            }
-          },
-          examples = {
-            {
-              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', {\n    decode = false,\n    effects = { 'spatialization', attenuation = false, reverb = true }\n  })\n\n  sandstorm:play()\nend"
             }
           },
           related = {
@@ -7520,8 +6810,8 @@ return {
         {
           name = "getFeatures",
           tag = "graphics-misc",
-          summary = "Get the set of supported GPU features.",
-          description = "TODO",
+          summary = "Get the supported GPU features.",
+          description = "Returns a table indicating which features are supported by the GPU.",
           key = "lovr.graphics.getFeatures",
           module = "lovr.graphics",
           variants = {
@@ -7531,67 +6821,62 @@ return {
                 {
                   name = "features",
                   type = "table",
-                  description = "Features supported by the GPU.",
+                  description = "",
                   table = {
                     {
-                      name = "bptc",
+                      name = "textureBC",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether `TextureFormat`s starting with `bc` are supported. This will almost always be `true` on desktop GPUs and will almost always be `false` on mobile GPUs."
                     },
                     {
-                      name = "astc",
+                      name = "textureASTC",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether `TextureFormat`s beginning with `astc` are supported.  This will almost always be `true` on mobile GPUs and will almost always be `false` on desktop GPUs."
                     },
                     {
                       name = "wireframe",
                       type = "boolean",
-                      description = "TODO"
+                      description = "When supported, `Pass:setWireframe` will work, otherwise it will do nothing. This will always be `true` when using Vulkan, and will always be `false` when using WebGPU."
                     },
                     {
                       name = "depthClamp",
                       type = "boolean",
-                      description = "TODO"
+                      description = "When supported, `Pass:setDepthClamp` will work, otherwise it will do nothing."
                     },
                     {
                       name = "clipDistance",
                       type = "boolean",
-                      description = "TODO"
+                      description = "delet this"
                     },
                     {
                       name = "cullDistance",
                       type = "boolean",
-                      description = "TODO"
-                    },
-                    {
-                      name = "fullIndexBufferRange",
-                      type = "boolean",
-                      description = "TODO"
+                      description = "delet this"
                     },
                     {
                       name = "indirectDrawFirstInstance",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether indirect draws can set the firstInstance property of buffer memory to something other than zero."
                     },
                     {
                       name = "dynamicIndexing",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether shader code can dynamically index arrays of resources (i.e. when false, only integer constants can be used to index into arrays of buffers or textures). TODO delet this?"
                     },
                     {
                       name = "float64",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether shader code can use doubles."
                     },
                     {
                       name = "int64",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether shader code can use signed and unsigned 64-bit integers."
                     },
                     {
                       name = "int16",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether shader code can use 16-bit integers."
                     }
                   }
                 }
@@ -8743,11 +8028,11 @@ return {
           description = "Returns a list of joint poses tracked by a device.  Currently, only hand devices are able to track joints.",
           key = "lovr.headset.getSkeleton",
           module = "lovr.headset",
+          notes = "If the Device does not support tracking joints or the poses are unavailable, `nil` is returned.\n\nThe joint orientation is similar to the graphics coordinate system: -Z is the forwards direction, pointing towards the fingertips.  The +Y direction is \"up\", pointing out of the back of the hand.  The +X direction is to the right, perpendicular to X and Z.\n\nHand joints are returned in the following order:\n\n<table>\n  <thead>\n    <tr>\n      <td colspan=\"2\">Joint</td>\n      <td>Index</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td colspan=\"2\">Palm</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <td colspan=\"2\">Wrist</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Thumb</td>\n      <td>Metacarpal</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Index</td>\n      <td>Metacarpal</td>\n      <td>7</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>9</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Middle</td>\n      <td>Metacarpal</td>\n      <td>12</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>13</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>16</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Ring</td>\n      <td>Metacarpal</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>19</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>20</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Pinky</td>\n      <td>Metacarpal</td>\n      <td>22</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>23</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>26</td>\n    </tr>\n  </tbody> </table>",
           related = {
             "lovr.headset.getPose",
             "lovr.headset.animate"
           },
-          notes = "If the Device does not support tracking joints or the poses are unavailable, `nil` is returned.\n\nThe joint orientation is similar to the graphics coordinate system: -Z is the forwards direction, pointing towards the fingertips.  The +Y direction is \"up\", pointing out of the back of the hand.  The +X direction is to the right, perpendicular to X and Z.\n\nHand joints are returned in the following order:\n\n<table>\n  <thead>\n    <tr>\n      <td colspan=\"2\">Joint</td>\n      <td>Index</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td colspan=\"2\">Palm</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <td colspan=\"2\">Wrist</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Thumb</td>\n      <td>Metacarpal</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Index</td>\n      <td>Metacarpal</td>\n      <td>7</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>9</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Middle</td>\n      <td>Metacarpal</td>\n      <td>12</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>13</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>16</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Ring</td>\n      <td>Metacarpal</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>19</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>20</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Pinky</td>\n      <td>Metacarpal</td>\n      <td>22</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>23</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>26</td>\n    </tr>\n  </tbody> </table>",
           examples = {
             {
               code = "function lovr.draw()\n  for _, hand in ipairs({ 'left', 'right' }) do\n    for _, joint in ipairs(lovr.headset.getSkeleton(hand) or {}) do\n      lovr.graphics.points(unpack(joint, 1, 3))\n    end\n  end\nend"
@@ -9116,7 +8401,6 @@ return {
                   name = "options",
                   type = "table",
                   description = "Options for loading the model.",
-                  default = "{}",
                   table = {
                     {
                       name = "animated",
@@ -9124,7 +8408,8 @@ return {
                       description = "Whether an animatable model should be loaded, for use with `lovr.headset.animate`.",
                       default = "false"
                     }
-                  }
+                  },
+                  default = "{}"
                 }
               },
               returns = {
@@ -9320,24 +8605,6 @@ return {
           description = "Different types of input devices supported by the `lovr.headset` module.",
           key = "Device",
           module = "lovr.headset",
-          related = {
-            "DeviceAxis",
-            "DeviceButton",
-            "lovr.headset.getPose",
-            "lovr.headset.getPosition",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getSkeleton",
-            "lovr.headset.isTracked",
-            "lovr.headset.isDown",
-            "lovr.headset.isTouched",
-            "lovr.headset.wasPressed",
-            "lovr.headset.wasReleased",
-            "lovr.headset.getAxis",
-            "lovr.headset.vibrate",
-            "lovr.headset.animate"
-          },
           values = {
             {
               name = "head",
@@ -9431,6 +8698,24 @@ return {
               name = "beacon/4",
               description = "The fourth tracking device (i.e. lighthouse)."
             }
+          },
+          related = {
+            "DeviceAxis",
+            "DeviceButton",
+            "lovr.headset.getPose",
+            "lovr.headset.getPosition",
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.getSkeleton",
+            "lovr.headset.isTracked",
+            "lovr.headset.isDown",
+            "lovr.headset.isTouched",
+            "lovr.headset.wasPressed",
+            "lovr.headset.wasReleased",
+            "lovr.headset.getAxis",
+            "lovr.headset.vibrate",
+            "lovr.headset.animate"
           }
         },
         {
@@ -9438,10 +8723,6 @@ return {
           description = "Axes on an input device.",
           key = "DeviceAxis",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getAxis",
-            "DeviceButton"
-          },
           values = {
             {
               name = "trigger",
@@ -9459,6 +8740,10 @@ return {
               name = "grip",
               description = "A grip button or grab gesture (1D)."
             }
+          },
+          related = {
+            "lovr.headset.getAxis",
+            "DeviceButton"
           }
         },
         {
@@ -9929,13 +9214,13 @@ return {
           description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.",
           key = "Mat4",
           module = "lovr.math",
-          related = {
-            "Vec3",
-            "Quat"
-          },
           constructors = {
             "lovr.math.newMat4",
             "lovr.math.mat4"
+          },
+          related = {
+            "Vec3",
+            "Quat"
           },
           methods = {
             {
@@ -10635,13 +9920,13 @@ return {
           description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.",
           key = "Quat",
           module = "lovr.math",
-          related = {
-            "Vec3",
-            "Mat4"
-          },
           constructors = {
             "lovr.math.newQuat",
             "lovr.math.quat"
+          },
+          related = {
+            "Vec3",
+            "Mat4"
           },
           methods = {
             {
@@ -11147,6 +10432,10 @@ return {
               variants = {
                 {
                   arguments = {
+                    low = {
+                      type = "number",
+                      description = "The lower 32 bits of the seed."
+                    },
                     seed = {
                       type = "number",
                       description = "The random seed."
@@ -11154,10 +10443,6 @@ return {
                     high = {
                       type = "number",
                       description = "The upper 32 bits of the seed."
-                    },
-                    low = {
-                      type = "number",
-                      description = "The lower 32 bits of the seed."
                     }
                   },
                   returns = {}
@@ -11196,13 +10481,13 @@ return {
           description = "A vector object that holds two numbers.",
           key = "Vec2",
           module = "lovr.math",
-          related = {
-            "Vec3",
-            "Vec4"
-          },
           constructors = {
             "lovr.math.newVec2",
             "lovr.math.vec2"
+          },
+          related = {
+            "Vec3",
+            "Vec4"
           },
           methods = {
             {
@@ -11608,13 +10893,13 @@ return {
           description = "A vector object that holds three numbers.",
           key = "Vec3",
           module = "lovr.math",
-          related = {
-            "Vec2",
-            "Vec4"
-          },
           constructors = {
             "lovr.math.newVec3",
             "lovr.math.vec3"
+          },
+          related = {
+            "Vec2",
+            "Vec4"
           },
           methods = {
             {
@@ -12079,13 +11364,13 @@ return {
           description = "A vector object that holds four numbers.",
           key = "Vec4",
           module = "lovr.math",
-          related = {
-            "Vec2",
-            "Vec3"
-          },
           constructors = {
             "lovr.math.newVec4",
             "lovr.math.vec4"
+          },
+          related = {
+            "Vec2",
+            "Vec3"
           },
           methods = {
             {
@@ -13326,6 +12611,9 @@ return {
           related = {
             "Collider"
           },
+          constructors = {
+            "lovr.physics.newBallJoint"
+          },
           methods = {
             {
               name = "getAnchors",
@@ -13501,9 +12789,6 @@ return {
               }
             }
           },
-          constructors = {
-            "lovr.physics.newBallJoint"
-          },
           extends = "Joint"
         },
         {
@@ -13512,10 +12797,6 @@ return {
           description = "A type of `Shape` that can be used for cubes or boxes.",
           key = "BoxShape",
           module = "lovr.physics",
-          constructors = {
-            "lovr.physics.newBoxShape",
-            "World:newBoxCollider"
-          },
           methods = {
             {
               name = "getDimensions",
@@ -13576,6 +12857,10 @@ return {
               }
             }
           },
+          constructors = {
+            "lovr.physics.newBoxShape",
+            "World:newBoxCollider"
+          },
           extends = "Shape"
         },
         {
@@ -13584,10 +12869,6 @@ return {
           description = "A type of `Shape` that can be used for capsule-shaped things.",
           key = "CapsuleShape",
           module = "lovr.physics",
-          constructors = {
-            "lovr.physics.newCapsuleShape",
-            "World:newCapsuleCollider"
-          },
           methods = {
             {
               name = "getLength",
@@ -13665,6 +12946,10 @@ return {
                 }
               }
             }
+          },
+          constructors = {
+            "lovr.physics.newCapsuleShape",
+            "World:newCapsuleCollider"
           },
           extends = "Shape"
         },
@@ -15345,10 +14630,6 @@ return {
           description = "A type of `Shape` that can be used for cylinder-shaped things.",
           key = "CylinderShape",
           module = "lovr.physics",
-          constructors = {
-            "lovr.physics.newCylinderShape",
-            "World:newCylinderCollider"
-          },
           methods = {
             {
               name = "getLength",
@@ -15427,6 +14708,10 @@ return {
               }
             }
           },
+          constructors = {
+            "lovr.physics.newCylinderShape",
+            "World:newCylinderCollider"
+          },
           extends = "Shape"
         },
         {
@@ -15437,6 +14722,9 @@ return {
           module = "lovr.physics",
           related = {
             "Collider"
+          },
+          constructors = {
+            "lovr.physics.newDistanceJoint"
           },
           methods = {
             {
@@ -15666,9 +14954,6 @@ return {
               }
             }
           },
-          constructors = {
-            "lovr.physics.newDistanceJoint"
-          },
           extends = "Joint"
         },
         {
@@ -15679,6 +14964,9 @@ return {
           module = "lovr.physics",
           related = {
             "Collider"
+          },
+          constructors = {
+            "lovr.physics.newHingeJoint"
           },
           methods = {
             {
@@ -15998,9 +15286,6 @@ return {
               }
             }
           },
-          constructors = {
-            "lovr.physics.newHingeJoint"
-          },
           extends = "Joint"
         },
         {
@@ -16009,14 +15294,14 @@ return {
           description = "A Joint is a physics object that constrains the movement of two Colliders.",
           key = "Joint",
           module = "lovr.physics",
-          related = {
-            "Collider"
-          },
           constructors = {
             "lovr.physics.newBallJoint",
             "lovr.physics.newDistanceJoint",
             "lovr.physics.newHingeJoint",
             "lovr.physics.newSliderJoint"
+          },
+          related = {
+            "Collider"
           },
           methods = {
             {
@@ -16616,6 +15901,9 @@ return {
           related = {
             "Collider"
           },
+          constructors = {
+            "lovr.physics.newSliderJoint"
+          },
           methods = {
             {
               name = "getAxis",
@@ -16842,9 +16130,6 @@ return {
               }
             }
           },
-          constructors = {
-            "lovr.physics.newSliderJoint"
-          },
           extends = "Joint"
         },
         {
@@ -16853,10 +16138,6 @@ return {
           description = "A type of `Shape` that can be used for spheres.",
           key = "SphereShape",
           module = "lovr.physics",
-          constructors = {
-            "lovr.physics.newSphereShape",
-            "World:newSphereCollider"
-          },
           methods = {
             {
               name = "getDimensions",
@@ -16897,6 +16178,10 @@ return {
               }
             }
           },
+          constructors = {
+            "lovr.physics.newSphereShape",
+            "World:newSphereCollider"
+          },
           extends = "Shape"
         },
         {
@@ -16905,6 +16190,9 @@ return {
           description = "A World is an object that holds the colliders, joints, and shapes in a physics simulation.",
           key = "World",
           module = "lovr.physics",
+          constructors = {
+            "lovr.physics.newWorld"
+          },
           methods = {
             {
               name = "collide",
@@ -17990,9 +17278,6 @@ return {
               description = "When the World is created using `lovr.physics.newWorld`, it is possible to specify a list of collision tags for the World.  Colliders can then be assigned a tag.  You can enable and disable collision between pairs of tags.  There are also some helper functions to quickly identify pairs of colliders that are near each other and test whether or not they are colliding.  These are used internally by default by `World:update`, but you can override this behavior and use the functions directly for custom collision behavior."
             }
           },
-          constructors = {
-            "lovr.physics.newWorld"
-          },
           notes = "Be sure to update the World in `lovr.update` using `World:update`, otherwise everything will stand still."
         }
       },
@@ -18800,13 +18085,13 @@ return {
           description = "A Thread is an object that runs a chunk of Lua code in the background.  Threads are completely isolated from other threads, meaning they have their own Lua context and can't access the variables and functions of other threads.  Communication between threads is limited and is accomplished by using `Channel` objects.\n\nTo get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.",
           key = "Thread",
           module = "lovr.thread",
+          constructors = {
+            "lovr.thread.newThread"
+          },
           related = {
             "lovr.threaderror",
             "lovr.system.getCoreCount",
             "Channel"
-          },
-          constructors = {
-            "lovr.thread.newThread"
           },
           methods = {
             {
@@ -19124,6 +18409,716 @@ return {
       },
       enums = {},
       objects = {}
+    }
+  },
+  callbacks = {
+    {
+      name = "conf",
+      tag = "callbacks",
+      summary = "Called to read configuration settings at startup.",
+      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.  Make sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes.",
+      key = "lovr.conf",
+      module = "lovr",
+      examples = {
+        {
+          description = "A noop conf.lua that sets all configuration settings to their defaults:",
+          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.14.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'pico', 'openvr', 'webxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.msaa = 4\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.vsync = 1\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+        }
+      },
+      notes = "Disabling the headset module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "t",
+              type = "table",
+              description = "The table to edit the configuration settings on.",
+              table = {
+                {
+                  name = "version",
+                  type = "string",
+                  description = "The version of LÖVR this project targets (not used yet)."
+                },
+                {
+                  name = "identity",
+                  type = "string",
+                  description = "A unique label for this project."
+                },
+                {
+                  name = "saveprecedence",
+                  type = "boolean",
+                  description = "Whether the files in the save directory should have precedence over files in the source archive."
+                },
+                {
+                  name = "modules",
+                  type = "table",
+                  description = "The set of enabled modules to use.",
+                  table = {
+                    {
+                      name = "audio",
+                      type = "boolean",
+                      description = "Whether the audio module should be enabled."
+                    },
+                    {
+                      name = "data",
+                      type = "boolean",
+                      description = "Whether the data module should be enabled."
+                    },
+                    {
+                      name = "event",
+                      type = "boolean",
+                      description = "Whether the event module should be enabled."
+                    },
+                    {
+                      name = "filesystem",
+                      type = "boolean",
+                      description = "Whether the filesystem module should be enabled."
+                    },
+                    {
+                      name = "graphics",
+                      type = "boolean",
+                      description = "Whether the graphics module should be enabled."
+                    },
+                    {
+                      name = "headset",
+                      type = "boolean",
+                      description = "Whether the headset module should be enabled."
+                    },
+                    {
+                      name = "math",
+                      type = "boolean",
+                      description = "Whether the math module should be enabled."
+                    },
+                    {
+                      name = "physics",
+                      type = "boolean",
+                      description = "Whether the physics module should be enabled."
+                    },
+                    {
+                      name = "system",
+                      type = "boolean",
+                      description = "Whether the system module should be enabled."
+                    },
+                    {
+                      name = "thread",
+                      type = "boolean",
+                      description = "Whether the thread module should be enabled."
+                    },
+                    {
+                      name = "timer",
+                      type = "boolean",
+                      description = "Whether the timer module should be enabled."
+                    }
+                  }
+                },
+                {
+                  name = "audio",
+                  type = "table",
+                  description = "Configuration for the audio module.",
+                  table = {
+                    {
+                      name = "spatializer",
+                      type = "string",
+                      description = "An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of them are attempted."
+                    },
+                    {
+                      name = "start",
+                      type = "boolean",
+                      description = "Whether the playback device should be automatically started."
+                    }
+                  }
+                },
+                {
+                  name = "graphics",
+                  type = "table",
+                  description = "Configuration for the graphics module.",
+                  table = {
+                    {
+                      name = "debug",
+                      type = "boolean",
+                      description = "Whether debug messages from the GPU should get sent to lovr.log."
+                    }
+                  }
+                },
+                {
+                  name = "headset",
+                  type = "table",
+                  description = "Configuration for the headset.",
+                  table = {
+                    {
+                      name = "drivers",
+                      type = "table",
+                      description = "An ordered list of preferred headset drivers."
+                    },
+                    {
+                      name = "supersample",
+                      type = "number",
+                      description = "A scaling factor to apply to the headset texture.  Improves visual quality but reduces performance.  Can also be a boolean."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The vertical offset for seated experiences."
+                    },
+                    {
+                      name = "msaa",
+                      type = "number",
+                      description = "The amount of antialiasing to use when rendering to the headset."
+                    }
+                  }
+                },
+                {
+                  name = "math",
+                  type = "table",
+                  description = "Configuration for the math module.",
+                  table = {
+                    {
+                      name = "globals",
+                      type = "boolean",
+                      description = "Whether vector object functions should be added to the global scope."
+                    }
+                  }
+                },
+                {
+                  name = "window",
+                  type = "table",
+                  description = "Configuration for the window.",
+                  table = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the window."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the window."
+                    },
+                    {
+                      name = "fullscreen",
+                      type = "boolean",
+                      description = "Whether the window is fullscreen."
+                    },
+                    {
+                      name = "resizable",
+                      type = "boolean",
+                      description = "Whether the window is fullscreen."
+                    },
+                    {
+                      name = "msaa",
+                      type = "number",
+                      description = "The number of antialiasing samples to use."
+                    },
+                    {
+                      name = "title",
+                      type = "string",
+                      description = "The window title."
+                    },
+                    {
+                      name = "icon",
+                      type = "string",
+                      description = "The path to the window icon file."
+                    },
+                    {
+                      name = "vsync",
+                      type = "number",
+                      description = "0 to disable vsync, 1 to enable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.load"
+      }
+    },
+    {
+      name = "draw",
+      tag = "callbacks",
+      summary = "Called continuously to render frames to the display.",
+      description = "This callback is called every frame.  Use it to render the scene.  If a VR headset is connected, anything rendered by this function will appear in the headset display.  The display is cleared to the background color before this function is called.",
+      key = "lovr.draw",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.mirror",
+        "lovr.headset.renderTo",
+        "lovr.graphics.setBackgroundColor"
+      }
+    },
+    {
+      name = "errhand",
+      tag = "callbacks",
+      summary = "Called when an error occurs.",
+      description = "The \"lovr.errhand\" callback is run whenever an error occurs.  It receives two parameters. The first is a string containing the error message. The second is either nil, or a string containing a traceback (as returned by \"debug.traceback()\"); if nil, this means \"lovr.errhand\" is being called in the stack where the error occurred, and it can call \"debug.traceback()\" itself.\n\n\"lovr.errhand\" should return a handler function to run in a loop to show the error screen. This handler function is of the same type as the one returned by \"lovr.run\" and has the same requirements (such as pumping events). If an error occurs while this handler is running, the program will terminate immediately-- \"lovr.errhand\" will not be given a second chance. Errors which occur inside \"lovr.errhand\" or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
+      key = "lovr.errhand",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "message",
+              type = "string",
+              description = "The error message."
+            },
+            {
+              name = "traceback",
+              type = "string",
+              description = "A traceback string, or nil."
+            }
+          },
+          returns = {
+            {
+              name = "handler",
+              type = "function",
+              description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
+              arguments = {},
+              returns = {
+                {
+                  name = "result",
+                  type = "*"
+                }
+              }
+            }
+          }
+        }
+      },
+      examples = {
+        {
+          code = "function lovr.errhand(message, traceback)\n  traceback = traceback or debug.traceback('', 3)\n  print('ohh NOOOO!', message)\n  print(traceback)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.quit"
+      }
+    },
+    {
+      name = "focus",
+      tag = "callbacks",
+      summary = "Called when the application gets or loses focus.",
+      description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
+      key = "lovr.focus",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "focused",
+              type = "boolean",
+              description = "Whether the program is now focused."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {}
+    },
+    {
+      name = "keypressed",
+      tag = "callbacks",
+      summary = "Called when a key is pressed.",
+      description = "This callback is called when a key is pressed.",
+      key = "lovr.keypressed",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "key",
+              type = "KeyCode",
+              description = "The key that was pressed."
+            },
+            {
+              name = "scancode",
+              type = "number",
+              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
+            },
+            {
+              name = "repeat",
+              type = "boolean",
+              description = "Whether the event is the result of a key repeat instead of an actual press."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.keyreleased",
+        "lovr.textinput"
+      }
+    },
+    {
+      name = "keyreleased",
+      tag = "callbacks",
+      summary = "Called when a key is released.",
+      description = "This callback is called when a key is released.",
+      key = "lovr.keyreleased",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "key",
+              type = "KeyCode",
+              description = "The key that was released."
+            },
+            {
+              name = "scancode",
+              type = "number",
+              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.keypressed",
+        "lovr.textinput"
+      }
+    },
+    {
+      name = "load",
+      tag = "callbacks",
+      summary = "Called once at startup.",
+      description = "This callback is called once when the app starts.  It should be used to perform initial setup work, like loading resources and initializing classes and variables.",
+      key = "lovr.load",
+      module = "lovr",
+      examples = {
+        {
+          code = "function lovr.load(args)\n  model = lovr.graphics.newModel('cena.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  levelGeometry = lovr.graphics.newMesh(1000)\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
+        }
+      },
+      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `args` table.\n\nThe `args` table follows the [Lua standard](https://en.wikibooks.org/wiki/Lua_Programming/command_line_parameter).  The arguments passed in from the shell are put into a global table named `arg` and passed to `lovr.load`, but with indices offset such that the \"script\" (the project path) is at index 0.  So all arguments (if any) intended for the project are at successive indices starting with 1, and the executable and its \"internal\" arguments are in normal order but stored in negative indices.",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "args",
+              type = "table",
+              description = "The command line arguments provided to the program."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.quit"
+      }
+    },
+    {
+      name = "log",
+      tag = "callbacks",
+      summary = "Called when a message is logged.",
+      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GL`).  It is also possible to emit your own log messages using `lovr.event.push`.",
+      key = "lovr.log",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "message",
+              type = "string",
+              description = "The log message.  It may end in a newline."
+            },
+            {
+              name = "level",
+              type = "string",
+              description = "The log level (`debug`, `info`, `warn`, or `error`)."
+            },
+            {
+              name = "tag",
+              type = "string",
+              description = "The log tag."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.graphics.print"
+      }
+    },
+    {
+      name = "mirror",
+      tag = "callbacks",
+      summary = "Called to render content to the desktop window.",
+      description = "This callback is called every frame after rendering to the headset and is usually used to render a mirror of the headset display onto the desktop window.  It can be overridden for custom mirroring behavior.  For example, you could render a single eye instead of a stereo view, apply postprocessing effects, add 2D UI, or render the scene from an entirely different viewpoint for a third person camera.",
+      key = "lovr.mirror",
+      module = "lovr",
+      examples = {
+        {
+          description = "The default `lovr.mirror` implementation draws the headset mirror texture to the window if the headset is active, or just calls `lovr.draw` if there isn't a headset.",
+          code = "function lovr.mirror()\n  if lovr.headset then\n    local texture = lovr.headset.getMirrorTexture()\n    if texture then\n      lovr.graphics.fill(texture)\n    end\n  else\n    lovr.graphics.clear()\n    lovr.draw()\n  end\nend"
+        }
+      },
+      notes = "When this callback is called, the camera is located at `(0, 0, 0)` and is looking down the negative-z axis.\n\nNote that the usual graphics state applies while `lovr.mirror` is invoked, so you may need to reset graphics state at the end of `lovr.draw` to get the result you want.",
+      variants = {
+        {
+          arguments = {},
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.headset.renderTo",
+        "lovr.headset.getMirrorTexture",
+        "lovr.graphics.createWindow",
+        "lovr.graphics.setProjection",
+        "lovr.draw"
+      }
+    },
+    {
+      name = "permission",
+      tag = "callbacks",
+      summary = "Called when a permission request is answered.",
+      description = "This callback contains a permission response previously requested with `lovr.system.requestPermission`.  The callback contains information on whether permission was granted or denied.",
+      key = "lovr.permission",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "permission",
+              type = "Permission",
+              description = "The type of permission."
+            },
+            {
+              name = "granted",
+              type = "boolean",
+              description = "Whether permission was granted or denied."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.system.requestPermission"
+      }
+    },
+    {
+      name = "quit",
+      tag = "callbacks",
+      summary = "Called before quitting.",
+      description = "This callback is called right before the application is about to quit.  Use it to perform any necessary cleanup work.  A truthy value can be returned from this callback to abort quitting.",
+      key = "lovr.quit",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "abort",
+              type = "boolean",
+              description = "Whether quitting should be aborted."
+            }
+          }
+        }
+      },
+      examples = {
+        {
+          code = "function lovr.quit()\n  if shouldQuit() then\n    return false\n  else\n    return true\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.event.quit",
+        "lovr.load"
+      }
+    },
+    {
+      name = "resize",
+      tag = "callbacks",
+      summary = "Called when the window is resized.",
+      description = "This callback is called when the desktop window is resized.",
+      key = "lovr.resize",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "width",
+              type = "number",
+              description = "The new width of the window."
+            },
+            {
+              name = "height",
+              type = "number",
+              description = "The new height of the window."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.graphics.getDimensions",
+        "lovr.graphics.getWidth",
+        "lovr.graphics.getHeight",
+        "lovr.headset.getDisplayDimensions",
+        "lovr.conf"
+      }
+    },
+    {
+      name = "restart",
+      tag = "callbacks",
+      summary = "Called when restarting.",
+      description = "This callback is called when a restart from `lovr.event.restart` is happening.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
+      key = "lovr.restart",
+      module = "lovr",
+      examples = {
+        {
+          code = "function lovr.restart()\n  return currentLevel:getName()\nend"
+        }
+      },
+      notes = "Only nil, booleans, numbers, and strings are supported types for the return value.",
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "cookie",
+              type = "*",
+              description = "The value to send to the next `lovr.load`."
+            }
+          }
+        }
+      },
+      related = {
+        "lovr.event.restart",
+        "lovr.load",
+        "lovr.quit"
+      }
+    },
+    {
+      name = "run",
+      tag = "callbacks",
+      summary = "The main entry point.",
+      description = "This callback is the main entry point for a LÖVR program.  It is responsible for calling `lovr.load` and returning the main loop function.",
+      key = "lovr.run",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "loop",
+              type = "function",
+              description = "The main loop function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.\n\nMost users should overload lovr.load, lovr.update and lovr.draw instead, since if a custom lovr.run does not do everything it is expected that some features may not work. For example, if lovr.run does not respond to \"quit\" events the program will not be able to quit, and if it does not call \"present\" then no graphics will be drawn.",
+              arguments = {},
+              returns = {
+                {
+                  name = "result",
+                  type = "*"
+                }
+              }
+            }
+          }
+        }
+      },
+      examples = {
+        {
+          description = "The default `lovr.run`:",
+          code = "function lovr.run()\n  lovr.timer.step()\n  if lovr.load then lovr.load() end\n  return function()\n    lovr.event.pump()\n    for name, a, b, c, d in lovr.event.poll() do\n      if name == 'quit' and (not lovr.quit or not lovr.quit()) then\n        return a or 0\n      end\n      if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n    end\n    local dt = lovr.timer.step()\n    if lovr.headset then\n      lovr.headset.update(dt)\n    end\n    if lovr.audio then\n      lovr.audio.update()\n      if lovr.headset then\n        lovr.audio.setOrientation(lovr.headset.getOrientation())\n        lovr.audio.setPosition(lovr.headset.getPosition())\n        lovr.audio.setVelocity(lovr.headset.getVelocity())\n      end\n    end\n    if lovr.update then lovr.update(dt) end\n    if lovr.graphics then\n      lovr.graphics.origin()\n      if lovr.draw then\n        if lovr.headset then\n          lovr.headset.renderTo(lovr.draw)\n        end\n        if lovr.graphics.hasWindow() then\n          lovr.mirror()\n        end\n      end\n      lovr.graphics.present()\n    end\n    lovr.math.drain()\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.load",
+        "lovr.quit"
+      }
+    },
+    {
+      name = "textinput",
+      tag = "callbacks",
+      summary = "Called when text has been entered.",
+      description = "This callback is called when text has been entered.\n\nFor example, when `shift + 1` is pressed on an American keyboard, `lovr.textinput` will be called with `!`.",
+      key = "lovr.textinput",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "text",
+              type = "string",
+              description = "The UTF-8 encoded character."
+            },
+            {
+              name = "code",
+              type = "number",
+              description = "The integer codepoint of the character."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.keypressed",
+        "lovr.keyreleased"
+      },
+      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `lovr.graphics.print` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings."
+    },
+    {
+      name = "threaderror",
+      tag = "callbacks",
+      summary = "Called when an error occurs in a thread.",
+      description = "The `lovr.threaderror` callback is called whenever an error occurs in a Thread.  It receives the Thread object where the error occurred and an error message.\n\nThe default implementation of this callback will call `lovr.errhand` with the error.",
+      key = "lovr.threaderror",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "thread",
+              type = "Thread",
+              description = "The Thread that errored."
+            },
+            {
+              name = "message",
+              type = "string",
+              description = "The error message."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "Thread",
+        "Thread:getError",
+        "lovr.errhand"
+      }
+    },
+    {
+      name = "update",
+      tag = "callbacks",
+      summary = "Called every frame to update the application logic.",
+      description = "The `lovr.update` callback should be used to update your game's logic.  It receives a single parameter, `dt`, which represents the amount of elapsed time between frames.  You can use this value to scale timers, physics, and animations in your game so they play at a smooth, consistent speed.",
+      key = "lovr.update",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "dt",
+              type = "number",
+              description = "The number of seconds elapsed since the last update."
+            }
+          },
+          returns = {}
+        }
+      },
+      examples = {
+        {
+          code = "function lovr.update(dt)\n  ball.vy = ball.vy + ball.gravity * dt\n  ball.y = ball.y + ball.vy * dt\nend"
+        }
+      },
+      related = {
+        "lovr.timer.getDelta"
+      }
     }
   }
 }
