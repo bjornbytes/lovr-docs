@@ -22,7 +22,7 @@ return {
     }
   },
   related = {
-    'lovr.graphics.getHardware',
+    'lovr.graphics.getDevice',
     'lovr.graphics.getFeatures',
     'lovr.graphics.getLimits'
   }

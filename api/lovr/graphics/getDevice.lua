@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     {
-      name = 'hardware',
+      name = 'device',
       type = 'table',
       description = 'Information about the GPU device.',
       table = {
@@ -15,17 +15,17 @@ return {
           description = 'TODO'
         },
         {
-          name = 'name',
-          type = 'string',
-          description = 'TODO'
-        },
-        {
           name = 'vendor',
           type = 'number',
           description = 'TODO'
         },
         {
-          name = 'driver',
+          name = 'name',
+          type = 'string',
+          description = 'TODO'
+        },
+        {
+          name = 'renderer',
           type = 'string',
           description = 'TODO'
         },
@@ -37,11 +37,6 @@ return {
         {
           name = 'discrete',
           type = 'boolean',
-          description = 'TODO'
-        },
-        {
-          name = 'renderer',
-          type = 'string',
           description = 'TODO'
         }
       }

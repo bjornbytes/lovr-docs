@@ -5,7 +5,6 @@ return {
   arguments = {},
   returns = {},
   related = {
-    'lovr.graphics.prepare',
     'lovr.graphics.submit'
   }
 }

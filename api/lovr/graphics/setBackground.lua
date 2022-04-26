@@ -48,8 +48,5 @@ return {
       arguments = { 'color' },
       returns = {}
     }
-  },
-  related = {
-    'lovr.graphics.begin'
   }
 }

@@ -74,7 +74,7 @@ return {
   },
   related = {
     'lovr.graphics.isFormatSupported',
-    'lovr.graphics.getHardware',
+    'lovr.graphics.getDevice',
     'lovr.graphics.getLimits',
     'lovr.graphics.getStats'
   }

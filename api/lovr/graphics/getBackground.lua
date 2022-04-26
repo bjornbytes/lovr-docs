@@ -24,8 +24,5 @@ return {
       type = 'number',
       description = 'The alpha component of the background color.',
     }
-  },
-  related = {
-    'lovr.graphics.begin'
   }
 }
