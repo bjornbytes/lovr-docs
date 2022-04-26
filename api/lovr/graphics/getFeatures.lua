@@ -80,7 +80,7 @@ return {
         {
           name = 'int16',
           type = 'boolean',
-          description = 'Whether shader code can use 16-bit integers.'
+          description = 'Whether shader code can use signed and unsigned 16-bit integers.'
         }
       }
     }
