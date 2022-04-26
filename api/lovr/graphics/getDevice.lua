@@ -11,7 +11,7 @@ return {
         {
           name = 'id',
           type = 'number',
-          description = 'The vendor-unique number for this device.'
+          description = 'The vendor-unique number for this GPU.'
         },
         {
           name = 'vendor',
@@ -60,7 +60,7 @@ return {
       <tbody>
         <tr>
           <td><code>0x1002</code></td>
-          <td>Advanced Micro Devices Inc.</td>
+          <td>Advanced Micro Devices, Inc.</td>
         </tr>
         <tr>
           <td><code>0x8086</code></td>
@@ -73,7 +73,7 @@ return {
       </tbody>
     </table>
 
-    It is not currently possible to get the version of the GPU driver, although this could be added.
+    It is not currently possible to get the version of the driver, although this could be added.
 
     Regarding multiple GPUs: If OpenXR is enabled, the OpenXR runtime has control over which GPU is
     used, which ensures best compatibility with the VR headset.  Otherwise, the "first" GPU returned
