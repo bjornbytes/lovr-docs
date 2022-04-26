@@ -46,9 +46,8 @@ return {
       description = 'TODO'
     },
     {
-      name = 'Miscellaneous',
-      tag = 'graphics-misc',
-      description = 'Hardware info and statistics.'
+      name = 'System Info',
+      tag = 'graphics-misc'
     }
   }
 }
