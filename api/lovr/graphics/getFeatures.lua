@@ -41,31 +41,12 @@ return {
           ]]
         },
         {
-          name = 'clipDistance',
-          type = 'boolean',
-          description = 'delet this'
-        },
-        {
-          name = 'cullDistance',
-          type = 'boolean',
-          description = 'delet this'
-        },
-        {
           name = 'indirectDrawFirstInstance',
           type = 'boolean',
           description = [[
             Whether indirect draws can set the firstInstance property of buffer memory to something
             other than zero.
           ]]
-        },
-        {
-          name = 'dynamicIndexing',
-          type = 'boolean',
-          description = [[
-            Whether shader code can dynamically index arrays of resources (i.e. when false, only
-            integer constants can be used to index into arrays of buffers or textures).
-            TODO delet this?
-          ]],
         },
         {
           name = 'float64',
