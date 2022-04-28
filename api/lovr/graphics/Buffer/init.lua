@@ -11,12 +11,12 @@ return {
     - Mesh data: Buffers hold the data that define the vertices in a mesh, like positions, normals,
       and UV coordinates.  Buffers also store the vertex indices of a mesh, which define how the
       vertices are connected together into triangles.  These are respectively called vertex and
-      index buffers.  TODO example.
+      index buffers.
     - Shader data: Buffers can be bound to a Shader, letting the Shader read arbitrary data. For
       example, Lua code could create a Buffer with the positions and colors of all the lights in a
       scene, which a Shader can use to do lighting calculations.
     - Compute: Compute shaders can write data to Buffers.  This GPU-generated data can be used in
-      later rendering work or read back from Lua.
+      later rendering work or sent back to Lua.
     - Indirect: Indirect rendering is an advanced technique where instructions for rendering work
       are recorded to a Buffer (potentially by a compute shader) and later drawn.
 
