@@ -13,7 +13,7 @@ return {
     // TODO zero-stride and straddled-stride
   ]],
   related = {
-    'lovr.graphics.getSize',
-    'lovr.graphics.getLength'
+    'Buffer:getSize',
+    'Buffer:getLength'
   }
 }

@@ -10,7 +10,7 @@ return {
     }
   },
   related = {
-    'lovr.graphics.getSize',
-    'lovr.graphics.getStride'
+    'Buffer:getSize',
+    'Buffer:getStride'
   }
 }
