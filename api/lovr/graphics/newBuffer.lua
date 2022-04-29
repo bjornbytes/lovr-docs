@@ -99,6 +99,8 @@ return {
       may be added in the future.
 
     If no table or Blob is used to define the initial Buffer contents, its data will be undefined.
+
+    There is currently a max of 16 fields.
   ]],
   related = {
     'lovr.graphics.buffer'
