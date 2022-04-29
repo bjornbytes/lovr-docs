@@ -6776,7 +6776,7 @@ return {
         {
           name = "buffer",
           summary = "Get a temporary Buffer.",
-          description = "Returns a temporary Buffer.  Use `lovr.graphics.newBuffer` to create a permanent buffer.",
+          description = "Creates a temporary Buffer.",
           key = "lovr.graphics.buffer",
           module = "lovr.graphics",
           notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
@@ -6794,7 +6794,13 @@ return {
                   description = "The type of each item in the Buffer."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -6809,7 +6815,13 @@ return {
                   description = "The type of each item in the Buffer."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -6838,7 +6850,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -6867,7 +6885,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -6882,7 +6906,13 @@ return {
                   description = "The type of each item in the Buffer."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -6911,7 +6941,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             }
           },
           related = {
@@ -7426,7 +7462,7 @@ return {
         {
           name = "newBuffer",
           summary = "Create a permanent Buffer.",
-          description = "Creates a permanent Buffer.  Use `lovr.graphics.buffer` to create a temporary buffer.",
+          description = "Creates a permanent Buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
           notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
@@ -7444,7 +7480,13 @@ return {
                   description = "The type of each item in the Buffer."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -7459,7 +7501,13 @@ return {
                   description = "The type of each item in the Buffer."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -7488,7 +7536,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -7517,7 +7571,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -7532,7 +7592,13 @@ return {
                   description = "The type of each item in the Buffer."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             },
             {
               arguments = {
@@ -7561,7 +7627,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
             }
           },
           related = {

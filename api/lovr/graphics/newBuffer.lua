@@ -1,8 +1,6 @@
 return {
   summary = 'Create a permanent Buffer.',
-  description = [[
-    Creates a permanent Buffer.  Use `lovr.graphics.buffer` to create a temporary buffer.
-  ]],
+  description = 'Creates a permanent Buffer.',
   arguments = {
     length = {
       type = 'number',
@@ -54,8 +52,7 @@ return {
     }
   },
   returns = {
-    {
-      name = 'buffer',
+    buffer = {
       type = 'Buffer',
       description = 'The new Buffer.'
     }
