@@ -10,7 +10,6 @@ return {
     the most padding between fields, and requires the stride to be a multiple of 16.  Example:
 
     ```
-    // Uses 1024 bytes, not 256!
     layout(std140) uniform ObjectScales { float scales[64]; };
     ```
 
