@@ -11,7 +11,7 @@ return {
       description = [[
         The initial data to put into the Buffer.  The length of the table will be used as the length
         of the Buffer.  Note: this means the table should only contain nested tables or
-        individual number/vector elements, which is less flexible than `Buffer:setData` is.
+        individual number/vector elements, which is less flexible than `Buffer:setData`.
       ]]
     },
     blob = {
@@ -94,7 +94,7 @@ return {
       fields or none of them.
     - `location` is the vertex attribute location of each field.  This is used to match up each
       field with an attribute declared in a shader, and doesn't have any purpose when binding the
-      buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a
+      buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an
       autoincrementing location starting at zero.  Named locations are not currently supported, but
       may be added in the future.
 

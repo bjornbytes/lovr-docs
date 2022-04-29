@@ -6779,7 +6779,7 @@ return {
           description = "Creates a temporary Buffer.",
           key = "lovr.graphics.buffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
           variants = {
             {
               arguments = {
@@ -6807,7 +6807,7 @@ return {
                 {
                   name = "data",
                   type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData`."
                 },
                 {
                   name = "type",
@@ -6863,7 +6863,7 @@ return {
                 {
                   name = "data",
                   type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData`."
                 },
                 {
                   name = "format",
@@ -7465,7 +7465,7 @@ return {
           description = "Creates a permanent Buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
           variants = {
             {
               arguments = {
@@ -7493,7 +7493,7 @@ return {
                 {
                   name = "data",
                   type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData`."
                 },
                 {
                   name = "type",
@@ -7549,7 +7549,7 @@ return {
                 {
                   name = "data",
                   type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData`."
                 },
                 {
                   name = "format",
@@ -7741,6 +7741,33 @@ return {
         }
       },
       enums = {
+        {
+          name = "BufferLayout",
+          description = "The different ways to pack Buffer fields into memory.\n\nThe default is `packed`, which is suitable for vertex buffers and index buffers.  It doesn't add any padding between elements, and so it doesn't waste any space.  However, this layout won't necessarily work for uniform buffers and storage buffers.\n\nThe `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds the most padding between fields, and requires the stride to be a multiple of 16.  Example:\n\n``` // Uses 1024 bytes, not 256! layout(std140) uniform ObjectScales { float scales[64]; }; ```\n\nThe `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds some padding between certain types, and may round up the stride.  Example:\n\n``` layout(std430) buffer TileSizes { vec2 sizes[]; } ```",
+          key = "BufferLayout",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.newBuffer",
+            "lovr.graphics.buffer",
+            "Buffer:getFormat",
+            "Buffer:getStride",
+            "FieldType"
+          },
+          values = {
+            {
+              name = "packed",
+              description = "The packed layout, without any padding."
+            },
+            {
+              name = "std140",
+              description = "The std140 layout."
+            },
+            {
+              name = "std430",
+              description = "The std430 layout."
+            }
+          }
+        },
         {
           name = "FieldType",
           description = "Different types for `Buffer` fields.  These are scalar, vector, or matrix types, usually packed into small amounts of space to reduce the amount of memory they occupy.\n\nThe names are encoded as follows:\n\n- The data type:\n  - `i` for signed integer\n  - `u` for unsigned integer\n  - `sn` for signed normalized (-1 to 1)\n  - `un` for unsigned normalized (0 to 1)\n  - `f` for floating point\n- The bit depth of each component\n- The letter `x` followed by the component count (for vectors)",
