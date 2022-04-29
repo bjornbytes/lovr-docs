@@ -4586,6 +4586,35 @@ return {
           },
           methods = {
             {
+              name = "getFormat",
+              summary = "Get the format of the Buffer.",
+              description = "Returns the format of the Buffer.  This is the list of fields that comprise each item in the buffer.  Each field has a type, byte offset, and vertex attribute location.",
+              key = "Buffer:getFormat",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "table",
+                      description = "The format of the Buffer."
+                    }
+                  }
+                }
+              },
+              related = {
+                "Buffer:getSize",
+                "Buffer:getLength",
+                "Buffer:getStride"
+              },
+              examples = {
+                {
+                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer(1, { 'vec3', 'vec3', 'vec2' })\n\n  for i, field in ipairs(buffer:getFormat()) do\n    local type, offset, location = field.type, field.offset, field.location\n    local template = 'Field: %d: Type = %s, Offset = %d, Location = %d'\n    print(template:format(i, type, offset, location))\n  end\n\n  -- prints the following:\n  -- Field 1: Type = f32x3, Offset = 0, Location = 0\n  -- Field 2: Type = f32x3, Offset = 12, Location = 1\n  -- Field 3: Type = f32x2, Offset = 24, Location = 2\nend"
+                }
+              }
+            },
+            {
               name = "getLength",
               summary = "Get the length of the Buffer.",
               description = "Returns the length of the Buffer.",
@@ -6746,24 +6775,147 @@ return {
       functions = {
         {
           name = "buffer",
-          summary = "Create a temporary Buffer.",
-          description = "Creates a temporary Buffer.",
+          summary = "Get a temporary Buffer.",
+          description = "Returns a temporary Buffer.  Use `lovr.graphics.newBuffer` to create a permanent buffer.",
           key = "lovr.graphics.buffer",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.newBuffer"
-          },
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
           variants = {
             {
-              arguments = {},
-              returns = {
+              arguments = {
                 {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer."
+                },
+                {
+                  name = "type",
+                  type = "FieldType",
+                  description = "The type of each item in the Buffer."
                 }
-              }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                },
+                {
+                  name = "type",
+                  type = "FieldType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "BufferLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "BufferLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                },
+                {
+                  name = "type",
+                  type = "FieldType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "BufferLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {}
             }
+          },
+          related = {
+            "lovr.graphics.newBuffer"
           }
         },
         {
@@ -7274,23 +7426,146 @@ return {
         {
           name = "newBuffer",
           summary = "Create a permanent Buffer.",
-          description = "Creates a permanent Buffer.",
+          description = "Creates a permanent Buffer.  Use `lovr.graphics.buffer` to create a temporary buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.buffer"
-          },
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use a\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
           variants = {
             {
-              arguments = {},
-              returns = {
+              arguments = {
                 {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer."
+                },
+                {
+                  name = "type",
+                  type = "FieldType",
+                  description = "The type of each item in the Buffer."
                 }
-              }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                },
+                {
+                  name = "type",
+                  type = "FieldType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "BufferLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the table will be used as the length of the Buffer.  Note: this means the table should only contain nested tables or individual number/vector elements, which is less flexible than `Buffer:setData` is."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "BufferLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                },
+                {
+                  name = "type",
+                  type = "FieldType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "BufferLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {}
             }
+          },
+          related = {
+            "lovr.graphics.buffer"
           }
         },
         {
