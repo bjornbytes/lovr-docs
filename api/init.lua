@@ -4683,6 +4683,28 @@ return {
                 "Buffer:getSize",
                 "Buffer:getLength"
               }
+            },
+            {
+              name = "isTemporary",
+              summary = "Check if the Buffer is temporary.",
+              description = "Returns whether the Buffer is temporary.",
+              key = "Buffer:isTemporary",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.buffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "temporary",
+                      type = "boolean",
+                      description = "Whether the Buffer is temporary."
+                    }
+                  }
+                }
+              }
             }
           }
         },
