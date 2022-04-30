@@ -12,11 +12,6 @@ return {
       description = 'The format of the Buffer.'
     }
   },
-  related = {
-    'Buffer:getSize',
-    'Buffer:getLength',
-    'Buffer:getStride'
-  },
   example = [=[
     function lovr.load()
       buffer = lovr.graphics.newBuffer(1, { 'vec3', 'vec3', 'vec2' })
@@ -32,5 +27,10 @@ return {
       -- Field 2: Type = f32x3, Offset = 12, Location = 1
       -- Field 3: Type = f32x2, Offset = 24, Location = 2
     end
-  ]=]
+  ]=],
+  related = {
+    'Buffer:getSize',
+    'Buffer:getLength',
+    'Buffer:getStride'
+  }
 }
