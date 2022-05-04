@@ -6964,6 +6964,18 @@ return {
               notes = "Order matters when scaling, translating, and rotating the coordinate system."
             }
           }
+        },
+        {
+          name = "Texture",
+          summary = "A multidimensional block of memory on the GPU.",
+          description = "Textures are multidimensional blocks of memory on the GPU, contrasted with `Buffer`s which are similar but one-dimensional.  Textures can be used to provide material data to Shaders, and they are also used as the destination for rendering operations.\n\nTextures can be created from image filenames, `Image` objects, or they can be left blank and created with a width, height, and depth.\n\nEach Texture has a type (`TextureType`).  2D Textures are the most common and are often used to store color image data, but there are also cubemaps for skyboxes, 3D textures for volumetric info, and array textures which store a sequence of 2D images.\n\nThe format of a Texture (`TextureFormat`) defines the size and number of channels of each pixel.\n\nTextures can have mipmaps, which are a precomputed set of progressively smaller versions of the Texture.  Mipmaps help make the Texture look smoother at smaller sizes, and also improve the performance of reading data from the Texture in a Shader.\n\nWhen used as a render target, the Texture can store multiple different color samples for each pixel, which can be averaged together after rendering to do antialiasing (this is called multisample antialiasing, or MSAA).\n\nIt is possible to create multiple views of a single Texture.  A texture view references a subset of the array layers and mipmap levels of its parent texture, and can be bound to a Shader or used as a render target just like a normal texture.",
+          key = "Texture",
+          module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newTexture",
+            "Texture:newView"
+          },
+          methods = {}
         }
       },
       functions = {
