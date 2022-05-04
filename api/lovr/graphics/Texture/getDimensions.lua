@@ -5,14 +5,17 @@ return {
   returns = {
     {
       name = 'width',
+      type = 'number',
       description = 'The width of the Texture.'
     },
     {
       name = 'height',
+      type = 'number',
       description = 'The height of the Texture.'
     },
     {
       name = 'depth',
+      type = 'number',
       description = 'The depth of the Texture.'
     }
   },

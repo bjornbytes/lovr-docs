@@ -5,6 +5,7 @@ return {
   returns = {
     {
       name = 'width',
+      type = 'number',
       description = 'The width of the Texture, in pixels.'
     }
   },

@@ -5,6 +5,7 @@ return {
   returns = {
     {
       name = 'height',
+      type = 'number',
       description = 'The height of the Texture, in pixels.'
     }
   },

@@ -10,6 +10,7 @@ return {
   returns = {
     {
       name = 'depth',
+      type = 'number',
       description = 'The depth of the Texture.'
     }
   },
