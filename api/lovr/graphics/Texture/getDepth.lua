@@ -17,6 +17,6 @@ return {
   related = {
     'Texture:getWidth',
     'Texture:getHeight',
-    'Texture:GetDimensions'
+    'Texture:getDimensions'
   }
 }

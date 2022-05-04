@@ -6939,7 +6939,7 @@ return {
               related = {
                 "Texture:getWidth",
                 "Texture:getHeight",
-                "Texture:GetDimensions"
+                "Texture:getDimensions"
               },
               variants = {
                 {
@@ -6997,7 +6997,7 @@ return {
               related = {
                 "Texture:getWidth",
                 "Texture:getDepth",
-                "Texture:GetDimensions"
+                "Texture:getDimensions"
               },
               variants = {
                 {
@@ -7021,7 +7021,7 @@ return {
               related = {
                 "Texture:getHeight",
                 "Texture:getDepth",
-                "Texture:GetDimensions"
+                "Texture:getDimensions"
               },
               variants = {
                 {
