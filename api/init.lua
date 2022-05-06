@@ -3311,6 +3311,186 @@ return {
               description = "16 bit integer samples (between -32768 and 32767)."
             }
           }
+        },
+        {
+          name = "TextureFormat",
+          description = "Different data layouts for pixels in `Image` and `Texture` objects.\n\nFormats starting with `d` are depth formats, used for depth/stencil render targets.\n\nFormats starting with `bc` and `astc` are compressed formats.  Compressed formats have better performance since they stay compressed on the CPU and GPU, reducing the amount of memory bandwidth required to look up all the pixels needed for shading.\n\nFormats without the `f` suffix are unsigned normalized formats, which store values in the range `[0,1]`.  The `f` suffix indicates a floating point format which can store values outside this range, and is used for HDR rendering or storing data in a texture.",
+          key = "TextureFormat",
+          module = "lovr.data",
+          values = {
+            {
+              name = "r8",
+              description = "One 8-bit channel.  1 byte per pixel."
+            },
+            {
+              name = "rg8",
+              description = "Two 8-bit channels.  2 bytes per pixel."
+            },
+            {
+              name = "rgba8",
+              description = "Four 8-bit channels.  4 bytes per pixel."
+            },
+            {
+              name = "r16",
+              description = "One 16-bit channel.  2 bytes per pixel."
+            },
+            {
+              name = "rg16",
+              description = "Two 16-bit channels.  4 bytes per pixel."
+            },
+            {
+              name = "rgba16",
+              description = "Four 16-bit channels.  8 bytes per pixel."
+            },
+            {
+              name = "r16f",
+              description = "One 16-bit floating point channel.  2 bytes per pixel."
+            },
+            {
+              name = "rg16f",
+              description = "Two 16-bit floating point channels.  4 bytes per pixel."
+            },
+            {
+              name = "rgba16f",
+              description = "Four 16-bit floating point channels.  8 bytes per pixel."
+            },
+            {
+              name = "r32f",
+              description = "One 32-bit floating point channel.  4 bytes per pixel."
+            },
+            {
+              name = "rg32f",
+              description = "Two 32-bit floating point channels.  8 bytes per pixel."
+            },
+            {
+              name = "rgba32f",
+              description = "Four 32-bit floating point channels.  16 bytes per pixel."
+            },
+            {
+              name = "rgb565",
+              description = "Packs three channels into 16 bits.  2 bytes per pixel."
+            },
+            {
+              name = "rgb5a1",
+              description = "Packs four channels into 16 bits, with \"cutout\" alpha.  2 bytes per pixel."
+            },
+            {
+              name = "rgb10a2",
+              description = "Packs four channels into 32 bits.  4 bytes per pixel."
+            },
+            {
+              name = "rg11b10f",
+              description = "Packs three unsigned floating point channels into 32 bits.  4 bytes per pixel."
+            },
+            {
+              name = "d16",
+              description = "One 16-bit depth channel.  2 bytes per pixel."
+            },
+            {
+              name = "d24s8",
+              description = "One 24-bit depth channel and one 8-bit stencil channel.  4 bytes per pixel."
+            },
+            {
+              name = "d32f",
+              description = "One 32-bit floating point depth channel.  4 bytes per pixel."
+            },
+            {
+              name = "bc1",
+              description = "3 channels.  8 bytes per 4x4 block, or 0.5 bytes per pixel.  Good for opaque images."
+            },
+            {
+              name = "bc2",
+              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  Not good for anything, because it only has 16 distinct levels of alpha."
+            },
+            {
+              name = "bc3",
+              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for color images with transparency."
+            },
+            {
+              name = "bc4u",
+              description = "One unsigned normalized channel.  8 bytes per 4x4 block or 0.5 bytes per pixel.  Good for grayscale images, like heightmaps."
+            },
+            {
+              name = "bc4s",
+              description = "One signed normalized channel.  8 bytes per 4x4 block or 0.5 bytes per pixel.  Similar to bc4u but has a range of -1 to 1."
+            },
+            {
+              name = "bc5u",
+              description = "Two unsigned normalized channels.  16 bytes per 4x4 block, or 1 byte per pixel.  Good for normal maps."
+            },
+            {
+              name = "bc5s",
+              description = "Two signed normalized channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for normal maps."
+            },
+            {
+              name = "bc6uf",
+              description = "Three unsigned floating point channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for HDR images."
+            },
+            {
+              name = "bc6sf",
+              description = "Three floating point channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for HDR images."
+            },
+            {
+              name = "bc7",
+              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  High quality.  Good for most color images, including transparency."
+            },
+            {
+              name = "astc4x4",
+              description = "Four channels, 16 bytes per 4x4 block or 1 byte per pixel."
+            },
+            {
+              name = "astc5x4",
+              description = "Four channels, 16 bytes per 5x4 block or 0.80 bytes per pixel."
+            },
+            {
+              name = "astc5x5",
+              description = "Four channels, 16 bytes per 5x5 block or 0.64 bytes per pixel."
+            },
+            {
+              name = "astc6x5",
+              description = "Four channels, 16 bytes per 6x5 block or 0.53 bytes per pixel."
+            },
+            {
+              name = "astc6x6",
+              description = "Four channels, 16 bytes per 6x6 block or 0.44 bytes per pixel."
+            },
+            {
+              name = "astc8x5",
+              description = "Four channels, 16 bytes per 8x5 block or 0.40 bytes per pixel."
+            },
+            {
+              name = "astc8x6",
+              description = "Four channels, 16 bytes per 8x6 block or 0.33 bytes per pixel."
+            },
+            {
+              name = "astc8x8",
+              description = "Four channels, 16 bytes per 8x8 block or 0.25 bytes per pixel."
+            },
+            {
+              name = "astc10x5",
+              description = "Four channels, 16 bytes per 10x5 block or 0.32 bytes per pixel."
+            },
+            {
+              name = "astc10x6",
+              description = "Four channels, 16 bytes per 10x6 block or 0.27 bytes per pixel."
+            },
+            {
+              name = "astc10x8",
+              description = "Four channels, 16 bytes per 10x8 block or 0.20 bytes per pixel."
+            },
+            {
+              name = "astc10x10",
+              description = "Four channels, 16 bytes per 10x10 block or 0.16 bytes per pixel."
+            },
+            {
+              name = "astc12x10",
+              description = "Four channels, 16 bytes per 12x10 block or 0.13 bytes per pixel."
+            },
+            {
+              name = "astc12x12",
+              description = "Four channels, 16 bytes per 12x12 block or 0.11 bytes per pixel."
+            }
+          }
         }
       }
     },
@@ -7037,6 +7217,29 @@ return {
               }
             },
             {
+              name = "getParent",
+              summary = "Get the parent of a Texture view.",
+              description = "Returns the parent of a Texture view, which is the Texture that it references.  Returns `nil` if the Texture is not a view.",
+              key = "Texture:getParent",
+              module = "lovr.graphics",
+              related = {
+                "Texture:isView",
+                "Texture:newView"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "parent",
+                      type = "Texture",
+                      description = "The parent of the texture, or `nil` if the texture is not a view."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getSampleCount",
               summary = "Get the number of MSAA samples in the Texture.",
               description = "Returns the number of multisample antialiasing (MSAA) samples in the Texture.  Multisampling is used for antialiasing when rendering to the Texture.  Using more samples will cause the Texture to use additional memory but reduce aliasing artifacts.",
@@ -7078,6 +7281,116 @@ return {
                       name = "width",
                       type = "number",
                       description = "The width of the Texture, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "hasUsage",
+              summary = "Check if a Texture was created with a set of usage flags.",
+              description = "Returns whether a Texture was created with a set of `TextureUsage` flags.  Usage flags are specified when the Texture is created, and restrict what you can do with a Texture object.  By default, only the `sample` usage is enabled.  Applying a smaller set of usage flags helps LÖVR optimize things better.",
+              key = "Texture:hasUsage",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "...",
+                      type = "TextureUsage",
+                      description = "One or more usage flags."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "supported",
+                      type = "boolean",
+                      description = "Whether the Texture has all the provided usage flags."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isView",
+              summary = "Check if a Texture is a texture view.",
+              description = "Returns whether a Texture is a texture view, created with `Texture:newView`.",
+              key = "Texture:isView",
+              module = "lovr.graphics",
+              related = {
+                "Texture:getParent",
+                "Texture:newView"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "view",
+                      type = "boolean",
+                      description = "Whether the Texture is a texture view."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "newView",
+              summary = "Create a texture view referencing this Texture.",
+              description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType` from the parent, and it may reference a subset of the parent texture's images and mipmap levels.\n\nTexture views can be used as render targets in a render pass and they can be bound to Shaders. They can not currently be used for transfer operations.  They are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as\n  an array texture.\n- Rendering to a particular image or mipmap level of a texture.\n- Binding a particular image or mipmap level to a shader.",
+              key = "Texture:newView",
+              module = "lovr.graphics",
+              related = {
+                "Texture:isView",
+                "Texture:getParent",
+                "lovr.graphics.newTexture"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "parent",
+                      type = "Texture",
+                      description = "The parent Texture to create the view of."
+                    },
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The texture type of the view."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer in the view.",
+                      default = "1"
+                    },
+                    {
+                      name = "layerCount",
+                      type = "number",
+                      description = "The number of layers in the view, or `nil` to use all remaining layers.",
+                      default = "nil"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the first mipmap in the view.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmapCount",
+                      type = "number",
+                      description = "The number of mipmaps in the view, or `nil` to use all remaining mipmaps.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "view",
+                      type = "Texture",
+                      description = "The new texture view."
                     }
                   }
                 }
@@ -8225,6 +8538,30 @@ return {
             {
               name = "mat4",
               description = "A 4x4 matrix containing sixteen 32-bit floats."
+            }
+          }
+        },
+        {
+          name = "TextureUsage",
+          description = "These are the different things `Texture`s can be used for.  When creating a Texture, a set of these flags can be provided, restricting what operations are allowed on the texture.  Using a smaller set of flags may improve performance.  If none are provided, the only usage flag applied is `sample`.",
+          key = "TextureUsage",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "sample",
+              description = "Whether the texture can be sampled from in Shaders (i.e. used in a material, or bound to a variable with a `texture` type, like `texture2D`)."
+            },
+            {
+              name = "render",
+              description = "Whether the texture can be rendered to (i.e. by using it as a render target in `lovr.graphics.pass`)."
+            },
+            {
+              name = "storage",
+              description = "Whether the texture can be used as a storage texture for compute operations (i.e. bound to a variable with an `image` type, like `image2D`)."
+            },
+            {
+              name = "transfer",
+              description = "Whether the texture can be used in a transfer pass."
             }
           }
         }
