@@ -41,10 +41,14 @@ return {
       -- Create the shader, injecting the shader code for the block
       shader = lovr.graphics.newShader(
         block:getShaderCode('ModelBlock') .. [[
-        vec4 position(mat4 project, mat4 transform, vec4 vertex) {
-          return lovrProjection * lovrTransform * modelPositions[gl_InstanceID] * lovrVertex;
+        vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
+          return projection * transform * modelPositions[lovrInstanceID] * vertex;
         }
-      ]], nil)
+      ]], [[
+        vec4 color(vec4 gcolor, sampler2D image, vec2 uv) {
+          return gcolor * texture(image, uv);
+        }
+      ]])
 
       -- Bind the block to the shader
       shader:sendBlock('ModelBlock', block)
