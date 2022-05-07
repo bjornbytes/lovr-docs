@@ -7169,6 +7169,25 @@ return {
               }
             },
             {
+              name = "getFormat",
+              summary = "Get the format of the Texture.",
+              description = "Returns the format of the texture.  The default is `rgba8`.",
+              key = "Texture:getFormat",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of the Texture."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getHeight",
               summary = "Get the height of the Texture, in pixels.",
               description = "Returns the height of the Texture, in pixels.",
@@ -7260,6 +7279,25 @@ return {
               },
               related = {
                 "lovr.graphics.newTexture"
+              }
+            },
+            {
+              name = "getType",
+              summary = "Get the type of the Texture.",
+              description = "Returns the type of the texture.",
+              key = "Texture:getType",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of the Texture."
+                    }
+                  }
+                }
               }
             },
             {
@@ -8538,6 +8576,30 @@ return {
             {
               name = "mat4",
               description = "A 4x4 matrix containing sixteen 32-bit floats."
+            }
+          }
+        },
+        {
+          name = "TextureType",
+          description = "Different types of textures.  Textures are multidimensional blocks of GPU memory, and the texture's type determines how many dimensions there are, and adds some semantics about what the 3rd dimension means.",
+          key = "TextureType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "2d",
+              description = "A single 2D image, the most common type."
+            },
+            {
+              name = "3d",
+              description = "A 3D image, where a sequence of 2D images defines a 3D volume.  Each mipmap level of a 3D texture gets smaller in the x, y, and z axes, unlike cubemap and array textures."
+            },
+            {
+              name = "cube",
+              description = "Six 2D images that define the faces of a cubemap, used for skyboxes or other \"directional\" images."
+            },
+            {
+              name = "array",
+              description = "Array textures are sequences of distinct 2D images."
             }
           }
         },
