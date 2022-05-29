@@ -12,7 +12,7 @@ return {
   notes = [[
     The length is equivalent to this:
 
-        math.sqrt(v.x * v.x + v.y * v.y * v.z + v.z + v.w * v.w)
+        math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w)
   ]],
   related = {
     'Vec4:normalize',

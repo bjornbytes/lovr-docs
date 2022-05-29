@@ -10,5 +10,6 @@ return {
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
     'World:newSphereCollider'
+    'World:newMeshCollider'
   }
 }

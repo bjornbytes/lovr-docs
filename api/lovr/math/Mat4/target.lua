@@ -3,7 +3,7 @@ return {
   description = [[
     Sets a model transform matrix that moves to `from` and orients model towards `to` point.
 
-    This is used when rendered model should always point torwards a point of interest. The
+    This is used when rendered model should always point towards a point of interest. The
     resulting Mat4 object can be used as model pose.
 
     The target() function produces same result as lookAt() after matrix inversion.
