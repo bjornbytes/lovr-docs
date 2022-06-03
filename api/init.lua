@@ -19469,8 +19469,117 @@ return {
           },
           variants = {
             {
+              description = "Sets the matrix to the identity matrix.",
               arguments = {},
-              returns = {}
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              description = "Copies the values from an existing matrix.",
+              arguments = {
+                {
+                  name = "n",
+                  type = "mat4",
+                  description = "An existing matrix to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "position",
+                  type = "Vec3",
+                  description = "The translation of the matrix.",
+                  default = "0, 0, 0"
+                },
+                {
+                  name = "scale",
+                  type = "Vec3",
+                  description = "The scale of the matrix.",
+                  default = "1, 1, 1"
+                },
+                {
+                  name = "rotation",
+                  type = "Quat",
+                  description = "The rotation of the matrix.",
+                  default = "0, 0, 0, 1"
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "position",
+                  type = "Vec3",
+                  description = "The translation of the matrix.",
+                  default = "0, 0, 0"
+                },
+                {
+                  name = "rotation",
+                  type = "Quat",
+                  description = "The rotation of the matrix.",
+                  default = "0, 0, 0, 1"
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "...",
+                  type = "number",
+                  description = "16 numbers to use as the raw values of the matrix (column-major)."
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              description = "Sets the diagonal values to a number and everything else to 0.",
+              arguments = {
+                {
+                  name = "d",
+                  type = "number",
+                  description = "A number to use for the diagonal elements."
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
             }
           }
         },
@@ -19563,8 +19672,117 @@ return {
           },
           variants = {
             {
+              description = "Sets the matrix to the identity matrix.",
               arguments = {},
-              returns = {}
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              description = "Copies the values from an existing matrix.",
+              arguments = {
+                {
+                  name = "n",
+                  type = "mat4",
+                  description = "An existing matrix to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "position",
+                  type = "Vec3",
+                  description = "The translation of the matrix.",
+                  default = "0, 0, 0"
+                },
+                {
+                  name = "scale",
+                  type = "Vec3",
+                  description = "The scale of the matrix.",
+                  default = "1, 1, 1"
+                },
+                {
+                  name = "rotation",
+                  type = "Quat",
+                  description = "The rotation of the matrix.",
+                  default = "0, 0, 0, 1"
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "position",
+                  type = "Vec3",
+                  description = "The translation of the matrix.",
+                  default = "0, 0, 0"
+                },
+                {
+                  name = "rotation",
+                  type = "Quat",
+                  description = "The rotation of the matrix.",
+                  default = "0, 0, 0, 1"
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "...",
+                  type = "number",
+                  description = "16 numbers to use as the raw values of the matrix (column-major)."
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
+            },
+            {
+              description = "Sets the diagonal values to a number and everything else to 0.",
+              arguments = {
+                {
+                  name = "d",
+                  type = "number",
+                  description = "A number to use for the diagonal elements."
+                }
+              },
+              returns = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "The new matrix."
+                }
+              }
             }
           }
         },
@@ -19581,8 +19799,126 @@ return {
           },
           variants = {
             {
+              arguments = {
+                {
+                  name = "angle",
+                  description = "An angle to use for the rotation, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "raw",
+                  type = "boolean",
+                  description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
+                  default = "false"
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "r",
+                  type = "quat",
+                  description = "An existing quaternion to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Uses the direction of a vector.",
+              arguments = {
+                {
+                  name = "v",
+                  type = "vec3",
+                  description = "A normalized direction vector."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Sets the rotation to represent the rotation between two vectors.",
+              arguments = {
+                {
+                  name = "v",
+                  type = "vec3",
+                  description = "A normalized direction vector."
+                },
+                {
+                  name = "u",
+                  type = "vec3",
+                  description = "Another normalized direction vector."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "m",
+                  type = "mat4",
+                  description = "A matrix to use the rotation from."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Set the quaternion to the identity (0, 0, 0, 1).",
               arguments = {},
-              returns = {}
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
             }
           }
         },
@@ -19658,8 +19994,43 @@ return {
           },
           variants = {
             {
-              arguments = {},
-              returns = {}
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x value of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y value of the vector.",
+                  default = "x"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec2",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "u",
+                  type = "Vec2",
+                  description = "A vector to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec2",
+                  description = "The new vector."
+                }
+              }
             }
           }
         },
@@ -19676,8 +20047,65 @@ return {
           },
           variants = {
             {
-              arguments = {},
-              returns = {}
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x value of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y value of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z value of the vector.",
+                  default = "x"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "u",
+                  type = "Vec3",
+                  description = "A vector to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "A matrix to use the position of."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
             }
           }
         },
@@ -19694,8 +20122,55 @@ return {
           },
           variants = {
             {
-              arguments = {},
-              returns = {}
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x value of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y value of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z value of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The w value of the vector.",
+                  default = "x"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec4",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "u",
+                  type = "Vec4",
+                  description = "A vector to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec4",
+                  description = "The new vector."
+                }
+              }
             }
           }
         },
@@ -19819,8 +20294,126 @@ return {
           },
           variants = {
             {
+              arguments = {
+                {
+                  name = "angle",
+                  description = "An angle to use for the rotation, in radians.",
+                  default = "0"
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation.",
+                  default = "0"
+                },
+                {
+                  name = "raw",
+                  type = "boolean",
+                  description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
+                  default = "false"
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "r",
+                  type = "quat",
+                  description = "An existing quaternion to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Uses the direction of a vector.",
+              arguments = {
+                {
+                  name = "v",
+                  type = "vec3",
+                  description = "A normalized direction vector."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Sets the rotation to represent the rotation between two vectors.",
+              arguments = {
+                {
+                  name = "v",
+                  type = "vec3",
+                  description = "A normalized direction vector."
+                },
+                {
+                  name = "u",
+                  type = "vec3",
+                  description = "Another normalized direction vector."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "m",
+                  type = "mat4",
+                  description = "A matrix to use the rotation from."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Set the quaternion to the identity (0, 0, 0, 1).",
               arguments = {},
-              returns = {}
+              returns = {
+                {
+                  name = "q",
+                  type = "quat",
+                  description = "The new quaternion."
+                }
+              }
             }
           }
         },
@@ -19960,8 +20553,43 @@ return {
           },
           variants = {
             {
-              arguments = {},
-              returns = {}
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x value of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y value of the vector.",
+                  default = "x"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec2",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "u",
+                  type = "Vec2",
+                  description = "A vector to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec2",
+                  description = "The new vector."
+                }
+              }
             }
           }
         },
@@ -19978,8 +20606,65 @@ return {
           },
           variants = {
             {
-              arguments = {},
-              returns = {}
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x value of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y value of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z value of the vector.",
+                  default = "x"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "u",
+                  type = "Vec3",
+                  description = "A vector to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "m",
+                  type = "Mat4",
+                  description = "A matrix to use the position of."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
             }
           }
         },
@@ -19996,8 +20681,55 @@ return {
           },
           variants = {
             {
-              arguments = {},
-              returns = {}
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x value of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y value of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z value of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The w value of the vector.",
+                  default = "x"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec4",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "u",
+                  type = "Vec4",
+                  description = "A vector to copy the values from."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec4",
+                  description = "The new vector."
+                }
+              }
             }
           }
         }
