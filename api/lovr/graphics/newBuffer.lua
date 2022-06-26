@@ -103,6 +103,6 @@ return {
     There is currently a max of 16 fields.
   ]],
   related = {
-    'lovr.graphics.buffer'
+    'lovr.graphics.getBuffer'
   }
 }

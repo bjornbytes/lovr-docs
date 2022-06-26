@@ -10,6 +10,6 @@ return {
     }
   },
   related = {
-    'lovr.graphics.buffer'
+    'lovr.graphics.getBuffer'
   }
 }

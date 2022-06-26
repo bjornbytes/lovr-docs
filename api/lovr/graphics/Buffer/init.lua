@@ -33,7 +33,7 @@ return {
       at load time, or data that is updated infrequently.
   ]],
   constructors = {
-    'lovr.graphics.buffer',
+    'lovr.graphics.getBuffer',
     'lovr.graphics.newBuffer'
   }
 }

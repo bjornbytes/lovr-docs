@@ -187,10 +187,6 @@ return {
           <td><code>color</code></td>
           <td><code>un8x4</code></td>
         </tr>
-        <tr>
-          <td><code>normal</code></td>
-          <td><code>un10x3</code></td>
-        </tr>
       </tbody>
     </table>
 
@@ -203,7 +199,7 @@ return {
   ]],
   related = {
     'lovr.graphics.newBuffer',
-    'lovr.graphics.buffer',
+    'lovr.graphics.getBuffer',
     'Buffer:getFormat'
   }
 }
