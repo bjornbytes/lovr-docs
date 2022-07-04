@@ -221,7 +221,7 @@ return {
         <tr>
           <td><code>textureLayers</code></td>
           <td>256</td>
-          <td>65536*</td>
+          <td></td>
         </tr>
         <tr>
           <td><code>renderSize</code></td>
