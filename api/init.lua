@@ -5684,6 +5684,64 @@ return {
           }
         },
         {
+          name = "PassType",
+          summary = "Different types of Passes.",
+          description = "TODO",
+          key = "PassType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "render",
+              description = "TODO"
+            },
+            {
+              name = "compute",
+              description = "TODO"
+            },
+            {
+              name = "transfer",
+              description = "TODO"
+            }
+          }
+        },
+        {
+          name = "ShaderStage",
+          description = "TODO",
+          key = "ShaderStage",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "vertex",
+              description = "TODO"
+            },
+            {
+              name = "fragment",
+              description = "TODO"
+            },
+            {
+              name = "compute",
+              description = "TODO"
+            }
+          }
+        },
+        {
+          name = "ShaderType",
+          summary = "Different types of Shaders.",
+          description = "TODO",
+          key = "ShaderType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "graphics",
+              description = "TODO"
+            },
+            {
+              name = "compute",
+              description = "TODO"
+            }
+          }
+        },
+        {
           name = "TextureType",
           description = "Different types of textures.  Textures are multidimensional blocks of GPU memory, and the texture's type determines how many dimensions there are, and adds some semantics about what the 3rd dimension means.",
           key = "TextureType",
@@ -5733,6 +5791,59 @@ return {
         }
       },
       functions = {
+        {
+          name = "compileShader",
+          summary = "Compile a Shader.",
+          description = "TODO",
+          key = "lovr.graphics.compileShader",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.newShader"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "stage",
+                  type = "ShaderStage",
+                  description = "TODO"
+                }
+              },
+              returns = {
+                {
+                  name = "bytecode",
+                  type = "Blob",
+                  description = "TODO"
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getAnisotropy",
+          summary = "Get the anisotropy of the Sampler.",
+          description = "TODO",
+          key = "lovr.graphics.getAnisotropy",
+          module = "lovr.graphics",
+          related = {
+            "Sampler:getFilter",
+            "Sampler:getWrap",
+            "Sampler:getCompareMode",
+            "Sampler:getMipmapRange"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "anisotropy",
+                  type = "number",
+                  description = "TODO"
+                }
+              }
+            }
+          }
+        },
         {
           name = "getBackground",
           tag = "camera",
@@ -5948,6 +6059,29 @@ return {
             }
           },
           notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields."
+        },
+        {
+          name = "getDefaultFont",
+          summary = "Get the default Font.",
+          description = "Returns the default Font.  The default font is Varela Round, created at 24px with a spread value of `4.0`.  It's used by `Pass:text` if no Font is provided.",
+          key = "lovr.graphics.getDefaultFont",
+          module = "lovr.graphics",
+          related = {
+            "Pass:text",
+            "lovr.graphics.newFont"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The default Font object."
+                }
+              }
+            }
+          }
         },
         {
           name = "getDevice",
@@ -6219,6 +6353,96 @@ return {
           notes = "The limit ranges are as follows:\n\n<table>\n  <thead>\n    <tr>\n      <td>Limit</td>\n      <td>Minimum</td>\n      <td>Maximum</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>textureSize2D</code></td>\n      <td>4096</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>textureSize3D</code></td>\n      <td>256</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>textureSizeCube</code></td>\n      <td>4096</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>textureLayers</code></td>\n      <td>256</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>renderSize</code></td>\n      <td>{ 4096, 4096, 6 }</td>\n      <td>{ 65536*, 65536*, 6* }</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferRange</code></td>\n      <td>16384 (often 65536)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>storageBufferRange</code></td>\n      <td>134217728 (128MB)</td>\n      <td>1073741824 (1GB)*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferAlign</code></td>\n      <td></td>\n      <td>256</td>\n    </tr>\n    <tr>\n      <td><code>storageBufferAlign</code></td>\n      <td></td>\n      <td>64</td>\n    </tr>\n    <tr>\n      <td><code>vertexAttributes</code></td>\n      <td>16</td>\n      <td>16*</td>\n    </tr>\n    <tr>\n      <td><code>vertexBufferStride</code></td>\n      <td>2048</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>vertexShaderOutputs</code></td>\n      <td>64</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>cullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipAndCullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeDispatchCount</code></td>\n      <td>{ 65536, 65536, 65536 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupSize</code></td>\n      <td>{ 128, 128, 64 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupVolume</code></td>\n      <td>128</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeSharedMemory</code></td>\n      <td>16384 (16KB)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>indirectDrawCount</code></td>\n      <td>1</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>instances</code></td>\n      <td>134217727</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>anisotropy</code></td>\n      <td>0.0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pointSize</code></td>\n      <td>1.0</td>\n      <td></td>\n    </tr>\n  </tbody> </table>\n\nNote: in the table above, `*` means that LÖVR itself is imposing a cap on the limit."
         },
         {
+          name = "getPass",
+          summary = "Get a new Pass.",
+          description = "TODO",
+          key = "lovr.graphics.getPass",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.submit"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "TODO"
+                },
+                {
+                  name = "label",
+                  type = "string",
+                  description = "TODO"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "TODO"
+                },
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                },
+                {
+                  name = "label",
+                  type = "string",
+                  description = "TODO"
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "PassType",
+                  description = "TODO"
+                },
+                {
+                  name = "canvas",
+                  type = "table",
+                  description = "TODO",
+                  table = {
+                    {
+                      name = "depth",
+                      type = "*",
+                      description = "TODO"
+                    },
+                    {
+                      name = "clear",
+                      type = "*",
+                      description = "TODO"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "boolean",
+                      description = "TODO",
+                      default = "'false'"
+                    }
+                  }
+                },
+                {
+                  name = "label",
+                  type = "string",
+                  description = "TODO"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "getStats",
           tag = "graphics-misc",
           summary = "Get graphics-related statistics.",
@@ -6421,8 +6645,8 @@ return {
         },
         {
           name = "newBuffer",
-          summary = "Create a permanent Buffer.",
-          description = "Creates a permanent Buffer.",
+          summary = "Create a new Buffer.",
+          description = "Creates a Buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
           related = {
@@ -6599,6 +6823,811 @@ return {
             }
           },
           notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields."
+        },
+        {
+          name = "newFont",
+          summary = "Create a new Font.",
+          description = "TODO",
+          key = "lovr.graphics.newFont",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getDefaultFont",
+            "lovr.data.newRasterizer",
+            "Pass:text"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "TODO"
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "TODO",
+                  default = "32"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "TODO",
+                  default = "4"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "TODO"
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "TODO",
+                  default = "32"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "TODO",
+                  default = "4"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "size",
+                  type = "number",
+                  description = "TODO",
+                  default = "32"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "TODO",
+                  default = "4"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "TODO"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "TODO",
+                  default = "4"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newMaterial",
+          summary = "Create a new Material.",
+          description = "TODO",
+          key = "lovr.graphics.newMaterial",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                }
+              },
+              returns = {
+                {
+                  name = "material",
+                  type = "Material",
+                  description = "TODO"
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Material properties.",
+                  table = {
+                    {
+                      name = "color",
+                      type = "Color",
+                      description = "TODO"
+                    },
+                    {
+                      name = "glow",
+                      type = "Color",
+                      description = "TODO"
+                    },
+                    {
+                      name = "uvShift",
+                      type = "Point2D",
+                      description = "TODO"
+                    },
+                    {
+                      name = "uvScale",
+                      type = "Scale2D",
+                      description = "TODO"
+                    },
+                    {
+                      name = "metalness",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "roughness",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "clearcoat",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "clearcoatRoughness",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "occlusionStrength",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "glowStrength",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "normalScale",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "alphaCutoff",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "pointSize",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "glowTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "glowTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "occlusionTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "metalnessTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "roughnessTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "clearcoatTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "normalTexture",
+                      type = "Texture",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "material",
+                  type = "Material",
+                  description = "TODO"
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newModel",
+          summary = "Create a new Model.",
+          description = "TODO",
+          key = "lovr.graphics.newModel",
+          module = "lovr.graphics",
+          related = {
+            "lovr.data.newModelData",
+            "Pass:draw"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Model options.",
+                  table = {
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Model options.",
+                  table = {
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "TODO"
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newSampler",
+          summary = "Create a new Sampler.",
+          description = "TODO",
+          key = "lovr.graphics.newSampler",
+          module = "lovr.graphics",
+          related = {
+            "Pass:setSampler"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "options",
+                  type = "table",
+                  description = "TODO",
+                  table = {
+                    {
+                      name = "filter",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "wrap",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "compare",
+                      type = "CompareMode",
+                      description = "TODO"
+                    },
+                    {
+                      name = "anisotropy",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmaprange",
+                      type = "table",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "sampler",
+                  type = "Sampler",
+                  description = "TODO"
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newShader",
+          summary = "Create a Shader.",
+          description = "TODO",
+          key = "lovr.graphics.newShader",
+          module = "lovr.graphics",
+          related = {
+            "lovr.graphics.compileShader"
+          },
+          variants = {
+            {
+              description = "Create a graphics shader.",
+              arguments = {
+                {
+                  name = "vertex",
+                  type = "ShaderSource",
+                  description = "TODO"
+                },
+                {
+                  name = "fragment",
+                  type = "ShaderSource",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Shader options.",
+                  table = {
+                    {
+                      name = "flags",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "shader",
+                  type = "Shader",
+                  description = "TODO"
+                }
+              }
+            },
+            {
+              description = "Create a compute shader.",
+              arguments = {
+                {
+                  name = "compute",
+                  type = "ShaderSource",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Shader options.",
+                  table = {
+                    {
+                      name = "flags",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "shader",
+                  type = "Shader",
+                  description = "TODO"
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newTexture",
+          summary = "Create a new Texture.",
+          description = "TODO",
+          key = "lovr.graphics.newTexture",
+          module = "lovr.graphics",
+          related = {
+            "Texture:newView"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Texture options.",
+                  table = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "TODO"
+                    },
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "TODO"
+                    },
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "usage",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "TODO"
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Texture options.",
+                  table = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "TODO"
+                    },
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "TODO"
+                    },
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "usage",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "TODO"
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "TODO"
+                },
+                {
+                  name = "depth",
+                  type = "number",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Texture options.",
+                  table = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "TODO"
+                    },
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "TODO"
+                    },
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "usage",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "image",
+                  type = "string",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Texture options.",
+                  table = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "TODO"
+                    },
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "TODO"
+                    },
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "usage",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "images",
+                  type = "table",
+                  description = "TODO"
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Texture options.",
+                  table = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "TODO"
+                    },
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "TODO"
+                    },
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "usage",
+                      type = "table",
+                      description = "TODO"
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "TODO"
+                }
+              }
+            }
+          }
         },
         {
           name = "setBackground",
@@ -6975,6 +8004,906 @@ return {
           constructors = {
             "lovr.graphics.getBuffer",
             "lovr.graphics.newBuffer"
+          }
+        },
+        {
+          name = "Font",
+          summary = "TODO",
+          description = "TODO",
+          key = "Font",
+          module = "lovr.graphics",
+          methods = {
+            {
+              name = "getAscent",
+              summary = "Get the ascent of the Font.",
+              description = "TODO",
+              key = "Font:getAscent",
+              module = "lovr.graphics",
+              related = {
+                "Font:getDescent",
+                "Font:getHeight",
+                "Font:getKerning",
+                "Font:getWidth"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "ascent",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDescent",
+              summary = "Get the descent of the Font.",
+              description = "TODO",
+              key = "Font:getDescent",
+              module = "lovr.graphics",
+              related = {
+                "Font:getAscent",
+                "Font:getHeight",
+                "Font:getKerning",
+                "Font:getWidth"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "descent",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getHeight",
+              summary = "Get the height of the Font.",
+              description = "TODO",
+              key = "Font:getHeight",
+              module = "lovr.graphics",
+              related = {
+                "Font:getAscent",
+                "Font:getDescent",
+                "Font:getKerning",
+                "Font:getWidth",
+                "Font:getLines"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getKerning",
+              summary = "Get the kerning of the Font.",
+              description = "TODO",
+              key = "Font:getKerning",
+              module = "lovr.graphics",
+              related = {
+                "Font:getAscent",
+                "Font:getDescent",
+                "Font:getHeight",
+                "Font:getWidth"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "first",
+                      type = "Codepoint",
+                      description = "TODO"
+                    },
+                    {
+                      name = "second",
+                      type = "Codepoint",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "kerning",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getLineSpacing",
+              summary = "Set the pixel density of the Font.",
+              description = "TODO",
+              key = "Font:getLineSpacing",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "spacing",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getLines",
+              summary = "Turn a long string into a sequence of wrapped lines.",
+              description = "TODO",
+              key = "Font:getLines",
+              module = "lovr.graphics",
+              related = {
+                "Font:getWidth",
+                "Font:getHeight",
+                "Pass:text"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "text",
+                      type = "Text",
+                      description = "TODO"
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "lines",
+                      type = "table",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPixelDensity",
+              summary = "Get the pixel density of the Font.",
+              description = "TODO",
+              key = "Font:getPixelDensity",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "density",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRasterizer",
+              summary = "Get the Font's Rasterizer.",
+              description = "TODO",
+              key = "Font:getRasterizer",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newFont",
+                "lovr.data.newRasterizer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "rasterizer",
+                      type = "Rasterizer",
+                      description = "The Rasterizer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWidth",
+              summary = "Get the width of rendered text.",
+              description = "TODO",
+              key = "Font:getWidth",
+              module = "lovr.graphics",
+              related = {
+                "Font:getAscent",
+                "Font:getDescent",
+                "Font:getHeight",
+                "Font:getKerning",
+                "Font:getLines"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "text",
+                      type = "Text",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setLineSpacing",
+              summary = "Set the line spacing of the Font.",
+              description = "TODO",
+              key = "Font:setLineSpacing",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "spacing",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPixelDensity",
+              summary = "Set the pixel density of the Font.",
+              description = "TODO",
+              key = "Font:setPixelDensity",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "density",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.graphics.newFont",
+            "lovr.graphics.getDefaultFont"
+          }
+        },
+        {
+          name = "Material",
+          summary = "TODO",
+          description = "TODO",
+          key = "Material",
+          module = "lovr.graphics",
+          methods = {},
+          constructors = {
+            "lovr.graphics.newMaterial"
+          }
+        },
+        {
+          name = "Model",
+          summary = "TODO",
+          description = "TODO",
+          key = "Model",
+          module = "lovr.graphics",
+          methods = {
+            {
+              name = "animate",
+              summary = "Apply an animation to the pose of the Model.",
+              description = "TODO",
+              key = "Model:animate",
+              module = "lovr.graphics",
+              related = {
+                "Model:resetPose",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:getAnimationDuration"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The timestamp to evaluate the keyframes at, in seconds."
+                    },
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "How much of the animation to mix in, from 0 to 1.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The timestamp to evaluate the keyframes at, in seconds."
+                    },
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "How much of the animation to mix in, from 0 to 1.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getAnimationCount",
+              summary = "Get the number of animations in the Model.",
+              description = "Returns the number of animations in the Model.",
+              key = "Model:getAnimationCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationName",
+                "Model:getAnimationDuration",
+                "Model:animate"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of animations in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationDuration",
+              summary = "Get the duration of an animation in the Model.",
+              description = "TODO",
+              key = "Model:getAnimationDuration",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:animate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "duration",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The animation index."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "duration",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationName",
+              summary = "Get the name of an animation in the Model.",
+              description = "TODO",
+              key = "Model:getAnimationName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getAnimationCount",
+                "Model:getAnimationDuration",
+                "Model:getMaterialName",
+                "Model:getNodeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the animation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBoundingBox",
+              summary = "Get the axis aligned bounding box of the Model.",
+              description = "TODO",
+              key = "Model:getBoundingBox",
+              module = "lovr.graphics",
+              related = {
+                "Collider:getAABB"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the box."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the box."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the box."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the box."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the box."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the box."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getIndexBuffer",
+              summary = "Get a Buffer containing the triangle indices in the Model.",
+              description = "TODO",
+              key = "Model:getIndexBuffer",
+              module = "lovr.graphics",
+              related = {
+                "Model:getVertexBuffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaterial",
+              summary = "Get a Material from the Model.",
+              description = "TODO",
+              key = "Model:getMaterial",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMaterialCount",
+                "Model:getMaterialName",
+                "Material"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Material to return."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "The material."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the Material to return."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "The material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaterialCount",
+              summary = "Get the number of materials in the Model.",
+              description = "Returns the number of materials in the Model.",
+              key = "Model:getMaterialCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMaterialName",
+                "Model:getMaterial"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of materials in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaterialName",
+              summary = "Get the name of a material in the Model.",
+              description = "TODO",
+              key = "Model:getMaterialName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMaterialCount",
+                "Model:getAnimationName",
+                "Model:getNodeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getModelData",
+              summary = "Get the ModelData backing the Model.",
+              description = "Returns the ModelData this Model was created from.",
+              key = "Model:getModelData",
+              module = "lovr.graphics",
+              related = {
+                "lovr.data.newModelData"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "data",
+                      type = "ModelData",
+                      description = "The ModelData."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeCount",
+              summary = "Get the number of nodes in the Model.",
+              description = "Returns the number of nodes in the Model.",
+              key = "Model:getNodeCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodeName",
+                "Model:getNodePose",
+                "Model:pose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of nodes in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeName",
+              summary = "Get the name of a node in the Model.",
+              description = "TODO",
+              key = "Model:getNodeName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodeCount",
+                "Model:getAnimationName",
+                "Model:getMaterialName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodePose",
+              summary = "Get the pose of a single node.",
+              description = "Returns the pose of a single node in the Model in a given `CoordinateSpace`.",
+              key = "Model:getNodePose",
+              module = "lovr.graphics",
+              related = {
+                "Model:pose",
+                "Model:animate",
+                "Model:getNodeName",
+                "Model:getNodeCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "space",
+                      type = "CoordinateSpace",
+                      description = "Whether the pose should be returned relative to the node's parent or relative to the root node of the Model.",
+                      default = "'global'"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the node."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the node."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its rotational axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The node index."
+                    },
+                    {
+                      name = "space",
+                      type = "CoordinateSpace",
+                      description = "Whether the pose should be returned relative to the node's parent or relative to the root node of the Model.",
+                      default = "'global'"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the node."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the node."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its rotational axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTexture",
+              summary = "Get one of the textures in the Model.",
+              description = "TODO",
+              key = "Model:getTexture",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMaterial"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexBuffer",
+              summary = "Get a Buffer containing the vertices in the Model.",
+              description = "TODO",
+              key = "Model:getVertexBuffer",
+              module = "lovr.graphics",
+              related = {
+                "Model:getIndexBuffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "resetPose",
+              summary = "Reset the Model to the default pose.",
+              description = "TODO",
+              key = "Model:resetPose",
+              module = "lovr.graphics",
+              related = {
+                "Model:animate",
+                "Model:getNodePose",
+                "Model:setNodePose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.graphics.newModel",
+            "lovr.headset.newModel"
           }
         },
         {
@@ -8914,6 +10843,265 @@ return {
                 "lovr.graphics.transform"
               }
             }
+          }
+        },
+        {
+          name = "Sampler",
+          summary = "TODO",
+          description = "TODO",
+          key = "Sampler",
+          module = "lovr.graphics",
+          methods = {
+            {
+              name = "getCompareMode",
+              summary = "Get the compare mode of the Sampler.",
+              description = "TODO",
+              key = "Sampler:getCompareMode",
+              module = "lovr.graphics",
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getAnisotropy",
+                "Sampler:getMipmapRange"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "compare",
+                      type = "CompareMode",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFilter",
+              summary = "Get the filter mode of the Sampler.",
+              description = "TODO",
+              key = "Sampler:getFilter",
+              module = "lovr.graphics",
+              related = {
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getAnisotropy",
+                "Sampler:getMipmapRange"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "min",
+                      type = "FilterMode",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mag",
+                      type = "FilterMode",
+                      description = "TODO"
+                    },
+                    {
+                      name = "mip",
+                      type = "FilterMode",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMipmapRange",
+              summary = "Get the mipmap range of the Sampler.",
+              description = "TODO",
+              key = "Sampler:getMipmapRange",
+              module = "lovr.graphics",
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getAnisotropy"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "min",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "max",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWrap",
+              summary = "Get the wrap mode of the Sampler.",
+              description = "TODO",
+              key = "Sampler:getWrap",
+              module = "lovr.graphics",
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getCompareMode",
+                "Sampler:getAnisotropy",
+                "Sampler:getMipmapRange"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "WrapMode",
+                      description = "TODO"
+                    },
+                    {
+                      name = "y",
+                      type = "WrapMode",
+                      description = "TODO"
+                    },
+                    {
+                      name = "z",
+                      type = "WrapMode",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.graphics.newSampler"
+          }
+        },
+        {
+          name = "Shader",
+          summary = "TODO",
+          description = "TODO",
+          key = "Shader",
+          module = "lovr.graphics",
+          methods = {
+            {
+              name = "clone",
+              summary = "Clone a Shader.",
+              description = "TODO",
+              key = "Shader:clone",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "source",
+                      type = "Shader",
+                      description = "The Shader to clone."
+                    },
+                    {
+                      name = "flags",
+                      type = "table",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "shader",
+                      type = "Shader",
+                      description = "The new Shader."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getType",
+              summary = "Get the type of the Shader.",
+              description = "TODO",
+              key = "Shader:getType",
+              module = "lovr.graphics",
+              related = {
+                "Shader:hasStage"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "type",
+                      type = "ShaderType",
+                      description = "The type of the Shader."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "hasAttribute",
+              summary = "Check if the Shader has a given vertex attribute.",
+              description = "TODO",
+              key = "Shader:hasAttribute",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an attribute."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "location",
+                      type = "number",
+                      description = "The location of an attribute."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "hasStage",
+              summary = "Check if the Shader has a given stage.",
+              description = "TODO",
+              key = "Shader:hasStage",
+              module = "lovr.graphics",
+              related = {
+                "Shader:getType"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "stage",
+                      type = "ShaderStage",
+                      description = "The stage."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "exists",
+                      type = "boolean",
+                      description = "Whether the Shader has the stage."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          constructors = {
+            "lovr.graphics.newShader",
+            "Shader:clone"
           }
         },
         {

@@ -1,6 +1,6 @@
 return {
-  summary = 'Create a permanent Buffer.',
-  description = 'Creates a permanent Buffer.',
+  summary = 'Create a new Buffer.',
+  description = 'Creates a Buffer.',
   arguments = {
     length = {
       type = 'number',
