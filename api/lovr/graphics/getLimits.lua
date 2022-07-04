@@ -38,17 +38,49 @@ return {
           ]]
         },
         {
+          name = 'uniformBuffersPerStage',
+          type = 'number',
+          description = 'The maximum number of uniform buffers in a shader stage.'
+        },
+        {
+          name = 'storageBuffersPerStage',
+          type = 'number',
+          description = 'The maximum number of storage buffers in a shader stage.'
+        },
+        {
+          name = 'sampledTexturesPerStage',
+          type = 'number',
+          description = 'The maximum number of sampled textures in a shader stage.'
+        },
+        {
+          name = 'storageTexturesPerStage',
+          type = 'number',
+          description = 'The maximum number of storage textures in a shader stage.'
+        },
+        {
+          name = 'samplersPerStage',
+          type = 'number',
+          description = 'The maximum number of samplers in a shader stage.'
+        },
+        {
+          name = 'resourcesPerShader',
+          type = 'number',
+          description = [[
+            The maximum combined number of buffers, textures, and sampler variables in a Shader.
+          ]]
+        },
+        {
           name = 'uniformBufferRange',
           type = 'number',
           description = [[
-            The maximum range of bytes that can be bound to a uniform buffer binding in a shader.
+            The maximum range of bytes that can be bound to a uniform buffer in a shader.
           ]]
         },
         {
           name = 'storageBufferRange',
           type = 'number',
           description = [[
-            The maximum range of bytes that can be bound to a storage buffer binding in a shader.
+            The maximum range of bytes that can be bound to a storage buffer in a shader.
           ]]
         },
         {
@@ -126,6 +158,15 @@ return {
           description = 'The maximum number of bytes used by `shared` variables in compute shaders.'
         },
         {
+          name = 'shaderConstantSize',
+          type = 'number',
+          description = [[
+            The maximum number of bytes of push constants that can be in a Shader.  Push constants
+            are shared between stages, so the stage with the largest amount of push constant data
+            will count towards this limit.
+          ]]
+        },
+        {
           name = 'indirectDrawCount',
           type = 'number',
           description = 'The maximum number of draws that can be issued by an indirect draw call.'
@@ -165,17 +206,17 @@ return {
         <tr>
           <td><code>textureSize2D</code></td>
           <td>4096</td>
-          <td>65536*</td>
+          <td></td>
         </tr>
         <tr>
           <td><code>textureSize3D</code></td>
           <td>256</td>
-          <td>65536*</td>
+          <td></td>
         </tr>
         <tr>
           <td><code>textureSizeCube</code></td>
           <td>4096</td>
-          <td>65536*</td>
+          <td></td>
         </tr>
         <tr>
           <td><code>textureLayers</code></td>
@@ -185,11 +226,41 @@ return {
         <tr>
           <td><code>renderSize</code></td>
           <td>{ 4096, 4096, 6 }</td>
-          <td>{ 65536*, 65536*, 6* }</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>uniformBuffersPerStage</code></td>
+          <td>9</td>
+          <td>32*</td>
+        </tr>
+        <tr>
+          <td><code>storageBuffersPerStage</code></td>
+          <td>4</td>
+          <td>32*</td>
+        </tr>
+        <tr>
+          <td><code>sampledTexturesPerStage</code></td>
+          <td>32</td>
+          <td>32*</td>
+        </tr>
+        <tr>
+          <td><code>storageTexturesPerStage</code></td>
+          <td>4</td>
+          <td>32*</td>
+        </tr>
+        <tr>
+          <td><code>samplersPerStage</code></td>
+          <td>15</td>
+          <td>32*</td>
+        </tr>
+        <tr>
+          <td><code>resourcesPerShader</code></td>
+          <td>32</td>
+          <td>32*</td>
         </tr>
         <tr>
           <td><code>uniformBufferRange</code></td>
-          <td>16384 (often 65536)</td>
+          <td>65536</td>
           <td></td>
         </tr>
         <tr>
@@ -215,7 +286,7 @@ return {
         <tr>
           <td><code>vertexBufferStride</code></td>
           <td>2048</td>
-          <td></td>
+          <td>65535*</td>
         </tr>
         <tr>
           <td><code>vertexShaderOutputs</code></td>
@@ -258,6 +329,11 @@ return {
           <td></td>
         </tr>
         <tr>
+          <td><code>pushConstantSize</code></td>
+          <td>128</td>
+          <td>256*</td>
+        </tr>
+        <tr>
           <td><code>indirectDrawCount</code></td>
           <td>1</td>
           <td></td>
@@ -280,7 +356,8 @@ return {
       </tbody>
     </table>
 
-    Note: in the table above, `*` means that LÖVR itself is imposing a cap on the limit.
+    Note: in the table above, `*` means that LÖVR itself is imposing a cap on the limit, instead of
+    the GPU.
   ]],
   related = {
     'lovr.graphics.isFormatSupported',

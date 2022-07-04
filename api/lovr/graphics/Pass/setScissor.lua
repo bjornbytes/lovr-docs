@@ -1,5 +1,5 @@
 return {
-  tag = 'camera',
+  tag = 'pipeline',
   summary = 'Set the scissor.',
   description = 'TODO',
   arguments = {

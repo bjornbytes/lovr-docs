@@ -1,5 +1,5 @@
 return {
-  tag = 'camera',
+  tag = 'pipeline',
   summary = 'Set the viewport.',
   description = 'TODO',
   arguments = {

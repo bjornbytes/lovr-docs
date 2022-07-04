@@ -6251,14 +6251,44 @@ return {
                       description = "The maximum width, height, and layer count of a texture (or texture view) used as a render target."
                     },
                     {
+                      name = "uniformBuffersPerStage",
+                      type = "number",
+                      description = "The maximum number of uniform buffers in a shader stage."
+                    },
+                    {
+                      name = "storageBuffersPerStage",
+                      type = "number",
+                      description = "The maximum number of storage buffers in a shader stage."
+                    },
+                    {
+                      name = "sampledTexturesPerStage",
+                      type = "number",
+                      description = "The maximum number of sampled textures in a shader stage."
+                    },
+                    {
+                      name = "storageTexturesPerStage",
+                      type = "number",
+                      description = "The maximum number of storage textures in a shader stage."
+                    },
+                    {
+                      name = "samplersPerStage",
+                      type = "number",
+                      description = "The maximum number of samplers in a shader stage."
+                    },
+                    {
+                      name = "resourcesPerShader",
+                      type = "number",
+                      description = "The maximum combined number of buffers, textures, and sampler variables in a Shader."
+                    },
+                    {
                       name = "uniformBufferRange",
                       type = "number",
-                      description = "The maximum range of bytes that can be bound to a uniform buffer binding in a shader."
+                      description = "The maximum range of bytes that can be bound to a uniform buffer in a shader."
                     },
                     {
                       name = "storageBufferRange",
                       type = "number",
-                      description = "The maximum range of bytes that can be bound to a storage buffer binding in a shader."
+                      description = "The maximum range of bytes that can be bound to a storage buffer in a shader."
                     },
                     {
                       name = "uniformBufferAlign",
@@ -6321,6 +6351,11 @@ return {
                       description = "The maximum number of bytes used by `shared` variables in compute shaders."
                     },
                     {
+                      name = "shaderConstantSize",
+                      type = "number",
+                      description = "The maximum number of bytes of push constants that can be in a Shader.  Push constants are shared between stages, so the stage with the largest amount of push constant data will count towards this limit."
+                    },
+                    {
                       name = "indirectDrawCount",
                       type = "number",
                       description = "The maximum number of draws that can be issued by an indirect draw call."
@@ -6351,7 +6386,7 @@ return {
             "lovr.graphics.getFeatures",
             "lovr.graphics.getStats"
           },
-          notes = "The limit ranges are as follows:\n\n<table>\n  <thead>\n    <tr>\n      <td>Limit</td>\n      <td>Minimum</td>\n      <td>Maximum</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>textureSize2D</code></td>\n      <td>4096</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>textureSize3D</code></td>\n      <td>256</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>textureSizeCube</code></td>\n      <td>4096</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>textureLayers</code></td>\n      <td>256</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>renderSize</code></td>\n      <td>{ 4096, 4096, 6 }</td>\n      <td>{ 65536*, 65536*, 6* }</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferRange</code></td>\n      <td>16384 (often 65536)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>storageBufferRange</code></td>\n      <td>134217728 (128MB)</td>\n      <td>1073741824 (1GB)*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferAlign</code></td>\n      <td></td>\n      <td>256</td>\n    </tr>\n    <tr>\n      <td><code>storageBufferAlign</code></td>\n      <td></td>\n      <td>64</td>\n    </tr>\n    <tr>\n      <td><code>vertexAttributes</code></td>\n      <td>16</td>\n      <td>16*</td>\n    </tr>\n    <tr>\n      <td><code>vertexBufferStride</code></td>\n      <td>2048</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>vertexShaderOutputs</code></td>\n      <td>64</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>cullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipAndCullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeDispatchCount</code></td>\n      <td>{ 65536, 65536, 65536 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupSize</code></td>\n      <td>{ 128, 128, 64 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupVolume</code></td>\n      <td>128</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeSharedMemory</code></td>\n      <td>16384 (16KB)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>indirectDrawCount</code></td>\n      <td>1</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>instances</code></td>\n      <td>134217727</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>anisotropy</code></td>\n      <td>0.0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pointSize</code></td>\n      <td>1.0</td>\n      <td></td>\n    </tr>\n  </tbody> </table>\n\nNote: in the table above, `*` means that LÖVR itself is imposing a cap on the limit."
+          notes = "The limit ranges are as follows:\n\n<table>\n  <thead>\n    <tr>\n      <td>Limit</td>\n      <td>Minimum</td>\n      <td>Maximum</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>textureSize2D</code></td>\n      <td>4096</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureSize3D</code></td>\n      <td>256</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureSizeCube</code></td>\n      <td>4096</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureLayers</code></td>\n      <td>256</td>\n      <td>65536*</td>\n    </tr>\n    <tr>\n      <td><code>renderSize</code></td>\n      <td>{ 4096, 4096, 6 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>uniformBuffersPerStage</code></td>\n      <td>9</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>storageBuffersPerStage</code></td>\n      <td>4</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>sampledTexturesPerStage</code></td>\n      <td>32</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>storageTexturesPerStage</code></td>\n      <td>4</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>samplersPerStage</code></td>\n      <td>15</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>resourcesPerShader</code></td>\n      <td>32</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferRange</code></td>\n      <td>65536</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>storageBufferRange</code></td>\n      <td>134217728 (128MB)</td>\n      <td>1073741824 (1GB)*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferAlign</code></td>\n      <td></td>\n      <td>256</td>\n    </tr>\n    <tr>\n      <td><code>storageBufferAlign</code></td>\n      <td></td>\n      <td>64</td>\n    </tr>\n    <tr>\n      <td><code>vertexAttributes</code></td>\n      <td>16</td>\n      <td>16*</td>\n    </tr>\n    <tr>\n      <td><code>vertexBufferStride</code></td>\n      <td>2048</td>\n      <td>65535*</td>\n    </tr>\n    <tr>\n      <td><code>vertexShaderOutputs</code></td>\n      <td>64</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>cullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipAndCullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeDispatchCount</code></td>\n      <td>{ 65536, 65536, 65536 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupSize</code></td>\n      <td>{ 128, 128, 64 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupVolume</code></td>\n      <td>128</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeSharedMemory</code></td>\n      <td>16384 (16KB)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pushConstantSize</code></td>\n      <td>128</td>\n      <td>256*</td>\n    </tr>\n    <tr>\n      <td><code>indirectDrawCount</code></td>\n      <td>1</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>instances</code></td>\n      <td>134217727</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>anisotropy</code></td>\n      <td>0.0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pointSize</code></td>\n      <td>1.0</td>\n      <td></td>\n    </tr>\n  </tbody> </table>\n\nNote: in the table above, `*` means that LÖVR itself is imposing a cap on the limit, instead of the GPU."
         },
         {
           name = "getPass",
@@ -10330,7 +10365,7 @@ return {
             },
             {
               name = "setScissor",
-              tag = "camera",
+              tag = "pipeline",
               summary = "Set the scissor.",
               description = "TODO",
               key = "Pass:setScissor",
@@ -10591,7 +10626,7 @@ return {
             },
             {
               name = "setViewport",
-              tag = "camera",
+              tag = "pipeline",
               summary = "Set the viewport.",
               description = "TODO",
               key = "Pass:setViewport",
