@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-objects',
   summary = 'Get a temporary Buffer.',
   description = 'Creates a temporary Buffer.',
   arguments = {

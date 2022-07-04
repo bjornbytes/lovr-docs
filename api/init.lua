@@ -5881,13 +5881,12 @@ return {
         },
         {
           name = "getBuffer",
+          tag = "graphics-objects",
           summary = "Get a temporary Buffer.",
           description = "Creates a temporary Buffer.",
           key = "lovr.graphics.getBuffer",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.newBuffer"
-          },
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
           variants = {
             {
               arguments = {
@@ -6058,7 +6057,9 @@ return {
               }
             }
           },
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields."
+          related = {
+            "lovr.graphics.newBuffer"
+          }
         },
         {
           name = "getDefaultFont",
@@ -6354,6 +6355,7 @@ return {
         },
         {
           name = "getPass",
+          tag = "graphics-objects",
           summary = "Get a new Pass.",
           description = "TODO",
           key = "lovr.graphics.getPass",
@@ -6645,13 +6647,12 @@ return {
         },
         {
           name = "newBuffer",
+          tag = "graphics-objects",
           summary = "Create a new Buffer.",
           description = "Creates a Buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.getBuffer"
-          },
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
           variants = {
             {
               arguments = {
@@ -6822,10 +6823,13 @@ return {
               }
             }
           },
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields."
+          related = {
+            "lovr.graphics.getBuffer"
+          }
         },
         {
           name = "newFont",
+          tag = "graphics-objects",
           summary = "Create a new Font.",
           description = "TODO",
           key = "lovr.graphics.newFont",
@@ -6941,6 +6945,7 @@ return {
         },
         {
           name = "newMaterial",
+          tag = "graphics-objects",
           summary = "Create a new Material.",
           description = "TODO",
           key = "lovr.graphics.newMaterial",
@@ -7089,6 +7094,7 @@ return {
         },
         {
           name = "newModel",
+          tag = "graphics-objects",
           summary = "Create a new Model.",
           description = "TODO",
           key = "lovr.graphics.newModel",
@@ -7174,6 +7180,7 @@ return {
         },
         {
           name = "newSampler",
+          tag = "graphics-objects",
           summary = "Create a new Sampler.",
           description = "TODO",
           key = "lovr.graphics.newSampler",
@@ -7229,6 +7236,7 @@ return {
         },
         {
           name = "newShader",
+          tag = "graphics-objects",
           summary = "Create a Shader.",
           description = "TODO",
           key = "lovr.graphics.newShader",
@@ -7314,6 +7322,7 @@ return {
         },
         {
           name = "newTexture",
+          tag = "graphics-objects",
           summary = "Create a new Texture.",
           description = "TODO",
           key = "lovr.graphics.newTexture",

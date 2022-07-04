@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-objects',
   summary = 'Create a new Font.',
   description = 'TODO',
   arguments = {

@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-objects',
   summary = 'Create a Shader.',
   description = 'TODO',
   arguments = {

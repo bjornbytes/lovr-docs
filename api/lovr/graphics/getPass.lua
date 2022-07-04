@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-objects',
   summary = 'Get a new Pass.',
   description = 'TODO',
   arguments = {
