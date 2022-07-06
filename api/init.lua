@@ -5809,6 +5809,7 @@ return {
         {
           name = "VertexMode",
           summary = "Different ways to draw mesh vertices.",
+          description = "TODO",
           key = "VertexMode",
           module = "lovr.graphics",
           values = {
