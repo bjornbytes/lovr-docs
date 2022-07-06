@@ -9043,6 +9043,70 @@ return {
               notes = "TODO"
             },
             {
+              name = "clear",
+              tag = "transfer",
+              summary = "Clear a Buffer or Texture.",
+              description = "TODO",
+              key = "Pass:clear",
+              module = "lovr.graphics",
+              notes = "TODO",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The Buffer to clear."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The Texture to clear."
+                    },
+                    {
+                      name = "color",
+                      type = "Color",
+                      description = "The color to clear to."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "The number of layers to clear.",
+                      default = "nil"
+                    },
+                    {
+                      name = "level",
+                      type = "number",
+                      description = "The index of the first mipmap level to clear.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "compute",
               tag = "compute",
               summary = "Dispatch a compute shader.",
