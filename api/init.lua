@@ -5742,6 +5742,23 @@ return {
           }
         },
         {
+          name = "StackType",
+          summary = "Types of stacks that can be pushed and popped.",
+          description = "TODO",
+          key = "StackType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "transform",
+              description = "TODO"
+            },
+            {
+              name = "pipeline",
+              descriptioin = "TODO"
+            }
+          }
+        },
+        {
           name = "TextureType",
           description = "Different types of textures.  Textures are multidimensional blocks of GPU memory, and the texture's type determines how many dimensions there are, and adds some semantics about what the 3rd dimension means.",
           key = "TextureType",
@@ -5788,6 +5805,26 @@ return {
               description = "Whether the texture can be used in a transfer pass."
             }
           }
+        },
+        {
+          name = "VertexMode",
+          summary = "Different ways to draw mesh vertices.",
+          key = "VertexMode",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "points",
+              description = "TODO"
+            },
+            {
+              name = "lines",
+              description = "TODO"
+            },
+            {
+              name = "triangles",
+              description = "TODO"
+            }
+          }
         }
       },
       functions = {
@@ -5813,31 +5850,6 @@ return {
                 {
                   name = "bytecode",
                   type = "Blob",
-                  description = "TODO"
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getAnisotropy",
-          summary = "Get the anisotropy of the Sampler.",
-          description = "TODO",
-          key = "lovr.graphics.getAnisotropy",
-          module = "lovr.graphics",
-          related = {
-            "Sampler:getFilter",
-            "Sampler:getWrap",
-            "Sampler:getCompareMode",
-            "Sampler:getMipmapRange"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "anisotropy",
-                  type = "number",
                   description = "TODO"
                 }
               }
@@ -8969,14 +8981,20 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "transform3",
+                      type = "Transform3",
                       description = "The transform to apply to the box."
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the box should be drawn filled or outlined.",
+                      default = "'fill'"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "TODO material"
+              notes = "TODO"
             },
             {
               name = "circle",
@@ -8990,20 +9008,38 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "transform",
+                      type = "Transform",
                       description = "The transform to apply to the circle."
                     },
                     {
-                      name = "detail",
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the circle should be filled or outlined.",
+                      default = "'fill'"
+                    },
+                    {
+                      name = "angle1",
                       type = "number",
-                      description = "A detail value from 0 to 6.",
-                      default = "4"
+                      description = "The angle of the beginning of the arc.",
+                      default = "0"
+                    },
+                    {
+                      name = "angle2",
+                      type = "number",
+                      description = "angle of the end of the arc.",
+                      default = "2 * math.pi"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of segments to render.",
+                      default = "64"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "TODO material"
+              notes = "TODO"
             },
             {
               name = "compute",
@@ -9068,14 +9104,20 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "transform",
+                      type = "Transform",
                       description = "The transform to apply to the cube."
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the cube should be drawn filled or outlined.",
+                      default = "'fill'"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "TODO material"
+              notes = "TODO"
             },
             {
               name = "cylinder",
@@ -9089,26 +9131,108 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "transformxy2",
-                      description = "The transform to apply to the cylinder."
-                    },
-                    {
-                      name = "detail",
-                      type = "number",
-                      description = "A detail value from 0 to 6.",
-                      default = "4"
+                      type = "TransformXY2",
+                      description = "The transform to apply to the cylinder.  The x and y scale is the radius, the z scale is the length."
                     },
                     {
                       name = "capped",
                       type = "boolean",
-                      description = "Whether the top and bottom of the tube should be rendered.",
+                      description = "Whether the tops and bottoms of the cylinder should be rendered.",
                       default = "true"
+                    },
+                    {
+                      name = "angle1",
+                      type = "number",
+                      description = "The angle of the beginning of the arc.",
+                      default = "0"
+                    },
+                    {
+                      name = "angle2",
+                      type = "number",
+                      description = "angle of the end of the arc.",
+                      default = "2 * math.pi"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to render.",
+                      default = "64"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "TODO material"
+              notes = "TODO"
+            },
+            {
+              name = "draw",
+              tag = "drawing",
+              summary = "Draw a drawable object.",
+              description = "TODO",
+              key = "Pass:draw",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The model to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The transform of the object."
+                    },
+                    {
+                      name = "nodeindex",
+                      type = "number",
+                      description = "TODO"
+                    },
+                    {
+                      name = "children",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The model to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Transform",
+                      description = "The transform of the object."
+                    },
+                    {
+                      name = "nodename",
+                      type = "string",
+                      description = "TODO"
+                    },
+                    {
+                      name = "children",
+                      type = "boolean",
+                      description = "TODO"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                }
+              }
             },
             {
               name = "fill",
@@ -9121,15 +9245,18 @@ return {
                 {
                   arguments = {
                     {
-                      name = "material",
-                      type = "Material",
-                      description = "The material to use for the fill."
+                      name = "texture",
+                      type = "Texture",
+                      description = "The texture to fill."
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {},
+                  returns = {}
                 }
-              },
-              notes = "TODO shader, attributes, depth/stencil clears"
+              }
             },
             {
               name = "getProjection",
@@ -9194,6 +9321,25 @@ return {
                       name = "matrix",
                       type = "Mat4",
                       description = "The matrix containing the projection."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getType",
+              summary = "Get the type of the Pass.",
+              description = "TODO",
+              key = "Pass:getType",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = " type",
+                      type = "PassType",
+                      description = "The type of the Pass."
                     }
                   }
                 }
@@ -9294,7 +9440,7 @@ return {
               description = "TODO",
               key = "Pass:line",
               module = "lovr.graphics",
-              notes = "TODO material, mesh, attributes",
+              notes = "TODO",
               variants = {
                 {
                   arguments = {
@@ -9375,14 +9521,14 @@ return {
               description = "TODO",
               key = "Pass:mesh",
               module = "lovr.graphics",
-              notes = "When `vertices` is `nil`, the mesh will still be rendered with `count` vertices and the vertex shader will still run.  The vertex shader can generate the vertex positions or read data from other variables to compute the final vertex position.  An index buffer can still be used too.\n\nTODO lots TODO material combinatorial explosion",
+              notes = "TODO",
               variants = {
                 {
                   arguments = {
                     {
                       name = "vertices",
                       type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
+                      description = "TODO",
                       default = "nil"
                     },
                     {
@@ -9416,13 +9562,13 @@ return {
                     {
                       name = "vertices",
                       type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
+                      description = "TODO",
                       default = "nil"
                     },
                     {
                       name = "indices",
                       type = "Buffer",
-                      description = "A Buffer containing indices of vertices to render."
+                      description = "TODO"
                     },
                     {
                       name = "transform",
@@ -9449,237 +9595,51 @@ return {
                     }
                   },
                   returns = {}
-                },
+                }
+              }
+            },
+            {
+              name = "multimesh",
+              tag = "drawing",
+              summary = "Use draw parameters stored in a Buffer to draw a mesh multiple times.",
+              description = "TODO",
+              key = "Pass:multimesh",
+              module = "lovr.graphics",
+              notes = "TODO",
+              variants = {
                 {
                   arguments = {
                     {
-                      name = "mode",
-                      type = "DrawMode",
-                      description = "Whether the vertices should be drawn as `points`, `lines`, or `triangles`."
-                    },
-                    {
                       name = "vertices",
                       type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
-                      default = "nil"
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
-                    },
-                    {
-                      name = "start",
-                      type = "number",
-                      description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
-                      default = "1"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
-                    },
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of copies of the mesh to render.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "mode",
-                      type = "DrawMode",
-                      description = "Whether the vertices should be drawn as `points`, `lines`, or `triangles`."
-                    },
-                    {
-                      name = "vertices",
-                      type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
-                      default = "nil"
+                      description = "TODO"
                     },
                     {
                       name = "indices",
                       type = "Buffer",
-                      description = "A Buffer containing indices of vertices to render."
+                      description = "TODO"
                     },
                     {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
-                    },
-                    {
-                      name = "start",
-                      type = "number",
-                      description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
-                      default = "1"
+                      name = "draws",
+                      type = "Buffer",
+                      description = "TODO"
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
-                    },
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of copies of the mesh to render.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "vertices",
-                      type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
-                      default = "nil"
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
-                    },
-                    {
-                      name = "indirect",
-                      type = "Buffer",
-                      description = "A Buffer containing parameters for the draw."
-                    },
-                    {
-                      name = "indirectcount",
-                      type = "number",
-                      description = "How many draws to read and render from the indirect buffer.",
+                      description = "TODO",
                       default = "1"
                     },
                     {
-                      name = "indirectoffset",
+                      name = "offset",
                       type = "number",
-                      description = "A byte offset of where the draw parameters are stored in the indirect buffer.",
+                      description = "TODO",
                       default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "vertices",
-                      type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
-                      default = "nil"
                     },
                     {
-                      name = "indices",
-                      type = "Buffer",
-                      description = "A Buffer containing indices of vertices to render."
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
-                    },
-                    {
-                      name = "indirect",
-                      type = "Buffer",
-                      description = "A Buffer containing parameters for the draw."
-                    },
-                    {
-                      name = "indirectcount",
+                      name = "stride",
                       type = "number",
-                      description = "How many draws to read and render from the indirect buffer.",
-                      default = "1"
-                    },
-                    {
-                      name = "indirectoffset",
-                      type = "number",
-                      description = "A byte offset of where the draw parameters are stored in the indirect buffer.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "mode",
-                      type = "DrawMode",
-                      description = "Whether the vertices should be drawn as `points`, `lines`, or `triangles`."
-                    },
-                    {
-                      name = "vertices",
-                      type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
-                      default = "nil"
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
-                    },
-                    {
-                      name = "indirect",
-                      type = "Buffer",
-                      description = "A Buffer containing parameters for the draw."
-                    },
-                    {
-                      name = "indirectcount",
-                      type = "number",
-                      description = "How many draws to read and render from the indirect buffer.",
-                      default = "1"
-                    },
-                    {
-                      name = "indirectoffset",
-                      type = "number",
-                      description = "A byte offset of where the draw parameters are stored in the indirect buffer.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "mode",
-                      type = "DrawMode",
-                      description = "Whether the vertices should be drawn as `points`, `lines`, or `triangles`."
-                    },
-                    {
-                      name = "vertices",
-                      type = "Buffer",
-                      description = "A Buffer containing the vertices to render, or `nil` if no vertex buffer is needed.",
-                      default = "nil"
-                    },
-                    {
-                      name = "indices",
-                      type = "Buffer",
-                      description = "A Buffer containing indices of vertices to render."
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
-                    },
-                    {
-                      name = "indirect",
-                      type = "Buffer",
-                      description = "A Buffer containing parameters for the draw."
-                    },
-                    {
-                      name = "indirectcount",
-                      type = "number",
-                      description = "How many draws to read and render from the indirect buffer.",
-                      default = "1"
-                    },
-                    {
-                      name = "indirectoffset",
-                      type = "number",
-                      description = "A byte offset of where the draw parameters are stored in the indirect buffer.",
+                      description = "TODO",
                       default = "0"
                     }
                   },
@@ -9719,19 +9679,32 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "transform2",
+                      type = "Transform2",
                       description = "The transform to apply to the plane."
                     },
                     {
-                      name = "detail",
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the plane should be drawn filled or outlined.",
+                      default = "'fill'"
+                    },
+                    {
+                      name = "columns",
                       type = "number",
-                      description = "A number between 0 and 7 indicating how many times to subdivide the plane."
+                      description = "The number of horizontal segments in the plane.",
+                      default = "1"
+                    },
+                    {
+                      name = "rows",
+                      type = "number",
+                      description = "The number of vertical segments in the plane.",
+                      default = "cols"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "TODO material"
+              notes = "TODO"
             },
             {
               name = "points",
@@ -9740,7 +9713,7 @@ return {
               description = "TODO",
               key = "Pass:points",
               module = "lovr.graphics",
-              notes = "TODO material, mesh, attributes",
+              notes = "TODO",
               variants = {
                 {
                   arguments = {
@@ -9819,88 +9792,6 @@ return {
                 "StackType"
               },
               notes = "TODO stack balancing/error"
-            },
-            {
-              name = "print",
-              tag = "drawing",
-              summary = "Draw text.",
-              description = "TODO",
-              key = "Pass:print",
-              module = "lovr.graphics",
-              notes = "TODO",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "text",
-                      type = "string",
-                      description = "The text to render."
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform of the text."
-                    },
-                    {
-                      name = "wrap",
-                      type = "number",
-                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
-                      default = "0"
-                    },
-                    {
-                      name = "halign",
-                      type = "HorizontalAlign",
-                      description = "The horizontal alignment.",
-                      default = "'center'"
-                    },
-                    {
-                      name = "valign",
-                      type = "VerticalAlign",
-                      description = "The vertical alignment.",
-                      default = "'middle'"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "font",
-                      type = "Font",
-                      description = "The Font to use."
-                    },
-                    {
-                      name = "text",
-                      type = "string",
-                      description = "The text to render."
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform of the text."
-                    },
-                    {
-                      name = "wrap",
-                      type = "number",
-                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
-                      default = "0"
-                    },
-                    {
-                      name = "halign",
-                      type = "HorizontalAlign",
-                      description = "The horizontal alignment.",
-                      default = "'center'"
-                    },
-                    {
-                      name = "valign",
-                      type = "VerticalAlign",
-                      description = "The vertical alignment.",
-                      default = "'middle'"
-                    }
-                  },
-                  returns = {}
-                }
-              }
             },
             {
               name = "push",
@@ -10032,9 +9923,124 @@ return {
               }
             },
             {
+              name = "send",
+              summary = "Set the value of a shader variable.",
+              description = "TODO",
+              key = "Pass:send",
+              module = "lovr.graphics",
+              notes = "TODO",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Shader variable."
+                    },
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The Buffer to assign."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Shader variable."
+                    },
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The Texture to assign."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Shader variable."
+                    },
+                    {
+                      name = "sampler",
+                      type = "Sampler",
+                      description = "The Sampler to assign."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Shader variable."
+                    },
+                    {
+                      name = "constant",
+                      type = "*",
+                      description = "Numbers or vectors to assign to the push constant."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "binding",
+                      type = "number",
+                      description = "The binding number of the Shader variable."
+                    },
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The Buffer to assign."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "binding",
+                      type = "number",
+                      description = "The binding number of the Shader variable."
+                    },
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The Texture to assign."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "binding",
+                      type = "number",
+                      description = "The binding number of the Shader variable."
+                    },
+                    {
+                      name = "sampler",
+                      type = "Sampler",
+                      description = "The Sampler to assign."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setAlphaToCoverage",
               tag = "pipeline",
-              summary = "Enable or disable \"alpha to coverage\".",
+              summary = "Enable or disable alpha to coverage.",
               description = "TODO",
               key = "Pass:setAlphaToCoverage",
               module = "lovr.graphics",
@@ -10078,11 +10084,31 @@ return {
               notes = "TODO"
             },
             {
-              name = "setColorMask",
+              name = "setColor",
+              tag = "pipeline",
+              summary = "Set the color.",
+              description = "TODO",
+              key = "Pass:setColor",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "color",
+                      type = "Color",
+                      description = "The new color."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setColorWrite",
               tag = "pipeline",
               summary = "Change the color components affected by drawing.",
               description = "TODO",
-              key = "Pass:setColorMask",
+              key = "Pass:setColorWrite",
               module = "lovr.graphics",
               variants = {
                 {
@@ -10249,9 +10275,30 @@ return {
               },
               related = {
                 "lovr.graphics.setDepthTest",
-                "lovr.graphics.setStencilWrite"
+                "lovr.graphics.setStencilWrite",
+                "lovr.graphics.setColorWrite"
               },
               notes = "TODO"
+            },
+            {
+              name = "setMaterial",
+              tag = "pipeline",
+              summary = "Set the material.",
+              description = "TODO",
+              key = "Pass:setMaterial",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                }
+              }
             },
             {
               name = "setProjection",
@@ -10357,6 +10404,26 @@ return {
                       type = "number",
                       description = "The far clipping plane.",
                       default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSampler",
+              tag = "pipeline",
+              summary = "Set the sampler.",
+              description = "TODO",
+              key = "Pass:setSampler",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "sampler",
+                      type = "Sampler",
+                      description = "TODO"
                     }
                   },
                   returns = {}
@@ -10544,6 +10611,26 @@ return {
               }
             },
             {
+              name = "setVertexMode",
+              tag = "pipeline",
+              summary = "Change whether mesh vertices are drawn as points, lines, or triangles.",
+              description = "TODO",
+              key = "Pass:setVertexMode",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mode",
+                      type = "VertexMode",
+                      description = "TODO"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setViewPose",
               tag = "camera",
               summary = "Set the camera pose.",
@@ -10721,6 +10808,31 @@ return {
               notes = "TODO"
             },
             {
+              name = "skybox",
+              tag = "drawing",
+              summary = "Draw a skybox.",
+              description = "TODO",
+              key = "Pass:skybox",
+              module = "lovr.graphics",
+              notes = "TODO",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "skybox",
+                      type = "Texture",
+                      description = "The skybox to render.  Its `TextureType` can be `cube` to render as a cubemap, or `2d` to render as an equirectangular (spherical) 2D image."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "sphere",
               tag = "drawing",
               summary = "Draw a sphere.",
@@ -10736,16 +10848,208 @@ return {
                       description = "The transform to apply to the sphere."
                     },
                     {
-                      name = "detail",
+                      name = "longitudes",
                       type = "number",
-                      description = "A detail value from 0 to 4.",
-                      default = "4"
+                      description = "The number of \"horizontal\" segments.",
+                      default = "48"
+                    },
+                    {
+                      name = "latitudes",
+                      type = "number",
+                      description = "The number of \"vertical\" segments.",
+                      default = "longitudes / 2"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "TODO material"
+              notes = "TODO"
+            },
+            {
+              name = "text",
+              tag = "drawing",
+              summary = "Draw text.",
+              description = "TODO",
+              key = "Pass:text",
+              module = "lovr.graphics",
+              notes = "TODO",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "text",
+                      type = "string",
+                      description = "The text to render."
+                    },
+                    {
+                      name = "transform",
+                      type = "transform",
+                      description = "The transform of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "font",
+                      type = "Font",
+                      description = "The Font to use."
+                    },
+                    {
+                      name = "text",
+                      type = "string",
+                      description = "The text to render."
+                    },
+                    {
+                      name = "transform",
+                      type = "transform",
+                      description = "The transform of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "colortext",
+                      type = "table",
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2\n      }`, where color is a `Color`."
+                    },
+                    {
+                      name = "transform",
+                      type = "transform",
+                      description = "The transform of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "font",
+                      type = "Font",
+                      description = "The Font to use."
+                    },
+                    {
+                      name = "colortext",
+                      type = "table",
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2\n      }`, where color is a `Color`."
+                    },
+                    {
+                      name = "transform",
+                      type = "transform",
+                      description = "The transform of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "torus",
+              tag = "drawing",
+              summary = "Draw a donut.",
+              description = "TODO",
+              key = "Pass:torus",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "transform",
+                      type = "TransformXY2",
+                      description = "The transform to apply to the torus.  The x scale is the radius, the z scale is the thickness."
+                    },
+                    {
+                      name = "tsegments",
+                      type = "number",
+                      description = "The number of toroidal (circular) segments to render.",
+                      default = "64"
+                    },
+                    {
+                      name = "psegments",
+                      type = "number",
+                      description = "The number of poloidal (tubular) segments to render.",
+                      default = "32"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "TODO"
             },
             {
               name = "transform",
@@ -10896,6 +11200,31 @@ return {
           key = "Sampler",
           module = "lovr.graphics",
           methods = {
+            {
+              name = "getAnisotropy",
+              summary = "Get the anisotropy of the Sampler.",
+              description = "TODO",
+              key = "Sampler:getAnisotropy",
+              module = "lovr.graphics",
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getMipmapRange"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "anisotropy",
+                      type = "number",
+                      description = "TODO"
+                    }
+                  }
+                }
+              }
+            },
             {
               name = "getCompareMode",
               summary = "Get the compare mode of the Sampler.",

@@ -5,10 +5,16 @@ return {
   arguments = {
     {
       name = 'transform',
-      type = 'transform3',
+      type = 'Transform3',
       description = 'The transform to apply to the box.'
+    },
+    {
+      name = 'style',
+      type = 'DrawStyle',
+      default = [['fill']],
+      description = 'Whether the box should be drawn filled or outlined.'
     }
   },
   returns = {},
-  notes = 'TODO material'
+  notes = 'TODO'
 }

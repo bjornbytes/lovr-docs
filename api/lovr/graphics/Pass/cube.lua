@@ -5,10 +5,16 @@ return {
   arguments = {
     {
       name = 'transform',
-      type = 'transform',
+      type = 'Transform',
       description = 'The transform to apply to the cube.'
+    },
+    {
+      name = 'style',
+      type = 'DrawStyle',
+      default = [['fill']],
+      description = 'Whether the cube should be drawn filled or outlined.'
     }
   },
   returns = {},
-  notes = 'TODO material'
+  notes = 'TODO'
 }

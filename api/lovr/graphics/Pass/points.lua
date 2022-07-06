@@ -43,5 +43,5 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO material, mesh, attributes'
+  notes = 'TODO'
 }

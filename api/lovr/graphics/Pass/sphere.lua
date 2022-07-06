@@ -9,12 +9,18 @@ return {
       description = 'The transform to apply to the sphere.'
     },
     {
-      name = 'detail',
+      name = 'longitudes',
       type = 'number',
-      default = '4',
-      description = 'A detail value from 0 to 4.'
+      default = '48',
+      description = 'The number of "horizontal" segments.'
+    },
+    {
+      name = 'latitudes',
+      type = 'number',
+      default = 'longitudes / 2',
+      description = 'The number of "vertical" segments.'
     }
   },
   returns = {},
-  notes = 'TODO material'
+  notes = 'TODO'
 }

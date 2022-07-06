@@ -1,6 +1,6 @@
 return {
   tag = 'pipeline',
-  summary = 'Enable or disable "alpha to coverage".',
+  summary = 'Enable or disable alpha to coverage.',
   description = 'TODO',
   arguments = {
     {

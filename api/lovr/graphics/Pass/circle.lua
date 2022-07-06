@@ -5,16 +5,34 @@ return {
   arguments = {
     {
       name = 'transform',
-      type = 'transform',
+      type = 'Transform',
       description = 'The transform to apply to the circle.'
     },
     {
-      name = 'detail',
+      name = 'style',
+      type = 'DrawStyle',
+      default = [['fill']],
+      description = 'Whether the circle should be filled or outlined.'
+    },
+    {
+      name = 'angle1',
       type = 'number',
-      default = '4',
-      description = 'A detail value from 0 to 6.'
+      default = '0',
+      description = 'The angle of the beginning of the arc.'
+    },
+    {
+      name = 'angle2',
+      type = 'number',
+      default = '2 * math.pi',
+      description = 'angle of the end of the arc.'
+    },
+    {
+      name = 'segments',
+      type = 'number',
+      default = '64',
+      description = 'The number of segments to render.'
     }
   },
   returns = {},
-  notes = 'TODO material'
+  notes = 'TODO'
 }

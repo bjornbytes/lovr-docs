@@ -5,15 +5,28 @@ return {
   arguments = {
     {
       name = 'transform',
-      type = 'transform2',
+      type = 'Transform2',
       description = 'The transform to apply to the plane.'
     },
     {
-      name = 'detail',
+      name = 'style',
+      type = 'DrawStyle',
+      default = [['fill']],
+      description = 'Whether the plane should be drawn filled or outlined.'
+    },
+    {
+      name = 'columns',
       type = 'number',
-      description = 'A number between 0 and 7 indicating how many times to subdivide the plane.'
+      default = '1',
+      description = 'The number of horizontal segments in the plane.'
+    },
+    {
+      name = 'rows',
+      type = 'number',
+      default = 'cols',
+      description = 'The number of vertical segments in the plane.'
     }
   },
   returns = {},
-  notes = 'TODO material'
+  notes = 'TODO'
 }

@@ -3,12 +3,20 @@ return {
   summary = 'Draw a fullscreen quad.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'material',
-      type = 'Material',
-      description = 'The material to use for the fill.'
+    texture = {
+      type = 'Texture',
+      description = 'The texture to fill.'
     }
   },
   returns = {},
-  notes = 'TODO shader, attributes, depth/stencil clears'
+  variants = {
+    {
+      arguments = { 'texture' },
+      returns = {}
+    },
+    {
+      arguments = {},
+      returns = {}
+    }
+  }
 }
