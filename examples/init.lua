@@ -11,6 +11,7 @@ return {
   'Interaction/Pointer_UI',
   'Interaction/Physics_Pointer',
   'Interaction/Dragging',
+  'Interaction/Dragging_with_Rotation',
   'Interaction/Controller_Models',
   'Interaction/Hand_Tracking',
   'Locomotion/Basic_Thumbsticks',
