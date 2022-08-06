@@ -25071,6 +25071,31 @@ return {
           }
         },
         {
+          name = "isKeyDown",
+          summary = "Get the state of a key.",
+          description = "Returns whether a key on the keyboard is pressed.",
+          key = "lovr.system.isKeyDown",
+          module = "lovr.system",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "key",
+                  type = "KeyCode",
+                  description = "The key."
+                }
+              },
+              returns = {
+                {
+                  name = "down",
+                  type = "boolean",
+                  description = "Whether the key is currently pressed."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "requestPermission",
           summary = "Request permission to use a feature.",
           description = "Requests permission to use a feature.  Usually this will pop up a dialog box that the user needs to confirm.  Once the permission request has been acknowledged, the `lovr.permission` callback will be called with the result.  Currently, this is only used for requesting microphone access on Android devices.",
