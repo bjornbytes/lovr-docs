@@ -54,23 +54,24 @@ function lovr.update(dt)
   end
 end
 
-function lovr.draw()
+function lovr.draw(pass)
 
   -- Draw the joints and the control point
-  lovr.graphics.setColor(0xff80ff)
-  lovr.graphics.sphere(root, pointSize / 2)
-  lovr.graphics.sphere(target, pointSize / 2)
-  lovr.graphics.setColor(0x80ffff)
-  lovr.graphics.sphere(control, pointSize / 2)
+  pass:setColor(0xff80ff)
+  pass:sphere(root, pointSize / 2)
+  pass:sphere(target, pointSize / 2)
+  pass:setColor(0x80ffff)
+  pass:sphere(control, pointSize / 2)
 
   -- Draw the hand
-  lovr.graphics.setColor(0xffffff)
+  pass:setColor(0xffffff)
   for _, hand in ipairs({ 'left', 'right' }) do
     if lovr.headset.isTracked(hand) then
-      lovr.graphics.cube('fill', mat4(lovr.headset.getPose(hand)):scale(.01))
+      pass:cube(mat4(lovr.headset.getPose(hand)):scale(.01))
     end
   end
 
   -- Draw a line from the root to the result from the IK solver, then to the target
-  lovr.graphics.line(root, solve(root, target, control, boneLengths), target)
+  print(solve(root, target, control, boneLengths))
+  pass:line(root, solve(root, target, control, boneLengths), target)
 end
