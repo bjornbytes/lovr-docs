@@ -29,7 +29,7 @@ return {
       returns = { 'children' }
     }
   },
-  notes = 'If the node does not have any children, this function returns an empty table.'
+  notes = 'If the node does not have any children, this function returns an empty table.',
   related = {
     'ModelData:getNodeParent',
     'ModelData:getRootNode'

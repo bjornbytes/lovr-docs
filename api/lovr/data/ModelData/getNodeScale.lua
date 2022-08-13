@@ -1,6 +1,6 @@
 return {
-  summary = 'Returns the local position of a node.',
-  description = 'Returns local position of a node, relative to its parent.',
+  summary = 'Returns the local scale of a node.',
+  description = 'Returns local scale of a node, relative to its parent.',
   arguments = {
     index = {
       type = 'number',
@@ -12,32 +12,32 @@ return {
     }
   },
   returns = {
-    x = {
+    sx = {
       type = 'number',
-      description = 'The x coordinate.'
+      description = 'The x scale.'
     },
-    y = {
+    sy = {
       type = 'number',
-      description = 'The y coordinate.'
+      description = 'The y scale.'
     },
-    z = {
+    sz = {
       type = 'number',
-      description = 'The z coordinate.'
+      description = 'The z scale.'
     }
   },
   variants = {
     {
       arguments = { 'index' },
-      returns = { 'x', 'y', 'z' }
+      returns = { 'sx', 'sy', 'sz' }
     },
     {
       arguments = { 'name' },
-      returns = { 'x', 'y', 'z' }
+      returns = { 'sx', 'sy', 'sz' }
     }
   },
   related = {
+    'ModelData:getNodePosition',
     'ModelData:getNodeOrientation',
-    'ModelData:getNodeScale',
     'ModelData:getNodePose',
     'ModelData:getNodeTransform'
   }

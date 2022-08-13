@@ -3519,7 +3519,821 @@ return {
           description = "A ModelData is a container object that loads and holds data contained in 3D model files.  This can include a variety of things like the node structure of the asset, the vertex data it contains, contains, the `Image` and `Material` properties, and any included animations.\n\nThe current supported formats are OBJ, glTF, and STL.\n\nUsually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want to load models in a thread or access more low-level information about the Model.",
           key = "ModelData",
           module = "lovr.data",
-          methods = {},
+          methods = {
+            {
+              name = "getBlob",
+              summary = "Get a Blob in the model.",
+              description = "Returns one of the Blobs in the model, by index.",
+              key = "ModelData:getBlob",
+              module = "lovr.data",
+              related = {
+                "ModelData:getBlobCount",
+                "ModelData:getImage"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the Blob to get."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob object."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBlobCount",
+              summary = "Get the number of Blobs stored in the model.",
+              description = "Returns the number of Blobs in the model.",
+              key = "ModelData:getBlobCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getBlob",
+                "ModelData:getImageCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of Blobs in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getImage",
+              summary = "Get an Image in the model.",
+              description = "Returns one of the Images in the model, by index.",
+              key = "ModelData:getImage",
+              module = "lovr.data",
+              related = {
+                "ModelData:getImageCount",
+                "ModelData:getBlob"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the Image to get."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "image",
+                      type = "Image",
+                      description = "The Image object."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getImageCount",
+              summary = "Get the number of Images stored in the model.",
+              description = "Returns the number of Images in the model.",
+              key = "ModelData:getImageCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getImage",
+                "ModelData:getBlobCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of Images in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMetadata",
+              summary = "Get extra information from the model file.",
+              description = "Returns extra information stored in the model file.  Currently this is only implemented for glTF models and returns the JSON string from the glTF or glb file.  The metadata can be used to get application-specific data or add support for glTF extensions not supported by LÖVR.",
+              key = "ModelData:getMetadata",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "metadata",
+                      type = "string",
+                      description = "The metadata from the model file."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeChildren",
+              summary = "Get the children of a node.",
+              description = "Given a parent node, this function returns a table with the indices of its children.",
+              key = "ModelData:getNodeChildren",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeParent",
+                "ModelData:getRootNode"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the parent node."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the parent node."
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "If the node does not have any children, this function returns an empty table."
+            },
+            {
+              name = "getNodeCount",
+              summary = "Get the number of nodes in the model.",
+              description = "Returns the number of nodes in the model.",
+              key = "ModelData:getNodeCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of nodes in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeMeshes",
+              summary = "Returns the indices of meshes attached to a node.",
+              description = "Returns a table of mesh indices attached to a node.  Meshes define the geometry and materials of a model, as opposed to the nodes which define the transforms and hierarchy.  A node can have multiple meshes, and meshes can be reused in multiple nodes.",
+              key = "ModelData:getNodeMeshes",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "meshes",
+                      type = "table",
+                      description = "A table with the node's mesh indices."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "meshes",
+                      type = "table",
+                      description = "A table with the node's mesh indices."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeName",
+              summary = "Get the name of a node.",
+              description = "Returns the name of a node.",
+              key = "ModelData:getNodeName",
+              module = "lovr.data",
+              notes = "If the node does not have a name, this function returns `nil`.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeOrientation",
+              summary = "Returns the local orientation of a node.",
+              description = "Returns local orientation of a node, relative to its parent.",
+              key = "ModelData:getNodeOrientation",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeParent",
+              summary = "Get the parent of a node.",
+              description = "Given a child node, this function returns the index of its parent.",
+              key = "ModelData:getNodeParent",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeChildren",
+                "ModelData:getRootNode"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the child node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "parent",
+                      type = "number",
+                      description = "The index of the parent."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the child node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "parent",
+                      type = "number",
+                      description = "The index of the parent."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodePose",
+              summary = "Returns the local pose of a node.",
+              description = "Returns local pose (position and orientation) of a node, relative to its parent.",
+              key = "ModelData:getNodePose",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodeTransform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodePosition",
+              summary = "Returns the local position of a node.",
+              description = "Returns local position of a node, relative to its parent.",
+              key = "ModelData:getNodePosition",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeScale",
+              summary = "Returns the local scale of a node.",
+              description = "Returns local scale of a node, relative to its parent.",
+              key = "ModelData:getNodeScale",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeSkin",
+              summary = "Returns the index of the skin used by a node.",
+              description = "Returns the index of the skin used by a node.  Skins are collections of joints used for skeletal animation.  A model can have multiple skins, and each node can use at most one skin to drive the animation of its meshes.",
+              key = "ModelData:getNodeSkin",
+              module = "lovr.data",
+              related = {
+                "ModelData:getSkinCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "skin",
+                      type = "number",
+                      description = "The index of the node's skin, or nil if the node isn't skeletally animated."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "skin",
+                      type = "number",
+                      description = "The index of the node's skin, or nil if the node isn't skeletally animated."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeTransform",
+              summary = "Returns the local transform of a node.",
+              description = "Returns local transform (position, orientation, and scale) of a node, relative to its parent.",
+              key = "ModelData:getNodeTransform",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRootNode",
+              summary = "Get the index of the root node.",
+              description = "Returns the index of the model's root node.",
+              key = "ModelData:getRootNode",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeCount",
+                "ModelData:getNodeParent"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "root",
+                      type = "number",
+                      description = "The index of the root node."
+                    }
+                  }
+                }
+              }
+            }
+          },
           constructors = {
             "lovr.data.newModelData"
           }
