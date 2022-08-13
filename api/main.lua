@@ -137,10 +137,14 @@ local function processFunction(path, parent)
 
     variant.description = unwrap(variant.description)
 
+    assert(variant.arguments, string.format('Variant for %q is missing arguments', fn.key))
+
     for _, arg in ipairs(variant.arguments) do
       arg.description = unwrap(arg.description)
       processTable(arg.table)
     end
+
+    assert(variant.returns, string.format('Variant for %q is missing returns', fn.key))
 
     for _, ret in ipairs(variant.returns) do
       ret.description = unwrap(ret.description)

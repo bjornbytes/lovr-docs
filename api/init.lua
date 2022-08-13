@@ -2871,6 +2871,64 @@ return {
       },
       enums = {
         {
+          name = "AnimationProperty",
+          summary = "Different animated properties.",
+          description = "This indicates the different transform properties that can be animated.",
+          key = "AnimationProperty",
+          module = "lovr.data",
+          values = {
+            {
+              name = "translation",
+              description = "Node translation."
+            },
+            {
+              name = "rotation",
+              description = "Node rotation."
+            },
+            {
+              name = "scale",
+              description = "Node scale."
+            }
+          }
+        },
+        {
+          name = "AttributeType",
+          summary = "Data types for vertex attributes in meshes.",
+          description = "These are the data types that can be used by vertex data in meshes.",
+          key = "AttributeType",
+          module = "lovr.data",
+          values = {
+            {
+              name = "i8",
+              description = "Signed 8 bit integers (-128 to 127)."
+            },
+            {
+              name = "u8",
+              description = "Unsigned 8 bit integers (0 to 255)."
+            },
+            {
+              name = "i16",
+              description = "Signed 16 bit integers (-32768 to 32767)."
+            },
+            {
+              name = "u16",
+              description = "Unsigned 16 bit integers (0 to 65535)."
+            },
+            {
+              name = "i32",
+              description = "Signed 32 bit integers (-2147483648 to 2147483647)."
+            },
+            {
+              name = "u32",
+              description = "Unsigned 32 bit integers (0 to 429467295)."
+            },
+            {
+              name = "f32",
+              description = "Floating point numbers."
+            }
+          }
+        },
+        {
           name = "ChannelLayout",
           summary = "Different channel layouts for Sounds.",
           description = "Sounds can have different numbers of channels, and those channels can map to various speaker layouts.",
@@ -2896,6 +2954,83 @@ return {
           }
         },
         {
+          name = "DefaultAttribute",
+          summary = "Attributes that can be loaded from a model.",
+          description = "These are the different types of attributes that may be present in meshes loaded from models.",
+          key = "DefaultAttribute",
+          module = "lovr.data",
+          values = {
+            {
+              name = "position",
+              description = "Vertex positions."
+            },
+            {
+              name = "normal",
+              description = "Vertex normal vectors."
+            },
+            {
+              name = "uv",
+              description = "Vertex texture coordinates."
+            },
+            {
+              name = "color",
+              description = "Vertex colors."
+            },
+            {
+              name = "tangent",
+              description = "Vertex tangent vectors."
+            },
+            {
+              name = "joints",
+              description = "Vertex joint indices."
+            },
+            {
+              name = "weights",
+              description = "Vertex joint weights."
+            }
+          }
+        },
+        {
+          name = "DrawMode",
+          summary = "Different draw modes for meshes in ModelDatas.",
+          description = "The DrawMode of a mesh determines how its vertices are connected together.",
+          key = "DrawMode",
+          module = "lovr.data",
+          values = {
+            {
+              name = "points",
+              description = "Each vertex is draw as a single point."
+            },
+            {
+              name = "lines",
+              description = "Every pair of vertices is drawn as a line."
+            },
+            {
+              name = "linestrip",
+              description = "Draws a single line through all of the vertices."
+            },
+            {
+              name = "lineloop",
+              description = "Draws a single line through all of the vertices, then connects back to the first vertex."
+            },
+            {
+              name = "strip",
+              description = "Vertices are rendered as triangles.  After the first 3 vertices, each subsequent vertex connects to the previous two."
+            },
+            {
+              name = "triangles",
+              description = "Every 3 vertices forms a triangle."
+            },
+            {
+              name = "fan",
+              description = "Vertices are rendered as triangles.  After the first 3 vertices, each subsequent vertex is connected to the previous vertex and the first vertex."
+            }
+          },
+          related = {
+            "ModelData:getMeshDrawMode"
+          }
+        },
+        {
           name = "SampleFormat",
           summary = "Different data types for samples in a Sound.",
           description = "Sounds can store audio samples as 16 bit integers or 32 bit floats.",
@@ -2914,6 +3049,27 @@ return {
           related = {
             "lovr.data.newSound",
             "Sound:getFormat"
+          }
+        },
+        {
+          name = "SmoothMode",
+          summary = "Different ways to interpolate between animation keyframes.",
+          description = "Different ways to interpolate between animation keyframes.",
+          key = "SmoothMode",
+          module = "lovr.data",
+          values = {
+            {
+              name = "step",
+              description = "The animated property will snap to the nearest keyframe."
+            },
+            {
+              name = "linear",
+              description = "The animated property will linearly interpolate between keyframes."
+            },
+            {
+              name = "cubic",
+              description = "The animated property will follow a smooth curve between nearby keyframes."
+            }
           }
         },
         {
@@ -3521,6 +3677,420 @@ return {
           module = "lovr.data",
           methods = {
             {
+              name = "getAnimationChannelCount",
+              summary = "Get the number of channels in an animation.",
+              description = "Returns the number of channels in an animation.\n\nA channel is a set of keyframes for a single property of a node.",
+              key = "ModelData:getAnimationChannelCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of channels in the animation."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of channels in the animation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationCount",
+              summary = "Get the number of animations in the model.",
+              description = "Returns the number of animations in the model.",
+              key = "ModelData:getAnimationCount",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of animations in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationDuration",
+              summary = "Get the duration of an animation.",
+              description = "Returns the duration of an animation.",
+              key = "ModelData:getAnimationDuration",
+              module = "lovr.data",
+              notes = "The duration of the animation is calculated as the latest timestamp of all of its channels.",
+              variants = {
+                {
+                  arguments = {
+                    name = {
+                      type = "string",
+                      description = "The name of the animation."
+                    },
+                    index = {
+                      type = "number",
+                      description = "The index of the animation."
+                    }
+                  },
+                  returns = {
+                    duration = {
+                      type = "number",
+                      description = "The duration of the animation, in seconds."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationKeyframe",
+              summary = "Get a keyframe in a channel of an animation.",
+              description = "Returns a single keyframe in a channel of an animation.",
+              key = "ModelData:getAnimationKeyframe",
+              module = "lovr.data",
+              related = {
+                "ModelData:getAnimationSmoothMode",
+                "ModelData:getAnimationKeyframeCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    },
+                    {
+                      name = "keyframe",
+                      type = "number",
+                      description = "The index of a keyframe in the channel."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The timestamp of the keyframe."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The data for the keyframe (either 3 or 4 numbers depending on the property)."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    },
+                    {
+                      name = "keyframe",
+                      type = "number",
+                      description = "The index of a keyframe in the channel."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "time",
+                      type = "number",
+                      description = "The timestamp of the keyframe."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The data for the keyframe (either 3 or 4 numbers depending on the property)."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationKeyframeCount",
+              summary = "Get the number of keyframes in a channel of an animation.",
+              description = "Returns the number of keyframes in a channel of an animation.",
+              key = "ModelData:getAnimationKeyframeCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getAnimationSmoothMode",
+                "ModelData:getAnimationKeyframe"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of keyframes in the channel."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of keyframes in the channel."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationName",
+              summary = "Get the name of an animation.",
+              description = "Returns the name of an animation.",
+              key = "ModelData:getAnimationName",
+              module = "lovr.data",
+              notes = "If the animation does not have a name, this function returns `nil`.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the animation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationNode",
+              summary = "Get the node targeted by the channel of an animation.",
+              description = "Returns the index of a node targeted by an animation's channel.",
+              key = "ModelData:getAnimationNode",
+              module = "lovr.data",
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "node",
+                      type = "number",
+                      description = "The index of the node targeted by the channel."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "node",
+                      type = "number",
+                      description = "The index of the node targeted by the channel."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationProperty",
+              summary = "Get the property targeted by the channel of an animation.",
+              description = "Returns the property targeted by an animation's channel.",
+              key = "ModelData:getAnimationProperty",
+              module = "lovr.data",
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty",
+                "ModelData:getAnimationSmoothMode"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "property",
+                      type = "AnimationProperty",
+                      description = "The property (translation, rotation, scale) affected by the keyframes."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "property",
+                      type = "AnimationProperty",
+                      description = "The property (translation, rotation, scale) affected by the keyframes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getAnimationSmoothMode",
+              summary = "Get the smooth mode of a channel in an animation.",
+              description = "Returns the smooth mode of a channel in an animation.",
+              key = "ModelData:getAnimationSmoothMode",
+              module = "lovr.data",
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "smooth",
+                      type = "SmoothMode",
+                      description = "The smooth mode of the keyframes."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of an animation."
+                    },
+                    {
+                      name = "channel",
+                      type = "number",
+                      description = "The index of a channel in the animation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "smooth",
+                      type = "SmoothMode",
+                      description = "The smooth mode of the keyframes."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getBlob",
               summary = "Get a Blob in the model.",
               description = "Returns one of the Blobs in the model, by index.",
@@ -3567,6 +4137,224 @@ return {
                       name = "count",
                       type = "number",
                       description = "The number of Blobs in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBoundingBox",
+              summary = "Get the bounding box of the model.",
+              description = "Returns the 6 values of the model's axis-aligned bounding box.",
+              key = "ModelData:getBoundingBox",
+              module = "lovr.data",
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingSphere"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the vertices in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBoundingSphere",
+              summary = "Get the bounding sphere of the model.",
+              description = "Returns a sphere approximately enclosing the vertices in the model.",
+              key = "ModelData:getBoundingSphere",
+              module = "lovr.data",
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the position of the sphere."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the position of the sphere."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the position of the sphere."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the bounding sphere."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getCenter",
+              summary = "Get the center of the model's bounding box.",
+              description = "Returns the center of the model's axis-aligned bounding box, relative to the model's origin.",
+              key = "ModelData:getCenter",
+              module = "lovr.data",
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x offset of the center of the bounding box."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y offset of the center of the bounding box."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z offset of the center of the bounding box."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDepth",
+              summary = "Get the depth of the model.",
+              description = "Returns the depth of the model, computed from its axis-aligned bounding box.",
+              key = "ModelData:getDepth",
+              module = "lovr.data",
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth of the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDimensions",
+              summary = "Get the dimensions of the model.",
+              description = "Returns the width, height, and depth of the model, computed from its axis-aligned bounding box.",
+              key = "ModelData:getDimensions",
+              module = "lovr.data",
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the model."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the model."
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth of the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getHeight",
+              summary = "Get the height of the model.",
+              description = "Returns the height of the model, computed from its axis-aligned bounding box.",
+              key = "ModelData:getHeight",
+              module = "lovr.data",
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the model."
                     }
                   }
                 }
@@ -3623,6 +4411,562 @@ return {
                   }
                 }
               }
+            },
+            {
+              name = "getMaterial",
+              summary = "Get the material properties for a material in the model.",
+              description = "Returns a table with all of the properties of a material.",
+              key = "ModelData:getMaterial",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMaterialCount",
+                "ModelData:getMeshMaterial",
+                "lovr.graphics.newMaterial",
+                "Model:getMaterial"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of a material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "properties",
+                      type = "table",
+                      description = "The material properties.",
+                      table = {
+                        {
+                          name = "color",
+                          type = "table",
+                          description = "The color of the material.  The table contains the `r`, `g`, `b`, and `a` components of the color, from 0 to 1."
+                        },
+                        {
+                          name = "glow",
+                          type = "table",
+                          description = "The glow color of the material (sometimes called emissive).  The table contains the `r`, `g`, and `b` components of the color from 0 to 1, and a fourth number indicating the strength of the glow."
+                        },
+                        {
+                          name = "uvShift",
+                          type = "table",
+                          description = "A table with 2 numbers indicating an offset to apply to UVs."
+                        },
+                        {
+                          name = "uvScale",
+                          type = "table",
+                          description = "A table with 2 numbers indicating a scale to apply to UVs.  By default, shaders apply the UV scale before the UV offset."
+                        },
+                        {
+                          name = "metalness",
+                          type = "number",
+                          description = "The metalness parameter of the material.  This is typically 0 or 1.  By default, shaders multiply this property with the value from the metalness texture (when present) to get the final metalness used for shading."
+                        },
+                        {
+                          name = "roughness",
+                          type = "number",
+                          description = "The roughness parameter of the material.  By default, shaders multiply this property with the value from the roughness texture (when present) to get the final roughness used for shading."
+                        },
+                        {
+                          name = "clearcoat",
+                          type = "number",
+                          description = "The clearcoat parameter of the material."
+                        },
+                        {
+                          name = "clearcoatRoughness",
+                          type = "number",
+                          description = "The roughness of the clearcoat layer."
+                        },
+                        {
+                          name = "occlusionStrength",
+                          type = "number",
+                          description = "A number multiplied by the value from the ambient occlusion texture to control how strong the occlusion effect is."
+                        },
+                        {
+                          name = "normalScale",
+                          type = "number",
+                          description = "A number multiplied by the value from the normal texture to control how strong the normal mapping effect is."
+                        },
+                        {
+                          name = "alphaCutoff",
+                          type = "number",
+                          description = "If a pixel has an alpha value less than the alpha cutoff, it will be discarded, which prevents it from occluding things behind it.  This is sometimes called \"holepunch\" or \"cutout\" alpha.  It's useful for textures with transparency."
+                        },
+                        {
+                          name = "texture",
+                          type = "number",
+                          description = "The index of the Image used for the color texture."
+                        },
+                        {
+                          name = "glowTexture",
+                          type = "number",
+                          description = "The index of the Image used for the glow texture."
+                        },
+                        {
+                          name = "occlusionTexture",
+                          type = "number",
+                          description = "The index of the Image used for the ambient occlusion texture.  The red channel of the texture is used for ambient occlusion, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "metalnessTexture",
+                          type = "number",
+                          description = "The index of the Image used for the metalness texture.  The blue channel of the texture is used for metalness, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "roughnessTexture",
+                          type = "number",
+                          description = "The index of the Image to use for the roughness texture.  The green channel of the texture is used for roughness, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "clearcoatTexture",
+                          type = "number",
+                          description = "The index of the Image to use for the clearcoat texture.  The red channel of the texture is used for the clearcoat parameter, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "normalTexture",
+                          type = "number",
+                          description = "The index of the Image to use for the normal map."
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of a material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "properties",
+                      type = "table",
+                      description = "The material properties.",
+                      table = {
+                        {
+                          name = "color",
+                          type = "table",
+                          description = "The color of the material.  The table contains the `r`, `g`, `b`, and `a` components of the color, from 0 to 1."
+                        },
+                        {
+                          name = "glow",
+                          type = "table",
+                          description = "The glow color of the material (sometimes called emissive).  The table contains the `r`, `g`, and `b` components of the color from 0 to 1, and a fourth number indicating the strength of the glow."
+                        },
+                        {
+                          name = "uvShift",
+                          type = "table",
+                          description = "A table with 2 numbers indicating an offset to apply to UVs."
+                        },
+                        {
+                          name = "uvScale",
+                          type = "table",
+                          description = "A table with 2 numbers indicating a scale to apply to UVs.  By default, shaders apply the UV scale before the UV offset."
+                        },
+                        {
+                          name = "metalness",
+                          type = "number",
+                          description = "The metalness parameter of the material.  This is typically 0 or 1.  By default, shaders multiply this property with the value from the metalness texture (when present) to get the final metalness used for shading."
+                        },
+                        {
+                          name = "roughness",
+                          type = "number",
+                          description = "The roughness parameter of the material.  By default, shaders multiply this property with the value from the roughness texture (when present) to get the final roughness used for shading."
+                        },
+                        {
+                          name = "clearcoat",
+                          type = "number",
+                          description = "The clearcoat parameter of the material."
+                        },
+                        {
+                          name = "clearcoatRoughness",
+                          type = "number",
+                          description = "The roughness of the clearcoat layer."
+                        },
+                        {
+                          name = "occlusionStrength",
+                          type = "number",
+                          description = "A number multiplied by the value from the ambient occlusion texture to control how strong the occlusion effect is."
+                        },
+                        {
+                          name = "normalScale",
+                          type = "number",
+                          description = "A number multiplied by the value from the normal texture to control how strong the normal mapping effect is."
+                        },
+                        {
+                          name = "alphaCutoff",
+                          type = "number",
+                          description = "If a pixel has an alpha value less than the alpha cutoff, it will be discarded, which prevents it from occluding things behind it.  This is sometimes called \"holepunch\" or \"cutout\" alpha.  It's useful for textures with transparency."
+                        },
+                        {
+                          name = "texture",
+                          type = "number",
+                          description = "The index of the Image used for the color texture."
+                        },
+                        {
+                          name = "glowTexture",
+                          type = "number",
+                          description = "The index of the Image used for the glow texture."
+                        },
+                        {
+                          name = "occlusionTexture",
+                          type = "number",
+                          description = "The index of the Image used for the ambient occlusion texture.  The red channel of the texture is used for ambient occlusion, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "metalnessTexture",
+                          type = "number",
+                          description = "The index of the Image used for the metalness texture.  The blue channel of the texture is used for metalness, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "roughnessTexture",
+                          type = "number",
+                          description = "The index of the Image to use for the roughness texture.  The green channel of the texture is used for roughness, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "clearcoatTexture",
+                          type = "number",
+                          description = "The index of the Image to use for the clearcoat texture.  The red channel of the texture is used for the clearcoat parameter, allowing multiple parameters to use the same texture."
+                        },
+                        {
+                          name = "normalTexture",
+                          type = "number",
+                          description = "The index of the Image to use for the normal map."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              notes = "All images are optional and may be `nil`."
+            },
+            {
+              name = "getMaterialCount",
+              summary = "Get the number of materials in the model.",
+              description = "Returns the number of materials in the model.",
+              key = "ModelData:getMaterialCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMaterialName",
+                "ModelData:getMeshMaterial",
+                "ModelData:getMaterial"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of materials in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaterialName",
+              summary = "Get the name of a material in the model.",
+              description = "Returns the name of a material in the model.",
+              key = "ModelData:getMaterialName",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMaterialCount",
+                "ModelData:getMeshMaterial",
+                "ModelData:getMaterial"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of a material."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the material, or nil if the material does not have a name."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshCount",
+              summary = "Get the number of meshes in the model.",
+              description = "Returns the number of meshes in the model.",
+              key = "ModelData:getMeshCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeMeshes"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of meshes in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshDrawMode",
+              summary = "Get the draw mode of a mesh.",
+              description = "Returns the draw mode of a mesh.  This controls how its vertices are connected together (points, lines, or triangles).",
+              key = "ModelData:getMeshDrawMode",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "mode",
+                      type = "DrawMode",
+                      description = "The draw mode of the mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshIndex",
+              summary = "Get one of the vertex indices in a mesh.",
+              description = "Returns one of the vertex indices in a mesh.  If a mesh has vertex indices, they define the order and connectivity of the vertices in the mesh, allowing a vertex to be reused multiple times without duplicating its data.",
+              key = "ModelData:getMeshIndex",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshIndexFormat",
+                "ModelData:getMeshIndexCount",
+                "ModelData:getMeshVertex",
+                "ModelData:getTriangles"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh to get the vertex from."
+                    },
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of a vertex index in the mesh to retrieve."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "vertexindex",
+                      type = "number",
+                      description = "The vertex index.  Like all indices in Lua, this is 1-indexed."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshIndexCount",
+              summary = "Get the number of vertex indices in a mesh.",
+              description = "Returns the number of vertex indices in a mesh.  Vertex indices allow for vertices to be reused when defining triangles.",
+              key = "ModelData:getMeshIndexCount",
+              module = "lovr.data",
+              notes = "This may return zero if the mesh does not use indices.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertex indices in the mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshIndexFormat",
+              summary = "Get the data format of vertex indices in a mesh.",
+              description = "Returns the data format of vertex indices in a mesh.  If a mesh doesn't use vertex indices, this function returns nil.",
+              key = "ModelData:getMeshIndexFormat",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshVertexFormat"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "type",
+                      type = "AttributeType",
+                      description = "The data type of each vertex index (always u16 or u32)."
+                    },
+                    {
+                      name = "blob",
+                      type = "number",
+                      description = "The index of a Blob in the mesh where the binary data is stored."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset into the Blob's data where the index data starts."
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The number of bytes between subsequent vertex indices.  Indices are always tightly packed, so this will always be 2 or 4 depending on the data type."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshMaterial",
+              summary = "Get the index of the material applied to a mesh.",
+              description = "Returns the index of the material applied to a mesh.",
+              key = "ModelData:getMeshMaterial",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "material",
+                      type = "number",
+                      description = "The index of the material applied to the mesh, or nil if the mesh does not have a material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshVertex",
+              summary = "Get the data for a single vertex in a mesh.",
+              description = "Returns the data for a single vertex in a mesh.  The data returned depends on the vertex format of a mesh, which is given by `ModelData:getMeshVertexFormat`.",
+              key = "ModelData:getMeshVertex",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshVertexFormat",
+                "ModelData:getMeshVertexCount",
+                "ModelData:getMeshIndex",
+                "ModelData:getTriangles"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh to get the vertex from."
+                    },
+                    {
+                      name = "vertex",
+                      type = "number",
+                      description = "The index of a vertex in the mesh to retrieve."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The data for all of the attributes of the vertex."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshVertexCount",
+              summary = "Get the number of vertices in a mesh.",
+              description = "Returns the number of vertices in a mesh.",
+              key = "ModelData:getMeshVertexCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshIndexCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices in the mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshVertexFormat",
+              summary = "Get the vertex format of a mesh.",
+              description = "Returns the vertex format of a mesh.  The vertex format defines the properties associated with each vertex (position, color, etc.), including their types and binary data layout.",
+              key = "ModelData:getMeshVertexFormat",
+              module = "lovr.data",
+              related = {
+                "ModelData:getIndexFormat"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "format",
+                      type = "table",
+                      description = "The vertex format of the mesh."
+                    }
+                  }
+                }
+              },
+              notes = "The format is given as a table of vertex attributes.  Each attribute is a table containing the following:\n\n    { name, type, components, blob, offset, stride }\n\n- The `name` will be a `DefaultAttribute`.\n- The `type` will be an `AttributeType`.\n- The `component` count will be 1-4.\n- The `blob` is an index of one of the Blobs in the model (see `ModelData:getBlob`).\n- The `offset` is a byte offset from the start of the Blob where the attribute's data starts.\n- The `stride` is the number of bytes between consecutive values."
             },
             {
               name = "getMetadata",
@@ -4328,6 +5672,182 @@ return {
                       name = "root",
                       type = "number",
                       description = "The index of the root node."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSkinCount",
+              summary = "Get the number of skins in the model.",
+              description = "Returns the number of skins in the model.  A skin is a collection of joints targeted by an animation.",
+              key = "ModelData:getSkinCount",
+              module = "lovr.data",
+              notes = "There is currently a maximum of 256 skins.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of skins in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSkinInverseBindMatrix",
+              summary = "Get the inverse bind matrix for a joint in the skin.",
+              description = "Returns the inverse bind matrix for a joint in the skin.",
+              key = "ModelData:getSkinInverseBindMatrix",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "skin",
+                      type = "number",
+                      description = "The index of a skin."
+                    },
+                    {
+                      name = "joint",
+                      type = "number",
+                      description = "The index of a joint in the skin."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The 16 components of the 4x4 inverse bind matrix, in column-major order."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSkinJoints",
+              summary = "Get the joints in a skin.",
+              description = "Returns a table with the node indices of the joints in a skin.",
+              key = "ModelData:getSkinJoints",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "skin",
+                      type = "number",
+                      description = "The index of a skin."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "joints",
+                      type = "table",
+                      description = "The joints in the skin."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTriangleCount",
+              summary = "Get the total number of triangles in the model.",
+              description = "Returns the total number of triangles in the model.  This count includes meshes that are attached to multiple nodes, and the count corresponds to the triangles returned by `ModelData:getTriangles`.",
+              key = "ModelData:getTriangleCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getTriangles",
+                "ModelData:getVertexCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The total number of triangles in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTriangles",
+              summary = "Get all the triangles in a mesh.",
+              description = "Returns the data for all triangles in the mesh.  There are a few differences between this function and the mesh-specific functions like `ModelData:getMeshVertex` and `ModelData:getMeshIndex`:\n\n- Only vertex positions are returned, not other vertex attributes.\n- Positions are relative to the origin of the whole model, instead of local to a node.\n- If a mesh is attached to more than one node, its vertices will be in the table multiple times.\n- Vertex indices will be relative to the whole triangle list instead of a mesh.",
+              key = "ModelData:getTriangles",
+              module = "lovr.data",
+              related = {
+                "ModelData:getTriangleCount",
+                "ModelData:getVertexCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "The triangle vertex positions, returned as a flat (non-nested) table of numbers.  The position of each vertex is given as an x, y, and z coordinate."
+                    },
+                    {
+                      name = "indices",
+                      type = "table",
+                      description = "The vertex indices.  Every 3 indices describes a triangle."
+                    }
+                  }
+                }
+              },
+              notes = "After this function is called on a ModelData once, the result is cached."
+            },
+            {
+              name = "getVertexCount",
+              summary = "Get the total vertex count of the model.",
+              description = "Returns the total vertex count of a model.  This count includes meshes that are attached to multiple nodes, and the count corresponds to the vertices returned by `ModelData:getTriangles`.",
+              key = "ModelData:getVertexCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getTriangles",
+                "ModelData:getTriangleCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The total number of vertices in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWidth",
+              summary = "Get the width of the model.",
+              description = "Returns the width of the model, computed from its axis-aligned bounding box.",
+              key = "ModelData:getWidth",
+              module = "lovr.data",
+              related = {
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the model."
                     }
                   }
                 }
