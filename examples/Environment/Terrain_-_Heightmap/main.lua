@@ -1,70 +1,47 @@
-local terrain, shader
-
 local shaderCode = {[[
 /* VERTEX shader */
-out vec4 fragmentView;
-uniform sampler2D heightmap;
+layout(location = 0) out vec4 fragmentClip;
+layout(set = 2) uniform texture2D heightmap;
 
-vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-  vertex.z = texture(heightmap, vertex.xy).r / 10.;
-  fragmentView = projection * transform * vertex;
-  return fragmentView;
+vec4 lovrmain() {
+  vec3 position = VertexPosition.xyz;
+  position.z = getPixel(heightmap, position.xy).r / 10.;
+  fragmentClip = ClipFromLocal * vec4(position, 1.);
+  return fragmentClip;
 } ]], [[
 /* FRAGMENT shader */
-#define PI 3.1415926538
-in vec4 fragmentView;
-uniform vec3 fogColor;
+layout(location = 0) in vec4 fragmentView;
 
-vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv)
-{
+Constants {
+  vec3 fogColor;
+};
+
+vec4 lovrmain() {
   float fogAmount = atan(length(fragmentView) * 0.1) * 2.0 / PI;
-  vec4 color = vec4(mix(graphicsColor.rgb, fogColor, fogAmount), graphicsColor.a);
-  return color;
+  return vec4(mix(Color.rgb, fogColor, fogAmount), Color.a);
 }]]}
 
-local function grid(subdivisions)
-  local size = 1 / math.floor(subdivisions or 1)
-  local vertices = {}
-  local indices  = {}
-  for y = -0.5, 0.5, size do
-    for x = -0.5, 0.5, size do
-      table.insert(vertices, {x, y, 0})
-      table.insert(vertices, {x, y + size, 0})
-      table.insert(vertices, {x + size, y, 0})
-      table.insert(vertices, {x + size, y + size, 0})
-      table.insert(indices, #vertices - 3)
-      table.insert(indices, #vertices - 2)
-      table.insert(indices, #vertices - 1)
-      table.insert(indices, #vertices - 2)
-      table.insert(indices, #vertices)
-      table.insert(indices, #vertices - 1)
-    end
-  end
-  local meshFormat = {{'lovrPosition', 'float', 3}}
-  local mesh = lovr.graphics.newMesh(meshFormat, vertices, "triangles", "dynamic", true)
-  mesh:setVertexMap(indices)
-  return mesh
-end
-
 function lovr.load()
-  local skyColor = {0.208, 0.208, 0.275}
-  lovr.graphics.setBackgroundColor(skyColor)
-  lovr.graphics.setLineWidth(5)
+  skyColor = { 0.208, 0.208, 0.275 }
+  lovr.graphics.setBackground(skyColor)
   heightmap = lovr.graphics.newTexture('heightmap.png')
   shader = lovr.graphics.newShader(unpack(shaderCode))
-  shader:send('fogColor', { lovr.math.gammaToLinear(unpack(skyColor)) })
-  shader:send('heightmap', heightmap)
-  terrain = grid(100)
 end
 
-function lovr.draw()
-  lovr.graphics.setShader(shader)
-  lovr.graphics.rotate(math.pi/2, 1, 0, 0)
-  lovr.graphics.scale(100)
-  lovr.graphics.setColor(0.565, 0.404, 0.463)
-  terrain:draw()
-  lovr.graphics.setWireframe(true)
-  lovr.graphics.setColor(0.388, 0.302, 0.412, 0.1)
-  terrain:draw()
-  lovr.graphics.setWireframe(false)
+function lovr.draw(pass)
+  pass:setShader(shader)
+  pass:send('fogColor', { lovr.math.gammaToLinear(unpack(skyColor)) })
+  pass:send('heightmap', heightmap)
+
+  pass:rotate(math.pi / 2, 1, 0, 0)
+  pass:scale(100)
+
+  pass:setColor(0.565, 0.404, 0.463)
+  pass:setDepthOffset(-10000) -- Ensures wireframe stays on top
+  pass:plane(mat4(), 'fill', 100)
+  pass:setDepthOffset()
+
+  pass:setWireframe(true)
+  pass:setColor(0.388, 0.302, 0.412, 0.1)
+  pass:plane(mat4(), 'fill', 100)
 end
