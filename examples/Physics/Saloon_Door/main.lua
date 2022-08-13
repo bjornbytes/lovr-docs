@@ -19,15 +19,15 @@ function lovr.load()
   local joint = lovr.physics.newDistanceJoint(door1, door2, vec3(door1:getPosition()), vec3(door2:getPosition()))
   joint:setTightness(0.2)
   joint:setResponseTime(10)
-  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
+  lovr.graphics.setBackground(0.1, 0.1, 0.1)
 end
 
-function lovr.draw()
+function lovr.draw(pass)
   for i, boxCollider in ipairs(world:getColliders()) do
-    lovr.graphics.setColor(i / 3, i / 3, i / 3)
+    pass:setColor(i / 3, i / 3, i / 3)
     local pose = mat4(boxCollider:getPose())
     local size = vec3(boxCollider:getShapes()[1]:getDimensions())
-    lovr.graphics.box('fill', pose:scale(size))
+    pass:box(pose:scale(size))
   end
 end
 

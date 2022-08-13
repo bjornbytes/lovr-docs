@@ -24,7 +24,7 @@ function lovr.load()
   local joint = lovr.physics.newDistanceJoint(trolley, weight, vec3(trolley:getPosition()), vec3(weight:getPosition()) + vec3(0, 0.3, 0))
   joint:setResponseTime(10) -- make the hanging rope streachable
 
-  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
+  lovr.graphics.setBackground(0.1, 0.1, 0.1)
 end
 
 
@@ -33,23 +33,20 @@ function lovr.update(dt)
 end
 
 
-function lovr.draw()
+function lovr.draw(pass)
   for i, collider in ipairs(world:getColliders()) do
-    lovr.graphics.setColor(0.6, 0.6, 0.6)
+    pass:setColor(0.6, 0.6, 0.6)
     local shape = collider:getShapes()[1]
     local shapeType = shape:getType()
     local x,y,z, angle, ax,ay,az = collider:getPose()
     if shapeType == 'box' then
       local sx, sy, sz = shape:getDimensions()
-      lovr.graphics.box('fill', x,y,z, sx,sy,sz, angle, ax,ay,az)
+      pass:box(x,y,z, sx,sy,sz, angle, ax,ay,az)
     elseif shapeType == 'capsule' then
-      lovr.graphics.setColor(0.4, 0, 0)
+      pass:setColor(0.4, 0, 0)
       local l, r = shape:getLength(), shape:getRadius()
       local x,y,z, angle, ax,ay,az = collider:getPose()
-      local m = mat4(x,y,z, 1,1,1, angle, ax,ay,az)
-      lovr.graphics.cylinder(x,y,z, l, angle, ax,ay,az, r, r, false)
-      lovr.graphics.sphere(vec3(m:mul(0, 0,  l/2)), r)
-      lovr.graphics.sphere(vec3(m:mul(0, 0, -l/2)), r)
+      pass:capsule(x,y,z, r, l, angle, ax,ay,az)
     end
   end
 end

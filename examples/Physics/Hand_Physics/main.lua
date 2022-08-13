@@ -113,22 +113,22 @@ function lovr.update(dt)
 end
 
 
-function lovr.draw()
+function lovr.draw(pass)
   for i, collider in ipairs(hands.colliders) do
     local alpha = hands.solid[i] and 1 or 0.2
-    lovr.graphics.setColor(0.75, 0.56, 0.44, alpha)
-    drawBoxCollider(collider)
+    pass:setColor(0.75, 0.56, 0.44, alpha)
+    drawBoxCollider(pass, collider)
   end
   lovr.math.setRandomSeed(0)
   for i, collider in ipairs(boxes) do
     local shade = 0.2 + 0.6 * lovr.math.random()
-    lovr.graphics.setColor(shade, shade, shade)
-    drawBoxCollider(collider)
+    pass:setColor(shade, shade, shade)
+    drawBoxCollider(pass, collider)
   end
 end
 
 
-function drawBoxCollider(collider)
+function drawBoxCollider(pass, collider)
   -- query current pose (location and orientation)
   local pose = mat4(collider:getPose())
   -- query dimensions of box
@@ -136,7 +136,7 @@ function drawBoxCollider(collider)
   local size = vec3(shape:getDimensions())
   -- draw box
   pose:scale(size)
-  lovr.graphics.box('fill', pose)
+  pass:box(pose)
 end
 
 
