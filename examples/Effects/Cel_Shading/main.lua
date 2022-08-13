@@ -1,39 +1,34 @@
 function lovr.load()
   shader = lovr.graphics.newShader([[
-    out vec3 vNormal;
-    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-      vNormal = lovrNormalMatrix * lovrNormal;
-      return projection * transform * vertex;
+    vec4 lovrmain() {
+      return DefaultPosition;
     }
   ]], [[
-    #define BANDS 8.0
-    const vec3 lightDirection = vec3(-1., -1., -1.);
-    in vec3 vNormal;
+    #define BANDS 5.0
 
-    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
+    vec4 lovrmain() {
+      const vec3 lightDirection = vec3(-1, -1, -1);
       vec3 L = normalize(-lightDirection);
-      vec3 N = normalize(vNormal);
+      vec3 N = normalize(Normal);
       float normal = .5 + dot(N, L) * .5;
 
-      vec3 baseColor = graphicsColor.rgb * normal;
+      vec3 baseColor = Color.rgb * normal;
       vec3 clampedColor = round(baseColor * BANDS) / BANDS;
 
-      return vec4(clampedColor, graphicsColor.a);
+      return vec4(clampedColor, Color.a);
     }
   ]])
 end
 
-function lovr.draw()
-  lovr.graphics.setShader(shader)
+function lovr.draw(pass)
+  pass:setShader(shader)
 
-  lovr.graphics.setColor(0, 0, 1)
-  lovr.graphics.sphere(0, 1.7, -1, .15)
+  pass:setColor(0, 0, 1)
+  pass:sphere(0, 1.7, -1, .15)
 
-  lovr.graphics.setColor(0, 1, 0)
-  lovr.graphics.sphere(-.4, 1.7, -1, .15)
+  pass:setColor(0, 1, 0)
+  pass:sphere(-.4, 1.7, -1, .15)
 
-  lovr.graphics.setColor(1, 0, 0)
-  lovr.graphics.sphere(.4, 1.7, -1, .15)
-
-  lovr.graphics.setShader()
+  pass:setColor(1, 0, 0)
+  pass:sphere(.4, 1.7, -1, .15)
 end
