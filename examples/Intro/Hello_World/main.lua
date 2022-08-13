@@ -1,3 +1,3 @@
-function lovr.draw()
-  lovr.graphics.print('hello world', 0, 1.7, -5)
+function lovr.draw(pass)
+  pass:text('hello world', 0, 1.7, -5)
 end

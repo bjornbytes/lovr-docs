@@ -1,43 +1,20 @@
 return lovr.graphics.newShader([[
-
-// All of these are in view-space.
-out vec3 lightDirection; // A vector from the vertex to the light
-out vec3 normalDirection;
-out vec3 vertexPosition;
-
-vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-  vec3 lightPosition = vec3(0., 10., 3.);
-  vec4 vVertex = transform * vec4(lovrPosition, 1.);
-  vec4 vLight = lovrView * vec4(lightPosition, 1.);
-
-  lightDirection = normalize(vec3(vLight - vVertex));
-  normalDirection = normalize(lovrNormalMatrix * lovrNormal);
-  vertexPosition = vVertex.xyz;
-
-  return projection * transform * vertex;
+vec4 lovrmain() {
+  PointSize = 5.0;
+  return DefaultPosition;
 }
 ]], [[
-in vec3 lightDirection;
-in vec3 normalDirection;
-in vec3 vertexPosition;
+vec4 lovrmain() {
+  const vec3 lightPosition = vec3(0., 2.0, -1.);
+  float distance = length(PositionWorld - lightPosition);
+  const vec3 lightDirection = normalize(PositionWorld - lightPosition);
+  const vec4 lightColor = vec4(1, 1, 1, 5);
 
-vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
-  vec3 cAmbient = vec3(.25);
-  vec3 cDiffuse = vec3(1.);
-  vec3 cSpecular = vec3(.35);
+  Surface surface;
+  initSurface(surface);
 
-  float diffuse = max(dot(normalDirection, lightDirection), 0.);
-  float specular = 0.;
+  vec3 lighting = getLighting(surface, lightDirection, lightColor, 1.0 / distance);
 
-  if (diffuse > 0.) {
-    vec3 r = reflect(lightDirection, normalDirection);
-    vec3 viewDirection = normalize(-vertexPosition);
-
-    float specularAngle = max(dot(r, viewDirection), 0.);
-    specular = pow(specularAngle, 5.);
-  }
-
-  vec3 cFinal = pow(clamp(vec3(diffuse) * cDiffuse + vec3(specular) * cSpecular, cAmbient, vec3(1.)), vec3(.4545));
-  return vec4(cFinal, 1.) * graphicsColor * texture(image, uv);
+  return vec4(Color.rgb * lighting, Color.a);
 }
 ]])
