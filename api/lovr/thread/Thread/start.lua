@@ -8,5 +8,12 @@ return {
       description = 'Up to 4 arguments to pass to the Thread\'s function.'
     }
   },
-  returns = {}
+  returns = {},
+  example = [=[
+    function lovr.load()
+      lovr.thread.newThread([[
+        print(...)
+      ]]):start(lovr.getVersion())
+    end
+  ]=]
 }
