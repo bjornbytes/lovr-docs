@@ -25462,6 +25462,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              examples = {
+                {
+                  code = "function lovr.load()\n  lovr.thread.newThread([[\n    print(...)\n  ]]):start(lovr.getVersion())\nend"
+                }
               }
             },
             {
