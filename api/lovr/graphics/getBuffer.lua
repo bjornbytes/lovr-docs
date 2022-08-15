@@ -10,9 +10,9 @@ return {
     data = {
       type = 'table',
       description = [[
-        The initial data to put into the Buffer.  The length of the table will be used as the length
-        of the Buffer.  Note: this means the table should only contain nested tables or
-        individual number/vector elements, which is less flexible than `Buffer:setData`.
+        The initial data to put into the Buffer.  The length of the Buffer will be determined by the
+        contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the
+        length calculation requires each field to consistently use one type of data.
       ]]
     },
     blob = {

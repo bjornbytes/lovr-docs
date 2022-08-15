@@ -5,7 +5,7 @@ return {
   arguments = {
     {
       name = 'mode',
-      type = 'VertexMode',
+      type = 'MeshMode',
       description = 'TODO'
     }
   },

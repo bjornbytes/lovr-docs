@@ -1,6 +1,6 @@
 return {
   tag = 'work-submission',
-  summary = 'Wait for the GPU to finish all submitted work.',
+  summary = 'Stalls the CPU until all submitted GPU work is finished.',
   description = 'TODO',
   arguments = {},
   returns = {},

@@ -48,5 +48,6 @@ return {
       arguments = { 'color' },
       returns = {}
     }
-  }
+  },
+  notes = 'TODO'
 }

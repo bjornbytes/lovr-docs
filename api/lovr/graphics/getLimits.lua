@@ -132,12 +132,12 @@ return {
           ]]
         },
         {
-          name = 'computeDispatchCount',
+          name = 'workgroupCount',
           type = 'table',
           description = 'The maximum values of `x`, `y`, and `z` in `Pass:compute`.'
         },
         {
-          name = 'computeWorkgroupSize',
+          name = 'workgroupSize',
           type = 'table',
           description = [[
             The maximum values of `local_size_x`, `local_size_y`, and `local_size_z` declared in a
@@ -145,7 +145,7 @@ return {
           ]]
         },
         {
-          name = 'computeWorkgroupVolume',
+          name = 'totalWorkgroupSize',
           type = 'number',
           description = [[
             The maximum product of `local_size_x`, `local_size_y`, and `local_size_z` in a compute

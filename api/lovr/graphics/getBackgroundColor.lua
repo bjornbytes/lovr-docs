@@ -24,5 +24,6 @@ return {
       type = 'number',
       description = 'The alpha component of the background color.',
     }
-  }
+  },
+  notes = 'TODO'
 }

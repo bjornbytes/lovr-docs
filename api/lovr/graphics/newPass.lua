@@ -1,6 +1,6 @@
 return {
   tag = 'graphics-objects',
-  summary = 'Get a new Pass.',
+  summary = 'Create a new Pass.',
   description = 'TODO',
   arguments = {
     type = {
@@ -37,10 +37,6 @@ return {
           description = 'TODO'
         }
       }
-    },
-    label = {
-      type = 'string',
-      description = 'TODO'
     }
   },
   returns = {
@@ -51,19 +47,22 @@ return {
   },
   variants = {
     {
-      arguments = { 'type', 'label' },
+      arguments = { 'type' },
       returns = { 'pass' }
     },
     {
-      arguments = { 'type', 'texture', 'label' },
+      arguments = { 'type', 'texture' },
       returns = { 'pass' }
     },
     {
-      arguments = { 'type', 'canvas', 'label' },
+      arguments = { 'type', 'canvas' },
       returns = { 'pass' }
     }
   },
   related = {
-    'lovr.graphics.submit'
+    'lovr.graphics.submit',
+    'lovr.graphics.getWindowPass',
+    'lovr.headset.getPass',
+    'Pass:reset'
   }
 }

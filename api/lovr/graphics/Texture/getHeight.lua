@@ -11,7 +11,7 @@ return {
   },
   related = {
     'Texture:getWidth',
-    'Texture:getDepth',
+    'Texture:getLayerCount',
     'Texture:getDimensions'
   }
 }
