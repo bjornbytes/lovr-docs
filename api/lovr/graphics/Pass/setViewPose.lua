@@ -5,9 +5,8 @@ return {
     Sets the pose for a single view.  Objects rendered in this view will appear as though the camera
     is positioned using the given pose.
 
-    Up to 6 views are supported, one for each eye.  When rendering to the headset, both views are
-    changed to match the estimated eye positions.  These view poses are also available using
-    `lovr.headset.getViewPose`.
+    Up to 6 views are supported.  When rendering to the headset, views are changed to match the eye
+    positions.  These view poses are also available using `lovr.headset.getViewPose`.
   ]],
   arguments = {
     view = {

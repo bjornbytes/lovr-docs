@@ -7,7 +7,7 @@ return {
       description = 'TODO'
     },
     {
-      name = 'pipeline',
+      name = 'state',
       descriptioin = 'TODO'
     }
   }

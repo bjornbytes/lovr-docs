@@ -12,6 +12,22 @@ return {
       type = 'Buffer',
       description = 'TODO'
     },
+    draws = {
+      type = 'Buffer',
+      description = 'TODO'
+    },
+    drawcount = {
+      type = 'number',
+      description = 'TODO'
+    },
+    offset = {
+      type = 'number',
+      description = 'TODO'
+    },
+    stride = {
+      type = 'number',
+      description = 'TODO'
+    }
     transform = {
       type = 'transform',
       description = 'The transform to apply to the mesh.'
@@ -47,6 +63,10 @@ return {
     },
     {
       arguments = { 'vertices', 'indices', 'transform', 'start', 'count', 'instances' },
+      returns = {}
+    },
+    {
+      arguments = { 'vertices', 'indices', 'draws', 'drawcount', 'offset', 'stride' },
       returns = {}
     }
   },

@@ -7,8 +7,9 @@ return {
     used for other types of projections like orthographic, oblique, etc.  There is also a shorthand
     string "orthographic" that can be used to configure an orthographic projection.
 
-    Up to 6 views are supported, one for each eye.  When rendering to the headset, both projections
-    are changed to match the ones used by the headset.
+    Up to 6 views are supported.  When rendering to the headset, both projections are changed to
+    match the ones used by the headset.  This is also available by calling
+    `lovr.headset.getViewAngles`.
   ]],
   arguments = {
     view = {
@@ -44,28 +45,6 @@ return {
     matrix = {
       type = 'Mat4',
       description = 'The projection matrix for the view.'
-    },
-    orthographic = {
-      type = 'string',
-      description = 'The shortcut string \'orthographic\'.'
-    },
-    width = {
-      type = 'number',
-      description = 'The width of the orthographic projection.'
-    },
-    height = {
-      type = 'number',
-      description = 'The height of the orthographic projection.'
-    },
-    clipNear = {
-      type = 'number',
-      default = '-1.0',
-      description = 'The near clipping plane.'
-    },
-    clipFar = {
-      type = 'number',
-      default = '1.0',
-      description = 'The far clipping plane.'
     }
   },
   returns = {},
@@ -77,12 +56,12 @@ return {
     {
       arguments = { 'view', 'matrix' },
       returns = {}
-    },
-    {
-      arguments = { 'view', 'orthographic', 'width', 'height', 'clipNear', 'clipFar' },
-      returns = {}
     }
   },
+  notes = [[
+    A far clipping plane of 0.0 can be used for an infinite far plane with reversed Z range.  This
+    is the default.
+  ]],
   related = {
     'lovr.headset.getViewAngles',
     'lovr.headset.getViewCount',
