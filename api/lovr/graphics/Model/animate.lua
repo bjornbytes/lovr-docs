@@ -23,11 +23,11 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'name', 'time', 'alpha' },
+      arguments = { 'name', 'time', 'blend' },
       returns = {}
     },
     {
-      arguments = { 'index', 'time', 'alpha' },
+      arguments = { 'index', 'time', 'blend' },
       returns = {}
     }
   },

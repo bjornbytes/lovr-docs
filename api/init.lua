@@ -5027,7 +5027,13 @@ return {
                       description = "The index of the parent node."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "children",
+                      type = "table",
+                      description = "A table containing a node index for each child of the node."
+                    }
+                  }
                 },
                 {
                   arguments = {
@@ -5037,7 +5043,13 @@ return {
                       description = "The name of the parent node."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "children",
+                      type = "table",
+                      description = "A table containing a node index for each child of the node."
+                    }
+                  }
                 }
               },
               notes = "If the node does not have any children, this function returns an empty table."
@@ -8277,6 +8289,11 @@ return {
                   name = "stage",
                   type = "ShaderStage",
                   description = "TODO"
+                },
+                {
+                  name = "source",
+                  type = "ShaderSource",
+                  description = "TODO"
                 }
               },
               returns = {
@@ -9610,7 +9627,13 @@ return {
                   description = "TODO"
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "pass",
+                  type = "Pass",
+                  description = "The new Pass."
+                }
+              }
             },
             {
               arguments = {
@@ -9625,7 +9648,13 @@ return {
                   description = "TODO"
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "pass",
+                  type = "Pass",
+                  description = "The new Pass."
+                }
+              }
             },
             {
               arguments = {
@@ -9663,7 +9692,13 @@ return {
                   }
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "pass",
+                  type = "Pass",
+                  description = "The new Pass."
+                }
+              }
             }
           }
         },
@@ -10265,7 +10300,13 @@ return {
           },
           variants = {
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "...",
+                  type = "Pass",
+                  description = "The pass objects to submit.  Falsy values will be skipped."
+                }
+              },
               returns = {
                 {
                   name = "true",
@@ -10275,7 +10316,13 @@ return {
               }
             },
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "t",
+                  type = "table",
+                  description = "A table of passes to submit.  Falsy values will be skipped."
+                }
+              },
               returns = {
                 {
                   name = "true",
@@ -10971,6 +11018,12 @@ return {
                       name = "time",
                       type = "number",
                       description = "The timestamp to evaluate the keyframes at, in seconds."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "How much of the animation's pose to blend into the nodes, from 0 to 1.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -10986,6 +11039,12 @@ return {
                       name = "time",
                       type = "number",
                       description = "The timestamp to evaluate the keyframes at, in seconds."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "How much of the animation's pose to blend into the nodes, from 0 to 1.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -11497,7 +11556,13 @@ return {
                       description = "The index of the parent node."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "children",
+                      type = "table",
+                      description = "A table containing a node index for each child of the node."
+                    }
+                  }
                 },
                 {
                   arguments = {
@@ -11507,7 +11572,13 @@ return {
                       description = "The name of the parent node."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "children",
+                      type = "table",
+                      description = "A table containing a node index for each child of the node."
+                    }
+                  }
                 }
               },
               notes = "If the node does not have any children, this function returns an empty table."
@@ -13110,6 +13181,12 @@ return {
                       type = "number",
                       description = "The index of the first mipmap level to clear.",
                       default = "1"
+                    },
+                    {
+                      name = "levels",
+                      type = "number",
+                      description = "The number of mipmap level to clear.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -14227,7 +14304,25 @@ return {
               module = "lovr.graphics",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "TODO"
+                    },
+                    {
+                      name = "base",
+                      type = "number",
+                      description = "TODO",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "TODO",
+                      default = "nil"
+                    }
+                  },
                   returns = {}
                 }
               }
@@ -16402,7 +16497,13 @@ return {
                       description = "The name of an attribute."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "exists",
+                      type = "boolean",
+                      description = "Whether the Shader has the attribute."
+                    }
+                  }
                 },
                 {
                   arguments = {
@@ -16412,7 +16513,13 @@ return {
                       description = "The location of an attribute."
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "exists",
+                      type = "boolean",
+                      description = "Whether the Shader has the attribute."
+                    }
+                  }
                 }
               }
             },

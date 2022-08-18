@@ -21,11 +21,5 @@ return {
       description = 'TODO'
     }
   },
-  returns = {},
-  variants = {
-    {
-      arguments = { 'texture', 'base', 'count' },
-      returns = {}
-    }
-  }
+  returns = {}
 }

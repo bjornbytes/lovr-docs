@@ -114,10 +114,12 @@ local function processFunction(path, parent)
 
     for _, variant in ipairs(fn.variants) do
       for i, name in ipairs(variant.arguments) do
+        assert(fn.arguments[name], string.format('Function %q variant argument %q does not exist', fn.key, name))
         variant.arguments[i] = copy(fn.arguments[name])
       end
 
       for i, name in ipairs(variant.returns) do
+        assert(fn.returns[name], string.format('Function %q variant return %q does not exist', fn.key, name))
         variant.returns[i] = copy(fn.returns[name])
       end
     end

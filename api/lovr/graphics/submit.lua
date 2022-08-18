@@ -3,15 +3,13 @@ return {
   summary = 'Submit recorded graphics work to the GPU.',
   description = 'TODO',
   arguments = {
-    {
-      ['...'] = {
-        type = 'Pass',
-        description = 'The pass objects to submit.  Falsy values will be skipped.'
-      },
-      t = {
-        type = 'table',
-        description = 'A table of passes to submit.  Falsy values will be skipped.'
-      }
+    ['...'] = {
+      type = 'Pass',
+      description = 'The pass objects to submit.  Falsy values will be skipped.'
+    },
+    t = {
+      type = 'table',
+      description = 'A table of passes to submit.  Falsy values will be skipped.'
     }
   },
   returns = {

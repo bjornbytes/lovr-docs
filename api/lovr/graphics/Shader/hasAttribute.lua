@@ -12,8 +12,7 @@ return {
     }
   },
   returns = {
-    present = {
-      name = 'exists',
+    exists = {
       type = 'boolean',
       description = 'Whether the Shader has the attribute.'
     }

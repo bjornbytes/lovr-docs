@@ -14,9 +14,9 @@ return {
     }
   },
   returns = {
-    parent = {
-      type = 'number',
-      description = 'The index of the node\'s parent.'
+    children = {
+      type = 'table',
+      description = 'A table containing a node index for each child of the node.'
     }
   },
   variants = {

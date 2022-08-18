@@ -6,7 +6,7 @@ return {
       type = 'ShaderStage',
       description = 'TODO'
     },
-    string = {
+    source = {
       type = 'ShaderSource',
       description = 'TODO'
     }

@@ -40,7 +40,7 @@ return {
     }
   },
   returns = {
-    model = {
+    pass = {
       type = 'Pass',
       description = 'The new Pass.'
     }

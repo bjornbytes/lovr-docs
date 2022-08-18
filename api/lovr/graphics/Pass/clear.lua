@@ -38,7 +38,7 @@ return {
        default = '1',
        description = 'The index of the first mipmap level to clear.'
      },
-     levelCount = {
+     levels = {
        type = 'number',
        default = 'nil',
        description = 'The number of mipmap level to clear.'
