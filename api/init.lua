@@ -15776,82 +15776,6 @@ return {
                 {
                   arguments = {
                     {
-                      name = "font",
-                      type = "Font",
-                      description = "The Font to use."
-                    },
-                    {
-                      name = "text",
-                      type = "string",
-                      description = "The text to render."
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform of the text."
-                    },
-                    {
-                      name = "wrap",
-                      type = "number",
-                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
-                      default = "0"
-                    },
-                    {
-                      name = "halign",
-                      type = "HorizontalAlign",
-                      description = "The horizontal alignment.",
-                      default = "'center'"
-                    },
-                    {
-                      name = "valign",
-                      type = "VerticalAlign",
-                      description = "The vertical alignment.",
-                      default = "'middle'"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "colortext",
-                      type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2\n      }`, where color is a `Color`."
-                    },
-                    {
-                      name = "transform",
-                      type = "transform",
-                      description = "The transform of the text."
-                    },
-                    {
-                      name = "wrap",
-                      type = "number",
-                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
-                      default = "0"
-                    },
-                    {
-                      name = "halign",
-                      type = "HorizontalAlign",
-                      description = "The horizontal alignment.",
-                      default = "'center'"
-                    },
-                    {
-                      name = "valign",
-                      type = "VerticalAlign",
-                      description = "The vertical alignment.",
-                      default = "'middle'"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "font",
-                      type = "Font",
-                      description = "The Font to use."
-                    },
-                    {
                       name = "colortext",
                       type = "table",
                       description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2\n      }`, where color is a `Color`."
@@ -15882,6 +15806,9 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:setFont"
               }
             },
             {

@@ -3,10 +3,6 @@ return {
   summary = 'Draw text.',
   description = 'TODO',
   arguments = {
-    font = {
-      type = 'Font',
-      description = 'The Font to use.'
-    },
     text = {
       type = 'string',
       description = 'The text to render.'
@@ -48,17 +44,12 @@ return {
       returns = {}
     },
     {
-      arguments = { 'font', 'text', 'transform', 'wrap', 'halign', 'valign' },
-      returns = {}
-    },
-    {
       arguments = { 'colortext', 'transform', 'wrap', 'halign', 'valign' },
-      returns = {}
-    },
-    {
-      arguments = { 'font', 'colortext', 'transform', 'wrap', 'halign', 'valign' },
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = 'TODO',
+  related = {
+    'Pass:setFont'
+  }
 }
