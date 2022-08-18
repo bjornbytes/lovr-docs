@@ -10,10 +10,12 @@ return {
       type = 'string',
       description = 'The name of a node.'
     },
-    space = {
-      type = 'CoordinateSpace',
-      default = [['global']],
-      description = 'The coordinate space to return the pose in.'
+    origin = {
+      type = 'OriginType',
+      default = [['root']],
+      description = [[
+        Whether the pose should be returned relative to the root node or the node's parent.
+      ]]
     }
   },
   returns = {
@@ -48,11 +50,11 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'space' },
+      arguments = { 'index', 'origin' },
       returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     },
     {
-      arguments = { 'name', 'space' },
+      arguments = { 'name', 'origin' },
       returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     }
   },

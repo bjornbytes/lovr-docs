@@ -11801,10 +11801,10 @@ return {
                       description = "The index of the node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the orientation in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the orientation should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -11838,10 +11838,10 @@ return {
                       description = "The name of the node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the orientation in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the orientation should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -11940,10 +11940,10 @@ return {
                       description = "The index of a node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the pose in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the pose should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -11992,10 +11992,10 @@ return {
                       description = "The name of a node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the pose in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the pose should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -12065,9 +12065,9 @@ return {
                     },
                     {
                       name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the position in.",
-                      default = "'global'"
+                      type = "OriginType",
+                      description = "Whether the position should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -12097,9 +12097,9 @@ return {
                     },
                     {
                       name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the position in.",
-                      default = "'global'"
+                      type = "OriginType",
+                      description = "Whether the position should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -12148,10 +12148,10 @@ return {
                       description = "The index of the node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the scale in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the scale should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -12180,10 +12180,10 @@ return {
                       description = "The name of the node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the scale in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the scale should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -12232,10 +12232,10 @@ return {
                       description = "The index of a node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the transform in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the transform should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {
@@ -12299,10 +12299,10 @@ return {
                       description = "The name of a node."
                     },
                     {
-                      name = "space",
-                      type = "CoordinateSpace",
-                      description = "The coordinate space to return the transform in.",
-                      default = "'global'"
+                      name = "origin",
+                      type = "OriginType",
+                      description = "Whether the transform should be returned relative to the root node or the node's parent.",
+                      default = "'root'"
                     }
                   },
                   returns = {

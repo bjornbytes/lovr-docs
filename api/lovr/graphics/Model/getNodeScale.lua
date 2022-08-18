@@ -10,10 +10,12 @@ return {
       type = 'string',
       description = 'The name of the node.'
     },
-    space = {
-      type = 'CoordinateSpace',
-      default = [['global']],
-      description = 'The coordinate space to return the scale in.'
+    origin = {
+      type = 'OriginType',
+      default = [['root']],
+      description = [[
+        Whether the scale should be returned relative to the root node or the node's parent.
+      ]]
     }
   },
   returns = {
@@ -32,11 +34,11 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'space' },
+      arguments = { 'index', 'origin' },
       returns = { 'x', 'y', 'z' }
     },
     {
-      arguments = { 'name', 'space' },
+      arguments = { 'name', 'origin' },
       returns = { 'x', 'y', 'z' }
     }
   },

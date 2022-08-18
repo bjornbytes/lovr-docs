@@ -11,9 +11,11 @@ return {
       description = 'The name of the node.'
     },
     space = {
-      type = 'CoordinateSpace',
-      default = [['global']],
-      description = 'The coordinate space to return the position in.'
+      type = 'OriginType',
+      default = [['root']],
+      description = [[
+        Whether the position should be returned relative to the root node or the node's parent.
+      ]]
     }
   },
   returns = {

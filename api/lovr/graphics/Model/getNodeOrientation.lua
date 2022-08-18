@@ -10,10 +10,12 @@ return {
       type = 'string',
       description = 'The name of the node.'
     },
-    space = {
-      type = 'CoordinateSpace',
-      default = [['global']],
-      description = 'The coordinate space to return the orientation in.'
+    origin = {
+      type = 'OriginType',
+      default = [['root']],
+      description = [[
+        Whether the orientation should be returned relative to the root node or the node's parent.
+      ]]
     }
   },
   returns = {
@@ -36,11 +38,11 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'space' },
+      arguments = { 'index', 'origin' },
       returns = { 'angle', 'ax', 'ay', 'az' }
     },
     {
-      arguments = { 'name', 'space' },
+      arguments = { 'name', 'origin' },
       returns = { 'angle', 'ax', 'ay', 'az' }
     }
   },
