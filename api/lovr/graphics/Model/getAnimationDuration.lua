@@ -19,14 +19,17 @@ return {
   },
   variants = {
     {
-      arguments = { 'name' },
+      arguments = { 'index' },
       returns = { 'duration' }
     },
     {
-      arguments = { 'index' },
+      arguments = { 'name' },
       returns = { 'duration' }
     }
   },
+  notes = [[
+    TODO how is duration calculated?
+  ]],
   related = {
     'Model:getAnimationCount',
     'Model:getAnimationName',

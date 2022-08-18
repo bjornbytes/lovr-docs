@@ -17,7 +17,7 @@ return {
       default = '64',
       description = 'The number of circular segments to render.'
     }
-  }
+  },
   returns = {},
   notes = 'TODO'
 }

@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the local orientation of a node.',
+  summary = 'Get the local orientation of a node.',
   description = 'Returns local orientation of a node, relative to its parent.',
   arguments = {
     index = {

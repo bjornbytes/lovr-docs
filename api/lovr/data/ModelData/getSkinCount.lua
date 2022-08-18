@@ -12,5 +12,8 @@ return {
       description = 'The number of skins in the model.'
     }
   },
-  notes = 'There is currently a maximum of 256 skins.'
+  notes = 'There is currently a maximum of 256 skins.',
+  related = {
+    'Model:hasJoints'
+  }
 }

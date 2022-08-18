@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the local pose of a node.',
+  summary = 'Get the local pose of a node.',
   description = 'Returns local pose (position and orientation) of a node, relative to its parent.',
   arguments = {
     index = {

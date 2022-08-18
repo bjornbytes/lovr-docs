@@ -1,22 +1,19 @@
 return {
-  summary = 'Get the pose of a single node.',
-  description = 'Returns the pose of a single node in the Model in a given `CoordinateSpace`.',
+  summary = 'Get the pose of a node.',
+  description = 'TODO',
   arguments = {
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
-    },
     index = {
       type = 'number',
-      description = 'The node index.'
+      description = 'The index of a node.'
+    },
+    name = {
+      type = 'string',
+      description = 'The name of a node.'
     },
     space = {
       type = 'CoordinateSpace',
       default = [['global']],
-      description = [[
-        Whether the pose should be returned relative to the node's parent or relative to the root
-        node of the Model.
-      ]]
+      description = 'The coordinate space to return the pose in.'
     }
   },
   returns = {
@@ -34,7 +31,7 @@ return {
     },
     angle = {
       type = 'number',
-      description = 'The number of radians the node is rotated around its rotational axis.'
+      description = 'The number of radians the node is rotated around its axis of rotation.'
     },
     ax = {
       type = 'number',
@@ -51,18 +48,23 @@ return {
   },
   variants = {
     {
-      arguments = { 'name', 'space' },
+      arguments = { 'index', 'space' },
       returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     },
     {
-      arguments = { 'index', 'space' },
+      arguments = { 'name', 'space' },
       returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     }
   },
   related = {
-    'Model:pose',
-    'Model:animate',
-    'Model:getNodeName',
-    'Model:getNodeCount'
+    'Model:getNodePosition',
+    'Model:setNodePosition',
+    'Model:getNodeOrientation',
+    'Model:setNodeOrientation',
+    'Model:getNodeScale',
+    'Model:setNodeScale',
+    'Model:getNodeTransform',
+    'Model:setNodeTransform',
+    'Model:animate'
   }
 }

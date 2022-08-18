@@ -18,7 +18,7 @@ return {
     image = {
       type = 'Image',
       description = 'TODO'
-    }
+    },
     texturesrc = {
       type = 'Texture',
       description = 'TODO'

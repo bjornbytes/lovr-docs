@@ -14,6 +14,7 @@ return {
     'ModelData:getHeight',
     'ModelData:getDimensions',
     'ModelData:getCenter',
-    'ModelData:getBoundingBox'
+    'ModelData:getBoundingBox',
+    'Model:getDepth'
   }
 }

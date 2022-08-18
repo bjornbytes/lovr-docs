@@ -52,7 +52,9 @@ return {
       type = 'number',
       default = 'nil',
       description = 'TODO'
-    },
+    }
+  },
+  returns = {
     readback = {
       type = 'Readback',
       description = 'TODO'

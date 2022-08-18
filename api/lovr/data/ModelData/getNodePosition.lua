@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the local position of a node.',
+  summary = 'Get the local position of a node.',
   description = 'Returns local position of a node, relative to its parent.',
   arguments = {
     index = {

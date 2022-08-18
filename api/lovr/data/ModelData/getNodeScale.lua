@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the local scale of a node.',
+  summary = 'Get the local scale of a node.',
   description = 'Returns local scale of a node, relative to its parent.',
   arguments = {
     index = {

@@ -12,5 +12,8 @@ return {
       type = 'string',
       description = 'The metadata from the model file.'
     }
+  },
+  related = {
+    'Model:getMetadata'
   }
 }

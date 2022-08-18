@@ -12,6 +12,7 @@ return {
   related = {
     'ModelData:getMaterialName',
     'ModelData:getMeshMaterial',
-    'ModelData:getMaterial'
+    'ModelData:getMaterial',
+    'Model:getMaterialCount'
   }
 }

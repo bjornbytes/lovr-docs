@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the index of the skin used by a node.',
+  summary = 'Get the index of the skin used by a node.',
   description = [[
     Returns the index of the skin used by a node.  Skins are collections of joints used for skeletal
     animation.  A model can have multiple skins, and each node can use at most one skin to drive the

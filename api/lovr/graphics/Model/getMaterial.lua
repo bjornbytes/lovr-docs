@@ -29,7 +29,6 @@ return {
   },
   related = {
     'Model:getMaterialCount',
-    'Model:getMaterialName',
-    'Material'
+    'Model:getMaterialName'
   }
 }

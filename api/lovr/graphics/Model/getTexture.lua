@@ -10,6 +10,7 @@ return {
     }
   },
   related = {
+    'Model:getTextureCount',
     'Model:getMaterial'
   }
 }

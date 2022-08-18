@@ -8,5 +8,8 @@ return {
       type = 'number',
       description = 'The number of animations in the model.'
     }
+  },
+  related = {
+    'Model:getAnimationCount'
   }
 }

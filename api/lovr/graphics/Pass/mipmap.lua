@@ -20,5 +20,12 @@ return {
       default = 'nil',
       description = 'TODO'
     }
+  },
+  returns = {},
+  variants = {
+    {
+      arguments = { 'texture', 'base', 'count' },
+      returns = {}
+    }
   }
 }

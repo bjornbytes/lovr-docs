@@ -11,6 +11,7 @@ return {
   },
   related = {
     'ModelData:getNodeCount',
-    'ModelData:getNodeParent'
+    'ModelData:getNodeParent',
+    'Model:getRootNode'
   }
 }

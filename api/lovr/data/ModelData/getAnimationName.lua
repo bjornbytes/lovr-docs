@@ -15,5 +15,8 @@ return {
       description = 'The name of the animation.'
     }
   },
-  notes = 'If the animation does not have a name, this function returns `nil`.'
+  notes = 'If the animation does not have a name, this function returns `nil`.',
+  related = {
+    'Model:getAnimationName'
+  }
 }

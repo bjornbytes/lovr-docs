@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the indices of meshes attached to a node.',
+  summary = 'Get the indices of meshes attached to a node.',
   description = [[
     Returns a table of mesh indices attached to a node.  Meshes define the geometry and materials of
     a model, as opposed to the nodes which define the transforms and hierarchy.  A node can have

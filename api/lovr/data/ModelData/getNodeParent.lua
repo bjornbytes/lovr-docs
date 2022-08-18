@@ -29,6 +29,7 @@ return {
   },
   related = {
     'ModelData:getNodeChildren',
-    'ModelData:getRootNode'
+    'ModelData:getRootNode',
+    'Model:getNodeParent'
   }
 }

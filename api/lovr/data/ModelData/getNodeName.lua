@@ -15,5 +15,8 @@ return {
       description = 'The name of the node.'
     }
   },
-  notes = 'If the node does not have a name, this function returns `nil`.'
+  notes = 'If the node does not have a name, this function returns `nil`.',
+  related = {
+    'Model:getNodeName'
+  }
 }

@@ -19,5 +19,8 @@ return {
   },
   notes = [[
     The duration of the animation is calculated as the latest timestamp of all of its channels.
-  ]]
+  ]],
+  related = {
+    'Model:getAnimationDuration'
+  }
 }

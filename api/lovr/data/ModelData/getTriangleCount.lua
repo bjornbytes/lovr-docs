@@ -15,6 +15,7 @@ return {
   },
   related = {
     'ModelData:getTriangles',
-    'ModelData:getVertexCount'
+    'ModelData:getVertexCount',
+    'Model:getTriangleCount'
   }
 }

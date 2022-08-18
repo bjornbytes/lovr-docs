@@ -27,7 +27,7 @@ return {
     stride = {
       type = 'number',
       description = 'TODO'
-    }
+    },
     transform = {
       type = 'transform',
       description = 'The transform to apply to the mesh.'

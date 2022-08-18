@@ -30,6 +30,7 @@ return {
     'ModelData:getDepth',
     'ModelData:getDimensions',
     'ModelData:getCenter',
-    'ModelData:getBoundingBox'
+    'ModelData:getBoundingBox',
+    'Model:getBoundingSphere'
   }
 }

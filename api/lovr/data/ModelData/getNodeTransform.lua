@@ -1,5 +1,5 @@
 return {
-  summary = 'Returns the local transform of a node.',
+  summary = 'Get the local transform of a node.',
   description = [[
     Returns local transform (position, orientation, and scale) of a node, relative to its parent.
   ]],

@@ -1,9 +1,8 @@
 return {
-  summary = 'Get all the triangles in a mesh.',
+  summary = 'Get all the triangles in the model.',
   description = [[
-    Returns the data for all triangles in the mesh.  There are a few differences between this
-    function and the mesh-specific functions like `ModelData:getMeshVertex` and
-    `ModelData:getMeshIndex`:
+    Returns the data for all triangles in the model.  There are a few differences between this and
+    the mesh-specific functions like `ModelData:getMeshVertex` and `ModelData:getMeshIndex`:
 
     - Only vertex positions are returned, not other vertex attributes.
     - Positions are relative to the origin of the whole model, instead of local to a node.
@@ -29,6 +28,7 @@ return {
   notes = 'After this function is called on a ModelData once, the result is cached.',
   related = {
     'ModelData:getTriangleCount',
-    'ModelData:getVertexCount'
+    'ModelData:getVertexCount',
+    'Model:getTriangles'
   }
 }

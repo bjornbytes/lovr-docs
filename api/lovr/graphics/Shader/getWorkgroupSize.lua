@@ -12,7 +12,7 @@ return {
       name = 'y',
       type = 'number',
       description = 'The y size of a workgroup.'
-    }
+    },
     {
       name = 'z',
       type = 'number',

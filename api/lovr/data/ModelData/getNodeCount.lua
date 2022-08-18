@@ -8,5 +8,8 @@ return {
       type = 'number',
       description = 'The number of nodes in the model.'
     }
+  },
+  related = {
+    'Model:getNodeCount'
   }
 }

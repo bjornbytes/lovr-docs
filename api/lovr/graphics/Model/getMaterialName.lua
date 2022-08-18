@@ -17,7 +17,6 @@ return {
   },
   related = {
     'Model:getMaterialCount',
-    'Model:getAnimationName',
-    'Model:getNodeName'
+    'Model:getMaterial'
   }
 }
