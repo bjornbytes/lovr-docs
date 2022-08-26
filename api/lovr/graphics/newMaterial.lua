@@ -82,11 +82,6 @@ return {
           description = 'TODO'
         },
         {
-          name = 'glowTexture',
-          type = 'Texture',
-          description = 'TODO'
-        },
-        {
           name = 'occlusionTexture',
           type = 'Texture',
           description = 'TODO'
