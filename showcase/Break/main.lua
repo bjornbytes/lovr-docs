@@ -107,7 +107,6 @@ function lovr.load()
 	print("Spatializer", lovr.audio.getSpatializer())
 
 	lovr.graphics.setBackgroundColor(.1, .1, .1)
-	lovr.headset.setClipDistance(0.1, 3000)
 
 	gameReset()
 	boardReset()
@@ -116,31 +115,31 @@ function lovr.load()
 		for i=0,5 do
 			table.insert(sounds, lovr.audio.newSource(string.format("break-bwomp-song-1-split-%d.ogg", i)))
 		end
-		sounds.fail = lovr.audio.newSource("break-buzzer.ogg", {effects=false})
-		sounds.restart = lovr.audio.newSource("break-countdown.ogg", {effects=false})
+		sounds.fail = lovr.audio.newSource("break-buzzer.ogg", {spatial=false})
+		sounds.restart = lovr.audio.newSource("break-countdown.ogg", {spatial=false})
 	end
 end
 
-local function cube(v) -- Draw board block
+local function cube(pass, v) -- Draw board block
 	local x,y,z = v:unpack()
-	lovr.graphics.cube('fill', x,y,z, cubeWidth)
+	pass:cube(x,y,z, cubeWidth)
 end
-local function ledCube(v) -- Draw score display block
+local function ledCube(pass, v) -- Draw score display block
 	local x,y,z = v:unpack()
-	lovr.graphics.cube('fill', x,y,z, lCube)
+	pass:cube(x,y,z, lCube)
 end
-local function paddle(x) -- Draw paddle. Expect 0..1
+local function paddle(pass, x) -- Draw paddle. Expect 0..1
 	local x,y,z = (gRight*((-0.5 + x)*bWidth*uWidth)):unpack()
 	local xd, yd, zd = pSize:unpack()
-	lovr.graphics.box('fill', x, y, z, xd, yd, zd)
+	pass:box(x, y, z, xd, yd, zd)
 end
 local function ballXyz(bv) -- Get the XYZ position of the ball (for drawing or sound)
 	local bx, by = bv:unpack()
 	return ballRoot + uRight*bx + uDown*by -- Temporary
 end
-local function ball(bv) -- Draw the ball
+local function ball(pass, bv) -- Draw the ball
 	local x,y,z = ballXyz(bv):unpack()
-	lovr.graphics.cube('fill', x, y, z, cubeWidth*ballWidth)
+	pass:cube(x, y, z, cubeWidth*ballWidth)
 end
 
 local function tie(x) -- tie fighter operator <=>
@@ -350,25 +349,23 @@ function lovr.update(dt)
 	lovr.audio.setPose(lovr.headset.getPose())
 end
 
-local function drawLed(root, character) -- Draw one digit of the LED screen
+local function drawLed(pass, root, character) -- Draw one digit of the LED screen
 	if not character then return end
 	for y=1,led.height do
 		local line = root
 		for x=1,led.width do
 			line = line + lRight
 			if character[x][y] then
-				ledCube(line)
+				ledCube(pass, line)
 			end
 		end
 		root = root + lDown
 	end
 end
 
-function lovr.draw()
-	lovr.graphics.clear()
-	
+function lovr.draw(pass)
 	if fixedCamera then
-		lovr.graphics.translate(0, 0, -2) -- Move backward so Go users can see the paddle
+		pass:translate(0, 0, -2) -- Move backward so Go users can see the paddle
 	end
 
 	-- This bit draws a three-dimensional grid, but it contains an intentional bug.
@@ -377,15 +374,15 @@ function lovr.draw()
 	local far = 1*gs
 	local grid = 2*gs
 	for x=-grid,grid,gs do for y=-grid,grid,gs do for z=-grid,grid,gs do
-		lovr.graphics.line(-far, y, z, far, y, z)
+		pass:line(-far, y, z, far, y, z)
 		if not (fixedCamera and x == 0 and z == 0) then -- In fixed camera setup this center line looks weird
-			lovr.graphics.line(x, -far, z, x, far, z)
+			pass:line(x, -far, z, x, far, z)
 		end
-		lovr.graphics.line(x, y, far, x, y, -far)
+		pass:line(x, y, far, x, y, -far)
 	end end end
 
 	-- Draw board
-	lovr.graphics.setShader(shader)
+	pass:setShader(shader)
 	local cheatX, cheatY, cheatStart
 	if gameState.cheat then -- Unpack cheat state
 		cheatX, cheatY, cheatStart = gameState.cheat.x, gameState.cheat.y, gameState.cheat.start
@@ -393,22 +390,22 @@ function lovr.draw()
 	for x=1,bWidth do for y=1,bHeight do
 		if Board.get(board,x,y) then
 			if x == cheatX and y == cheatY and (tim - gameState.cheat.start) % 0.5 > 0.25 then -- Blinking cube during cheat
-				lovr.graphics.setColor(1,1,1,1)
+				pass:setColor(1,1,1,1)
 			else -- Base color on position so there's a nice gradient
-				lovr.graphics.setColor(x/bWidth, y/bHeight, 1, 1)
+				pass:setColor(x/bWidth, y/bHeight, 1, 1)
 			end
-			cube(bCenter(x,y))
+			cube(pass, bCenter(x,y))
 		end
 	end end
-	lovr.graphics.setColor(1, 1, 1, 1)
+	pass:setColor(1, 1, 1, 1)
 	-- Draw paddle and board
-	paddle(paddleAt)
-	if gameState[1] ~= "dead" then ball(ballAt) end
+	paddle(pass, paddleAt)
+	if gameState[1] ~= "dead" then ball(pass, ballAt) end
 	-- Draw screen
 	local screenlen = #screen
 	local lUlCorner = lovr.math.vec3( lUlRoot - lDown*led.height - lRight * (screenlen * (led.width + 1) + 2)/ 2 )
 	for i=screenlen,1, -1 do
-		drawLed(lUlCorner, led[screen[i]+1])
+		drawLed(pass, lUlCorner, led[screen[i]+1])
 		if i ~= 1 then lUlCorner = lUlCorner + lRight * (led.width + 1) end
 	end
 	-- Draw controller
