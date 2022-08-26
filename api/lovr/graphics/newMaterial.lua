@@ -72,11 +72,6 @@ return {
           description = 'TODO'
         },
         {
-          name = 'pointSize',
-          type = 'number',
-          description = 'TODO'
-        },
-        {
           name = 'texture',
           type = 'Texture',
           description = 'TODO'
