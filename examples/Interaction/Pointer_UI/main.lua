@@ -65,35 +65,35 @@ function lovr.update()
   end
 end
 
-function lovr.draw()
+function lovr.draw(pass)
   -- Button background
   if button.active then
-    lovr.graphics.setColor(.4, .4, .4)
+    pass:setColor(.4, .4, .4)
   elseif button.hover then
-    lovr.graphics.setColor(.2, .2, .2)
+    pass:setColor(.2, .2, .2)
   else
-    lovr.graphics.setColor(.1, .1, .1)
+    pass:setColor(.1, .1, .1)
   end
-  lovr.graphics.plane('fill', button.position, button.width, button.height)
+  pass:plane(button.position, button.width, button.height)
 
   -- Button text (add a small amount to the z to put the text slightly in front of button)
-  lovr.graphics.setColor(1, 1, 1)
-  lovr.graphics.print(button.text, button.position + vec3(0, 0, .001), button.textSize)
-  lovr.graphics.print('Count: ' .. button.count, button.position + vec3(0, .5, 0), .1)
+  pass:setColor(1, 1, 1)
+  pass:text(button.text, button.position + vec3(0, 0, .001), button.textSize)
+  pass:text('Count: ' .. button.count, button.position + vec3(0, .5, 0), .1)
 
   -- Pointers
   for hand, tip in pairs(tips) do
     local position = vec3(lovr.headset.getPosition(hand))
 
-    lovr.graphics.setColor(1, 1, 1)
-    lovr.graphics.sphere(position, .01)
+    pass:setColor(1, 1, 1)
+    pass:sphere(position, .01)
 
     if button.active then
-      lovr.graphics.setColor(0, 1, 0)
+      pass:setColor(0, 1, 0)
     else
-      lovr.graphics.setColor(1, 0, 0)
+      pass:setColor(1, 0, 0)
     end
-    lovr.graphics.line(position, tip)
-    lovr.graphics.setColor(1, 1, 1)
+
+    pass:line(position, tip)
   end
 end

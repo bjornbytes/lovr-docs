@@ -65,10 +65,5 @@ return {
         lovr.graphics.setColor(0xffffff)
       end
     end
-  ]=],
-  related = {
-    'lovr.graphics.newMesh',
-    'lovr.graphics.setDepthTest',
-    'lovr.graphics.setStencilTest'
-  }
+  ]=]
 }

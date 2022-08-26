@@ -1,6 +1,6 @@
 return {
   summary = 'Get the duration of an animation in the Model.',
-  description = 'Returns the duration of an animation in the Model, in seconds.',
+  description = 'TODO',
   arguments = {
     name = {
       type = 'string',
@@ -14,19 +14,22 @@ return {
   returns = {
     duration = {
       type = 'number',
-      description = 'The duration of the animation, in seconds.'
+      description = 'TODO'
     }
   },
   variants = {
     {
-      arguments = { 'name' },
+      arguments = { 'index' },
       returns = { 'duration' }
     },
     {
-      arguments = { 'index' },
+      arguments = { 'name' },
       returns = { 'duration' }
     }
   },
+  notes = [[
+    TODO how is duration calculated?
+  ]],
   related = {
     'Model:getAnimationCount',
     'Model:getAnimationName',

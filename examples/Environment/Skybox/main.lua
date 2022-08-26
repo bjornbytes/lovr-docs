@@ -11,6 +11,6 @@ function lovr.load()
   })
 end
 
-function lovr.draw()
-  lovr.graphics.skybox(cube)
+function lovr.draw(pass)
+  pass:skybox(cube)
 end

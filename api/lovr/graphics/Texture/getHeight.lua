@@ -1,19 +1,17 @@
 return {
-  summary = 'Get the height of the Texture.',
-  description = 'Returns the height of the Texture.',
-  arguments = {
-    {
-      name = 'mipmap',
-      type = 'number',
-      default = '1',
-      description = 'The mipmap level to get the height of.'
-    }
-  },
+  summary = 'Get the height of the Texture, in pixels.',
+  description = 'Returns the height of the Texture, in pixels.',
+  arguments = {},
   returns = {
     {
       name = 'height',
       type = 'number',
       description = 'The height of the Texture, in pixels.'
     }
+  },
+  related = {
+    'Texture:getWidth',
+    'Texture:getLayerCount',
+    'Texture:getDimensions'
   }
 }

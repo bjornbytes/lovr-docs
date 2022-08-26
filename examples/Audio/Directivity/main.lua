@@ -14,29 +14,32 @@ function lovr.update(dt)
   lovr.audio.setPose(lovr.headset.getPose())
 end
 
-function lovr.draw()
+function lovr.draw(pass)
+  if lovr.audio.getSpatializer() ~= 'phonon' then
+    pass:text('Warning: phonon spatializer is not active', 0, 1.2, -1, .05)
+  end
+
   shader = shader or lovr.graphics.newShader(
-    [[out vec3 vNormal;
-      vec4 position(mat4 p, mat4 t, vec4 v) {
-        vNormal = normalize(lovrNormalMatrix * lovrNormal);
-        return p * t * v;
-      }]],
-    [[in vec3 vNormal;
-      vec4 color(vec4 g, sampler2D i, vec2 uv) {
+    'unlit',
+    [[vec4 lovrmain() {
         vec3 L = vec3(0., 1., 0.);
-        vec3 N = normalize(vNormal);
+        vec3 N = normalize(Normal);
         float NoL = dot(N, L) * .5 + .5;
         return vec4(vec3(NoL), 1.);
       }
     ]]
   )
-  lovr.graphics.setShader(shader)
-  local length = .1
-  local r1, r2 = .06, .01
+  pass:setShader(shader)
+
+  local radius, length = .03, .05
   local x, y, z, angle, ax, ay, az = source:getPose()
-  lovr.graphics.cylinder(x, y, z, length, angle, ax, ay, az, r1, r2)
-  lovr.graphics.setShader()
-  if lovr.audio.getSpatializer() ~= 'phonon' then
-    lovr.graphics.print('Warning: phonon spatializer is not active', 0, 1.2, -1, .05)
-  end
+
+  -- Draw speaker cone
+  pass:push()
+  pass:translate(x, y, z)
+  pass:translate(0, 0, -length)
+  pass:rotate(angle + math.pi, ax, ay, az)
+  pass:translate(0, 0, length)
+  pass:cone(0, 0, 0, radius, length)
+  pass:pop()
 end

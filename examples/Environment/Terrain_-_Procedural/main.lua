@@ -1,23 +1,21 @@
-local terrain, shader
-
 local shaderCode = {[[
 /* VERTEX shader */
-out vec4 fragmentView;
+layout(location = 0) out vec4 fragmentView;
 
-vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-  fragmentView = projection * transform * vertex;
+vec4 lovrmain() {
+  fragmentView = ClipFromLocal * VertexPosition;
   return fragmentView;
 } ]], [[
 /* FRAGMENT shader */
-#define PI 3.1415926538
-in vec4 fragmentView;
-uniform vec3 fogColor;
+layout(location = 0) in vec4 fragmentView;
 
-vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv)
-{
+Constants {
+  vec3 fogColor;
+};
+
+vec4 lovrmain() {
   float fogAmount = atan(length(fragmentView) * 0.1) * 2.0 / PI;
-  vec4 color = vec4(mix(graphicsColor.rgb, fogColor, fogAmount), graphicsColor.a);
-  return color;
+  return vec4(mix(Color.rgb, fogColor, fogAmount), Color.a);
 }]]}
 
 local function grid(subdivisions)
@@ -38,37 +36,39 @@ local function grid(subdivisions)
       table.insert(indices, #vertices - 1)
     end
   end
-  local meshFormat = {{'lovrPosition', 'float', 3}}
-  local mesh = lovr.graphics.newMesh(meshFormat, vertices, "triangles", "dynamic", true)
-  mesh:setVertexMap(indices)
-  return mesh
+  return vertices, indices
 end
 
 function lovr.load()
-  local skyColor = {0.208, 0.208, 0.275}
+  skyColor = {0.208, 0.208, 0.275}
   lovr.graphics.setBackgroundColor(skyColor)
-  lovr.graphics.setLineWidth(5)
   shader = lovr.graphics.newShader(unpack(shaderCode))
-  shader:send('fogColor', { lovr.math.gammaToLinear(unpack(skyColor)) })
-  terrain = grid(100)
+
+  local vertices, indices = grid(100)
+
   local offset = lovr.math.noise(0, 0) -- ensure zero height at origin
-  for vi = 1, terrain:getVertexCount() do
-    local x,y,z = terrain:getVertex(vi)
+  for vi = 1, #vertices do
+    local x,y,z = unpack(vertices[vi])
     z = (lovr.math.noise(x * 10, y * 10) - offset) / 20
-    terrain:setVertex(vi, {x,y,z})
+    vertices[vi][1], vertices[vi][2], vertices[vi][3] = x, y, z
   end
+
+  vertexBuffer = lovr.graphics.newBuffer(vertices, 'vec3')
+  indexBuffer = lovr.graphics.newBuffer(indices, 'index16')
 end
 
-function lovr.draw()
-  lovr.graphics.setShader(shader)
-  lovr.graphics.rotate(math.pi/2, 1, 0, 0)
-  lovr.graphics.scale(100)
-  lovr.graphics.setColor(0.565, 0.404, 0.463)
-  terrain:draw()
-  lovr.graphics.setWireframe(true)
-  lovr.graphics.setColor(0.388, 0.302, 0.412, 0.1)
-  terrain:draw()
-  lovr.graphics.setWireframe(false)
-  lovr.graphics.setColor(1, 1, 1)
-  lovr.graphics.setShader()
+function lovr.draw(pass)
+  pass:setShader(shader)
+  pass:send('fogColor', { lovr.math.gammaToLinear(unpack(skyColor)) })
+  pass:rotate(math.pi/2, 1, 0, 0)
+  pass:scale(100)
+
+  pass:setColor(0.565, 0.404, 0.463)
+  pass:setDepthOffset(-10000) -- Ensure wireframe stays on top
+  pass:mesh(vertexBuffer, indexBuffer)
+  pass:setDepthOffset()
+
+  pass:setWireframe(true)
+  pass:setColor(0.388, 0.302, 0.412, 0.1)
+  pass:mesh(vertexBuffer, indexBuffer)
 end

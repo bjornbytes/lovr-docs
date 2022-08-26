@@ -1,29 +1,27 @@
 return {
   summary = 'Get the dimensions of the Texture.',
-  description = 'Returns the dimensions of the Texture.',
-  arguments = {
-    {
-      name = 'mipmap',
-      type = 'number',
-      default = '1',
-      description = 'The mipmap level to get the dimensions of.'
-    }
-  },
+  description = 'Returns the width, height, and depth of the Texture.',
+  arguments = {},
   returns = {
     {
       name = 'width',
       type = 'number',
-      description = 'The width of the Texture, in pixels.'
+      description = 'The width of the Texture.'
     },
     {
       name = 'height',
       type = 'number',
-      description = 'The height of the Texture, in pixels.'
+      description = 'The height of the Texture.'
     },
     {
       name = 'depth',
       type = 'number',
-      description = 'The number of images stored in the Texture, for non-2D textures.'
+      description = 'The depth of the Texture.'
     }
+  },
+  related = {
+    'Texture:getWidth',
+    'Texture:getHeight',
+    'Texture:getDepth'
   }
 }

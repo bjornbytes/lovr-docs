@@ -12,7 +12,8 @@ function lovr.update()
   end
 end
 
-function lovr.draw()
-  lovr.graphics.print(muted and 'Muted' or 'Unmuted', 0, 1.7, -1, .1)
-  lovr.graphics.print('Press trigger to toggle mute', 0, 1.7 - lovr.graphics.getFont():getHeight() * .2, -1, .1)
+function lovr.draw(pass)
+  local font = lovr.graphics.getDefaultFont()
+  pass:text(muted and 'Muted' or 'Unmuted', 0, 1.7, -1, .1)
+  pass:text('Press trigger to toggle mute', 0, 1.7 - font:getHeight() * .2, -1, .1)
 end

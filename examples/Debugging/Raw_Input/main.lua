@@ -20,7 +20,7 @@ local function controllerFetch(k)
   return controllerData[k]
 end
 
-local function drawText()
+local function drawText(pass)
   local hands = lovr.headset.getHands()
   -- Head
   local s = {string.format("%d controllers", #hands),
@@ -51,17 +51,17 @@ local function drawText()
     end
   end
   -- Display
-  local font = lovr.graphics.getFont()
+  local font = lovr.graphics.getDefaultFont()
   local fh = font:getHeight()/2 -- Half size render
   local top = 2 + fh*#s/2
   for i,line in ipairs(s) do -- Manually center using maximum width of each line so it jiggles less
     if line then
       local w = lineWidth(i, font:getWidth(line))
-      lovr.graphics.print(line, -w/2/2, top-fh*i, -3, .5, 0,0,1,0,0, "left")
+      pass:text(line, -w/2/2, top-fh*i, -3, .5, 0,0,1,0,0, "left")
     end
   end
 end
 
-function lovr.draw()
-	drawText()
+function lovr.draw(pass)
+	drawText(pass)
 end

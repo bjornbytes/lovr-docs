@@ -1,6 +1,6 @@
-function lovr.draw()
+function lovr.draw(pass)
   for i, hand in ipairs(lovr.headset.getHands()) do
     local x, y, z = lovr.headset.getPosition(hand)
-    lovr.graphics.sphere(x, y, z, .1)
+    pass:sphere(x, y, z, .1)
   end
 end

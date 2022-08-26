@@ -45,24 +45,21 @@ function lovr.update(dt)
 end
 
 
-function lovr.draw()
+function lovr.draw(pass)
   for i, collider in ipairs(world:getColliders()) do
     -- rendering shapes of each collider
-    drawCollider(collider)
+    drawCollider(pass, collider)
     -- debug geometry for joints (no joints are used in this example)
-    drawAttachedJoints(collider)
+    drawAttachedJoints(pass, collider)
   end
 end
 
 
-function drawCollider(collider)
+function drawCollider(pass, collider)
   local color = collider:getUserData()
-  lovr.graphics.setColor(color or 0x202020)
   local shape = collider:getShapes()[1]
-  if shape:isSensor() then
-    local r,g,b = lovr.graphics.getColor()
-    lovr.graphics.setColor(r,g,b,0.2)
-  end
+  local alpha = shape:isSensor() and 0.2 or 1.0
+  pass:setColor(color or 0x202020, alpha)
   -- shapes
   for _, shape in ipairs(collider:getShapes()) do
     local shapeType = shape:getType()
@@ -70,27 +67,24 @@ function drawCollider(collider)
     -- draw primitive at collider's position with correct dimensions
     if shapeType == 'box' then
       local sx, sy, sz = shape:getDimensions()
-      lovr.graphics.box('fill', x,y,z, sx,sy,sz, angle, ax,ay,az)
+      pass:box(x,y,z, sx,sy,sz, angle, ax,ay,az)
     elseif shapeType == 'sphere' then
-      lovr.graphics.sphere(x,y,z, shape:getRadius())
+      pass:sphere(x,y,z, shape:getRadius())
     elseif shapeType == 'cylinder' then
       local l, r = shape:getLength(), shape:getRadius()
       local x,y,z, angle, ax,ay,az = collider:getPose()
-      lovr.graphics.cylinder(x,y,z, l, angle, ax,ay,az, r, r)
+      pass:cylinder(x,y,z, r, l, angle, ax,ay,az)
     elseif shapeType == 'capsule' then
       local l, r = shape:getLength(), shape:getRadius()
       local x,y,z, angle, ax,ay,az = collider:getPose()
-      local m = mat4(x,y,z, 1,1,1, angle, ax,ay,az)
-      lovr.graphics.cylinder(x,y,z, l, angle, ax,ay,az, r, r, false)
-      lovr.graphics.sphere(vec3(m:mul(0, 0,  l/2)), r)
-      lovr.graphics.sphere(vec3(m:mul(0, 0, -l/2)), r)
+      pass:capsule(x,y,z, r, l, angle, ax,ay,az)
     end
   end
 end
 
 
-function drawAttachedJoints(collider)
-  lovr.graphics.setColor(1,1,1,0.3)
+function drawAttachedJoints(pass, collider)
+  pass:setColor(1,1,1,0.3)
   -- joints are attached to two colliders; function draws joint for second collider
   for j, joint in ipairs(collider:getJoints()) do
     local anchoring, attached = joint:getColliders()
@@ -98,33 +92,33 @@ function drawAttachedJoints(collider)
       jointType = joint:getType()
       if jointType == 'ball' then
         local x1, y1, z1, x2, y2, z2 = joint:getAnchors()
-        drawAnchor(vec3(x1,y1,z1))
-        drawAnchor(vec3(x2,y2,z2))
+        drawAnchor(pass, vec3(x1,y1,z1))
+        drawAnchor(pass, vec3(x2,y2,z2))
       elseif jointType == 'slider' then
         local position = joint:getPosition()
         local x,y,z = anchoring:getPosition()
-        drawAxis(vec3(x,y,z), vec3(joint:getAxis()))
+        drawAxis(pass, vec3(x,y,z), vec3(joint:getAxis()))
       elseif jointType == 'distance' then
         local x1, y1, z1, x2, y2, z2 = joint:getAnchors()
-        drawAnchor(vec3(x1,y1,z1))
-        drawAnchor(vec3(x2,y2,z2))
-        drawAxis(vec3(x2,y2,z2), vec3(x1, y1, z1) - vec3(x2,y2,z2))
+        drawAnchor(pass, vec3(x1,y1,z1))
+        drawAnchor(pass, vec3(x2,y2,z2))
+        drawAxis(pass, vec3(x2,y2,z2), vec3(x1, y1, z1) - vec3(x2,y2,z2))
       elseif jointType == 'hinge' then
         local x1, y1, z1, x2, y2, z2 = joint:getAnchors()
-        drawAnchor(vec3(x1,y1,z1))
-        drawAnchor(vec3(x2,y2,z2))
-        drawAxis(vec3(x1,y1,z1), vec3(joint:getAxis()))
+        drawAnchor(pass, vec3(x1,y1,z1))
+        drawAnchor(pass, vec3(x2,y2,z2))
+        drawAxis(pass, vec3(x1,y1,z1), vec3(joint:getAxis()))
       end
     end
   end
 end
 
 
-function drawAnchor(origin)
-  lovr.graphics.sphere(origin, .02)
+function drawAnchor(pass, origin)
+  pass:sphere(origin, .02)
 end
 
 
 function drawAxis(origin, axis)
-  lovr.graphics.line(origin, origin + axis:normalize() * 0.3)
+  pass:line(origin, origin + axis:normalize() * 0.3)
 end

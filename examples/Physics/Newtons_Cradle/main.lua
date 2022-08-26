@@ -34,13 +34,13 @@ function lovr.load()
 end
 
 
-function lovr.draw()
-  lovr.graphics.setColor(0, 0, 0)
-  lovr.graphics.box('fill', framePose)
-  lovr.graphics.setColor(1, 1, 1)
+function lovr.draw(pass)
+  pass:setColor(0, 0, 0)
+  pass:box(framePose)
+  pass:setColor(1, 1, 1)
   for i, ball in ipairs(balls) do
     local position = vec3(ball:getPosition())
-    lovr.graphics.sphere(position, radius)
+    pass:sphere(position, radius)
   end
 end
 

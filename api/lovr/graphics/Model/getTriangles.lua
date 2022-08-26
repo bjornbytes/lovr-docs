@@ -1,5 +1,5 @@
 return {
-  summary = 'Get a list of the triangles in the Model.',
+  summary = 'Get all the triangles in the Model.',
   description = [[
     Returns 2 tables containing mesh data for the Model.
 
@@ -15,17 +15,21 @@ return {
     {
       name = 'vertices',
       type = 'table',
-      description = 'A flat table of numbers containing vertex positions.'
+      description = [[
+        The triangle vertex positions, returned as a flat (non-nested) table of numbers.  The
+        position of each vertex is given as an x, y, and z coordinate.
+      ]]
     },
     {
       name = 'indices',
       type = 'table',
-      description = 'A flat table of numbers containing triangle vertex indices.'
+      description = 'The vertex indices.  Every 3 indices describes a triangle.'
     }
   },
+  notes = 'After this function is called on a Model once, the result is cached (in its ModelData).',
   related = {
-    'Model:getAABB',
-    'World:newMeshCollider',
-    'lovr.audio.setGeometry'
+    'Model:getTriangleCount',
+    'Model:getVertexCount',
+    'ModelData:getTriangles'
   }
 }

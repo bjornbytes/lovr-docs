@@ -26,7 +26,7 @@ function lovr.update(dt)
   message = channel:pop()
 end
 
-function lovr.draw()
+function lovr.draw(pass)
   -- Display the message on screen/headset
-  lovr.graphics.print(tostring(message), 0, 1.7, -5)
+  pass:text(tostring(message), 0, 1.7, -5)
 end

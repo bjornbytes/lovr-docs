@@ -12,6 +12,7 @@ function lovr.update()
   source:setPose(x, 1, -1)
 end
 
-function lovr.draw()
-  lovr.graphics.sphere(mat4(source:getPose()):scale(.05))
+function lovr.draw(pass)
+  if lovr.timer.getTime() > 1 then error('oh') end
+  pass:sphere(mat4(source:getPose()):scale(.05))
 end

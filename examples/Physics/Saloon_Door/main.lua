@@ -22,12 +22,12 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end
 
-function lovr.draw()
+function lovr.draw(pass)
   for i, boxCollider in ipairs(world:getColliders()) do
-    lovr.graphics.setColor(i / 3, i / 3, i / 3)
+    pass:setColor(i / 3, i / 3, i / 3)
     local pose = mat4(boxCollider:getPose())
     local size = vec3(boxCollider:getShapes()[1]:getDimensions())
-    lovr.graphics.box('fill', pose:scale(size))
+    pass:box(pose:scale(size))
   end
 end
 

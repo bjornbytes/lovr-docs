@@ -51,19 +51,19 @@ function lovr.update(dt)
 end
 
 
-function lovr.draw()
+function lovr.draw(pass)
   for i, collider in ipairs(world:getColliders()) do
     local shade = (i - 10) / #world:getColliders()
-    lovr.graphics.setColor(shade, shade, shade)
+    pass:setColor(shade, shade, shade)
     local shape = collider:getShapes()[1]
     local shapeType = shape:getType()
     local x,y,z, angle, ax,ay,az = collider:getPose()
     if shapeType == 'box' then
       local sx, sy, sz = shape:getDimensions()
-      lovr.graphics.box('fill', x,y,z, sx,sy,sz, angle, ax,ay,az)
+      pass:box(x,y,z, sx,sy,sz, angle, ax,ay,az)
     elseif shapeType == 'sphere' then
-      lovr.graphics.setColor(0.4, 0, 0)
-      lovr.graphics.sphere(x,y,z, shape:getRadius())
+      pass:setColor(0.4, 0, 0)
+      pass:sphere(x,y,z, shape:getRadius())
     end
   end
 end

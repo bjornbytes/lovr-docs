@@ -1,50 +1,158 @@
 return {
-  tag = 'graphicsState',
-  summary = 'Get renderer stats for the current frame.',
-  description = 'Returns graphics-related performance statistics for the current frame.',
+  tag = 'graphics-misc',
+  summary = 'Get graphics-related statistics.',
+  description = 'TODO',
   arguments = {},
   returns = {
     {
       name = 'stats',
       type = 'table',
-      description = 'The table of stats.',
+      description = 'Graphics statistics.',
       table = {
         {
-          name = 'drawcalls',
-          type = 'number',
-          description = 'The number of draw calls.'
+          name = 'memory',
+          type = 'table',
+          description = 'TODO',
+          table = {
+            {
+              name = 'total',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'buffer',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'texture',
+              type = 'number',
+              description = 'TODO'
+            }
+          }
         },
         {
-          name = 'renderpasses',
-          type = 'number',
-          description = 'The number of times the canvas has been switched.'
+          name = 'objects',
+          type = 'table',
+          description = 'TODO',
+          table = {
+            {
+              name = 'buffers',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'textures',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'samplers',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'shaders',
+              type = 'number',
+              description = 'TODO'
+            }
+          }
         },
         {
-          name = 'shaderswitches',
-          type = 'number',
-          description = 'The number of times the shader has been switched.'
+          name = 'frame',
+          type = 'table',
+          description = 'TODO',
+          table = {
+            {
+              name = 'scratchMemory',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'renderPasses',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'computePasses',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'transferPasses',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'pipelineBinds',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'bundleBinds',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'drawCalls',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'dispatches',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'workgroups',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'copies',
+              type = 'number',
+              description = 'TODO'
+            }
+          }
         },
         {
-          name = 'buffers',
-          type = 'number',
-          description = 'The number of buffers.'
-        },
-        {
-          name = 'textures',
-          type = 'number',
-          description = 'The number of textures.'
-        },
-        {
-          name = 'buffermemory',
-          type = 'number',
-          description = 'The amount of memory used by buffers, in bytes.'
-        },
-        {
-          name = 'texturememory',
-          type = 'number',
-          description = 'The amount of memory used by textures, in bytes.'
+          name = 'internal',
+          type = 'table',
+          description = 'TODO',
+          table = {
+            {
+              name = 'blocks',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'canvases',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'pipelines',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'layouts',
+              type = 'number',
+              description = 'TODO'
+            },
+            {
+              name = 'bunches',
+              type = 'number',
+              description = 'TODO'
+            }
+          }
         }
       }
     }
+  },
+  related = {
+    'lovr.graphics.getDevice',
+    'lovr.graphics.getFeatures',
+    'lovr.graphics.getLimits'
   }
 }

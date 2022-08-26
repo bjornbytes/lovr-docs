@@ -1,17 +1,19 @@
 return {
-  summary = 'Get the height of a line of text.',
-  description = [[
-    Returns the height of a line of text.  Units are in meters, see `Font:setPixelDensity`.
-  ]],
+  summary = 'Get the height of the Font.',
+  description = 'TODO',
   arguments = {},
   returns = {
     {
       name = 'height',
       type = 'number',
-      description = 'The height of a rendered line of text.'
+      description = 'TODO'
     }
   },
   related = {
-    'Rasterizer:getHeight'
+    'Font:getAscent',
+    'Font:getDescent',
+    'Font:getKerning',
+    'Font:getWidth',
+    'Font:getLines'
   }
 }

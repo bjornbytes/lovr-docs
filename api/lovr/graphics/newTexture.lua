@@ -1,124 +1,103 @@
 return {
-  tag = 'graphicsObjects',
+  tag = 'graphics-objects',
   summary = 'Create a new Texture.',
-  description = 'Creates a new Texture from an image file.',
+  description = 'TODO',
   arguments = {
+    filename = {
+      type = 'string',
+      description = 'TODO'
+    },
+    image = {
+      type = 'string',
+      description = 'TODO'
+    },
     width = {
       type = 'number',
-      description = 'The width of the Texture.'
+      description = 'TODO'
     },
     height = {
       type = 'number',
-      description = 'The height of the Texture.'
+      description = 'TODO'
     },
     depth = {
       type = 'number',
-      description = 'The depth of the Texture.'
-    },
-    filename = {
-      type = 'string',
-      description = 'The filename of the image to load.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'The Blob containing encoded image data used to create the Texture.'
-    },
-    image = {
-      type = 'Image',
-      description = 'The Image to create the Texture from.'
+      description = 'TODO'
     },
     images = {
       type = 'table',
-      description = 'A table of image filenames to load.'
+      description = 'TODO'
     },
-    flags = {
+    options = {
       type = 'table',
-      default = '{}',
-      description = 'Optional settings for the texture.',
+      description = 'Texture options.',
       table = {
-        {
-          name = 'linear',
-          type = 'boolean',
-          default = 'false',
-          description = 'Whether the texture is in linear color space instead of the usual sRGB.'
-        },
-        {
-          name = 'mipmaps',
-          type = 'boolean',
-          default = 'true',
-          description = 'Whether mipmaps will be generated for the texture.'
-        },
         {
           name = 'type',
           type = 'TextureType',
-          default = 'nil',
-          description = [[
-            The type of Texture to load the images into.  If nil, the type will be `2d` for a
-            single image, `array` for a table of images with numeric keys, or `cube` for a table
-            of images with string keys.
-          ]]
+          description = 'TODO'
         },
         {
           name = 'format',
           type = 'TextureFormat',
-          default = [['rgba']],
-          description = 'The format used for the Texture (when creating a blank texture).'
+          description = 'TODO'
         },
         {
-          name = 'msaa',
+          name = 'linear',
+          type = 'boolean',
+          description = 'TODO'
+        },
+        {
+          name = 'samples',
           type = 'number',
-          default = '0',
-          description = 'The antialiasing level to use (when attaching the Texture to a Canvas).'
+          description = 'TODO'
+        },
+        {
+          name = 'mipmaps',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'usage',
+          type = 'table',
+          description = 'TODO'
+        },
+        {
+          name = 'label',
+          type = 'string',
+          description = 'TODO'
         }
       }
     }
   },
   returns = {
     texture = {
-      name = 'texture',
       type = 'Texture',
-      description = 'The new Texture.'
+      description = 'TODO'
     }
   },
   variants = {
     {
-      arguments = { 'filename', 'flags' },
+      arguments = { 'filename', 'options' },
       returns = { 'texture' }
     },
     {
-      description = [[
-        Create a Texture from a table of filenames, Blobs, or Images.  For cube textures, the
-        individual faces can be specified using the string keys "right", "left", "top", "bottom",
-        "back", "front".
-      ]],
-      arguments = { 'images', 'flags' },
+      arguments = { 'width', 'height', 'options' },
       returns = { 'texture' }
     },
     {
-      description = [[
-        Creates a blank Texture with specified dimensions.  This saves memory if you're planning on
-        rendering to the Texture using a Canvas or a compute shader, but the contents of the Texture
-        will be initialized to random data.
-      ]],
-      arguments = { 'width', 'height', 'depth', 'flags' },
+      arguments = { 'width', 'height', 'depth', 'options' },
       returns = { 'texture' }
     },
     {
-      description = 'Create a texture from a single Blob.',
-      arguments = { 'blob', 'flags' },
+      arguments = { 'image', 'options' },
       returns = { 'texture' }
     },
     {
-      description = 'Create a texture from a single Image.',
-      arguments = { 'image', 'flags' },
+      arguments = { 'images', 'options' },
       returns = { 'texture' }
     }
   },
-  notes = [[
-    The "linear" flag should be set to true for textures that don't contain color information, such
-    as normal maps.
-
-    Right now the supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and
-    astc.
-  ]]
+  related = {
+    'Texture:newView'
+  }
 }

@@ -1,4 +1,3 @@
-lovr.keyboard = require 'lovr-keyboard'
 lovr.mouse = require 'lovr-mouse'
 
 function lovr.load()
@@ -16,15 +15,15 @@ end
 function lovr.update(dt)
   local velocity = vec4()
 
-  if lovr.keyboard.isDown('w', 'up') then
+  if lovr.system.isKeyDown('w', 'up') then
     velocity.z = -1
-  elseif lovr.keyboard.isDown('s', 'down') then
+  elseif lovr.system.isKeyDown('s', 'down') then
     velocity.z = 1
   end
 
-  if lovr.keyboard.isDown('a', 'left') then
+  if lovr.system.isKeyDown('a', 'left') then
     velocity.x = -1
-  elseif lovr.keyboard.isDown('d', 'right') then
+  elseif lovr.system.isKeyDown('d', 'right') then
     velocity.x = 1
   end
 
@@ -41,19 +40,19 @@ function lovr.update(dt)
   camera.transform:rotate(camera.pitch, 1, 0, 0)
 end
 
-function lovr.draw()
-  lovr.graphics.push()
-  lovr.graphics.setViewPose(1, camera.transform)
-  lovr.graphics.setColor(0xff0000)
-  lovr.graphics.cube('fill', 0, 1.7, -3, .5, lovr.timer.getTime())
-  lovr.graphics.setColor(0xffffff)
-  lovr.graphics.plane('fill', 0, 0, 0, 10, 10, math.pi / 2, 1, 0, 0)
-  lovr.graphics.pop()
+function lovr.draw(pass)
+  pass:push()
+  pass:setViewPose(1, camera.transform)
+  pass:setColor(0xff0000)
+  pass:cube(0, 1.7, -3, .5, lovr.timer.getTime())
+  pass:setColor(0xffffff)
+  pass:plane(0, 0, 0, 10, 10, math.pi / 2, 1, 0, 0)
+  pass:pop()
 end
 
 function lovr.mousemoved(x, y, dx, dy)
-  camera.pitch = camera.pitch - dy * .001
-  camera.yaw = camera.yaw - dx * .001
+  camera.pitch = camera.pitch - dy * .004
+  camera.yaw = camera.yaw - dx * .004
 end
 
 function lovr.keypressed(key)

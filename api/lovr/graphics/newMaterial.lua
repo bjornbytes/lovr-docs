@@ -1,78 +1,128 @@
 return {
-  tag = 'graphicsObjects',
+  tag = 'graphics-objects',
   summary = 'Create a new Material.',
-  description = [[
-    Creates a new Material.  Materials are sets of colors, textures, and other parameters that
-    affect the appearance of objects.  They can be applied to `Model`s, `Mesh`es, and most graphics
-    primitives accept a Material as an optional first argument.
-  ]],
+  description = 'TODO',
   arguments = {
     texture = {
       type = 'Texture',
-      description = 'The diffuse texture.'
+      description = 'TODO'
     },
-    canvas = {
-      type = 'Canvas',
-      description = 'A Canvas to use as the diffuse texture.'
-    },
-    r = {
-      type = 'number',
-      default = '1',
-      description = 'The red component of the diffuse color.'
-    },
-    g = {
-      type = 'number',
-      default = '1',
-      description = 'The green component of the diffuse color.'
-    },
-    b = {
-      type = 'number',
-      default = '1',
-      description = 'The blue component of the diffuse color.'
-    },
-    hex = {
-      type = 'number',
-      default = '0xffffff',
-      description = 'A hexcode to use for the diffuse color.'
-    },
-    a = {
-      type = 'number',
-      default = '1',
-      description = 'The alpha component of the diffuse color.'
+    options = {
+      type = 'table',
+      description = 'Material properties.',
+      table = {
+        {
+          name = 'color',
+          type = 'Color',
+          description = 'TODO'
+        },
+        {
+          name = 'glow',
+          type = 'Color',
+          description = 'TODO'
+        },
+        {
+          name = 'uvShift',
+          type = 'Point2D',
+          description = 'TODO'
+        },
+        {
+          name = 'uvScale',
+          type = 'Scale2D',
+          description = 'TODO'
+        },
+        {
+          name = 'metalness',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'roughness',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'clearcoat',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'clearcoatRoughness',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'occlusionStrength',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'glowStrength',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'normalScale',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'alphaCutoff',
+          type = 'number',
+          description = 'TODO'
+        },
+        {
+          name = 'texture',
+          type = 'Texture',
+          description = 'TODO'
+        },
+        {
+          name = 'glowTexture',
+          type = 'Texture',
+          description = 'TODO'
+        },
+        {
+          name = 'occlusionTexture',
+          type = 'Texture',
+          description = 'TODO'
+        },
+        {
+          name = 'metalnessTexture',
+          type = 'Texture',
+          description = 'TODO'
+        },
+        {
+          name = 'roughnessTexture',
+          type = 'Texture',
+          description = 'TODO'
+        },
+        {
+          name = 'clearcoatTexture',
+          type = 'Texture',
+          description = 'TODO'
+        },
+        {
+          name = 'normalTexture',
+          type = 'Texture',
+          description = 'TODO'
+        }
+      }
     }
   },
   returns = {
     material = {
       type = 'Material',
-      description = 'The new Material.'
+      description = 'TODO'
     }
   },
   variants = {
     {
-      arguments = {},
+      arguments = { 'texture' },
       returns = { 'material' }
     },
     {
-      arguments = { 'texture', 'r', 'g', 'b', 'a' },
-      returns = { 'material' }
-    },
-    {
-      arguments = { 'canvas', 'r', 'g', 'b', 'a' },
-      returns = { 'material' }
-    },
-    {
-      arguments = { 'r', 'g', 'b', 'a' },
-      returns = { 'material' }
-    },
-    {
-      arguments = { 'hex', 'a' },
+      arguments = { 'options' },
       returns = { 'material' }
     }
-  },
-  notes = [[
-    - Scalar properties will default to `1.0`.
-    - Color properties will default to `(1.0, 1.0, 1.0, 1.0)`, except for `emissive` which will
-      default to `(0.0, 0.0, 0.0, 0.0)`.
-    - Textures will default to `nil` (a single 1x1 white pixel will be used for them).
-  ]]
+  }
 }

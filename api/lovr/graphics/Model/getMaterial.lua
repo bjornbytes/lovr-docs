@@ -1,10 +1,6 @@
 return {
   summary = 'Get a Material from the Model.',
-  description = [[
-    Returns a Material loaded from the Model, by name or index.
-
-    This includes `Texture` objects and other properties like colors, metalness/roughness, and more.
-  ]],
+  description = 'TODO',
   arguments = {
     name = {
       type = 'string',
@@ -33,7 +29,6 @@ return {
   },
   related = {
     'Model:getMaterialCount',
-    'Model:getMaterialName',
-    'Material'
+    'Model:getMaterialName'
   }
 }

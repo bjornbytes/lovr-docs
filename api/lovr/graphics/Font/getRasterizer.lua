@@ -1,16 +1,16 @@
 return {
-  summary = 'Get the underlying Rasterizer.',
-  description = 'Returns the underlying `Rasterizer` object for a Font.',
+  summary = 'Get the Font\'s Rasterizer.',
+  description = 'TODO',
   arguments = {},
   returns = {
     {
       name = 'rasterizer',
       type = 'Rasterizer',
-      description = 'The rasterizer.'
+      description = 'The Rasterizer.'
     }
   },
   related = {
-    'Rasterizer',
+    'lovr.graphics.newFont',
     'lovr.data.newRasterizer'
   }
 }

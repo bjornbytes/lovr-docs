@@ -7,8 +7,7 @@ return {
     input vector, and a value of `.5` will set the components to be halfway between the two vectors.
   ]],
   arguments = {
-    {
-      name = 'u',
+    u = {
       type = 'Vec2',
       description = 'The vector to lerp towards.'
     },
@@ -20,8 +19,7 @@ return {
       type = 'number',
       description = 'A value of y component to lerp towards.'
     },
-    {
-      name = 't',
+    t = {
       type = 'number',
       description = 'The lerping parameter.'
     }
