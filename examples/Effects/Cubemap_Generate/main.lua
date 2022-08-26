@@ -64,24 +64,23 @@ function scene.update(dt) -- On each frame, move each cube and spin it a little
 	end
 end
 
-function scene.draw()
-	lovr.graphics.setShader()
+function scene.draw(pass)
 
 	-- First, draw a floor
 	local floorRecenter = scene.floorSize/2 + 0.5
 	for x=1,scene.floorSize do for y=1,scene.floorSize do
 		if (x+y)%2==0 then
-			lovr.graphics.setColor(0.25,0.25,0.25)
+			pass:setColor(0.25,0.25,0.25)
 		else
-			lovr.graphics.setColor(0.5,0.5,0.5)
+			pass:setColor(0.5,0.5,0.5)
 		end
-		lovr.graphics.plane('fill', x-floorRecenter,0,y-floorRecenter, 1,1, math.pi/2,1,0,0)
+		pass:plane(x-floorRecenter,0,y-floorRecenter, 1,1, math.pi/2,1,0,0)
 	end end
 
 	-- Draw cubes
 	for _,cube in ipairs(scene.cubes) do
-		lovr.graphics.setColor(unpack(cube.color))
-		lovr.graphics.cube('fill', cube.at.x, cube.at.y, cube.at.z, scene.cubeSize, cube.rotate:unpack())
+		pass:setColor(unpack(cube.color))
+		pass:cube(cube.at.x, cube.at.y, cube.at.z, scene.cubeSize, cube.rotate:unpack())
 	end
 end
 
@@ -96,81 +95,60 @@ local unitZ = lovr.math.newVec3(0,0,1)
 function cubemap.load()
 	-- Create cubemap textures
 	local cubemapWidth, cubemapHeight = 256, 256
-	local skybox = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, { format = "rg11b10f", stereo = false, type = "cube" })
+	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, { type = "cube" })
 	cubemap.faces = {}
 
 	-- Precalculate cubemap View-Projection matrices
 	local center = scene.sphereCenter
-	local bias = unitZ * 0.001
-	local up = -unitY
-	cubemap.facePerspective = lovr.math.newMat4( lovr.math.mat4():perspective(90.0, 1, 0.1, 1000) )
+	cubemap.facePerspective = lovr.math.newMat4():perspective(math.rad(90.0), 1, .1, 0)
 	for i,matrix in ipairs{
-		lovr.math.mat4():lookAt(center, center + unitX, up),
-		lovr.math.mat4():lookAt(center, center - unitX, up),
-		lovr.math.mat4():lookAt(center, center + unitY, up + bias),
-		lovr.math.mat4():lookAt(center, center - unitY, up - bias),
-		lovr.math.mat4():lookAt(center, center + unitZ, up),
-		lovr.math.mat4():lookAt(center, center - unitZ, up)
+		lovr.math.mat4():lookAt(center, center + unitX, vec3(0, -1, 0)),
+		lovr.math.mat4():lookAt(center, center - unitX, vec3(0, -1, 0)),
+		lovr.math.mat4():lookAt(center, center + unitY, vec3(0, 0, 1)),
+		lovr.math.mat4():lookAt(center, center - unitY, vec3(0, 0, -1)),
+		lovr.math.mat4():lookAt(center, center + unitZ, vec3(0, -1, 0)),
+		lovr.math.mat4():lookAt(center, center - unitZ, vec3(0, -1, 0))
 	} do
-		-- Each face will contain a matrix, and a preallocated canvas linked to the skybox cube texture
+		-- Each face will contain a matrix
 		local face = {}
-		local canvas = lovr.graphics.newCanvas(skybox)
-		canvas:setTexture(skybox, i)
-		cubemap.faces[i] = lovr.graphics.newCanvas(skybox)
-		cubemap.faces[i]:setTexture(skybox, i)
-
-		cubemap.faces[i] = face
-		face.canvas = canvas
 		face.matrix = lovr.math.newMat4(matrix)
+		cubemap.faces[i] = face
 	end
 
 	-- Create reflection shader
 	cubemap.shader = lovr.graphics.newShader([[
-		out vec3 viewAngle;
-		out vec3 normal;
-		vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-			mat4 view_from_local = lovrView * lovrModel; // Move to sphere center
-			normal = normalize(view_from_local * vec4(lovrNormal, 0.0)).xyz; // What angle does our view reflect at?
-			viewAngle = -(view_from_local * vertex).xyz; // Angle to query cube map from
-			return projection * transform * vertex;      // Actual vertex to draw at
+		layout(location = 0) out vec3 viewNormal;
+		layout(location = 1) out vec3 viewAngle;
+		vec4 lovrmain() {
+      viewNormal = (ViewFromLocal * vec4(VertexNormal, 0.0)).xyz;
+			viewAngle = -(ViewFromLocal * VertexPosition).xyz; // Angle to query cube map from
+			return DefaultPosition;
 		}
 	]], [[
-		in vec3 viewAngle;
-		in vec3 normal;
-		uniform samplerCube cubemap;
-		vec4 color(vec4 color, sampler2D image, vec2 uv) {
-			vec3 n = normalize(normal);
+		layout(location = 0) in vec3 viewNormal;
+		layout(location = 1) in vec3 viewAngle;
+		layout(set = 2, binding = 0) uniform textureCube cubemap;
+		vec4 lovrmain() {
+			vec3 n = normalize(viewNormal);
 			vec3 i = normalize(viewAngle);
-			vec4 sphereColor = color*texture(cubemap, reflect(n, i));
+			vec4 sphereColor = Color * getPixel(cubemap, reflect(n, i));
 			float ndi = dot(n, i) * 0.5 + 0.5; // Darken the sphere a little around the edges to give it apparent depth
 			return vec4(sphereColor.rgb * ndi, 1.);
 		}
 	]])
-	cubemap.shader:send("cubemap", skybox)
 end
 
-function cubemap.draw()
-	local view = {lovr.graphics.getViewPose(1)} -- Manual "push" for view and projection
-	local perspective = lovr.math.mat4()
-	lovr.graphics.getProjection(1, perspective)
+function cubemap.draw(pass)
+  local cubemapper = lovr.graphics.getPass('render', { cubemap.texture, samples = 1, depth = false })
 
-	-- On each frame, render the six faces of the cube map with the current item positions
-	lovr.graphics.setProjection(1, cubemap.facePerspective)
-	for i,face in ipairs(cubemap.faces) do
-		face.canvas:renderTo(function()
-			lovr.graphics.setViewPose(1,face.matrix,false)
-			lovr.graphics.clear()
-			scene.draw()
-		end)
-	end
-	
-	lovr.graphics.setProjection(1, perspective) -- Manual "pop" for view and projection
-	lovr.graphics.setViewPose(1, unpack(view))
+  for i = 1, 6 do
+    cubemapper:setProjection(i, cubemap.facePerspective)
+    cubemapper:setViewPose(i,cubemap.faces[i].matrix,true)
+  end
 
-	-- Draw sphere textured with cube map
-	lovr.graphics.setColor(1,0.6,0.6)
-	lovr.graphics.setShader(cubemap.shader)
-	lovr.graphics.sphere(scene.sphereCenter.x, scene.sphereCenter.y, scene.sphereCenter.z, scene.sphereRad)
+  scene.draw(cubemapper)
+
+  return cubemapper
 end
 
 -- Handle lovr
@@ -185,7 +163,19 @@ function lovr.update(dt)
 	scene.update(dt)
 end
 
-function lovr.draw()
-	scene.draw()
-	cubemap.draw()
+function lovr.draw(pass)
+	local cubemapPass = cubemap.draw(pass)
+
+	scene.draw(pass)
+
+  pass:setColor(1, 1, 1)
+  pass:skybox(cubemap.texture)
+
+	-- Draw sphere textured with cube map
+	pass:setColor(1,0.6,0.6)
+  pass:setShader(cubemap.shader)
+	pass:send("cubemap", cubemap.texture)
+	pass:sphere(scene.sphereCenter.x, scene.sphereCenter.y, scene.sphereCenter.z, scene.sphereRad)
+
+  return lovr.graphics.submit(cubemapPass, pass)
 end
