@@ -29298,13 +29298,25 @@ return {
       module = "lovr",
       related = {
         "lovr.mirror",
-        "lovr.headset.renderTo",
+        "lovr.headset.getPass",
         "lovr.graphics.setBackgroundColor"
       },
       variants = {
         {
-          arguments = {},
-          returns = {}
+          arguments = {
+            {
+              name = "pass",
+              type = "Pass",
+              description = "A render pass targeting the main display (headset or window)."
+            }
+          },
+          returns = {
+            {
+              name = "skip",
+              type = "boolean",
+              description = "Whether the input Pass should be submitted to the GPU."
+            }
+          }
         }
       }
     },
