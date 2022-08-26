@@ -19,7 +19,7 @@ function lovr.load()
   controllerBoxes = {}
 
   lovr.timer.step() -- Reset the timer before the first update
-  lovr.graphics.setBackground(.8, .8, .8)
+  lovr.graphics.setBackgroundColor(.8, .8, .8)
 end
 
 local isFirstFrame = true

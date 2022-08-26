@@ -1,6 +1,6 @@
 shader = require 'shader'
 
-lovr.graphics.setBackground(.1, .1, .1)
+lovr.graphics.setBackgroundColor(.1, .1, .1)
 
 local function drawLabel(pass, str, x, y, z)
   pass:setColor(1, 1, 1)

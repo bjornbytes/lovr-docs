@@ -1,5 +1,5 @@
 function lovr.load()
-  lovr.graphics.setBackground(.7, .7, .7)
+  lovr.graphics.setBackgroundColor(.7, .7, .7)
 
   -- Precompute camera transform (could also be attached to a controller)
   local x, y, z = -3, 3, 3

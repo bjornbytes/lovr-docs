@@ -41,7 +41,7 @@ end
 
 function lovr.load()
   skyColor = {0.208, 0.208, 0.275}
-  lovr.graphics.setBackground(skyColor)
+  lovr.graphics.setBackgroundColor(skyColor)
   shader = lovr.graphics.newShader(unpack(shaderCode))
 
   local vertices, indices = grid(100)

@@ -30,7 +30,7 @@ function lovr.load()
   -- displace the last ball to set the Newton's cradle in motion
   local lastBall = balls[#balls]
   lastBall:setPosition(vec3(lastBall:getPosition()) + vec3(5 * radius, 5 * radius, 0))
-  lovr.graphics.setBackground(0.1, 0.1, 0.1)
+  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end
 
 

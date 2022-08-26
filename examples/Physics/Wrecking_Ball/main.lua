@@ -42,7 +42,7 @@ function lovr.load()
     even = not even
   end
 
-  lovr.graphics.setBackground(0.1, 0.1, 0.1)
+  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end
 
 

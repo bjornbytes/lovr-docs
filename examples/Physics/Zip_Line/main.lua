@@ -24,7 +24,7 @@ function lovr.load()
   local joint = lovr.physics.newDistanceJoint(trolley, weight, vec3(trolley:getPosition()), vec3(weight:getPosition()) + vec3(0, 0.3, 0))
   joint:setResponseTime(10) -- make the hanging rope streachable
 
-  lovr.graphics.setBackground(0.1, 0.1, 0.1)
+  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end
 
 

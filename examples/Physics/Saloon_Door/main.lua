@@ -19,7 +19,7 @@ function lovr.load()
   local joint = lovr.physics.newDistanceJoint(door1, door2, vec3(door1:getPosition()), vec3(door2:getPosition()))
   joint:setTightness(0.2)
   joint:setResponseTime(10)
-  lovr.graphics.setBackground(0.1, 0.1, 0.1)
+  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end
 
 function lovr.draw(pass)

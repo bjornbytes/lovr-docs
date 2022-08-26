@@ -1,5 +1,5 @@
 function lovr.load()
-  lovr.graphics.setBackground(.05, .05, .05)
+  lovr.graphics.setBackgroundColor(.05, .05, .05)
 end
 
 function lovr.draw(pass)

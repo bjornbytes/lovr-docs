@@ -72,6 +72,5 @@ function lovr.draw(pass)
   end
 
   -- Draw a line from the root to the result from the IK solver, then to the target
-  print(solve(root, target, control, boneLengths))
   pass:line(root, solve(root, target, control, boneLengths), target)
 end

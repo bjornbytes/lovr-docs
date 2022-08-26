@@ -23,7 +23,7 @@ vec4 lovrmain() {
 
 function lovr.load()
   skyColor = { 0.208, 0.208, 0.275 }
-  lovr.graphics.setBackground(skyColor)
+  lovr.graphics.setBackgroundColor(skyColor)
   heightmap = lovr.graphics.newTexture('heightmap.png')
   shader = lovr.graphics.newShader(unpack(shaderCode))
 end
