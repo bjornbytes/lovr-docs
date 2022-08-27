@@ -20,6 +20,8 @@ local motion = {
   walkingSpeed = 4,
 }
 
+lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
+
 function motion.smooth(dt)
   if lovr.headset.isTracked('right') then
     local x, y = lovr.headset.getAxis('right', 'thumbstick')
@@ -88,18 +90,17 @@ function lovr.update(dt)
   end
 end
 
-function lovr.draw()
-  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
-  lovr.graphics.transform(mat4(motion.pose):invert())
+function lovr.draw(pass)
+  pass:transform(mat4(motion.pose):invert())
   -- Render hands
-  lovr.graphics.setColor(1,1,1)
+  pass:setColor(1,1,1)
   local radius = 0.05
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
     local poseRW = mat4(lovr.headset.getPose(hand))
     local poseVR = mat4(motion.pose):mul(poseRW)
     poseVR:scale(radius)
-    lovr.graphics.sphere(poseVR)
+    pass:sphere(poseVR)
   end
   -- Some scenery
   lovr.math.setRandomSeed(0)
@@ -111,11 +112,11 @@ function lovr.draw()
     local x = math.cos(goldenAngle * i) * r
     local y = math.sin(goldenAngle * i) * r
     if lovr.math.random() < 0.05 then
-      lovr.graphics.setColor(0.5, 0, 0)
+      pass:setColor(0.5, 0, 0)
     else
       local shade = 0.1 + 0.3 * lovr.math.random()
-      lovr.graphics.setColor(shade, shade, shade)
+      pass:setColor(shade, shade, shade)
     end
-    lovr.graphics.cylinder(x, 0, y,  0.05, math.pi / 2, 1,0,0, 1, 1)
+    pass:cylinder(x, 0, y,  1,0.05, math.pi / 2, 1,0,0)
   end
 end

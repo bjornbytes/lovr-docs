@@ -8,6 +8,7 @@ local motion = {
 }
 
 local palette = {0x0d2b45, 0x203c56, 0x544e68, 0x8d697a, 0xd08159, 0xffaa5e, 0xffd4a3, 0xffecd6}
+lovr.graphics.setBackgroundColor(palette[1])
 
 
 function lovr.update(dt)
@@ -57,31 +58,30 @@ function lovr.update(dt)
 end
 
 
-function lovr.draw()
-  lovr.graphics.setBackgroundColor(palette[1])
-  lovr.graphics.transform(mat4(motion.pose):invert())
+function lovr.draw(pass)
+  pass:transform(mat4(motion.pose):invert())
   -- Render hands
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
     local poseRW = mat4(lovr.headset.getPose(hand))
     local poseVR = mat4(motion.pose):mul(poseRW)
     if lovr.headset.isDown(hand, 'grip') then
-      lovr.graphics.setColor(palette[6])
+      pass:setColor(palette[6])
     else
-      lovr.graphics.setColor(palette[8])
+      pass:setColor(palette[8])
     end
     poseVR:scale(0.02)
-    lovr.graphics.sphere(poseVR)
+    pass:sphere(poseVR)
   end
   -- An example scene
   local t = lovr.timer.getTime()
-  lovr.graphics.setCullingEnabled(true)
+  pass:setCullMode('back')
   local step = 0.5
   for x = -5, 5, step do
     for z = -5, 5, step do
       local y = 0.5 * math.sin(t * 0.2 + (x * 0.5)^2 + (z * 0.5)^2)
-      lovr.graphics.setColor(palette[2 + math.floor(y * 10) % (#palette - 1)])
-      lovr.graphics.sphere(x, y, z, step / 2)
+      pass:setColor(palette[2 + math.floor(y * 10) % (#palette - 1)])
+      pass:sphere(x, y, z, step / 2)
     end
   end
 end

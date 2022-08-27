@@ -17,9 +17,11 @@ local motion = {
   teleportCurve = lovr.math.newCurve(3),
 }
 
+lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
+
 function motion.teleport(dt)
   -- Teleportation determining target position and executing jump when triggered
-  local handPose = mat4(motion.pose):mul(mat4(lovr.headset.getPose('right')))
+  local handPose = mat4(motion.pose):mul(mat4(lovr.headset.getPose('hand/right/point')))
   local handPosition = vec3(handPose)
   local handDirection = quat(handPose):direction()
   -- Intersect with ground plane
@@ -62,20 +64,20 @@ function motion.teleport(dt)
   motion.thumbstickCooldown = motion.thumbstickCooldown - dt
 end
 
-function motion.drawTeleport()
+function motion.drawTeleport(pass)
   -- Teleport target and curve
-  lovr.graphics.setColor(1, 1, 1, 0.1)
+  pass:setColor(1, 1, 1, 0.1)
   if motion.teleportValid then
-    lovr.graphics.setColor(1, 1, 0)
-    lovr.graphics.cylinder(motion.targetPosition, 0.05, math.pi/2,  1,0,0,  0.4, 0.4)
-    lovr.graphics.setColor(1, 1, 1)
+    pass:setColor(1, 1, 0)
+    pass:cylinder(motion.targetPosition, 0.4,0.05, math.pi/2,  1,0,0)
+    pass:setColor(1, 1, 1)
   end
-  lovr.graphics.setLineWidth(4)
-  lovr.graphics.line(motion.teleportCurve:render(30))
+  --lovr.graphics.setLineWidth(4)
+  pass:line(motion.teleportCurve:render(30))
   -- Teleport blink, modeled as gaussian function
   local blinkAlpha = math.exp(-(motion.blinkStopwatch/ 0.25 / motion.blinkTime)^2)
-  lovr.graphics.setColor(0,0,0, blinkAlpha)
-  lovr.graphics.fill()
+  pass:setColor(0,0,0, blinkAlpha)
+  pass:fill()
 end
 
 
@@ -84,18 +86,17 @@ function lovr.update(dt)
   motion.teleport(dt)
 end
 
-function lovr.draw()
-  lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
-  lovr.graphics.transform(mat4(motion.pose):invert())
+function lovr.draw(pass)
+  pass:transform(mat4(motion.pose):invert())
   -- Render hands
-  lovr.graphics.setColor(1,1,1)
+  pass:setColor(1,1,1)
   local radius = 0.04
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
     local poseRW = mat4(lovr.headset.getPose(hand))
     local poseVR = mat4(motion.pose):mul(poseRW)
     poseVR:scale(radius)
-    lovr.graphics.sphere(poseVR)
+    pass:sphere(poseVR)
   end
   -- Some scenery
   lovr.math.setRandomSeed(0)
@@ -107,12 +108,12 @@ function lovr.draw()
     local x = math.cos(goldenAngle * i) * r
     local y = math.sin(goldenAngle * i) * r
     if lovr.math.random() < 0.05 then
-      lovr.graphics.setColor(0.8, 0.5, 0)
+      pass:setColor(0.8, 0.5, 0)
     else
       local shade = 0.1 + 0.3 * lovr.math.random()
-      lovr.graphics.setColor(shade, shade, shade)
+      pass:setColor(shade, shade, shade)
     end
-    lovr.graphics.cylinder(x, -0.01, y,  0.02, math.pi / 2, 1,0,0, 1, 1)
+    pass:cylinder(x, -0.01, y,  1,0.02, math.pi / 2, 1,0,0)
   end
-  motion.drawTeleport()
+  motion.drawTeleport(pass)
 end

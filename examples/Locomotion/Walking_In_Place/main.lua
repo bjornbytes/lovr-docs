@@ -67,19 +67,19 @@ function lovr.update(dt)
   motion.walkinplace(dt)
 end
 
-function lovr.draw()
+function lovr.draw(pass)
   lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
-  lovr.graphics.print(string.format('%2.3f', motion.speed), 19, 1, -15, 0.05)
-  lovr.graphics.transform(mat4(motion.pose):invert())
+  pass:text(string.format('%2.3f', motion.speed), 19, 1, -15, 0.05)
+  pass:transform(mat4(motion.pose):invert())
   -- Render hands
-  lovr.graphics.setColor(1,1,1)
+  pass:setColor(1,1,1)
   local radius = 0.04
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
     local poseRW = mat4(lovr.headset.getPose(hand))
     local poseVR = mat4(motion.pose):mul(poseRW)
     poseVR:scale(radius)
-    lovr.graphics.sphere(poseVR)
+    pass:sphere(poseVR)
   end
   -- Some scenery
   lovr.math.setRandomSeed(0)
@@ -91,11 +91,11 @@ function lovr.draw()
     local x = math.cos(goldenAngle * i) * r
     local y = math.sin(goldenAngle * i) * r
     if lovr.math.random() < 0.05 then
-      lovr.graphics.setColor(0.5, 0, 0)
+      pass:setColor(0.5, 0, 0)
     else
       local shade = 0.1 + 0.3 * lovr.math.random()
-      lovr.graphics.setColor(shade, shade, shade)
+      pass:setColor(shade, shade, shade)
     end
-    lovr.graphics.cylinder(x, -0.01, y,  0.02, math.pi / 2, 1,0,0, 1, 1)
+    pass:cylinder(x, -0.01, y,  1,0.02, math.pi / 2, 1,0,0)
   end
 end
