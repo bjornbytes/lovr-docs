@@ -15,7 +15,6 @@ function lovr.load()
     end
   end
   puffTexture = lovr.graphics.newTexture(puffImage)
-  -- puffTexture:setFilter('nearest')                                         -- try uncommenting
   puffMaterial = lovr.graphics.newMaterial(puffTexture)
 
   -- puff positions
@@ -42,7 +41,9 @@ function lovr.load()
 
   -- red puff billboard shader
   redPuffVertex = [[
-    uniform vec3 headPosition;
+    Constants {
+      vec3 headPosition;
+    };
 
     mat4 target(vec3 from, vec3 to, vec3 up) {
       mat4 m;
@@ -56,9 +57,9 @@ function lovr.load()
       return m;
     }
 
-    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-      vec3 puffPosition = lovrModel[3].xyz;
-      vec3 puffScale = vec3(length(lovrModel[0]), length(lovrModel[1]), length(lovrModel[2]));
+    vec4 lovrmain() {
+      vec3 puffPosition = Transform[3].xyz;
+      vec3 puffScale = vec3(length(Transform[0]), length(Transform[1]), length(Transform[2]));
       mat4 billboardModel = target(puffPosition, headPosition, vec3(0, 1, 0));
       billboardModel *= mat4(
         puffScale.x, 0,           0,           0,
@@ -66,12 +67,12 @@ function lovr.load()
         0,           0,           puffScale.z, 0,
         0,           0,           0,           1
       );
-      return projection * lovrView * billboardModel * vertex;
+      return Projection * View * billboardModel * VertexPosition;
     }
   ]]
   defaultFragment = [[
-    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
-      return graphicsColor * lovrDiffuseColor * lovrVertexColor * texture(image, uv);
+    vec4 lovrmain() {
+      return DefaultColor;
     }
   ]]
   redPuffShader = lovr.graphics.newShader(redPuffVertex, defaultFragment)
@@ -79,24 +80,24 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(0, .5, 1)
 end
 
-function lovr.draw()
+function lovr.draw(pass)
+  pass:setSampler('nearest')                                         -- try uncommenting
+
   -- red puffs
-  lovr.graphics.setColor(1, .9, .9)
-  lovr.graphics.setDepthTest('lequal', false)
-  lovr.graphics.setShader(redPuffShader)
-  redPuffShader:send('headPosition', {lovr.headset.getPosition('head')})
+  pass:setColor(1, .9, .9)
+  pass:setMaterial(puffMaterial)
+  pass:setDepthWrite(false)
+  pass:setShader(redPuffShader)
+  pass:send('headPosition', lovr.headset.getPosition('head'))
   for _, puff in pairs(redPuffs) do
-    lovr.graphics.plane(puffMaterial, puff.position, .1)
+    pass:plane(puff.position, .1)
   end
-  lovr.graphics.setDepthTest('lequal', true)
-  lovr.graphics.setShader()
+  pass:setShader()
 
   -- blue puffs
-  lovr.graphics.setColor(.9, 1, 1)
-  lovr.graphics.setDepthTest('lequal', false)
+  pass:setColor(.9, 1, 1)
   for _, puff in pairs(bluePuffs) do
     puff.orientation = quat(mat4():target(puff.position, vec3(lovr.headset.getPosition('head'))))
-    lovr.graphics.plane(puffMaterial, puff.position, .1, .1, puff.orientation)
+    pass:plane(puff.position, .1, .1, puff.orientation)
   end
-  lovr.graphics.setDepthTest('lequal', true)
 end

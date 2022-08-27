@@ -42,7 +42,7 @@ ffi.cdef [[
   GLFWcursorposfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
 ]]
 
-local window = C.os_get_glfw_window()
+local window = ffi.C.os_get_glfw_window()
 
 local mouse = {}
 

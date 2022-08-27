@@ -1,3 +1,4 @@
+-- Applies a cubemap texture to a cube
 -- Texture from Humus (www.humus.name)
 
 function lovr.load()
@@ -11,24 +12,22 @@ function lovr.load()
   })
 
   shader = lovr.graphics.newShader([[
-    out vec3 pos;
-    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-      pos = vertex.xyz;
-      return projection * transform * vertex;
+    layout(location = 0) out vec3 pos;
+    vec4 lovrmain() {
+      pos = VertexPosition.xyz;
+      return DefaultPosition;
     }
   ]], [[
-    uniform samplerCube cube;
-    in vec3 pos;
-    vec4 color(vec4 tint, sampler2D image, vec2 uv) {
-      return texture(cube, pos);
+    layout(set = 2, binding = 0) uniform textureCube cube;
+    layout(location = 0) in vec3 pos;
+    vec4 lovrmain() {
+      return getPixel(cube, pos);
     }
   ]])
-
-  shader:send('cube', cube)
 end
 
-function lovr.draw()
-  lovr.graphics.setShader(shader)
-  lovr.graphics.cube('fill', 0, 1.7, -3, 1, lovr.timer.getTime(), 1, 1, 1)
-  lovr.graphics.setShader()
+function lovr.draw(pass)
+  pass:setShader(shader)
+  pass:send('cube', cube)
+  pass:cube(0, 1.7, -3, 1, lovr.timer.getTime(), 1, 1, 1)
 end

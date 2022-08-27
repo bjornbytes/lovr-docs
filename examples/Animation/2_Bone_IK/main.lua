@@ -36,7 +36,7 @@ function lovr.update(dt)
   -- Allow hands to drag any of the points
   local points = { root, target, control }
   for i, hand in ipairs(lovr.headset.getHands()) do
-    local handPosition = vec3(lovr.headset.getPosition(hand))
+    local handPosition = vec3(lovr.headset.getPosition(hand .. '/point'))
 
     if lovr.headset.wasPressed(hand, 'trigger') then
       for j, point in ipairs(points) do
@@ -65,10 +65,8 @@ function lovr.draw(pass)
 
   -- Draw the hand
   pass:setColor(0xffffff)
-  for _, hand in ipairs({ 'left', 'right' }) do
-    if lovr.headset.isTracked(hand) then
-      pass:cube(mat4(lovr.headset.getPose(hand)):scale(.01))
-    end
+  for _, hand in ipairs(lovr.headset.getHands()) do
+    pass:cube(mat4(lovr.headset.getPose(hand .. '/point')):scale(.01))
   end
 
   -- Draw a line from the root to the result from the IK solver, then to the target
