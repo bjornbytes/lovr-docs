@@ -35,12 +35,12 @@ function lovr.update(dt)
   end
 end
 
-function lovr.draw()
-  lovr.graphics.setColor(drag.active and 0x80ee80 or 0xee8080)
-  lovr.graphics.cube('line', box.position, box.size)
+function lovr.draw(pass)
+  pass:setColor(drag.active and 0x80ee80 or 0xee8080)
+  pass:cube(box.position, box.size, quat(), 'line')
 
   for i, hand in ipairs(lovr.headset.getHands()) do
-    lovr.graphics.setColor(0xffffff)
-    lovr.graphics.cube('fill', mat4(lovr.headset.getPose(hand)):scale(.01))
+    pass:setColor(0xffffff)
+    pass:cube(mat4(lovr.headset.getPose(hand)):scale(.01))
   end
 end

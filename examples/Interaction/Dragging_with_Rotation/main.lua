@@ -19,11 +19,11 @@ function lovr.update(dt)
   end
 end
 
-function lovr.draw()
-  lovr.graphics.box('line', boxMatrix)
+function lovr.draw(pass)
+  pass:box(boxMatrix, 'line')
 
   for i, hand in ipairs(lovr.headset.getHands()) do
     local x, y, z = lovr.headset.getPosition(hand)
-    lovr.graphics.sphere(x, y, z, .01)
+    pass:sphere(x, y, z, .01)
   end
 end
