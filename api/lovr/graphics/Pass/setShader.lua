@@ -4,7 +4,7 @@ return {
   description = 'TODO',
   arguments = {
     shader = {
-      type = 'boolean',
+      type = 'Shader',
       description = 'A custom Shader object to use for rendering.'
     },
     default = {
