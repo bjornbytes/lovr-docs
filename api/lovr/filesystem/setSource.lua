@@ -5,11 +5,16 @@ return {
     internally.
   ]],
   arguments = {
-    {
-      name = 'identity',
+    identity = {
       type = 'string',
       description = 'The path containing the project\'s source.'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'identity' },
+      returns = {}
+    }
+  }
 }

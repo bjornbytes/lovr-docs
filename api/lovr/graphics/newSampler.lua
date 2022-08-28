@@ -3,8 +3,7 @@ return {
   summary = 'Create a new Sampler.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'options',
+    options = {
       type = 'table',
       description = 'TODO',
       table = {
@@ -37,10 +36,15 @@ return {
     }
   },
   returns = {
-    {
-      name = 'sampler',
+    sampler = {
       type = 'Sampler',
       description = 'TODO'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'options' },
+      returns = { 'sampler' }
     }
   },
   related = {

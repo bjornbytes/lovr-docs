@@ -7,15 +7,19 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'near',
+    near = {
       type = 'number',
       description = 'The distance to the near clipping plane, in meters.'
     },
-    {
-      name = 'far',
+    far = {
       type = 'number',
       description = 'The distance to the far clipping plane, in meters.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'near', 'far' }
     }
   },
   notes = [[

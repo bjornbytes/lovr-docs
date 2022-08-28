@@ -4,8 +4,7 @@ return {
   description = 'Returns a table indicating which features are supported by the GPU.',
   arguments = {},
   returns = {
-    {
-      name = 'features',
+    features = {
       type = 'table',
       description = '',
       table = {
@@ -64,6 +63,12 @@ return {
           description = 'Whether shader code can use signed and unsigned 16-bit integers.'
         }
       }
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'features' }
     }
   },
   related = {

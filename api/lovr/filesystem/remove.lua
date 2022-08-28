@@ -2,17 +2,21 @@ return {
   summary = 'Remove a file or directory.',
   description = 'Remove a file or directory in the save directory.',
   arguments = {
-    {
-      name = 'path',
+    path = {
       type = 'string',
       description = 'The file or directory to remove.'
     }
   },
   returns = {
-    {
-      name = 'success',
+    success = {
       type = 'boolean',
       description = 'Whether the path was removed.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'path' },
+      returns = { 'success' }
     }
   },
   notes = [[

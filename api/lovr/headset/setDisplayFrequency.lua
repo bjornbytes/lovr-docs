@@ -3,17 +3,21 @@ return {
   summary = 'Set the display refresh rate.',
   description = 'Sets the display refresh rate, in Hz.',
   arguments = {
-    {
-      name = 'frequency',
+    frequency = {
       type = 'number',
       description = 'The new refresh rate, in Hz.',
     }
   },
   returns = {
-    {
-      name = 'success',
+    success = {
       type = 'boolean',
       description = 'Whether the display refresh rate was successfully set.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'frequency' },
+      returns = { 'success' }
     }
   },
   notes = [[

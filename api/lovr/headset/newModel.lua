@@ -3,14 +3,12 @@ return {
   summary = 'Get a Model for a device.',
   description = 'Returns a new Model for the specified device.',
   arguments = {
-    {
-      name = 'device',
+    device = {
       type = 'Device',
       default = [['head']],
       description = 'The device to load a model for.'
     },
-    {
-      name = 'options',
+    options = {
       type = 'table',
       default = '{}',
       description = 'Options for loading the model.',
@@ -25,10 +23,15 @@ return {
     }
   },
   returns = {
-    {
-      name = 'model',
+    model = {
       type = 'Model',
       description = 'The new Model, or `nil` if a model could not be loaded.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'device', 'options' },
+      returns = { 'model' }
     }
   },
   notes = 'This is only supported on the `openvr` and `vrapi` drivers right now.',

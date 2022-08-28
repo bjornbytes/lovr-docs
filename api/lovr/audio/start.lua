@@ -6,18 +6,22 @@ return {
     and started, but this can be controlled using the `t.audio.start` flag in `lovr.conf`.
   ]],
   arguments = {
-    {
-      name = 'type',
+    type = {
       type = 'AudioType',
       default = [['playback']],
       description = 'The type of device to start.'
     }
   },
   returns = {
-    {
-      name = 'started',
+    started = {
       type = 'boolean',
       description = 'Whether the device was successfully started.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'type' },
+      returns = { 'started' }
     }
   },
   notes = [[

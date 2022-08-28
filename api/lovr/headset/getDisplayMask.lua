@@ -10,10 +10,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'points',
+    points = {
       type = 'table',
       description = 'A table of points.  Each point is a table with two numbers between 0 and 1.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'points' }
     }
   },
   example = [=[

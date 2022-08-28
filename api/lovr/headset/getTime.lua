@@ -9,10 +9,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'time',
+    time = {
       type = 'number',
       description = 'The predicted display time, in seconds.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'time' }
     }
   },
   notes = [[

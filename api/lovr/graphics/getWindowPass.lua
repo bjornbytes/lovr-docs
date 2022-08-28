@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'pass',
+    pass = {
       type = 'Pass',
       description = 'The window pass, or `nil` if there is no window.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'pass' }
     }
   },
   notes = [[

@@ -12,11 +12,16 @@ return {
     `lovr.draw` as the callback.
   ]],
   arguments = {
-    {
-      name = 'callback',
+    callback = {
       type = 'function',
       arguments = {},
       returns = {},
+  variants = {
+    {
+      arguments = { 'callback' },
+      returns = {}
+    }
+  },
       description = [[
         The function used to render.  Any functions called will render to the headset instead of to
         the window.
@@ -24,6 +29,12 @@ return {
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'callback' },
+      returns = {}
+    }
+  },
   notes = [[
     When using the `pico` headset driver, headset rendering is asynchronous and the callback passed
     to `lovr.headset.renderTo` will not be called immediately.

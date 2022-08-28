@@ -8,13 +8,11 @@ return {
     the `select` function built in to Lua to select a particular axis component.
   ]],
   arguments = {
-    {
-      name = 'device',
+    device = {
       type = 'Device',
       description = 'The device.'
     },
-    {
-      name = 'axis',
+    axis = {
       type = 'DeviceAxis',
       description = 'The axis.'
     }
@@ -27,6 +25,12 @@ return {
         The current state of the components of the axis, or `nil` if the device does not have any
         information about the axis.
       ]]
+    }
+  },
+  variants = {
+    {
+      arguments = { 'device', 'axis' },
+      returns = {}
     }
   },
   notes = [[

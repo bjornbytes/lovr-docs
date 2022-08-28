@@ -3,8 +3,7 @@ return {
   summary = 'Check if a Texture format is supported.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'format',
+    format = {
       type = 'TextureFormat',
       description = 'TODO'
     },
@@ -15,10 +14,15 @@ return {
     }
   },
   returns = {
-    {
-      name = 'supported',
+    supported = {
       type = 'boolean',
       description = 'TODO'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'format' },
+      returns = { 'supported' }
     }
   },
   related = {

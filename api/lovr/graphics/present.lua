@@ -7,6 +7,12 @@ return {
   ]],
   arguments = {},
   returns = {},
+  variants = {
+    {
+      arguments = {},
+      returns = {}
+    }
+  },
   notes = [[
     This should be called after submitting the window pass (`lovr.graphics.getWindowPass`).  If the
     window texture has not been rendered to since the last present, this function does nothing.

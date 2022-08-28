@@ -4,8 +4,7 @@ return {
   description = 'Returns information about the graphics device and driver.',
   arguments = {},
   returns = {
-    {
-      name = 'device',
+    device = {
       type = 'table',
       table = {
         {
@@ -43,6 +42,12 @@ return {
           description = 'Whether the GPU is a discrete graphics card.'
         }
       }
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'device' }
     }
   },
   notes = [[

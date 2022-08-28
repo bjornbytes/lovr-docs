@@ -10,10 +10,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'spatializer',
+    spatializer = {
       type = 'string',
       description = 'The name of the active spatializer.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'spatializer' }
     }
   },
   notes = [[

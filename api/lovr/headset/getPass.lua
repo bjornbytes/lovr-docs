@@ -3,10 +3,15 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {
-    {
-      name = 'pass',
+    pass = {
       type = 'Pass',
       description = 'The Pass.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'pass' }
     }
   },
   related = {

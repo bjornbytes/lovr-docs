@@ -3,18 +3,15 @@ return {
   summary = 'Create a new Tally.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'type',
+    type = {
       type = 'TallyType',
       description = 'The type of the Tally, which controls what "thing" it measures.'
     },
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of slots in the Tally.  Each slot performs one measurement.'
     },
-    {
-      name = 'views',
+    views = {
       type = 'number',
       default = '2',
       description = [[
@@ -24,10 +21,15 @@ return {
     }
   },
   returns = {
-    {
-      name = 'tally',
+    tally = {
       type = 'Tally',
       description = 'The new Tally.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'type', 'count', 'views' },
+      returns = { 'tally' }
     }
   },
   related = {

@@ -4,8 +4,7 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {
-    {
-      name = 'stats',
+    stats = {
       type = 'table',
       description = 'Graphics statistics.',
       table = {
@@ -148,6 +147,12 @@ return {
           }
         }
       }
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'stats' }
     }
   },
   related = {

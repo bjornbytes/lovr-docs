@@ -4,8 +4,7 @@ return {
   description = 'Returns limits of the current GPU.',
   arguments = {},
   returns = {
-    {
-      name = 'limits',
+    limits = {
       type = 'table',
       description = '',
       table = {
@@ -189,6 +188,12 @@ return {
           description = 'The maximum point size.'
         }
       }
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'limits' }
     }
   },
   notes = [[

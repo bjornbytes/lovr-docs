@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'name',
+    name = {
       type = 'string',
       description = 'The name of the headset as a string.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'name' }
     }
   },
   notes = [[

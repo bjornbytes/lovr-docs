@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'font',
+    font = {
       type = 'Font',
       description = 'The default Font object.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'font' }
     }
   },
   related = {

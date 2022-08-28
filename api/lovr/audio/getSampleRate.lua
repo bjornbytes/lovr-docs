@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'rate',
+    rate = {
       type = 'number',
       description = 'The sample rate of the playback device, in Hz.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'rate' }
     }
   },
   related = {

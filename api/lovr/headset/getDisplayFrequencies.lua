@@ -6,12 +6,17 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'frequencies',
+    frequencies = {
       type = 'table',
       description = [[
         A flat table of the refresh rates supported by the headset display, nil if not supported.
       ]]
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'frequencies' }
     }
   },
   related = {

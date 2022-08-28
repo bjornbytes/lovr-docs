@@ -13,10 +13,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'mirror',
+    mirror = {
       type = 'Texture',
       description = 'The mirror texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'mirror' }
     }
   },
   related = {

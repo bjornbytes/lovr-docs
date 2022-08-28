@@ -3,10 +3,15 @@ return {
   description = 'Returns the absolute path to the save directory.',
   arguments = {},
   returns = {
-    {
-      name = 'path',
+    path = {
       type = 'string',
       description = 'The absolute path to the save directory.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'path' }
     }
   },
   notes = [[

@@ -9,26 +9,29 @@ return {
     `true`.
   ]],
   arguments = {
-    {
-      name = 'device',
+    device = {
       type = 'Device',
       default = [['head']],
       description = 'The device to use for the animation data.'
     },
-    {
-      name = 'model',
+    model = {
       type = 'Model',
       description = 'The model to animate.'
     }
   },
   returns = {
-    {
-      name = 'success',
+    success = {
       type = 'boolean',
       description = [[
         Whether the animation was applied successfully to the Model.  If the Model was not
         compatible or animation data for the device was not available, this will be `false`.
       ]]
+    }
+  },
+  variants = {
+    {
+      arguments = { 'device', 'model' },
+      returns = { 'success' }
     }
   },
   notes = [[
