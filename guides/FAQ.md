@@ -21,6 +21,10 @@ touchscreens.  There are some plugins available that help bridge this gap.
 Yes, there are `lovr.keypressed`, `lovr.keyreleased`, and `lovr.textinput` callbacks.  For mouse
 input, see `lovr-mouse` on the <a data-key="Libraries">Libraries</a> page.
 
+> Is there autocomplete for VS Code?
+
+See [this gist](https://gist.github.com/ussaohelcim/9eca6eaa903eefff07b4f3e2019de915).
+
 > How do I get LÖVR to work with OpenXR?
 
 Currently, OpenXR support is not included by default.  You can compile from source and add the
