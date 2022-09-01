@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-objects',
   summary = 'Get the default Font.',
   description = [[
     Returns the default Font.  The default font is Varela Round, created at 32px with a spread value

@@ -1,6 +1,6 @@
 return {
   tag = 'graphics-objects',
-  summary = 'Create a new Pass.',
+  summary = 'Get a temporary Pass.',
   description = 'TODO',
   arguments = {
     type = {

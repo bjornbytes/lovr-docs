@@ -14015,6 +14015,7 @@ return {
         },
         {
           name = "getDefaultFont",
+          tag = "graphics-objects",
           summary = "Get the default Font.",
           description = "Returns the default Font.  The default font is Varela Round, created at 32px with a spread value of `4.0`.  It's used by `Pass:text` if no Font is provided.",
           key = "lovr.graphics.getDefaultFont",
@@ -14343,7 +14344,7 @@ return {
         {
           name = "getPass",
           tag = "graphics-objects",
-          summary = "Create a new Pass.",
+          summary = "Get a temporary Pass.",
           description = "TODO",
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
@@ -14603,6 +14604,7 @@ return {
         },
         {
           name = "getWindowPass",
+          tag = "graphics-objects",
           summary = "Get the window pass.",
           description = "Returns the window pass.  This is a builtin render `Pass` object that renders to the desktop window texture.  If the desktop window was not open when the graphics module was initialized, this function will return `nil`.",
           key = "lovr.graphics.getWindowPass",

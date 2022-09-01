@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-objects',
   summary = 'Get the window pass.',
   description = [[
     Returns the window pass.  This is a builtin render `Pass` object that renders to the desktop
