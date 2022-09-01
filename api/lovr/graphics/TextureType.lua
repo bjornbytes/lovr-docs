@@ -19,13 +19,15 @@ return {
     {
       name = 'cube',
       description = [[
-        Six 2D images that define the faces of a cubemap, used for skyboxes or other "directional"
-        images.
+        Six 2D images with the same dimensions that define the faces of a cubemap, used for skyboxes
+        or other "directional" images.
       ]]
     },
     {
       name = 'array',
-      description = 'Array textures are sequences of distinct 2D images.'
+      description = [[
+        Array textures are sequences of distinct 2D images that all have the same dimensions.
+      ]]
     }
   }
 }

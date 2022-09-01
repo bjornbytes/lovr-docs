@@ -15370,9 +15370,10 @@ return {
           name = "newTexture",
           tag = "graphics-objects",
           summary = "Create a new Texture.",
-          description = "TODO",
+          description = "Creates a new Texture.  Image filenames or `Image` objects can be used to provide the initial pixel data and the dimensions, format, and type.  Alternatively, dimensions can be provided, which will create an empty texture.",
           key = "lovr.graphics.newTexture",
           module = "lovr.graphics",
+          notes = "If no `type` is provided in the options table, LÖVR will guess the `TextureType` of the Texture based on the number of layers:\n\n- If there's 1 layer, the type will be `2d`.\n- If there are 6 layers, the type will be `cube`.\n- Otherwise, the type will be `array`.\n\nNote that an Image can contain multiple layers and mipmaps.  When a single Image is provided, its layer count will be used as the Texture's layer count.\n\nIf multiple Images are used to initialize the Texture, they must all have a single layer, and their dimensions, format, and mipmap counts must match.\n\nWhen providing cubemap images in a table, they can be in one of the following forms:\n\n    { 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' }\n    { right = 'px.png', left = 'nx.png', top = 'py.png', bottom = 'ny.png', back = 'pz.png', front = 'nz.png' }\n    { px = 'px.png', nx = 'nx.png', py = 'py.png', ny = 'ny.png', pz = 'pz.png', nz = 'nz.png' }\n\n(Where 'p' stands for positive and 'n' stands for negative).\n\nIf no `usage` is provided in the options table, LÖVR will guess the `TextureUsage` of the Texture.  The `sample` usage is always included, but if the texture was created without any images then the texture will have the `render` usage as well.\n\nThe supported image formats are png, jpg, hdr, dds, ktx1, ktx2, and astc.\n\nIf image data is provided, mipmaps will be generated for any missing mipmap levels.",
           related = {
             "Texture:newView"
           },
@@ -15382,7 +15383,7 @@ return {
                 {
                   name = "filename",
                   type = "string",
-                  description = "TODO"
+                  description = "The filename of an image to load."
                 },
                 {
                   name = "options",
@@ -15392,37 +15393,41 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "TODO"
+                      description = "The type of the texture."
                     },
                     {
                       name = "format",
                       type = "TextureFormat",
-                      description = "TODO"
+                      description = "The format of the texture (ignored when images are provided).",
+                      default = "'rgba8'"
                     },
                     {
                       name = "linear",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
+                      default = "false"
                     },
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
+                      default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "number",
-                      description = "TODO"
+                      type = "*",
+                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
+                      default = "true"
                     },
                     {
                       name = "usage",
                       type = "table",
-                      description = "TODO"
+                      description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -15431,7 +15436,7 @@ return {
                 {
                   name = "texture",
                   type = "Texture",
-                  description = "TODO"
+                  description = "The new Texture."
                 }
               }
             },
@@ -15440,12 +15445,12 @@ return {
                 {
                   name = "width",
                   type = "number",
-                  description = "TODO"
+                  description = "The width of the Texture, in pixels."
                 },
                 {
                   name = "height",
                   type = "number",
-                  description = "TODO"
+                  description = "The height of the Texture, in pixels."
                 },
                 {
                   name = "options",
@@ -15455,37 +15460,41 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "TODO"
+                      description = "The type of the texture."
                     },
                     {
                       name = "format",
                       type = "TextureFormat",
-                      description = "TODO"
+                      description = "The format of the texture (ignored when images are provided).",
+                      default = "'rgba8'"
                     },
                     {
                       name = "linear",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
+                      default = "false"
                     },
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
+                      default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "number",
-                      description = "TODO"
+                      type = "*",
+                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
+                      default = "true"
                     },
                     {
                       name = "usage",
                       type = "table",
-                      description = "TODO"
+                      description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -15494,7 +15503,7 @@ return {
                 {
                   name = "texture",
                   type = "Texture",
-                  description = "TODO"
+                  description = "The new Texture."
                 }
               }
             },
@@ -15503,17 +15512,17 @@ return {
                 {
                   name = "width",
                   type = "number",
-                  description = "TODO"
+                  description = "The width of the Texture, in pixels."
                 },
                 {
                   name = "height",
                   type = "number",
-                  description = "TODO"
+                  description = "The height of the Texture, in pixels."
                 },
                 {
-                  name = "depth",
+                  name = "layers",
                   type = "number",
-                  description = "TODO"
+                  description = "The number of layers in the Texture."
                 },
                 {
                   name = "options",
@@ -15523,37 +15532,41 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "TODO"
+                      description = "The type of the texture."
                     },
                     {
                       name = "format",
                       type = "TextureFormat",
-                      description = "TODO"
+                      description = "The format of the texture (ignored when images are provided).",
+                      default = "'rgba8'"
                     },
                     {
                       name = "linear",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
+                      default = "false"
                     },
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
+                      default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "number",
-                      description = "TODO"
+                      type = "*",
+                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
+                      default = "true"
                     },
                     {
                       name = "usage",
                       type = "table",
-                      description = "TODO"
+                      description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -15562,7 +15575,7 @@ return {
                 {
                   name = "texture",
                   type = "Texture",
-                  description = "TODO"
+                  description = "The new Texture."
                 }
               }
             },
@@ -15571,7 +15584,7 @@ return {
                 {
                   name = "image",
                   type = "string",
-                  description = "TODO"
+                  description = "An Image object holding pixel data to load into the Texture."
                 },
                 {
                   name = "options",
@@ -15581,37 +15594,41 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "TODO"
+                      description = "The type of the texture."
                     },
                     {
                       name = "format",
                       type = "TextureFormat",
-                      description = "TODO"
+                      description = "The format of the texture (ignored when images are provided).",
+                      default = "'rgba8'"
                     },
                     {
                       name = "linear",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
+                      default = "false"
                     },
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
+                      default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "number",
-                      description = "TODO"
+                      type = "*",
+                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
+                      default = "true"
                     },
                     {
                       name = "usage",
                       type = "table",
-                      description = "TODO"
+                      description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -15620,7 +15637,7 @@ return {
                 {
                   name = "texture",
                   type = "Texture",
-                  description = "TODO"
+                  description = "The new Texture."
                 }
               }
             },
@@ -15629,7 +15646,7 @@ return {
                 {
                   name = "images",
                   type = "table",
-                  description = "TODO"
+                  description = "A table of filenames or Images to load into the Texture."
                 },
                 {
                   name = "options",
@@ -15639,37 +15656,41 @@ return {
                     {
                       name = "type",
                       type = "TextureType",
-                      description = "TODO"
+                      description = "The type of the texture."
                     },
                     {
                       name = "format",
                       type = "TextureFormat",
-                      description = "TODO"
+                      description = "The format of the texture (ignored when images are provided).",
+                      default = "'rgba8'"
                     },
                     {
                       name = "linear",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
+                      default = "false"
                     },
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
+                      default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "number",
-                      description = "TODO"
+                      type = "*",
+                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
+                      default = "true"
                     },
                     {
                       name = "usage",
                       type = "table",
-                      description = "TODO"
+                      description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -15678,7 +15699,69 @@ return {
                 {
                   name = "texture",
                   type = "Texture",
-                  description = "TODO"
+                  description = "The new Texture."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob object holding pixel data to load into the Texture."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Texture options.",
+                  table = {
+                    {
+                      name = "type",
+                      type = "TextureType",
+                      description = "The type of the texture."
+                    },
+                    {
+                      name = "format",
+                      type = "TextureFormat",
+                      description = "The format of the texture (ignored when images are provided).",
+                      default = "'rgba8'"
+                    },
+                    {
+                      name = "linear",
+                      type = "boolean",
+                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
+                      default = "false"
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmaps",
+                      type = "*",
+                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
+                      default = "true"
+                    },
+                    {
+                      name = "usage",
+                      type = "table",
+                      description = "A list of `TextureUsage` indicating how the texture will be used."
+                    },
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "A label for the Texture that will show up in debugging tools."
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The new Texture."
                 }
               }
             }
@@ -16182,11 +16265,11 @@ return {
             },
             {
               name = "cube",
-              description = "Six 2D images that define the faces of a cubemap, used for skyboxes or other \"directional\" images."
+              description = "Six 2D images with the same dimensions that define the faces of a cubemap, used for skyboxes or other \"directional\" images."
             },
             {
               name = "array",
-              description = "Array textures are sequences of distinct 2D images."
+              description = "Array textures are sequences of distinct 2D images that all have the same dimensions."
             }
           }
         },
@@ -29456,15 +29539,15 @@ return {
       },
       examples = {
         {
-          code = "function lovr.load(args)\n  model = lovr.graphics.newModel('cena.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  levelGeometry = lovr.graphics.newMesh(1000)\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
+          code = "function lovr.load(arg)\n  model = lovr.graphics.newModel('sponza.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
         }
       },
-      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `args` table.\n\nThe `args` table follows the [Lua standard](https://en.wikibooks.org/wiki/Lua_Programming/command_line_parameter).  The arguments passed in from the shell are put into a global table named `arg` and passed to `lovr.load`, but with indices offset such that the \"script\" (the project path) is at index 0.  So all arguments (if any) intended for the project are at successive indices starting with 1, and the executable and its \"internal\" arguments are in normal order but stored in negative indices.",
+      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `arg` table.\n\nThe `arg` table follows the [Lua standard](https://en.wikibooks.org/wiki/Lua_Programming/command_line_parameter).  The arguments passed in from the shell are put into a global table named `arg` and passed to `lovr.load`, but with indices offset such that the \"script\" (the project path) is at index 0.  So all arguments (if any) intended for the project are at successive indices starting with 1, and the executable and its \"internal\" arguments are in normal order but stored in negative indices.",
       variants = {
         {
           arguments = {
             {
-              name = "args",
+              name = "arg",
               type = "table",
               description = "The command line arguments provided to the program."
             }
