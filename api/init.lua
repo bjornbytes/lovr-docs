@@ -9811,10 +9811,42 @@ return {
         },
         {
           name = "Pass",
-          summary = "A self-contained stream of graphics commands.",
+          summary = "A stream of graphics commands.",
           description = "TODO",
           key = "Pass",
           module = "lovr.graphics",
+          sections = {
+            {
+              name = "Drawing",
+              tag = "drawing",
+              description = "TODO"
+            },
+            {
+              name = "Coordinate System",
+              tag = "transform",
+              description = "TODO"
+            },
+            {
+              name = "Render States",
+              tag = "pipeline",
+              description = "TODO"
+            },
+            {
+              name = "Shader Inputs",
+              tag = "shader-inputs",
+              description = "TODO"
+            },
+            {
+              name = "Camera",
+              tag = "camera",
+              description = "TODO"
+            },
+            {
+              name = "Compute",
+              tag = "compute",
+              description = "TODO"
+            }
+          },
           methods = {
             {
               name = "blit",
@@ -13765,7 +13797,7 @@ return {
         },
         {
           name = "getBackgroundColor",
-          tag = "camera",
+          tag = "graphics-global",
           summary = "Get the background color.",
           description = "TODO",
           key = "lovr.graphics.getBackgroundColor",
@@ -15665,7 +15697,7 @@ return {
         },
         {
           name = "setBackgroundColor",
-          tag = "camera",
+          tag = "graphics-global",
           summary = "Set the background color.",
           description = "TODO",
           key = "lovr.graphics.setBackgroundColor",
@@ -16175,44 +16207,16 @@ return {
       },
       sections = {
         {
-          name = "Drawing",
-          tag = "drawing",
-          description = "TODO"
-        },
-        {
           name = "Objects",
-          tag = "graphics-objects",
-          description = "TODO"
+          tag = "graphics-objects"
         },
         {
-          name = "Coordinate System",
-          tag = "transform",
-          description = "TODO"
-        },
-        {
-          name = "Render States",
-          tag = "pipeline",
-          description = "TODO"
-        },
-        {
-          name = "Shader Inputs",
-          tag = "shader-inputs",
-          description = "TODO"
-        },
-        {
-          name = "Camera",
-          tag = "camera",
-          description = "TODO"
-        },
-        {
-          name = "Compute",
-          tag = "compute",
-          description = "TODO"
+          name = "Global State",
+          tag = "graphics-global"
         },
         {
           name = "Work Submission",
-          tag = "work-submission",
-          description = "TODO"
+          tag = "work-submission"
         },
         {
           name = "System Info",
@@ -17652,22 +17656,6 @@ return {
             {
               name = "eye/right",
               description = "The right eye."
-            },
-            {
-              name = "beacon/1",
-              description = "The first tracking device (i.e. lighthouse)."
-            },
-            {
-              name = "beacon/2",
-              description = "The second tracking device (i.e. lighthouse)."
-            },
-            {
-              name = "beacon/3",
-              description = "The third tracking device (i.e. lighthouse)."
-            },
-            {
-              name = "beacon/4",
-              description = "The fourth tracking device (i.e. lighthouse)."
             }
           }
         },

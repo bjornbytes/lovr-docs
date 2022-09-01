@@ -6,44 +6,16 @@ return {
   ]],
   sections = {
     {
-      name = 'Drawing',
-      tag = 'drawing',
-      description = 'TODO'
-    },
-    {
       name = 'Objects',
-      tag = 'graphics-objects',
-      description = 'TODO'
+      tag = 'graphics-objects'
     },
     {
-      name = 'Coordinate System',
-      tag = 'transform',
-      description = 'TODO'
-    },
-    {
-      name = 'Render States',
-      tag = 'pipeline',
-      description = 'TODO'
-    },
-    {
-      name = 'Shader Inputs',
-      tag = 'shader-inputs',
-      description = 'TODO'
-    },
-    {
-      name = 'Camera',
-      tag = 'camera',
-      description = 'TODO'
-    },
-    {
-      name = 'Compute',
-      tag = 'compute',
-      description = 'TODO'
+      name = 'Global State',
+      tag = 'graphics-global'
     },
     {
       name = 'Work Submission',
-      tag = 'work-submission',
-      description = 'TODO'
+      tag = 'work-submission'
     },
     {
       name = 'System Info',

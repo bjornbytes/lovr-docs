@@ -1,5 +1,5 @@
 return {
-  tag = 'camera',
+  tag = 'graphics-global',
   summary = 'Get the background color.',
   description = 'TODO',
   arguments = {},
