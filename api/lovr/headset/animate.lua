@@ -35,11 +35,7 @@ return {
     }
   },
   notes = [[
-    Currently this function is supported for OpenVR controller models and Oculus hand models.
-
-    This function may animate using node-based animation or skeletal animation.  `Model:hasJoints`
-    can be used on a Model so you know if a Shader with the `animated` ShaderFlag needs to be used
-    to render the results properly.
+    Currently this function is only supported for hand models on the Oculus Quest.
 
     It's possible to use models that weren't created with `lovr.headset.newModel` but they need to
     be set up carefully to have the same structure as the models provided by the headset SDK.

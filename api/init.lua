@@ -9,7 +9,7 @@ return {
         {
           name = "Object",
           summary = "The base object.",
-          description = "This is not a real object, but describes the behavior shared by all objects.  Think of it as the superclass of all LÖVR objects.\n\nIn addition to the methods here, all objects have a `__tostring` metamethod that returns the name of the object's type.  So to check if a LÖVR object is an instance of \"Blob\", you can do `tostring(object) == 'Blob'`.",
+          description = "The superclass of all LÖVR objects.\n\nIn addition to the methods here, all objects have a `__tostring` metamethod that returns the name of the object's type.  So `tostring(object) == 'Blob'` will check if a LÖVR object is a Blob.",
           key = "Object",
           module = "lovr",
           notes = "Note that the functions here don't apply to any vector objects, see `Vectors`.",
@@ -13844,7 +13844,7 @@ return {
           description = "Creates a temporary Buffer.",
           key = "lovr.graphics.getBuffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that an `offset` should be set for either all of the fields or none of\n  them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
           related = {
             "lovr.graphics.newBuffer"
           },
@@ -16251,7 +16251,7 @@ return {
           description = "Animates a device model to match its current input state.  The buttons and joysticks on a controller will move as they're pressed/moved and hand models will move to match skeletal input.\n\nThe model should have been created using `lovr.headset.newModel` with the `animated` flag set to `true`.",
           key = "lovr.headset.animate",
           module = "lovr.headset",
-          notes = "Currently this function is supported for OpenVR controller models and Oculus hand models.\n\nThis function may animate using node-based animation or skeletal animation.  `Model:hasJoints` can be used on a Model so you know if a Shader with the `animated` ShaderFlag needs to be used to render the results properly.\n\nIt's possible to use models that weren't created with `lovr.headset.newModel` but they need to be set up carefully to have the same structure as the models provided by the headset SDK.",
+          notes = "Currently this function is only supported for hand models on the Oculus Quest.\n\nIt's possible to use models that weren't created with `lovr.headset.newModel` but they need to be set up carefully to have the same structure as the models provided by the headset SDK.",
           related = {
             "lovr.headset.newModel"
           },
@@ -17324,7 +17324,7 @@ return {
               code = "local models = {}\n\nfunction lovr.draw()\n  for i, hand in ipairs(lovr.headset.getHands()) do\n    models[hand] = models[hand] or lovr.headset.newModel(hand)\n\n    if models[hand] then\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)\n      models[hand]:draw(x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend"
             }
           },
-          notes = "This is only supported on the `openvr` and `vrapi` drivers right now.",
+          notes = "Currently this is only implemented for hand models on the Oculus Quest.",
           variants = {
             {
               arguments = {
@@ -17343,7 +17343,7 @@ return {
                     {
                       name = "animated",
                       type = "boolean",
-                      description = "Whether an animatable model should be loaded, for use with `lovr.headset.animate`.",
+                      description = "Whether an animatable model should be loaded, for use with `lovr.headset.animate`.'",
                       default = "false"
                     }
                   }
@@ -29285,12 +29285,14 @@ return {
       name = "draw",
       tag = "callbacks",
       summary = "Called continuously to render frames to the display.",
-      description = "This callback is called every frame.  Use it to render the scene.  If a VR headset is connected, anything rendered by this function will appear in the headset display.  The display is cleared to the background color before this function is called.",
+      description = "This callback is called every frame, and receives a `Pass` object as an argument which can be used to render graphics to the display.  If a VR headset is connected, this function renders to the headset display, otherwise it will render to the desktop window.",
       key = "lovr.draw",
       module = "lovr",
+      notes = "To render to the desktop window when a VR headset is connected, use the `lovr.mirror` callback.\n\nThe display is cleared to the global background color before this callback is called, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nSince the `lovr.graphics.submit` function always returns true, the following idiom can be used to submit graphics work manually and override the default submission:\n\n    function lovr.draw(pass)\n      local passes = getPasses()\n      return lovr.graphics.submit(passes)\n    end",
       related = {
         "lovr.mirror",
         "lovr.headset.getPass",
+        "lovr.graphics.getWindowPass",
         "lovr.graphics.setBackgroundColor"
       },
       variants = {
@@ -29306,7 +29308,7 @@ return {
             {
               name = "skip",
               type = "boolean",
-              description = "Whether the input Pass should be submitted to the GPU."
+              description = "If truthy, the input Pass will not be submitted to the GPU."
             }
           }
         }
@@ -29475,7 +29477,7 @@ return {
       name = "log",
       tag = "callbacks",
       summary = "Called when a message is logged.",
-      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GL`).  It is also possible to emit your own log messages using `lovr.event.push`.",
+      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GPU`).  It is also possible to emit customlog messages using `lovr.event.push`, or by calling the callback.",
       key = "lovr.log",
       module = "lovr",
       related = {

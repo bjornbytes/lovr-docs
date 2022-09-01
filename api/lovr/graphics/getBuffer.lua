@@ -91,8 +91,8 @@ return {
     - `type` is the `FieldType` of the field and is required.
     - `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next
       to each other sequentially in memory, subject to any padding required by the Buffer's layout.
-      In practice this means that you probably want to provide an `offset` for either all of the
-      fields or none of them.
+      In practice this means that an `offset` should be set for either all of the fields or none of
+      them.
     - `location` is the vertex attribute location of each field.  This is used to match up each
       field with an attribute declared in a shader, and doesn't have any purpose when binding the
       buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an

@@ -2,9 +2,9 @@ return {
   tag = 'callbacks',
   summary = 'Called continuously to render frames to the display.',
   description = [[
-    This callback is called every frame.  Use it to render the scene.  If a VR headset is connected,
-    anything rendered by this function will appear in the headset display.  The display is cleared
-    to the background color before this function is called.
+    This callback is called every frame, and receives a `Pass` object as an argument which can be
+    used to render graphics to the display.  If a VR headset is connected, this function renders to
+    the headset display, otherwise it will render to the desktop window.
   ]],
   arguments = {
     {
@@ -17,12 +17,27 @@ return {
     {
       name = 'skip',
       type = 'boolean',
-      description = 'Whether the input Pass should be submitted to the GPU.'
+      description = 'If truthy, the input Pass will not be submitted to the GPU.'
     }
   },
+  notes = [[
+    To render to the desktop window when a VR headset is connected, use the `lovr.mirror` callback.
+
+    The display is cleared to the global background color before this callback is called, which can
+    be changed using `lovr.graphics.setBackgroundColor`.
+
+    Since the `lovr.graphics.submit` function always returns true, the following idiom can be used
+    to submit graphics work manually and override the default submission:
+
+        function lovr.draw(pass)
+          local passes = getPasses()
+          return lovr.graphics.submit(passes)
+        end
+  ]],
   related = {
     'lovr.mirror',
     'lovr.headset.getPass',
+    'lovr.graphics.getWindowPass',
     'lovr.graphics.setBackgroundColor'
   }
 }

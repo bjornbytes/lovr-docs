@@ -17,7 +17,9 @@ return {
           name = 'animated',
           type = 'boolean',
           default = 'false',
-          description = 'Whether an animatable model should be loaded, for use with `lovr.headset.animate`.'
+          description = [[
+            Whether an animatable model should be loaded, for use with `lovr.headset.animate`.'
+          ]]
         }
       }
     }
@@ -34,7 +36,7 @@ return {
       returns = { 'model' }
     }
   },
-  notes = 'This is only supported on the `openvr` and `vrapi` drivers right now.',
+  notes = 'Currently this is only implemented for hand models on the Oculus Quest.',
   example = [[
     local models = {}
 
