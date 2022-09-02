@@ -1,6 +1,6 @@
 return {
   summary = 'Set or blend the transform of a node.',
-  description = 'TODO',
+  description = 'Sets or blends the transform of a node to a new value.',
   arguments = {
     index = {
       type = 'number',
@@ -11,8 +11,11 @@ return {
       description = 'The name of the node.'
     },
     transform = {
-      type = 'transform',
-      description = 'The target transform.'
+      type = 'Mat4',
+      description = [[
+        The target transform.  The position, scale, and rotation can also be provided using `Vec3`,
+        `Quat`, or numbers.
+      ]]
     },
     blend = {
       type = 'number',

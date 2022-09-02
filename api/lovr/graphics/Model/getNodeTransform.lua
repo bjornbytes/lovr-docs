@@ -1,6 +1,6 @@
 return {
   summary = 'Get the transform of a node.',
-  description = 'TODO',
+  description = 'Returns the transform of a node.',
   arguments = {
     index = {
       type = 'number',

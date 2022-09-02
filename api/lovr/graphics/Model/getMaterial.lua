@@ -1,6 +1,6 @@
 return {
   summary = 'Get a Material from the Model.',
-  description = 'TODO',
+  description = 'Returns a `Material` loaded from the Model.',
   arguments = {
     name = {
       type = 'string',
@@ -29,6 +29,7 @@ return {
   },
   related = {
     'Model:getMaterialCount',
-    'Model:getMaterialName'
+    'Model:getMaterialName',
+    'Model:getNodeDraw'
   }
 }

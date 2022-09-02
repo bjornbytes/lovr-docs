@@ -1752,7 +1752,7 @@ return {
               description = "Causes audio to be heard through walls when occluded, based on audio materials."
             }
           },
-          notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nTODO: expose a table of supported effects for spatializers in docs or from Lua."
+          notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nSee `lovr.audio.getSpatializer` for a table of the supported effects for each spatializer."
         },
         {
           name = "TimeUnit",
@@ -7888,8 +7888,8 @@ return {
         },
         {
           name = "Model",
-          summary = "TODO",
-          description = "TODO",
+          summary = "A 3D model.",
+          description = "Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are supported.\n\nA model can be drawn using `Pass:draw`.\n\nThe raw CPU data for a model is held in a `ModelData` object, which can be loaded on threads or reused for multiple Model instances.\n\nModels have a hierarchy of nodes which can have their transforms modified.  Meshes are attached to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn multiple times while only storing a single copy of its data.\n\nModels can have animations.  Animations have keyframes which affect the transforms of nodes. Right now each model can only be drawn with a single animated pose per frame.\n\nModels can have materials, which are collections of properties and textures that define how its surface is affected by lighting.  Each mesh in the model can use a single material.",
           key = "Model",
           module = "lovr.graphics",
           constructors = {
@@ -8334,12 +8334,13 @@ return {
             {
               name = "getMaterial",
               summary = "Get a Material from the Model.",
-              description = "TODO",
+              description = "Returns a `Material` loaded from the Model.",
               key = "Model:getMaterial",
               module = "lovr.graphics",
               related = {
                 "Model:getMaterialCount",
-                "Model:getMaterialName"
+                "Model:getMaterialName",
+                "Model:getNodeDraw"
               },
               variants = {
                 {
@@ -9119,7 +9120,7 @@ return {
             {
               name = "getNodeTransform",
               summary = "Get the transform of a node.",
-              description = "TODO",
+              description = "Returns the transform of a node.",
               key = "Model:getNodeTransform",
               module = "lovr.graphics",
               related = {
@@ -9748,7 +9749,7 @@ return {
             {
               name = "setNodeTransform",
               summary = "Set or blend the transform of a node.",
-              description = "TODO",
+              description = "Sets or blends the transform of a node to a new value.",
               key = "Model:setNodeTransform",
               module = "lovr.graphics",
               related = {
@@ -9772,8 +9773,8 @@ return {
                     },
                     {
                       name = "transform",
-                      type = "transform",
-                      description = "The target transform."
+                      type = "Mat4",
+                      description = "The target transform.  The position, scale, and rotation can also be provided using `Vec3`, `Quat`, or numbers."
                     },
                     {
                       name = "blend",
@@ -9793,8 +9794,8 @@ return {
                     },
                     {
                       name = "transform",
-                      type = "transform",
-                      description = "The target transform."
+                      type = "Mat4",
+                      description = "The target transform.  The position, scale, and rotation can also be provided using `Vec3`, `Quat`, or numbers."
                     },
                     {
                       name = "blend",
@@ -16135,21 +16136,26 @@ return {
         {
           name = "PassType",
           summary = "Different types of Passes.",
-          description = "TODO",
+          description = "The three different types of `Pass` objects.  Each Pass has a single type, which determines the type of work it does and which functions can be called on it.",
           key = "PassType",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getPass",
+            "lovr.graphics.submit",
+            "Pass:getType"
+          },
           values = {
             {
               name = "render",
-              description = "TODO"
+              description = "A render pass renders graphics to a set of up to four color textures and an optional depth texture.  The textures all need to have the same dimensions and sample counts.  The textures can have multiple layers, and all rendering work will be broadcast to each layer.  Each layer can use a different camera pose, which is used for stereo rendering."
             },
             {
               name = "compute",
-              description = "TODO"
+              description = "A compute pass runs compute shaders.  Compute passes usually only call `Pass:setShader`, `Pass:send`, and `Pass:compute`.  All of the compute work in a single compute pass is run in parallel, so multiple compute passes should be used if one compute pass needs to happen after a different one."
             },
             {
               name = "transfer",
-              description = "TODO"
+              description = "A transfer pass copies data to and from GPU memory in `Buffer` and `Texture` objects. Transfer passes use `Pass:copy`, `Pass:clear`, `Pass:blit`, `Pass:mipmap`, and `Pass:read`. Similar to compute passes, all the work in a transfer pass happens in parallel, so multiple passes should be used if the transfers need to be ordered."
             }
           }
         },
@@ -16943,13 +16949,10 @@ return {
         {
           name = "getPass",
           summary = "Get a Pass that renders to the headset.",
-          description = "TODO",
+          description = "Returns a `Pass` that renders to the headset display.",
           key = "lovr.headset.getPass",
           module = "lovr.headset",
-          related = {
-            "lovr.graphics.getPass",
-            "lovr.conf"
-          },
+          notes = "The same Pass will be returned until `lovr.headset.submit` is called.\n\nThe first time this function is called during a frame, the views of the Pass will be initialized with the headset view poses and view angles.\n\nThe pass will be cleared to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nThe pass will have a depth buffer.  If `t.headset.stencil` was set to a truthy value in `lovr.conf`, the depth buffer will use the `d32fs8` format, otherwise `d32f` will be used.\n\nIf `t.headset.antialias` was set to a truthy value in `lovr.conf`, the pass will be multisampled.",
           variants = {
             {
               arguments = {},
@@ -16957,10 +16960,15 @@ return {
                 {
                   name = "pass",
                   type = "Pass",
-                  description = "The Pass."
+                  description = "The pass."
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.getPass",
+            "lovr.graphics.getWindowPass",
+            "lovr.conf"
           }
         },
         {
