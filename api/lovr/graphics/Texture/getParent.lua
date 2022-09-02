@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the parent of a Texture view.',
+  summary = 'Get the parent of a texture view.',
   description = [[
     Returns the parent of a Texture view, which is the Texture that it references.  Returns `nil`
     if the Texture is not a view.

@@ -19,8 +19,8 @@ return {
     {
       name = 'cube',
       description = [[
-        Six 2D images with the same dimensions that define the faces of a cubemap, used for skyboxes
-        or other "directional" images.
+        Six square 2D images with the same dimensions that define the faces of a cubemap, used for
+        skyboxes or other "directional" images.
       ]]
     },
     {

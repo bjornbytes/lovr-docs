@@ -14,14 +14,14 @@ return {
       description = 'The height of the Texture.'
     },
     {
-      name = 'depth',
+      name = 'layers',
       type = 'number',
-      description = 'The depth of the Texture.'
+      description = 'The number of layers in the Texture.'
     }
   },
   related = {
     'Texture:getWidth',
     'Texture:getHeight',
-    'Texture:getDepth'
+    'Texture:getLayerCount'
   }
 }

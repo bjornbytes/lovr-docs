@@ -1,6 +1,6 @@
 return {
   summary = 'Get the format of the Texture.',
-  description = 'Returns the format of the texture.  The default is `rgba8`.',
+  description = 'Returns the format of the texture.',
   arguments = {},
   returns = {
     {

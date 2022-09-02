@@ -1,9 +1,9 @@
 return {
   summary = 'Get the number of MSAA samples in the Texture.',
   description = [[
-    Returns the number of multisample antialiasing (MSAA) samples in the Texture.  Multisampling is
-    used for antialiasing when rendering to the Texture.  Using more samples will cause the Texture
-    to use additional memory but reduce aliasing artifacts.
+    Returns the number of samples in the texture.  Multiple samples are used for multisample
+    antialiasing when rendering to the texture.  Currently, the sample count is either 1 (not
+    antialiased) or 4 (antialiased).
   ]],
   arguments = {},
   returns = {
@@ -13,8 +13,8 @@ return {
       description = 'The number of samples in the Texture.'
     }
   },
-  notes = 'Currently, the sample count must be either 1 or 4.',
   related = {
-    'lovr.graphics.newTexture'
+    'lovr.graphics.newTexture',
+    'Pass:getSampleCount'
   }
 }

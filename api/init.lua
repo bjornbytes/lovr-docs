@@ -10907,7 +10907,7 @@ return {
             {
               name = "getType",
               summary = "Get the type of the Pass.",
-              description = "TODO",
+              description = "Returns the type of the pass (render, compute, or transfer).  The type restricts what kinds of functions can be called on the pass.",
               key = "Pass:getType",
               module = "lovr.graphics",
               variants = {
@@ -13443,7 +13443,7 @@ return {
               related = {
                 "Texture:getWidth",
                 "Texture:getHeight",
-                "Texture:getDepth"
+                "Texture:getLayerCount"
               },
               variants = {
                 {
@@ -13460,9 +13460,9 @@ return {
                       description = "The height of the Texture."
                     },
                     {
-                      name = "depth",
+                      name = "layers",
                       type = "number",
-                      description = "The depth of the Texture."
+                      description = "The number of layers in the Texture."
                     }
                   }
                 }
@@ -13471,7 +13471,7 @@ return {
             {
               name = "getFormat",
               summary = "Get the format of the Texture.",
-              description = "Returns the format of the texture.  The default is `rgba8`.",
+              description = "Returns the format of the texture.",
               key = "Texture:getFormat",
               module = "lovr.graphics",
               variants = {
@@ -13514,7 +13514,7 @@ return {
             {
               name = "getLayerCount",
               summary = "Get the layer count of the Texture.",
-              description = "Returns the layer count of the Texture.  2D textures always have 1 layer and cubemaps always have 6 layers.  For 3D and array textures, this is the number of images stored in the texture. 3D textures represent a spatial 3D volume, whereas array textures are multiple layers of distinct 2D images.",
+              description = "Returns the layer count of the Texture.  2D textures always have 1 layer and cubemaps always have 6 layers.  3D and array textures have a variable number of layers.",
               key = "Texture:getLayerCount",
               module = "lovr.graphics",
               related = {
@@ -13538,10 +13538,14 @@ return {
             {
               name = "getMipmapCount",
               summary = "Get the number of mipmap levels in the Texture.",
-              description = "Returns the number of mipmap levels in the Texture.  This is set when the Texture is created. By default, textures are created with a full set of mipmap levels, and mipmaps are generated if the images used to create the texture do not include mipmaps.",
+              description = "Returns the number of mipmap levels in the Texture.",
               key = "Texture:getMipmapCount",
               module = "lovr.graphics",
-              notes = "Each mipmap level will be half the size of the previous (larger) mipmap level, down to a single pixel.  This means the maximum number of mipmap levels is given by `log2(max(width, height))` for non-3D textures and `log2(max(width, height, depth))` for 3D textures.",
+              related = {
+                "lovr.graphics.newTexture",
+                "Sampler:getMipmapRange",
+                "Pass:mipmap"
+              },
               variants = {
                 {
                   arguments = {},
@@ -13553,15 +13557,11 @@ return {
                     }
                   }
                 }
-              },
-              related = {
-                "lovr.graphics.newTexture",
-                "Pass:mipmap"
               }
             },
             {
               name = "getParent",
-              summary = "Get the parent of a Texture view.",
+              summary = "Get the parent of a texture view.",
               description = "Returns the parent of a Texture view, which is the Texture that it references.  Returns `nil` if the Texture is not a view.",
               key = "Texture:getParent",
               module = "lovr.graphics",
@@ -13585,10 +13585,13 @@ return {
             {
               name = "getSampleCount",
               summary = "Get the number of MSAA samples in the Texture.",
-              description = "Returns the number of multisample antialiasing (MSAA) samples in the Texture.  Multisampling is used for antialiasing when rendering to the Texture.  Using more samples will cause the Texture to use additional memory but reduce aliasing artifacts.",
+              description = "Returns the number of samples in the texture.  Multiple samples are used for multisample antialiasing when rendering to the texture.  Currently, the sample count is either 1 (not antialiased) or 4 (antialiased).",
               key = "Texture:getSampleCount",
               module = "lovr.graphics",
-              notes = "Currently, the sample count must be either 1 or 4.",
+              related = {
+                "lovr.graphics.newTexture",
+                "Pass:getSampleCount"
+              },
               variants = {
                 {
                   arguments = {},
@@ -13600,9 +13603,6 @@ return {
                     }
                   }
                 }
-              },
-              related = {
-                "lovr.graphics.newTexture"
               }
             },
             {
@@ -16265,7 +16265,7 @@ return {
             },
             {
               name = "cube",
-              description = "Six 2D images with the same dimensions that define the faces of a cubemap, used for skyboxes or other \"directional\" images."
+              description = "Six square 2D images with the same dimensions that define the faces of a cubemap, used for skyboxes or other \"directional\" images."
             },
             {
               name = "array",
