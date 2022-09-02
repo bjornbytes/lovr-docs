@@ -1,16 +1,20 @@
 return {
   summary = 'Check if the Model uses joints for skeletal animation.',
-  description = 'TODO',
+  description = 'Returns whether the Model has any skeletal animations.',
   arguments = {},
   returns = {
     {
       name = 'jointed',
       type = 'boolean',
-      description = 'Whether the animation uses joints for skeletal animation.'
+      description = 'Whether the animation uses joint nodes for skeletal animation.'
     }
   },
   notes = [[
-    TODO it's computed as skinCount
-    TODO it's different from animationCount
+    This will return when there's at least one skin in the model, as returned by
+    `ModelData:getSkinCount`.
+
+    Even if this function returns true, the model could still have non-skeletal animations.
+
+    Right now a model can only be drawn with one skeletal pose per frame.
   ]]
 }

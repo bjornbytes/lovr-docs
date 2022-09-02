@@ -4140,12 +4140,7 @@ return {
               description = "Returns local transform (position, orientation, and scale) of a node, relative to its parent.",
               key = "ModelData:getNodeTransform",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodePosition",
-                "ModelData:getNodeOrientation",
-                "ModelData:getNodeScale",
-                "ModelData:getNodePose"
-              },
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
               variants = {
                 {
                   arguments = {
@@ -4269,6 +4264,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose"
               }
             },
             {
@@ -7899,11 +7900,11 @@ return {
           methods = {
             {
               name = "animate",
-              summary = "Apply an animation to the nodes of the Model.",
-              description = "TODO",
+              summary = "Animate the Model.",
+              description = "Animates a Model by setting or blending the transforms of nodes using data stored in the keyframes of an animation.\n\nThe animation from the model file is evaluated at the timestamp, resulting in a set of node properties.  These properties are then applied to the nodes in the model, using an optional blend factor.  If the animation doesn't have keyframes that target a given node, the node will remain unchanged.",
               key = "Model:animate",
               module = "lovr.graphics",
-              notes = "TODO What happens if the timestamp is before the first keyframe? TODO Does it loop?",
+              notes = "If the timestamp is larger than the duration of the animation, it will wrap back around to zero, so looping an animation doesn't require using the modulo operator.\n\nTo change the speed of the animation, multiply the timestamp by a speed factor.\n\nFor each animated property in the animation, if the timestamp used for the animation is less than the timestamp of the first keyframe, the data of the first keyframe will be used.\n\nThis function can be called multiple times to layer and blend animations.  The model joints will be drawn in the final resulting pose.\n\n`Model:resetNodeTransforms` can be used to reset the model nodes to their initial transforms, which is helpful to ensure animating starts from a clean slate.",
               variants = {
                 {
                   arguments = {
@@ -7949,6 +7950,7 @@ return {
                 }
               },
               related = {
+                "Model:resetNodeTransforms",
                 "Model:getAnimationCount",
                 "Model:getAnimationName",
                 "Model:getAnimationDuration",
@@ -7989,10 +7991,10 @@ return {
             {
               name = "getAnimationDuration",
               summary = "Get the duration of an animation in the Model.",
-              description = "TODO",
+              description = "Returns the duration of an animation in the Model, in seconds.",
               key = "Model:getAnimationDuration",
               module = "lovr.graphics",
-              notes = "TODO how is duration calculated?",
+              notes = "The duration of an animation is calculated as the largest timestamp of all of its keyframes.",
               variants = {
                 {
                   arguments = {
@@ -8006,7 +8008,7 @@ return {
                     {
                       name = "duration",
                       type = "number",
-                      description = "TODO"
+                      description = "The duration of the animation, in seconds."
                     }
                   }
                 },
@@ -8022,7 +8024,7 @@ return {
                     {
                       name = "duration",
                       type = "number",
-                      description = "TODO"
+                      description = "The duration of the animation, in seconds."
                     }
                   }
                 }
@@ -8036,7 +8038,7 @@ return {
             {
               name = "getAnimationName",
               summary = "Get the name of an animation in the Model.",
-              description = "TODO",
+              description = "Returns the name of an animation in the Model.",
               key = "Model:getAnimationName",
               module = "lovr.graphics",
               related = {
@@ -8049,7 +8051,7 @@ return {
                     {
                       name = "index",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of an animation."
                     }
                   },
                   returns = {
@@ -8312,7 +8314,7 @@ return {
             {
               name = "getIndexBuffer",
               summary = "Get a Buffer containing the triangle indices in the Model.",
-              description = "TODO",
+              description = "Returns the index buffer used by the Model.  The index buffer describes the order used to draw the vertices in each mesh.",
               key = "Model:getIndexBuffer",
               module = "lovr.graphics",
               related = {
@@ -8325,7 +8327,7 @@ return {
                     {
                       name = "buffer",
                       type = "Buffer",
-                      description = "TODO"
+                      description = "The index buffer."
                     }
                   }
                 }
@@ -8403,7 +8405,7 @@ return {
             {
               name = "getMaterialName",
               summary = "Get the name of a material in the Model.",
-              description = "TODO",
+              description = "Returns the name of a material in the Model.",
               key = "Model:getMaterialName",
               module = "lovr.graphics",
               related = {
@@ -8416,7 +8418,7 @@ return {
                     {
                       name = "index",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of a material."
                     }
                   },
                   returns = {
@@ -8515,17 +8517,10 @@ return {
             },
             {
               name = "getNodeDraw",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the information needed to draw one mesh attached to a node.",
+              description = "Returns the draw mode, material, and vertex range of a mesh in the model.",
               key = "Model:getNodeDraw",
               module = "lovr.graphics",
-              related = {
-                "Pass:setMeshMode",
-                "Pass:setMaterial",
-                "Pass:mesh",
-                "Model:getVertexBuffer",
-                "Model:getIndexBuffer"
-              },
               variants = {
                 {
                   arguments = {
@@ -8609,12 +8604,24 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:setMeshMode",
+                "Pass:setMaterial",
+                "Pass:mesh",
+                "Model:getVertexBuffer",
+                "Model:getIndexBuffer"
+              },
+              examples = {
+                {
+                  code = "function lovr.load()\n  local m = lovr.graphics.newModel('enraged-gorilla.gltf')\n\n  model = {\n    object = m,\n    data = m:getData(),\n    vertices = m:getVertexBuffer(),\n    indices = m:getIndexBuffer()\n  }\nend\n\nlocal function drawNode(model, pass, i)\n  for j = 1, model.object:getNodeDrawCount(i) do\n    local mode, material, start, count, base = model.object:getNodeDraw(i, j)\n    local transform = mat4(model.object:getNodeTransform(i))\n\n    pass:setMeshMode(mode)\n    pass:setMaterial(material)\n\n    if base then\n      pass:mesh(model.vertices, model.indices, transform, start, count, 1, base)\n    else\n      pass:mesh(model.vertices, transform, start, count)\n    end\n  end\n\n  for _, index in ipairs(model.data:getNodeChildren(i)) do\n    drawNode(model, pass, index)\n  end\nend\n\nfunction lovr.draw(pass)\n  drawNode(model, pass, model.data:getRootNode())\nend"
+                }
               }
             },
             {
               name = "getNodeDrawCount",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the number of meshes attached to a node.",
+              description = "Returns the number of meshes attached to a node.  Each mesh is drawn individually.",
               key = "Model:getNodeDrawCount",
               module = "lovr.graphics",
               related = {
@@ -8659,7 +8666,7 @@ return {
             {
               name = "getNodeName",
               summary = "Get the name of a node in the Model.",
-              description = "TODO",
+              description = "Returns the name of a node.",
               key = "Model:getNodeName",
               module = "lovr.graphics",
               related = {
@@ -8673,14 +8680,14 @@ return {
                     {
                       name = "index",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of the node."
                     }
                   },
                   returns = {
                     {
                       name = "name",
                       type = "string",
-                      description = "TODO"
+                      description = "The name of the node."
                     }
                   }
                 }
@@ -8689,7 +8696,7 @@ return {
             {
               name = "getNodeOrientation",
               summary = "Get the orientation of a node.",
-              description = "TODO",
+              description = "Returns the orientation of a node.",
               key = "Model:getNodeOrientation",
               module = "lovr.graphics",
               related = {
@@ -8828,7 +8835,7 @@ return {
             {
               name = "getNodePose",
               summary = "Get the pose of a node.",
-              description = "TODO",
+              description = "Returns the pose (position and orientation) of a node.",
               key = "Model:getNodePose",
               module = "lovr.graphics",
               related = {
@@ -8952,7 +8959,7 @@ return {
             {
               name = "getNodePosition",
               summary = "Get the position of a node.",
-              description = "TODO",
+              description = "Returns the position of a node.",
               key = "Model:getNodePosition",
               module = "lovr.graphics",
               related = {
@@ -9036,20 +9043,10 @@ return {
             {
               name = "getNodeScale",
               summary = "Get the scale of a node.",
-              description = "TODO",
+              description = "Returns the scale of a node.",
               key = "Model:getNodeScale",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
               variants = {
                 {
                   arguments = {
@@ -9115,12 +9112,23 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
               name = "getNodeTransform",
               summary = "Get the transform of a node.",
-              description = "Returns the transform of a node.",
+              description = "Returns the transform (position, scale, and rotation) of a node.",
               key = "Model:getNodeTransform",
               module = "lovr.graphics",
               related = {
@@ -9297,7 +9305,7 @@ return {
             {
               name = "getTexture",
               summary = "Get one of the textures in the Model.",
-              description = "TODO",
+              description = "Returns one of the textures in the Model.",
               key = "Model:getTexture",
               module = "lovr.graphics",
               related = {
@@ -9306,12 +9314,18 @@ return {
               },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the texture to get."
+                    }
+                  },
                   returns = {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "TODO"
+                      description = "The texture."
                     }
                   }
                 }
@@ -9397,7 +9411,7 @@ return {
             {
               name = "getVertexBuffer",
               summary = "Get a Buffer containing the vertices in the Model.",
-              description = "TODO",
+              description = "Returns a `Buffer` that holds the vertices of all of the meshes in the Model.",
               key = "Model:getVertexBuffer",
               module = "lovr.graphics",
               related = {
@@ -9410,7 +9424,7 @@ return {
                     {
                       name = "buffer",
                       type = "Buffer",
-                      description = "TODO"
+                      description = "The vertex buffer."
                     }
                   }
                 }
@@ -9471,10 +9485,10 @@ return {
             {
               name = "hasJoints",
               summary = "Check if the Model uses joints for skeletal animation.",
-              description = "TODO",
+              description = "Returns whether the Model has any skeletal animations.",
               key = "Model:hasJoints",
               module = "lovr.graphics",
-              notes = "TODO it's computed as skinCount TODO it's different from animationCount",
+              notes = "This will return when there's at least one skin in the model, as returned by `ModelData:getSkinCount`.\n\nEven if this function returns true, the model could still have non-skeletal animations.\n\nRight now a model can only be drawn with one skeletal pose per frame.",
               variants = {
                 {
                   arguments = {},
@@ -9482,7 +9496,7 @@ return {
                     {
                       name = "jointed",
                       type = "boolean",
-                      description = "Whether the animation uses joints for skeletal animation."
+                      description = "Whether the animation uses joint nodes for skeletal animation."
                     }
                   }
                 }
@@ -9491,7 +9505,7 @@ return {
             {
               name = "setNodeOrientation",
               summary = "Set or blend the orientation of a node.",
-              description = "TODO",
+              description = "Sets or blends the orientation of a node to a new orientation.",
               key = "Model:setNodeOrientation",
               module = "lovr.graphics",
               related = {
@@ -9553,7 +9567,7 @@ return {
             {
               name = "setNodePose",
               summary = "Set or blend the pose of a node.",
-              description = "TODO",
+              description = "Sets or blends the pose (position and orientation) of a node to a new pose.",
               key = "Model:setNodePose",
               module = "lovr.graphics",
               related = {
@@ -9577,13 +9591,13 @@ return {
                     },
                     {
                       name = "position",
-                      type = "vector3",
-                      description = "The target position."
+                      type = "Vec3",
+                      description = "The target position.  Can also be provided as 3 numbers."
                     },
                     {
                       name = "orientation",
-                      type = "rotation",
-                      description = "The target orientation."
+                      type = "Quat",
+                      description = "The target orientation.  Can also be provided as 4 numbers in angle-axis form."
                     },
                     {
                       name = "blend",
@@ -9603,13 +9617,13 @@ return {
                     },
                     {
                       name = "position",
-                      type = "vector3",
-                      description = "The target position."
+                      type = "Vec3",
+                      description = "The target position.  Can also be provided as 3 numbers."
                     },
                     {
                       name = "orientation",
-                      type = "rotation",
-                      description = "The target orientation."
+                      type = "Quat",
+                      description = "The target orientation.  Can also be provided as 4 numbers in angle-axis form."
                     },
                     {
                       name = "blend",
@@ -9625,7 +9639,7 @@ return {
             {
               name = "setNodePosition",
               summary = "Set or blend the position of a node.",
-              description = "TODO",
+              description = "Sets or blends the position of a node to a new position.",
               key = "Model:setNodePosition",
               module = "lovr.graphics",
               related = {
@@ -9649,8 +9663,8 @@ return {
                     },
                     {
                       name = "position",
-                      type = "vector3",
-                      description = "The target position."
+                      type = "Vec3",
+                      description = "The target position.  Can also be provided as 3 numbers."
                     },
                     {
                       name = "blend",
@@ -9670,8 +9684,8 @@ return {
                     },
                     {
                       name = "position",
-                      type = "vector3",
-                      description = "The target position."
+                      type = "Vec3",
+                      description = "The target position.  Can also be provided as 3 numbers."
                     },
                     {
                       name = "blend",
@@ -9687,9 +9701,54 @@ return {
             {
               name = "setNodeScale",
               summary = "Set or blend the scale of a node.",
-              description = "TODO",
+              description = "Sets or blends the scale of a node to a new scale.",
               key = "Model:setNodeScale",
               module = "lovr.graphics",
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The target scale.  Can also be provided as 3 numbers."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The target scale.  Can also be provided as 3 numbers."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              },
               related = {
                 "Model:getNodePosition",
                 "Model:setNodePosition",
@@ -9700,7 +9759,15 @@ return {
                 "Model:getNodeTransform",
                 "Model:setNodeTransform",
                 "Model:animate"
-              },
+              }
+            },
+            {
+              name = "setNodeTransform",
+              summary = "Set or blend the transform of a node.",
+              description = "Sets or blends the transform of a node to a new transform.",
+              key = "Model:setNodeTransform",
+              module = "lovr.graphics",
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
               variants = {
                 {
                   arguments = {
@@ -9710,14 +9777,14 @@ return {
                       description = "The index of the node."
                     },
                     {
-                      name = "scale",
-                      type = "vector3",
-                      description = "The target scale."
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
                   },
@@ -9731,27 +9798,20 @@ return {
                       description = "The name of the node."
                     },
                     {
-                      name = "scale",
-                      type = "vector3",
-                      description = "The target scale."
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
                   },
                   returns = {}
                 }
-              }
-            },
-            {
-              name = "setNodeTransform",
-              summary = "Set or blend the transform of a node.",
-              description = "Sets or blends the transform of a node to a new value.",
-              key = "Model:setNodeTransform",
-              module = "lovr.graphics",
+              },
               related = {
                 "Model:getNodePosition",
                 "Model:setNodePosition",
@@ -9762,50 +9822,6 @@ return {
                 "Model:getNodePose",
                 "Model:setNodePose",
                 "Model:animate"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The target transform.  The position, scale, and rotation can also be provided using `Vec3`, `Quat`, or numbers."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The target transform.  The position, scale, and rotation can also be provided using `Vec3`, `Quat`, or numbers."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                }
               }
             }
           }

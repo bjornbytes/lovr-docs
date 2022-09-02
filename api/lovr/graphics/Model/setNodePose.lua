@@ -1,6 +1,6 @@
 return {
   summary = 'Set or blend the pose of a node.',
-  description = 'TODO',
+  description = 'Sets or blends the pose (position and orientation) of a node to a new pose.',
   arguments = {
     index = {
       type = 'number',
@@ -11,12 +11,12 @@ return {
       description = 'The name of the node.'
     },
     position = {
-      type = 'vector3',
-      description = 'The target position.'
+      type = 'Vec3',
+      description = 'The target position.  Can also be provided as 3 numbers.'
     },
     orientation = {
-      type = 'rotation',
-      description = 'The target orientation.'
+      type = 'Quat',
+      description = 'The target orientation.  Can also be provided as 4 numbers in angle-axis form.'
     },
     blend = {
       type = 'number',

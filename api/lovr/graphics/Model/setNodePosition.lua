@@ -1,6 +1,6 @@
 return {
   summary = 'Set or blend the position of a node.',
-  description = 'TODO',
+  description = 'Sets or blends the position of a node to a new position.',
   arguments = {
     index = {
       type = 'number',
@@ -11,8 +11,8 @@ return {
       description = 'The name of the node.'
     },
     position = {
-      type = 'vector3',
-      description = 'The target position.'
+      type = 'Vec3',
+      description = 'The target position.  Can also be provided as 3 numbers.'
     },
     blend = {
       type = 'number',

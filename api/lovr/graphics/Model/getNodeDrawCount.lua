@@ -1,6 +1,8 @@
 return {
-  summary = 'TODO',
-  description = 'TODO',
+  summary = 'Get the number of meshes attached to a node.',
+  description = [[
+    Returns the number of meshes attached to a node.  Each mesh is drawn individually.
+  ]],
   arguments = {
     index = {
       type = 'number',

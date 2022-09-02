@@ -1,12 +1,22 @@
 return {
   summary = 'Get one of the textures in the Model.',
-  description = 'TODO',
-  arguments = {},
+  description = 'Returns one of the textures in the Model.',
+  arguments = {
+    index = {
+      type = 'number',
+      description = 'The index of the texture to get.'
+    }
+  },
   returns = {
-    {
-      name = 'texture',
+    texture = {
       type = 'Texture',
-      description = 'TODO'
+      description = 'The texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'index' },
+      returns = { 'texture' }
     }
   },
   related = {

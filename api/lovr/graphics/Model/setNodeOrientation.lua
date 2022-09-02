@@ -1,6 +1,6 @@
 return {
   summary = 'Set or blend the orientation of a node.',
-  description = 'TODO',
+  description = 'Sets or blends the orientation of a node to a new orientation.',
   arguments = {
     index = {
       type = 'number',

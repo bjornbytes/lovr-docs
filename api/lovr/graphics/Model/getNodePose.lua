@@ -1,6 +1,6 @@
 return {
   summary = 'Get the pose of a node.',
-  description = 'TODO',
+  description = 'Returns the pose (position and orientation) of a node.',
   arguments = {
     index = {
       type = 'number',

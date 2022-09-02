@@ -1,6 +1,6 @@
 return {
   summary = 'Get the orientation of a node.',
-  description = 'TODO',
+  description = 'Returns the orientation of a node.',
   arguments = {
     index = {
       type = 'number',

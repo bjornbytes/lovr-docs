@@ -1,6 +1,6 @@
 return {
   summary = 'Get the position of a node.',
-  description = 'TODO',
+  description = 'Returns the position of a node.',
   arguments = {
     index = {
       type = 'number',

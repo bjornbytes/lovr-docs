@@ -1,6 +1,6 @@
 return {
   summary = 'Set or blend the transform of a node.',
-  description = 'Sets or blends the transform of a node to a new value.',
+  description = 'Sets or blends the transform of a node to a new transform.',
   arguments = {
     index = {
       type = 'number',
@@ -13,8 +13,8 @@ return {
     transform = {
       type = 'Mat4',
       description = [[
-        The target transform.  The position, scale, and rotation can also be provided using `Vec3`,
-        `Quat`, or numbers.
+        The target transform.  Can also be provided as position, scale, and rotation using a mix of
+        `Vectors` or numbers, with 3 scale components.
       ]]
     },
     blend = {
@@ -38,6 +38,10 @@ return {
       returns = {}
     }
   },
+  notes = [[
+    For best results when animating, it's recommended to keep the 3 components of the scale the
+    same.
+  ]],
   related = {
     'Model:getNodePosition',
     'Model:setNodePosition',

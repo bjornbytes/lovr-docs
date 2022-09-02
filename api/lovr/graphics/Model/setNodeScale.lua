@@ -1,6 +1,6 @@
 return {
   summary = 'Set or blend the scale of a node.',
-  description = 'TODO',
+  description = 'Sets or blends the scale of a node to a new scale.',
   arguments = {
     index = {
       type = 'number',
@@ -11,8 +11,8 @@ return {
       description = 'The name of the node.'
     },
     scale = {
-      type = 'vector3',
-      description = 'The target scale.'
+      type = 'Vec3',
+      description = 'The target scale.  Can also be provided as 3 numbers.'
     },
     blend = {
       type = 'number',
@@ -34,6 +34,10 @@ return {
       returns = {}
     }
   },
+  notes = [[
+    For best results when animating, it's recommended to keep the 3 components of the scale the
+    same.
+  ]],
   related = {
     'Model:getNodePosition',
     'Model:setNodePosition',

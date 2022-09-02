@@ -1,6 +1,8 @@
 return {
-  summary = 'TODO',
-  description = 'TODO',
+  summary = 'Get the information needed to draw one mesh attached to a node.',
+  description = [[
+    Returns the draw mode, material, and vertex range of a mesh in the model.
+  ]],
   arguments = {
     node = {
       type = 'number',
@@ -50,6 +52,42 @@ return {
       returns = { 'mode', 'material', 'start', 'count', 'base' }
     }
   },
+  example = [[
+    function lovr.load()
+      local m = lovr.graphics.newModel('enraged-gorilla.gltf')
+
+      model = {
+        object = m,
+        data = m:getData(),
+        vertices = m:getVertexBuffer(),
+        indices = m:getIndexBuffer()
+      }
+    end
+
+    local function drawNode(model, pass, i)
+      for j = 1, model.object:getNodeDrawCount(i) do
+        local mode, material, start, count, base = model.object:getNodeDraw(i, j)
+        local transform = mat4(model.object:getNodeTransform(i))
+
+        pass:setMeshMode(mode)
+        pass:setMaterial(material)
+
+        if base then
+          pass:mesh(model.vertices, model.indices, transform, start, count, 1, base)
+        else
+          pass:mesh(model.vertices, transform, start, count)
+        end
+      end
+
+      for _, index in ipairs(model.data:getNodeChildren(i)) do
+        drawNode(model, pass, index)
+      end
+    end
+
+    function lovr.draw(pass)
+      drawNode(model, pass, model.data:getRootNode())
+    end
+  ]],
   related = {
     'Pass:setMeshMode',
     'Pass:setMaterial',

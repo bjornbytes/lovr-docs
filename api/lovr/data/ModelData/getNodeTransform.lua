@@ -65,6 +65,10 @@ return {
       returns = { 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' }
     }
   },
+  notes = [[
+    For best results when animating, it's recommended to keep the 3 components of the scale the
+    same.
+  ]],
   related = {
     'ModelData:getNodePosition',
     'ModelData:getNodeOrientation',

@@ -1,6 +1,6 @@
 return {
   summary = 'Get the scale of a node.',
-  description = 'TODO',
+  description = 'Returns the scale of a node.',
   arguments = {
     index = {
       type = 'number',
@@ -42,6 +42,10 @@ return {
       returns = { 'x', 'y', 'z' }
     }
   },
+  notes = [[
+    For best results when animating, it's recommended to keep the 3 components of the scale the
+    same.
+  ]],
   related = {
     'Model:getNodePosition',
     'Model:setNodePosition',
