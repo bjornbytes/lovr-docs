@@ -7232,10 +7232,10 @@ return {
             {
               name = "clear",
               summary = "Clear the data in the Buffer.",
-              description = "Clears some or all of the data in the Buffer to zero.  This is supported for both temporary and permanent Buffers.  Permanent Buffers can also be cleared in a transfer pass using `Pass:clear`.",
+              description = "Clears some or all of the data in the **temporary** Buffer to zero.  Permanent Buffers can be cleared in a transfer pass using `Pass:clear`.",
               key = "Buffer:clear",
               module = "lovr.graphics",
-              notes = "Clearing a permanent buffer requires the byte offset and byte count of the cleared range to be a multiple of 4.  This will usually be true for most field types.",
+              notes = "Clearing a permanent buffer requires the byte offset and byte count of the cleared range to be a multiple of 4.  This will usually be true for most data types.",
               variants = {
                 {
                   arguments = {
@@ -7314,7 +7314,7 @@ return {
             {
               name = "getPointer",
               summary = "Get a raw pointer to the Buffer's memory.",
-              description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT ffi or for passing to C libraries.  This is only available for temporary buffers, and as such the pointer is only valid until `lovr.graphics.submit` is called.",
+              description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.  This is only available for temporary buffers, so the pointer is only valid until `lovr.graphics.submit` is called.",
               key = "Buffer:getPointer",
               module = "lovr.graphics",
               related = {
@@ -7405,7 +7405,7 @@ return {
             {
               name = "setData",
               summary = "Change the data in the Buffer.",
-              description = "Changes data in the Buffer using a table or a Blob.  This is supported for both temporary and permanent buffers.  All passes submitted to the GPU will use the new data.\n\nIt is also possible to change the data in permanent buffers inside of a transfer pass using `Pass:copy`.  Using a transfer pass allows the copy to happen after other passes in the frame.",
+              description = "Changes data in a temporary Buffer using a table or a Blob.  Permanent buffers can be changed using `Pass:copy`.",
               key = "Buffer:setData",
               module = "lovr.graphics",
               variants = {
@@ -7472,7 +7472,7 @@ return {
               },
               examples = {
                 {
-                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer(3, 'floats')\n  buffer:setData({ { 1.0 }, { 2.0 }, { 3.0 } })\n  buffer:setData({ 1.0, 2.0, 3.0 })\n\n  buffer = lovr.graphics.newBuffer(5, { 'vec3', 'vec3', 'vec2' })\n  buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6), vec2(7, 8) })\n  buffer:setData({ { 1, 2, 3, 4, 5, 6, 7, 8 } })\n  buffer:setData({ 1, 2, 3, 4, 5, 6, 7, 8 })\n  buffer:setData({\n    { x1, y1, z1, nx1, ny1, nz1, u1, v1 },\n    { x2, y2, z2, vec3(nx, ny, nz) }\n  }, 1, 3, 2)\nend"
+                  code = "function lovr.draw(pass)\n  buffer = lovr.graphics.getBuffer(3, 'floats')\n  buffer:setData({ { 1.0 }, { 2.0 }, { 3.0 } })\n  buffer:setData({ 1.0, 2.0, 3.0 })\n\n  buffer = lovr.graphics.getBuffer(5, { 'vec3', 'vec3', 'vec2' })\n  buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6), vec2(7, 8) })\n  buffer:setData({ { 1, 2, 3, 4, 5, 6, 7, 8 } })\n  buffer:setData({ 1, 2, 3, 4, 5, 6, 7, 8 })\n  buffer:setData({\n    { x1, y1, z1, nx1, ny1, nz1, u1, v1 },\n    { x2, y2, z2, vec3(nx, ny, nz) }\n  }, 1, 3, 2)\nend"
                 }
               }
             }
@@ -13031,8 +13031,8 @@ return {
         },
         {
           name = "Sampler",
-          summary = "TODO",
-          description = "TODO",
+          summary = "An object that controls how texture pixels are read.",
+          description = "Samplers are objects that control how pixels are read from a texture.  They can control whether the pixels are smoothed, whether the texture wraps at the edge of its UVs, and more.\n\nEach has a default sampler that will be used by default, which can be changed using `Pass:setSampler`.  Also, samplers can be declared in shaders using the following syntax:\n\n    layout(set = 2, binding = X) uniform sampler mySampler;\n\nA Sampler can be sent to the variable using `Pass:send('mySampler', sampler)`.\n\nThe properties of a Sampler are immutable, and can't be changed after it's created.",
           key = "Sampler",
           module = "lovr.graphics",
           constructors = {
@@ -13041,16 +13041,11 @@ return {
           methods = {
             {
               name = "getAnisotropy",
-              summary = "Get the anisotropy of the Sampler.",
-              description = "TODO",
+              summary = "Get the anisotropy level of the Sampler.",
+              description = "Returns the anisotropy level of the Sampler.  Anisotropy smooths out a texture's appearance when viewed at grazing angles.",
               key = "Sampler:getAnisotropy",
               module = "lovr.graphics",
-              related = {
-                "Sampler:getFilter",
-                "Sampler:getWrap",
-                "Sampler:getCompareMode",
-                "Sampler:getMipmapRange"
-              },
+              notes = "Not all GPUs support anisotropy.  The maximum anisotropy level is given by the `anisotropy` limit of `lovr.graphics.getLimits`, which may be zero.  It's very common for the maximum to be 16, however.",
               variants = {
                 {
                   arguments = {},
@@ -13058,16 +13053,22 @@ return {
                     {
                       name = "anisotropy",
                       type = "number",
-                      description = "TODO"
+                      description = "The anisotropy level of the sampler."
                     }
                   }
                 }
+              },
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getMipmapRange"
               }
             },
             {
               name = "getCompareMode",
               summary = "Get the compare mode of the Sampler.",
-              description = "TODO",
+              description = "Returns the compare mode of the Sampler.  This is a feature typically only used for shadow mapping.  Using a sampler with a compare mode requires it to be declared in a shader as a `samplerShadow` instead of a `sampler` variable, and used with a texture that has a depth format.  The result of sampling a depth texture with a shadow sampler is a number between 0 and 1, indicating the percentage of sampled pixels that passed the comparison.",
               key = "Sampler:getCompareMode",
               module = "lovr.graphics",
               related = {
@@ -13083,7 +13084,7 @@ return {
                     {
                       name = "compare",
                       type = "CompareMode",
-                      description = "TODO"
+                      description = "The compare mode of the sampler."
                     }
                   }
                 }
@@ -13092,7 +13093,7 @@ return {
             {
               name = "getFilter",
               summary = "Get the filter mode of the Sampler.",
-              description = "TODO",
+              description = "Returns the filter mode of the Sampler.",
               key = "Sampler:getFilter",
               module = "lovr.graphics",
               related = {
@@ -13108,17 +13109,17 @@ return {
                     {
                       name = "min",
                       type = "FilterMode",
-                      description = "TODO"
+                      description = "The filter mode used when the texture is minified."
                     },
                     {
                       name = "mag",
                       type = "FilterMode",
-                      description = "TODO"
+                      description = "The filter mode used when the texture is magnified."
                     },
                     {
                       name = "mip",
                       type = "FilterMode",
-                      description = "TODO"
+                      description = "The filter mode used to select a mipmap level."
                     }
                   }
                 }
@@ -13127,7 +13128,7 @@ return {
             {
               name = "getMipmapRange",
               summary = "Get the mipmap range of the Sampler.",
-              description = "TODO",
+              description = "Returns the mipmap range of the Sampler.  This is used to clamp the range of mipmap levels that can be accessed from a texture.",
               key = "Sampler:getMipmapRange",
               module = "lovr.graphics",
               related = {
@@ -13143,12 +13144,12 @@ return {
                     {
                       name = "min",
                       type = "number",
-                      description = "TODO"
+                      description = "The minimum mipmap level that will be sampled (0 is the largest image)."
                     },
                     {
                       name = "max",
                       type = "number",
-                      description = "TODO"
+                      description = "The maximum mipmap level that will be sampled."
                     }
                   }
                 }
@@ -13157,7 +13158,7 @@ return {
             {
               name = "getWrap",
               summary = "Get the wrap mode of the Sampler.",
-              description = "TODO",
+              description = "Returns the wrap mode of the sampler, used to wrap or clamp texture coordinates when the extend outside of the 0-1 range.",
               key = "Sampler:getWrap",
               module = "lovr.graphics",
               related = {
@@ -13173,17 +13174,17 @@ return {
                     {
                       name = "x",
                       type = "WrapMode",
-                      description = "TODO"
+                      description = "The wrap mode used in the horizontal direction."
                     },
                     {
                       name = "y",
                       type = "WrapMode",
-                      description = "TODO"
+                      description = "The wrap mode used in the vertical direction."
                     },
                     {
                       name = "z",
                       type = "WrapMode",
-                      description = "TODO"
+                      description = "The wrap mode used in the \"z\" direction, for 3D textures only."
                     }
                   }
                 }
@@ -16092,6 +16093,25 @@ return {
           }
         },
         {
+          name = "FilterMode",
+          summary = "Different ways to smooth textures.",
+          description = "Controls how `Sampler` objects smooth pixels in textures.",
+          key = "FilterMode",
+          module = "lovr.graphics",
+          values = {
+            {
+              {
+                name = "nearest",
+                description = "A pixelated appearance where the \"nearest neighbor\" pixel is used."
+              },
+              {
+                name = "linear",
+                description = "A smooth appearance where neighboring pixels are averaged."
+              }
+            }
+          }
+        },
+        {
           name = "MeshMode",
           summary = "Different ways to draw mesh vertices.",
           description = "TODO",
@@ -16294,6 +16314,25 @@ return {
             {
               name = "transfer",
               description = "Whether the texture can be used in a transfer pass."
+            }
+          }
+        },
+        {
+          name = "WrapMode",
+          summary = "Different ways to wrap textures.",
+          description = "Controls how `Sampler` objects wrap textures.",
+          key = "WrapMode",
+          module = "lovr.graphics",
+          values = {
+            {
+              {
+                name = "clamp",
+                description = "          Pixels will be clamped to the edge, with pixels outside the 0-1 uv range using colors from\n          the nearest edge.\n        "
+              },
+              {
+                name = "repeat",
+                description = "Tiles the texture."
+              }
             }
           }
         }

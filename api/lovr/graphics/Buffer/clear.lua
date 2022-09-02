@@ -1,8 +1,8 @@
 return {
   summary = 'Clear the data in the Buffer.',
   description = [[
-    Clears some or all of the data in the Buffer to zero.  This is supported for both temporary and
-    permanent Buffers.  Permanent Buffers can also be cleared in a transfer pass using `Pass:clear`.
+    Clears some or all of the data in the **temporary** Buffer to zero.  Permanent Buffers can be
+    cleared in a transfer pass using `Pass:clear`.
   ]],
   arguments = {
     {
@@ -21,7 +21,7 @@ return {
   returns = {},
   notes = [[
     Clearing a permanent buffer requires the byte offset and byte count of the cleared range to be a
-    multiple of 4.  This will usually be true for most field types.
+    multiple of 4.  This will usually be true for most data types.
   ]],
   related = {
     'Pass:clear'

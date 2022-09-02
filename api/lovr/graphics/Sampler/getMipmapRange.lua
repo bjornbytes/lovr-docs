@@ -1,17 +1,20 @@
 return {
   summary = 'Get the mipmap range of the Sampler.',
-  description = 'TODO',
+  description = [[
+    Returns the mipmap range of the Sampler.  This is used to clamp the range of mipmap levels that
+    can be accessed from a texture.
+  ]],
   arguments = {},
   returns = {
     {
       name = 'min',
       type = 'number',
-      description = 'TODO'
+      description = 'The minimum mipmap level that will be sampled (0 is the largest image).'
     },
     {
       name = 'max',
       type = 'number',
-      description = 'TODO'
+      description = 'The maximum mipmap level that will be sampled.'
     }
   },
   related = {

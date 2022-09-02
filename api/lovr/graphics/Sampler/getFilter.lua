@@ -1,22 +1,22 @@
 return {
   summary = 'Get the filter mode of the Sampler.',
-  description = 'TODO',
+  description = 'Returns the filter mode of the Sampler.',
   arguments = {},
   returns = {
     {
       name = 'min',
       type = 'FilterMode',
-      description = 'TODO'
+      description = 'The filter mode used when the texture is minified.'
     },
     {
       name = 'mag',
       type = 'FilterMode',
-      description = 'TODO'
+      description = 'The filter mode used when the texture is magnified.'
     },
     {
       name = 'mip',
       type = 'FilterMode',
-      description = 'TODO'
+      description = 'The filter mode used to select a mipmap level.'
     }
   },
   related = {

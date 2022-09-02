@@ -1,22 +1,25 @@
 return {
   summary = 'Get the wrap mode of the Sampler.',
-  description = 'TODO',
+  description = [[
+    Returns the wrap mode of the sampler, used to wrap or clamp texture coordinates when the extend
+    outside of the 0-1 range.
+  ]],
   arguments = {},
   returns = {
     {
       name = 'x',
       type = 'WrapMode',
-      description = 'TODO'
+      description = 'The wrap mode used in the horizontal direction.'
     },
     {
       name = 'y',
       type = 'WrapMode',
-      description = 'TODO'
+      description = 'The wrap mode used in the vertical direction.'
     },
     {
       name = 'z',
       type = 'WrapMode',
-      description = 'TODO'
+      description = 'The wrap mode used in the "z" direction, for 3D textures only.'
     }
   },
   related = {

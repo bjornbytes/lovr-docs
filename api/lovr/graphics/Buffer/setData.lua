@@ -1,11 +1,8 @@
 return {
   summary = 'Change the data in the Buffer.',
   description = [[
-    Changes data in the Buffer using a table or a Blob.  This is supported for both temporary and
-    permanent buffers.  All passes submitted to the GPU will use the new data.
-
-    It is also possible to change the data in permanent buffers inside of a transfer pass using
-    `Pass:copy`.  Using a transfer pass allows the copy to happen after other passes in the frame.
+    Changes data in a temporary Buffer using a table or a Blob.  Permanent buffers can be changed
+    using `Pass:copy`.
   ]],
   arguments = {
     data = {
@@ -76,12 +73,12 @@ return {
     Buffer.  Any missing components for an updated field will be set to zero.
   ]],
   example = [[
-    function lovr.load()
-      buffer = lovr.graphics.newBuffer(3, 'floats')
+    function lovr.draw(pass)
+      buffer = lovr.graphics.getBuffer(3, 'floats')
       buffer:setData({ { 1.0 }, { 2.0 }, { 3.0 } })
       buffer:setData({ 1.0, 2.0, 3.0 })
 
-      buffer = lovr.graphics.newBuffer(5, { 'vec3', 'vec3', 'vec2' })
+      buffer = lovr.graphics.getBuffer(5, { 'vec3', 'vec3', 'vec2' })
       buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6), vec2(7, 8) })
       buffer:setData({ { 1, 2, 3, 4, 5, 6, 7, 8 } })
       buffer:setData({ 1, 2, 3, 4, 5, 6, 7, 8 })
