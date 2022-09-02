@@ -6,11 +6,11 @@ This is an example of a **callback** because we wrote a function and LÖVR "call
 function later.  Defining a callback lets you specify how your project behaves when a specific event
 occurs.
 
-In the previous example we also used the `lovr.graphics.print` function to render text to the
-screen.  This is an example of using the `lovr.graphics` **module**.  LÖVR has several modules and
-each one contains functions related to a certain area of functionality.  For example, there's the
-`lovr.graphics` module for rendering graphics, the `lovr.audio` module for playing sounds, and the
-`lovr.headset` module for getting information about connected VR hardware.
+In the previous example we also used the `Pass:text` function to render text to the screen.  This is
+an example of using the `lovr.graphics` **module**.  LÖVR has several modules and each one contains
+functions related to a certain area of functionality.  For example, there's the `lovr.graphics`
+module for rendering graphics, the `lovr.audio` module for playing sounds, and the `lovr.headset`
+module for getting information about connected VR hardware.
 
 We can define **callbacks** and call functions from **modules** to make things with LÖVR.
 
@@ -38,10 +38,10 @@ function lovr.update(dt)
   print('updating', dt)
 end
 
-function lovr.draw()
+function lovr.draw(pass)
   -- This is called once every frame.
   --
-  -- You can use it to render the scene.
+  -- You can call functions on the pass to render graphics.
 
   print('rendering')
 end
@@ -75,8 +75,11 @@ lovr.graphics
 The graphics module is the most exciting module, and is also the largest.  Most functions in
 `lovr.graphics` should be used in `lovr.draw`, since that's where rendering happens.
 
-`lovr.graphics` has a set of handy **graphics primitives** for rendering basic shapes and text.
-These can be used to quickly prototype a scene without needing to create or load assets.
+`lovr.draw` receives a `Pass` object as an argument, which holds a list of rendering instructions.
+At the end of `lovr.draw`, everything drawn by the Pass will get sent to the display.
+
+`Pass` has a set of handy **graphics primitives** for rendering basic shapes and text. These can be
+used to quickly prototype a scene without needing to create or load assets.
 
 There are lots of different rendering-related objects that can be created using `lovr.graphics`,
 such as `Model`, `Texture`, `Font`, `Shader`, and more.  Every function to create a new
@@ -85,37 +88,35 @@ object is prefixed with `new`, so to create a 3D model object you can use `lovr.
 > Note: Creating graphics objects uses memory and can slow things down if done every frame.  For
 > this reason, it's recommended to create objects only once in `lovr.load` before using them!
 
-Another important component of `lovr.graphics` is **graphics state**.  The graphics renderer has a
-number of state variables that can be changed, like the color of rendered objects, the font in use,
-or the coordinate system.  These functions usually have prefixes of `get` or `set`, so to change the
-active color you can use `lovr.graphics.setColor`.  It's important to keep in mind that this state
-is **global**, so changing the color will affect all subsequent drawing operations until it's
-changed again.
+Another important component of `lovr.graphics` is **graphics state**.  `Pass` has a number of state
+variables that can be changed, like the color of rendered objects, the font in use, or the
+coordinate system.  These functions usually have prefixes of `get` or `set`, so to change the active
+color you can use `Pass:setColor`.
 
 Finally, we'll talk about the coordinate system.  LÖVR uses a 3D coordinate system with values
 specified in meters.  Negative z values are in front of the camera, positive y values are above the
 ground, and negative x values are to the left.  By default, the coordinate system maps to the VR
 play area, so the origin is on the ground in the middle of the play space.
 
-You've already seen `lovr.graphics.print`, but here's another example:
+You've already seen `Pass:text`, but here's another example:
 
 ```
 function lovr.load()
   -- Load a 3D model
   model = lovr.graphics.newModel('monkey.obj')
-end
 
-function lovr.draw()
   -- Use a dark grey background
   lovr.graphics.setBackgroundColor(.2, .2, .2)
+end
 
+function lovr.draw(pass)
   -- Draw the model
-  lovr.graphics.setColor(1.0, 1.0, 1.0)
-  model:draw(-.5, 1, -3)
+  pass:setColor(1, 1, 1)
+  pass:draw(model, -.5, 1, -3)
 
   -- Draw a red cube using the "cube" primitive
-  lovr.graphics.setColor(1.0, 0, 0)
-  lovr.graphics.cube('fill', .5, 1, -3, .5, lovr.timer.getTime())
+  pass:setColor(1, 0, 0)
+  pass:cube(.5, 1, -3, .5, lovr.timer.getTime())
 end
 ```
 
@@ -140,9 +141,9 @@ functions can be used to figure out the state of buttons and other controls on t
 Here's a simple example that draws a sphere in the "opposite" position of the headset:
 
 ```
-function lovr.draw()
+function lovr.draw(pass)
   local x, y, z = lovr.headset.getPosition()
-  lovr.graphics.sphere(-x, y, -z, .1)
+  pass:sphere(-x, y, -z, .1)
 end
 ```
 
@@ -217,20 +218,20 @@ function lovr.update(dt)
 end
 
 -- A helper function for drawing boxes
-function drawBox(box)
+function drawBox(pass, box)
   local x, y, z = box:getPosition()
-  lovr.graphics.cube('line', x, y, z, .25, box:getOrientation())
+  pass:cube(x, y, z, .25, quat(box:getOrientation()), 'line')
 end
 
-function lovr.draw()
-  lovr.graphics.setColor(1.0, 0, 0)
+function lovr.draw(pass)
+  pass:setColor(1.0, 0, 0)
   for i, box in ipairs(boxes) do
-    drawBox(box)
+    drawBox(pass, box)
   end
 
-  lovr.graphics.setColor(0, 0, 1.0)
+  pass:setColor(0, 0, 1.0)
   for i, box in ipairs(controllerBoxes) do
-    drawBox(box)
+    drawBox(pass, box)
   end
 end
 ```
