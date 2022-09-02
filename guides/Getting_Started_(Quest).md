@@ -37,8 +37,8 @@ Now we can create a LÖVR project, which is a folder with some code and assets i
 folder called `hello-world` and add this code to a file named `main.lua` in there:
 
 ```
-function lovr.draw()
-  lovr.graphics.print('hello world', 0, 1.7, -3, .5)
+function lovr.draw(pass)
+  pass:text('hello world', 0, 1.7, -3, .5)
 end
 ```
 
