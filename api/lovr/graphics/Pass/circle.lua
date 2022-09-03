@@ -1,12 +1,15 @@
 return {
   tag = 'drawing',
   summary = 'Draw a circle.',
-  description = 'TODO',
+  description = 'Draws a circle.',
   arguments = {
     {
       name = 'transform',
-      type = 'Transform',
-      description = 'The transform to apply to the circle.'
+      type = 'Mat4',
+      description = [[
+        The transform of the circle.  Can also be provided as position, radius, and rotation, using
+        a mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used.
+      ]]
     },
     {
       name = 'style',
@@ -34,5 +37,7 @@ return {
     }
   },
   returns = {},
-  notes = 'TODO'
+  notes = [[
+    The local origin of the circle is in its center, and the local z axis goes through the center.
+  ]]
 }

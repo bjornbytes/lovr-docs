@@ -1,18 +1,36 @@
 return {
   summary = 'Get the width of rendered text.',
-  description = 'TODO',
+  description = [[
+    Returns the maximum width of a piece of text.  This function does not perform wrapping but does
+    respect newlines in the text.
+  ]],
   arguments = {
-    {
-      name = 'text',
-      type = 'Text',
-      description = 'TODO'
-    }
+    string = {
+      type = 'string',
+      description = 'The text to measure.'
+    },
+    strings = {
+      type = 'table',
+      description = [[
+        A table of colored strings, each given as a `{ color, string }` pair.  The color can be a
+        `Vec3`, `Vec4`, table, or hexcode.
+      ]]
+    },
   },
   returns = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
-      description = 'TODO'
+      description = 'The maximum width of the text.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'string' },
+      returns = { 'width' }
+    },
+    {
+      arguments = { 'strings' },
+      returns = { 'width' }
     }
   },
   related = {

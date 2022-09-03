@@ -86,7 +86,6 @@ return {
   ]],
   related = {
     'lovr.graphics.getFeatures',
-    'lovr.graphics.getLimits',
-    'lovr.graphics.getStats'
+    'lovr.graphics.getLimits'
   }
 }

@@ -6395,6 +6395,11 @@ return {
                   name = "name",
                   type = "string",
                   description = "The name of the event."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "The arguments for the event.  Currently, up to 4 are supported."
                 }
               },
               returns = {}
@@ -7493,10 +7498,11 @@ return {
             {
               name = "getAscent",
               summary = "Get the ascent of the Font.",
-              description = "TODO",
+              description = "Returns the ascent of the font.  The ascent is the maximum amount glyphs ascend above the baseline.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getAscent",
               module = "lovr.graphics",
               related = {
+                "Rasterizer:getAscent",
                 "Font:getDescent",
                 "Font:getHeight",
                 "Font:getKerning",
@@ -7509,7 +7515,7 @@ return {
                     {
                       name = "ascent",
                       type = "number",
-                      description = "TODO"
+                      description = "The ascent of the font."
                     }
                   }
                 }
@@ -7518,10 +7524,11 @@ return {
             {
               name = "getDescent",
               summary = "Get the descent of the Font.",
-              description = "TODO",
+              description = "Returns the descent of the font.  The descent is the maximum amount glyphs descend below the baseline.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getDescent",
               module = "lovr.graphics",
               related = {
+                "Rasterizer:getDescent",
                 "Font:getAscent",
                 "Font:getHeight",
                 "Font:getKerning",
@@ -7534,7 +7541,7 @@ return {
                     {
                       name = "descent",
                       type = "number",
-                      description = "TODO"
+                      description = "The descent of the font."
                     }
                   }
                 }
@@ -7543,10 +7550,13 @@ return {
             {
               name = "getHeight",
               summary = "Get the height of the Font.",
-              description = "TODO",
+              description = "Returns the height of the font, sometimes also called the leading.  This is the full height of a line of text, including the space between lines.  Each line of a multiline string is separated on the y axis by this height, multiplied by the font's line spacing.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getHeight",
               module = "lovr.graphics",
               related = {
+                "Rasterizer:getLeading",
+                "Font:getLineSpacing",
+                "Font:setLineSpacing",
                 "Font:getAscent",
                 "Font:getDescent",
                 "Font:getKerning",
@@ -7560,7 +7570,7 @@ return {
                     {
                       name = "height",
                       type = "number",
-                      description = "TODO"
+                      description = "The height of the font."
                     }
                   }
                 }
@@ -7568,11 +7578,12 @@ return {
             },
             {
               name = "getKerning",
-              summary = "Get the kerning of the Font.",
-              description = "TODO",
+              summary = "Get the kerning between 2 glyphs.",
+              description = "Returns the kerning between 2 glyphs.  Kerning is a slight horizontal adjustment between 2 glyphs to improve the visual appearance.  It will often be negative.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getKerning",
               module = "lovr.graphics",
               related = {
+                "Rasterizer:getKerning",
                 "Font:getAscent",
                 "Font:getDescent",
                 "Font:getHeight",
@@ -7583,20 +7594,83 @@ return {
                   arguments = {
                     {
                       name = "first",
-                      type = "Codepoint",
-                      description = "TODO"
+                      type = "string",
+                      description = "The first character."
                     },
                     {
                       name = "second",
-                      type = "Codepoint",
-                      description = "TODO"
+                      type = "string",
+                      description = "The second letter."
                     }
                   },
                   returns = {
                     {
-                      name = "kerning",
+                      name = "keming",
                       type = "number",
-                      description = "TODO"
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "firstCodepoint",
+                      type = "number",
+                      description = "The first codepoint."
+                    },
+                    {
+                      name = "second",
+                      type = "string",
+                      description = "The second letter."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "first",
+                      type = "string",
+                      description = "The first character."
+                    },
+                    {
+                      name = "secondCodepoint",
+                      type = "number",
+                      description = "The second codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "firstCodepoint",
+                      type = "number",
+                      description = "The first codepoint."
+                    },
+                    {
+                      name = "secondCodepoint",
+                      type = "number",
+                      description = "The second codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
                     }
                   }
                 }
@@ -7604,10 +7678,13 @@ return {
             },
             {
               name = "getLineSpacing",
-              summary = "Set the pixel density of the Font.",
-              description = "TODO",
+              summary = "Get the line spacing of the Font.",
+              description = "Returns the line spacing of the Font.  When spacing out lines, the height of the font is multiplied the line spacing to get the final spacing value.  The default is 1.0.",
               key = "Font:getLineSpacing",
               module = "lovr.graphics",
+              related = {
+                "Font:getHeight"
+              },
               variants = {
                 {
                   arguments = {},
@@ -7615,7 +7692,7 @@ return {
                     {
                       name = "spacing",
                       type = "number",
-                      description = "TODO"
+                      description = "The line spacing of the font."
                     }
                   }
                 }
@@ -7623,8 +7700,8 @@ return {
             },
             {
               name = "getLines",
-              summary = "Turn a long string into a sequence of wrapped lines.",
-              description = "TODO",
+              summary = "Wrap a string into a sequence of lines.",
+              description = "Returns a table of wrapped lines for a piece of text, given a line length limit.  Newlines are handled correctly.  The wrap limit units depend on the pixel density of the font.  With the default pixel density, the units correspond to meters when the font is drawn at 1.0 scale.",
               key = "Font:getLines",
               module = "lovr.graphics",
               related = {
@@ -7636,21 +7713,42 @@ return {
                 {
                   arguments = {
                     {
-                      name = "text",
-                      type = "Text",
-                      description = "TODO"
+                      name = "string",
+                      type = "string",
+                      description = "The text to wrap."
                     },
                     {
                       name = "wrap",
                       type = "number",
-                      description = "TODO"
+                      description = "The line length to wrap at."
                     }
                   },
                   returns = {
                     {
                       name = "lines",
                       type = "table",
-                      description = "TODO"
+                      description = "A table strings, one for each wrapped line (without any color information)."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "strings",
+                      type = "table",
+                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a `Vec3`, `Vec4`, table, or hexcode."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The line length to wrap at."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "lines",
+                      type = "table",
+                      description = "A table strings, one for each wrapped line (without any color information)."
                     }
                   }
                 }
@@ -7659,7 +7757,7 @@ return {
             {
               name = "getPixelDensity",
               summary = "Get the pixel density of the Font.",
-              description = "TODO",
+              description = "Returns the pixel density of the font.  The density is a \"pixels per world unit\" factor that controls how the pixels in the font's texture are mapped to units in the coordinate space.\n\nThe default pixel density is set to the height of the font.  This means that lines of text rendered with a scale of 1.0 come out to 1 unit (meter) tall.  However, if this font was drawn to a 2D texture where the units are in pixels, the font would still be drawn 1 unit (pixel) tall!  Scaling the coordinate space or the size of the text by the height of the font would fix this.  However, a more convenient option is to set the pixel density of the font to 1.0 when doing 2D rendering to make the font's size match up with the pixels of the canvas.",
               key = "Font:getPixelDensity",
               module = "lovr.graphics",
               variants = {
@@ -7669,7 +7767,7 @@ return {
                     {
                       name = "density",
                       type = "number",
-                      description = "TODO"
+                      description = "The pixel density of the font."
                     }
                   }
                 }
@@ -7678,7 +7776,7 @@ return {
             {
               name = "getRasterizer",
               summary = "Get the Font's Rasterizer.",
-              description = "TODO",
+              description = "Returns the Rasterizer object backing the Font.",
               key = "Font:getRasterizer",
               module = "lovr.graphics",
               related = {
@@ -7701,7 +7799,7 @@ return {
             {
               name = "getVertices",
               summary = "Get the vertices for a piece of text.",
-              description = "Returns a table of vertices for a piece of text, along with a Material to use when rendering it. The Material may change over time if the Font's texture atlas needs to be resized to make room for more glyphs.",
+              description = "Returns a table of vertices for a piece of text, along with a Material to use when rendering it. The Material returned by this function may not be the same if the Font's texture atlas needs to be recreated with a bigger size to make room for more glyphs.",
               key = "Font:getVertices",
               module = "lovr.graphics",
               notes = "Each vertex is a table of 4 floating point numbers with the following data:\n\n    { x, y, u, v }\n\nThese could be placed in a vertex buffer using the following buffer format:\n\n    { 'vec2:VertexPosition', 'vec2:VertexUV' }",
@@ -7709,24 +7807,27 @@ return {
                 {
                   arguments = {
                     {
-                      name = "text",
-                      type = "Text",
-                      description = "TODO"
-                    },
-                    {
-                      name = "wrap",
-                      type = "number",
-                      description = "TODO"
-                    },
-                    {
                       name = "halign",
                       type = "HorizontalAlign",
-                      description = "TODO"
+                      description = "The horizontal align."
                     },
-                    {
+                    wrap = {
+                      type = "number",
+                      description = "        The maximum line length.  The units depend on the pixel density of the font, but are in\n        meters by default.\n      ",
+                      default = "0"
+                    },
+                    string = {
+                      type = "string",
+                      description = "The text to render."
+                    },
+                    [2] = {
                       name = "valign",
                       type = "VerticalAlign",
-                      description = "TODO"
+                      description = "The vertical align."
+                    },
+                    strings = {
+                      type = "table",
+                      description = "        A table of colored strings, each given as a `{ color, string }` pair.  The color can be a\n        `Vec3`, `Vec4`, table, or hexcode.\n      "
                     }
                   },
                   returns = {
@@ -7747,7 +7848,7 @@ return {
             {
               name = "getWidth",
               summary = "Get the width of rendered text.",
-              description = "TODO",
+              description = "Returns the maximum width of a piece of text.  This function does not perform wrapping but does respect newlines in the text.",
               key = "Font:getWidth",
               module = "lovr.graphics",
               related = {
@@ -7761,16 +7862,32 @@ return {
                 {
                   arguments = {
                     {
-                      name = "text",
-                      type = "Text",
-                      description = "TODO"
+                      name = "string",
+                      type = "string",
+                      description = "The text to measure."
                     }
                   },
                   returns = {
                     {
                       name = "width",
                       type = "number",
-                      description = "TODO"
+                      description = "The maximum width of the text."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "strings",
+                      type = "table",
+                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a `Vec3`, `Vec4`, table, or hexcode."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The maximum width of the text."
                     }
                   }
                 }
@@ -7779,16 +7896,19 @@ return {
             {
               name = "setLineSpacing",
               summary = "Set the line spacing of the Font.",
-              description = "TODO",
+              description = "Sets the line spacing of the Font.  When spacing out lines, the height of the font is multiplied the line spacing to get the final spacing value.  The default is 1.0.",
               key = "Font:setLineSpacing",
               module = "lovr.graphics",
+              related = {
+                "Font:getHeight"
+              },
               variants = {
                 {
                   arguments = {
                     {
                       name = "spacing",
                       type = "number",
-                      description = "TODO"
+                      description = "The new line spacing."
                     }
                   },
                   returns = {}
@@ -7798,7 +7918,7 @@ return {
             {
               name = "setPixelDensity",
               summary = "Set the pixel density of the Font.",
-              description = "TODO",
+              description = "Returns the pixel density of the font.  The density is a \"pixels per world unit\" factor that controls how the pixels in the font's texture are mapped to units in the coordinate space.\n\nThe default pixel density is set to the height of the font.  This means that lines of text rendered with a scale of 1.0 come out to 1 unit (meter) tall.  However, if this font was drawn to a 2D texture where the units are in pixels, the font would still be drawn 1 unit (pixel) tall!  Scaling the coordinate space or the size of the text by the height of the font would fix this.  However, a more convenient option is to set the pixel density of the font to 1.0 when doing 2D rendering to make the font's size match up with the pixels of the canvas.",
               key = "Font:setPixelDensity",
               module = "lovr.graphics",
               variants = {
@@ -7807,9 +7927,14 @@ return {
                     {
                       name = "density",
                       type = "number",
-                      description = "TODO"
+                      description = "The new pixel density of the font."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Resets the pixel density to the default, which is given by `Font:getHeight`.",
+                  arguments = {},
                   returns = {}
                 }
               }
@@ -9978,17 +10103,19 @@ return {
               name = "box",
               tag = "drawing",
               summary = "Draw a box.",
-              description = "TODO",
+              description = "Draw a box.  This is like `Pass:cube`, except it takes 3 separate values for the scale.",
               key = "Pass:box",
               module = "lovr.graphics",
-              notes = "TODO",
+              related = {
+                "Pass:cube"
+              },
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "Transform3",
-                      description = "The transform to apply to the box."
+                      type = "Mat4",
+                      description = "The transform of the box.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 3 numbers are used."
                     },
                     {
                       name = "style",
@@ -10005,17 +10132,17 @@ return {
               name = "capsule",
               tag = "drawing",
               summary = "Draw a capsule.",
-              description = "TODO",
+              description = "Draws a capsule.  A capsule is shaped like a cylinder with a hemisphere on each end.",
               key = "Pass:capsule",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The length of the capsule does not include the end caps.  The local origin of the capsule is in the center, and the local z axis points towards the end caps.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "TransformXY2",
-                      description = "The transform to apply to the capsule.  The x and y scale is the radius, the z scale is the length."
+                      type = "Mat4",
+                      description = "The transform of the capsule.  Can also be provided as position, radius, length, and rotation using a mix of `Vectors` or numbers.  When using a `Vec3` for the scale, the X and Y components are used for the radius and the Z component is used for the length."
                     },
                     {
                       name = "segments",
@@ -10027,16 +10154,23 @@ return {
                   returns = {}
                 },
                 {
+                  description = "Draws a capsule between two points.",
                   arguments = {
                     {
                       name = "p1",
-                      type = "Point3",
+                      type = "Vec3",
                       description = "The starting point of the capsule."
                     },
                     {
                       name = "p2",
-                      type = "Point3",
+                      type = "Vec3",
                       description = "The ending point of the capsule."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the capsule.",
+                      default = "1.0"
                     },
                     {
                       name = "segments",
@@ -10053,17 +10187,17 @@ return {
               name = "circle",
               tag = "drawing",
               summary = "Draw a circle.",
-              description = "TODO",
+              description = "Draws a circle.",
               key = "Pass:circle",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The local origin of the circle is in its center, and the local z axis goes through the center.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "Transform",
-                      description = "The transform to apply to the circle."
+                      type = "Mat4",
+                      description = "The transform of the circle.  Can also be provided as position, radius, and rotation, using a mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used."
                     },
                     {
                       name = "style",
@@ -10578,7 +10712,7 @@ return {
               name = "cylinder",
               tag = "drawing",
               summary = "Draw a cylinder.",
-              description = "TODO",
+              description = "Draws a cylinder.",
               key = "Pass:cylinder",
               module = "lovr.graphics",
               notes = "TODO",
@@ -10628,6 +10762,11 @@ return {
                       name = "p2",
                       type = "Point3",
                       description = "The ending point of the cylinder."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cylinder."
                     },
                     {
                       name = "capped",
@@ -13783,12 +13922,14 @@ return {
         {
           name = "compileShader",
           tag = "graphics-objects",
-          summary = "Compile a Shader.",
-          description = "TODO",
+          summary = "Compile a Shader to bytecode.",
+          description = "Compiles shader code to SPIR-V bytecode.  The bytecode can be passed to `lovr.graphics.newShader` to create shaders, which will be faster than creating it from GLSL. The bytecode is portable, so bytecode compiled on one platform will work on other platforms. This allows shaders to be precompiled in a build step.",
           key = "lovr.graphics.compileShader",
           module = "lovr.graphics",
+          notes = "The input can be GLSL or SPIR-V.  If it's SPIR-V, it will be returned unchanged as a Blob.\n\nIf the shader fails to compile, an error will be thrown with the error message.",
           related = {
-            "lovr.graphics.newShader"
+            "lovr.graphics.newShader",
+            "Shader"
           },
           variants = {
             {
@@ -13796,19 +13937,40 @@ return {
                 {
                   name = "stage",
                   type = "ShaderStage",
-                  description = "TODO"
+                  description = "The type of shader to compile."
                 },
                 {
                   name = "source",
-                  type = "ShaderSource",
-                  description = "TODO"
+                  type = "string",
+                  description = "A string or filename with shader code."
                 }
               },
               returns = {
                 {
                   name = "bytecode",
                   type = "Blob",
-                  description = "TODO"
+                  description = "A Blob containing compiled SPIR-V code."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "stage",
+                  type = "ShaderStage",
+                  description = "The type of shader to compile."
+                },
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob containing shader code."
+                }
+              },
+              returns = {
+                {
+                  name = "bytecode",
+                  type = "Blob",
+                  description = "A Blob containing compiled SPIR-V code."
                 }
               }
             }
@@ -14071,8 +14233,7 @@ return {
           notes = "The device and vendor ID numbers will usually be PCI IDs, which are standardized numbers consisting of 4 hex digits.  Various online databases and system utilities can be used to look up these numbers.  Here are some example vendor IDs for a few popular GPU manufacturers:\n\n<table>\n  <thead>\n    <tr>\n      <td>ID</td>\n      <td>Vendor</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>0x1002</code></td>\n      <td>Advanced Micro Devices, Inc.</td>\n    </tr>\n    <tr>\n      <td><code>0x8086</code></td>\n      <td>Intel Corporation</td>\n    </tr>\n    <tr>\n      <td><code>0x10de</code></td>\n      <td>NVIDIA Corporation</td>\n    </tr>\n  </tbody> </table>\n\nIt is not currently possible to get the version of the driver, although this could be added.\n\nRegarding multiple GPUs: If OpenXR is enabled, the OpenXR runtime has control over which GPU is used, which ensures best compatibility with the VR headset.  Otherwise, the \"first\" GPU returned by the renderer will be used.  There is currently no other way to pick a GPU to use.",
           related = {
             "lovr.graphics.getFeatures",
-            "lovr.graphics.getLimits",
-            "lovr.graphics.getStats"
+            "lovr.graphics.getLimits"
           },
           variants = {
             {
@@ -14128,8 +14289,7 @@ return {
           related = {
             "lovr.graphics.isFormatSupported",
             "lovr.graphics.getDevice",
-            "lovr.graphics.getLimits",
-            "lovr.graphics.getStats"
+            "lovr.graphics.getLimits"
           },
           variants = {
             {
@@ -14197,8 +14357,7 @@ return {
           related = {
             "lovr.graphics.isFormatSupported",
             "lovr.graphics.getDevice",
-            "lovr.graphics.getFeatures",
-            "lovr.graphics.getStats"
+            "lovr.graphics.getFeatures"
           },
           variants = {
             {
@@ -14462,171 +14621,6 @@ return {
           }
         },
         {
-          name = "getStats",
-          tag = "graphics-misc",
-          summary = "Get graphics-related statistics.",
-          description = "TODO",
-          key = "lovr.graphics.getStats",
-          module = "lovr.graphics",
-          related = {
-            "lovr.graphics.getDevice",
-            "lovr.graphics.getFeatures",
-            "lovr.graphics.getLimits"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "stats",
-                  type = "table",
-                  description = "Graphics statistics.",
-                  table = {
-                    {
-                      name = "memory",
-                      type = "table",
-                      description = "TODO",
-                      table = {
-                        {
-                          name = "total",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "buffer",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "texture",
-                          type = "number",
-                          description = "TODO"
-                        }
-                      }
-                    },
-                    {
-                      name = "objects",
-                      type = "table",
-                      description = "TODO",
-                      table = {
-                        {
-                          name = "buffers",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "textures",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "samplers",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "shaders",
-                          type = "number",
-                          description = "TODO"
-                        }
-                      }
-                    },
-                    {
-                      name = "frame",
-                      type = "table",
-                      description = "TODO",
-                      table = {
-                        {
-                          name = "scratchMemory",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "renderPasses",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "computePasses",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "transferPasses",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "pipelineBinds",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "bundleBinds",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "drawCalls",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "dispatches",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "workgroups",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "copies",
-                          type = "number",
-                          description = "TODO"
-                        }
-                      }
-                    },
-                    {
-                      name = "internal",
-                      type = "table",
-                      description = "TODO",
-                      table = {
-                        {
-                          name = "blocks",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "canvases",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "pipelines",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "layouts",
-                          type = "number",
-                          description = "TODO"
-                        },
-                        {
-                          name = "bunches",
-                          type = "number",
-                          description = "TODO"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getWindowPass",
           tag = "graphics-objects",
           summary = "Get the window pass.",
@@ -14651,7 +14645,7 @@ return {
           name = "isFormatSupported",
           tag = "graphics-misc",
           summary = "Check if a Texture format is supported.",
-          description = "TODO",
+          description = "Returns the type of operations the GPU supports for a texture format, if any.",
           key = "lovr.graphics.isFormatSupported",
           module = "lovr.graphics",
           related = {
@@ -14665,14 +14659,19 @@ return {
                 {
                   name = "format",
                   type = "TextureFormat",
-                  description = "TODO"
+                  description = "The texture format to query."
+                },
+                {
+                  name = "...features",
+                  type = "TextureFeature",
+                  description = "Zero or more features to check.  If no features are given, this function will return whether the GPU supports *any* feature for this format.  Otherwise, this function will only return true if *all* of the input features are supported."
                 }
               },
               returns = {
                 {
                   name = "supported",
                   type = "boolean",
-                  description = "TODO"
+                  description = "Whether the GPU supports these operations for textures with this format."
                 }
               }
             }
@@ -14878,18 +14877,18 @@ return {
                 {
                   name = "filename",
                   type = "string",
-                  description = "TODO"
+                  description = "A path to a TTF file."
                 },
                 {
                   name = "size",
                   type = "number",
-                  description = "TODO",
+                  description = "The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
                   name = "spread",
                   type = "number",
-                  description = "TODO",
+                  description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
               },
@@ -14906,18 +14905,18 @@ return {
                 {
                   name = "blob",
                   type = "Blob",
-                  description = "TODO"
+                  description = "A Blob containing TTF file data."
                 },
                 {
                   name = "size",
                   type = "number",
-                  description = "TODO",
+                  description = "The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
                   name = "spread",
                   type = "number",
-                  description = "TODO",
+                  description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
               },
@@ -14934,13 +14933,13 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "TODO",
+                  description = "The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
                   name = "spread",
                   type = "number",
-                  description = "TODO",
+                  description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
               },
@@ -14957,12 +14956,12 @@ return {
                 {
                   name = "rasterizer",
                   type = "Rasterizer",
-                  description = "TODO"
+                  description = "An existing Rasterizer to use to load glyph images."
                 },
                 {
                   name = "spread",
                   type = "number",
-                  description = "TODO",
+                  description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
               },
@@ -15110,7 +15109,7 @@ return {
           name = "newModel",
           tag = "graphics-objects",
           summary = "Create a new Model.",
-          description = "TODO",
+          description = "Loads a 3D model from a file.  Currently, OBJ, glTF, and binary STL files are supported.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
           related = {
@@ -15123,7 +15122,7 @@ return {
                 {
                   name = "filename",
                   type = "string",
-                  description = "TODO"
+                  description = "The path to model file."
                 },
                 {
                   name = "options",
@@ -15133,7 +15132,8 @@ return {
                     {
                       name = "mipmaps",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the textures created for the Model should have mipmaps generated.",
+                      default = "true"
                     }
                   }
                 }
@@ -15151,7 +15151,7 @@ return {
                 {
                   name = "blob",
                   type = "Blob",
-                  description = "TODO"
+                  description = "A Blob containing 3D model data."
                 },
                 {
                   name = "options",
@@ -15161,7 +15161,8 @@ return {
                     {
                       name = "mipmaps",
                       type = "boolean",
-                      description = "TODO"
+                      description = "Whether the textures created for the Model should have mipmaps generated.",
+                      default = "true"
                     }
                   }
                 }
@@ -15179,7 +15180,20 @@ return {
                 {
                   name = "modelData",
                   type = "ModelData",
-                  description = "TODO"
+                  description = "An existing ModelData object to use for the Model."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Model options.",
+                  table = {
+                    {
+                      name = "mipmaps",
+                      type = "boolean",
+                      description = "Whether the textures created for the Model should have mipmaps generated.",
+                      default = "true"
+                    }
+                  }
                 }
               },
               returns = {
@@ -15206,9 +15220,9 @@ return {
             {
               arguments = {
                 {
-                  name = "options",
+                  name = "parameters",
                   type = "table",
-                  description = "TODO",
+                  description = "Parameters for the sampler.",
                   table = {
                     {
                       name = "filter",
@@ -15242,7 +15256,7 @@ return {
                 {
                   name = "sampler",
                   type = "Sampler",
-                  description = "TODO"
+                  description = "The new sampler."
                 }
               }
             }
@@ -16122,21 +16136,21 @@ return {
         {
           name = "MeshMode",
           summary = "Different ways to draw mesh vertices.",
-          description = "TODO",
+          description = "Different ways vertices in a mesh can be connected together and filled in with pixels.",
           key = "MeshMode",
           module = "lovr.graphics",
           values = {
             {
               name = "points",
-              description = "TODO"
+              description = "Each vertex is rendered as a single point.  The size of the point can be controlled using the `pointSize` shader flag, or by writing to the `PointSize` variable in shaders.  The maximum point size is given by the `pointSize` limit from `lovr.graphics.getLimits`."
             },
             {
               name = "lines",
-              description = "TODO"
+              description = "Pairs of vertices are connected with line segments.  To draw a single line through all of the vertices, an index buffer can be used to repeat vertices.  It is not currently possible to change the width of the lines, although cylinders or capsules can be used as an alternative."
             },
             {
               name = "triangles",
-              description = "TODO"
+              description = "Every 3 vertices form a triangle, which is filled in with pixels (unless `Pass:setWireframe` is used).  This mode is the most commonly used."
             }
           }
         },
@@ -16483,7 +16497,13 @@ return {
                   description = "The axis."
                 }
               },
-              returns = {}
+              returns = {
+                {
+                  name = "...",
+                  type = "number",
+                  description = "The current state of the components of the axis, or `nil` if the device does not have any information about the axis."
+                }
+              }
             }
           }
         },

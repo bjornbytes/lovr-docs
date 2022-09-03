@@ -1,15 +1,20 @@
 return {
   summary = 'Get the descent of the Font.',
-  description = 'TODO',
+  description = [[
+    Returns the descent of the font.  The descent is the maximum amount glyphs descend below the
+    baseline.  The units depend on the font's pixel density.  With the default density, the units
+    correspond to meters.
+  ]],
   arguments = {},
   returns = {
     {
       name = 'descent',
       type = 'number',
-      description = 'TODO'
+      description = 'The descent of the font.'
     }
   },
   related = {
+    'Rasterizer:getDescent',
     'Font:getAscent',
     'Font:getHeight',
     'Font:getKerning',

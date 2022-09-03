@@ -10,8 +10,7 @@ return {
       type = 'string',
       description = 'The name of the event.'
     },
-    {
-      name = '...',
+    ['...'] = {
       type = '*',
       description = 'The arguments for the event.  Currently, up to 4 are supported.'
     }
@@ -19,7 +18,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'name' },
+      arguments = { 'name', '...' },
       returns = {}
     }
   },

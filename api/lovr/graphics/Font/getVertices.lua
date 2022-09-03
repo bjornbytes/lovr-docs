@@ -2,29 +2,38 @@ return {
   summary = 'Get the vertices for a piece of text.',
   description = [[
     Returns a table of vertices for a piece of text, along with a Material to use when rendering it.
-    The Material may change over time if the Font's texture atlas needs to be resized to make room
-    for more glyphs.
+    The Material returned by this function may not be the same if the Font's texture atlas needs to
+    be recreated with a bigger size to make room for more glyphs.
   ]],
   arguments = {
-    {
-      name = 'text',
-      type = 'Text',
-      description = 'TODO'
+    string = {
+      type = 'string',
+      description = 'The text to render.'
     },
-    {
-      name = 'wrap',
+    strings = {
+      type = 'table',
+      description = [[
+        A table of colored strings, each given as a `{ color, string }` pair.  The color can be a
+        `Vec3`, `Vec4`, table, or hexcode.
+      ]]
+    },
+    wrap = {
       type = 'number',
-      description = 'TODO'
+      default = '0',
+      description = [[
+        The maximum line length.  The units depend on the pixel density of the font, but are in
+        meters by default.
+      ]]
     },
     {
       name = 'halign',
       type = 'HorizontalAlign',
-      description = 'TODO'
+      description = 'The horizontal align.'
     },
     {
       name = 'valign',
       type = 'VerticalAlign',
-      description = 'TODO'
+      description = 'The vertical align.'
     }
   },
   returns = {

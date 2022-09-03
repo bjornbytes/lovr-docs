@@ -1,19 +1,21 @@
 return {
   tag = 'graphics-objects',
   summary = 'Create a new Model.',
-  description = 'TODO',
+  description = [[
+    Loads a 3D model from a file.  Currently, OBJ, glTF, and binary STL files are supported.
+  ]],
   arguments = {
     filename = {
       type = 'string',
-      description = 'TODO'
+      description = 'The path to model file.'
     },
     blob = {
       type = 'Blob',
-      description = 'TODO'
+      description = 'A Blob containing 3D model data.'
     },
     modelData = {
       type = 'ModelData',
-      description = 'TODO'
+      description = 'An existing ModelData object to use for the Model.'
     },
     options = {
       type = 'table',
@@ -22,7 +24,8 @@ return {
         {
           name = 'mipmaps',
           type = 'boolean',
-          description = 'TODO'
+          default = 'true',
+          description = 'Whether the textures created for the Model should have mipmaps generated.'
         }
       }
     }
@@ -43,7 +46,7 @@ return {
       returns = { 'model' }
     },
     {
-      arguments = { 'modelData' },
+      arguments = { 'modelData', 'options' },
       returns = { 'model' }
     }
   },

@@ -3,9 +3,9 @@ return {
   summary = 'Create a new Sampler.',
   description = 'TODO',
   arguments = {
-    options = {
+    parameters = {
       type = 'table',
-      description = 'TODO',
+      description = 'Parameters for the sampler.',
       table = {
         {
           name = 'filter',
@@ -38,12 +38,12 @@ return {
   returns = {
     sampler = {
       type = 'Sampler',
-      description = 'TODO'
+      description = 'The new sampler.'
     }
   },
   variants = {
     {
-      arguments = { 'options' },
+      arguments = { 'parameters' },
       returns = { 'sampler' }
     }
   },

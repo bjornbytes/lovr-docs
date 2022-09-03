@@ -367,7 +367,6 @@ return {
   related = {
     'lovr.graphics.isFormatSupported',
     'lovr.graphics.getDevice',
-    'lovr.graphics.getFeatures',
-    'lovr.graphics.getStats'
+    'lovr.graphics.getFeatures'
   }
 }

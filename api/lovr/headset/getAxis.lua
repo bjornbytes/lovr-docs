@@ -18,8 +18,7 @@ return {
     }
   },
   returns = {
-    {
-      name = '...',
+    ['...'] = {
       type = 'number',
       description = [[
         The current state of the components of the axis, or `nil` if the device does not have any
@@ -30,7 +29,7 @@ return {
   variants = {
     {
       arguments = { 'device', 'axis' },
-      returns = {}
+      returns = { '...' }
     }
   },
   notes = [[

@@ -1,27 +1,30 @@
 return {
   tag = 'graphics-misc',
   summary = 'Check if a Texture format is supported.',
-  description = 'TODO',
+  description = 'Returns the type of operations the GPU supports for a texture format, if any.',
   arguments = {
     format = {
       type = 'TextureFormat',
-      description = 'TODO'
+      description = 'The texture format to query.'
     },
-    {
-      name = '...features',
+    ['...features'] = {
       type = 'TextureFeature',
-      description = 'TODO'
+      description = [[
+        Zero or more features to check.  If no features are given, this function will return whether
+        the GPU supports *any* feature for this format.  Otherwise, this function will only return
+        true if *all* of the input features are supported.
+      ]]
     }
   },
   returns = {
     supported = {
       type = 'boolean',
-      description = 'TODO'
+      description = 'Whether the GPU supports these operations for textures with this format.'
     }
   },
   variants = {
     {
-      arguments = { 'format' },
+      arguments = { 'format', '...features' },
       returns = { 'supported' }
     }
   },

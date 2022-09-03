@@ -1,7 +1,7 @@
 return {
   tag = 'drawing',
   summary = 'Draw a cylinder.',
-  description = 'TODO',
+  description = 'Draws a cylinder.',
   arguments = {
     transform = {
       type = 'TransformXY2',
@@ -17,6 +17,10 @@ return {
     p2 = {
       type = 'Point3',
       description = 'The ending point of the cylinder.'
+    },
+    radius = {
+      type = 'number',
+      description = 'The radius of the cylinder.'
     },
     capped = {
       type = 'boolean',
@@ -45,7 +49,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'p1', 'p2', 'capped', 'angle1', 'angle2', 'segments' },
+      arguments = { 'p1', 'p2', 'radius', 'capped', 'angle1', 'angle2', 'segments' },
       returns = {}
     }
   },

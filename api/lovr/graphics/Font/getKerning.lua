@@ -1,26 +1,55 @@
 return {
-  summary = 'Get the kerning of the Font.',
-  description = 'TODO',
+  summary = 'Get the kerning between 2 glyphs.',
+  description = [[
+    Returns the kerning between 2 glyphs.  Kerning is a slight horizontal adjustment between 2
+    glyphs to improve the visual appearance.  It will often be negative.  The units depend on the
+    font's pixel density.  With the default density, the units correspond to meters.
+  ]],
   arguments = {
-    {
-      name = 'first',
-      type = 'Codepoint',
-      description = 'TODO'
+    first = {
+      type = 'string',
+      description = 'The first character.'
     },
-    {
-      name = 'second',
-      type = 'Codepoint',
-      description = 'TODO'
+    firstCodepoint = {
+      type = 'number',
+      description = 'The first codepoint.'
+    },
+    second = {
+      type = 'string',
+      description = 'The second letter.'
+    },
+    secondCodepoint = {
+      name = 'secondCodepoint',
+      type = 'number',
+      description = 'The second codepoint.'
     }
   },
   returns = {
-    {
-      name = 'kerning',
+    keming = {
       type = 'number',
-      description = 'TODO'
+      description = 'The kerning between the two glyphs.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'first', 'second' },
+      returns = { 'keming' }
+    },
+    {
+      arguments = { 'firstCodepoint', 'second' },
+      returns = { 'keming' }
+    },
+    {
+      arguments = { 'first', 'secondCodepoint' },
+      returns = { 'keming' }
+    },
+    {
+      arguments = { 'firstCodepoint', 'secondCodepoint' },
+      returns = { 'keming' }
     }
   },
   related = {
+    'Rasterizer:getKerning',
     'Font:getAscent',
     'Font:getDescent',
     'Font:getHeight',
