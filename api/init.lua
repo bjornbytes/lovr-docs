@@ -10142,7 +10142,7 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the capsule.  Can also be provided as position, radius, length, and rotation using a mix of `Vectors` or numbers.  When using a `Vec3` for the scale, the X and Y components are used for the radius and the Z component is used for the length."
+                      description = "The transform of the capsule.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the length.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the length."
                     },
                     {
                       name = "segments",
@@ -10721,8 +10721,8 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "TransformXY2",
-                      description = "The transform to apply to the cylinder.  The x and y scale is the radius, the z scale is the length."
+                      type = "Mat4",
+                      description = "The transform of the cylinder.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the length.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the length."
                     },
                     {
                       name = "capped",
@@ -10755,12 +10755,12 @@ return {
                   arguments = {
                     {
                       name = "p1",
-                      type = "Point3",
+                      type = "Vec3",
                       description = "The starting point of the cylinder."
                     },
                     {
                       name = "p2",
-                      type = "Point3",
+                      type = "Vec3",
                       description = "The ending point of the cylinder."
                     },
                     {

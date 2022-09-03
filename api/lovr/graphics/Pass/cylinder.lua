@@ -4,18 +4,20 @@ return {
   description = 'Draws a cylinder.',
   arguments = {
     transform = {
-      type = 'TransformXY2',
+      type = 'Mat4',
       description = [[
-        The transform to apply to the cylinder.  The x and y scale is the radius, the z scale is the
-        length.
+        The transform of the cylinder.  Can also be provided as position, scale, and rotation using
+        a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one
+        for the radius and one for the length.  When using a matrix or a vector for the scale, the X
+        and Y components are the radius and the Z component is the length.
       ]]
     },
     p1 = {
-      type = 'Point3',
+      type = 'Vec3',
       description = 'The starting point of the cylinder.'
     },
     p2 = {
-      type = 'Point3',
+      type = 'Vec3',
       description = 'The ending point of the cylinder.'
     },
     radius = {
