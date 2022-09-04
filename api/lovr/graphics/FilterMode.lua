@@ -12,5 +12,8 @@ return {
         description = 'A smooth appearance where neighboring pixels are averaged.'
       }
     }
+  },
+  related = {
+    'Pass:blit'
   }
 }

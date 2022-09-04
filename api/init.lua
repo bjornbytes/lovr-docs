@@ -7254,7 +7254,7 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of items to clear.  If `nil`, clears as many items as possible.",
+                      description = "The number of items to clear.  If `nil`, clears to the end of the Buffer.",
                       default = "nil"
                     }
                   },
@@ -7486,14 +7486,15 @@ return {
         },
         {
           name = "Font",
-          summary = "TODO",
-          description = "TODO",
+          summary = "A Font used to render text.",
+          description = "Font objects are used to render text with `Pass:text`.  The active font can be changed using `Pass:setFont`.  The default font is Varela Round, which is used when no font is active, and can be retrieved using `lovr.graphics.getDefaultFont`.  Custom fonts can be loaded from TTF files using `lovr.graphics.newFont`.\n\nEach Font uses a `Rasterizer` to load the TTF file and create images for each glyph. As text is drawn, the Font uploads images from the Rasterizer to a GPU texture atlas as needed.  The Font also performs text layout and mesh generation for strings of text.\n\nLÖVR uses a text rendering technique called \"multichannel signed distance fields\" (MSDF), which makes the font rendering remain crisp when text is viewed up close.",
           key = "Font",
           module = "lovr.graphics",
           constructors = {
             "lovr.graphics.newFont",
             "lovr.graphics.getDefaultFont"
           },
+          notes = "MSDF text requires a special shader to work.  LÖVR will automatically switch to this shader if no shader is active on the `Pass`.  This font shader is also available as a `DefaultShader`.",
           methods = {
             {
               name = "getAscent",
@@ -9994,105 +9995,112 @@ return {
               name = "blit",
               tag = "transfer",
               summary = "Copy data between textures with scaling.",
-              description = "TODO",
+              description = "Copies data between textures.  Similar to `Pass:copy`, except the source and destination sizes can be different.  The pixels from the source texture will be scaled to the destination size.",
               key = "Pass:blit",
               module = "lovr.graphics",
+              notes = "When blitting between 3D textures, the layer counts do not need to match, and the layers will be treated as a continuous axis (i.e. pixels will be smoothed between layers).\n\nWhen blitting between array textures, the layer counts must match, and the blit occurs as a sequence of distinct 2D blits layer-by-layer.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "src",
                       type = "Texture",
-                      description = "TODO"
+                      description = "The texture to copy from."
                     },
                     {
                       name = "dst",
                       type = "Texture",
-                      description = "TODO"
+                      description = "The texture to copy to."
                     },
                     {
                       name = "srcx",
                       type = "number",
-                      description = "TODO",
+                      description = "The x offset from the left of the source texture to blit from, in pixels.",
                       default = "0"
                     },
                     {
                       name = "srcy",
                       type = "number",
-                      description = "TODO",
+                      description = "The y offset from the top of the source texture to blit from, in pixels.",
                       default = "0"
                     },
                     {
                       name = "srcz",
                       type = "number",
-                      description = "TODO",
-                      default = "0"
+                      description = "The index of the first layer in the source texture to blit from.",
+                      default = "1"
                     },
                     {
                       name = "dstx",
                       type = "number",
-                      description = "TODO",
+                      description = "The x offset from the left of the destination texture to blit to, in pixels.",
                       default = "0"
                     },
                     {
                       name = "dsty",
                       type = "number",
-                      description = "TODO",
+                      description = "The y offset from the top of the destination texture to blit to, in pixels.",
                       default = "0"
                     },
                     {
                       name = "dstz",
                       type = "number",
-                      description = "TODO",
-                      default = "0"
+                      description = "The index of the first layer in the destination texture to blit to.",
+                      default = "1"
                     },
                     {
                       name = "srcw",
                       type = "number",
-                      description = "TODO",
+                      description = "The width of the region in the source texture to blit.  If nil, the region will extend to the right side of the texture.",
                       default = "nil"
                     },
                     {
                       name = "srch",
                       type = "number",
-                      description = "TODO",
+                      description = "The height of the region in the source texture to blit.  If nil, the region will extend to the bottom of the texture.",
                       default = "nil"
                     },
                     {
                       name = "srcd",
                       type = "number",
-                      description = "TODO",
+                      description = "The number of layers in the source texture to blit.",
                       default = "nil"
                     },
                     {
                       name = "dstw",
                       type = "number",
-                      description = "TODO",
+                      description = "The width of the region in the destination texture to blit to.  If nil, the region will extend to the right side of the texture.",
                       default = "nil"
                     },
                     {
                       name = "dsth",
                       type = "number",
-                      description = "TODO",
+                      description = "The height of the region in the destination texture to blit to.  If nil, the region will extend to the bottom of the texture.",
                       default = "nil"
                     },
                     {
                       name = "dstd",
                       type = "number",
-                      description = "TODO",
+                      description = "The number of the layers in the destination texture to blit to.",
                       default = "nil"
                     },
                     {
                       name = "srclevel",
                       type = "number",
-                      description = "TODO",
+                      description = "The index of the mipmap level in the source texture to blit from.",
                       default = "1"
                     },
                     {
                       name = "dstlevel",
                       type = "number",
-                      description = "TODO",
+                      description = "The index of the mipmap level in the destination texture to blit to.",
                       default = "1"
+                    },
+                    {
+                      name = "filter",
+                      type = "FilterMode",
+                      description = "The filtering algorithm used when rescaling.",
+                      default = "linear"
                     }
                   },
                   returns = {}
@@ -10232,12 +10240,16 @@ return {
               name = "clear",
               tag = "transfer",
               summary = "Clear a Buffer or Texture.",
-              description = "TODO",
+              description = "Clears a Buffer or Texture.",
               key = "Pass:clear",
               module = "lovr.graphics",
-              notes = "TODO",
+              related = {
+                "Buffer:clear",
+                "Pass:copy"
+              },
               variants = {
                 {
+                  description = "Clears a range of a Buffer, setting the values to zero.",
                   arguments = {
                     {
                       name = "buffer",
@@ -10245,19 +10257,22 @@ return {
                       description = "The Buffer to clear."
                     },
                     {
-                      name = "offset",
+                      name = "index",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of the first item to clear.",
+                      default = "1"
                     },
                     {
-                      name = "extent",
+                      name = "count",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of items to clear.  If `nil`, clears to the end of the Buffer.",
+                      default = "nil"
                     }
                   },
                   returns = {}
                 },
                 {
+                  description = "Clears layers and mipmap levels in a Texture to a color.",
                   arguments = {
                     {
                       name = "texture",
@@ -10278,7 +10293,7 @@ return {
                     {
                       name = "layers",
                       type = "number",
-                      description = "The number of layers to clear.",
+                      description = "The number of layers to clear.  If `nil`, clears the remaining layers.",
                       default = "nil"
                     },
                     {
@@ -10290,7 +10305,7 @@ return {
                     {
                       name = "levels",
                       type = "number",
-                      description = "The number of mipmap level to clear.",
+                      description = "The number of mipmap level to clear.  If `nil`, clears the remaining mipmaps.",
                       default = "nil"
                     }
                   },
@@ -14528,9 +14543,10 @@ return {
           name = "getPass",
           tag = "graphics-objects",
           summary = "Get a temporary Pass.",
-          description = "TODO",
+          description = "Creates and returns a Pass object, which is used to record commands for the GPU.  Commands can be recorded by calling functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to process using `lovr.graphics.submit`.\n\nPass objects are **temporary** and only exist for a single frame.  Once `lovr.graphics.submit` is called, any passes that were created during that frame become **invalid**.  Each frame, a new set of passes must be created and recorded. LÖVR tries to detect if you use a pass after it's invalid, but this error checking is not 100% accurate at the moment.\n\nThere are 3 types of passes.  Each type can record a specific type of command:\n\n- `render` passes render graphics to textures.  The `lovr.draw` callback receives a render pass\n  as an argument.\n- `compute` passes run compute shaders.\n- `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.",
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
+          notes = "Fun facts about render passes:\n\n- Textures must have the same dimensions, layer counts, and sample counts.\n- Textures must have been created with the `render` `TextureUsage`.\n- If `mipmap` is true, then any textures with mipmaps must have the `transfer` `TextureUsage`.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- Setting `clear` to `false` for textures is usually very slow on mobile GPUs.\n\nFor `compute` and `transfer` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  LÖVR is not currently able to check for this.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
           related = {
             "lovr.graphics.submit",
             "lovr.graphics.getWindowPass",
@@ -14542,7 +14558,7 @@ return {
                 {
                   name = "type",
                   type = "PassType",
-                  description = "TODO"
+                  description = "The type of pass to create."
                 }
               },
               returns = {
@@ -14558,12 +14574,12 @@ return {
                 {
                   name = "type",
                   type = "PassType",
-                  description = "TODO"
+                  description = "The type of pass to create."
                 },
                 {
                   name = "texture",
                   type = "Texture",
-                  description = "TODO"
+                  description = "The texture the render pass will render to.  Ignored for non-render passes."
                 }
               },
               returns = {
@@ -14579,32 +14595,52 @@ return {
                 {
                   name = "type",
                   type = "PassType",
-                  description = "TODO"
+                  description = "The type of pass to create."
                 },
                 {
                   name = "canvas",
                   type = "table",
-                  description = "TODO",
+                  description = "Render pass configuration.  Up to 4 textures can be provided in table keys 1 through 4. Ignored for non-render passes.",
                   table = {
                     {
                       name = "depth",
-                      type = "*",
-                      description = "TODO"
+                      type = "table",
+                      description = "Depth/stencil buffer configuration.  In addition to a table, it can be a `Texture`, a `TextureFormat`, or `false` to disable the depth buffer.",
+                      table = {
+                        {
+                          name = "format",
+                          type = "TextureFormat",
+                          description = "The format of the depth buffer texture, which must be a depth format (the ones that start with `d`).  LÖVR will create or reuse an internal depth buffer with this format.",
+                          default = "'d32f'"
+                        },
+                        {
+                          name = "texture",
+                          type = "Texture",
+                          description = "A Texture to use as the depth buffer.  Takes precedence over `format`."
+                        },
+                        {
+                          name = "clear",
+                          type = "number",
+                          description = "How to clear the depth buffer at the beginning of the pass.  Can be a floating point number to clear each pixel to, `true` to do a \"fast clear\" that clears to random data, or `false` to not clear at all and instead load the depth texture's pixels.",
+                          default = "0"
+                        }
+                      }
                     },
                     {
                       name = "clear",
                       type = "*",
-                      description = "TODO"
+                      description = "How to clear the color textures at the beginning of the pass."
                     },
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of multisamples to use.  Can be 4 for antialiasing, or 1 to disable antialiasing.",
+                      default = "4"
                     },
                     {
                       name = "mipmap",
                       type = "boolean",
-                      description = "TODO",
+                      description = "Whether mipmaps for the color and depth textures should be regenerated after the pass is finished.",
                       default = "'false'"
                     }
                   }
@@ -14863,7 +14899,7 @@ return {
           name = "newFont",
           tag = "graphics-objects",
           summary = "Create a new Font.",
-          description = "TODO",
+          description = "Creates a new Font.",
           key = "lovr.graphics.newFont",
           module = "lovr.graphics",
           related = {
@@ -14873,6 +14909,7 @@ return {
           },
           variants = {
             {
+              description = "Creates a new Font from a TTF file.",
               arguments = {
                 {
                   name = "filename",
@@ -14901,6 +14938,7 @@ return {
               }
             },
             {
+              description = "Creates a new Font from TTF data.",
               arguments = {
                 {
                   name = "blob",
@@ -14929,6 +14967,7 @@ return {
               }
             },
             {
+              description = "Creates a new Font using the default typeface (Varela Round).",
               arguments = {
                 {
                   name = "size",
@@ -14952,6 +14991,7 @@ return {
               }
             },
             {
+              description = "Creates a new Font from an existing Rasterizer.",
               arguments = {
                 {
                   name = "rasterizer",
@@ -16120,6 +16160,9 @@ return {
           description = "Controls how `Sampler` objects smooth pixels in textures.",
           key = "FilterMode",
           module = "lovr.graphics",
+          related = {
+            "Pass:blit"
+          },
           values = {
             {
               {

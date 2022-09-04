@@ -15,7 +15,7 @@ return {
       name = 'count',
       type = 'number',
       default = 'nil',
-      description = 'The number of items to clear.  If `nil`, clears as many items as possible.'
+      description = 'The number of items to clear.  If `nil`, clears to the end of the Buffer.'
     }
   },
   returns = {},

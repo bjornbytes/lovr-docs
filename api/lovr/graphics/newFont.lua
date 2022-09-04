@@ -1,7 +1,7 @@
 return {
   tag = 'graphics-objects',
   summary = 'Create a new Font.',
-  description = 'TODO',
+  description = 'Creates a new Font.',
   arguments = {
     filename = {
       type = 'string',
@@ -42,18 +42,22 @@ return {
   },
   variants = {
     {
+      description = 'Creates a new Font from a TTF file.',
       arguments = { 'filename', 'size', 'spread' },
       returns = { 'font' }
     },
     {
+      description = 'Creates a new Font from TTF data.',
       arguments = { 'blob', 'size', 'spread' },
       returns = { 'font' }
     },
     {
+      description = 'Creates a new Font using the default typeface (Varela Round).',
       arguments = { 'size', 'spread' },
       returns = { 'font' }
     },
     {
+      description = 'Creates a new Font from an existing Rasterizer.',
       arguments = { 'rasterizer', 'spread' },
       returns = { 'font' }
     }
