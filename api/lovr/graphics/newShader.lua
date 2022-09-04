@@ -27,7 +27,7 @@ return {
         {
           name = 'label',
           type = 'string',
-          description = 'TODO'
+          description = 'A label to use for the shader in debugging tools.'
         }
       }
     }
@@ -35,7 +35,7 @@ return {
   returns = {
     shader = {
       type = 'Shader',
-      description = 'TODO'
+      description = 'The new shader.'
     }
   },
   variants = {

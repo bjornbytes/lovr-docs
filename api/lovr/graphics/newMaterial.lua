@@ -4,7 +4,7 @@ return {
   description = [[
     Creates a new Material from a table of properties and textures.  All fields are optional.  Once
     a Material is created, its properties can not be changed.  Instead, a new Material should be
-    created.
+    created with the updated properties.
   ]],
   arguments = {
     properties = {

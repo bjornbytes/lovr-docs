@@ -1,6 +1,6 @@
 return {
   summary = 'Check if the Shader has a given vertex attribute.',
-  description = 'TODO',
+  description = 'Returns whether the Shader has a vertex attribute, by name or location.',
   arguments = {
     name = {
       type = 'string',
@@ -26,5 +26,24 @@ return {
       arguments = { 'location' },
       returns = { 'exists' }
     }
-  }
+  },
+  example = [=[
+    function lovr.load()
+      shader = lovr.graphics.newShader([[
+        layout(location = 7) in uint coolAttribute;
+
+        vec4 lovrmain() {
+          return DefaultPosition;
+        }
+      ]], [[
+        vec4 lovrmain() {
+          return DefaultColor;
+        }
+      ]])
+
+      print(shader:hasAttribute('coolAttribute')) --> true
+      print(shader:hasAttribute(7)) --> true
+      print(shader:hasAttribute(8)) --> false
+    end
+  ]=]
 }

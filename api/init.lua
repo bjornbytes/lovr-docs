@@ -7944,8 +7944,8 @@ return {
         },
         {
           name = "Material",
-          summary = "A set of properties and textures that define the appearance of a surface.",
-          description = "TODO",
+          summary = "A set of properties and textures that define the properties of a surface.",
+          description = "Materials are a set of properties and textures that define the properties of a surface, like what color it is, how bumpy or shiny it is, etc. `Shader` code can use the data from a material to compute lighting.\n\nMaterials are immutable, and can't be changed after they are created.  Instead, a new Material should be created with the updated properties.\n\n`Pass:setMaterial` changes the active material, causing it to affect rendering until the active material is changed again.\n\nUsing material objects is optional.  `Pass:setMaterial` can take a `Texture`, and `Pass:setColor` can change the color of objects, so basic tinting and texturing of surfaces does not require a full material to be created.  Also, a custom material system could be developed by sending textures and other data to shaders manually.\n\n`Model` objects will create materials for all of the materials defined in the model file.\n\nIn shader code, non-texture material properties can be accessed as `Material.<property>`, and material textures can be accessed as `<Type>Texture`, e.g. `RoughnessTexture`.",
           key = "Material",
           module = "lovr.graphics",
           constructors = {
@@ -11057,8 +11057,8 @@ return {
             },
             {
               name = "getSampleCount",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the antialiasing setting of a render pass.",
+              description = "Returns the antialiasing setting of a render pass.",
               key = "Pass:getSampleCount",
               module = "lovr.graphics",
               variants = {
@@ -11068,7 +11068,7 @@ return {
                     {
                       name = "samples",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of samples used for rendering.  Currently, will be 1 or 4."
                     }
                   }
                 }
@@ -13493,7 +13493,7 @@ return {
             {
               name = "hasAttribute",
               summary = "Check if the Shader has a given vertex attribute.",
-              description = "TODO",
+              description = "Returns whether the Shader has a vertex attribute, by name or location.",
               key = "Shader:hasAttribute",
               module = "lovr.graphics",
               variants = {
@@ -13529,12 +13529,17 @@ return {
                     }
                   }
                 }
+              },
+              examples = {
+                {
+                  code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    layout(location = 7) in uint coolAttribute;\n\n    vec4 lovrmain() {\n      return DefaultPosition;\n    }\n  ]], [[\n    vec4 lovrmain() {\n      return DefaultColor;\n    }\n  ]])\n\n  print(shader:hasAttribute('coolAttribute')) --> true\n  print(shader:hasAttribute(7)) --> true\n  print(shader:hasAttribute(8)) --> false\nend"
+                }
               }
             },
             {
               name = "hasStage",
               summary = "Check if the Shader has a given stage.",
-              description = "TODO",
+              description = "Returns whether the Shader has a given stage.",
               key = "Shader:hasStage",
               module = "lovr.graphics",
               related = {
@@ -15057,7 +15062,7 @@ return {
           name = "newMaterial",
           tag = "graphics-objects",
           summary = "Create a new Material.",
-          description = "Creates a new Material from a table of properties and textures.  All fields are optional.  Once a Material is created, its properties can not be changed.  Instead, a new Material should be created.",
+          description = "Creates a new Material from a table of properties and textures.  All fields are optional.  Once a Material is created, its properties can not be changed.  Instead, a new Material should be created with the updated properties.",
           key = "lovr.graphics.newMaterial",
           module = "lovr.graphics",
           notes = "The non-texture material properties can be accessed in shaders using `Material.<property>`, where the property is the same as the Lua table key.  The textures use capitalized names in shader code, e.g. `ColorTexture`.",
@@ -15288,7 +15293,7 @@ return {
           name = "newSampler",
           tag = "graphics-objects",
           summary = "Create a new Sampler.",
-          description = "TODO",
+          description = "Creates a new Sampler.  Samplers are immutable, meaning their parameters can not be changed after the sampler is created.  Instead, a new sampler should be created with the updated properties.",
           key = "lovr.graphics.newSampler",
           module = "lovr.graphics",
           related = {
@@ -15305,27 +15310,65 @@ return {
                     {
                       name = "filter",
                       type = "table",
-                      description = "TODO"
+                      description = "How the sampler smooths texture pixels.  Can be a table of 3 FilterModes, or a single FilterMode to use for all three.",
+                      default = "'linear'",
+                      table = {
+                        {
+                          name = "[1]",
+                          type = "FilterMode",
+                          description = "The filter mode to use when minifying a texture (drawing it at a smaller size than its native pixel resolution)."
+                        },
+                        {
+                          name = "[2]",
+                          type = "FilterMode",
+                          description = "The filter mode to use when magnifying a texture (drawing it at a larger size than its native pixel resolution)."
+                        },
+                        {
+                          name = "[3]",
+                          type = "FilterMode",
+                          description = "The filter mode used to smooth between mipmap levels in a texture."
+                        }
+                      }
                     },
                     {
                       name = "wrap",
                       type = "table",
-                      description = "TODO"
+                      description = "How the sampler behaves when wrapping UVs outside the 0-1 range.  Can be a table of 3 WrapModes, or a single WrapMode to use for all three axes.",
+                      default = "'repeat'",
+                      table = {
+                        {
+                          name = "[1]",
+                          type = "WrapMode",
+                          description = "The horizontal wrap mode."
+                        },
+                        {
+                          name = "[2]",
+                          type = "WrapMode",
+                          description = "The vertical wrap mode."
+                        },
+                        {
+                          name = "[3]",
+                          type = "FilterMode",
+                          description = "The \"z\" wrap mode for 3D textures."
+                        }
+                      }
                     },
                     {
                       name = "compare",
                       type = "CompareMode",
-                      description = "TODO"
+                      description = "The compare mode of the sampler (for shadow samplers).",
+                      default = "'none'"
                     },
                     {
                       name = "anisotropy",
                       type = "number",
-                      description = "TODO"
+                      description = "The maximum amount of anisotropic filtering to use.",
+                      default = "1"
                     },
                     {
                       name = "mipmaprange",
                       type = "table",
-                      description = "TODO"
+                      description = "A table of 2 mipmap levels the sampler will clamp to."
                     }
                   }
                 }
@@ -15377,7 +15420,7 @@ return {
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label to use for the shader in debugging tools."
                     }
                   }
                 }
@@ -15386,7 +15429,7 @@ return {
                 {
                   name = "shader",
                   type = "Shader",
-                  description = "TODO"
+                  description = "The new shader."
                 }
               }
             },
@@ -15411,7 +15454,7 @@ return {
                     {
                       name = "label",
                       type = "string",
-                      description = "TODO"
+                      description = "A label to use for the shader in debugging tools."
                     }
                   }
                 }
@@ -15420,7 +15463,7 @@ return {
                 {
                   name = "shader",
                   type = "Shader",
-                  description = "TODO"
+                  description = "The new shader."
                 }
               }
             }
@@ -16003,8 +16046,8 @@ return {
         {
           name = "wait",
           tag = "work-submission",
-          summary = "Stalls the CPU until all submitted GPU work is finished.",
-          description = "TODO",
+          summary = "Stall the CPU until all submitted GPU work is finished.",
+          description = "Waits for all submitted GPU work to finish.  A normal application that is trying to render graphics at a high framerate should never use this function, since waiting like this prevents the CPU from doing other useful work.  Otherwise, reasons to use this function might be for debugging or to force a `Readback` to finish immediately.",
           key = "lovr.graphics.wait",
           module = "lovr.graphics",
           related = {

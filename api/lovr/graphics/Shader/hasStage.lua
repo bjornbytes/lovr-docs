@@ -1,6 +1,6 @@
 return {
   summary = 'Check if the Shader has a given stage.',
-  description = 'TODO',
+  description = 'Returns whether the Shader has a given stage.',
   arguments = {
     {
       name = 'stage',
