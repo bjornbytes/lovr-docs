@@ -7,9 +7,9 @@ return {
     submitted for the GPU to process using `lovr.graphics.submit`.
 
     Pass objects are **temporary** and only exist for a single frame.  Once `lovr.graphics.submit`
-    is called, any passes that were created during that frame become **invalid**.  Each frame, a new
-    set of passes must be created and recorded. LÖVR tries to detect if you use a pass after it's
-    invalid, but this error checking is not 100% accurate at the moment.
+    is called to end the frame, any passes that were created during that frame become **invalid**.
+    Each frame, a new set of passes must be created and recorded. LÖVR tries to detect if you use a
+    pass after it's invalid, but this error checking is not 100% accurate at the moment.
 
     There are 3 types of passes.  Each type can record a specific type of command:
 
@@ -72,7 +72,15 @@ return {
         {
           name = 'clear',
           type = '*',
-          description = 'How to clear the color textures at the beginning of the pass.'
+          description = [[
+            How to clear the color textures at the beginning of the pass.  If this is a boolean or a
+            color, that value will be used for all color textures.  It can also be a table of colors
+            or booleans, one for each color texture.  Colors may be provided as `Vec3`, `Vec4`,
+            hexcodes, or tables of numbers.  Note that tables of hexcode colors are ambiguous and
+            therefore unsupported.  When using a boolean, `true` means to do a "fast clear" that
+            clears the texture to random data, and `false` means to not clear at all and instead
+            load the texture's existing pixels.
+          ]]
         },
         {
           name = 'samples',
