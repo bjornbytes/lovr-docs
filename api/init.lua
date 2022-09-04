@@ -7944,7 +7944,7 @@ return {
         },
         {
           name = "Material",
-          summary = "TODO",
+          summary = "A set of properties and textures that define the appearance of a surface.",
           description = "TODO",
           key = "Material",
           module = "lovr.graphics",
@@ -9955,7 +9955,7 @@ return {
         {
           name = "Pass",
           summary = "A stream of graphics commands.",
-          description = "TODO",
+          description = "Pass objects are used to record commands for the GPU.  Commands can be recorded by calling functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to process using `lovr.graphics.submit`.\n\nPass objects are **temporary** and only exist for a single frame.  Once `lovr.graphics.submit` is called to end the frame, any passes that were created during that frame become **invalid**. Each frame, a new set of passes must be created and recorded.  LÖVR tries to detect if you use a pass after it's invalid, but this error checking is not 100% accurate at the moment.\n\nThere are 3 types of passes.  Each type can record a specific type of command:\n\n- `render` passes render graphics to textures.  The `lovr.draw` callback receives a render pass\n  as an argument.\n- `compute` passes run compute shaders.\n- `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.",
           key = "Pass",
           module = "lovr.graphics",
           sections = {
@@ -10928,10 +10928,11 @@ return {
             },
             {
               name = "getDimensions",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the texture dimensions of a render pass.",
+              description = "Returns the dimensions of the textures attached to the render pass.",
               key = "Pass:getDimensions",
               module = "lovr.graphics",
+              notes = "If the pass is not a render pass, this function returns zeros.",
               variants = {
                 {
                   arguments = {},
@@ -10939,23 +10940,32 @@ return {
                     {
                       name = "width",
                       type = "number",
-                      description = "TODO"
+                      description = "The texture width."
                     },
                     {
                       name = "height",
                       type = "number",
-                      description = "TODO"
+                      description = "The texture height."
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:getWidth",
+                "Pass:getHeight",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowDimensions",
+                "lovr.headset.getDisplayDimensions"
               }
             },
             {
               name = "getHeight",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the texture height of a render pass.",
+              description = "Returns the height of the textures attached to the render pass.",
               key = "Pass:getHeight",
               module = "lovr.graphics",
+              notes = "If the pass is not a render pass, this function returns zero.",
               variants = {
                 {
                   arguments = {},
@@ -10963,10 +10973,18 @@ return {
                     {
                       name = "height",
                       type = "number",
-                      description = "TODO"
+                      description = "The texture height."
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:getWidth",
+                "Pass:getDimensions",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowHeight",
+                "lovr.headset.getDisplayHeight"
               }
             },
             {
@@ -11096,10 +11114,11 @@ return {
             },
             {
               name = "getViewCount",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Returns the view count of a render pass.",
+              description = "Returns the view count of a render pass.  This is the layer count of the textures it is rendering to.",
               key = "Pass:getViewCount",
               module = "lovr.graphics",
+              notes = "A render pass has one \"camera\" for each view.  Whenever something is drawn, it is broadcast to each view (layer) of each texture, using the corresponding camera.",
               variants = {
                 {
                   arguments = {},
@@ -11107,10 +11126,17 @@ return {
                     {
                       name = "views",
                       type = "number",
-                      description = "TODO"
+                      description = "The view count."
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:getViewPose",
+                "Pass:setViewPose",
+                "Pass:getProjection",
+                "Pass:setProjection",
+                "lovr.headset.getViewCount"
               }
             },
             {
@@ -11203,10 +11229,11 @@ return {
             },
             {
               name = "getWidth",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the texture width of a render pass.",
+              description = "Returns the width of the textures attached to the render pass.",
               key = "Pass:getWidth",
               module = "lovr.graphics",
+              notes = "If the pass is not a render pass, this function returns zero.",
               variants = {
                 {
                   arguments = {},
@@ -11214,10 +11241,18 @@ return {
                     {
                       name = "width",
                       type = "number",
-                      description = "TODO"
+                      description = "The texture width."
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:getHeight",
+                "Pass:getDimensions",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowWidth",
+                "lovr.headset.getDisplayWidth"
               }
             },
             {
@@ -14543,7 +14578,7 @@ return {
           name = "getPass",
           tag = "graphics-objects",
           summary = "Get a temporary Pass.",
-          description = "Creates and returns a Pass object, which is used to record commands for the GPU.  Commands can be recorded by calling functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to process using `lovr.graphics.submit`.\n\nPass objects are **temporary** and only exist for a single frame.  Once `lovr.graphics.submit` is called to end the frame, any passes that were created during that frame become **invalid**. Each frame, a new set of passes must be created and recorded. LÖVR tries to detect if you use a pass after it's invalid, but this error checking is not 100% accurate at the moment.\n\nThere are 3 types of passes.  Each type can record a specific type of command:\n\n- `render` passes render graphics to textures.  The `lovr.draw` callback receives a render pass\n  as an argument.\n- `compute` passes run compute shaders.\n- `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.",
+          description = "Creates and returns a temporary Pass object.",
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
           notes = "Fun facts about render passes:\n\n- Textures must have the same dimensions, layer counts, and sample counts.\n- Textures must have been created with the `render` `TextureUsage`.\n- If `mipmap` is true, then any textures with mipmaps must have the `transfer` `TextureUsage`.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- Setting `clear` to `false` for textures is usually very slow on mobile GPUs.\n\nFor `compute` and `transfer` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  LÖVR is not currently able to check for this.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
@@ -14554,6 +14589,7 @@ return {
           },
           variants = {
             {
+              description = "Create a compute or transfer pass.",
               arguments = {
                 {
                   name = "type",
@@ -14570,6 +14606,7 @@ return {
               }
             },
             {
+              description = "Create a render pass.",
               arguments = {
                 {
                   name = "type",
@@ -14591,6 +14628,7 @@ return {
               }
             },
             {
+              description = "Create a render pass, with options.",
               arguments = {
                 {
                   name = "type",
@@ -14663,7 +14701,7 @@ return {
           description = "Returns the window pass.  This is a builtin render `Pass` object that renders to the desktop window texture.  If the desktop window was not open when the graphics module was initialized, this function will return `nil`.",
           key = "lovr.graphics.getWindowPass",
           module = "lovr.graphics",
-          notes = "- TODO is the same pass always returned\n- TODO does the texture change\n- TODO what settings does the Pass use (incl conf.lua)\n- TODO is it reset",
+          notes = "`lovr.conf` may be used to change the settings for the pass:  `t.graphics.antialias` enables antialiasing, and `t.graphics.stencil` enables the stencil buffer.\n\nThis pass clears the window texture to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.",
           variants = {
             {
               arguments = {},
@@ -16246,17 +16284,22 @@ return {
         {
           name = "ShaderType",
           summary = "Different types of Shaders.",
-          description = "TODO",
+          description = "The two types of shaders that can be created.",
           key = "ShaderType",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.newShader",
+            "Shader:getType",
+            "ShaderStage"
+          },
           values = {
             {
               name = "graphics",
-              description = "TODO"
+              description = "A graphics shader with a vertex and pixel stage."
             },
             {
               name = "compute",
-              description = "TODO"
+              description = "A compute shader with a single compute stage."
             }
           }
         },

@@ -1,12 +1,23 @@
 return {
-  summary = 'TODO',
-  description = 'TODO',
+  summary = 'Get the texture width of a render pass.',
+  description = 'Returns the width of the textures attached to the render pass.',
   arguments = {},
   returns = {
     {
       name = 'width',
       type = 'number',
-      description = 'TODO'
+      description = 'The texture width.'
     }
+  },
+  notes = [[
+    If the pass is not a render pass, this function returns zero.
+  ]],
+  related = {
+    'Pass:getHeight',
+    'Pass:getDimensions',
+    'Pass:getViewCount',
+    'lovr.graphics.getPass',
+    'lovr.system.getWindowWidth',
+    'lovr.headset.getDisplayWidth'
   }
 }

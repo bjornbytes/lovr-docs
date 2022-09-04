@@ -1,23 +1,7 @@
 return {
   tag = 'graphics-objects',
   summary = 'Get a temporary Pass.',
-  description = [[
-    Creates and returns a Pass object, which is used to record commands for the GPU.  Commands can
-    be recorded by calling functions on the Pass.  After recording a set of passes, they can be
-    submitted for the GPU to process using `lovr.graphics.submit`.
-
-    Pass objects are **temporary** and only exist for a single frame.  Once `lovr.graphics.submit`
-    is called to end the frame, any passes that were created during that frame become **invalid**.
-    Each frame, a new set of passes must be created and recorded. LÖVR tries to detect if you use a
-    pass after it's invalid, but this error checking is not 100% accurate at the moment.
-
-    There are 3 types of passes.  Each type can record a specific type of command:
-
-    - `render` passes render graphics to textures.  The `lovr.draw` callback receives a render pass
-      as an argument.
-    - `compute` passes run compute shaders.
-    - `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.
-  ]],
+  description = 'Creates and returns a temporary Pass object.',
   arguments = {
     type = {
       type = 'PassType',
@@ -111,14 +95,17 @@ return {
   },
   variants = {
     {
+      description = 'Create a compute or transfer pass.',
       arguments = { 'type' },
       returns = { 'pass' }
     },
     {
+      description = 'Create a render pass.',
       arguments = { 'type', 'texture' },
       returns = { 'pass' }
     },
     {
+      description = 'Create a render pass, with options.',
       arguments = { 'type', 'canvas' },
       returns = { 'pass' }
     }

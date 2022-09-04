@@ -20,9 +20,10 @@ return {
     }
   },
   notes = [[
-    - TODO is the same pass always returned
-    - TODO does the texture change
-    - TODO what settings does the Pass use (incl conf.lua)
-    - TODO is it reset
+    `lovr.conf` may be used to change the settings for the pass:  `t.graphics.antialias` enables
+    antialiasing, and `t.graphics.stencil` enables the stencil buffer.
+
+    This pass clears the window texture to the background color, which can be changed using
+    `lovr.graphics.setBackgroundColor`.
   ]]
 }
