@@ -14641,7 +14641,7 @@ return {
                       name = "mipmap",
                       type = "boolean",
                       description = "Whether mipmaps for the color and depth textures should be regenerated after the pass is finished.",
-                      default = "'false'"
+                      default = "false"
                     }
                   }
                 }

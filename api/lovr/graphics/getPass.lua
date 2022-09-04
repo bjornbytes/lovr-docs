@@ -86,7 +86,7 @@ return {
         {
           name = 'mipmap',
           type = 'boolean',
-          default = [['false']],
+          default = [[false]],
           description = [[
             Whether mipmaps for the color and depth textures should be regenerated after the pass is
             finished.
