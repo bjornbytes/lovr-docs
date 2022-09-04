@@ -10205,7 +10205,7 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the circle.  Can also be provided as position, radius, and rotation, using a mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used."
+                      description = "The transform of the circle.  Can also be provided as position, radius, and rotation, using a mix of `Vectors` or numbers."
                     },
                     {
                       name = "style",
@@ -10368,22 +10368,22 @@ return {
               name = "cone",
               tag = "drawing",
               summary = "Draw a cone.",
-              description = "TODO",
+              description = "Draws a cone.",
               key = "Pass:cone",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The local origin is at the center of the base of the cone, and the negative z axis points towards the tip.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "TransformXY2",
-                      description = "The transform to apply to the cone.  The x and y scale is the radius, the z scale is the length."
+                      type = "Mat4",
+                      description = "The transform of the cone.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the length.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the length."
                     },
                     {
                       name = "segments",
                       type = "number",
-                      description = "The number of circular segments to render.",
+                      description = "The number of segments in the cone.",
                       default = "64"
                     }
                   },
@@ -10700,17 +10700,17 @@ return {
               name = "cube",
               tag = "drawing",
               summary = "Draw a cube.",
-              description = "TODO",
+              description = "Draws a cube.",
               key = "Pass:cube",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The local origin is in the center of the cube.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "Transform",
-                      description = "The transform to apply to the cube."
+                      type = "Mat4",
+                      description = "The transform of the cube.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used."
                     },
                     {
                       name = "style",
@@ -10730,7 +10730,7 @@ return {
               description = "Draws a cylinder.",
               key = "Pass:cylinder",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The local origin is in the center of the cylinder, and the length of the cylinder is along the z axis.",
               variants = {
                 {
                   arguments = {
@@ -10885,17 +10885,18 @@ return {
             {
               name = "fill",
               tag = "drawing",
-              summary = "Draw a fullscreen quad.",
-              description = "TODO",
+              summary = "Draw a fullscreen triangle.",
+              description = "Draws a fullscreen triangle.  The `fill` shader is used, which stretches the triangle across the screen.",
               key = "Pass:fill",
               module = "lovr.graphics",
+              notes = "This function has some special behavior for array textures:\n\n- Filling a single-layer texture to a multi-layer canvas will mirror the texture to all layers,\n  just like regular drawing.\n- Filling a 2-layer texture to a mono canvas will render the 2 layers side-by-side.\n- Filling a multi-layer texture to a multi-layer canvas will do a layer-by-layer fill (the layer\n  counts must match).",
               variants = {
                 {
                   arguments = {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "The texture to fill."
+                      description = "The texture to fill.  If nil, the texture from the active material is used."
                     }
                   },
                   returns = {}

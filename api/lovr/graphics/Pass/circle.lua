@@ -8,7 +8,7 @@ return {
       type = 'Mat4',
       description = [[
         The transform of the circle.  Can also be provided as position, radius, and rotation, using
-        a mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used.
+        a mix of `Vectors` or numbers.
       ]]
     },
     {

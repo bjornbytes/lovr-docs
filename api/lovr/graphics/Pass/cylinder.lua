@@ -56,5 +56,8 @@ return {
     }
   },
   returns = {},
-  notes = 'TODO'
+  notes = [[
+    The local origin is in the center of the cylinder, and the length of the cylinder is along the z
+    axis.
+  ]]
 }

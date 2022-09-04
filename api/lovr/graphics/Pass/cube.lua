@@ -1,12 +1,15 @@
 return {
   tag = 'drawing',
   summary = 'Draw a cube.',
-  description = 'TODO',
+  description = 'Draws a cube.',
   arguments = {
     {
       name = 'transform',
-      type = 'Transform',
-      description = 'The transform to apply to the cube.'
+      type = 'Mat4',
+      description = [[
+        The transform of the cube.  Can also be provided as position, scale, and rotation using a
+        mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used.
+      ]]
     },
     {
       name = 'style',
@@ -16,5 +19,5 @@ return {
     }
   },
   returns = {},
-  notes = 'TODO'
+  notes = 'The local origin is in the center of the cube.'
 }
