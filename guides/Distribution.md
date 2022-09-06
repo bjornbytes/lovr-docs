@@ -54,9 +54,13 @@ Finally, `LÖVR.app` can be renamed to `Awesome VR Project.app` and distributed 
 Android
 ---
 
-To create an APK for Android systems, the `-DANDROID_ASSETS=/path/to/project` CMake option can be
-provided to include a LÖVR project in the APK when compiling.  See the `Compiling` guide for more
-info.
+When the LÖVR APK runs, it will search for and load a project located in the `assets` folder of the
+APK.  Distributing an APK with a custom LÖVR project involves adding the project files into the
+`assets` folder.  However, Android requires that the APK is resigned after it's modified.
 
-(TODO: Mention other approaches like `aapt add`, `apktool`, or
-unzipping/modifying/rezipping/resigning).
+LÖVR's build system has options for including assets in the APK.  For CMake, specify the
+`-DANDROID_ASSETS=/path/to/project` option on the command line.  For tup, specify the
+`CONFIG_ANDROID_PROJECT=/path/to/project` config variable in `tup.config`.  See the `Compiling`
+guide for more info.
+
+(TODO: Mention other approaches like `aapt add`, `apktool`, or manually unzipping/rezipping).
