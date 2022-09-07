@@ -1,8 +1,6 @@
 FAQ
 ===
 
-Frequently asked questions.
-
 > Can I use LÖVR without a VR headset?
 
 Yes, LÖVR will automatically use a fake headset system that you can control with your keyboard/mouse
