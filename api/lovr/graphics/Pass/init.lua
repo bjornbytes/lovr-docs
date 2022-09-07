@@ -12,8 +12,7 @@ return {
 
     There are 3 types of passes.  Each type can record a specific type of command:
 
-    - `render` passes render graphics to textures.  The `lovr.draw` callback receives a render pass
-      as an argument.
+    - `render` passes render graphics to textures.
     - `compute` passes run compute shaders.
     - `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.
   ]],

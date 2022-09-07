@@ -1,8 +1,8 @@
 Distribution
 ===
 
-LÖVR projects can be exported to standalone executables or WebXR projects.  This guide will teach you
-how to export and distribute a project.
+LÖVR projects can be exported to standalone executables.  This guide will teach you how to export
+and distribute a project.
 
 Creating an Archive
 ---
