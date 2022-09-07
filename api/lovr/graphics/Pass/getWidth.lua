@@ -3,10 +3,15 @@ return {
   description = 'Returns the width of the textures attached to the render pass.',
   arguments = {},
   returns = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
       description = 'The texture width.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'width' }
     }
   },
   notes = [[

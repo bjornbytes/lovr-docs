@@ -8,10 +8,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'height',
+    height = {
       type = 'number',
       description = 'The height of the font.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'height' }
     }
   },
   related = {

@@ -7,42 +7,41 @@ return {
     GLSL.
   ]],
   arguments = {
-    {
-      name = 'left',
+    left = {
       type = 'number',
       description = 'The left edge of the projection.'
     },
-    {
-      name = 'right',
+    right = {
       type = 'number',
       description = 'The right edge of the projection.'
     },
-    {
-      name = 'top',
+    top = {
       type = 'number',
       description = 'The top edge of the projection.'
     },
-    {
-      name = 'bottom',
+    bottom = {
       type = 'number',
       description = 'The bottom edge of the projection.'
     },
-    {
-      name = 'near',
+    near = {
       type = 'number',
       description = 'The position of the near clipping plane.'
     },
-    {
-      name = 'far',
+    far = {
       type = 'number',
       description = 'The position of the far clipping plane.'
     }
   },
   returns = {
-    {
-      name = 'm',
+    m = {
       type = 'Mat4',
       description = 'The original matrix.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'left', 'right', 'top', 'bottom', 'near', 'far' },
+      returns = { 'm' }
     }
   },
   related = {

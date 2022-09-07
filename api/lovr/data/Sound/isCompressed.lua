@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'compressed',
+    compressed = {
       type = 'boolean',
       description = 'Whether the Sound is compressed.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'compressed' }
     }
   },
   related = {

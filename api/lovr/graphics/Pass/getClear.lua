@@ -3,10 +3,15 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {
-    {
-      name = 'clears',
+    clears = {
       type = 'table',
       description = 'TODO'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'clears' }
     }
   },
   notes = 'TODO'

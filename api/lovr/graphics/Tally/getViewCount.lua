@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'views',
+    views = {
       type = 'number',
       description = 'The number of views the Tally is compatible with.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'views' }
     }
   }
 }

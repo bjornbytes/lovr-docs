@@ -3,10 +3,15 @@ return {
   description = 'Encodes the Image to an uncompressed png.  This intended mainly for debugging.',
   arguments = {},
   returns = {
-    {
-      name = 'blob',
+    blob = {
       type = 'Blob',
       description = 'A new Blob containing the PNG image data.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'blob' }
     }
   },
   related = {

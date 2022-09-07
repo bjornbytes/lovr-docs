@@ -13,10 +13,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'density',
+    density = {
       type = 'number',
       description = 'The pixel density of the font.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'density' }
     }
   }
 }

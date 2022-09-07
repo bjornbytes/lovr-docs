@@ -7,32 +7,33 @@ return {
     GLSL.
   ]],
   arguments = {
-    {
-      name = 'near',
+    near = {
       type = 'number',
       description = 'The near plane.'
     },
-    {
-      name = 'far',
+    far = {
       type = 'number',
       description = 'The far plane.'
     },
-    {
-      name = 'fov',
+    fov = {
       type = 'number',
       description = 'The vertical field of view (in radians).'
     },
-    {
-      name = 'aspect',
+    aspect = {
       type = 'number',
       description = 'The horizontal aspect ratio of the projection (width / height).'
     }
   },
   returns = {
-    {
-      name = 'm',
+    m = {
       type = 'Mat4',
       description = 'The original matrix.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'near', 'far', 'fov', 'aspect' },
+      returns = { 'm' }
     }
   },
   related = {

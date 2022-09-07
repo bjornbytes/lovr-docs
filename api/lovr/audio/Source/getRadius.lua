@@ -11,10 +11,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'radius',
+    radius = {
       type = 'number',
       description = 'The radius of the Source, in meters.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'radius' }
     }
   }
 }

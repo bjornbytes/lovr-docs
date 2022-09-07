@@ -3,10 +3,15 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {
-    {
-      name = 'type',
+    type = {
       type = 'ShaderType',
       description = 'The type of the Shader.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'type' }
     }
   },
   related = {

@@ -2,17 +2,21 @@ return {
   summary = 'Get the number of vertices in a mesh.',
   description = 'Returns the number of vertices in a mesh.',
   arguments = {
-    {
-      name = 'mesh',
+    mesh = {
       type = 'number',
       description = 'The index of a mesh.'
     }
   },
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of vertices in the mesh.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'mesh' },
+      returns = { 'count' }
     }
   },
   related = {

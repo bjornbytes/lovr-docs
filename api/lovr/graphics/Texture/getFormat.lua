@@ -3,10 +3,15 @@ return {
   description = 'Returns the format of the texture.',
   arguments = {},
   returns = {
-    {
-      name = 'format',
+    format = {
       type = 'TextureFormat',
       description = 'The format of the Texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'format' }
     }
   }
 }

@@ -18,15 +18,19 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'weight',
+    weight = {
       type = 'number',
       description = 'The dipole weight.  0.0 is omnidirectional, 1.0 is a dipole, 0.5 is cardioid.'
     },
-    {
-      name = 'power',
+    power = {
       type = 'number',
       description = 'The dipole power, controlling how focused the directivity shape is.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'weight', 'power' }
     }
   }
 }

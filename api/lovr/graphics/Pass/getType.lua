@@ -11,5 +11,11 @@ return {
       type = 'PassType',
       description = 'The type of the Pass.'
     }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = {}
+    }
   }
 }

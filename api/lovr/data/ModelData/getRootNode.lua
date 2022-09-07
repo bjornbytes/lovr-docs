@@ -3,10 +3,15 @@ return {
   description = 'Returns the index of the model\'s root node.',
   arguments = {},
   returns = {
-    {
-      name = 'root',
+    root = {
       type = 'number',
       description = 'The index of the root node.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'root' }
     }
   },
   related = {

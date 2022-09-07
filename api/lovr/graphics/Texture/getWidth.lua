@@ -3,10 +3,15 @@ return {
   description = 'Returns the width of the Texture, in pixels.',
   arguments = {},
   returns = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
       description = 'The width of the Texture, in pixels.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'width' }
     }
   },
   related = {

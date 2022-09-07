@@ -3,35 +3,35 @@ return {
   description = 'Returns the 6 values of the Model\'s axis-aligned bounding box.',
   arguments = {},
   returns = {
-    {
-      name = 'minx',
+    minx = {
       type = 'number',
       description = 'The minimum x coordinate of the vertices in the Model.'
     },
-    {
-      name = 'maxx',
+    maxx = {
       type = 'number',
       description = 'The maximum x coordinate of the vertices in the Model.'
     },
-    {
-      name = 'miny',
+    miny = {
       type = 'number',
       description = 'The minimum y coordinate of the vertices in the Model.'
     },
-    {
-      name = 'maxy',
+    maxy = {
       type = 'number',
       description = 'The maximum y coordinate of the vertices in the Model.'
     },
-    {
-      name = 'minz',
+    minz = {
       type = 'number',
       description = 'The minimum z coordinate of the vertices in the Model.'
     },
-    {
-      name = 'maxz',
+    maxz = {
       type = 'number',
       description = 'The maximum z coordinate of the vertices in the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'minx', 'maxx', 'miny', 'maxy', 'minz', 'maxz' }
     }
   },
   related = {

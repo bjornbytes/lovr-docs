@@ -3,13 +3,18 @@ return {
   summary = 'Set whether draws write to the depth buffer.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'write',
+    write = {
       type = 'boolean',
       description = 'The new depth write setting.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'write' },
+      returns = {}
+    }
+  },
   notes = 'TODO',
   related = {
     'lovr.graphics.setDepthTest',

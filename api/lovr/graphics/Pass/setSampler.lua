@@ -3,11 +3,16 @@ return {
   summary = 'Set the sampler.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'sampler',
+    sampler = {
       type = 'Sampler',
       description = 'TODO'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'sampler' },
+      returns = {}
+    }
+  }
 }

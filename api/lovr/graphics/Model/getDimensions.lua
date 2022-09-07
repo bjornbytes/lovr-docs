@@ -5,20 +5,23 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
       description = 'The width of the Model.'
     },
-    {
-      name = 'height',
+    height = {
       type = 'number',
       description = 'The height of the Model.'
     },
-    {
-      name = 'depth',
+    depth = {
       type = 'number',
       description = 'The depth of the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'width', 'height', 'depth' }
     }
   },
   related = {

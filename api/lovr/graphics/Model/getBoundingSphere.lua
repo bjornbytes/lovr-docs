@@ -3,25 +3,27 @@ return {
   description = 'Returns a sphere approximately enclosing the vertices in the Model.',
   arguments = {},
   returns = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       description = 'The x coordinate of the position of the sphere.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       description = 'The y coordinate of the position of the sphere.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'number',
       description = 'The z coordinate of the position of the sphere.'
     },
-    {
-      name = 'radius',
+    radius = {
       type = 'number',
       description = 'The radius of the bounding sphere.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'x', 'y', 'z', 'radius' }
     }
   },
   related = {

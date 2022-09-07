@@ -3,16 +3,20 @@ return {
   summary = 'Stop measuring GPU counters.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'tally',
+    tally = {
       type = 'Tally',
       description = 'TODO'
     },
-    {
-      name = 'index',
+    index = {
       type = 'number',
       description = 'TODO'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'tally', 'index' },
+      returns = {}
+    }
+  }
 }

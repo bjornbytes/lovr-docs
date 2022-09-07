@@ -3,8 +3,7 @@ return {
   summary = 'Draw a cone.',
   description = 'Draws a cone.',
   arguments = {
-    {
-      name = 'transform',
+    transform = {
       type = 'Mat4',
       description = [[
         The transform of the cone.  Can also be provided as position, scale, and rotation using a
@@ -13,14 +12,19 @@ return {
         and Y components are the radius and the Z component is the length.
       ]]
     },
-    {
-      name = 'segments',
+    segments = {
       type = 'number',
       default = '64',
       description = 'The number of segments in the cone.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'transform', 'segments' },
+      returns = {}
+    }
+  },
   notes = [[
     The local origin is at the center of the base of the cone, and the negative z axis points
     towards the tip.

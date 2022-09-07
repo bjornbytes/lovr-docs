@@ -3,17 +3,21 @@ return {
   summary = 'Set the blend mode.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'blend',
+    blend = {
       type = 'BlendMode',
       description = 'The blend mode.'
     },
-    {
-      name = 'alphaBlend',
+    alphaBlend = {
       type = 'BlendAlphaMode',
       description = 'The alpha blend mode.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'blend', 'alphaBlend' },
+      returns = {}
+    }
+  },
   notes = 'TODO'
 }

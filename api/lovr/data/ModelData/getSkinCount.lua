@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of skins in the model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'count' }
     }
   },
   notes = 'There is currently a maximum of 256 skins.',

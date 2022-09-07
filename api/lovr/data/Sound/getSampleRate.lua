@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'frequency',
+    frequency = {
       type = 'number',
       description = 'The number of frames per second in the Sound.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'frequency' }
     }
   }
 }

@@ -3,20 +3,23 @@ return {
   description = 'Returns the filter mode of the Sampler.',
   arguments = {},
   returns = {
-    {
-      name = 'min',
+    min = {
       type = 'FilterMode',
       description = 'The filter mode used when the texture is minified.'
     },
-    {
-      name = 'mag',
+    mag = {
       type = 'FilterMode',
       description = 'The filter mode used when the texture is magnified.'
     },
-    {
-      name = 'mip',
+    mip = {
       type = 'FilterMode',
       description = 'The filter mode used to select a mipmap level.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'min', 'mag', 'mip' }
     }
   },
   related = {

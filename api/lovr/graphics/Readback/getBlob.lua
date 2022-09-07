@@ -3,10 +3,15 @@ return {
   description = 'Returns the Readback\'s data as a Blob.',
   arguments = {},
   returns = {
-    {
-      name = 'blob',
+    blob = {
       type = 'Blob',
       description = 'The Blob.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'blob' }
     }
   },
   notes = 'TODO what if it\'s an image?!',

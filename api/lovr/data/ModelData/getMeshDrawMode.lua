@@ -5,17 +5,21 @@ return {
     lines, or triangles).
   ]],
   arguments = {
-    {
-      name = 'mesh',
+    mesh = {
       type = 'number',
       description = 'The index of a mesh.'
     }
   },
   returns = {
-    {
-      name = 'mode',
+    mode = {
       type = 'DrawMode',
       description = 'The draw mode of the mesh.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'mesh' },
+      returns = { 'mode' }
     }
   }
 }

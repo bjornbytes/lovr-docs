@@ -7,17 +7,21 @@ return {
     optimize things better.
   ]],
   arguments = {
-    {
-      name = '...',
+    ['...'] = {
       type = 'TextureUsage',
       description = 'One or more usage flags.'
     }
   },
   returns = {
-    {
-      name = 'supported',
+    supported = {
       type = 'boolean',
       description = 'Whether the Texture has all the provided usage flags.'
+    }
+  },
+  variants = {
+    {
+      arguments = { '...' },
+      returns = { 'supported' }
     }
   },
   related = {

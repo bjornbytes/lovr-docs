@@ -3,10 +3,15 @@ return {
   description = 'Returns the number of nodes in the model.',
   arguments = {},
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of nodes in the model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'count' }
     }
   }
 }

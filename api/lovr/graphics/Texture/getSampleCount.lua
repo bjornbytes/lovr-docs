@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'samples',
+    samples = {
       type = 'number',
       description = 'The number of samples in the Texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'samples' }
     }
   },
   related = {

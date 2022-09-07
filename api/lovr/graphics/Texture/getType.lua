@@ -3,10 +3,15 @@ return {
   description = 'Returns the type of the texture.',
   arguments = {},
   returns = {
-    {
-      name = 'type',
+    type = {
       type = 'TextureType',
       description = 'The type of the Texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'type' }
     }
   }
 }

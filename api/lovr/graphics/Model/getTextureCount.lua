@@ -3,10 +3,15 @@ return {
   description = 'Returns the number of textures in the Model.',
   arguments = {},
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of textures in the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'count' }
     }
   },
   related = {

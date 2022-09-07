@@ -3,10 +3,15 @@ return {
   description = 'Returns the Readback\'s data as an Image.',
   arguments = {},
   returns = {
-    {
-      name = 'image',
+    image = {
       type = 'Image',
       description = 'The Image.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'image' }
     }
   },
   notes = 'TODO what if it\'s a buffer or tally?!',

@@ -2,22 +2,25 @@ return {
   summary = 'Clone a Shader.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'source',
+    source = {
       type = 'Shader',
       description = 'The Shader to clone.'
     },
-    {
-      name = 'flags',
+    flags = {
       type = 'table',
       description = 'TODO'
     }
   },
   returns = {
-    {
-      name = 'shader',
+    shader = {
       type = 'Shader',
       description = 'The new Shader.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'source', 'flags' },
+      returns = { 'shader' }
     }
   }
 }

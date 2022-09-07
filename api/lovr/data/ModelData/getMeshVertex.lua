@@ -5,22 +5,25 @@ return {
     of a mesh, which is given by `ModelData:getMeshVertexFormat`.
   ]],
   arguments = {
-    {
-      name = 'mesh',
+    mesh = {
       type = 'number',
       description = 'The index of a mesh to get the vertex from.'
     },
-    {
-      name = 'vertex',
+    vertex = {
       type = 'number',
       description = 'The index of a vertex in the mesh to retrieve.'
     }
   },
   returns = {
-    {
-      name = '...',
+    ['...'] = {
       type = 'number',
       description = 'The data for all of the attributes of the vertex.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'mesh', 'vertex' },
+      returns = { '...' }
     }
   },
   related = {

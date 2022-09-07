@@ -5,10 +5,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'view',
+    view = {
       type = 'boolean',
       description = 'Whether the Texture is a texture view.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'view' }
     }
   },
   related = {

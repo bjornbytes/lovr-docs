@@ -5,17 +5,21 @@ return {
     when defining triangles.
   ]],
   arguments = {
-    {
-      name = 'mesh',
+    mesh = {
       type = 'number',
       description = 'The index of a mesh.'
     }
   },
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of vertex indices in the mesh.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'mesh' },
+      returns = { 'count' }
     }
   },
   notes = 'This may return zero if the mesh does not use indices.'

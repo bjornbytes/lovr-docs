@@ -3,10 +3,15 @@ return {
   description = 'Returns the distance between each item in the Buffer, in bytes.',
   arguments = {},
   returns = {
-    {
-      name = 'stride',
+    stride = {
       type = 'number',
       description = 'The stride of the Buffer, in bytes.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'stride' }
     }
   },
   notes = [[

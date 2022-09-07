@@ -3,10 +3,15 @@ return {
   description = 'Returns the total number of samples in the Sound.',
   arguments = {},
   returns = {
-    {
-      name = 'samples',
+    samples = {
       type = 'number',
       description = 'The total number of samples in the Sound.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'samples' }
     }
   },
   notes = 'For streams, this returns the number of samples in the stream\'s buffer.',

@@ -3,10 +3,15 @@ return {
   description = 'Returns the height of the Model, computed from its axis-aligned bounding box.',
   arguments = {},
   returns = {
-    {
-      name = 'height',
+    height = {
       type = 'number',
       description = 'The height of the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'height' }
     }
   },
   related = {

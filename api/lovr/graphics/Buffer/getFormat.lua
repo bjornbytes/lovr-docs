@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'format',
+    format = {
       type = 'table',
       description = 'The format of the Buffer.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'format' }
     }
   },
   example = [=[

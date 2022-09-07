@@ -3,15 +3,19 @@ return {
   description = 'Returns the dimensions of the Image, in pixels.',
   arguments = {},
   returns = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
       description = 'The width of the Image, in pixels.'
     },
-    {
-      name = 'height',
+    height = {
       type = 'number',
       description = 'The height of the Image, in pixels.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'width', 'height' }
     }
   },
   related = {

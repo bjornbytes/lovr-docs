@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'metadata',
+    metadata = {
       type = 'string',
       description = 'The metadata from the model file.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'metadata' }
     }
   },
   related = {

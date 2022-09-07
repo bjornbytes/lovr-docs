@@ -8,12 +8,17 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'iterator',
+    iterator = {
       type = 'function',
       arguments = {},
       returns = {},
       description = 'A Lua iterator, usable in a for loop.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'iterator' }
     }
   },
   example = [[

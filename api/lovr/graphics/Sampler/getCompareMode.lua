@@ -9,10 +9,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'compare',
+    compare = {
       type = 'CompareMode',
       description = 'The compare mode of the sampler.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'compare' }
     }
   },
   related = {

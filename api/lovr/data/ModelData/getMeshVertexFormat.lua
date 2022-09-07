@@ -5,17 +5,21 @@ return {
     each vertex (position, color, etc.), including their types and binary data layout.
   ]],
   arguments = {
-    {
-      name = 'mesh',
+    mesh = {
       type = 'number',
       description = 'The index of a mesh.'
     }
   },
   returns = {
-    {
-      name = 'format',
+    format = {
       type = 'table',
       description = 'The vertex format of the mesh.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'mesh' },
+      returns = { 'format' }
     }
   },
   notes = [[

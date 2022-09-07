@@ -3,10 +3,15 @@ return {
   description = 'Returns the format of the Image.',
   arguments = {},
   returns = {
-    {
-      name = 'format',
+    format = {
       type = 'TextureFormat',
       description = 'The format of the pixels in the Image.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'format' }
     }
   },
   related = {

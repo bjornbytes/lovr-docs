@@ -3,10 +3,15 @@ return {
   description = 'Returns the total number of triangles in the Model.',
   arguments = {},
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The total number of triangles in the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'count' }
     }
   },
   notes = [[

@@ -3,30 +3,32 @@ return {
   summary = 'Draw a flat plane.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'transform',
+    transform = {
       type = 'Transform2',
       description = 'The transform to apply to the plane.'
     },
-    {
-      name = 'style',
+    style = {
       type = 'DrawStyle',
       default = [['fill']],
       description = 'Whether the plane should be drawn filled or outlined.'
     },
-    {
-      name = 'columns',
+    columns = {
       type = 'number',
       default = '1',
       description = 'The number of horizontal segments in the plane.'
     },
-    {
-      name = 'rows',
+    rows = {
       type = 'number',
       default = 'cols',
       description = 'The number of vertical segments in the plane.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'transform', 'style', 'columns', 'rows' },
+      returns = {}
+    }
+  },
   notes = 'TODO'
 }

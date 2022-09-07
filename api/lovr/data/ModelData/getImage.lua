@@ -2,17 +2,21 @@ return {
   summary = 'Get an Image in the model.',
   description = 'Returns one of the Images in the model, by index.',
   arguments = {
-    {
-      name = 'index',
+    index = {
       type = 'number',
       description = 'The index of the Image to get.'
     }
   },
   returns = {
-    {
-      name = 'image',
+    image = {
       type = 'Image',
       description = 'The Image object.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'index' },
+      returns = { 'image' }
     }
   },
   related = {

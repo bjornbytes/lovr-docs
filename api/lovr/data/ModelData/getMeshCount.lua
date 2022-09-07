@@ -3,10 +3,15 @@ return {
   description = 'Returns the number of meshes in the model.',
   arguments = {},
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The number of meshes in the model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'count' }
     }
   },
   related = {

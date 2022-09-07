@@ -3,10 +3,15 @@ return {
   description = 'Returns the width of the Model, computed from its axis-aligned bounding box.',
   arguments = {},
   returns = {
-    {
-      name = 'width',
+    width = {
       type = 'number',
       description = 'The width of the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'width' }
     }
   },
   related = {

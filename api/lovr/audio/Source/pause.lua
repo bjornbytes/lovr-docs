@@ -6,5 +6,11 @@ return {
     is rewound, it will remain paused.
   ]],
   arguments = {},
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = {},
+      returns = {}
+    }
+  }
 }

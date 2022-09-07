@@ -3,10 +3,15 @@ return {
   description = 'Returns whether the Sound is a stream.',
   arguments = {},
   returns = {
-    {
-      name = 'stream',
+    stream = {
       type = 'boolean',
       description = 'Whether the Sound is a stream.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'stream' }
     }
   },
   related = {

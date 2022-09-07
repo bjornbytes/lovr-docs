@@ -3,10 +3,15 @@ return {
   description = 'Returns a Blob containing the raw bytes of the Sound.',
   arguments = {},
   returns = {
-    {
-      name = 'blob',
+    blob = {
       type = 'Blob',
       description = 'The Blob instance containing the bytes for the `Sound`.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'blob' }
     }
   },
   notes = [[

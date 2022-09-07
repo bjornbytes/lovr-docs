@@ -3,24 +3,27 @@ return {
   summary = 'Draw a sphere.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'transform',
+    transform = {
       type = 'transform',
       description = 'The transform to apply to the sphere.'
     },
-    {
-      name = 'longitudes',
+    longitudes = {
       type = 'number',
       default = '48',
       description = 'The number of "horizontal" segments.'
     },
-    {
-      name = 'latitudes',
+    latitudes = {
       type = 'number',
       default = 'longitudes / 2',
       description = 'The number of "vertical" segments.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'transform', 'longitudes', 'latitudes' },
+      returns = {}
+    }
+  },
   notes = 'TODO'
 }

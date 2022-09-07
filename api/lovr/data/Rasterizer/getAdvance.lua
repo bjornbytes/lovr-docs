@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'advance',
+    advance = {
       type = 'number',
       description = 'The advance of the font, in pixels.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'advance' }
     }
   }
 }

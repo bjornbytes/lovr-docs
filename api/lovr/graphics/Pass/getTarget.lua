@@ -3,10 +3,15 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {
-    {
-      name = 'target',
+    target = {
       type = 'table',
       description = 'TODO'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'target' }
     }
   }
 }

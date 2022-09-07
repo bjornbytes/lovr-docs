@@ -3,27 +3,29 @@ return {
   summary = 'Change the color components affected by drawing.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'r',
+    r = {
       type = 'boolean',
       description = 'Whether the red component should be affected by drawing.'
     },
-    {
-      name = 'g',
+    g = {
       type = 'boolean',
       description = 'Whether the green component should be affected by drawing.'
     },
-    {
-      name = 'b',
+    b = {
       type = 'boolean',
       description = 'Whether the blue component should be affected by drawing.'
     },
-    {
-      name = 'a',
+    a = {
       type = 'boolean',
       description = 'Whether the alpha component should be affected by drawing.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'r', 'g', 'b', 'a' },
+      returns = {}
+    }
+  },
   notes = 'TODO'
 }

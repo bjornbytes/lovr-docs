@@ -3,11 +3,16 @@ return {
   summary = 'Set the material.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'material',
+    material = {
       type = 'Material',
       description = 'TODO'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'material' },
+      returns = {}
+    }
+  }
 }

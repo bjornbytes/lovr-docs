@@ -6,15 +6,19 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'min',
+    min = {
       type = 'number',
       description = 'The minimum mipmap level that will be sampled (0 is the largest image).'
     },
-    {
-      name = 'max',
+    max = {
       type = 'number',
       description = 'The maximum mipmap level that will be sampled.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'min', 'max' }
     }
   },
   related = {

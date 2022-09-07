@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'sound',
+    sound = {
       type = 'Sound',
       description = 'The Sound object.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'sound' }
     }
   },
   related = {

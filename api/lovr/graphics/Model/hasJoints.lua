@@ -3,10 +3,15 @@ return {
   description = 'Returns whether the Model has any skeletal animations.',
   arguments = {},
   returns = {
-    {
-      name = 'jointed',
+    jointed = {
       type = 'boolean',
       description = 'Whether the animation uses joint nodes for skeletal animation.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'jointed' }
     }
   },
   notes = [[

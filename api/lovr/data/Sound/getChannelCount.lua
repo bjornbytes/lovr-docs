@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'channels',
+    channels = {
       type = 'number',
       description = 'The number of channels in the sound.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'channels' }
     }
   },
   related = {

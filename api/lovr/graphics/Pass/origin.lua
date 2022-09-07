@@ -4,6 +4,12 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {},
+  variants = {
+    {
+      arguments = {},
+      returns = {}
+    }
+  },
   related = {
     'lovr.graphics.translate',
     'lovr.graphics.rotate',

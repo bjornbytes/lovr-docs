@@ -7,20 +7,23 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       description = 'The x coordinate.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       description = 'The y coordinate.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'number',
       description = 'The z coordinate.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'x', 'y', 'z' }
     }
   },
   related = {

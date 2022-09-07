@@ -25,27 +25,29 @@ return {
         meters by default.
       ]]
     },
-    {
-      name = 'halign',
+    halign = {
       type = 'HorizontalAlign',
       description = 'The horizontal align.'
     },
-    {
-      name = 'valign',
+    valign = {
       type = 'VerticalAlign',
       description = 'The vertical align.'
     }
   },
   returns = {
-    {
-      name = 'vertices',
+    vertices = {
       type = 'table',
       description = 'The table of vertices.  See below for the format of each vertex.'
     },
-    {
-      name = 'material',
+    material = {
       type = 'Material',
       description = 'A Material to use when rendering the vertices.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'halign', 'valign' },
+      returns = { 'vertices', 'material' }
     }
   },
   notes = [[

@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'capacity',
+    capacity = {
       type = 'number',
       description = 'The number of frames that can be written to the Sound.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'capacity' }
     }
   },
   related = {

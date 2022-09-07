@@ -3,18 +3,22 @@ return {
   summary = 'Get the duration of the Source.',
   description = 'Returns the duration of the Source.',
   arguments = {
-    {
-      name = 'unit',
+    unit = {
       type = 'TimeUnit',
       default = [['seconds']],
       description = 'The unit to return.'
     }
   },
   returns = {
-    {
-      name = 'duration',
+    duration = {
       type = 'number',
       description = 'The duration of the Source.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'unit' },
+      returns = { 'duration' }
     }
   },
   related = {

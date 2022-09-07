@@ -2,37 +2,37 @@ return {
   summary = 'Get the value of a pixel of the Image.',
   description = 'Returns the value of a pixel of the Image.',
   arguments = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       description = 'The x coordinate of the pixel to get (0-indexed).'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       description = 'The y coordinate of the pixel to get (0-indexed).'
     }
   },
   returns = {
-    {
-      name = 'r',
+    r = {
       type = 'number',
       description = 'The red component of the pixel, from 0.0 to 1.0.'
     },
-    {
-      name = 'g',
+    g = {
       type = 'number',
       description = 'The green component of the pixel, from 0.0 to 1.0.'
     },
-    {
-      name = 'b',
+    b = {
       type = 'number',
       description = 'The blue component of the pixel, from 0.0 to 1.0.'
     },
-    {
-      name = 'a',
+    a = {
       type = 'number',
       description = 'The alpha component of the pixel, from 0.0 to 1.0.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'x', 'y' },
+      returns = { 'r', 'g', 'b', 'a' }
     }
   },
   notes = [[

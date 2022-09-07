@@ -4,10 +4,15 @@ return {
   description = 'Returns whether or not the Source will loop when it finishes.',
   arguments = {},
   returns = {
-    {
-      name = 'looping',
+    looping = {
       type = 'boolean',
       description = 'Whether or not the Source is looping.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'looping' }
     }
   }
 }

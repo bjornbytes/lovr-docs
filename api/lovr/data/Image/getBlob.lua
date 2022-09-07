@@ -3,10 +3,15 @@ return {
   description = 'Returns a Blob containing the raw bytes of the Image.',
   arguments = {},
   returns = {
-    {
-      name = 'blob',
+    blob = {
       type = 'Blob',
       description = 'The Blob instance containing the bytes for the `Image`.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'blob' }
     }
   },
   related = {

@@ -3,11 +3,16 @@ return {
   summary = 'Change whether mesh vertices are drawn as points, lines, or triangles.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'mode',
+    mode = {
       type = 'MeshMode',
       description = 'TODO'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'mode' },
+      returns = {}
+    }
+  }
 }

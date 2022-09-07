@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'layers',
+    layers = {
       type = 'number',
       description = 'The layer count of the Texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'layers' }
     }
   },
   related = {

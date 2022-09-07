@@ -2,17 +2,21 @@ return {
   summary = 'Check if a matrix equals another matrix.',
   description = 'Returns whether a matrix is approximately equal to another matrix.',
   arguments = {
-    {
-      name = 'n',
+    n = {
       type = 'Mat4',
       description = 'The other matrix.'
     }
   },
   returns = {
-    {
-      name = 'equal',
+    equal = {
       type = 'boolean',
       description = 'Whether the 2 matrices approximately equal each other.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'n' },
+      returns = { 'equal' }
     }
   },
   related = {

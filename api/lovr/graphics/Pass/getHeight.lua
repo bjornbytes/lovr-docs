@@ -3,10 +3,15 @@ return {
   description = 'Returns the height of the textures attached to the render pass.',
   arguments = {},
   returns = {
-    {
-      name = 'height',
+    height = {
       type = 'number',
       description = 'The texture height.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'height' }
     }
   },
   notes = [[

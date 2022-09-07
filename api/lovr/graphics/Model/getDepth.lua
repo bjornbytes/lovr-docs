@@ -3,10 +3,15 @@ return {
   description = 'Returns the depth of the Model, computed from its axis-aligned bounding box.',
   arguments = {},
   returns = {
-    {
-      name = 'depth',
+    depth = {
       type = 'number',
       description = 'The depth of the Model.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'depth' }
     }
   },
   related = {

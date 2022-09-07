@@ -3,20 +3,23 @@ return {
   description = 'Returns the workgroup size of a compute shader.  TODO what is it.',
   arguments = {},
   returns = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       description = 'The x size of a workgroup.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       description = 'The y size of a workgroup.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'number',
       description = 'The z size of a workgroup.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'x', 'y', 'z' }
     }
   }
 }

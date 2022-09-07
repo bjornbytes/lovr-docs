@@ -3,10 +3,15 @@ return {
   description = 'Returns the total vertex count of the Model.',
   arguments = {},
   returns = {
-    {
-      name = 'count',
+    count = {
       type = 'number',
       description = 'The total number of vertices.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'count' }
     }
   },
   notes = [[

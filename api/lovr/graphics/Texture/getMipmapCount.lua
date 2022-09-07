@@ -3,10 +3,15 @@ return {
   description = 'Returns the number of mipmap levels in the Texture.',
   arguments = {},
   returns = {
-    {
-      name = 'mipmaps',
+    mipmaps = {
       type = 'number',
       description = 'The number of mipmap levels in the Texture.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'mipmaps' }
     }
   },
   related = {

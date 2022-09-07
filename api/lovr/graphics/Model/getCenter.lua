@@ -5,20 +5,23 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       description = 'The x offset of the center of the bounding box.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       description = 'The y offset of the center of the bounding box.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'number',
       description = 'The z offset of the center of the bounding box.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'x', 'y', 'z' }
     }
   },
   related = {

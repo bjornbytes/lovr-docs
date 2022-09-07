@@ -3,10 +3,15 @@ return {
   description = 'Returns whether the Buffer is temporary.',
   arguments = {},
   returns = {
-    {
-      name = 'temporary',
+    temporary = {
       type = 'boolean',
       description = 'Whether the Buffer is temporary.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'temporary' }
     }
   },
   related = {

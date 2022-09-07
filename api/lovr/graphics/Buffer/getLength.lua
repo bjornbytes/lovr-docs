@@ -3,10 +3,15 @@ return {
   description = 'Returns the length of the Buffer.',
   arguments = {},
   returns = {
-    {
-      name = 'length',
+    length = {
       type = 'number',
       description = 'The length of the Buffer.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'length' }
     }
   },
   related = {

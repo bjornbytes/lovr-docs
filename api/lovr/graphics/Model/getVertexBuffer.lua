@@ -3,10 +3,15 @@ return {
   description = 'Returns a `Buffer` that holds the vertices of all of the meshes in the Model.',
   arguments = {},
   returns = {
-    {
-      name = 'buffer',
+    buffer = {
       type = 'Buffer',
       description = 'The vertex buffer.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'buffer' }
     }
   },
   related = {

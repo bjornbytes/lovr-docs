@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'pointer',
+    pointer = {
       type = 'lightuserdata',
       description = 'A pointer to the Buffer\'s memory.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'pointer' }
     }
   },
   related = {

@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'anisotropy',
+    anisotropy = {
       type = 'number',
       description = 'The anisotropy level of the sampler.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'anisotropy' }
     }
   },
   notes = [[

@@ -3,10 +3,15 @@ return {
   description = 'Returns the properties of the Material in a table.',
   arguments = {},
   returns = {
-    {
-      name = 'properties',
+    properties = {
       type = 'table',
       description = 'The Material properties.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'properties' }
     }
   }
 }

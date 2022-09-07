@@ -3,10 +3,15 @@ return {
   description = 'Returns the channel layout of the Sound.',
   arguments = {},
   returns = {
-    {
-      name = 'channels',
+    channels = {
       type = 'ChannelLayout',
       description = 'The channel layout.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'channels' }
     }
   },
   related = {

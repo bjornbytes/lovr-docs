@@ -4,10 +4,15 @@ return {
   description = 'Returns whether or not the Source is playing.',
   arguments = {},
   returns = {
-    {
-      name = 'playing',
+    playing = {
       type = 'boolean',
       description = 'Whether the Source is playing.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'playing' }
     }
   },
   related = {

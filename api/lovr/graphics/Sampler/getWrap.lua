@@ -6,20 +6,23 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'x',
+    x = {
       type = 'WrapMode',
       description = 'The wrap mode used in the horizontal direction.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'WrapMode',
       description = 'The wrap mode used in the vertical direction.'
     },
-    {
-      name = 'z',
+    z = {
       type = 'WrapMode',
       description = 'The wrap mode used in the "z" direction, for 3D textures only.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'x', 'y', 'z' }
     }
   },
   related = {

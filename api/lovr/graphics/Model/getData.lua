@@ -3,10 +3,15 @@ return {
   description = 'Returns the ModelData this Model was created from.',
   arguments = {},
   returns = {
-    {
-      name = 'data',
+    data = {
       type = 'ModelData',
       description = 'The ModelData.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'data' }
     }
   },
   related = {

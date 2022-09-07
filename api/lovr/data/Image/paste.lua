@@ -2,49 +2,48 @@ return {
   summary = 'Copy pixels from another Image to this one.',
   description = 'Copies a rectangle of pixels from one Image to this one.',
   arguments = {
-    {
-      name = 'source',
+    source = {
       type = 'Image',
       description = 'The Image to copy pixels from.'
     },
-    {
-      name = 'x',
+    x = {
       type = 'number',
       default = '0',
       description = 'The x coordinate to paste to (0-indexed).',
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       default = '0',
       description = 'The y coordinate to paste to (0-indexed).',
     },
-    {
-      name = 'fromX',
+    fromX = {
       type = 'number',
       default = '0',
       description = 'The x coordinate in the source to paste from (0-indexed).',
     },
-    {
-      name = 'fromY',
+    fromY = {
       type = 'number',
       default = '0',
       description = 'The y coordinate in the source to paste from (0-indexed).',
     },
-    {
-      name = 'width',
+    width = {
       type = 'number',
       default = 'source:getWidth()',
       description = 'The width of the region to copy.'
     },
-    {
-      name = 'height',
+    height = {
       type = 'number',
       default = 'source:getHeight()',
       description = 'The height of the region to copy.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'source', 'x', 'y', 'fromX', 'fromY', 'width', 'height' },
+      returns = {}
+    }
+  },
   notes = [[
     The two Images must have the same pixel format.
 

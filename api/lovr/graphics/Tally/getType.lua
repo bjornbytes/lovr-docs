@@ -3,10 +3,15 @@ return {
   description = 'TODO',
   arguments = {},
   returns = {
-    {
-      name = 'type',
+    type = {
       type = 'TallyType',
       description = 'TODO'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'type' }
     }
   }
 }

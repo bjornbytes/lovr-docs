@@ -3,17 +3,21 @@ return {
   summary = 'Check if an effect is enabled.',
   description = 'Returns whether a given `Effect` is enabled for the Source.',
   arguments = {
-    {
-      name = 'effect',
+    effect = {
       type = 'Effect',
       description = 'The effect.'
     }
   },
   returns = {
-    {
-      name = 'enabled',
+    enabled = {
       type = 'boolean',
       description = 'Whether the effect is enabled.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'effect' },
+      returns = { 'enabled' }
     }
   },
   notes = [[

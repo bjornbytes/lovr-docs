@@ -3,14 +3,19 @@ return {
   summary = 'Push state onto a stack.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'stack',
+    stack = {
       type = 'StackType',
       default = [['transform']],
       description = 'The type of stack to push.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'stack' },
+      returns = {}
+    }
+  },
   notes = [[
     TODO stack balancing/error
   ]],

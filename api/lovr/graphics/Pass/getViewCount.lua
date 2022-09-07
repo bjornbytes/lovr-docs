@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'views',
+    views = {
       type = 'number',
       description = 'The view count.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'views' }
     }
   },
   notes = [[

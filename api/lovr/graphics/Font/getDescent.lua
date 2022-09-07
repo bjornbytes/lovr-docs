@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'descent',
+    descent = {
       type = 'number',
       description = 'The descent of the font.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'descent' }
     }
   },
   related = {

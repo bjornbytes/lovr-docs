@@ -5,10 +5,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'frames',
+    frames = {
       type = 'number',
       description = 'The number of frames in the Sound.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'frames' }
     }
   },
   notes = 'For streams, this returns the number of frames in the stream\'s buffer.',

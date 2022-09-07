@@ -7,13 +7,18 @@ return {
     default step count is 20.
   ]],
   arguments = {
-    {
-      name = 'steps',
+    steps = {
       type = 'number',
       description = 'The new step count.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'steps' },
+      returns = {}
+    }
+  },
   related = {
     'World:update'
   }

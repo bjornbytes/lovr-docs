@@ -3,10 +3,15 @@ return {
   description = 'Returns the sample format of the Sound.',
   arguments = {},
   returns = {
-    {
-      name = 'format',
+    format = {
       type = 'SampleFormat',
       description = 'The data type of each sample.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'format' }
     }
   },
   related = {

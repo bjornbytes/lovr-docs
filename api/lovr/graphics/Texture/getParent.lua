@@ -6,10 +6,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'parent',
+    parent = {
       type = 'Texture',
       description = 'The parent of the texture, or `nil` if the texture is not a view.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'parent' }
     }
   },
   related = {

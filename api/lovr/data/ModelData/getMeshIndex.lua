@@ -6,22 +6,25 @@ return {
     times without duplicating its data.
   ]],
   arguments = {
-    {
-      name = 'mesh',
+    mesh = {
       type = 'number',
       description = 'The index of a mesh to get the vertex from.'
     },
-    {
-      name = 'index',
+    index = {
       type = 'number',
       description = 'The index of a vertex index in the mesh to retrieve.'
     }
   },
   returns = {
-    {
-      name = 'vertexindex',
+    vertexindex = {
       type = 'number',
       description = 'The vertex index.  Like all indices in Lua, this is 1-indexed.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'mesh', 'index' },
+      returns = { 'vertexindex' }
     }
   },
   related = {

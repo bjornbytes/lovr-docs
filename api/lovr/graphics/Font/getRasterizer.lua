@@ -3,10 +3,15 @@ return {
   description = 'Returns the Rasterizer object backing the Font.',
   arguments = {},
   returns = {
-    {
-      name = 'rasterizer',
+    rasterizer = {
       type = 'Rasterizer',
       description = 'The Rasterizer.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'rasterizer' }
     }
   },
   related = {

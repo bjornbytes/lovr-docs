@@ -6,54 +6,45 @@ return {
     can be different.  The pixels from the source texture will be scaled to the destination size.
   ]],
   arguments = {
-    {
-      name = 'src',
+    src = {
       type = 'Texture',
       description = 'The texture to copy from.'
     },
-    {
-      name = 'dst',
+    dst = {
       type = 'Texture',
       description = 'The texture to copy to.'
     },
-    {
-      name = 'srcx',
+    srcx = {
       type = 'number',
       default = '0',
       description = 'The x offset from the left of the source texture to blit from, in pixels.'
     },
-    {
-      name = 'srcy',
+    srcy = {
       type = 'number',
       default = '0',
       description = 'The y offset from the top of the source texture to blit from, in pixels.'
     },
-    {
-      name = 'srcz',
+    srcz = {
       type = 'number',
       default = '1',
       description = 'The index of the first layer in the source texture to blit from.'
     },
-    {
-      name = 'dstx',
+    dstx = {
       type = 'number',
       default = '0',
       description = 'The x offset from the left of the destination texture to blit to, in pixels.'
     },
-    {
-      name = 'dsty',
+    dsty = {
       type = 'number',
       default = '0',
       description = 'The y offset from the top of the destination texture to blit to, in pixels.'
     },
-    {
-      name = 'dstz',
+    dstz = {
       type = 'number',
       default = '1',
       description = 'The index of the first layer in the destination texture to blit to.'
     },
-    {
-      name = 'srcw',
+    srcw = {
       type = 'number',
       default = 'nil',
       description = [[
@@ -61,8 +52,7 @@ return {
         the right side of the texture.
       ]]
     },
-    {
-      name = 'srch',
+    srch = {
       type = 'number',
       default = 'nil',
       description = [[
@@ -70,14 +60,12 @@ return {
         the bottom of the texture.
       ]]
     },
-    {
-      name = 'srcd',
+    srcd = {
       type = 'number',
       default = 'nil',
       description = 'The number of layers in the source texture to blit.'
     },
-    {
-      name = 'dstw',
+    dstw = {
       type = 'number',
       default = 'nil',
       description = [[
@@ -85,8 +73,7 @@ return {
         extend to the right side of the texture.
       ]]
     },
-    {
-      name = 'dsth',
+    dsth = {
       type = 'number',
       default = 'nil',
       description = [[
@@ -94,32 +81,34 @@ return {
         extend to the bottom of the texture.
       ]]
     },
-    {
-      name = 'dstd',
+    dstd = {
       type = 'number',
       default = 'nil',
       description = 'The number of the layers in the destination texture to blit to.'
     },
-    {
-      name = 'srclevel',
+    srclevel = {
       type = 'number',
       default = '1',
       description = 'The index of the mipmap level in the source texture to blit from.'
     },
-    {
-      name = 'dstlevel',
+    dstlevel = {
       type = 'number',
       default = '1',
       description = 'The index of the mipmap level in the destination texture to blit to.'
     },
-    {
-      name = 'filter',
+    filter = {
       type = 'FilterMode',
       default = 'linear',
       description = 'The filtering algorithm used when rescaling.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'src', 'dst', 'srcx', 'srcy', 'srcz', 'dstx', 'dsty', 'dstz', 'srcw', 'srch', 'srcd', 'dstw', 'dsth', 'dstd', 'srclevel', 'dstlevel', 'filter' },
+      returns = {}
+    }
+  },
   notes = [[
     When blitting between 3D textures, the layer counts do not need to match, and the layers will be
     treated as a continuous axis (i.e. pixels will be smoothed between layers).

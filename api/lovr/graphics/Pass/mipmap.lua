@@ -3,23 +3,26 @@ return {
   summary = 'Generate mipmaps for a texture.',
   description = 'TODO',
   arguments = {
-    {
-      name = 'texture',
+    texture = {
       type = 'Texture',
       description = 'TODO'
     },
-    {
-      name = 'base',
+    base = {
       type = 'number',
       default = '0',
       description = 'TODO'
     },
-    {
-      name = 'count',
+    count = {
       type = 'number',
       default = 'nil',
       description = 'TODO'
     }
   },
-  returns = {}
+  returns = {},
+  variants = {
+    {
+      arguments = { 'texture', 'base', 'count' },
+      returns = {}
+    }
+  }
 }

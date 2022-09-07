@@ -8,10 +8,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'source',
+    source = {
       type = 'Source',
       description = 'A genetically identical copy of the Source.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'source' }
     }
   },
   notes = [[
