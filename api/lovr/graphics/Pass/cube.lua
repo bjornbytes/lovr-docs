@@ -6,8 +6,8 @@ return {
     transform = {
       type = 'Mat4',
       description = [[
-        The transform of the cube.  Can also be provided as position, scale, and rotation using a
-        mix of `Vectors` or numbers.  When using numbers for the scale, 1 number is used.
+        The transform of the cube.  Can also be provided as position, 1-component scale, and
+        rotation using a mix of `Vectors` or numbers.
       ]]
     },
     style = {

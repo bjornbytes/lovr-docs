@@ -8,8 +8,8 @@ return {
     transform = {
       type = 'Mat4',
       description = [[
-        The transform of the box.  Can also be provided as position, scale, and rotation using a mix
-        of `Vectors` or numbers.  When using numbers for the scale, 3 numbers are used.
+        The transform of the box.  Can also be provided as position, 3-component scale, and rotation
+        using a mix of `Vectors` or numbers.
       ]]
     },
     style = {

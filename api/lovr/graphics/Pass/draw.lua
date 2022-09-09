@@ -1,31 +1,38 @@
 return {
   tag = 'drawing',
-  summary = 'Draw a drawable object.',
-  description = 'TODO',
+  summary = 'Draw a model.',
+  description = 'Draws a model.',
   arguments = {
-    transform = {
-      type = 'Transform',
-      description = 'The transform of the object.'
-    },
     model = {
       type = 'Model',
       description = 'The model to draw.'
     },
+    transform = {
+      type = 'Mat4',
+      description = [[
+        The transform of the model.  Can also be provided as a position, 1-component scale, and
+        rotation using a combination of `Vectors` and numbers.
+      ]]
+    },
     nodeindex = {
       type = 'number',
-      description = 'TODO'
+      default = 'nil',
+      description = 'The index of the node to draw.  If nil, the root node is drawn.'
     },
     nodename = {
       type = 'string',
-      description = 'TODO'
+      default = 'nil',
+      description = 'The name of the node to draw.  If nil, the root node is drawn.'
     },
     children = {
       type = 'boolean',
-      description = 'TODO'
+      default = 'true',
+      description = 'Whether the children of the node should be drawn.'
     },
     instances = {
       type = 'number',
-      description = 'TODO'
+      default = '1',
+      description = 'The number of instances to draw.'
     }
   },
   returns = {},

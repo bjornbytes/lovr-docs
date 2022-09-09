@@ -1,7 +1,7 @@
 return {
   tag = 'graphics-objects',
   summary = 'Create a new Tally.',
-  description = 'TODO',
+  description = 'Creates a new Tally.',
   arguments = {
     type = {
       type = 'TallyType',
@@ -9,7 +9,7 @@ return {
     },
     count = {
       type = 'number',
-      description = 'The number of slots in the Tally.  Each slot performs one measurement.'
+      description = 'The number of slots in the Tally.  Each slot holds one measurement.'
     },
     views = {
       type = 'number',
