@@ -1,7 +1,7 @@
 return {
   tag = 'transform',
   summary = 'Reset the transform to the origin.',
-  description = 'TODO',
+  description = 'Resets the transform back to the origin.',
   arguments = {},
   returns = {},
   variants = {

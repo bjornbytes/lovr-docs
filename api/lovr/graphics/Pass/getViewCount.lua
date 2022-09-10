@@ -1,4 +1,5 @@
 return {
+  tag = 'camera',
   summary = 'Returns the view count of a render pass.',
   description = [[
     Returns the view count of a render pass.  This is the layer count of the textures it is

@@ -1,4 +1,5 @@
 return {
+  tag = 'pass-misc',
   summary = 'Get the type of the Pass.',
   description = [[
     Returns the type of the pass (render, compute, or transfer).  The type restricts what kinds of

@@ -1,21 +1,21 @@
 return {
   tag = 'transfer',
   summary = 'Generate mipmaps for a texture.',
-  description = 'TODO',
+  description = 'Generates mipmaps for a texture.',
   arguments = {
     texture = {
       type = 'Texture',
-      description = 'TODO'
+      description = 'The texture to mipmap.'
     },
     base = {
       type = 'number',
-      default = '0',
-      description = 'TODO'
+      default = '1',
+      description = 'The index of the mipmap used to generate the remaining mipmaps.'
     },
     count = {
       type = 'number',
       default = 'nil',
-      description = 'TODO'
+      description = 'The number of mipmaps to generate.  If nil, generates the remaining mipmaps.'
     }
   },
   returns = {},

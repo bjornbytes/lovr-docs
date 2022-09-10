@@ -1,7 +1,10 @@
 return {
   tag = 'drawing',
   summary = 'Draw a line.',
-  description = 'TODO',
+  description = [[
+    Draws a line between points.  `Pass:mesh` can also be used to draw line segments using the
+    `line` `MeshMode`.
+  ]],
   arguments = {
     x1 = {
       type = 'number',
@@ -29,7 +32,9 @@ return {
     },
     t = {
       type = 'table',
-      description = 'A table of numbers or Vec3 objects (not both) representing points of the line.'
+      description = [[
+        A table of numbers or `Vec3` objects (not a mix) representing points of the line.
+      ]]
     },
     v1 = {
       type = 'Vec3',
@@ -59,5 +64,5 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = 'There is currently no way to increase line thickness.'
 }

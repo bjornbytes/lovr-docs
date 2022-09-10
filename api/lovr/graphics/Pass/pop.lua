@@ -1,7 +1,10 @@
 return {
   tag = 'transform',
-  summary = 'Restore original state from a stack.',
-  description = 'TODO',
+  summary = 'Pop one of the stacks.',
+  description = [[
+    Pops the transform or render state stack, restoring it to the state it was in when it was last
+    pushed.
+  ]],
   arguments = {
     stack = {
       type = 'StackType',
@@ -17,10 +20,10 @@ return {
     }
   },
   notes = [[
-    TODO stack balancing/error
+    If a stack is popped without a corresponding push, the stack "underflows" which causes an error.
   ]],
   related = {
-    'lovr.graphics.push',
+    'Pass:push',
     'StackType'
   }
 }

@@ -1,7 +1,7 @@
 return {
   tag = 'drawing',
   summary = 'Draw points.',
-  description = 'TODO',
+  description = 'Draws points.  `Pass:mesh` can also be used to draw points using a `Buffer`.',
   arguments = {
     x = {
       type = 'number',
@@ -43,5 +43,8 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = [[
+    To change the size of points, set the `pointSize` shader flag in `lovr.graphics.newShader` or
+    write to the `PointSize` variable in the vertex shader.  Points are always the same size on the screen, regardless of distance, and the units are in pixels.
+  ]]
 }

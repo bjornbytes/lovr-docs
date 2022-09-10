@@ -1,5 +1,5 @@
 return {
-  tag = 'transfer',
+  tag = 'tallies',
   summary = 'Begin measuring GPU counters.',
   description = 'TODO',
   arguments = {

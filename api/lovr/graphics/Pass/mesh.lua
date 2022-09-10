@@ -1,36 +1,39 @@
 return {
   tag = 'drawing',
   summary = 'Draw a mesh.',
-  description = 'TODO',
+  description = 'Draws a mesh.',
   arguments = {
     vertices = {
       type = 'Buffer',
       default = 'nil',
-      description = 'TODO'
+      description = 'The buffer containing the vertices to draw.'
     },
     indices = {
       type = 'Buffer',
-      description = 'TODO'
+      description = 'The buffer containing the vertex indices to draw.'
     },
     draws = {
       type = 'Buffer',
-      description = 'TODO'
+      description = 'The buffer containing indirect draw commands.'
     },
     drawcount = {
       type = 'number',
-      description = 'TODO'
+      description = 'The number of indirect draws to draw.'
     },
     offset = {
       type = 'number',
-      description = 'TODO'
+      description = 'A byte offset into the draw buffer.'
     },
     stride = {
       type = 'number',
-      description = 'TODO'
+      description = 'The number of bytes between consecutive elements in the draw buffer.'
     },
     transform = {
-      type = 'transform',
-      description = 'The transform to apply to the mesh.'
+      type = 'Mat4',
+      description = [[
+        The transform to apply to the mesh.  Can also be provided as a position, 1-component scale,
+        and rotation using a combination of `Vectors` and numbers.
+      ]]
     },
     start = {
       type = 'number',
@@ -49,26 +52,49 @@ return {
         the Buffers and `start`).
       ]]
     },
+    vertexcount = {
+      type = 'number',
+      description = 'The number of vertices or indices to draw.'
+    },
     instances = {
       type = 'number',
       default = '1',
       description = 'The number of copies of the mesh to render.'
+    },
+    base = {
+      type = 'number',
+      default = 'A base offset to apply to vertex indices.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'vertices', 'transform', 'start', 'count', 'instances' },
+      arguments = { 'vertices', 'transform', 'start', 'count', 'instances', 'base' },
       returns = {}
     },
     {
-      arguments = { 'vertices', 'indices', 'transform', 'start', 'count', 'instances' },
+      arguments = { 'vertices', 'indices', 'transform', 'start', 'count', 'instances', 'base' },
       returns = {}
     },
     {
       arguments = { 'vertices', 'indices', 'draws', 'drawcount', 'offset', 'stride' },
       returns = {}
+    },
+    {
+      arguments = { 'vertexcount', 'transform' },
+      returns = {}
+    },
+    {
+      arguments = { 'vertexcount', 'indices', 'transform' },
+      returns = {}
     }
   },
-  notes = 'TODO'
+  notes = [[
+    The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse,
+    or omit vertices from the mesh.
+
+    The active `MeshMode` controls whether the vertices are drawn as points, lines, or triangles.
+
+    The active `Material` is applied to the mesh.
+  ]]
 }

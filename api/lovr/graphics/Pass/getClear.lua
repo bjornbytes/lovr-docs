@@ -1,4 +1,5 @@
 return {
+  tag = 'pass-misc',
   summary = 'Return the clear values of the Pass.',
   description = 'Returns the clear values of the pass.',
   arguments = {},

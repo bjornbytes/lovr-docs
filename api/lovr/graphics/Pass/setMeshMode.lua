@@ -1,6 +1,6 @@
 return {
   tag = 'pipeline',
-  summary = 'Change whether mesh vertices are drawn as points, lines, or triangles.',
+  summary = 'Change the way vertices are connected together.',
   description = 'TODO',
   arguments = {
     mode = {

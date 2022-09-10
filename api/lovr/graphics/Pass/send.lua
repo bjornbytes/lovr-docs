@@ -1,4 +1,5 @@
 return {
+  tag = 'shader-inputs',
   summary = 'Set the value of a shader variable.',
   description = 'TODO',
   arguments = {

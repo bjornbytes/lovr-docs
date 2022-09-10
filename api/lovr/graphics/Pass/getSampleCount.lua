@@ -1,4 +1,5 @@
 return {
+  tag = 'pass-misc',
   summary = 'Get the antialiasing setting of a render pass.',
   description = 'Returns the antialiasing setting of a render pass.',
   arguments = {},

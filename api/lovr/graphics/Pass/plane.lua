@@ -1,11 +1,14 @@
 return {
   tag = 'drawing',
-  summary = 'Draw a flat plane.',
-  description = 'TODO',
+  summary = 'Draw a plane.',
+  description = 'Draws a plane.',
   arguments = {
     transform = {
-      type = 'Transform2',
-      description = 'The transform to apply to the plane.'
+      type = 'Mat4',
+      description = [[
+        The transform of the plane.  Can also be provided as a position, 2-component scale, and
+        rotation using a combination of `Vectors`, and numbers.
+      ]]
     },
     style = {
       type = 'DrawStyle',
@@ -19,7 +22,7 @@ return {
     },
     rows = {
       type = 'number',
-      default = 'cols',
+      default = 'columns',
       description = 'The number of vertical segments in the plane.'
     }
   },
@@ -29,6 +32,5 @@ return {
       arguments = { 'transform', 'style', 'columns', 'rows' },
       returns = {}
     }
-  },
-  notes = 'TODO'
+  }
 }

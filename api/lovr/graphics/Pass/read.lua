@@ -1,63 +1,71 @@
 return {
   tag = 'transfer',
   summary = 'Download data from a GPU resource.',
-  description = 'TODO',
+  description = [[
+    Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or
+    `Tally`.  The readback can be polled for completion, or, after this transfer pass is completed,
+    `Readback:wait` can be used to block until the download is complete.
+  ]],
   arguments = {
     buffer = {
       type = 'Buffer',
-      description = 'TODO'
+      description = 'The Buffer to download data from.'
     },
     texture = {
       type = 'Texture',
-      description = 'TODO'
+      description = 'The Texture to download data from.'
     },
     tally = {
       type = 'Tally',
-      description = 'TODO'
+      description = 'The Tally to download data from.'
     },
     index = {
       type = 'number',
-      description = 'TODO'
+      description = 'The index of the first item to download.'
     },
     count = {
       type = 'number',
-      description = 'TODO'
+      description = 'The number of items to download.'
     },
     x = {
       type = 'number',
       default = '0',
-      description = 'TODO'
+      description = 'The x offset of the region to download.'
     },
     y = {
       type = 'number',
       default = '0',
-      description = 'TODO'
+      description = 'The y offset of the region to download.'
     },
     layer = {
       type = 'number',
       default = '1',
-      description = 'TODO'
+      description = 'The index of the layer to download.'
     },
     level = {
       type = 'number',
       default = '1',
-      description = 'TODO'
+      description = 'The index of the mipmap level to download.'
     },
     width = {
       type = 'number',
       default = 'nil',
-      description = 'TODO'
+      description = [[
+        The width of the region to download.  If nil, the region will be as wide as possible.
+      ]]
     },
     height = {
       type = 'number',
       default = 'nil',
-      description = 'TODO'
+      description = [[
+        The height of the region to download.  If nil, the region will be as tall as possible.
+      ]]
     }
   },
   returns = {
     readback = {
       type = 'Readback',
-      description = 'TODO'
+      description = 'The new readback.'
     }
   },
   variants = {

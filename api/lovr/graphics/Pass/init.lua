@@ -20,32 +20,41 @@ return {
     {
       name = 'Drawing',
       tag = 'drawing',
-      description = 'TODO'
+      description = 'Draw objects and shapes.'
     },
     {
       name = 'Coordinate System',
       tag = 'transform',
-      description = 'TODO'
+      description = 'Manipulate the 3D coordinate system.'
     },
     {
       name = 'Render States',
       tag = 'pipeline',
-      description = 'TODO'
+      description = 'Set render states that change the way drawing happens.'
     },
     {
-      name = 'Shader Inputs',
+      name = 'Shader Variables',
       tag = 'shader-inputs',
-      description = 'TODO'
     },
     {
       name = 'Camera',
       tag = 'camera',
-      description = 'TODO'
     },
     {
       name = 'Compute',
       tag = 'compute',
-      description = 'TODO'
+    },
+    {
+      name = 'Transfers',
+      tag = 'transfer'
+    },
+    {
+      name = 'Tallies',
+      tag = 'tallies'
+    },
+    {
+      name = 'Miscellaneous',
+      tag = 'pass-misc'
     }
   }
 }

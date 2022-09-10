@@ -1,42 +1,25 @@
 return {
   tag = 'transform',
   summary = 'Scale the coordinate system.',
-  description = 'TODO',
+  description = 'Scales the coordinate system.',
   arguments = {
-    x = {
-      type = 'number',
-      default = '1',
-      description = 'The amount to scale the x axis.'
-    },
-    y = {
-      type = 'number',
-      default = '1',
-      description = 'The amount to scale the y axis.'
-    },
-    z = {
-      type = 'number',
-      default = '1',
-      description = 'The amount to scale the z axis.'
-    },
-    v = {
+    scale = {
       type = 'Vec3',
-      description = 'A vector to translate by.'
+      description = [[
+        The scale to apply to the coordinate system.  Can also be provided as 1 or 3 numbers.
+      ]]
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'z' },
-      returns = {}
-    },
-    {
-      arguments = { 'v' },
+      arguments = { 'scale' },
       returns = {}
     }
   },
   related = {
-    'lovr.graphics.translate',
-    'lovr.graphics.rotate',
-    'lovr.graphics.transform'
+    'Pass:translate',
+    'Pass:rotate',
+    'Pass:transform'
   }
 }

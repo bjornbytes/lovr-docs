@@ -1,7 +1,11 @@
 return {
   tag = 'transform',
   summary = 'Push state onto a stack.',
-  description = 'TODO',
+  description = [[
+    Saves a copy of the transform or render states.  Further changes can be made to the transform or
+    render states, and afterwards `Pass:pop` can be used to restore the original state.  Pushes and
+    pops can be nested, but it's an error to pop without a corresponding push.
+  ]],
   arguments = {
     stack = {
       type = 'StackType',
@@ -17,10 +21,11 @@ return {
     }
   },
   notes = [[
-    TODO stack balancing/error
+    Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4
+    render states saved.
   ]],
   related = {
-    'lovr.graphics.pop',
+    'Pass:pop',
     'StackType'
   }
 }

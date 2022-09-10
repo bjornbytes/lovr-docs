@@ -1,4 +1,5 @@
 return {
+  tag = 'pass-misc',
   summary = 'Get the texture width of a render pass.',
   description = 'Returns the width of the textures attached to the render pass.',
   arguments = {},
