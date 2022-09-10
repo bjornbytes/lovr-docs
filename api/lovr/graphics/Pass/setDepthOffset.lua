@@ -23,7 +23,7 @@ return {
   },
   notes = 'TODO',
   related = {
-    'lovr.graphics.setDepthTest',
-    'lovr.graphics.setDepthWrite'
+    'Pass:setDepthTest',
+    'Pass:setDepthWrite'
   }
 }

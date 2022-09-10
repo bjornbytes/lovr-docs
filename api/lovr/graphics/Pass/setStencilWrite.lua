@@ -43,7 +43,7 @@ return {
   },
   notes = 'TODO',
   related = {
-    'lovr.graphics.setStencilTest',
-    'lovr.graphics.setDepthTest'
+    'Pass:setStencilTest',
+    'Pass:setDepthTest'
   }
 }

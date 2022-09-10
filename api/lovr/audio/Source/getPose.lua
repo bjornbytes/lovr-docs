@@ -42,7 +42,6 @@ return {
   related = {
     'Source:getPosition',
     'Source:getOrientation',
-    'Source:getCone',
     'lovr.audio.getPose'
   }
 }

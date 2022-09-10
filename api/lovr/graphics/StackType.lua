@@ -8,7 +8,7 @@ return {
     },
     {
       name = 'state',
-      descriptioin = 'TODO'
+      description = 'TODO'
     }
   }
 }

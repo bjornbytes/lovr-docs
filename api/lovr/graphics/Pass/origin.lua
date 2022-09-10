@@ -11,9 +11,9 @@ return {
     }
   },
   related = {
-    'lovr.graphics.translate',
-    'lovr.graphics.rotate',
-    'lovr.graphics.scale',
-    'lovr.graphics.transform'
+    'Pass:translate',
+    'Pass:rotate',
+    'Pass:scale',
+    'Pass:transform'
   }
 }

@@ -17,6 +17,6 @@ return {
   },
   notes = 'TODO',
   related = {
-    'lovr.graphics.setCullMode'
+    'Pass:setCullMode'
   }
 }

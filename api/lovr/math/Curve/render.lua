@@ -39,7 +39,8 @@ return {
   related = {
     'Curve:evaluate',
     'Curve:slice',
-    'lovr.graphics.points',
-    'lovr.graphics.line'
+    'Pass:points',
+    'Pass:line',
+    'Pass:mesh'
   }
 }

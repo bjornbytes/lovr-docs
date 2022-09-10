@@ -47,7 +47,7 @@ return {
   related = {
     'lovr.headset.getViewAngles',
     'lovr.headset.getViewCount',
-    'lovr.graphics.getViewPose',
-    'lovr.graphics.setViewPose'
+    'Pass:getViewPose',
+    'Pass:setViewPose'
   }
 }

@@ -42,6 +42,6 @@ return {
     what the hell is depth range
   ]],
   related = {
-    'lovr.graphics.setScissor'
+    'Pass:setScissor'
   }
 }

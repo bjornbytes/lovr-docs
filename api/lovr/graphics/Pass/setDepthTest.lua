@@ -22,9 +22,9 @@ return {
   },
   notes = 'TODO',
   related = {
-    'lovr.graphics.setDepthWrite',
-    'lovr.graphics.setDepthOffset',
-    'lovr.graphics.setDepthClamp',
-    'lovr.graphics.setStencilTest'
+    'Pass:setDepthWrite',
+    'Pass:setDepthOffset',
+    'Pass:setDepthClamp',
+    'Pass:setStencilTest'
   }
 }

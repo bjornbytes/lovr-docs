@@ -1,8 +1,8 @@
 return {
-  summary = 'Get the advance of a glyph.',
+  summary = 'Get the bearing of a glyph.',
   description = [[
-    Returns the advance metric for a glyph, in pixels.  The advance is the horizontal distance to
-    advance the cursor after rendering the glyph.
+    Returns the bearing metric for a glyph, in pixels.  The bearing is the horizontal distance from
+    the cursor to the edge of the glyph.
   ]],
   arguments = {
     character = {
@@ -15,19 +15,19 @@ return {
     }
   },
   returns = {
-    advance = {
+    bearing = {
       type = 'number',
-      description = 'The advance of the glyph, in pixels.'
+      description = 'The bearing of the glyph, in pixels.'
     }
   },
   variants = {
     {
       arguments = { 'character' },
-      returns = { 'advance' }
+      returns = { 'bearing' }
     },
     {
       arguments = { 'codepoint' },
-      returns = { 'advance' }
+      returns = { 'bearing' }
     }
   }
 }

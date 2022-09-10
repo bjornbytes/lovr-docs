@@ -30,7 +30,6 @@ return {
   related = {
     'Source:setPosition',
     'Source:setPose',
-    'Source:setCone',
     'lovr.audio.setOrientation'
   }
 }

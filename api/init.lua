@@ -203,7 +203,6 @@ return {
               related = {
                 "Source:getPosition",
                 "Source:getPose",
-                "Source:getCone",
                 "lovr.audio.getOrientation"
               },
               variants = {
@@ -244,7 +243,6 @@ return {
               related = {
                 "Source:getPosition",
                 "Source:getOrientation",
-                "Source:getCone",
                 "lovr.audio.getPose"
               },
               variants = {
@@ -300,7 +298,6 @@ return {
               related = {
                 "Source:getOrientation",
                 "Source:getPose",
-                "Source:getCone",
                 "lovr.audio.getPosition"
               },
               variants = {
@@ -613,7 +610,6 @@ return {
               related = {
                 "Source:setPosition",
                 "Source:setPose",
-                "Source:setCone",
                 "lovr.audio.setOrientation"
               },
               variants = {
@@ -1652,27 +1648,27 @@ return {
             },
             {
               name = "glass",
-              descripion = "Glass."
+              description = "Glass."
             },
             {
               name = "gravel",
-              descripion = "Gravel."
+              description = "Gravel."
             },
             {
               name = "metal",
-              descripion = "Metal."
+              description = "Metal."
             },
             {
               name = "plaster",
-              descripion = "Plaster."
+              description = "Plaster."
             },
             {
               name = "rock",
-              descripion = "Rock."
+              description = "Rock."
             },
             {
               name = "wood",
-              descripion = "Wood."
+              description = "Wood."
             }
           }
         },
@@ -2087,8 +2083,8 @@ return {
               },
               related = {
                 "Image:setPixel",
-                "Texture:replacePixels",
-                "TextureFormat"
+                "TextureFormat",
+                "Pass:copy"
               }
             },
             {
@@ -2171,9 +2167,9 @@ return {
                 }
               },
               related = {
-                "Texture:replacePixels",
                 "Image:getPixel",
-                "Image:setPixel"
+                "Image:setPixel",
+                "Pass:copy"
               }
             },
             {
@@ -2223,8 +2219,8 @@ return {
               },
               related = {
                 "Image:getPixel",
-                "Texture:replacePixels",
-                "TextureFormat"
+                "TextureFormat",
+                "Pass:copy"
               }
             }
           }
@@ -3559,7 +3555,7 @@ return {
                 }
               },
               related = {
-                "ModelData:getIndexFormat"
+                "ModelData:getMeshIndexFormat"
               }
             },
             {
@@ -4493,18 +4489,40 @@ return {
           methods = {
             {
               name = "getAdvance",
-              summary = "Get the advance of the font.",
-              description = "Returns the advance metric of the font, in pixels.  The advance is how many pixels the font advances horizontally after each glyph is rendered.  This does not include kerning.",
+              summary = "Get the advance of a glyph.",
+              description = "Returns the advance metric for a glyph, in pixels.  The advance is the horizontal distance to advance the cursor after rendering the glyph.",
               key = "Rasterizer:getAdvance",
               module = "lovr.data",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    }
+                  },
                   returns = {
                     {
                       name = "advance",
                       type = "number",
-                      description = "The advance of the font, in pixels."
+                      description = "The advance of the glyph, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "advance",
+                      type = "number",
+                      description = "The advance of the glyph, in pixels."
                     }
                   }
                 }
@@ -4534,13 +4552,210 @@ return {
               }
             },
             {
+              name = "getBearing",
+              summary = "Get the bearing of a glyph.",
+              description = "Returns the bearing metric for a glyph, in pixels.  The bearing is the horizontal distance from the cursor to the edge of the glyph.",
+              key = "Rasterizer:getBearing",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "bearing",
+                      type = "number",
+                      description = "The bearing of the glyph, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "bearing",
+                      type = "number",
+                      description = "The bearing of the glyph, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBoundingBox",
+              summary = "Get the bounding box of a glyph, or the font.",
+              description = "Returns the bounding box of a glyph, or the bounding box surrounding all glyphs.  Note that font coordinates use a cartesian \"y up\" coordinate system.",
+              key = "Rasterizer:getBoundingBox",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getWidth",
+                "Rasterizer:getHeight",
+                "Rasterizer:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The left edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The bottom edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The right edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The top edge of the bounding box, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The left edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The bottom edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The right edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The top edge of the bounding box, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The left edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The bottom edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The right edge of the bounding box, in pixels."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The top edge of the bounding box, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getCurves",
+              summary = "Get the bezier curves defining a glyph.",
+              description = "Returns the bezier curve control points defining the shape of a glyph.",
+              key = "Rasterizer:getCurves",
+              module = "lovr.data",
+              related = {
+                "Curve",
+                "Rasterizer:newImage"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    },
+                    {
+                      name = "three",
+                      type = "boolean",
+                      description = "Whether the control points should be 3D or 2D."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "curves",
+                      type = "table",
+                      description = "A table of curves.  Each curve is a table of numbers representing the control points (2 for a line, 3 for a quadratic curve, etc.)."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    },
+                    {
+                      name = "three",
+                      type = "boolean",
+                      description = "Whether the control points should be 3D or 2D."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "curves",
+                      type = "table",
+                      description = "A table of curves.  Each curve is a table of numbers representing the control points (2 for a line, 3 for a quadratic curve, etc.)."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDescent",
               summary = "Get the descent of the font.",
               description = "Returns the descent metric of the font, in pixels.  The descent represents how far any glyph of the font descends below the baseline.",
               key = "Rasterizer:getDescent",
               module = "lovr.data",
               related = {
-                "Rasterzer:getAscent",
+                "Rasterizer:getAscent",
                 "Font:getDescent"
               },
               variants = {
@@ -4551,6 +4766,99 @@ return {
                       name = "descent",
                       type = "number",
                       description = "The descent of the font, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDimensions",
+              summary = "Get the dimensions of a glyph, or the font.",
+              description = "Returns the dimensions of a glyph, or the dimensions of any glyph.",
+              key = "Rasterizer:getDimensions",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getWidth",
+                "Rasterizer:getHeight",
+                "Rasterizer:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width, in pixels."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width, in pixels."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width, in pixels."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFontSize",
+              summary = "Get the size of the font.",
+              description = "Returns the size of the font, in pixels.  This is the size the rasterizer was created with, and defines the size of images it rasterizes.",
+              key = "Rasterizer:getFontSize",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getHeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The font size, in pixels."
                     }
                   }
                 }
@@ -4580,45 +4888,230 @@ return {
             },
             {
               name = "getHeight",
-              summary = "Get the height of the font.",
-              description = "Returns the height metric of the font, in pixels.",
+              summary = "Get the height of a glyph, or the font.",
+              description = "Returns the height of a glyph, or the maximum height of any glyph.",
               key = "Rasterizer:getHeight",
               module = "lovr.data",
               related = {
-                "Font:getHeight"
+                "Rasterizer:getWidth",
+                "Rasterizer:getDimensions",
+                "Rasterizer:getBoundingBox"
               },
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height, in pixels."
+                    }
+                  }
+                },
                 {
                   arguments = {},
                   returns = {
                     {
                       name = "height",
                       type = "number",
-                      description = "The height of the font, in pixels."
+                      description = "The height, in pixels."
                     }
                   }
                 }
               }
             },
             {
-              name = "getLineHeight",
-              summary = "Get the line height of the font.",
-              description = "Returns the line height metric of the font, in pixels.  This is how far apart lines are.",
-              key = "Rasterizer:getLineHeight",
+              name = "getKerning",
+              summary = "Get the kerning between two glyphs.",
+              description = "Returns the kerning between 2 glyphs, in pixels.  Kerning is a slight horizontal adjustment between 2 glyphs to improve the visual appearance.  It will often be negative.",
+              key = "Rasterizer:getKerning",
               module = "lovr.data",
               related = {
-                "Rasterizer:getHeight",
-                "Font:getLineHeight",
-                "Font:setLineHeight"
+                "Font:getKerning"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "first",
+                      type = "string",
+                      description = "The first character."
+                    },
+                    {
+                      name = "second",
+                      type = "string",
+                      description = "The second character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "firstCodepoint",
+                      type = "number",
+                      description = "The first codepoint."
+                    },
+                    {
+                      name = "second",
+                      type = "string",
+                      description = "The second character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "first",
+                      type = "string",
+                      description = "The first character."
+                    },
+                    {
+                      name = "secondCodepoint",
+                      type = "number",
+                      description = "The second codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "firstCodepoint",
+                      type = "number",
+                      description = "The first codepoint."
+                    },
+                    {
+                      name = "secondCodepoint",
+                      type = "number",
+                      description = "The second codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "keming",
+                      type = "number",
+                      description = "The kerning between the two glyphs."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getLeading",
+              summary = "Get the leading of the font.",
+              description = "Returns the leading metric of the font, in pixels.  This is the full amount of space between lines.",
+              key = "Rasterizer:getLeading",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getAscent",
+                "Rasterizer:getDescent"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "height",
+                      name = "leading",
                       type = "number",
-                      description = "The line height of the font, in pixels."
+                      description = "The font leading, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWidth",
+              summary = "Get the width of a glyph, or the font.",
+              description = "Returns the width of a glyph, or the maximum width of any glyph.",
+              key = "Rasterizer:getWidth",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getHeight",
+                "Rasterizer:getDimensions",
+                "Rasterizer:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width, in pixels."
+                    }
+                  }
+                },
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width, in pixels."
                     }
                   }
                 }
@@ -4627,7 +5120,7 @@ return {
             {
               name = "hasGlyphs",
               summary = "Get whether the Rasterizer can rasterize a set of glyphs.",
-              description = "Check if the Rasterizer can rasterize a set of glyphs.",
+              description = "Returns whether the Rasterizer can rasterize a set of glyphs.",
               key = "Rasterizer:hasGlyphs",
               module = "lovr.data",
               related = {
@@ -4647,6 +5140,74 @@ return {
                       name = "hasGlyphs",
                       type = "boolean",
                       description = "true if the Rasterizer can rasterize all of the supplied characters, false otherwise."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "newImage",
+              summary = "Get an Image of a rasterized glyph.",
+              description = "Returns an `Image` containing a rasterized glyph.",
+              key = "Rasterizer:newImage",
+              module = "lovr.data",
+              related = {
+                "Rasterizer:getCurves"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "character",
+                      type = "string",
+                      description = "A character."
+                    },
+                    {
+                      name = "spread",
+                      type = "number",
+                      description = "The width of the distance field, for signed distance field rasterization.",
+                      default = "4.0"
+                    },
+                    {
+                      name = "padding",
+                      type = "number",
+                      description = "The number of pixels of padding to add at the edges of the image.",
+                      default = "spread / 2"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "image",
+                      type = "Image",
+                      description = "The glyph image.  It will be in the `rgba32f` format."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "codepoint",
+                      type = "number",
+                      description = "A codepoint."
+                    },
+                    {
+                      name = "spread",
+                      type = "number",
+                      description = "The width of the distance field, for signed distance field rasterization.",
+                      default = "4.0"
+                    },
+                    {
+                      name = "padding",
+                      type = "number",
+                      description = "The number of pixels of padding to add at the edges of the image.",
+                      default = "spread / 2"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "image",
+                      type = "Image",
+                      description = "The glyph image.  It will be in the `rgba32f` format."
                     }
                   }
                 }
@@ -7601,7 +8162,7 @@ return {
                     {
                       name = "second",
                       type = "string",
-                      description = "The second letter."
+                      description = "The second character."
                     }
                   },
                   returns = {
@@ -7622,7 +8183,7 @@ return {
                     {
                       name = "second",
                       type = "string",
-                      description = "The second letter."
+                      description = "The second character."
                     }
                   },
                   returns = {
@@ -7956,46 +8517,6 @@ return {
                     }
                   }
                 }
-              }
-            },
-            {
-              name = "setTexture",
-              summary = "Set a texture for the Material.",
-              description = "Sets a texture for a Material.  Several predefined `MaterialTexture`s are supported.  Any texture that is `nil` will use a single white pixel as a fallback.",
-              key = "Material:setTexture",
-              module = "lovr.graphics",
-              notes = "Textures must have a `TextureType` of `2d` to be used with Materials.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "textureType",
-                      type = "MaterialTexture",
-                      description = "The type of texture to set.",
-                      default = "'diffuse'"
-                    },
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The texture to apply, or `nil` to use the default."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The texture to apply, or `nil` to use the default."
-                    }
-                  },
-                  returns = {}
-                }
-              },
-              related = {
-                "MaterialTexture",
-                "lovr.graphics.newTexture"
               }
             }
           }
@@ -8738,7 +9259,7 @@ return {
               key = "Model:getNodeDrawCount",
               module = "lovr.graphics",
               related = {
-                "ModelData:getNodeMeshCount",
+                "ModelData:getMeshCount",
                 "Model:getNodeDraw"
               },
               variants = {
@@ -9949,32 +10470,41 @@ return {
             {
               name = "Drawing",
               tag = "drawing",
-              description = "TODO"
+              description = "Draw objects and shapes."
             },
             {
               name = "Coordinate System",
               tag = "transform",
-              description = "TODO"
+              description = "Manipulate the 3D coordinate system."
             },
             {
               name = "Render States",
               tag = "pipeline",
-              description = "TODO"
+              description = "Set render states that change the way drawing happens."
             },
             {
-              name = "Shader Inputs",
-              tag = "shader-inputs",
-              description = "TODO"
+              name = "Shader Variables",
+              tag = "shader-inputs"
             },
             {
               name = "Camera",
-              tag = "camera",
-              description = "TODO"
+              tag = "camera"
             },
             {
               name = "Compute",
-              tag = "compute",
-              description = "TODO"
+              tag = "compute"
+            },
+            {
+              name = "Transfers",
+              tag = "transfer"
+            },
+            {
+              name = "Tallies",
+              tag = "tallies"
+            },
+            {
+              name = "Miscellaneous",
+              tag = "pass-misc"
             }
           },
           methods = {
@@ -10907,6 +11437,7 @@ return {
             },
             {
               name = "getClear",
+              tag = "pass-misc",
               summary = "Return the clear values of the Pass.",
               description = "Returns the clear values of the pass.",
               key = "Pass:getClear",
@@ -10929,11 +11460,20 @@ return {
             },
             {
               name = "getDimensions",
+              tag = "pass-misc",
               summary = "Get the texture dimensions of a render pass.",
               description = "Returns the dimensions of the textures attached to the render pass.",
               key = "Pass:getDimensions",
               module = "lovr.graphics",
               notes = "If the pass is not a render pass, this function returns zeros.",
+              related = {
+                "Pass:getWidth",
+                "Pass:getHeight",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowDimensions",
+                "lovr.headset.getDisplayDimensions"
+              },
               variants = {
                 {
                   arguments = {},
@@ -10950,14 +11490,6 @@ return {
                     }
                   }
                 }
-              },
-              related = {
-                "Pass:getWidth",
-                "Pass:getHeight",
-                "Pass:getViewCount",
-                "lovr.graphics.getPass",
-                "lovr.system.getWindowDimensions",
-                "lovr.headset.getDisplayDimensions"
               }
             },
             {
@@ -10998,8 +11530,8 @@ return {
               related = {
                 "lovr.headset.getViewAngles",
                 "lovr.headset.getViewCount",
-                "lovr.graphics.getViewPose",
-                "lovr.graphics.setViewPose"
+                "Pass:getViewPose",
+                "Pass:setViewPose"
               },
               variants = {
                 {
@@ -11058,6 +11590,7 @@ return {
             },
             {
               name = "getSampleCount",
+              tag = "pass-misc",
               summary = "Get the antialiasing setting of a render pass.",
               description = "Returns the antialiasing setting of a render pass.",
               key = "Pass:getSampleCount",
@@ -11077,6 +11610,7 @@ return {
             },
             {
               name = "getTarget",
+              tag = "pass-misc",
               summary = "Get the textures a render pass is rendering to.",
               description = "Returns the textures a render pass is rendering to.",
               key = "Pass:getTarget",
@@ -11099,6 +11633,7 @@ return {
             },
             {
               name = "getType",
+              tag = "pass-misc",
               summary = "Get the type of the Pass.",
               description = "Returns the type of the pass (render, compute, or transfer).  The type restricts what kinds of functions can be called on the pass.",
               key = "Pass:getType",
@@ -11112,11 +11647,19 @@ return {
             },
             {
               name = "getViewCount",
+              tag = "camera",
               summary = "Returns the view count of a render pass.",
               description = "Returns the view count of a render pass.  This is the layer count of the textures it is rendering to.",
               key = "Pass:getViewCount",
               module = "lovr.graphics",
               notes = "A render pass has one \"camera\" for each view.  Whenever something is drawn, it is broadcast to each view (layer) of each texture, using the corresponding camera.",
+              related = {
+                "Pass:getViewPose",
+                "Pass:setViewPose",
+                "Pass:getProjection",
+                "Pass:setProjection",
+                "lovr.headset.getViewCount"
+              },
               variants = {
                 {
                   arguments = {},
@@ -11128,13 +11671,6 @@ return {
                     }
                   }
                 }
-              },
-              related = {
-                "Pass:getViewPose",
-                "Pass:setViewPose",
-                "Pass:getProjection",
-                "Pass:setProjection",
-                "lovr.headset.getViewCount"
               }
             },
             {
@@ -11147,8 +11683,8 @@ return {
               related = {
                 "lovr.headset.getViewPose",
                 "lovr.headset.getViewCount",
-                "lovr.graphics.getProjection",
-                "lovr.graphics.setProjection"
+                "Pass:getProjection",
+                "Pass:setProjection"
               },
               variants = {
                 {
@@ -11227,11 +11763,20 @@ return {
             },
             {
               name = "getWidth",
+              tag = "pass-misc",
               summary = "Get the texture width of a render pass.",
               description = "Returns the width of the textures attached to the render pass.",
               key = "Pass:getWidth",
               module = "lovr.graphics",
               notes = "If the pass is not a render pass, this function returns zero.",
+              related = {
+                "Pass:getHeight",
+                "Pass:getDimensions",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowWidth",
+                "lovr.headset.getDisplayWidth"
+              },
               variants = {
                 {
                   arguments = {},
@@ -11243,24 +11788,16 @@ return {
                     }
                   }
                 }
-              },
-              related = {
-                "Pass:getHeight",
-                "Pass:getDimensions",
-                "Pass:getViewCount",
-                "lovr.graphics.getPass",
-                "lovr.system.getWindowWidth",
-                "lovr.headset.getDisplayWidth"
               }
             },
             {
               name = "line",
               tag = "drawing",
               summary = "Draw a line.",
-              description = "TODO",
+              description = "Draws a line between points.  `Pass:mesh` can also be used to draw line segments using the `line` `MeshMode`.",
               key = "Pass:line",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "There is currently no way to increase line thickness.",
               variants = {
                 {
                   arguments = {
@@ -11307,7 +11844,7 @@ return {
                     {
                       name = "t",
                       type = "table",
-                      description = "A table of numbers or Vec3 objects (not both) representing points of the line."
+                      description = "A table of numbers or `Vec3` objects (not a mix) representing points of the line."
                     }
                   },
                   returns = {}
@@ -11338,23 +11875,23 @@ return {
               name = "mesh",
               tag = "drawing",
               summary = "Draw a mesh.",
-              description = "TODO",
+              description = "Draws a mesh.",
               key = "Pass:mesh",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse, or omit vertices from the mesh.\n\nThe active `MeshMode` controls whether the vertices are drawn as points, lines, or triangles.\n\nThe active `Material` is applied to the mesh.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "vertices",
                       type = "Buffer",
-                      description = "TODO",
+                      description = "The buffer containing the vertices to draw.",
                       default = "nil"
                     },
                     {
                       name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
+                      type = "Mat4",
+                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
                     },
                     {
                       name = "start",
@@ -11373,6 +11910,11 @@ return {
                       type = "number",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
+                    },
+                    {
+                      name = "base",
+                      type = "number",
+                      default = "A base offset to apply to vertex indices."
                     }
                   },
                   returns = {}
@@ -11382,18 +11924,18 @@ return {
                     {
                       name = "vertices",
                       type = "Buffer",
-                      description = "TODO",
+                      description = "The buffer containing the vertices to draw.",
                       default = "nil"
                     },
                     {
                       name = "indices",
                       type = "Buffer",
-                      description = "TODO"
+                      description = "The buffer containing the vertex indices to draw."
                     },
                     {
                       name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the mesh."
+                      type = "Mat4",
+                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
                     },
                     {
                       name = "start",
@@ -11412,6 +11954,11 @@ return {
                       type = "number",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
+                    },
+                    {
+                      name = "base",
+                      type = "number",
+                      default = "A base offset to apply to vertex indices."
                     }
                   },
                   returns = {}
@@ -11421,33 +11968,68 @@ return {
                     {
                       name = "vertices",
                       type = "Buffer",
-                      description = "TODO",
+                      description = "The buffer containing the vertices to draw.",
                       default = "nil"
                     },
                     {
                       name = "indices",
                       type = "Buffer",
-                      description = "TODO"
+                      description = "The buffer containing the vertex indices to draw."
                     },
                     {
                       name = "draws",
                       type = "Buffer",
-                      description = "TODO"
+                      description = "The buffer containing indirect draw commands."
                     },
                     {
                       name = "drawcount",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of indirect draws to draw."
                     },
                     {
                       name = "offset",
                       type = "number",
-                      description = "TODO"
+                      description = "A byte offset into the draw buffer."
                     },
                     {
                       name = "stride",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of bytes between consecutive elements in the draw buffer."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "vertexcount",
+                      type = "number",
+                      description = "The number of vertices or indices to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "vertexcount",
+                      type = "number",
+                      description = "The number of vertices or indices to draw."
+                    },
+                    {
+                      name = "indices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertex indices to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
                     }
                   },
                   returns = {}
@@ -11458,7 +12040,7 @@ return {
               name = "mipmap",
               tag = "transfer",
               summary = "Generate mipmaps for a texture.",
-              description = "TODO",
+              description = "Generates mipmaps for a texture.",
               key = "Pass:mipmap",
               module = "lovr.graphics",
               variants = {
@@ -11467,18 +12049,18 @@ return {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "TODO"
+                      description = "The texture to mipmap."
                     },
                     {
                       name = "base",
                       type = "number",
-                      description = "TODO",
-                      default = "0"
+                      description = "The index of the mipmap used to generate the remaining mipmaps.",
+                      default = "1"
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "TODO",
+                      description = "The number of mipmaps to generate.  If nil, generates the remaining mipmaps.",
                       default = "nil"
                     }
                   },
@@ -11490,14 +12072,14 @@ return {
               name = "origin",
               tag = "transform",
               summary = "Reset the transform to the origin.",
-              description = "TODO",
+              description = "Resets the transform back to the origin.",
               key = "Pass:origin",
               module = "lovr.graphics",
               related = {
-                "lovr.graphics.translate",
-                "lovr.graphics.rotate",
-                "lovr.graphics.scale",
-                "lovr.graphics.transform"
+                "Pass:translate",
+                "Pass:rotate",
+                "Pass:scale",
+                "Pass:transform"
               },
               variants = {
                 {
@@ -11509,18 +12091,17 @@ return {
             {
               name = "plane",
               tag = "drawing",
-              summary = "Draw a flat plane.",
-              description = "TODO",
+              summary = "Draw a plane.",
+              description = "Draws a plane.",
               key = "Pass:plane",
               module = "lovr.graphics",
-              notes = "TODO",
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "Transform2",
-                      description = "The transform to apply to the plane."
+                      type = "Mat4",
+                      description = "The transform of the plane.  Can also be provided as a position, 2-component scale, and rotation using a combination of `Vectors`, and numbers."
                     },
                     {
                       name = "style",
@@ -11538,7 +12119,7 @@ return {
                       name = "rows",
                       type = "number",
                       description = "The number of vertical segments in the plane.",
-                      default = "cols"
+                      default = "columns"
                     }
                   },
                   returns = {}
@@ -11549,10 +12130,10 @@ return {
               name = "points",
               tag = "drawing",
               summary = "Draw points.",
-              description = "TODO",
+              description = "Draws points.  `Pass:mesh` can also be used to draw points using a `Buffer`.",
               key = "Pass:points",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "To change the size of points, set the `pointSize` shader flag in `lovr.graphics.newShader` or write to the `PointSize` variable in the vertex shader.  Points are always the same size on the screen, regardless of distance, and the units are in pixels.",
               variants = {
                 {
                   arguments = {
@@ -11609,13 +12190,13 @@ return {
             {
               name = "pop",
               tag = "transform",
-              summary = "Restore original state from a stack.",
-              description = "TODO",
+              summary = "Pop one of the stacks.",
+              description = "Pops the transform or render state stack, restoring it to the state it was in when it was last pushed.",
               key = "Pass:pop",
               module = "lovr.graphics",
-              notes = "TODO stack balancing/error",
+              notes = "If a stack is popped without a corresponding push, the stack \"underflows\" which causes an error.",
               related = {
-                "lovr.graphics.push",
+                "Pass:push",
                 "StackType"
               },
               variants = {
@@ -11636,12 +12217,12 @@ return {
               name = "push",
               tag = "transform",
               summary = "Push state onto a stack.",
-              description = "TODO",
+              description = "Saves a copy of the transform or render states.  Further changes can be made to the transform or render states, and afterwards `Pass:pop` can be used to restore the original state.  Pushes and pops can be nested, but it's an error to pop without a corresponding push.",
               key = "Pass:push",
               module = "lovr.graphics",
-              notes = "TODO stack balancing/error",
+              notes = "Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4 render states saved.",
               related = {
-                "lovr.graphics.pop",
+                "Pass:pop",
                 "StackType"
               },
               variants = {
@@ -11662,7 +12243,7 @@ return {
               name = "read",
               tag = "transfer",
               summary = "Download data from a GPU resource.",
-              description = "TODO",
+              description = "Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or `Tally`.  The readback can be polled for completion, or, after this transfer pass is completed, `Readback:wait` can be used to block until the download is complete.",
               key = "Pass:read",
               module = "lovr.graphics",
               variants = {
@@ -11671,24 +12252,24 @@ return {
                     {
                       name = "buffer",
                       type = "Buffer",
-                      description = "TODO"
+                      description = "The Buffer to download data from."
                     },
                     {
                       name = "index",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of the first item to download."
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of items to download."
                     }
                   },
                   returns = {
                     {
                       name = "readback",
                       type = "Readback",
-                      description = "TODO"
+                      description = "The new readback."
                     }
                   }
                 },
@@ -11697,42 +12278,42 @@ return {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "TODO"
+                      description = "The Texture to download data from."
                     },
                     {
                       name = "x",
                       type = "number",
-                      description = "TODO",
+                      description = "The x offset of the region to download.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "TODO",
+                      description = "The y offset of the region to download.",
                       default = "0"
                     },
                     {
                       name = "layer",
                       type = "number",
-                      description = "TODO",
+                      description = "The index of the layer to download.",
                       default = "1"
                     },
                     {
                       name = "level",
                       type = "number",
-                      description = "TODO",
+                      description = "The index of the mipmap level to download.",
                       default = "1"
                     },
                     {
                       name = "width",
                       type = "number",
-                      description = "TODO",
+                      description = "The width of the region to download.  If nil, the region will be as wide as possible.",
                       default = "nil"
                     },
                     {
                       name = "height",
                       type = "number",
-                      description = "TODO",
+                      description = "The height of the region to download.  If nil, the region will be as tall as possible.",
                       default = "nil"
                     }
                   },
@@ -11740,7 +12321,7 @@ return {
                     {
                       name = "readback",
                       type = "Readback",
-                      description = "TODO"
+                      description = "The new readback."
                     }
                   }
                 },
@@ -11749,24 +12330,24 @@ return {
                     {
                       name = "tally",
                       type = "Tally",
-                      description = "TODO"
+                      description = "The Tally to download data from."
                     },
                     {
                       name = "index",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of the first item to download."
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "TODO"
+                      description = "The number of items to download."
                     }
                   },
                   returns = {
                     {
                       name = "readback",
                       type = "Readback",
-                      description = "TODO"
+                      description = "The new readback."
                     }
                   }
                 }
@@ -11776,51 +12357,21 @@ return {
               name = "rotate",
               tag = "transform",
               summary = "Rotate the coordinate system.",
-              description = "TODO",
+              description = "Rotates the coordinate system.",
               key = "Pass:rotate",
               module = "lovr.graphics",
-              notes = "TODO axis does not need to be normalized TODO order matters",
               related = {
-                "lovr.graphics.translate",
-                "lovr.graphics.scale",
-                "lovr.graphics.transform"
+                "Pass:translate",
+                "Pass:scale",
+                "Pass:transform"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians to rotate around the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "q",
+                      name = "rotation",
                       type = "Quat",
-                      description = "A quaternion containing the rotation to apply."
+                      description = "A quaternion containing the rotation to apply.  Can also be provided as 4 numbers in angle-axis representation."
                     }
                   },
                   returns = {}
@@ -11831,44 +12382,21 @@ return {
               name = "scale",
               tag = "transform",
               summary = "Scale the coordinate system.",
-              description = "TODO",
+              description = "Scales the coordinate system.",
               key = "Pass:scale",
               module = "lovr.graphics",
               related = {
-                "lovr.graphics.translate",
-                "lovr.graphics.rotate",
-                "lovr.graphics.transform"
+                "Pass:translate",
+                "Pass:rotate",
+                "Pass:transform"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "x",
-                      type = "number",
-                      description = "The amount to scale the x axis.",
-                      default = "1"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The amount to scale the y axis.",
-                      default = "1"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The amount to scale the z axis.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v",
+                      name = "scale",
                       type = "Vec3",
-                      description = "A vector to translate by."
+                      description = "The scale to apply to the coordinate system.  Can also be provided as 1 or 3 numbers."
                     }
                   },
                   returns = {}
@@ -11877,6 +12405,7 @@ return {
             },
             {
               name = "send",
+              tag = "shader-inputs",
               summary = "Set the value of a shader variable.",
               description = "TODO",
               key = "Pass:send",
@@ -12101,7 +12630,7 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setWinding"
+                "Pass:setWinding"
               },
               variants = {
                 {
@@ -12126,9 +12655,9 @@ return {
               module = "lovr.graphics",
               notes = "TODO depthClamp feature!",
               related = {
-                "lovr.graphics.setDepthTest",
-                "lovr.graphics.setDepthWrite",
-                "lovr.graphics.setDepthOffset"
+                "Pass:setDepthTest",
+                "Pass:setDepthWrite",
+                "Pass:setDepthOffset"
               },
               variants = {
                 {
@@ -12152,8 +12681,8 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setDepthTest",
-                "lovr.graphics.setDepthWrite"
+                "Pass:setDepthTest",
+                "Pass:setDepthWrite"
               },
               variants = {
                 {
@@ -12184,10 +12713,10 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setDepthWrite",
-                "lovr.graphics.setDepthOffset",
-                "lovr.graphics.setDepthClamp",
-                "lovr.graphics.setStencilTest"
+                "Pass:setDepthWrite",
+                "Pass:setDepthOffset",
+                "Pass:setDepthClamp",
+                "Pass:setStencilTest"
               },
               variants = {
                 {
@@ -12216,9 +12745,9 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setDepthTest",
-                "lovr.graphics.setStencilWrite",
-                "lovr.graphics.setColorWrite"
+                "Pass:setDepthTest",
+                "Pass:setStencilWrite",
+                "Pass:setColorWrite"
               },
               variants = {
                 {
@@ -12279,7 +12808,7 @@ return {
             {
               name = "setMeshMode",
               tag = "pipeline",
-              summary = "Change whether mesh vertices are drawn as points, lines, or triangles.",
+              summary = "Change the way vertices are connected together.",
               description = "TODO",
               key = "Pass:setMeshMode",
               module = "lovr.graphics",
@@ -12307,8 +12836,8 @@ return {
               related = {
                 "lovr.headset.getViewAngles",
                 "lovr.headset.getViewCount",
-                "lovr.graphics.getViewPose",
-                "lovr.graphics.setViewPose"
+                "Pass:getViewPose",
+                "Pass:setViewPose"
               },
               variants = {
                 {
@@ -12399,7 +12928,7 @@ return {
               module = "lovr.graphics",
               notes = "TODO not floating point, negative, limits, not pipeline, initial pass state",
               related = {
-                "lovr.graphics.setViewport"
+                "Pass:setViewport"
               },
               variants = {
                 {
@@ -12474,8 +13003,8 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setStencilWrite",
-                "lovr.graphics.setDepthTest"
+                "Pass:setStencilWrite",
+                "Pass:setDepthTest"
               },
               variants = {
                 {
@@ -12515,8 +13044,8 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setStencilTest",
-                "lovr.graphics.setDepthTest"
+                "Pass:setStencilTest",
+                "Pass:setDepthTest"
               },
               variants = {
                 {
@@ -12580,8 +13109,8 @@ return {
               related = {
                 "lovr.headset.getViewPose",
                 "lovr.headset.getViewCount",
-                "lovr.graphics.getProjection",
-                "lovr.graphics.setProjection"
+                "Pass:getProjection",
+                "Pass:setProjection"
               },
               variants = {
                 {
@@ -12660,7 +13189,7 @@ return {
               module = "lovr.graphics",
               notes = "TODO floating point, negative, flipped depth range, limits, not pipeline, initial pass state, what the hell is depth range",
               related = {
-                "lovr.graphics.setScissor"
+                "Pass:setScissor"
               },
               variants = {
                 {
@@ -12711,7 +13240,7 @@ return {
               module = "lovr.graphics",
               notes = "TODO",
               related = {
-                "lovr.graphics.setCullMode"
+                "Pass:setCullMode"
               },
               variants = {
                 {
@@ -12887,7 +13416,7 @@ return {
             },
             {
               name = "tick",
-              tag = "transfer",
+              tag = "tallies",
               summary = "Begin measuring GPU counters.",
               description = "TODO",
               key = "Pass:tick",
@@ -12912,7 +13441,7 @@ return {
             },
             {
               name = "tock",
-              tag = "transfer",
+              tag = "tallies",
               summary = "Stop measuring GPU counters.",
               description = "TODO",
               key = "Pass:tock",
@@ -12977,9 +13506,9 @@ return {
               module = "lovr.graphics",
               notes = "TODO you can use combos of numbers/vectors/quats too (or use meta Transform type to explain)",
               related = {
-                "lovr.graphics.translate",
-                "lovr.graphics.rotate",
-                "lovr.graphics.scale"
+                "Pass:translate",
+                "Pass:rotate",
+                "Pass:scale"
               },
               variants = {
                 {
@@ -13068,9 +13597,9 @@ return {
               module = "lovr.graphics",
               notes = "Order matters when scaling, translating, and rotating the coordinate system.",
               related = {
-                "lovr.graphics.rotate",
-                "lovr.graphics.scale",
-                "lovr.graphics.transform"
+                "Pass:rotate",
+                "Pass:scale",
+                "Pass:transform"
               },
               variants = {
                 {
@@ -16280,14 +16809,12 @@ return {
           },
           values = {
             {
-              {
-                name = "nearest",
-                description = "A pixelated appearance where the \"nearest neighbor\" pixel is used."
-              },
-              {
-                name = "linear",
-                description = "A smooth appearance where neighboring pixels are averaged."
-              }
+              name = "nearest",
+              description = "A pixelated appearance where the \"nearest neighbor\" pixel is used."
+            },
+            {
+              name = "linear",
+              description = "A smooth appearance where neighboring pixels are averaged."
             }
           }
         },
@@ -16393,7 +16920,7 @@ return {
             },
             {
               name = "state",
-              descriptioin = "TODO"
+              description = "TODO"
             }
           }
         },
@@ -16515,14 +17042,12 @@ return {
           module = "lovr.graphics",
           values = {
             {
-              {
-                name = "clamp",
-                description = "          Pixels will be clamped to the edge, with pixels outside the 0-1 uv range using colors from\n          the nearest edge.\n        "
-              },
-              {
-                name = "repeat",
-                description = "Tiles the texture."
-              }
+              name = "clamp",
+              description = "Pixels will be clamped to the edge, with pixels outside the 0-1 uv range using colors from the nearest edge."
+            },
+            {
+              name = "repeat",
+              description = "Tiles the texture."
             }
           }
         }
@@ -18416,8 +18941,9 @@ return {
               related = {
                 "Curve:evaluate",
                 "Curve:slice",
-                "lovr.graphics.points",
-                "lovr.graphics.line"
+                "Pass:points",
+                "Pass:line",
+                "Pass:mesh"
               }
             },
             {
@@ -18553,7 +19079,7 @@ return {
               related = {
                 "Mat4:orthographic",
                 "Mat4:perspective",
-                "lovr.graphics.setProjection"
+                "Pass:setProjection"
               },
               variants = {
                 {
@@ -18606,7 +19132,7 @@ return {
               key = "Mat4:identity",
               module = "lovr.math",
               related = {
-                "lovr.graphics.origin"
+                "Pass:origin"
               },
               variants = {
                 {
@@ -18752,7 +19278,7 @@ return {
               related = {
                 "Mat4:perspective",
                 "Mat4:fov",
-                "lovr.graphics.setProjection"
+                "Pass:setProjection"
               },
               variants = {
                 {
@@ -18807,7 +19333,7 @@ return {
               related = {
                 "Mat4:orthographic",
                 "Mat4:fov",
-                "lovr.graphics.setProjection"
+                "Pass:setProjection"
               },
               variants = {
                 {
@@ -26855,6 +27381,32 @@ return {
               }
             },
             {
+              name = "getPosition",
+              summary = "Get how far the SliderJoint is extended.",
+              description = "Returns how far the slider joint is extended (zero is the position the slider was created at, positive values are further apart).",
+              key = "SliderJoint:getPosition",
+              module = "lovr.physics",
+              related = {
+                "SliderJoint:getAxis",
+                "SliderJoint:getLowerLimit",
+                "SliderJoint:setLowerLimit",
+                "SliderJoint:getUpperLimit",
+                "SliderJoint:setUpperLimit"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "position",
+                      type = "number",
+                      description = "The joint position along its axis."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getUpperLimit",
               summary = "Get the SliderJoint's upper limit.",
               description = "Returns the upper limit of the slider position.",
@@ -28826,6 +29378,105 @@ return {
           }
         },
         {
+          name = "getWindowDensity",
+          summary = "Get the window pixel density.",
+          description = "Returns the window pixel density.  High DPI windows will usually return 2.0 to indicate that there are 2 pixels for every window coordinate in each axis.  On a normal display, 1.0 is returned, indicating that window coordinates match up with pixels 1:1.",
+          key = "lovr.system.getWindowDensity",
+          module = "lovr.system",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "density",
+                  type = "number",
+                  description = "The pixel density of the window."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getWindowDimensions",
+          summary = "Get the dimensions of the window.",
+          description = "Returns the dimensions of the desktop window.",
+          key = "lovr.system.getWindowDimensions",
+          module = "lovr.system",
+          notes = "If the window is not open, this will return zeros.",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the desktop window."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the desktop window."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.system.getWindowWidth",
+            "lovr.system.getWindowHeight",
+            "lovr.system.isWindowOpen"
+          }
+        },
+        {
+          name = "getWindowHeight",
+          summary = "Get the height of the window.",
+          description = "Returns the height of the desktop window.",
+          key = "lovr.system.getWindowHeight",
+          module = "lovr.system",
+          notes = "If the window is not open, this will return zero.",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The height of the desktop window."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.system.getWindowWidth",
+            "lovr.system.getWindowDimensions",
+            "lovr.system.isWindowOpen"
+          }
+        },
+        {
+          name = "getWindowWidth",
+          summary = "Get the width of the window.",
+          description = "Returns the width of the desktop window.",
+          key = "lovr.system.getWindowWidth",
+          module = "lovr.system",
+          notes = "If the window is not open, this will return zero.",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the desktop window."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.system.getWindowHeight",
+            "lovr.system.getWindowDimensions",
+            "lovr.system.isWindowOpen"
+          }
+        },
+        {
           name = "isKeyDown",
           summary = "Get the state of a key.",
           description = "Returns whether a key on the keyboard is pressed.",
@@ -28845,6 +29496,28 @@ return {
                   name = "down",
                   type = "boolean",
                   description = "Whether the key is currently pressed."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "isWindowOpen",
+          summary = "Check if the desktop window is open.",
+          description = "Returns whether the desktop window is open.  `t.window` can be set to `nil` in `lovr.conf` to disable automatic opening of the window.  In this case, the window can be opened manually using `lovr.system.openWindow`.",
+          key = "lovr.system.isWindowOpen",
+          module = "lovr.system",
+          related = {
+            "lovr.system.openWindow"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "open",
+                  type = "boolean",
+                  description = "Whether the desktop window is open."
                 }
               }
             }

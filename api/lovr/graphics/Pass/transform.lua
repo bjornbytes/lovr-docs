@@ -73,8 +73,8 @@ return {
     TODO you can use combos of numbers/vectors/quats too (or use meta Transform type to explain)
   ]],
   related = {
-    'lovr.graphics.translate',
-    'lovr.graphics.rotate',
-    'lovr.graphics.scale'
+    'Pass:translate',
+    'Pass:rotate',
+    'Pass:scale'
   }
 }

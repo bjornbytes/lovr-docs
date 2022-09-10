@@ -1,6 +1,6 @@
 return {
   summary = 'Get whether the Rasterizer can rasterize a set of glyphs.',
-  description = 'Check if the Rasterizer can rasterize a set of glyphs.',
+  description = 'Returns whether the Rasterizer can rasterize a set of glyphs.',
   arguments = {
     ['...'] = {
       type = '*',

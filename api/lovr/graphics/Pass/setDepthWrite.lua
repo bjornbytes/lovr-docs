@@ -17,8 +17,8 @@ return {
   },
   notes = 'TODO',
   related = {
-    'lovr.graphics.setDepthTest',
-    'lovr.graphics.setStencilWrite',
-    'lovr.graphics.setColorWrite'
+    'Pass:setDepthTest',
+    'Pass:setStencilWrite',
+    'Pass:setColorWrite'
   }
 }

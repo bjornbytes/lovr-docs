@@ -31,6 +31,6 @@ return {
     TODO not floating point, negative, limits, not pipeline, initial pass state
   ]],
   related = {
-    'lovr.graphics.setViewport'
+    'Pass:setViewport'
   }
 }

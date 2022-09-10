@@ -46,6 +46,6 @@ return {
   related = {
     'Mat4:orthographic',
     'Mat4:perspective',
-    'lovr.graphics.setProjection'
+    'Pass:setProjection'
   }
 }

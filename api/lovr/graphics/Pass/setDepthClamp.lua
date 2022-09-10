@@ -17,8 +17,8 @@ return {
   },
   notes = 'TODO depthClamp feature!',
   related = {
-    'lovr.graphics.setDepthTest',
-    'lovr.graphics.setDepthWrite',
-    'lovr.graphics.setDepthOffset'
+    'Pass:setDepthTest',
+    'Pass:setDepthWrite',
+    'Pass:setDepthOffset'
   }
 }

@@ -18,7 +18,7 @@ return {
     }
   },
   related = {
-    'Rasterzer:getAscent',
+    'Rasterizer:getAscent',
     'Font:getDescent'
   }
 }

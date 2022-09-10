@@ -47,6 +47,6 @@ return {
   related = {
     'Mat4:perspective',
     'Mat4:fov',
-    'lovr.graphics.setProjection'
+    'Pass:setProjection'
   }
 }

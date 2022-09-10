@@ -63,7 +63,7 @@ return {
   related = {
     'lovr.headset.getViewPose',
     'lovr.headset.getViewCount',
-    'lovr.graphics.getProjection',
-    'lovr.graphics.setProjection'
+    'Pass:getProjection',
+    'Pass:setProjection'
   }
 }

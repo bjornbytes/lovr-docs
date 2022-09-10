@@ -1,9 +1,8 @@
 return {
-  summary = 'Get the kerning between 2 glyphs.',
+  summary = 'Get the kerning between two glyphs.',
   description = [[
-    Returns the kerning between 2 glyphs.  Kerning is a slight horizontal adjustment between 2
-    glyphs to improve the visual appearance.  It will often be negative.  The units depend on the
-    font's pixel density.  With the default density, the units correspond to meters.
+    Returns the kerning between 2 glyphs, in pixels.  Kerning is a slight horizontal adjustment
+    between 2 glyphs to improve the visual appearance.  It will often be negative.
   ]],
   arguments = {
     first = {
@@ -49,10 +48,6 @@ return {
     }
   },
   related = {
-    'Rasterizer:getKerning',
-    'Font:getAscent',
-    'Font:getDescent',
-    'Font:getHeight',
-    'Font:getWidth'
+    'Font:getKerning'
   }
 }

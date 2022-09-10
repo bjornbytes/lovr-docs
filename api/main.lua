@@ -247,10 +247,16 @@ end
 local function validateRelated(item)
   for _, key in ipairs(item.related or {}) do
     warnIf(not lookup[key], 'Related item for %s not found: %s', item.key, key)
+    warnIf(key == item.key, 'Item %s should not be related to itself', key)
   end
 end
 
 local function validateEnum(enum)
+  for i, value in ipairs(enum.values) do
+    warnIf(not value.name, 'Enum %s value #%d is missing name', enum.name, i)
+    warnIf(not value.description, 'Enum %s value #%d is missing description', enum.name, i)
+  end
+
   validateRelated(enum)
 end
 

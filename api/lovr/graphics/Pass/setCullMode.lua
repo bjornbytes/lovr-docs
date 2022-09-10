@@ -18,6 +18,6 @@ return {
   },
   notes = 'TODO',
   related = {
-    'lovr.graphics.setWinding'
+    'Pass:setWinding'
   }
 }

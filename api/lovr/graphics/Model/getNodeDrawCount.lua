@@ -30,7 +30,7 @@ return {
     }
   },
   related = {
-    'ModelData:getNodeMeshCount',
+    'ModelData:getMeshCount',
     'Model:getNodeDraw'
   }
 }

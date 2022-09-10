@@ -36,6 +36,6 @@ return {
     - The `stride` is the number of bytes between consecutive values.
   ]],
   related = {
-    'ModelData:getIndexFormat'
+    'ModelData:getMeshIndexFormat'
   }
 }

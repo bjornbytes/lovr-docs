@@ -52,8 +52,8 @@ return {
     The rectangle cannot go outside the dimensions of the source or destination textures.
   ]],
   related = {
-    'Texture:replacePixels',
     'Image:getPixel',
-    'Image:setPixel'
+    'Image:setPixel',
+    'Pass:copy'
   }
 }

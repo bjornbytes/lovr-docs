@@ -18,6 +18,6 @@ return {
     }
   },
   related = {
-    'lovr.graphics.origin'
+    'Pass:origin'
   }
 }

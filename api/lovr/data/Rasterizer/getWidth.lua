@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the height of a glyph, or the font.',
-  description = 'Returns the height of a glyph, or the maximum height of any glyph.',
+  summary = 'Get the width of a glyph, or the font.',
+  description = 'Returns the width of a glyph, or the maximum width of any glyph.',
   arguments = {
     character = {
       type = 'string',
@@ -12,27 +12,27 @@ return {
     }
   },
   returns = {
-    height = {
+    width = {
       type = 'number',
-      description = 'The height, in pixels.'
+      description = 'The width, in pixels.'
     }
   },
   variants = {
     {
       arguments = { 'character' },
-      returns = { 'height' }
+      returns = { 'width' }
     },
     {
       arguments = { 'codepoint' },
-      returns = { 'height' }
+      returns = { 'width' }
     },
     {
       arguments = {},
-      returns = { 'height' }
+      returns = { 'width' }
     }
   },
   related = {
-    'Rasterizer:getWidth',
+    'Rasterizer:getHeight',
     'Rasterizer:getDimensions',
     'Rasterizer:getBoundingBox'
   }

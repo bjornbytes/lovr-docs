@@ -40,7 +40,7 @@ return {
   ]],
   related = {
     'Image:setPixel',
-    'Texture:replacePixels',
-    'TextureFormat'
+    'TextureFormat',
+    'Pass:copy'
   }
 }
