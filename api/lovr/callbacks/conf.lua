@@ -121,6 +121,26 @@ return {
               name = 'debug',
               type = 'boolean',
               description = 'Whether debug messages from the GPU should get sent to lovr.log.'
+            },
+            {
+              name = 'vsync',
+              type = 'boolean',
+              description = 'Whether vsync is enabled (forced off when VR is active).'
+            },
+            {
+              name = 'stencil',
+              type = 'boolean',
+              description = 'Whether the desktop window should have a stencil buffer.'
+            },
+            {
+              name = 'antialias',
+              type = 'boolean',
+              description = 'Whether the desktop window rendering should be antialiased.'
+            },
+            {
+              name = 'shadercache',
+              type = 'boolean',
+              description = 'Whether the shader cache should be loaded and saved to disk.'
             }
           }
         },
@@ -148,9 +168,21 @@ return {
               description = 'The vertical offset for seated experiences.'
             },
             {
-              name = 'msaa',
-              type = 'number',
-              description = 'The amount of antialiasing to use when rendering to the headset.'
+              name = 'antialias',
+              type = 'boolean',
+              description = 'Whether headset rendering should be antialiased.'
+            },
+            {
+              name = 'stencil',
+              type = 'boolean',
+              description = 'Whether headset rendering should have a stencil buffer.'
+            },
+            {
+              name = 'submitdepth',
+              type = 'boolean',
+              description = [[
+                Whether the depth buffer should be sent to the VR runtime (improves reprojection).
+              ]]
             },
             {
               name = 'overlay',
@@ -194,12 +226,7 @@ return {
             {
               name = 'resizable',
               type = 'boolean',
-              description = 'Whether the window is fullscreen.'
-            },
-            {
-              name = 'msaa',
-              type = 'number',
-              description = 'The number of antialiasing samples to use.'
+              description = 'Whether the window is resizable.'
             },
             {
               name = 'title',
@@ -210,11 +237,6 @@ return {
               name = 'icon',
               type = 'string',
               description = 'The path to the window icon file.'
-            },
-            {
-              name = 'vsync',
-              type = 'number',
-              description = '0 to disable vsync, 1 to enable.'
             }
           }
         }
@@ -223,14 +245,10 @@ return {
   },
   returns = {},
   notes = [[
-    Disabling the headset module can improve startup time a lot if you aren't intending to use
-    `lovr.headset`.
+    Disabling unused modules can improve startup time.
 
-    You can set `t.window` to nil to avoid creating the window. You can do it yourself later by
-    using `lovr.graphics.createWindow`.
-
-    If the `lovr.graphics` module is disabled or the window isn't created, attempting to use any
-    functionality requiring graphics may cause a crash.
+    `t.window` can be set to nil to avoid creating the window.  The window can later be opened
+    manually using `lovr.system.openWindow`.
 
     Enabling the `t.graphics.debug` flag will add additional error checks and will send messages
     from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help
@@ -247,7 +265,7 @@ return {
         function lovr.conf(t)
 
           -- Set the project version and identity
-          t.version = '0.14.0'
+          t.version = '0.16.0'
           t.identity = 'default'
 
           -- Set save directory precedence
@@ -272,12 +290,17 @@ return {
 
           -- Graphics
           t.graphics.debug = false
+          t.graphics.vsync = true
+          t.graphics.stencil = false
+          t.graphics.antialias = true
+          t.graphics.shadercache = true
 
           -- Headset settings
-          t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'pico', 'openvr', 'webxr', 'desktop' }
+          t.headset.drivers = { 'openxr', 'webxr', 'desktop' }
           t.headset.supersample = false
           t.headset.offset = 1.7
-          t.headset.msaa = 4
+          t.headset.antialias = true
+          t.headset.submitdepth = true
           t.headset.overlay = false
 
           -- Math settings
@@ -287,8 +310,6 @@ return {
           t.window.width = 1080
           t.window.height = 600
           t.window.fullscreen = false
-          t.window.msaa = 0
-          t.window.vsync = 1
           t.window.title = 'LÖVR'
           t.window.icon = nil
         end
