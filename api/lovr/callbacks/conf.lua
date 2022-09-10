@@ -51,11 +51,6 @@ return {
               description = 'Whether the event module should be enabled.'
             },
             {
-              name = 'filesystem',
-              type = 'boolean',
-              description = 'Whether the filesystem module should be enabled.'
-            },
-            {
               name = 'graphics',
               type = 'boolean',
               description = 'Whether the graphics module should be enabled.'
