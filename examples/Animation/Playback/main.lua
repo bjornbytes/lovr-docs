@@ -8,11 +8,7 @@ function lovr.load()
   model = lovr.graphics.newModel('scytha/scene.gltf')
 end
 
-function lovr.update(dt)
-  model:animate(1, lovr.timer.getTime())
-end
-
 function lovr.draw(pass)
-  pass:setShader(shader)
+  model:animate(1, lovr.headset.getTime())
   pass:draw(model, 0, 0, -4, .2)
 end
