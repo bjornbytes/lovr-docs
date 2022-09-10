@@ -254,19 +254,16 @@ local function validateEnum(enum)
   validateRelated(enum)
 end
 
-local function validateObject(object)
-  for _, constructor in ipairs(object.constructors or {}) do
-    warnIf(not lookup[constructor], 'Constructor for %s not found: %s', object.key, constructor)
-  end
-
-  validateRelated(object)
-end
-
 local function validateFunction(fn)
   if fn.tag then
     local found = false
     for _, section in ipairs(lookup[fn.module].sections or {}) do
       if section.tag == fn.tag then found = true break end
+    end
+    for _, object in ipairs(lookup[fn.module].objects) do
+      for _, section in ipairs(object.sections or {}) do
+        if section.tag == fn.tag then found = true break end
+      end
     end
     warnIf(not found, 'Unknown tag %s for %s', fn.tag, fn.key)
   end
@@ -282,6 +279,18 @@ local function validateFunction(fn)
   end
 
   validateRelated(fn)
+end
+
+local function validateObject(object)
+  for _, constructor in ipairs(object.constructors or {}) do
+    warnIf(not lookup[constructor], 'Constructor for %s not found: %s', object.key, constructor)
+  end
+
+  for _, method in ipairs(object.methods or {}) do
+    validateFunction(method)
+  end
+
+  validateRelated(object)
 end
 
 local function validateModule(module)
