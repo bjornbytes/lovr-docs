@@ -1,6 +1,6 @@
 return {
   tag = 'graphics-objects',
-  summary = 'Compile a Shader to bytecode.',
+  summary = 'Compile shader code to bytecode.',
   description = [[
     Compiles shader code to SPIR-V bytecode.  The bytecode can be passed to
     `lovr.graphics.newShader` to create shaders, which will be faster than creating it from GLSL.

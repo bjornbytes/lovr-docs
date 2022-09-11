@@ -2513,8 +2513,8 @@ return {
               key = "ModelData:getAnimationNode",
               module = "lovr.data",
               related = {
-                "ModelData:getAnimationNode",
-                "ModelData:getAnimationProperty"
+                "ModelData:getAnimationProperty",
+                "ModelData:getAnimationSmoothMode"
               },
               variants = {
                 {
@@ -2569,7 +2569,6 @@ return {
               module = "lovr.data",
               related = {
                 "ModelData:getAnimationNode",
-                "ModelData:getAnimationProperty",
                 "ModelData:getAnimationSmoothMode"
               },
               variants = {
@@ -10137,6 +10136,19 @@ return {
               }
             },
             {
+              name = "resetNodeTransforms",
+              summary = "Reset node transforms.",
+              description = "Resets node transforms to the original ones defined in the model file.",
+              key = "Model:resetNodeTransforms",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setNodeOrientation",
               summary = "Set or blend the orientation of a node.",
               description = "Sets or blends the orientation of a node to a new orientation.",
@@ -14504,7 +14516,7 @@ return {
         {
           name = "compileShader",
           tag = "graphics-objects",
-          summary = "Compile a Shader to bytecode.",
+          summary = "Compile shader code to bytecode.",
           description = "Compiles shader code to SPIR-V bytecode.  The bytecode can be passed to `lovr.graphics.newShader` to create shaders, which will be faster than creating it from GLSL. The bytecode is portable, so bytecode compiled on one platform will work on other platforms. This allows shaders to be precompiled in a build step.",
           key = "lovr.graphics.compileShader",
           module = "lovr.graphics",
@@ -27961,15 +27973,14 @@ return {
             },
             {
               name = "getTightness",
-              summary = "Get the joint tightness.",
-              description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
+              tag = "worldProperties",
+              summary = "Get the tightness of joints in the World.",
+              description = "Returns the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:getTightness",
               module = "lovr.physics",
               related = {
                 "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
+                "DistanceJoint:setTightness"
               },
               variants = {
                 {
@@ -27978,7 +27989,7 @@ return {
                     {
                       name = "tightness",
                       type = "number",
-                      description = "The tightness of the joint."
+                      description = "The tightness of the World."
                     }
                   }
                 }
@@ -29332,7 +29343,7 @@ return {
       name = "system",
       tag = "modules",
       summary = "Provides information about the current operating system and platform.",
-      description = "The `lovr.system` provides information about the current operating system, and platform, and hardware.",
+      description = "The `lovr.system` provides information about the current platform and hardware.",
       key = "lovr.system",
       objects = {},
       functions = {
@@ -29521,6 +29532,64 @@ return {
                 }
               }
             }
+          }
+        },
+        {
+          name = "openWindow",
+          summary = "Open the desktop window.",
+          description = "Opens the desktop window.  If the window is already open, this function does nothing.",
+          key = "lovr.system.openWindow",
+          module = "lovr.system",
+          notes = "By default, the window is opened automatically, but this can be disabled by setting `t.window` to `nil` in `conf.lua`.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Window options.",
+                  table = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the window, or 0 to use the width of the monitor.",
+                      default = "720"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the window, or 0 to use the height of the monitor.",
+                      default = "800"
+                    },
+                    {
+                      name = "fullscreen",
+                      type = "boolean",
+                      description = "Whether the window should be fullscreen."
+                    },
+                    {
+                      name = "resizable",
+                      type = "boolean",
+                      description = "Whether the window should be resizable."
+                    },
+                    {
+                      name = "title",
+                      type = "string",
+                      description = "The window title."
+                    },
+                    {
+                      name = "icon",
+                      type = "string",
+                      description = "An `Image` or path to an image file to use for the window icon."
+                    }
+                  }
+                }
+              },
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.system.isWindowOpen",
+            "lovr.conf"
           }
         },
         {
@@ -30077,10 +30146,10 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.14.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'oculus', 'vrapi', 'pico', 'openvr', 'webxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.msaa = 4\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.msaa = 0\n  t.window.vsync = 1\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.16.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'webxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.antialias = true\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
-      notes = "Disabling the headset module can improve startup time a lot if you aren't intending to use `lovr.headset`.\n\nYou can set `t.window` to nil to avoid creating the window. You can do it yourself later by using `lovr.graphics.createWindow`.\n\nIf the `lovr.graphics` module is disabled or the window isn't created, attempting to use any functionality requiring graphics may cause a crash.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
+      notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
       variants = {
         {
           arguments = {
@@ -30123,11 +30192,6 @@ return {
                       name = "event",
                       type = "boolean",
                       description = "Whether the event module should be enabled."
-                    },
-                    {
-                      name = "filesystem",
-                      type = "boolean",
-                      description = "Whether the filesystem module should be enabled."
                     },
                     {
                       name = "graphics",
@@ -30197,6 +30261,26 @@ return {
                       name = "debug",
                       type = "boolean",
                       description = "Whether debug messages from the GPU should get sent to lovr.log."
+                    },
+                    {
+                      name = "vsync",
+                      type = "boolean",
+                      description = "Whether vsync is enabled (forced off when VR is active)."
+                    },
+                    {
+                      name = "stencil",
+                      type = "boolean",
+                      description = "Whether the desktop window should have a stencil buffer."
+                    },
+                    {
+                      name = "antialias",
+                      type = "boolean",
+                      description = "Whether the desktop window rendering should be antialiased."
+                    },
+                    {
+                      name = "shadercache",
+                      type = "boolean",
+                      description = "Whether the shader cache should be loaded and saved to disk."
                     }
                   }
                 },
@@ -30221,9 +30305,19 @@ return {
                       description = "The vertical offset for seated experiences."
                     },
                     {
-                      name = "msaa",
-                      type = "number",
-                      description = "The amount of antialiasing to use when rendering to the headset."
+                      name = "antialias",
+                      type = "boolean",
+                      description = "Whether headset rendering should be antialiased."
+                    },
+                    {
+                      name = "stencil",
+                      type = "boolean",
+                      description = "Whether headset rendering should have a stencil buffer."
+                    },
+                    {
+                      name = "submitdepth",
+                      type = "boolean",
+                      description = "Whether the depth buffer should be sent to the VR runtime (improves reprojection)."
                     },
                     {
                       name = "overlay",
@@ -30267,12 +30361,7 @@ return {
                     {
                       name = "resizable",
                       type = "boolean",
-                      description = "Whether the window is fullscreen."
-                    },
-                    {
-                      name = "msaa",
-                      type = "number",
-                      description = "The number of antialiasing samples to use."
+                      description = "Whether the window is resizable."
                     },
                     {
                       name = "title",
@@ -30283,11 +30372,6 @@ return {
                       name = "icon",
                       type = "string",
                       description = "The path to the window icon file."
-                    },
-                    {
-                      name = "vsync",
-                      type = "number",
-                      description = "0 to disable vsync, 1 to enable."
                     }
                   }
                 }

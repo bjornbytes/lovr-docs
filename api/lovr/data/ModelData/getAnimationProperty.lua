@@ -33,7 +33,6 @@ return {
   },
   related = {
     'ModelData:getAnimationNode',
-    'ModelData:getAnimationProperty',
     'ModelData:getAnimationSmoothMode'
   }
 }

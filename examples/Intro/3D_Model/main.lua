@@ -5,6 +5,6 @@ function lovr.load()
 end
 
 function lovr.draw(pass)
-  pass:setWireframe(true)
+  pass:setShader('normal')
   pass:draw(model, 0, 1.7, -3, 1, lovr.headset.getTime() * .25)
 end

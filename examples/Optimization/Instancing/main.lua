@@ -23,11 +23,7 @@ function lovr.load()
     vec4 lovrmain() {
       return Projection * View * transforms[InstanceIndex] * VertexPosition;
     }
-  ]], [[
-    vec4 lovrmain() {
-      return vec4(Normal * .5 + .5, 1.);
-    }
-  ]])
+  ]], 'normal')
 
   monkey = lovr.graphics.newModel('monkey.obj')
 end
