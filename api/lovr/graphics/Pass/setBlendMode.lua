@@ -1,7 +1,7 @@
 return {
   tag = 'pipeline',
   summary = 'Set the blend mode.',
-  description = 'TODO',
+  description = 'Sets the blend mode.',
   arguments = {
     blend = {
       type = 'BlendMode',
@@ -9,7 +9,7 @@ return {
     },
     alphaBlend = {
       type = 'BlendAlphaMode',
-      description = 'The alpha blend mode.'
+      description = 'The alpha blend mode, used to control premultiplied alpha.'
     }
   },
   returns = {},

@@ -1,7 +1,11 @@
 return {
   tag = 'pipeline',
   summary = 'Enable or disable alpha to coverage.',
-  description = 'TODO',
+  description = [[
+    Sets whether alpha to coverage is enabled.  Alpha to coverage factors the alpha of a pixel into
+    antialiasing calculations.  It can be used to get antialiased edges on textures with
+    transparency.  It's often used for foliage.
+  ]],
   arguments = {
     enable = {
       type = 'boolean',

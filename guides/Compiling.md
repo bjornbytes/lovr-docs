@@ -95,52 +95,6 @@ the command:
 $ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 ```
 
-WebXR
----
-
-First, [install the Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html).
-
-Unix:
-
-```
-$ mkdir build
-$ cd build
-$ emcmake cmake ..
-$ emmake make -j2
-```
-
-Windows (from a Visual Studio Command Prompt, make sure the Emscripten SDK is on PATH):
-
-```
-$ mkdir build
-$ cd build
-$ emcmake cmake -G "NMake Makefiles" ..
-$ emmake nmake
-```
-
-The above commands will output `lovr.js`, `lovr.wasm`, and `lovr.html`.  The easiest way to run LÖVR
-from here is to use `emrun`:
-
-```
-$ emrun --browser firefox lovr.html
-```
-
-To add a project, create a .zip of its contents and serve it alongside the HTML and JS files.  The
-following JS can be added to the page to download the zip file, add it to the emscripten virtual
-filesystem, and add it as a command line argument:
-
-```
-var filename = 'game.zip';
-var url = '/game.zip';
-Module.arguments.push(filename);
-Module.preRun.push(function() {
-  Module.FS_createPreloadedFile('/', filename, url, true, false);
-});
-```
-
-See `lovr.html` (or `src/resources/lovr.html`) for a full example page, including a button that
-can be used to enter/exit immersive mode.
-
 Android
 ---
 

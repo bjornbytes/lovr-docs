@@ -2,9 +2,9 @@ return {
   tag = 'compute',
   summary = 'Run a compute shader.',
   description = [[
-    Runs a compute shader.  Compute shaders are run in 3D grids of workgroups.  Each workgroup is
-    itself a 3D grid of threads, declared using `local_size_x`, `local_size_y`, and `local_size_z`
-    in the shader code.
+    Runs a compute shader.  Compute shaders are run in 3D grids of workgroups.  Each local workgroup
+    is itself a 3D grid of invocations, declared using `local_size_x`, `local_size_y`, and
+    `local_size_z` in the shader code.
   ]],
   arguments = {
      x = {
@@ -48,11 +48,12 @@ return {
     }
   },
   notes = [[
-    All these 3D grids can get confusing, but the basic idea is to make the local size a small block
-    of e.g. 8x8 pixels or 4x4x4 voxels, and then dispatch however many workgroups are needed to
-    cover an image or voxel field.  The reason to do it this way is that the GPU runs threads in
-    little bundles called subgroups.  Subgroups usually have 32 or 64 threads in them (the exact
-    size is given by the `subgroupSize` property of `lovr.graphics.getDevice`).  If the local size
-    was `1x1x1`, then the GPU would only run 1 thread per subgroup and waste the other 31 or 63.
+    All these 3D grids can get confusing, but the basic idea is to make the local workgroup size a
+    small block of e.g. 8x8 pixels or 4x4x4 voxels, and then dispatch however many global workgroups
+    are needed to cover an image or voxel field.  The reason to do it this way is that the GPU runs
+    invocations in bundles called subgroups.  Subgroups are usually 32 or 64 invocations (the exact
+    size is given by the `subgroupSize` property of `lovr.graphics.getDevice`).  If the local
+    workgroup size was `1x1x1`, then the GPU would only run 1 invocation per subgroup and waste the
+    other 31 or 63.
   ]]
 }

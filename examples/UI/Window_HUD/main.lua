@@ -6,8 +6,8 @@
 local shader = require 'shader'
 
 -- In order for lovr.mouse to work, and therefore for this example to work,
--- we must be using LuaJIT and we must be using GLFW (ie: we can't be on Oculus Mobile)
-if type(jit) == 'table' and lovr.headset.getDriver() ~= "vrapi" then
+-- we must be using LuaJIT and we must be using GLFW (ie: we can't be on Android)
+if type(jit) == 'table' and lovr.system.getOS() ~= "android" then
 	lovr.mouse = require 'mouse'
 end
 

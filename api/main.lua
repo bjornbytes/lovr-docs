@@ -277,10 +277,12 @@ local function validateFunction(fn)
   for _, variant in ipairs(fn.variants) do
     for _, arg in ipairs(variant.arguments) do
       warnIf(not arg or not arg.name, 'Invalid argument for variant of %s', fn.key)
+      warnIf(not arg.type or (arg.type:match('^[A-Z]') and not lookup[arg.type]), 'Invalid or missing argument type %s in %s', arg.type, fn.key)
     end
 
     for _, ret in ipairs(variant.returns) do
       warnIf(not ret or not ret.name, 'Invalid return for variant of %s', fn.key)
+      warnIf(not ret.type or (ret.type:match('^[A-Z]') and not lookup[ret.type]), 'Invalid or missing return type %s for %s variant', ret.type, fn.key)
     end
   end
 

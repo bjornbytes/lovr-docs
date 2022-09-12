@@ -37,13 +37,5 @@ return {
       arguments = { 'device', 'strength', 'duration', 'frequency' },
       returns = { 'vibrated' }
     }
-  },
-  notes = [[
-    When using the `openvr` headset driver on an HTC Vive, the value for the `duration` currently
-    must be less than .004 seconds.  Call this function several frames in a row for stronger or
-    prolonged vibration patterns.
-
-    On the Oculus Quest, devices can only be vibrated once per frame.  Any attempts after the first
-    will return `false`.
-  ]]
+  }
 }

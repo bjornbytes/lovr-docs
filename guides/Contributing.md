@@ -43,14 +43,11 @@ Organization
 
 An overview of the folder structure:
 
-- `deps` contains submodules for external dependencies.  Some smaller dependencies are also included
-in the `src/lib` folder.
-- `src/api` contains Lua bindings.  There's a file for each module and a file for each object.
+- `deps` contains submodules for external dependencies.
+- `etc` is a sort of "junk drawer" containing shaders, icons, scripts, etc.
+- `src/api` contains Lua bindings.  There's a file for each module and object.
 - `src/core` contains shared engine code.  It's usually lower-level and not specific to LÖVR.
 - `src/lib` contains smaller third party libraries.
-- `src/modules` has a folder for each module in the project.  It's good to keep them separated as
-  much as possible, there's inevitably some overlap.
-- `src/resources` is a sort of "junk drawer" containing helper files like shaders, icons, scripts,
-  etc. often included in builds for various platforms.
+- `src/modules` has a folder for each module.
 
-Branches other than master can be force-pushed during development to organize commit history.
+Branches other than master and dev may be force-pushed during development to keep commits clean.

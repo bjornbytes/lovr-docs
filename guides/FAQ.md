@@ -40,7 +40,7 @@ runtime.
 
 > Does LÖVR support AR?
 
-LÖVR does not currently support the Magic Leap or "magic window" style AR on phones.  There are some
-ways to experiment with AR on LÖVR using passthrough devices like the North Star or SteamVR's Room
-View 3D.  LÖVR's direction is guided by the community, and as more AR hardware comes out there will
-likely be future demand and development on AR support.
+LÖVR does not currently support Magic Leap, HoloLens, or "magic window" style AR on phones.  There
+are some ways to experiment with AR on LÖVR using passthrough devices like the North Star or
+SteamVR's Room View 3D.  LÖVR's direction is guided by the community, and as more AR hardware comes
+out there will likely be future demand and development on AR support.

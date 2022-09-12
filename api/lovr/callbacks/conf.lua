@@ -296,7 +296,7 @@ return {
           t.graphics.shadercache = true
 
           -- Headset settings
-          t.headset.drivers = { 'openxr', 'webxr', 'desktop' }
+          t.headset.drivers = { 'openxr', 'desktop' }
           t.headset.supersample = false
           t.headset.offset = 1.7
           t.headset.antialias = true
