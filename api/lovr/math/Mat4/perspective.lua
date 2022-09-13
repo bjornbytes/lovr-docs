@@ -3,10 +3,18 @@ return {
   description = [[
     Sets this matrix to represent a perspective projection.
 
-    This can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in
+    This can be used with `Pass:setProjection`, or it can be sent to a `Shader` for use in
     GLSL.
   ]],
   arguments = {
+    fov = {
+      type = 'number',
+      description = 'The vertical field of view (in radians).'
+    },
+    aspect = {
+      type = 'number',
+      description = 'The horizontal aspect ratio of the projection (width / height).'
+    },
     near = {
       type = 'number',
       description = 'The near plane.'
@@ -15,14 +23,6 @@ return {
       type = 'number',
       description = 'The far plane.'
     },
-    fov = {
-      type = 'number',
-      description = 'The vertical field of view (in radians).'
-    },
-    aspect = {
-      type = 'number',
-      description = 'The horizontal aspect ratio of the projection (width / height).'
-    }
   },
   returns = {
     m = {
@@ -32,7 +32,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'near', 'far', 'fov', 'aspect' },
+      arguments = { 'fov', 'aspect', 'near', 'far' },
       returns = { 'm' }
     }
   },
