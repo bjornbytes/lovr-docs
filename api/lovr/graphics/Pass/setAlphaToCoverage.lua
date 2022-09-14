@@ -18,5 +18,6 @@ return {
       arguments = { 'enable' },
       returns = {}
     }
-  }
+  },
+  notes = 'By default, alpha to coverage is disabled.'
 }

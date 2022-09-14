@@ -1,7 +1,7 @@
 return {
   tag = 'pipeline',
   summary = 'Control triangle face culling.',
-  description = 'TODO',
+  description = 'Sets whether the front or back faces of triangles are culled.',
   arguments = {
     mode = {
       type = 'CullMode',
@@ -16,7 +16,7 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO',
+  notes = 'The default cull mode is `none`.',
   related = {
     'Pass:setWinding'
   }

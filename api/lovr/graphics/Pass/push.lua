@@ -23,6 +23,8 @@ return {
   notes = [[
     Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4
     render states saved.
+
+    The `state` stack does not save the camera info or shader variables changed with `Pass:send`.
   ]],
   related = {
     'Pass:pop',

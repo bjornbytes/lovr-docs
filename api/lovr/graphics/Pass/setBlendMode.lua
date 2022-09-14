@@ -1,7 +1,10 @@
 return {
   tag = 'pipeline',
   summary = 'Set the blend mode.',
-  description = 'Sets the blend mode.',
+  description = [[
+    Sets the blend mode.  When a pixel is drawn, the blend mode controls how it is mixed with the
+    color and alpha of the pixel underneath it.
+  ]],
   arguments = {
     blend = {
       type = 'BlendMode',
@@ -19,5 +22,5 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = 'The default blend mode is `alpha` with the `alphamultiply` alpha mode.'
 }

@@ -1,11 +1,15 @@
 return {
   tag = 'pipeline',
   summary = 'Set whether draws write to the depth buffer.',
-  description = 'TODO',
+  description = [[
+    Sets whether draws write to the depth buffer.  When a pixel is drawn, if depth writes are
+    enabled and the pixel passes the depth test, the depth buffer will be updated with the pixel's
+    depth value.
+  ]],
   arguments = {
     write = {
       type = 'boolean',
-      description = 'The new depth write setting.'
+      description = 'Whether the depth buffer should be affected by draws.'
     }
   },
   returns = {},
@@ -15,10 +19,10 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO',
+  notes = 'The default depth write is `true`.',
   related = {
-    'Pass:setDepthTest',
     'Pass:setStencilWrite',
-    'Pass:setColorWrite'
+    'Pass:setColorWrite',
+    'Pass:setDepthTest'
   }
 }

@@ -1,6 +1,6 @@
 return {
   summary = 'Get the type of the Shader.',
-  description = 'TODO',
+  description = 'Returns whether the shader is a graphics or compute shader.',
   arguments = {},
   returns = {
     type = {
@@ -15,6 +15,7 @@ return {
     }
   },
   related = {
-    'Shader:hasStage'
+    'Shader:hasStage',
+    'lovr.graphics.newShader'
   }
 }

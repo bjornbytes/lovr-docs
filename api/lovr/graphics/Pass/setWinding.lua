@@ -1,7 +1,10 @@
 return {
   tag = 'pipeline',
   summary = 'Set the winding direction of triangle vertices.',
-  description = 'TODO',
+  description = [[
+    Sets whether vertices in the clockwise or counterclockwise order vertices are considered the
+    "front" face of a triangle.  This is used for culling with `Pass:setCullMode`.
+  ]],
   arguments = {
     winding = {
       type = 'Winding',
@@ -15,7 +18,9 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO',
+  notes = [[
+    The default winding is counterclockwise.  LÖVR's builtin shapes are wound counterclockwise.
+  ]],
   related = {
     'Pass:setCullMode'
   }

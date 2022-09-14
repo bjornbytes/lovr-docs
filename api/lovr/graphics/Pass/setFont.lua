@@ -1,7 +1,7 @@
 return {
   tag = 'pipeline',
-  summary = 'Enable or disable depth clamp.',
-  description = 'TODO',
+  summary = 'Set the font.',
+  description = 'Sets the font used for `Pass:text`.',
   arguments = {
     font = {
       type = 'Font',
@@ -16,6 +16,8 @@ return {
     }
   },
   related = {
-    'Pass:text'
+    'Pass:text',
+    'lovr.graphics.newFont',
+    'lovr.graphics.getDefaultFont'
   }
 }
