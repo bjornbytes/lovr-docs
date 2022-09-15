@@ -33,20 +33,24 @@ List of Plugins
 <table>
   <tbody>
     <tr>
+      <td><a href="https://github.com/brainrom/lovr-luasocket">lovr-luasocket</a></td>
+      <td>HTTP and socket support via luasocket</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/bjornbytes/lua-cjson">lua-cjson</a></td>
       <td>Fast native JSON encoder/decoder</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/bjornbytes/lua-deepspeech">lua-deepspeech</a></td>
+      <td>Speech recognition using Mozilla's DeepSpeech library</td>
     </tr>
     <tr>
       <td><a href="https://github.com/bjornbytes/lua-enet">lua-enet</a></td>
       <td>enet for UDP multiplayer servers/clients</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/brainrom/lovr-luasocket">lovr-luasocket</a></td>
-      <td>HTTP and socket support via luasocket</td>
-    </tr>
-    <tr>
-      <td><a href="https://github.com/bjornbytes/lua-deepspeech">lua-deepspeech</a></td>
-      <td>Speech recognition using Mozilla's DeepSpeech library</td>
+      <td><a href="https://github.com/luvit/luv">luv</a></td>
+      <td>libuv bindings for Lua (provides an event loop with asynchronous io and networking)</td>
     </tr>
   </tbody>
 </table>
