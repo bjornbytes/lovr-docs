@@ -49,6 +49,10 @@ List of Plugins
       <td>enet for UDP multiplayer servers/clients</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/love2d/lua-https">lua-https</a></td>
+      <td>Lua HTTPS module using native platform backends.</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/luvit/luv">luv</a></td>
       <td>libuv bindings for Lua</td>
     </tr>
