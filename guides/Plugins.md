@@ -41,6 +41,10 @@ List of Plugins
       <td>Fast native JSON encoder/decoder</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/antirez/lua-cmsgpack">lua-cmsgpack</a></td>
+      <td>Lua MessagePack C implementation.</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/bjornbytes/lua-deepspeech">lua-deepspeech</a></td>
       <td>Speech recognition using Mozilla's DeepSpeech library</td>
     </tr>
