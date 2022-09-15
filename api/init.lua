@@ -12588,7 +12588,7 @@ return {
             },
             {
               name = "getNodeDraw",
-              summary = "Get the information needed to draw one mesh attached to a node.",
+              summary = "Get the information needed to draw one mesh in the model.",
               description = "Returns the draw mode, material, and vertex range of a mesh in the model.",
               key = "Model:getNodeDraw",
               module = "lovr.graphics",
