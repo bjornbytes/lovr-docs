@@ -1,4 +1,5 @@
 return {
+  tag = 'pass-misc',
   summary = 'Get the texture height of a render pass.',
   description = 'Returns the height of the textures attached to the render pass.',
   arguments = {},
