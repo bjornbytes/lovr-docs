@@ -50,7 +50,7 @@ List of Plugins
     </tr>
     <tr>
       <td><a href="https://github.com/luvit/luv">luv</a></td>
-      <td>libuv bindings for Lua (provides an event loop with asynchronous io and networking)</td>
+      <td>libuv bindings for Lua</td>
     </tr>
   </tbody>
 </table>
