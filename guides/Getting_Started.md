@@ -15,7 +15,7 @@ files.
 Double click on `lovr.exe` to open LÖVR.  You should see a window with the LÖVR logo in it.  This is
 what's shown if you run LÖVR without specifying a project.
 
-![The Default Project](https://lovr.org/static/img/defaultProject.png)
+![The Default Project](https://lovr.org/static/img/nogame.png)
 
 > Note: If you're using a VR headset, you'll only see the logo if your headset is pointing in the
 > forward direction.
