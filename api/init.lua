@@ -3235,6 +3235,10 @@ return {
               description = "One 32-bit floating point depth channel.  4 bytes per pixel."
             },
             {
+              name = "d32fs8",
+              description = "One 32-bit floating point depth channel and one 8-bit stencil channel.  5 bytes per pixel."
+            },
+            {
               name = "bc1",
               description = "3 channels.  8 bytes per 4x4 block, or 0.5 bytes per pixel.  Good for opaque images."
             },
@@ -16436,7 +16440,7 @@ return {
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "`x` and `y` can not be negative.\n\nThe default scissor rectangle covers the entire region of the render pass textures.",
+              notes = "`x` and `y` can not be negative.\n\nThe default scissor rectangle covers the entire dimensions of the render pass textures.",
               variants = {
                 {
                   arguments = {
@@ -16699,10 +16703,10 @@ return {
               name = "setViewport",
               tag = "pipeline",
               summary = "Set the viewport.",
-              description = "TODO",
+              description = "Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
               key = "Pass:setViewport",
               module = "lovr.graphics",
-              notes = "TODO floating point, negative, flipped depth range, limits, not pipeline, initial pass state, what the hell is depth range",
+              notes = "The viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
               variants = {
                 {
                   arguments = {
@@ -16724,16 +16728,16 @@ return {
                     {
                       name = "h",
                       type = "number",
-                      description = "The height of the viewport."
+                      description = "The height of the viewport.  May be negative."
                     },
                     {
-                      name = "minDepth",
+                      name = "dmin",
                       type = "number",
                       description = "The min component of the depth range.",
                       default = "0.0"
                     },
                     {
-                      name = "maxDepth",
+                      name = "dmax",
                       type = "number",
                       description = "The max component of the depth range.",
                       default = "1.0"
@@ -16743,7 +16747,8 @@ return {
                 }
               },
               related = {
-                "Pass:setScissor"
+                "Pass:setScissor",
+                "Pass:getDimensions"
               }
             },
             {
@@ -16774,10 +16779,10 @@ return {
               name = "setWireframe",
               tag = "pipeline",
               summary = "Enable or disable wireframe rendering.",
-              description = "TODO",
+              description = "Enables or disables wireframe rendering.  This will draw all triangles as lines while active. It's intended to be used for debugging, since it usually has a performance cost.",
               key = "Pass:setWireframe",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "Wireframe rendering is disabled by default.\n\nThere is currently no way to change the thickness of the lines.",
               variants = {
                 {
                   arguments = {
@@ -16789,16 +16794,19 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:setMeshMode"
               }
             },
             {
               name = "skybox",
               tag = "drawing",
               summary = "Draw a skybox.",
-              description = "TODO",
+              description = "Draws a skybox.",
               key = "Pass:skybox",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The skybox will be rotated based on the camera rotation.\n\nThe skybox is drawn using a fullscreen triangle.\n\nThe skybox uses a custom shader, so set the shader to `nil` before calling this function (unless explicitly using a custom shader).",
               variants = {
                 {
                   arguments = {
@@ -16823,7 +16831,7 @@ return {
               description = "Draws a sphere",
               key = "Pass:sphere",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The local origin of the sphere is in its center.",
               variants = {
                 {
                   arguments = {

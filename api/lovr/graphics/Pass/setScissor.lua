@@ -32,7 +32,7 @@ return {
   notes = [[
     `x` and `y` can not be negative.
 
-    The default scissor rectangle covers the entire region of the render pass textures.
+    The default scissor rectangle covers the entire dimensions of the render pass textures.
   ]],
   related = {
     'Pass:setViewport'

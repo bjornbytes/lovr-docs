@@ -28,5 +28,5 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = 'The local origin of the sphere is in its center.'
 }

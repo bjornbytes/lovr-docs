@@ -1,7 +1,11 @@
 return {
   tag = 'pipeline',
   summary = 'Set the viewport.',
-  description = 'TODO',
+  description = [[
+    Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the
+    viewport.  More specifically, this defines the transformation from normalized device coordinates
+    to pixel coordinates.
+  ]],
   arguments = {
     x = {
       type = 'number',
@@ -17,14 +21,14 @@ return {
     },
     h = {
       type = 'number',
-      description = 'The height of the viewport.',
+      description = 'The height of the viewport.  May be negative.',
     },
-    minDepth = {
+    dmin = {
       type = 'number',
       default = '0.0',
       description = 'The min component of the depth range.'
     },
-    maxDepth = {
+    dmax = {
       type = 'number',
       default = '1.0',
       description = 'The max component of the depth range.'
@@ -33,15 +37,21 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'w', 'h', 'minDepth', 'maxDepth' },
+      arguments = { 'x', 'y', 'w', 'h', 'dmin', 'dmax' },
       returns = {}
     }
   },
   notes = [[
-    TODO floating point, negative, flipped depth range, limits, not pipeline, initial pass state,
-    what the hell is depth range
+    The viewport rectangle can use floating point numbers.
+
+    A negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used
+    to flip the rendering vertically.
+
+    The default viewport extends from `(0, 0)` to the dimensions of the target textures, with min
+    depth and max depth respectively set to 0 and 1.
   ]],
   related = {
-    'Pass:setScissor'
+    'Pass:setScissor',
+    'Pass:getDimensions'
   }
 }

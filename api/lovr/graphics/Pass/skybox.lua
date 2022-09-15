@@ -1,7 +1,7 @@
 return {
   tag = 'drawing',
   summary = 'Draw a skybox.',
-  description = 'TODO',
+  description = 'Draws a skybox.',
   arguments = {
     skybox = {
       type = 'Texture',
@@ -22,5 +22,12 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = [[
+    The skybox will be rotated based on the camera rotation.
+
+    The skybox is drawn using a fullscreen triangle.
+
+    The skybox uses a custom shader, so set the shader to `nil` before calling this function (unless
+    explicitly using a custom shader).
+  ]]
 }
