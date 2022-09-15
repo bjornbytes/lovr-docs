@@ -12,9 +12,9 @@ LÖVR is currently known to work with (and optimized for)
 
 - CPU: 64 bit, little endian, x86 or ARM
 - OS: Windows (Vista+), macOS (11+), Linux (libc 2.29+), Android (10)
-- GPU: supports OpenGL 3.3+ or OpenGL ES 3.1+
+- GPU: supports Vulkan 1.1
 
-Other systems and hardware may work, but are not frequently tested and may fail to build/run.
+Other systems and hardware may work, but are not frequently tested.
 
 Dependencies
 ---
@@ -25,10 +25,12 @@ in an existing repository.
 
 - Lua (5.1+) or LuaJIT (2.1+)
 - GLFW (3.3+)
-- OpenGL (3.3, ES3, or WebGL 2)
-- OpenVR
+- glslang
+- OpenXR
 - msdfgen
 - ODE
+
+LÖVR requires a C compiler that supports C11.  GCC 4.9, clang 3.1, and Windows SDK 2104 support C11.
 
 Windows
 ---
@@ -59,7 +61,7 @@ $ cmake ..
 $ cmake --build .
 ```
 
-The lovr executable should exist in `lovr/build` now.  It's recommended to set up an alias or
+The lovr executable should exist in `lovr/build/bin` now.  It's recommended to set up an alias or
 symlink so that this executable can be found in your PATH environment variable.  Once that's done,
 you can run a project like this:
 
