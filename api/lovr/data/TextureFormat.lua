@@ -90,6 +90,12 @@ return {
       description = 'One 32-bit floating point depth channel.  4 bytes per pixel.'
     },
     {
+      name = 'd32fs8',
+      description = [[
+        One 32-bit floating point depth channel and one 8-bit stencil channel.  5 bytes per pixel.
+      ]]
+    },
+    {
       name = 'bc1',
       description = [[
         3 channels.  8 bytes per 4x4 block, or 0.5 bytes per pixel.  Good for opaque images.
