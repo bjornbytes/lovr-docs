@@ -22,8 +22,10 @@ return {
       description = 'The Texture to clear.'
     },
     color = {
-      type = 'Color',
-      description = 'The color to clear to.'
+      type = 'Vec4',
+      description = [[
+        The color to clear the texture to.  Can also be a `Vec3`, table of numbers, or a hexcode.
+      ]]
     },
     layer = {
       type = 'number',

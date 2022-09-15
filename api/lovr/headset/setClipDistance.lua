@@ -12,7 +12,10 @@ return {
     },
     far = {
       type = 'number',
-      description = 'The distance to the far clipping plane, in meters.'
+      description = [[
+        The distance to the far clipping plane, in meters, or 0 for an infinite far clipping plane
+        with a reversed Z range.
+      ]]
     }
   },
   returns = {},
@@ -22,5 +25,5 @@ return {
       returns = {}
     }
   },
-  notes = 'The default clip distances are 0.1 and 100.0.'
+  notes = 'The default clip distances are 0.01 and 0.0.'
 }

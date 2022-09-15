@@ -6,6 +6,7 @@ return {
   ]],
   arguments = {
     angle = {
+      type = 'number',
       default = '0',
       description = 'An angle to use for the rotation, in radians.'
     },

@@ -41,7 +41,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'hex', 'alpha' },
+      arguments = { 'hex', 'a' },
       returns = {}
     }
   }

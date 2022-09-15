@@ -1,11 +1,14 @@
 return {
   tag = 'drawing',
   summary = 'Draw a sphere.',
-  description = 'TODO',
+  description = 'Draws a sphere',
   arguments = {
     transform = {
-      type = 'transform',
-      description = 'The transform to apply to the sphere.'
+      type = 'Mat4',
+      description = [[
+        The transform of the sphere.  Can also be provided as a position, radius, and rotation using
+        a mix of `Vectors and numbers.'
+      ]]
     },
     longitudes = {
       type = 'number',

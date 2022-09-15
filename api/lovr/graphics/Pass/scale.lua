@@ -20,6 +20,9 @@ return {
   related = {
     'Pass:translate',
     'Pass:rotate',
-    'Pass:transform'
+    'Pass:transform',
+    'Pass:origin',
+    'Pass:push',
+    'Pass:pop'
   }
 }

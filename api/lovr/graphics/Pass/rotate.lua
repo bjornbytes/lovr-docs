@@ -21,6 +21,9 @@ return {
   related = {
     'Pass:translate',
     'Pass:scale',
-    'Pass:transform'
+    'Pass:transform',
+    'Pass:origin',
+    'Pass:push',
+    'Pass:pop'
   }
 }

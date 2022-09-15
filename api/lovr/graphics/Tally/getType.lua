@@ -1,11 +1,14 @@
 return {
-  summary = 'TODO',
-  description = 'TODO',
+  summary = 'Get the type of the Tally.',
+  description = [[
+    Returns the type of the tally, which is the thing it measures between `Pass:tick` and
+    `Pass:tock`.
+  ]],
   arguments = {},
   returns = {
     type = {
       type = 'TallyType',
-      description = 'TODO'
+      description = 'The type of measurement.'
     }
   },
   variants = {
@@ -13,5 +16,8 @@ return {
       arguments = {},
       returns = { 'type' }
     }
+  },
+  related = {
+    'lovr.graphics.newTally'
   }
 }

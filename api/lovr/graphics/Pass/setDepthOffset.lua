@@ -1,7 +1,10 @@
 return {
   tag = 'pipeline',
   summary = 'Configure the depth offset.',
-  description = 'TODO',
+  description = [[
+    Set the depth offset.  This is a constant offset added to the depth value of pixels.  It can be
+    used to fix Z fighting when rendering decals or other nearly-overlapping objects.
+  ]],
   arguments = {
     offset = {
       type = 'number',
@@ -21,7 +24,7 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO',
+  notes = 'The default depth offset is zero for both values.',
   related = {
     'Pass:setDepthTest',
     'Pass:setDepthWrite'

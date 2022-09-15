@@ -1,7 +1,10 @@
 return {
   tag = 'pipeline',
   summary = 'Set whether draws write to the stencil buffer.',
-  description = 'TODO',
+  description = [[
+    Sets or disables stencil writes.  When stencil writes are enabled, any pixels drawn will update
+    the values in the stencil buffer using the `StencilAction` set.
+  ]],
   arguments = {
     action = {
       type = 'StencilAction',
@@ -41,7 +44,7 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO',
+  notes = 'By default, stencil writes are disabled.',
   related = {
     'Pass:setStencilTest',
     'Pass:setDepthTest'

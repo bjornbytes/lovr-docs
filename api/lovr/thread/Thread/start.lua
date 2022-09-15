@@ -14,9 +14,7 @@ return {
       returns = {}
     }
   },
-  notes = [[
-    TODO what type can the arguments be?
-  ]],
+  notes = 'The arguments can be nil, booleans, numbers, strings, or LÖVR objects.',
   example = [=[
     function lovr.load()
       lovr.thread.newThread([[

@@ -14,6 +14,8 @@ return {
     'Pass:translate',
     'Pass:rotate',
     'Pass:scale',
-    'Pass:transform'
+    'Pass:transform',
+    'Pass:push',
+    'Pass:pop'
   }
 }

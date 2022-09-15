@@ -1,7 +1,9 @@
 return {
   tag = 'pipeline',
-  summary = 'Set the scissor.',
-  description = 'TODO',
+  summary = 'Set the scissor rectangle.',
+  description = [[
+    Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.
+  ]],
   arguments = {
     x = {
       type = 'number',
@@ -28,7 +30,9 @@ return {
     }
   },
   notes = [[
-    TODO not floating point, negative, limits, not pipeline, initial pass state
+    `x` and `y` can not be negative.
+
+    The default scissor rectangle covers the entire region of the render pass textures.
   ]],
   related = {
     'Pass:setViewport'

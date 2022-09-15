@@ -8578,6 +8578,29 @@ return {
           }
         },
         {
+          name = "DrawStyle",
+          summary = "Different styles to draw shapes.",
+          description = "Whether a shape should be drawn filled or outlined.",
+          key = "DrawStyle",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "fill",
+              description = "The shape will be filled in (the default)."
+            },
+            {
+              name = "line",
+              description = "The shape will be outlined."
+            }
+          },
+          related = {
+            "Pass:plane",
+            "Pass:cube",
+            "Pass:box",
+            "Pass:circle"
+          }
+        },
+        {
           name = "FieldType",
           description = "Different types for `Buffer` fields.  These are scalar, vector, or matrix types, usually packed into small amounts of space to reduce the amount of memory they occupy.\n\nThe names are encoded as follows:\n\n- The data type:\n  - `i` for signed integer\n  - `u` for unsigned integer\n  - `sn` for signed normalized (-1 to 1)\n  - `un` for unsigned normalized (0 to 1)\n  - `f` for floating point\n- The bit depth of each component\n- The letter `x` followed by the component count (for vectors)",
           key = "FieldType",
@@ -8744,6 +8767,32 @@ return {
           }
         },
         {
+          name = "HorizontalAlign",
+          summary = "Different ways to horizontally align text.",
+          description = "Different ways to horizontally align text with `Pass:text`.",
+          key = "HorizontalAlign",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "left",
+              description = "Left-aligned text."
+            },
+            {
+              name = "center",
+              description = "Centered text."
+            },
+            {
+              name = "right",
+              description = "Right-aligned text."
+            }
+          },
+          related = {
+            "VerticalAlign",
+            "Pass:text",
+            "Font:getVertices"
+          }
+        },
+        {
           name = "MeshMode",
           summary = "Different ways to draw mesh vertices.",
           description = "Different ways vertices in a mesh can be connected together and filled in with pixels.",
@@ -8762,6 +8811,32 @@ return {
               name = "triangles",
               description = "Every 3 vertices form a triangle, which is filled in with pixels (unless `Pass:setWireframe` is used).  This mode is the most commonly used."
             }
+          }
+        },
+        {
+          name = "OriginType",
+          summary = "Different coordinate spaces for nodes in a Model.",
+          description = "Different coordinate spaces for nodes in a `Model`.",
+          key = "OriginType",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "root",
+              description = "Transforms are relative to the origin (root) of the Model."
+            },
+            {
+              name = "parent",
+              description = "Transforms are relative to the parent of the node."
+            }
+          },
+          related = {
+            "Model:getNodePosition",
+            "Model:getNodeOrientation",
+            "Model:getNodeScale",
+            "Model:getNodePose",
+            "Model:getNodeTransform",
+            "Model:getRootNode",
+            "Model:getNodeParent"
           }
         },
         {
@@ -8792,21 +8867,22 @@ return {
         },
         {
           name = "ShaderStage",
-          description = "TODO",
+          summary = "Different shader stages.",
+          description = "Different shader stages.  Graphics shaders have a `vertex` and `fragment` stage, and compute shaders have a single `compute` stage.",
           key = "ShaderStage",
           module = "lovr.graphics",
           values = {
             {
               name = "vertex",
-              description = "TODO"
+              description = "The vertex stage, which computes transformed vertex positions."
             },
             {
               name = "fragment",
-              description = "TODO"
+              description = "The fragment stage, which computes pixel colors."
             },
             {
               name = "compute",
-              description = "TODO"
+              description = "The compute stage, which performs arbitrary computation."
             }
           }
         },
@@ -8835,24 +8911,24 @@ return {
         {
           name = "StackType",
           summary = "Types of stacks that can be pushed and popped.",
-          description = "TODO",
+          description = "Different types of stacks that can be pushed and popped with `Pass:push` and `Pass:pop`.",
           key = "StackType",
           module = "lovr.graphics",
           values = {
             {
               name = "transform",
-              description = "TODO"
+              description = "The transform stack (`Pass:transform`, `Pass:translate`, etc.)."
             },
             {
               name = "state",
-              description = "TODO"
+              description = "Graphics state, like `Pass:setColor`, `Pass:setFont`, etc.  Notably this does not include camera poses/projections or shader variables changed with `Pass:send`."
             }
           }
         },
         {
           name = "TallyType",
           summary = "Different values a Tally can measure.",
-          description = "TODO",
+          description = "These are the different metrics a `Tally` can measure.",
           key = "TallyType",
           module = "lovr.graphics",
           values = {
@@ -8861,12 +8937,12 @@ return {
               description = "Each slot measures elapsed time in nanoseconds."
             },
             {
-              name = "pixel",
-              description = "Each slot measures the approximate number of pixels affected by rendering."
+              name = "shader",
+              description = "Each slot measures 4 numbers: the total number of vertices processed, the number of times the vertex shader was run, the number of triangles that were visible in the view, and the number of times the fragment shader was run."
             },
             {
-              name = "shader",
-              description = "Each slot measures the number of times different shader stages are invoked."
+              name = "pixel",
+              description = "Each slot measures the approximate number of pixels affected by rendering."
             }
           }
         },
@@ -8957,6 +9033,53 @@ return {
               name = "transfer",
               description = "Whether the texture can be used in a transfer pass."
             }
+          }
+        },
+        {
+          name = "VerticalAlign",
+          summary = "Different ways to vertically align text.",
+          description = "Different ways to vertically align text with `Pass:text`.",
+          key = "VerticalAlign",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "top",
+              description = "Top-aligned text."
+            },
+            {
+              name = "middle",
+              description = "Centered text."
+            },
+            {
+              name = "bottom",
+              description = "Bottom-aligned text."
+            }
+          },
+          related = {
+            "HorizontalAlign",
+            "Pass:text",
+            "Font:getVertices"
+          }
+        },
+        {
+          name = "Winding",
+          summary = "Different triangle windings.",
+          description = "Indicates whether the front face of a triangle uses the clockwise or counterclockwise vertex order.",
+          key = "Winding",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "clockwise",
+              description = "Clockwise winding."
+            },
+            {
+              name = "counterclockwise",
+              description = "Counterclockwise winding."
+            }
+          },
+          related = {
+            "Pass:setWinding",
+            "Pass:setCullMode"
           }
         },
         {
@@ -11042,12 +11165,10 @@ return {
           name = "submit",
           tag = "work-submission",
           summary = "Submit recorded graphics work to the GPU.",
-          description = "TODO",
+          description = "Submits work to the GPU.",
           key = "lovr.graphics.submit",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.wait"
-          },
+          notes = "The submitted `Pass` objects will run in the order specified.  Commands within a single Pass do not have any ordering guarantees.\n\nSubmitting work to the GPU is not thread safe.  No other `lovr.graphics` or `Pass` functions may run at the same time as `lovr.graphics.submit`.\n\nCalling this function will invalidate any temporary buffers or passes that were created during the frame.\n\nSubmitting work to the GPU is a relatively expensive operation.  It's a good idea to batch all `Pass` objects into 1 submission if possible, unless there's a good reason not to.  One such reason would be that the frame has so much work that some of it needs to be submitted early to prevent the GPU from running out of things to do.  Another would be for `Readback` objects.\n\nBy default, this function is called with the default pass at the end of `lovr.draw` and `lovr.mirror`.\n\nIt is valid to submit zero passes.  This will send an empty batch of work to the GPU.",
           variants = {
             {
               arguments = {
@@ -11081,6 +11202,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.wait"
           }
         },
         {
@@ -14087,8 +14211,8 @@ return {
                     },
                     {
                       name = "color",
-                      type = "Color",
-                      description = "The color to clear to."
+                      type = "Vec4",
+                      description = "The color to clear the texture to.  Can also be a `Vec3`, table of numbers, or a hexcode."
                     },
                     {
                       name = "layer",
@@ -15368,7 +15492,9 @@ return {
                 "Pass:translate",
                 "Pass:rotate",
                 "Pass:scale",
-                "Pass:transform"
+                "Pass:transform",
+                "Pass:push",
+                "Pass:pop"
               },
               variants = {
                 {
@@ -15509,7 +15635,7 @@ return {
               description = "Saves a copy of the transform or render states.  Further changes can be made to the transform or render states, and afterwards `Pass:pop` can be used to restore the original state.  Pushes and pops can be nested, but it's an error to pop without a corresponding push.",
               key = "Pass:push",
               module = "lovr.graphics",
-              notes = "Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4 render states saved.",
+              notes = "Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4 render states saved.\n\nThe `state` stack does not save the camera info or shader variables changed with `Pass:send`.",
               variants = {
                 {
                   arguments = {
@@ -15652,7 +15778,10 @@ return {
               related = {
                 "Pass:translate",
                 "Pass:scale",
-                "Pass:transform"
+                "Pass:transform",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
               },
               variants = {
                 {
@@ -15677,7 +15806,10 @@ return {
               related = {
                 "Pass:translate",
                 "Pass:rotate",
-                "Pass:transform"
+                "Pass:transform",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
               },
               variants = {
                 {
@@ -15820,6 +15952,7 @@ return {
               description = "Sets whether alpha to coverage is enabled.  Alpha to coverage factors the alpha of a pixel into antialiasing calculations.  It can be used to get antialiased edges on textures with transparency.  It's often used for foliage.",
               key = "Pass:setAlphaToCoverage",
               module = "lovr.graphics",
+              notes = "By default, alpha to coverage is disabled.",
               variants = {
                 {
                   arguments = {
@@ -15837,10 +15970,10 @@ return {
               name = "setBlendMode",
               tag = "pipeline",
               summary = "Set the blend mode.",
-              description = "Sets the blend mode.",
+              description = "Sets the blend mode.  When a pixel is drawn, the blend mode controls how it is mixed with the color and alpha of the pixel underneath it.",
               key = "Pass:setBlendMode",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The default blend mode is `alpha` with the `alphamultiply` alpha mode.",
               variants = {
                 {
                   arguments = {
@@ -15863,16 +15996,59 @@ return {
               name = "setColor",
               tag = "pipeline",
               summary = "Set the color.",
-              description = "TODO",
+              description = "Sets the color used for drawing.  Color components are from 0 to 1.",
               key = "Pass:setColor",
               module = "lovr.graphics",
+              notes = "The default color is `(1, 1, 1, 1)`.",
               variants = {
                 {
                   arguments = {
                     {
-                      name = "color",
-                      type = "Color",
-                      description = "The new color."
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the color."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the color."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the color."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the color.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      descriptioin = "A table of 3 or 4 color components."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "hex",
+                      type = "number",
+                      description = "A hexcode."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the color.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -15882,47 +16058,61 @@ return {
             {
               name = "setColorWrite",
               tag = "pipeline",
-              summary = "Change the color components affected by drawing.",
-              description = "TODO",
+              summary = "Change the color channels affected by drawing.",
+              description = "Sets the color channels affected by drawing, on a per-channel basis.  Disabling color writes is often used to render to the depth or stencil buffer without affecting existing pixel colors.",
               key = "Pass:setColorWrite",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "By default, color writes are enabled for all channels.",
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether all color components should be affected by draws."
+                    }
+                  },
+                  returns = {}
+                },
                 {
                   arguments = {
                     {
                       name = "r",
                       type = "boolean",
-                      description = "Whether the red component should be affected by drawing."
+                      description = "Whether the red component should be affected by draws."
                     },
                     {
                       name = "g",
                       type = "boolean",
-                      description = "Whether the green component should be affected by drawing."
+                      description = "Whether the green component should be affected by draws."
                     },
                     {
                       name = "b",
                       type = "boolean",
-                      description = "Whether the blue component should be affected by drawing."
+                      description = "Whether the blue component should be affected by draws."
                     },
                     {
                       name = "a",
                       type = "boolean",
-                      description = "Whether the alpha component should be affected by drawing."
+                      description = "Whether the alpha component should be affected by draws."
                     }
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:setDepthWrite",
+                "Pass:setStencilWrite"
               }
             },
             {
               name = "setCullMode",
               tag = "pipeline",
               summary = "Control triangle face culling.",
-              description = "TODO",
+              description = "Sets whether the front or back faces of triangles are culled.",
               key = "Pass:setCullMode",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The default cull mode is `none`.",
               variants = {
                 {
                   arguments = {
@@ -15944,10 +16134,10 @@ return {
               name = "setDepthClamp",
               tag = "pipeline",
               summary = "Enable or disable depth clamp.",
-              description = "TODO",
+              description = "Enables or disables depth clamp.  Normally, when pixels fall outside of the clipping planes, they are clipped (not rendered).  Depth clamp will instead render these pixels, clamping their depth on to the clipping planes.",
               key = "Pass:setDepthClamp",
               module = "lovr.graphics",
-              notes = "TODO depthClamp feature!",
+              notes = "This isn\\'t supported on all GPUs.  Use the `depthClamp` feature of `lovr.graphics.getFeatures` to check for support.  If depth clamp is enabled when unsupported, it will silently fall back to depth clipping.\n\nDepth clamping is not enabled by default.",
               variants = {
                 {
                   arguments = {
@@ -15970,10 +16160,10 @@ return {
               name = "setDepthOffset",
               tag = "pipeline",
               summary = "Configure the depth offset.",
-              description = "TODO",
+              description = "Set the depth offset.  This is a constant offset added to the depth value of pixels.  It can be used to fix Z fighting when rendering decals or other nearly-overlapping objects.",
               key = "Pass:setDepthOffset",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The default depth offset is zero for both values.",
               variants = {
                 {
                   arguments = {
@@ -16002,10 +16192,10 @@ return {
               name = "setDepthTest",
               tag = "pipeline",
               summary = "Configure the depth test.",
-              description = "TODO",
+              description = "Sets the depth test.",
               key = "Pass:setDepthTest",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "When using LÖVR's default projection (reverse Z with infinite far plane) the default depth test is `gequal`, depth values of 0.0 are on the far plane and depth values of 1.0 are on the near plane, closer to the camera.\n\nA depth buffer must be present to use the depth test, but this is enabled by default.",
               variants = {
                 {
                   arguments = {
@@ -16034,37 +16224,39 @@ return {
               name = "setDepthWrite",
               tag = "pipeline",
               summary = "Set whether draws write to the depth buffer.",
-              description = "TODO",
+              description = "Sets whether draws write to the depth buffer.  When a pixel is drawn, if depth writes are enabled and the pixel passes the depth test, the depth buffer will be updated with the pixel's depth value.",
               key = "Pass:setDepthWrite",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The default depth write is `true`.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "write",
                       type = "boolean",
-                      description = "The new depth write setting."
+                      description = "Whether the depth buffer should be affected by draws."
                     }
                   },
                   returns = {}
                 }
               },
               related = {
-                "Pass:setDepthTest",
                 "Pass:setStencilWrite",
-                "Pass:setColorWrite"
+                "Pass:setColorWrite",
+                "Pass:setDepthTest"
               }
             },
             {
               name = "setFont",
               tag = "pipeline",
-              summary = "Enable or disable depth clamp.",
-              description = "TODO",
+              summary = "Set the font.",
+              description = "Sets the font used for `Pass:text`.",
               key = "Pass:setFont",
               module = "lovr.graphics",
               related = {
-                "Pass:text"
+                "Pass:text",
+                "lovr.graphics.newFont",
+                "lovr.graphics.getDefaultFont"
               },
               variants = {
                 {
@@ -16083,7 +16275,7 @@ return {
               name = "setMaterial",
               tag = "pipeline",
               summary = "Set the material.",
-              description = "TODO",
+              description = "Sets the material.  This will apply to most drawing, except for text, skyboxes, and models, which use their own materials.",
               key = "Pass:setMaterial",
               module = "lovr.graphics",
               variants = {
@@ -16092,9 +16284,14 @@ return {
                     {
                       name = "material",
                       type = "Material",
-                      description = "TODO"
+                      description = "The material to use for drawing."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Use the default material.",
+                  arguments = {},
                   returns = {}
                 }
               }
@@ -16103,16 +16300,17 @@ return {
               name = "setMeshMode",
               tag = "pipeline",
               summary = "Change the way vertices are connected together.",
-              description = "TODO",
+              description = "Changes the way vertices are connected together when drawing using `Pass:mesh`.",
               key = "Pass:setMeshMode",
               module = "lovr.graphics",
+              notes = "The default mesh mode is `triangles`.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "mode",
                       type = "MeshMode",
-                      description = "TODO"
+                      description = "The mesh mode to use."
                     }
                   },
                   returns = {}
@@ -16197,30 +16395,47 @@ return {
               name = "setSampler",
               tag = "pipeline",
               summary = "Set the sampler.",
-              description = "TODO",
+              description = "Sets the default `Sampler` to use when sampling textures.  It is also possible to send a custom sampler to a shader using `Pass:send` and use that instead, which allows customizing the sampler on a per-texture basis.",
               key = "Pass:setSampler",
               module = "lovr.graphics",
+              notes = "The `getPixel` shader helper function will use this sampler.",
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "filter",
+                      type = "FilterMode",
+                      description = "The default filter mode to use when sampling textures (the `repeat` wrap mode will be used).",
+                      default = "'linear'"
+                    }
+                  },
+                  returns = {}
+                },
                 {
                   arguments = {
                     {
                       name = "sampler",
                       type = "Sampler",
-                      description = "TODO"
+                      description = "The default sampler shaders will use when reading from textures."
                     }
                   },
                   returns = {}
+                }
+              },
+              examples = {
+                {
+                  code = "function lovr.draw(pass)\n  pass:setSampler('nearest') -- activate minecraft mode\n  pass:setMaterial(rock)\n  pass:cube(x, y, z)\nend"
                 }
               }
             },
             {
               name = "setScissor",
               tag = "pipeline",
-              summary = "Set the scissor.",
-              description = "TODO",
+              summary = "Set the scissor rectangle.",
+              description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "TODO not floating point, negative, limits, not pipeline, initial pass state",
+              notes = "`x` and `y` can not be negative.\n\nThe default scissor rectangle covers the entire region of the render pass textures.",
               variants = {
                 {
                   arguments = {
@@ -16297,10 +16512,10 @@ return {
               name = "setStencilTest",
               tag = "pipeline",
               summary = "Configure the stencil test.",
-              description = "TODO",
+              description = "Sets the stencil test.  Any pixels that fail the stencil test won't be drawn.  For example, setting the stencil test to `('equal', 1)` will only draw pixels that have a stencil value of 1. The stencil buffer can be modified by drawing while stencil writes are enabled with `lovr.graphics.setStencilWrite`.",
               key = "Pass:setStencilTest",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The stencil test is disabled by default.",
               variants = {
                 {
                   arguments = {
@@ -16338,10 +16553,10 @@ return {
               name = "setStencilWrite",
               tag = "pipeline",
               summary = "Set whether draws write to the stencil buffer.",
-              description = "TODO",
+              description = "Sets or disables stencil writes.  When stencil writes are enabled, any pixels drawn will update the values in the stencil buffer using the `StencilAction` set.",
               key = "Pass:setStencilWrite",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "By default, stencil writes are disabled.",
               variants = {
                 {
                   arguments = {
@@ -16534,10 +16749,10 @@ return {
               name = "setWinding",
               tag = "pipeline",
               summary = "Set the winding direction of triangle vertices.",
-              description = "TODO",
+              description = "Sets whether vertices in the clockwise or counterclockwise order vertices are considered the \"front\" face of a triangle.  This is used for culling with `Pass:setCullMode`.",
               key = "Pass:setWinding",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The default winding is counterclockwise.  LÖVR's builtin shapes are wound counterclockwise.",
               variants = {
                 {
                   arguments = {
@@ -16604,7 +16819,7 @@ return {
               name = "sphere",
               tag = "drawing",
               summary = "Draw a sphere.",
-              description = "TODO",
+              description = "Draws a sphere",
               key = "Pass:sphere",
               module = "lovr.graphics",
               notes = "TODO",
@@ -16613,8 +16828,8 @@ return {
                   arguments = {
                     {
                       name = "transform",
-                      type = "transform",
-                      description = "The transform to apply to the sphere."
+                      type = "Mat4",
+                      description = "The transform of the sphere.  Can also be provided as a position, radius, and rotation using a mix of `Vectors and numbers.'"
                     },
                     {
                       name = "longitudes",
@@ -16716,47 +16931,58 @@ return {
             {
               name = "tick",
               tag = "tallies",
-              summary = "Begin measuring GPU counters.",
-              description = "TODO",
+              summary = "Start a GPU measurement.",
+              description = "Starts a GPU measurement.  One of the slots in a `Tally` object will be used to hold the result. Commands on the Pass will continue being measured until `Pass:tock` is called with the same tally and slot combination.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be copied to a `Buffer.",
               key = "Pass:tick",
               module = "lovr.graphics",
+              notes = "`pixel` and `shader` measurements can not be nested, but `time` measurements can be nested.\n\nFor `time` measurements, the view count of the pass (`Pass:getViewCount`) must match the view count of the tally, which defaults to `2`.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "tally",
                       type = "Tally",
-                      description = "TODO"
+                      description = "The tally that will store the measurement."
                     },
                     {
-                      name = "index",
+                      name = "slot",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of the slot in the tally to store the measurement in."
                     }
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:tock",
+                "TallyType",
+                "Pass:read"
               }
             },
             {
               name = "tock",
               tag = "tallies",
-              summary = "Stop measuring GPU counters.",
-              description = "TODO",
+              summary = "Stop a GPU measurement.",
+              description = "Stops a GPU measurement.  `Pass:tick` must be called to start the measurement before this can be called.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be copied to a `Buffer.",
               key = "Pass:tock",
               module = "lovr.graphics",
+              related = {
+                "Pass:tick",
+                "TallyType",
+                "Pass:read"
+              },
               variants = {
                 {
                   arguments = {
                     {
                       name = "tally",
                       type = "Tally",
-                      description = "TODO"
+                      description = "The tally storing the measurement."
                     },
                     {
-                      name = "index",
+                      name = "slot",
                       type = "number",
-                      description = "TODO"
+                      description = "The index of the slot in the tally storing the measurement."
                     }
                   },
                   returns = {}
@@ -16767,17 +16993,17 @@ return {
               name = "torus",
               tag = "drawing",
               summary = "Draw a donut.",
-              description = "TODO",
+              description = "Draws a torus.",
               key = "Pass:torus",
               module = "lovr.graphics",
-              notes = "TODO",
+              notes = "The local origin is in the center of the torus, and the torus forms a circle around the local Z axis.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "transform",
-                      type = "TransformXY2",
-                      description = "The transform to apply to the torus.  The x scale is the radius, the z scale is the thickness."
+                      type = "Mat4",
+                      description = "The transform of the torus.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the thickness.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the thickness."
                     },
                     {
                       name = "tsegments",
@@ -16800,98 +17026,35 @@ return {
               name = "transform",
               tag = "transform",
               summary = "Apply a general transform to the coordinate system.",
-              description = "TODO",
+              description = "Transforms the coordinate system.",
               key = "Pass:transform",
               module = "lovr.graphics",
-              notes = "TODO you can use combos of numbers/vectors/quats too (or use meta Transform type to explain)",
+              related = {
+                "Pass:translate",
+                "Pass:rotate",
+                "Pass:scale",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
+              },
               variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians to rotate around the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
                 {
                   arguments = {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The matrix holding the transform to apply."
+                      description = "A matrix containing the transformation to apply to the coordinate system.  Can also be provided as a position, 3-component scale, and rotation, using a mix of `Vectors` or numbers."
                     }
                   },
                   returns = {}
                 }
-              },
-              related = {
-                "Pass:translate",
-                "Pass:rotate",
-                "Pass:scale"
               }
             },
             {
               name = "translate",
               tag = "transform",
               summary = "Translate the coordinate system.",
-              description = "TODO",
+              description = "Translates the coordinate system.",
               key = "Pass:translate",
               module = "lovr.graphics",
               notes = "Order matters when scaling, translating, and rotating the coordinate system.",
@@ -16899,32 +17062,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "x",
-                      type = "number",
-                      description = "The amount to translate on the x axis.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The amount to translate on the y axis.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The amount to translate on the z axis.",
-                      default = "0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v",
+                      name = "translation",
                       type = "Vec3",
-                      description = "A vector to translate by."
+                      description = "The translation to apply to the coordinate system.  Can also be provided as 3 numbers."
                     }
                   },
                   returns = {}
@@ -16933,7 +17073,10 @@ return {
               related = {
                 "Pass:rotate",
                 "Pass:scale",
-                "Pass:transform"
+                "Pass:transform",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
               }
             }
           },
@@ -17275,7 +17418,7 @@ return {
             {
               name = "clone",
               summary = "Clone a Shader.",
-              description = "TODO",
+              description = "Clones a shader.  This creates an inexpensive copy of it with different flags.  It can be used to create several variants of a shader with different behavior.",
               key = "Shader:clone",
               module = "lovr.graphics",
               variants = {
@@ -17289,7 +17432,7 @@ return {
                     {
                       name = "flags",
                       type = "table",
-                      description = "TODO"
+                      description = "The flags used by the clone."
                     }
                   },
                   returns = {
@@ -17305,11 +17448,12 @@ return {
             {
               name = "getType",
               summary = "Get the type of the Shader.",
-              description = "TODO",
+              description = "Returns whether the shader is a graphics or compute shader.",
               key = "Shader:getType",
               module = "lovr.graphics",
               related = {
-                "Shader:hasStage"
+                "Shader:hasStage",
+                "lovr.graphics.newShader"
               },
               variants = {
                 {
@@ -17462,10 +17606,13 @@ return {
             },
             {
               name = "getType",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Get the type of the Tally.",
+              description = "Returns the type of the tally, which is the thing it measures between `Pass:tick` and `Pass:tock`.",
               key = "Tally:getType",
               module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newTally"
+              },
               variants = {
                 {
                   arguments = {},
@@ -17473,7 +17620,7 @@ return {
                     {
                       name = "type",
                       type = "TallyType",
-                      description = "TODO"
+                      description = "The type of measurement."
                     }
                   }
                 }
@@ -18325,7 +18472,7 @@ return {
                 {
                   name = "far",
                   type = "number",
-                  description = "The distance to the far clipping plane, in meters, or 0 for an infinite far clipping plane."
+                  description = "The distance to the far clipping plane, in meters, or 0 for an infinite far clipping plane with a reversed Z range."
                 }
               }
             }
@@ -19241,7 +19388,7 @@ return {
           description = "Sets the near and far clipping planes used to render to the headset.  Objects closer than the near clipping plane or further than the far clipping plane will be clipped out of view.",
           key = "lovr.headset.setClipDistance",
           module = "lovr.headset",
-          notes = "The default clip distances are 0.1 and 100.0.",
+          notes = "The default clip distances are 0.01 and 0.0.",
           variants = {
             {
               arguments = {
@@ -19253,7 +19400,7 @@ return {
                 {
                   name = "far",
                   type = "number",
-                  description = "The distance to the far clipping plane, in meters."
+                  description = "The distance to the far clipping plane, in meters, or 0 for an infinite far clipping plane with a reversed Z range."
                 }
               },
               returns = {}
@@ -20004,6 +20151,7 @@ return {
               arguments = {
                 {
                   name = "angle",
+                  type = "number",
                   description = "An angle to use for the rotation, in radians.",
                   default = "0"
                 },
@@ -20499,6 +20647,7 @@ return {
               arguments = {
                 {
                   name = "angle",
+                  type = "number",
                   description = "An angle to use for the rotation, in radians.",
                   default = "0"
                 },
@@ -21529,7 +21678,7 @@ return {
             {
               name = "orthographic",
               summary = "Turn the matrix into an orthographic projection.",
-              description = "Sets this matrix to represent an orthographic projection, useful for 2D/isometric rendering.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
+              description = "Sets this matrix to represent an orthographic projection, useful for 2D/isometric rendering.\n\nThis can be used with `Pass:setProjection`, or it can be sent to a `Shader` for use in GLSL.",
               key = "Mat4:orthographic",
               module = "lovr.math",
               related = {
@@ -21551,14 +21700,45 @@ return {
                       description = "The right edge of the projection."
                     },
                     {
+                      name = "bottom",
+                      type = "number",
+                      description = "The bottom edge of the projection."
+                    },
+                    {
                       name = "top",
                       type = "number",
                       description = "The top edge of the projection."
                     },
                     {
-                      name = "bottom",
+                      name = "near",
                       type = "number",
-                      description = "The bottom edge of the projection."
+                      description = "The position of the near clipping plane."
+                    },
+                    {
+                      name = "far",
+                      type = "number",
+                      description = "The position of the far clipping plane."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The original matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the projection."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the projection."
                     },
                     {
                       name = "near",
@@ -21584,7 +21764,7 @@ return {
             {
               name = "perspective",
               summary = "Turn the matrix into a perspective projection.",
-              description = "Sets this matrix to represent a perspective projection.\n\nThis can be used with `lovr.graphics.setProjection`, or it can be sent to a `Shader` for use in GLSL.",
+              description = "Sets this matrix to represent a perspective projection.\n\nThis can be used with `Pass:setProjection`, or it can be sent to a `Shader` for use in GLSL.",
               key = "Mat4:perspective",
               module = "lovr.math",
               related = {
@@ -21596,16 +21776,6 @@ return {
                 {
                   arguments = {
                     {
-                      name = "near",
-                      type = "number",
-                      description = "The near plane."
-                    },
-                    {
-                      name = "far",
-                      type = "number",
-                      description = "The far plane."
-                    },
-                    {
                       name = "fov",
                       type = "number",
                       description = "The vertical field of view (in radians)."
@@ -21614,6 +21784,16 @@ return {
                       name = "aspect",
                       type = "number",
                       description = "The horizontal aspect ratio of the projection (width / height)."
+                    },
+                    {
+                      name = "near",
+                      type = "number",
+                      description = "The near plane."
+                    },
+                    {
+                      name = "far",
+                      type = "number",
+                      description = "The far plane."
                     }
                   },
                   returns = {
@@ -22205,6 +22385,7 @@ return {
                   arguments = {
                     {
                       name = "angle",
+                      type = "number",
                       description = "The angle to use for the rotation, in radians.",
                       default = "0"
                     },
@@ -30683,7 +30864,7 @@ return {
               description = "Starts the Thread.",
               key = "Thread:start",
               module = "lovr.thread",
-              notes = "TODO what type can the arguments be?",
+              notes = "The arguments can be nil, booleans, numbers, strings, or LÖVR objects.",
               variants = {
                 {
                   arguments = {

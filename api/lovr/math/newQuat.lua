@@ -4,6 +4,7 @@ return {
   description = 'Creates a new quaternion.  This function takes the same arguments as `Quat:set`.',
   arguments = {
     angle = {
+      type = 'number',
       default = '0',
       description = 'An angle to use for the rotation, in radians.'
     },

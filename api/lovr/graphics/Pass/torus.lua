@@ -1,13 +1,15 @@
 return {
   tag = 'drawing',
   summary = 'Draw a donut.',
-  description = 'TODO',
+  description = 'Draws a torus.',
   arguments = {
     transform = {
-      type = 'TransformXY2',
+      type = 'Mat4',
       description = [[
-        The transform to apply to the torus.  The x scale is the radius, the z scale is the
-        thickness.
+        The transform of the torus.  Can also be provided as position, scale, and rotation using a
+        mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one
+        for the radius and one for the thickness.  When using a matrix or a vector for the scale,
+        the X and Y components are the radius and the Z component is the thickness.
       ]]
     },
     tsegments = {
@@ -28,5 +30,8 @@ return {
       returns = {}
     }
   },
-  notes = 'TODO'
+  notes = [[
+    The local origin is in the center of the torus, and the torus forms a circle around the local Z
+    axis.
+  ]]
 }

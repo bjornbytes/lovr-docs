@@ -1,6 +1,9 @@
 return {
   summary = 'Clone a Shader.',
-  description = 'TODO',
+  description = [[
+    Clones a shader.  This creates an inexpensive copy of it with different flags.  It can be used
+    to create several variants of a shader with different behavior.
+  ]],
   arguments = {
     source = {
       type = 'Shader',
@@ -8,7 +11,7 @@ return {
     },
     flags = {
       type = 'table',
-      description = 'TODO'
+      description = 'The flags used by the clone.'
     }
   },
   returns = {

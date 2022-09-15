@@ -1,36 +1,19 @@
 return {
   tag = 'transform',
   summary = 'Translate the coordinate system.',
-  description = 'TODO',
+  description = 'Translates the coordinate system.',
   arguments = {
-    x = {
-      type = 'number',
-      default = '0',
-      description = 'The amount to translate on the x axis.'
-    },
-    y = {
-      type = 'number',
-      default = '0',
-      description = 'The amount to translate on the y axis.'
-    },
-    z = {
-      type = 'number',
-      default = '0',
-      description = 'The amount to translate on the z axis.'
-    },
-    v = {
+    translation = {
       type = 'Vec3',
-      description = 'A vector to translate by.'
+      description = [[
+        The translation to apply to the coordinate system.  Can also be provided as 3 numbers.
+      ]]
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'z' },
-      returns = {}
-    },
-    {
-      arguments = { 'v' },
+      arguments = { 'translation' },
       returns = {}
     }
   },
@@ -38,6 +21,9 @@ return {
   related = {
     'Pass:rotate',
     'Pass:scale',
-    'Pass:transform'
+    'Pass:transform',
+    'Pass:origin',
+    'Pass:push',
+    'Pass:pop'
   }
 }

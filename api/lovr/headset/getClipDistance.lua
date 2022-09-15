@@ -14,7 +14,8 @@ return {
     far = {
       type = 'number',
       description = [[
-        The distance to the far clipping plane, in meters, or 0 for an infinite far clipping plane.
+        The distance to the far clipping plane, in meters, or 0 for an infinite far clipping plane
+        with a reversed Z range.
       ]]
     }
   },
