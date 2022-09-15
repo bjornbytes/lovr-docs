@@ -15,7 +15,7 @@ function lovr.load()
 end
 ```
 
-Also see the `Plugins` page for a list of useful plugins.
+Also see the <a data-key="Plugins">Plugins</a> page for a list of useful plugins.
 
 List of Libraries
 ---
