@@ -6,11 +6,6 @@ local ffi = require 'ffi'
 function lovr.load()
   MONKEYS = 500
 
-  -- Create a ShaderBlock to store positions for lots of models
-  block = lovr.graphics.newShaderBlock('uniform', {
-    modelTransforms = { 'mat4', MONKEYS }
-  }, { usage = 'static' })
-
   -- Write some random transforms to the block
   local transformBlob = lovr.data.newBlob(4*16*MONKEYS, "transformBlob")
   local pointer = ffi.cast("float*",transformBlob:getPointer())
@@ -25,34 +20,26 @@ function lovr.load()
       pointer[(i-1)*16 + (i2-1)] = v
     end
   end
-  block:send(transformBlob)
 
-  -- Create the shader, injecting the shader code for the block
-  shader = lovr.graphics.newShader(
-    block:getShaderCode('ModelBlock') .. [[
-    out vec3 vNormal;
-    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-      vNormal = lovrNormal;
-      return projection * transform * modelTransforms[lovrInstanceID] * vertex;
-    }
-  ]], [[
-    in vec3 vNormal;
-    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
-      return vec4(vNormal * .5 + .5, 1.);
-    }
-  ]])
+  -- Create a Buffer to store positions for lots of models
+  buffer = lovr.graphics.newBuffer(transformBlob, 'mat4')
 
-  -- Bind the block to the shader
-  shader:sendBlock('ModelBlock', block)
+  shader = lovr.graphics.newShader([[
+    layout(set = 2, binding = 0) uniform TransformBuffer { mat4 transforms[500]; };
+
+    vec4 lovrmain() {
+      return Projection * View * Transform * transforms[InstanceIndex] * VertexPosition;
+    }
+  ]], 'normal')
 
   model = lovr.graphics.newModel('monkey.obj')
-  lovr.graphics.setCullingEnabled(true)
-  lovr.graphics.setBlendMode(nil)
 end
 
--- Draw many copies of the model using instancing, with transforms from the shader block
-function lovr.draw()
-  lovr.graphics.setShader(shader)
-  model:draw(mat4(), MONKEYS)
-  lovr.graphics.setShader()
+-- Draw many copies of the model using instancing, with transforms from the buffer
+function lovr.draw(pass)
+  pass:setShader(shader)
+  pass:setCullMode('back')
+  pass:setBlendMode(nil)
+  pass:send('TransformBuffer', buffer)
+  pass:draw(model, mat4(), nil, nil, MONKEYS)
 end
