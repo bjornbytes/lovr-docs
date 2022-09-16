@@ -1,31 +1,25 @@
 function lovr.load()
   -- shadow shader
-  shadowVertex = [[
-    out vec3 fragPos;
-
-    vec4 position(mat4 projection, mat4 transform, vec4 vertex) {
-      fragPos = vec3(lovrModel * vertex);
-      return projection * transform * vertex;
-    }
-  ]]
+  shadowVertex = 'unlit'
   shadowFragment = [[
-    in vec3 fragPos;
-    uniform vec4 left;
-    uniform vec4 right;
-    uniform vec4 head;
+    Constants {
+      vec4 left;
+      vec4 right;
+      vec4 head;
+    };
 
-    vec4 color(vec4 graphicsColor, sampler2D image, vec2 uv) {
+    vec4 lovrmain() {
       vec4 shadowColor;
-      if (                                       // w is radius
-        (length( left.xz - fragPos.xz) <  left.w   &&    left.y > fragPos.y) ||
-        (length(right.xz - fragPos.xz) < right.w   &&   right.y > fragPos.y) ||
-        (length( head.xz - fragPos.xz) <  head.w   &&    head.y > fragPos.y)
+      if (
+        (length( left.xz - PositionWorld.xz) <  left.w   &&    left.y > PositionWorld.y) ||
+        (length(right.xz - PositionWorld.xz) < right.w   &&   right.y > PositionWorld.y) ||
+        (length( head.xz - PositionWorld.xz) <  head.w   &&    head.y > PositionWorld.y)
       ) {
         shadowColor = vec4(.25, .625, 1, 1);
       } else {
         shadowColor = vec4(1, 1, 1, 1);
       }
-      return shadowColor * graphicsColor * lovrDiffuseColor * vertexColor * texture(image, uv);
+      return shadowColor * Color * getPixel(ColorTexture, UV);
     }
   ]]
   shadowShader = lovr.graphics.newShader(shadowVertex, shadowFragment)
@@ -43,8 +37,6 @@ function lovr.load()
     end
   end
   grassTexture = lovr.graphics.newTexture(grassImage)
-  grassTexture:setFilter('nearest')
-  grassMaterial = lovr.graphics.newMaterial(grassTexture)
 
   -- boxes
   boxes = {}
@@ -61,38 +53,44 @@ function lovr.load()
       b      = lovr.math.random()
     })
   end
+
+  -- sky
+  lovr.graphics.setBackgroundColor(0,.5,1)
 end
 
 function lovr.update()
   left = vec3(lovr.headset.getPosition('left'))
   right = vec3(lovr.headset.getPosition('right'))
   head = vec3(mat4(lovr.headset.getPose('head')):translate(0, -.1, -.1))
-
-  shadowShader:send('left',  { left.x,  left.y,  left.z, .05}) -- x, y, z, radius
-  shadowShader:send('right', {right.x, right.y, right.z, .05})
-  shadowShader:send('head',  { head.x,  head.y,  head.z, .1 })
 end
 
-function lovr.draw()
-  -- sky
-  lovr.graphics.setBackgroundColor(0,.5,1)
+function lovr.draw(pass)
 
   -- grass
-  lovr.graphics.setColor(1, 1, 1)
-  lovr.graphics.setShader(shadowShader)
-  lovr.graphics.box(grassMaterial, 0, 0, 0, 10, 1, 10)
-  lovr.graphics.setShader()
+  pass:setShader(shadowShader)
+  pass:send('left',  { left.x,  left.y,  left.z, .05}) -- x, y, z, radius
+  pass:send('right', {right.x, right.y, right.z, .05})
+  pass:send('head',  { head.x,  head.y,  head.z, .1 })
+  pass:setMaterial(grassTexture)
+  pass:setSampler('nearest')
+  pass:box(0, 0, 0, 10, 1, 10)
+  pass:setMaterial()
+  pass:setSampler()
+  pass:setShader()
 
   -- boxes
-  lovr.graphics.setShader(shadowShader)
+  pass:setShader(shadowShader)
+  pass:send('left',  { left.x,  left.y,  left.z, .05}) -- x, y, z, radius
+  pass:send('right', {right.x, right.y, right.z, .05})
+  pass:send('head',  { head.x,  head.y,  head.z, .1 })
   for _, box in pairs(boxes) do
-    lovr.graphics.setColor(box.r, box.g, box.b)
-    lovr.graphics.box('fill', box.x, box.y, box.z, box.width, box.height, box.depth)
+    pass:setColor(box.r, box.g, box.b)
+    pass:box(box.x, box.y, box.z, box.width, box.height, box.depth)
   end
-  lovr.graphics.setShader()
+  pass:setShader()
 
   -- hands
-  lovr.graphics.setColor(.9, .7, .1)
-  lovr.graphics.sphere(vec3(lovr.headset.getPosition('left')), .05)
-  lovr.graphics.sphere(vec3(lovr.headset.getPosition('right')), .05)
+  pass:setColor(.9, .7, .1)
+  pass:sphere(vec3(lovr.headset.getPosition('left')), .05)
+  pass:sphere(vec3(lovr.headset.getPosition('right')), .05)
 end

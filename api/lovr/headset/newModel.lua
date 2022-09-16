@@ -40,13 +40,13 @@ return {
   example = [[
     local models = {}
 
-    function lovr.draw()
+    function lovr.draw(pass)
       for i, hand in ipairs(lovr.headset.getHands()) do
         models[hand] = models[hand] or lovr.headset.newModel(hand)
 
         if models[hand] then
           local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)
-          models[hand]:draw(x, y, z, 1, angle, ax, ay, az)
+          pass:draw(models[hand], x, y, z, 1, angle, ax, ay, az)
         end
       end
     end
