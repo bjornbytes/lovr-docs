@@ -114,26 +114,27 @@ Constants are declared in shader code in a `Constants` block, then individual co
 from Lua using `Pass:send`:
 
     function lovr.load()
-      shader = lovr.graphics.newShader([[
+      shader = lovr.graphics.newShader('unlit', [[
         Constants {
-          vec4 offset;
+          vec4 color1;
+          vec4 color2;
         };
 
+        // Apply a vertical gradient using the 2 colors from the constants:
+
         vec4 lovrmain() {
-          return Projection * View * Transform * (VertexPosition + offset);
+          return mix(color1, color2, dot(Normal, vec3(0, 1, 0)) * .5 + .5);
         }
-      ]], 'normal')
+      ]])
     end
 
     function lovr.draw(pass)
       pass:setShader(shader)
-      pass:send('offset', vec4(
-        math.sin(lovr.headset.getTime() * 2),
-        math.cos(lovr.headset.getTime() * 1),
-        math.sin(lovr.headset.getTime() * .7),
-        0
-      ))
-      pass:sphere(0, 1.7, -5)
+
+      pass:send('color1', { 1, 0, 1, 1 })
+      pass:send('color2', { 0, 1, 1, 1 })
+
+      pass:sphere(0, 1.7, -2)
     end
 
 The vertex and fragment stages share the constants block, so they should match or one should be a
