@@ -1,7 +1,7 @@
 return {
   summary = 'Set the pixel density of the Font.',
   description = [[
-    Returns the pixel density of the font.  The density is a "pixels per world unit" factor that
+    Sets the pixel density of the font.  The density is a "pixels per world unit" factor that
     controls how the pixels in the font's texture are mapped to units in the coordinate space.
 
     The default pixel density is set to the height of the font.  This means that lines of text
