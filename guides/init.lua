@@ -4,6 +4,7 @@ return {
   'Callbacks_and_Modules',
   'Simple_Lighting',
   'Vectors',
+  'Shaders',
   'Libraries',
   'Plugins',
   'Distribution',
