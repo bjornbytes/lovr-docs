@@ -20,8 +20,8 @@ return {
 
     There are 2 types of shaders, given by `ShaderType`:
 
-    - `graphics` shaders are used for rendering to compute vertex positions and pixel colors.
-    - `compute` shaders run in compute passes and can perform arbitrary GPU computation.
+    - `graphics` shaders are used for rendering.  They compute vertex positions and pixel colors.
+    - `compute` shaders run in compute passes.  They can perform arbitrary GPU computation.
 
     Shaders have one or more "stages", which are basically functions, given by `ShaderStage`:
 
