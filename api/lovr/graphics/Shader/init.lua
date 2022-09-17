@@ -72,9 +72,9 @@ return {
           return DefaultColor;
         }
 
-    The default pixel color is calculated by multiplying the `Color` from the vertex shader (which
-    includes the vertex color, material color, and pass color) with the pixel sampled from the main
-    color texture.
+    The default pixel color is calculated by multiplying the `Color` from the vertex stage (which
+    includes the vertex color, material color, and pass color) with a pixel sampled from the color
+    texture.
 
     Compute shaders implement the `void lovrmain()` function, and don't return anything.
 
