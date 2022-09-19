@@ -157,27 +157,27 @@ the following default vertex attributes for shapes and meshes:
   <tbody>
     <tr>
       <td>VertexPosition</td>
-      <td>`vec4`</td>
+      <td>vec4</td>
       <td>10</td>
     </tr>
     <tr>
       <td>VertexNormal</td>
-      <td>`vec3`</td>
+      <td>vec3</td>
       <td>11</td>
     </tr>
     <tr>
       <td>VertexUV</td>
-      <td>`vec2`</td>
+      <td>vec2</td>
       <td>12</td>
     </tr>
     <tr>
       <td>VertexColor</td>
-      <td>`vec4`</td>
+      <td>vec4</td>
       <td>13</td>
     </tr>
     <tr>
       <td>VertexTangent</td>
-      <td>`vec4`</td>
+      <td>vec3</td>
       <td>14</td>
     </tr>
   </tbody>
