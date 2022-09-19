@@ -142,6 +142,63 @@ subset of the other.
 
 ### Vertex Attributes
 
+Vertex attributes are the data for each vertex of a mesh.  They should be used for data that varies
+on a per-vertex basis.  Attributes have a name, a type, and a location (an integer ID).  LÖVR uses
+the following default vertex attributes for shapes and meshes:
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Location</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>VertexPosition</td>
+      <td>`vec4`</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>VertexNormal</td>
+      <td>`vec3`</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>VertexUV</td>
+      <td>`vec2`</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td>VertexColor</td>
+      <td>`vec4`</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <td>VertexTangent</td>
+      <td>`vec4`</td>
+      <td>14</td>
+    </tr>
+  </tbody>
+</table>
+
+Custom vertex attributes can be declared for locations 0 through 9:
+
+    layout(location = 3) in vec3 customAttribute;
+
+The data in a buffer can then be associated with the attribute, either by name:
+
+    vertices = lovr.graphics.newBuffer(vertexCount, {
+      { type = 'vec3', name = 'customAttribute' }
+    })
+
+Or by location:
+
+    vertices = lovr.graphics.newBuffer(vertexCount, {
+      { type = 'vec3', location = 3 }
+    })
+
 ### Objects
 
 - syntax
