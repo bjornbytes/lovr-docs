@@ -2,7 +2,7 @@
 --
 -- Sample contributed by andi mcc
 
-local useCanvas = true -- Set this to false to see the scene with no postprocessing.
+local applyBlur = true -- Set this to false to see the scene with no postprocessing.
 
 -- For the fragment shader: We are going to create a separable gaussian blur.
 -- A "separable" blur means we first blur horizontally, then blur vertically to get a 2D blur.
@@ -24,18 +24,18 @@ local blurShader = [[
     vec2 direction;
   };
 
-  // The Canvas texture to sample from.
-  layout(set = 2, binding = 0) uniform texture2DArray canvas;
+  // The texture to sample from.
+  layout(set = 2, binding = 0) uniform texture2DArray sourceTexture;
 
   // lovr's shader architecture will automatically supply a main(), which will call this lovrmain() function
   vec4 lovrmain() {
     vec2 uvOffset = direction / Resolution.xy; // Convert the offset from pixels to UVs
     vec4 color = vec4(0.0);
-    color += getPixel(canvas, UV, ViewIndex) * WEIGHT0;
-    color += getPixel(canvas, UV + uvOffset * OFFSET1, ViewIndex) * WEIGHT1;
-    color += getPixel(canvas, UV - uvOffset * OFFSET1, ViewIndex) * WEIGHT1;
-    color += getPixel(canvas, UV + uvOffset * OFFSET2, ViewIndex) * WEIGHT2;
-    color += getPixel(canvas, UV - uvOffset * OFFSET2, ViewIndex) * WEIGHT2;
+    color += getPixel(sourceTexture, UV, ViewIndex) * WEIGHT0;
+    color += getPixel(sourceTexture, UV + uvOffset * OFFSET1, ViewIndex) * WEIGHT1;
+    color += getPixel(sourceTexture, UV - uvOffset * OFFSET1, ViewIndex) * WEIGHT1;
+    color += getPixel(sourceTexture, UV + uvOffset * OFFSET2, ViewIndex) * WEIGHT2;
+    color += getPixel(sourceTexture, UV - uvOffset * OFFSET2, ViewIndex) * WEIGHT2;
     return color;
   }
 ]]
@@ -46,8 +46,8 @@ local screenShader
 -- Image of an eyechart
 local eyechart
 
--- This table will contain two canvases we will use as scratch space
-local tempCanvas
+-- This table will contain two textures we will use as scratch space
+local tempTexture
 
 function lovr.load()
   -- Load the eyechart image
@@ -62,23 +62,25 @@ function lovr.load()
     texture = texture
   }
 
-  -- Configure the shader
-  if useCanvas then
+  -- Configure the objects needed for the blur
+  if applyBlur then
     local width, height = lovr.headset.getDisplayDimensions()
+    local layers = lovr.headset.getViewCount()
 
     -- Compile the shader
     screenShader = lovr.graphics.newShader('fill', blurShader)
 
-    -- Create two temporary canvases
-    tempCanvas = {
-      lovr.graphics.newCanvas(width, height),
-      lovr.graphics.newCanvas(width, height)
+    -- Create two temporary textures
+    tempTexture = {
+      lovr.graphics.newTexture(width, height, layers, { mipmaps = false }),
+      lovr.graphics.newTexture(width, height, layers, { mipmaps = false })
     }
   end
 end
 
 -- The scene is drawn in this callback
 local function sceneDraw(pass)
+
   -- Draw text on the left and right
   for _, sign in ipairs { -1, 1 } do
     pass:push()
@@ -87,53 +89,64 @@ local function sceneDraw(pass)
     pass:pop()
   end
 
+  -- Draw the eye chart
   pass:setMaterial(eyechart.texture)
   pass:plane(0, 1.7, -1, eyechart.scale, eyechart.scale * eyechart.aspect)
-  pass:setMaterial()
 end
 
--- This simple callback is used to draw one canvas onto another
-local function fullScreenDraw(pass, source)
-  screenShader:send('canvas', source:getTexture())
+-- This simple function is used to render a render pass that
+-- draws one texture onto another with the blur shader
+local function fullScreenDraw(source, destination, blurSize)
+  local pass = lovr.graphics.getPass('render', { destination, depth = false, samples = 1 })
+  pass:setShader(screenShader)
+  pass:send('sourceTexture', source)
+  pass:send('direction', blurSize)
   pass:fill()
+  return pass
 end
 
 function lovr.draw(pass)
-  if not useCanvas then
+  if not applyBlur then
 
     -- No-postprocessing path: Call scene-draw callback without doing anything fancy
     sceneDraw(pass)
 
   else
+    local passes = {}
 
-    -- Start by drawing the scene to one of our temp canvases.
-    tempCanvas[1]:renderTo(sceneDraw)
-    tempCanvas[2]:renderTo(function() lovr.graphics.clear() end)
+    -- Start by drawing the scene to one of our temp textures.
+    local scene = lovr.graphics.getPass('render', tempTexture[1])
 
-    -- We now have the scene in a texture (a canvas), which means we can apply a full-screen effect
-    -- by rendering the texture with a shader material. However, because our blur is separable,
+    -- Make the scene pass use the same cameras as the headset
+    for i = 1, pass:getViewCount() do
+      scene:setViewPose(i, pass:getViewPose(i))
+      scene:setProjection(i, pass:getProjection(i, mat4()))
+    end
+
+    sceneDraw(scene)
+
+    table.insert(passes, scene)
+
+    -- We now have the scene in a texture, which means we can apply a full-screen effect by
+    -- rendering the texture with a shader. However, because our blur is separable,
     -- we will need to do this twice, once for horizontal blur and once for vertical.
     -- We would also like to do multiple blur passes at larger and larger scales, to get a blurrier blur.
-    -- To achieve these many passes we will render from canvas A into B, and then B back into A, and repeat.
-    lovr.graphics.setShader(screenShader)
+    -- To achieve these many passes we will render from texture 1 into 2, and then 2 back into 1, and repeat.
 
-    pass:send("direction", {1, 0})
-    tempCanvas[2]:renderTo(fullScreenDraw, tempCanvas[1])
+    table.insert(passes, fullScreenDraw(tempTexture[1], tempTexture[2], { 1, 0 }))
+    table.insert(passes, fullScreenDraw(tempTexture[2], tempTexture[1], { 0, 1 }))
 
-    pass:send("direction", {0, 1})
-    tempCanvas[1]:renderTo(fullScreenDraw, tempCanvas[2])
+    table.insert(passes, fullScreenDraw(tempTexture[1], tempTexture[2], { 2, 0 }))
+    table.insert(passes, fullScreenDraw(tempTexture[2], tempTexture[1], { 0, 2 }))
 
-    pass:send("direction", {2, 0})
-    tempCanvas[2]:renderTo(fullScreenDraw, tempCanvas[1])
+    table.insert(passes, fullScreenDraw(tempTexture[1], tempTexture[2], { 4, 0 }))
+    table.insert(passes, fullScreenDraw(tempTexture[2], tempTexture[1], { 0, 4 }))
 
-    pass:send("direction", {0, 2})
-    tempCanvas[1]:renderTo(fullScreenDraw, tempCanvas[2])
+    -- Finally, draw the blurred texture to the main display
+    pass:fill(tempTexture[1])
 
-    pass:send("direction", {4, 0})
-    tempCanvas[2]:renderTo(fullScreenDraw, tempCanvas[1])
+    table.insert(passes, pass)
 
-    pass:send("direction", {0, 4})
-    pass:send("canvas", tempCanvas[2]:getTexture())
-    pass:fill() -- On the final pass, render directly to the screen.
+    return lovr.graphics.submit(passes)
   end
 end
