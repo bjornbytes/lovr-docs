@@ -44,7 +44,6 @@ return {
   'Effects/Stereo_Image',
   'Effects/Cubemap_Texturing',
   'UI/Spectator_Camera',
-  'UI/Window_HUD',
   'Optimization/Instancing',
   'Optimization/Mask',
   'Debugging/FPS_Controls',

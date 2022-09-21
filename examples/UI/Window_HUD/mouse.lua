@@ -17,7 +17,7 @@ ffi.cdef [[
   typedef void(*GLFWcursorposfun)(GLFWwindow*, double, double);
   typedef void(*GLFWscrollfun)(GLFWwindow*, double, double);
 
-  GLFWwindow* glfwGetCurrentContext(void);
+  GLFWwindow* os_get_glfw_window(void);
   void glfwGetInputMode(GLFWwindow* window, int mode);
   void glfwSetInputMode(GLFWwindow* window, int mode, int value);
   void glfwGetCursorPos(GLFWwindow* window, double* x, double* y);
@@ -29,7 +29,7 @@ ffi.cdef [[
   GLFWcursorposfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
 ]]
 
-local window = C.glfwGetCurrentContext()
+local window = ffi.C.os_get_glfw_window()
 
 local mouse = {}
 
@@ -38,7 +38,7 @@ local mouse = {}
 function mouse.getScale()
   local x, _ = ffi.new('int[1]'), ffi.new('int[1]')
   C.glfwGetWindowSize(window, x, _)
-  return lovr.graphics.getWidth()/x[0]
+  return lovr.system.getWindowWidth()/x[0]
 end
 
 function mouse.getX()
