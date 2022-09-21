@@ -95,19 +95,20 @@ local unitZ = lovr.math.newVec3(0,0,1)
 function cubemap.load()
 	-- Create cubemap textures
 	local cubemapWidth, cubemapHeight = 256, 256
-	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, { type = "cube" })
+	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, { type = "cube", mipmaps = false })
 	cubemap.faces = {}
 
 	-- Precalculate cubemap View-Projection matrices
 	local center = scene.sphereCenter
 	cubemap.facePerspective = lovr.math.newMat4():perspective(math.rad(90.0), 1, .1, 0)
 	for i,matrix in ipairs{
-		lovr.math.mat4():lookAt(center, center + unitX, vec3(0, -1, 0)),
-		lovr.math.mat4():lookAt(center, center - unitX, vec3(0, -1, 0)),
-		lovr.math.mat4():lookAt(center, center + unitY, vec3(0, 0, 1)),
-		lovr.math.mat4():lookAt(center, center - unitY, vec3(0, 0, -1)),
-		lovr.math.mat4():lookAt(center, center + unitZ, vec3(0, -1, 0)),
-		lovr.math.mat4():lookAt(center, center - unitZ, vec3(0, -1, 0))
+    -- Not sure why the x flip is needed!
+		lovr.math.mat4():lookAt(center, center - unitX, vec3(0, 1, 0)),
+		lovr.math.mat4():lookAt(center, center + unitX, vec3(0, 1, 0)),
+		lovr.math.mat4():lookAt(center, center + unitY, vec3(0, 0, -1)),
+		lovr.math.mat4():lookAt(center, center - unitY, vec3(0, 0, 1)),
+		lovr.math.mat4():lookAt(center, center + unitZ, vec3(0, 1, 0)),
+		lovr.math.mat4():lookAt(center, center - unitZ, vec3(0, 1, 0))
 	} do
 		-- Each face will contain a matrix
 		local face = {}
@@ -116,23 +117,15 @@ function cubemap.load()
 	end
 
 	-- Create reflection shader
-	cubemap.shader = lovr.graphics.newShader([[
-		layout(location = 0) out vec3 viewNormal;
-		layout(location = 1) out vec3 viewAngle;
-		vec4 lovrmain() {
-      viewNormal = (ViewFromLocal * vec4(VertexNormal, 0.0)).xyz;
-			viewAngle = -(ViewFromLocal * VertexPosition).xyz; // Angle to query cube map from
-			return DefaultPosition;
-		}
-	]], [[
-		layout(location = 0) in vec3 viewNormal;
-		layout(location = 1) in vec3 viewAngle;
+	cubemap.shader = lovr.graphics.newShader('unlit', [[
 		layout(set = 2, binding = 0) uniform textureCube cubemap;
+
 		vec4 lovrmain() {
-			vec3 n = normalize(viewNormal);
-			vec3 i = normalize(viewAngle);
-			vec4 sphereColor = Color * getPixel(cubemap, reflect(n, i));
-			float ndi = dot(n, i) * 0.5 + 0.5; // Darken the sphere a little around the edges to give it apparent depth
+      vec3 V = normalize(CameraPositionWorld - PositionWorld);
+      vec3 N = normalize(Normal);
+      vec3 R = reflect(-V, N);
+			vec4 sphereColor = Color * getPixel(cubemap, R * vec3(-1, 1, 1));
+			float ndi = dot(N, V) * 0.5 + 0.5; // Darken the sphere a little around the edges to give it apparent depth
 			return vec4(sphereColor.rgb * ndi, 1.);
 		}
 	]])
@@ -167,9 +160,6 @@ function lovr.draw(pass)
 	local cubemapPass = cubemap.draw(pass)
 
 	scene.draw(pass)
-
-  pass:setColor(1, 1, 1)
-  pass:skybox(cubemap.texture)
 
 	-- Draw sphere textured with cube map
 	pass:setColor(1,0.6,0.6)
