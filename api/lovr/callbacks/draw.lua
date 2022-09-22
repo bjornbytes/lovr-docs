@@ -30,7 +30,10 @@ return {
     to submit graphics work manually and override the default submission:
 
         function lovr.draw(pass)
-          local passes = getPasses()
+          local passes = {}
+
+          -- ... record multiple passes and add to passes table
+
           return lovr.graphics.submit(passes)
         end
   ]],

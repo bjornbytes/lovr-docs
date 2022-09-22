@@ -17,7 +17,7 @@ return {
       ]]
     },
     transform = {
-      type = 'transform',
+      type = 'Mat4',
       description = 'The transform of the text.'
     },
     wrap = {

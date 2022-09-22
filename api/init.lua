@@ -8448,7 +8448,7 @@ return {
             {
               name = "setLineSpacing",
               summary = "Set the line spacing of the Font.",
-              description = "Sets the line spacing of the Font.  When spacing out lines, the height of the font is multiplied the line spacing to get the final spacing value.  The default is 1.0.",
+              description = "Sets the line spacing of the Font.  When spacing out lines, the height of the font is multiplied by the line spacing to get the final spacing value.  The default is 1.0.",
               key = "Font:setLineSpacing",
               module = "lovr.graphics",
               related = {
@@ -13499,7 +13499,7 @@ return {
                     },
                     {
                       name = "transform",
-                      type = "transform",
+                      type = "Mat4",
                       description = "The transform of the text."
                     },
                     {
@@ -13533,7 +13533,7 @@ return {
                     },
                     {
                       name = "transform",
-                      type = "transform",
+                      type = "Mat4",
                       description = "The transform of the text."
                     },
                     {
@@ -30828,7 +30828,7 @@ return {
       description = "This callback is called every frame, and receives a `Pass` object as an argument which can be used to render graphics to the display.  If a VR headset is connected, this function renders to the headset display, otherwise it will render to the desktop window.",
       key = "lovr.draw",
       module = "lovr",
-      notes = "To render to the desktop window when a VR headset is connected, use the `lovr.mirror` callback.\n\nThe display is cleared to the global background color before this callback is called, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nSince the `lovr.graphics.submit` function always returns true, the following idiom can be used to submit graphics work manually and override the default submission:\n\n    function lovr.draw(pass)\n      local passes = getPasses()\n      return lovr.graphics.submit(passes)\n    end",
+      notes = "To render to the desktop window when a VR headset is connected, use the `lovr.mirror` callback.\n\nThe display is cleared to the global background color before this callback is called, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nSince the `lovr.graphics.submit` function always returns true, the following idiom can be used to submit graphics work manually and override the default submission:\n\n    function lovr.draw(pass)\n      local passes = {}\n\n      -- ... record multiple passes and add to passes table\n\n      return lovr.graphics.submit(passes)\n    end",
       related = {
         "lovr.mirror",
         "lovr.headset.getPass",
