@@ -25,6 +25,7 @@ return {
     that value.
   ]],
   related = {
+    'lovr.headset.getDeltaTime',
     'lovr.timer.getTime'
   }
 }

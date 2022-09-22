@@ -17747,6 +17747,31 @@ return {
           }
         },
         {
+          name = "getDeltaTime",
+          tag = "headset",
+          summary = "Get the predicted delta time.",
+          description = "Returns the headset delta time, which is the difference between the current and previous predicted display times.  When the headset is active, this will be the `dt` value passed in to `lovr.update`.",
+          key = "lovr.headset.getDeltaTime",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getTime",
+            "lovr.timer.getTime",
+            "lovr.timer.getDelta"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "dt",
+                  type = "number",
+                  description = "The delta time."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getDisplayDimensions",
           tag = "headset",
           summary = "Get the dimensions of the headset display.",
@@ -17927,29 +17952,6 @@ return {
                   description = "The currently tracked hand devices.",
                   arguments = {},
                   returns = {}
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getMirrorTexture",
-          tag = "headset",
-          summary = "Get the Texture containing a view of what's in the headset.",
-          description = "Returns a Texture that contains whatever is currently rendered to the headset.\n\nSometimes this can be `nil` if the current headset driver doesn't have a mirror texture, which can happen if the driver renders directly to the display, like with the `desktop` driver.",
-          key = "lovr.headset.getMirrorTexture",
-          module = "lovr.headset",
-          related = {
-            "lovr.mirror"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "mirror",
-                  type = "Texture",
-                  description = "The mirror texture."
                 }
               }
             }
@@ -18246,6 +18248,31 @@ return {
           }
         },
         {
+          name = "getTexture",
+          tag = "headset",
+          summary = "Get the Texture for the headset display.",
+          description = "Returns a Texture that will be submitted to the headset display.  This will be the render target used in the headset's render pass.  The texture is not guaranteed to be the same every frame, and must be called every frame to get the current texture.",
+          key = "lovr.headset.getTexture",
+          module = "lovr.headset",
+          notes = "This function may return `nil` if the headset is not being rendered to this frame.",
+          related = {
+            "lovr.headset.getPass",
+            "lovr.mirror"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "texture",
+                  type = "Texture",
+                  description = "The headset texture."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getTime",
           summary = "Get the predicted display time.",
           description = "Returns the estimated time in the future at which the light from the pixels of the current frame will hit the eyes of the user.\n\nThis can be used as a replacement for `lovr.timer.getTime` for timestamps that are used for rendering to get a smoother result that is synchronized with the display of the headset.",
@@ -18265,6 +18292,7 @@ return {
             }
           },
           related = {
+            "lovr.headset.getDeltaTime",
             "lovr.timer.getTime"
           }
         },
@@ -18480,6 +18508,28 @@ return {
           }
         },
         {
+          name = "isFocused",
+          summary = "Check if LÖVR has VR input focus.",
+          description = "Returns whether LÖVR has VR input focus.  Focus is lost when the VR system menu is shown.  The `lovr.focus` callback can be used to detect when this changes.",
+          key = "lovr.headset.isFocused",
+          module = "lovr.headset",
+          related = {
+            "lovr.focus"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "focused",
+                  type = "boolean",
+                  description = "Whether the application is focused."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isTouched",
           tag = "input",
           summary = "Check if a button on a device is touched.",
@@ -18594,37 +18644,6 @@ return {
           }
         },
         {
-          name = "renderTo",
-          tag = "headset",
-          summary = "Render to the headset using a function.",
-          description = "Renders to each eye of the headset using a function.\n\nThis function takes care of setting the appropriate graphics transformations to ensure that the scene is rendered as though it is being viewed through each eye of the player.  It also takes care of setting the correct projection for the headset lenses.\n\nIf the headset module is enabled, this function is called automatically by `lovr.run` with `lovr.draw` as the callback.",
-          key = "lovr.headset.renderTo",
-          module = "lovr.headset",
-          notes = "At the beginning of the callback, the display is cleared to the background color.  The background color can be changed using `lovr.graphics.setBackgroundColor`.\n\nIf the callback is `nil`, an empty frame cleared to current graphics background color will be submitted to the headset.",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "callback",
-                  type = "function",
-                  description = "The function used to render.  Any functions called will render to the headset instead of to the window.",
-                  arguments = {},
-                  returns = {},
-                  variants = {
-                    {
-                      arguments = {
-                        "callback"
-                      },
-                      returns = {}
-                    }
-                  }
-                }
-              },
-              returns = {}
-            }
-          }
-        },
-        {
           name = "setClipDistance",
           tag = "headset",
           summary = "Set the near and far clipping planes of the headset.",
@@ -18674,6 +18693,36 @@ return {
                   description = "Whether the display refresh rate was successfully set."
                 }
               }
+            }
+          }
+        },
+        {
+          name = "start",
+          summary = "Starts the headset session.",
+          description = "Starts the headset session.  This must be called after the graphics module is initialized, and can only be called once.  Normally it is called automatically by `boot.lua`.",
+          key = "lovr.headset.start",
+          module = "lovr.headset",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "submit",
+          summary = "Submit a frame to the headset display.",
+          description = "Submits the current headset texture to the VR display.  This should be called after calling `lovr.graphics.submit` with the headset render pass.  Normally this is taken care of by `lovr.run`.",
+          key = "lovr.headset.submit",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getPass",
+            "lovr.headset.getTexture"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
             }
           }
         },
@@ -30858,7 +30907,9 @@ return {
       description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
       key = "lovr.focus",
       module = "lovr",
-      related = {},
+      related = {
+        "lovr.headset.isFocused"
+      },
       variants = {
         {
           arguments = {
