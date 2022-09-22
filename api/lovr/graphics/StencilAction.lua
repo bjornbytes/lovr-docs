@@ -1,6 +1,6 @@
 return {
   summary = 'Different ways of updating the stencil buffer.',
-  description = 'Different ways of updating the stencil buffer with `Pass:setStencilWrite.',
+  description = 'Different ways of updating the stencil buffer with `Pass:setStencilWrite`.',
   values = {
     {
       name = 'keep',
