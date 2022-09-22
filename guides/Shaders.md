@@ -214,52 +214,52 @@ The following built-in variables are available only in vertex shaders:
     <tr>
       <td><code>NormalMatrix</code></td>
       <td>mat4</td>
-      <td>A matrix that can be used to transform normal vectors from local space to world space.</td>
+      <td>Transforms normal vectors from local space to world space.</td>
     </tr>
     <tr>
       <td><code>ClipFromLocal</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from local space to clip space (<code>Projection * View * Transform</code>).</td>
+      <td>Transforms from local space to clip space (<code>Projection * View * Transform</code>).</td>
     </tr>
     <tr>
       <td><code>ClipFromWorld</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from world space to clip space (<code>Projection * View</code>).</td>
+      <td>Transforms from world space to clip space (<code>Projection * View</code>).</td>
     </tr>
     <tr>
       <td><code>ClipFromView</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from view space to clip space (<code>Projection</code>).</td>
+      <td>Transforms from view space to clip space (<code>Projection</code>).</td>
     </tr>
     <tr>
       <td><code>ViewFromLocal</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from local space to view space (<code>View * Transform</code>).</td>
+      <td>Transforms from local space to view space (<code>View * Transform</code>).</td>
     </tr>
     <tr>
       <td><code>ViewFromWorld</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from world space to view space (<code>View</code>).</td>
+      <td>Transforms from world space to view space (<code>View</code>).</td>
     </tr>
     <tr>
       <td><code>ViewFromClip</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from clip space to view space (<code>InverseProjection</code>).</td>
+      <td>Transforms from clip space to view space (<code>InverseProjection</code>).</td>
     </tr>
     <tr>
       <td><code>WorldFromLocal</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from local space to world space (<code>Transform</code>).</td>
+      <td>Transforms from local space to world space (<code>Transform</code>).</td>
     </tr>
     <tr>
       <td><code>WorldFromView</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from view space to world space (<code>inverse(View)</code>).</td>
+      <td>Transforms from view space to world space (<code>inverse(View)</code>).</td>
     </tr>
     <tr>
       <td><code>WorldFromClip</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from clip space to world space (<code>inverse(ViewProjection)</code>).</td>
+      <td>Transforms from clip space to world space (<code>inverse(ViewProjection)</code>).</td>
     </tr>
     <tr>
       <td><code>PassColor</code></td>
