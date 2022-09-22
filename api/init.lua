@@ -13715,7 +13715,7 @@ return {
         {
           name = "Readback",
           summary = "An asynchronous read of a GPU resource.",
-          description = "Readbacks track the progress of an asynchronous read of a `Buffer`, `Texture`, or `Tally`.  Once a Readback is created, TODO",
+          description = "Readbacks track the progress of an asynchronous read of a `Buffer`, `Texture`, or `Tally`.  Once a Readback is created in a transfer pass, and the transfer pass is submitted, the Readback can be polled for completion or the CPU can wait for it to finish using `Readback:wait`.",
           key = "Readback",
           module = "lovr.graphics",
           constructors = {
@@ -14170,8 +14170,8 @@ return {
         },
         {
           name = "Tally",
-          summary = "TODO",
-          description = "TODO",
+          summary = "Measures GPU counters.",
+          description = "Tally objects are able to measure events on the GPU.  Tallies can measure three types of things:\n\n- `time` - measures elapsed GPU time.\n- `pixel` - measures how many pixels were rendered, which can be used for occlusion culling.\n- `shader` - measure how many times shaders were run.\n\nTally objects can be created with up to 4096 slots.  Each slot can hold a single measurement value.  `Pass:tick` is used to begin a measurement, storing the result in one of the slots.  All commands recorded on the Pass will be measured until `Pass:tock` is called with the same tally and slot.\n\nThe measurement value stored in the slots can be copied to a `Buffer` using `Pass:copy`, or they can be read back to Lua using `Pass:read`.",
           key = "Tally",
           module = "lovr.graphics",
           constructors = {
@@ -17248,7 +17248,7 @@ return {
         {
           name = "StencilAction",
           summary = "Different ways of updating the stencil buffer.",
-          description = "Different ways of updating the stencil buffer with `Pass:setStencilWrite.",
+          description = "Different ways of updating the stencil buffer with `Pass:setStencilWrite`.",
           key = "StencilAction",
           module = "lovr.graphics",
           related = {
