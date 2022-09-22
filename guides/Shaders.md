@@ -602,12 +602,3 @@ It's also possible to declare a custom sampler variable and use it to sample tex
     // texture(sampler2D(myTexture, mySampler), UV)
 
 A `Sampler` object can be sent to the shader using `Pass:send`, similar to buffers and textures.
-
-Flags
----
-
-SPIR-V
----
-
-Descriptor Set Interface
----
