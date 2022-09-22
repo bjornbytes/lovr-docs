@@ -14,7 +14,7 @@ return {
       returns = { 'image' }
     }
   },
-  notes = 'TODO what if it\'s a buffer or tally?!',
+  notes = 'If the Readback is not reading back a Texture, returns `nil`.',
   related = {
     'Readback:getData',
     'Readback:getBlob'

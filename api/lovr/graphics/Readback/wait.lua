@@ -15,6 +15,7 @@ return {
     }
   },
   notes = [[
-    TODO what if the readback will never complete?!
+    If the transfer pass that created the readback has not been submitted yet, no wait will occur
+    and this function will return `false`.
   ]]
 }

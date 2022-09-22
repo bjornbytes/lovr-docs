@@ -14,7 +14,7 @@ return {
       returns = { 'blob' }
     }
   },
-  notes = 'TODO what if it\'s an image?!',
+  notes = 'If the Readback is reading back a Texture, returns `nil`.',
   related = {
     'Readback:getData',
     'Readback:getImage'

@@ -1,7 +1,9 @@
 return {
   tag = 'drawing',
   summary = 'Draw text.',
-  description = 'TODO',
+  description = [[
+    Draws text.  The font can be changed using `Pass:setFont`.
+  ]],
   arguments = {
     text = {
       type = 'string',
@@ -44,12 +46,36 @@ return {
       returns = {}
     },
     {
+      description = 'Renders multicolor text with a single draw call.',
       arguments = { 'colortext', 'transform', 'wrap', 'halign', 'valign' },
       returns = {}
     }
   },
-  notes = 'TODO',
+  notes = [[
+    Strings should be encoded as UTF-8.
+
+    Newlines will start a new line of text.  Tabs will be rendered as four spaces.  Carriage returns
+    are ignored.
+
+    With the default font pixel density, a scale of 1.0 makes the text height 1 meter.
+
+    The wrap value does not take into account the text's scale.
+
+    Text rendering requires a special shader, which will only be automatically used when the active
+    shader is set to `nil`.
+
+    Blending should be enabled when rendering text (it's on by default).
+
+    This function can draw up to 16384 visible characters at a time.
+  ]],
   related = {
-    'Pass:setFont'
+    'Pass:setFont',
+    'lovr.graphics.getDefaultFont',
+    'Pass:setShader',
+    'Font:getWidth',
+    'Font:getHeight',
+    'Font:getLines',
+    'Font:getVertices',
+    'Font'
   }
 }

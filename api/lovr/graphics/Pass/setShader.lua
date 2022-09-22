@@ -50,6 +50,8 @@ return {
     buffer variable that has been cleared is not well-defined, and may return random data or even
     crash the GPU.  For textures, white pixels will be returned.  Samplers will use `linear`
     filtering and the `repeat` wrap mode.
+
+    Changing the shader will not clear push constants set in the `Constants` block.
   ]],
   related = {
     'Pass:send',
