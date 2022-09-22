@@ -98,11 +98,182 @@ the code of one or both of the stages:
 
     shader = lovr.graphics.newShader('vertex.glsl', 'unlit')
 
+Shader Builtins
+---
+
+The following built-in variables and macros are available in vertex and fragment shaders:
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Notes</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PI</td>
+      <td>float</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>TAU</td>
+      <td>float</td>
+      <td>`(2 * PI)`</td>
+    </tr>
+    <tr>
+      <td>PI_2</td>
+      <td>float</td>
+      <td>`(PI / 2)`</td>
+    </tr>
+    <tr>
+      <td>Resolution</td>
+      <td>vec2</td>
+      <td>The size of the render pass texture, in pixels.</td>
+    </tr>
+    <tr>
+      <td>Time</td>
+      <td>float</td>
+      <td>The current time, in seconds (uses `lovr.headset.getTime` if available).</td>
+    </tr>
+    <tr>
+      <td>CameraPositionWorld</td>
+      <td>vec3</td>
+      <td>The position of the current view, set with `Pass:setViewPose`.</td>
+    </tr>
+    <tr>
+      <td>Sampler</td>
+      <td>sampler</td>
+      <td>The default sampler, set with `Pass:setSampler`.</td>
+    </tr>
+  </tbody>
+</table>
+
+The following built-in variables are available only in vertex shaders:
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Notes</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>VertexPosition</td>
+      <td>vec4</td>
+      <td>The local position of the current vertex.</td>
+    </tr>
+    <tr>
+      <td>VertexNormal</td>
+      <td>vec3</td>
+      <td>The normal vector of the current vertex.</td>
+    </tr>
+    <tr>
+      <td>VertexUV</td>
+      <td>vec2</td>
+      <td>The texture coordinate of the current vertex.</td>
+    </tr>
+    <tr>
+      <td>VertexColor</td>
+      <td>vec4</td>
+      <td>The color of the current vertex.</td>
+    </tr>
+    <tr>
+      <td>VertexTangent</td>
+      <td>vec3</td>
+      <td>The tangent vector of the current vertex.</td>
+    </tr>
+    <tr>
+      <td>Projection</td>
+      <td>mat4</td>
+      <td>The projection matrix of the current view, set with `Pass:setProjection`.</td>
+    </tr>
+    <tr>
+      <td>View</td>
+      <td>mat4</td>
+      <td>The view matrix of the current view, set with `Pass:setViewPose`.</td>
+    </tr>
+    <tr>
+      <td>ViewProjection</td>
+      <td>mat4</td>
+      <td>The projection matrix multiplied with the view matrix.</td>
+    </tr>
+    <tr>
+      <td>InverseProjection</td>
+      <td>mat4</td>
+      <td>The inverse of the projection matrix.</td>
+    </tr>
+    <tr>
+      <td>Transform</td>
+      <td>mat4</td>
+      <td>The transform matrix of the object being drawn (includes the transform stack).</td>
+    </tr>
+    <tr>
+      <td>NormalMatrix</td>
+      <td>mat4</td>
+      <td>A matrix that can be used to transform normal vectors from local space to world space.</td>
+    </tr>
+    <tr>
+      <td>ClipFromLocal</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from local space to clip space (`Projection * View * Transform`).</td>
+    </tr>
+    <tr>
+      <td>ClipFromWorld</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from world space to clip space (`Projection * View`).</td>
+    </tr>
+    <tr>
+      <td>ClipFromView</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from view space to clip space (`Projection`).</td>
+    </tr>
+    <tr>
+      <td>ViewFromLocal</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from local space to view space (`View * Transform`).</td>
+    </tr>
+    <tr>
+      <td>ViewFromWorld</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from world space to view space (`View`).</td>
+    </tr>
+    <tr>
+      <td>ViewFromClip</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from clip space to view space (`InverseProjection`).</td>
+    </tr>
+    <tr>
+      <td>WorldFromLocal</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from local space to world space (`Transform`).</td>
+    </tr>
+    <tr>
+      <td>WorldFromView</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from view space to world space (`inverse(View)`).</td>
+    </tr>
+    <tr>
+      <td>WorldFromClip</td>
+      <td>mat4</td>
+      <td>A matrix that transforms from clip space to world space (`inverse(ViewProjection)`).</td>
+    </tr>
+    <tr>
+      <td>PassColor</td>
+      <td>vec4</td>
+      <td>The color set with `Pass:setColor`.</td>
+    </tr>
+  </tbody>
+</table>
+
 Shader Inputs
 ---
 
-It's possible to send values or objects from Lua to a Shader.  There are a few different ways to do
-this, each with their own tradeoffs (speed, size, ease of use, etc.).
+It's also possible to send values or objects from Lua to a Shader.  There are a few different ways
+to do this, each with their own tradeoffs (speed, size, ease of use, etc.).
 
 ### Constants
 
@@ -139,6 +310,8 @@ from Lua using `Pass:send`:
 
 The vertex and fragment stages share the constants block, so they should match or one should be a
 subset of the other.
+
+When the active shader is changed, constants will be preserved.
 
 ### Vertex Attributes
 
@@ -199,22 +372,91 @@ Or by location:
       { type = 'vec3', location = 3 }
     })
 
-### Objects
+### Buffers
 
-- syntax
-- :send
-- limits
-- dirtying
+Shaders can access data in `Buffer` objects.  Buffers can store large arrays of data from Lua tables
+or Blobs.  The GPU can also write to buffers using compute shaders.
+
+Data in buffers can be accessed in 2 ways:
+
+- **Uniform** buffers have a smaller size limit, may be faster, and are read-only in shaders.
+- **Storage** buffers have a large size limit, may be slower, and compute shaders can write to them.
+
+First, the buffer should be declared in the shader.  Here's an example declaring a uniform buffer:
+
+    layout(set = 2, location = 0) uniform Colors {
+      vec4 colors[100];
+    };
+
+And an example storage buffer:
+
+    layout(set = 2, location = 0) buffer Colors {
+      vec4 colors[100];
+    };
+
+The first part declares the set and location of the variable.  Right now the set should always be 2
+(LÖVR uses set 0 and 1 internally).  The location is a number that can be used to identify the
+variable.  After that, `uniform` or `buffer` is used to declare which type of buffer it is, followed
+by the name of the variable.  Finally, there is a block declaring the format of the data in the
+buffer, which should match the format used to create the Buffer in Lua (structs can be used if the
+buffer has multiple fields per element).
+
+A Buffer can be sent to one of the above variables like this:
+
+    -- palette is a table with 100 colors in it
+    buffer = lovr.graphics.getBuffer(palette, 'vec4')
+    pass:send('Colors', buffer)
+
+    -- or, using the location
+    pass:send(0, buffer)
+
+The shader can then use the `colors` array to access the data from the `palette` table.
+
+It's possible to bind a subset of a buffer to the shader by passing the range as extra arguments to
+`Pass:send`.
+
+### Textures
+
+Shaders can also access data from `Texture` objects.  Similar to buffers, textures can be accessed
+in 2 ways:
+
+- Sampled textures are read-only, and can use `Sampler` objects.
+- Storage textures can be written to using compute shaders.
+
+Sampled textures are declared like this:
+
+    layout(set = 2, location = 0) uniform texture2D myTexture;
+
+The texture type can be `texture2D`, `textureCube`, `texture2DArray`, or `texture3D` (see
+`TextureType`).
+
+Storage textures are declared like this:
+
+    layout(set = 2, location = 0) uniform image2D myImage;
+
+A texture can be sent to the shader variable using `Pass:send`.
+
+The `getPixel` helper function can be used to sample from a texture:
+
+    getPixel(myTexture, UV)
+
+This will sample from the texture using the UV coordinates and the default sampler set using
+`Pass:setSampler`.  It's the same as writing this for 2D textures:
+
+    texture(sampler2D(myTexture, Sampler), UV)
+
+It's also possible to declare a custom sampler variable and use it to sample textures:
+
+    layout(set = 2, location = 0) uniform sampler mySampler;
+
+    // texture(sampler2D(myTexture, mySampler), UV)
+
+A `Sampler` object can be sent to the shader using `Pass:send`, similar to buffers and textures.
 
 ### Materials
 
-### Flags
-
-Built-ins
+Flags
 ---
-
-### Variables
-### Flags
 
 SPIR-V
 ---
