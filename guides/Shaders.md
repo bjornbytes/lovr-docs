@@ -534,18 +534,18 @@ Data in buffers can be accessed in 2 ways:
 
 First, the buffer should be declared in the shader.  Here's an example declaring a uniform buffer:
 
-    layout(set = 2, location = 0) uniform Colors {
+    layout(set = 2, binding = 0) uniform Colors {
       vec4 colors[100];
     };
 
 And an example storage buffer:
 
-    layout(set = 2, location = 0) buffer Colors {
+    layout(set = 2, binding = 0) buffer Colors {
       vec4 colors[100];
     };
 
-The first part declares the set and location of the variable.  Right now the set should always be 2
-(LÖVR uses set 0 and 1 internally).  The location is a number that can be used to identify the
+The first part declares the set and binding of the variable.  Right now the set should always be 2
+(LÖVR uses set 0 and 1 internally).  The binding is a number that can be used to identify the
 variable.  After that, `uniform` or `buffer` is used to declare which type of buffer it is, followed
 by the name of the variable.  Finally, there is a block declaring the format of the data in the
 buffer, which should match the format used to create the Buffer in Lua (structs can be used if the
@@ -557,7 +557,7 @@ A Buffer can be sent to one of the above variables like this:
     buffer = lovr.graphics.getBuffer(palette, 'vec4')
     pass:send('Colors', buffer)
 
-    -- or, using the location
+    -- or, using the binding number
     pass:send(0, buffer)
 
 The shader can then use the `colors` array to access the data from the `palette` table.
@@ -575,14 +575,14 @@ in 2 ways:
 
 Sampled textures are declared like this:
 
-    layout(set = 2, location = 0) uniform texture2D myTexture;
+    layout(set = 2, binding = 0) uniform texture2D myTexture;
 
 The texture type can be `texture2D`, `textureCube`, `texture2DArray`, or `texture3D` (see
 `TextureType`).
 
 Storage textures are declared like this:
 
-    layout(set = 2, location = 0) uniform image2D myImage;
+    layout(set = 2, binding = 0) uniform image2D myImage;
 
 A texture can be sent to the shader variable using `Pass:send`.
 
@@ -597,7 +597,7 @@ This will sample from the texture using the UV coordinates and the default sampl
 
 It's also possible to declare a custom sampler variable and use it to sample textures:
 
-    layout(set = 2, location = 0) uniform sampler mySampler;
+    layout(set = 2, binding = 0) uniform sampler mySampler;
 
     // texture(sampler2D(myTexture, mySampler), UV)
 
