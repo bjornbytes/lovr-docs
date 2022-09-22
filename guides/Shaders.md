@@ -120,7 +120,7 @@ The following built-in variables and macros are available in vertex and fragment
     <tr>
       <td><code>TAU</code></td>
       <td>float</td>
-      <td><code>(2 * PI)</code></td>
+      <td><code>(PI * 2)</code></td>
     </tr>
     <tr>
       <td><code>PI_2</code></td>
@@ -135,17 +135,17 @@ The following built-in variables and macros are available in vertex and fragment
     <tr>
       <td><code>Time</code></td>
       <td>float</td>
-      <td>The current time, in seconds (uses <code>lovr.headset.getTime</code> if available).</td>
+      <td>Current time in seconds (<code>lovr.headset.getTime</code>).</td>
     </tr>
     <tr>
       <td><code>CameraPositionWorld</code></td>
       <td>vec3</td>
-      <td>The position of the current view, set with <code>Pass:setViewPose</code>.</td>
+      <td>The position of the current view (<code>Pass:setViewPose</code>).</td>
     </tr>
     <tr>
       <td><code>Sampler</code></td>
       <td>sampler</td>
-      <td>The default sampler, set with <code>Pass:setSampler</code>.</td>
+      <td>The default sampler (<code>Pass:setSampler</code>).</td>
     </tr>
   </tbody>
 </table>
@@ -189,12 +189,12 @@ The following built-in variables are available only in vertex shaders:
     <tr>
       <td><code>Projection</code></td>
       <td>mat4</td>
-      <td>The projection matrix of the current view, set with <code>Pass:setProjection</code>.</td>
+      <td>The projection matrix of the current view (<code>Pass:setProjection</code>).</td>
     </tr>
     <tr>
       <td><code>View</code></td>
       <td>mat4</td>
-      <td>The view matrix of the current view, set with <code>Pass:setViewPose</code>.</td>
+      <td>The view matrix of the current view (<code>Pass:setViewPose</code>).</td>
     </tr>
     <tr>
       <td><code>ViewProjection</code></td>
@@ -209,7 +209,7 @@ The following built-in variables are available only in vertex shaders:
     <tr>
       <td><code>Transform</code></td>
       <td>mat4</td>
-      <td>The transform matrix of the object being drawn (includes the transform stack).</td>
+      <td>The model matrix (includes transform stack and draw transform).</td>
     </tr>
     <tr>
       <td><code>NormalMatrix</code></td>
@@ -265,6 +265,156 @@ The following built-in variables are available only in vertex shaders:
       <td><code>PassColor</code></td>
       <td>vec4</td>
       <td>The color set with <code>Pass:setColor</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+The following built-in variables and macros are available only in fragment shaders:
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Notes</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>PositionWorld</code></td>
+      <td>vec3</td>
+      <td>The position of the pixel, in world space.</td>
+    </tr>
+    <tr>
+      <td><code>Normal</code></td>
+      <td>vec3</td>
+      <td>The normal vector of the pixel, in world space.</td>
+    </tr>
+    <tr>
+      <td><code>Color</code></td>
+      <td>vec4</td>
+      <td>The vertex, material, and pass colors multiplied together.</td>
+    </tr>
+    <tr>
+      <td><code>UV</code></td>
+      <td>vec2</td>
+      <td>The texture coordinate of the current pixel.</td>
+    </tr>
+    <tr>
+      <td><code>Tangent</code></td>
+      <td>vec3</td>
+      <td>The tangent vector of the current pixel, in world space.</td>
+    </tr>
+    <tr>
+      <td><code>TangentMatrix</code></td>
+      <td>mat3</td>
+      <td>The tangent matrix, used for normal mapping.</td>
+    </tr>
+  </tbody>
+</table>
+
+The properties of the active material, set using `Pass:setMaterial`, can be accessed in vertex and
+fragment shaders.  Textures can be sampled using the `getPixel` helper function.  The `Material` and
+`lovr.graphics.newMaterial` pages have more info on these properties.
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Notes</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Material.color</code></td>
+      <td>vec4</td>
+      <td>The material color.</td>
+    </tr>
+    <tr>
+      <td><code>Material.glow</code></td>
+      <td>vec4</td>
+      <td>The material glow color (alpha is glow strength).</td>
+    </tr>
+    <tr>
+      <td><code>Material.uvShift</code></td>
+      <td>vec2</td>
+      <td>The material UV shift.</td>
+    </tr>
+    <tr>
+      <td><code>Material.uvScale</code></td>
+      <td>vec2</td>
+      <td>The material UV shift.</td>
+    </tr>
+    <tr>
+      <td><code>Material.metalness</code></td>
+      <td>float</td>
+      <td>The material metalness.</td>
+    </tr>
+    <tr>
+      <td><code>Material.roughness</code></td>
+      <td>float</td>
+      <td>The material roughness.</td>
+    </tr>
+    <tr>
+      <td><code>Material.clearcoat</code></td>
+      <td>float</td>
+      <td>The material clearcoat factor.</td>
+    </tr>
+    <tr>
+      <td><code>Material.clearcoatRoughness</code></td>
+      <td>float</td>
+      <td>The roughness of the clearcoat layer.</td>
+    </tr>
+    <tr>
+      <td><code>Material.occlusionStrength</code></td>
+      <td>float</td>
+      <td>The strength of the occlusion texture.</td>
+    </tr>
+    <tr>
+      <td><code>Material.normalScale</code></td>
+      <td>float</td>
+      <td>The strength of the normal map texture.</td>
+    </tr>
+    <tr>
+      <td><code>Material.alphaCutoff</code></td>
+      <td>float</td>
+      <td>The alpha cutoff.</td>
+    </tr>
+    <tr>
+      <td><code>ColorTexture</code></td>
+      <td>texture2D</td>
+      <td>The color texture.</td>
+    </tr>
+    <tr>
+      <td><code>GlowTexture</code></td>
+      <td>texture2D</td>
+      <td>The glow texture.</td>
+    </tr>
+    <tr>
+      <td><code>OcclusionTexture</code></td>
+      <td>texture2D</td>
+      <td>The ambient occlusion texture.</td>
+    </tr>
+    <tr>
+      <td><code>MetalnessTexture</code></td>
+      <td>texture2D</td>
+      <td>The metalness texture.</td>
+    </tr>
+    <tr>
+      <td><code>RoughnessTexture</code></td>
+      <td>texture2D</td>
+      <td>The roughness texture.</td>
+    </tr>
+    <tr>
+      <td><code>ClearcoatTexture</code></td>
+      <td>texture2D</td>
+      <td>The clearcoat texture.</td>
+    </tr>
+    <tr>
+      <td><code>NormalTexture</code></td>
+      <td>texture2D</td>
+      <td>The normal map.</td>
     </tr>
   </tbody>
 </table>
@@ -452,8 +602,6 @@ It's also possible to declare a custom sampler variable and use it to sample tex
     // texture(sampler2D(myTexture, mySampler), UV)
 
 A `Sampler` object can be sent to the shader using `Pass:send`, similar to buffers and textures.
-
-### Materials
 
 Flags
 ---
