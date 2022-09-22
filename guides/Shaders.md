@@ -113,39 +113,39 @@ The following built-in variables and macros are available in vertex and fragment
   </thead>
   <tbody>
     <tr>
-      <td>PI</td>
+      <td><code>PI</code></td>
       <td>float</td>
       <td></td>
     </tr>
     <tr>
-      <td>TAU</td>
+      <td><code>TAU</code></td>
       <td>float</td>
-      <td>`(2 * PI)`</td>
+      <td><code>(2 * PI)</code></td>
     </tr>
     <tr>
-      <td>PI_2</td>
+      <td><code>PI_2</code></td>
       <td>float</td>
-      <td>`(PI / 2)`</td>
+      <td><code>(PI / 2)</code></td>
     </tr>
     <tr>
-      <td>Resolution</td>
+      <td><code>Resolution</code></td>
       <td>vec2</td>
       <td>The size of the render pass texture, in pixels.</td>
     </tr>
     <tr>
-      <td>Time</td>
+      <td><code>Time</code></td>
       <td>float</td>
-      <td>The current time, in seconds (uses `lovr.headset.getTime` if available).</td>
+      <td>The current time, in seconds (uses <code>lovr.headset.getTime</code> if available).</td>
     </tr>
     <tr>
-      <td>CameraPositionWorld</td>
+      <td><code>CameraPositionWorld</code></td>
       <td>vec3</td>
-      <td>The position of the current view, set with `Pass:setViewPose`.</td>
+      <td>The position of the current view, set with <code>Pass:setViewPose</code>.</td>
     </tr>
     <tr>
-      <td>Sampler</td>
+      <td><code>Sampler</code></td>
       <td>sampler</td>
-      <td>The default sampler, set with `Pass:setSampler`.</td>
+      <td>The default sampler, set with <code>Pass:setSampler</code>.</td>
     </tr>
   </tbody>
 </table>
@@ -162,109 +162,109 @@ The following built-in variables are available only in vertex shaders:
   </thead>
   <tbody>
     <tr>
-      <td>VertexPosition</td>
+      <td><code>VertexPosition</code></td>
       <td>vec4</td>
       <td>The local position of the current vertex.</td>
     </tr>
     <tr>
-      <td>VertexNormal</td>
+      <td><code>VertexNormal</code></td>
       <td>vec3</td>
       <td>The normal vector of the current vertex.</td>
     </tr>
     <tr>
-      <td>VertexUV</td>
+      <td><code>VertexUV</code></td>
       <td>vec2</td>
       <td>The texture coordinate of the current vertex.</td>
     </tr>
     <tr>
-      <td>VertexColor</td>
+      <td><code>VertexColor</code></td>
       <td>vec4</td>
       <td>The color of the current vertex.</td>
     </tr>
     <tr>
-      <td>VertexTangent</td>
+      <td><code>VertexTangent</code></td>
       <td>vec3</td>
       <td>The tangent vector of the current vertex.</td>
     </tr>
     <tr>
-      <td>Projection</td>
+      <td><code>Projection</code></td>
       <td>mat4</td>
-      <td>The projection matrix of the current view, set with `Pass:setProjection`.</td>
+      <td>The projection matrix of the current view, set with <code>Pass:setProjection</code>.</td>
     </tr>
     <tr>
-      <td>View</td>
+      <td><code>View</code></td>
       <td>mat4</td>
-      <td>The view matrix of the current view, set with `Pass:setViewPose`.</td>
+      <td>The view matrix of the current view, set with <code>Pass:setViewPose</code>.</td>
     </tr>
     <tr>
-      <td>ViewProjection</td>
+      <td><code>ViewProjection</code></td>
       <td>mat4</td>
       <td>The projection matrix multiplied with the view matrix.</td>
     </tr>
     <tr>
-      <td>InverseProjection</td>
+      <td><code>InverseProjection</code></td>
       <td>mat4</td>
       <td>The inverse of the projection matrix.</td>
     </tr>
     <tr>
-      <td>Transform</td>
+      <td><code>Transform</code></td>
       <td>mat4</td>
       <td>The transform matrix of the object being drawn (includes the transform stack).</td>
     </tr>
     <tr>
-      <td>NormalMatrix</td>
+      <td><code>NormalMatrix</code></td>
       <td>mat4</td>
       <td>A matrix that can be used to transform normal vectors from local space to world space.</td>
     </tr>
     <tr>
-      <td>ClipFromLocal</td>
+      <td><code>ClipFromLocal</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from local space to clip space (`Projection * View * Transform`).</td>
+      <td>A matrix that transforms from local space to clip space (<code>Projection * View * Transform</code>).</td>
     </tr>
     <tr>
-      <td>ClipFromWorld</td>
+      <td><code>ClipFromWorld</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from world space to clip space (`Projection * View`).</td>
+      <td>A matrix that transforms from world space to clip space (<code>Projection * View</code>).</td>
     </tr>
     <tr>
-      <td>ClipFromView</td>
+      <td><code>ClipFromView</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from view space to clip space (`Projection`).</td>
+      <td>A matrix that transforms from view space to clip space (<code>Projection</code>).</td>
     </tr>
     <tr>
-      <td>ViewFromLocal</td>
+      <td><code>ViewFromLocal</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from local space to view space (`View * Transform`).</td>
+      <td>A matrix that transforms from local space to view space (<code>View * Transform</code>).</td>
     </tr>
     <tr>
-      <td>ViewFromWorld</td>
+      <td><code>ViewFromWorld</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from world space to view space (`View`).</td>
+      <td>A matrix that transforms from world space to view space (<code>View</code>).</td>
     </tr>
     <tr>
-      <td>ViewFromClip</td>
+      <td><code>ViewFromClip</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from clip space to view space (`InverseProjection`).</td>
+      <td>A matrix that transforms from clip space to view space (<code>InverseProjection</code>).</td>
     </tr>
     <tr>
-      <td>WorldFromLocal</td>
+      <td><code>WorldFromLocal</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from local space to world space (`Transform`).</td>
+      <td>A matrix that transforms from local space to world space (<code>Transform</code>).</td>
     </tr>
     <tr>
-      <td>WorldFromView</td>
+      <td><code>WorldFromView</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from view space to world space (`inverse(View)`).</td>
+      <td>A matrix that transforms from view space to world space (<code>inverse(View)</code>).</td>
     </tr>
     <tr>
-      <td>WorldFromClip</td>
+      <td><code>WorldFromClip</code></td>
       <td>mat4</td>
-      <td>A matrix that transforms from clip space to world space (`inverse(ViewProjection)`).</td>
+      <td>A matrix that transforms from clip space to world space (<code>inverse(ViewProjection)</code>).</td>
     </tr>
     <tr>
-      <td>PassColor</td>
+      <td><code>PassColor</code></td>
       <td>vec4</td>
-      <td>The color set with `Pass:setColor`.</td>
+      <td>The color set with <code>Pass:setColor</code>.</td>
     </tr>
   </tbody>
 </table>
