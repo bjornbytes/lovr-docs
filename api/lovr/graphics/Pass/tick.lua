@@ -5,7 +5,7 @@ return {
     Starts a GPU measurement.  One of the slots in a `Tally` object will be used to hold the result.
     Commands on the Pass will continue being measured until `Pass:tock` is called with the same
     tally and slot combination.  Afterwards, `Pass:read` can be used to read back the tally result,
-    or the tally can be copied to a `Buffer.
+    or the tally can be copied to a `Buffer`.
   ]],
   arguments = {
     tally = {

@@ -4,7 +4,7 @@ return {
   description = [[
     Stops a GPU measurement.  `Pass:tick` must be called to start the measurement before this can be
     called.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be
-    copied to a `Buffer.
+    copied to a `Buffer`.
   ]],
   arguments = {
     tally = {
