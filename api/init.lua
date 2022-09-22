@@ -13529,7 +13529,7 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2\n      }`, where color is a `Color`."
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2\n      }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers."
                     },
                     {
                       name = "transform",
