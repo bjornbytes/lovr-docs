@@ -104,11 +104,7 @@ Here be dragons.
 
 First, make sure the Java JDK is installed (version 8 is known to work).
 
-Then, the Android SDK and NDK need to be installed.  The SDK version to install depends on the
-devices being targeted:
-
-- Version 26: Oculus Quest, Oculus Quest 2.
-- Version 27: Pico Neo 2.
+Then, the Android SDK and NDK need to be installed.  SDK version 26 should be installed.
 
 The Android command line tools can be found on the Android website or installed using a package
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
@@ -120,48 +116,33 @@ Note where the SDK is installed.  Some paths in the SDK will need to be specifie
 
 CMake or tup can be used to build an APK that can be installed on an Android device.
 
-When building for Oculus Android devices, download the latest Oculus Mobile SDK and copy the VrApi
-folder from there into `deps`.
-
 ### tup
 
-When using tup, third-party dependencies need to be built with CMake.  Follow the CMake instructions
-below, but add `-DLOVR_BUILD_EXE=OFF` to only build the LÖVR dependencies.
+Add a `tup.config` file in the repository root.  The config values to fill in are:
 
-Next, make sure you have a `tup.config` file in the repository root.  A sample config file can be
-found at `config/default`.  Some android-specific configuration needs to be filled in there:
-
-- Set `CONFIG_PLATFORM` to `android`.
+- Set `CONFIG_TARGET` to `android`.
 - Set `CONFIG_ANDROID_SDK` to the path to the Android SDK.
-- Set `CONFIG_ANDROID_VERSION` to the version of Android to use.  Check the `sdk/platforms` folder
-  to see which Android versions are installed.
-- Set `CONFIG_ANDROID_BUILD_TOOLS_VERSION` to the build tools version.  Check the `sdk/build-tools`
-  folder to see which versions are installed.
-- Set `CONFIG_HOST_TAG` to the type of computer you're using.  Examples:
-  - `windows-x86_64` for 64 bit Windows.
-  - `darwin-x86_64` for 64 bit macOS.
-  - Other: Check `ndk-bundle/prebuilt` folder to see a list of them.
+- Set `CONFIG_ANDROID_NDK` to the path to the NDK.
+- Set `CONFIG_ANDROID_VERSION` to the version of Android to use (e.g. 26).  Check the
+  `sdk/platforms` folder to see which Android versions are installed.
+- Set `CONFIG_ANDROID_BUILDTOOLS` to the build tools version.  Check the `sdk/build-tools` folder to
+  see which versions are installed.
 - Set `CONFIG_ANDROID_KEYSTORE` to the path to the keystore file.  See "Creating a Keystore" below
   for instructions on how to create a keystore.
-- Set `CONFIG_ANDROID_KEYSTORE_PASS` to the password to the keystore file.  This can be used in
-  multiple ways, described in "Creating a Keystore" below.
+- Set `CONFIG_ANDROID_KEYSTOREPASS` to the password to the keystore file.  It can be provided as a
+  string, file, or environment variable (see keystore section below).
 - Optional: To use a custom Android manifest XML, set `CONFIG_ANDROID_MANIFEST`.
-- Optional: To embed assets in the APK (e.g. a project folder), set `CONFIG_ANDROID_ASSETS`.
+- Optional: To use a different package name instead of `org.lovr.app`, set `CONFIG_ANDROID_PACKAGE`.
+- Optional: To bundle a LÖVR project in the APK, set `CONFIG_ANDROID_PROJECT` to the project folder.
 
-Once all of this is set up, run `tup init` if tup hasn't been initialized yet.  Then run
-
-```
-$ tup
-```
-
-to build the apk.
+Once all of this is set up, run `tup init` if tup hasn't been initialized yet.  Then run `tup` to
+build the APK, output in the `bin` folder.
 
 ### CMake
 
 The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
 the command line:
 
-- Set `LOVR_USE_VRAPI` to `ON` for Oculus Android devices, otherwise `LOVR_USE_PICO` to `ON` for Pico.
 - Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
   `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
 - Set `ANDROID_SDK` to the path to the Android SDK.
@@ -172,6 +153,7 @@ the command line:
 - Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
   described in "Creating a Keystore" below.
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
+- Optional: Set `ANDROID_PACKAGE` to change the package name from `org.lovr.app`.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
 - Windows: Make sure you add `-G "Unix Makefiles"` so it doesn't try to use Visual Studio.
 
@@ -181,7 +163,6 @@ The usual CMake incantation with all of the above variables set up should produc
 $ mkdir build
 $ cd build
 $ cmake \
-    -D LOVR_USE_VRAPI=ON \
     -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
     -D ANDROID_SDK=/path/to/android \
     -D ANDROID_ABI=arm64-v8a \
