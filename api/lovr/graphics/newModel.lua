@@ -55,7 +55,6 @@ return {
 
     - glTF: Morph targets are not supported.
     - glTF: Only the default scene is loaded.
-    - glTF: Only the default scene is loaded.
     - glTF: Currently, each skin in a Model can have up to 256 joints.
     - glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need
       to use 1 skin consistently.
