@@ -18019,6 +18019,7 @@ return {
                   arguments = {
                     {
                       name = "angle",
+                      type = "number",
                       description = "The angle to use for the rotation, in radians.",
                       default = "0"
                     },
