@@ -45,7 +45,6 @@ return {
   'Effects/Cubemap_Texturing',
   'UI/Spectator_Camera',
   'Optimization/Instancing',
-  'Optimization/Mask',
   'Debugging/FPS_Controls',
   'Debugging/Raw_Input'
 }
