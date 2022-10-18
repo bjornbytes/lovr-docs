@@ -27,6 +27,7 @@ in an existing repository.
 - GLFW (3.3+)
 - glslang
 - OpenXR
+- Vulkan SDK
 - msdfgen
 - ODE
 
