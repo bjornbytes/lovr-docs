@@ -6,17 +6,17 @@ return {
     a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The
     default step count is 20.
   ]],
-  arguments = {
+  arguments = {},
+  returns = {
     steps = {
       type = 'number',
       description = 'The step count.'
     }
   },
-  returns = {},
   variants = {
     {
-      arguments = { 'steps' },
-      returns = {}
+      arguments = {},
+      returns = { 'steps' }
     }
   },
   related = {

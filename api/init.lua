@@ -10540,7 +10540,7 @@ return {
           description = "Loads a 3D model from a file.  Currently, OBJ, glTF, and binary STL files are supported.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "Currently, the following features are not supported by the model importer:\n\n- glTF: Morph targets are not supported.\n- glTF: Only the default scene is loaded.\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 256 joints.\n- glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need\n  to use 1 skin consistently.\n- glTF: `KHR_texture_transform` is supported, but all textures in a material will use the same\n  transform.\n- STL: ASCII STL files are not supported.\n\nDiffuse and emissive textures will be loaded using sRGB encoding, all other textures will be loaded as linear.",
+          notes = "Currently, the following features are not supported by the model importer:\n\n- glTF: Morph targets are not supported.\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 256 joints.\n- glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need\n  to use 1 skin consistently.\n- glTF: `KHR_texture_transform` is supported, but all textures in a material will use the same\n  transform.\n- STL: ASCII STL files are not supported.\n\nDiffuse and emissive textures will be loaded using sRGB encoding, all other textures will be loaded as linear.",
           variants = {
             {
               arguments = {
@@ -29669,14 +29669,14 @@ return {
               },
               variants = {
                 {
-                  arguments = {
+                  arguments = {},
+                  returns = {
                     {
                       name = "steps",
                       type = "number",
                       description = "The step count."
                     }
-                  },
-                  returns = {}
+                  }
                 }
               }
             },
