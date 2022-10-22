@@ -82,10 +82,10 @@ $ cmake ..
 $ cmake --build .
 ```
 
-On Linux, LÖVR needs to run within the Steam Runtime.  To do this, first [install
-Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next, [install the Steam udev
-rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).  Then, run LÖVR
-within the Steam runtime:
+On Linux, LÖVR needs to run within the Steam Runtime.  To do this, first
+[install Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next,
+[install the Steam udev rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).
+Then, run LÖVR within the Steam runtime:
 
 ```
 $ ~/.local/share/Steam/ubuntu12_32/steam-runtime/run.sh lovr
@@ -226,6 +226,8 @@ When specifying the password for the keystore, it can be done in multiple ways:
 Troubleshooting
 ---
 
-- If you get "CMake no CMAKE_CXX_COMPILER found" on Windows, then install Visual Studio and create a
+- If you get "CMake no `CMAKE_CXX_COMPILER` found" on Windows, then install Visual Studio and create a
   blank C++ project, which will prompt you to install the compilers and tools necessary to compile
   LÖVR.
+- If you receive an issue about the `<stdalign.h>` header missing on Windows, then the compiler does
+  not support C11, and a newer version of the Windows SDK needs to be installed.
