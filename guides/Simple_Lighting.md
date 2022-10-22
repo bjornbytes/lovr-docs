@@ -6,7 +6,7 @@ This guide assumes basic knowledge of LÖVR project structure and Lua in general
 Intro
 ---
 
-Lighting in LÖVR is tricky for the uninitiated. There are no lighting prefabs or constructors -- you must do it all by hand. Luckily, it's not that hard! 
+Lighting in LÖVR is tricky for the uninitiated. There are no lighting prefabs or constructors -- you must do it all by hand. Luckily, it's not that hard!
 
 We've been spoiled by applications that create "lights" for us, so we think of them as objects that cast light within the rendering space. This is not how lighting is done for most video games - casting light itself in a realistic way is [extremely GPU-consuming](https://store.steampowered.com/agecheck/app/1089130/).
 
@@ -54,7 +54,7 @@ We now have custom shader code that is equivalent to the built-in unlit shader, 
 
 Now let's get to ambient lighting!
 
-Phase 1 - Ambience 
+Phase 1 - Ambience
 ---
 
 Step one of the Phong model is ambient lighting. Light bounces around everywhere, especially in the daytime, and even rooms without lights can be well-lit. You will likely change your ambient level frequently during the game, so being familiar with its affect on your scene is important.
@@ -218,9 +218,9 @@ There's lots of playing around you can do - experiment with multiple lights, new
 
 >Special Note 3: For factorization purposes, you can keep the vertex and fragment shader code in seperate files (default extension for them is .vs and .fs). You can use the lovr.filesystem.read() command to load them in as strings just like above. The advantage of this is using syntax highlighting or linting when coding your shaders i.e. in VS Code.
 
->Final Note: If you are having issues with some faces on your models not being lit properly, there are a few things to check on your model. 
+>Final Note: If you are having issues with some faces on your models not being lit properly, there are a few things to check on your model.
 >First, make sure it is built with a uniform scale. This can easily be done in Blender by selecting a properly scaled piece, then A to select the entire model, then Cmd+A (Apply) -> Scale. There is also the uniformScale shader flag, which gives a small speed boost - you should be developing everything in uniform scale in VR anyway!
->Second, all model faces need to be facing the correct way to generate their normal properly for lighting. If you notice some parts of your model are shading in the opposite direction, you can flip the face direction in Blender by selecting it all in edit mode, then Opt+N > Recalculate Normals or Flip Normals. 
+>Second, all model faces need to be facing the correct way to generate their normal properly for lighting. If you notice some parts of your model are shading in the opposite direction, you can flip the face direction in Blender by selecting it all in edit mode, then Opt+N > Recalculate Normals or Flip Normals.
 >These two tips should fix 90% of any issues!
 
 [Complete source code for this tutorial can be found here.](https://barelyconsciousgames.com/lovr-phong.zip)
