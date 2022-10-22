@@ -68,6 +68,7 @@ return {
   },
   related = {
     'lovr.math.mat4',
-    'Mat4'
+    'Mat4',
+    'Vectors'
   }
 }

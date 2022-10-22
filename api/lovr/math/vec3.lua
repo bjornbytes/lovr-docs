@@ -51,6 +51,7 @@ return {
   },
   related = {
     'lovr.math.newVec3',
-    'Vec3'
+    'Vec3',
+    'Vectors'
   }
 }

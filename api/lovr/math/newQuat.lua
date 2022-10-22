@@ -82,6 +82,7 @@ return {
   },
   related = {
     'lovr.math.quat',
-    'Quat'
+    'Quat',
+    'Vectors'
   }
 }

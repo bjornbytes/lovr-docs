@@ -20066,7 +20066,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.newMat4",
-            "Mat4"
+            "Mat4",
+            "Vectors"
           },
           variants = {
             {
@@ -20269,7 +20270,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.mat4",
-            "Mat4"
+            "Mat4",
+            "Vectors"
           },
           variants = {
             {
@@ -20396,7 +20398,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.quat",
-            "Quat"
+            "Quat",
+            "Vectors"
           },
           variants = {
             {
@@ -20592,7 +20595,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.vec2",
-            "Vec2"
+            "Vec2",
+            "Vectors"
           },
           variants = {
             {
@@ -20645,7 +20649,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.vec3",
-            "Vec3"
+            "Vec3",
+            "Vectors"
           },
           variants = {
             {
@@ -20720,7 +20725,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.vec4",
-            "Vec4"
+            "Vec4",
+            "Vectors"
           },
           variants = {
             {
@@ -20892,7 +20898,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.newQuat",
-            "Quat"
+            "Quat",
+            "Vectors"
           },
           variants = {
             {
@@ -21152,7 +21159,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.newVec2",
-            "Vec2"
+            "Vec2",
+            "Vectors"
           },
           variants = {
             {
@@ -21205,7 +21213,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.newVec3",
-            "Vec3"
+            "Vec3",
+            "Vectors"
           },
           variants = {
             {
@@ -21280,7 +21289,8 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.newVec4",
-            "Vec4"
+            "Vec4",
+            "Vectors"
           },
           variants = {
             {
@@ -22455,7 +22465,8 @@ return {
           },
           related = {
             "Vec3",
-            "Quat"
+            "Quat",
+            "Vectors"
           }
         },
         {
@@ -22842,7 +22853,8 @@ return {
           },
           related = {
             "Vec3",
-            "Mat4"
+            "Mat4",
+            "Vectors"
           }
         },
         {
@@ -23665,7 +23677,8 @@ return {
           },
           related = {
             "Vec3",
-            "Vec4"
+            "Vec4",
+            "Vectors"
           }
         },
         {
@@ -24408,7 +24421,8 @@ return {
           },
           related = {
             "Vec2",
-            "Vec4"
+            "Vec4",
+            "Vectors"
           }
         },
         {
@@ -25137,7 +25151,8 @@ return {
           },
           related = {
             "Vec2",
-            "Vec3"
+            "Vec3",
+            "Vectors"
           }
         },
         {
