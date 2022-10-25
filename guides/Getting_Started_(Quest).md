@@ -23,9 +23,7 @@ Download the latest Android APK from the [Downloads page](https://lovr.org/downl
 
 Install it to the device:
 
-```
-$ adb install lovr.apk
-```
+    $ adb install lovr.apk
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
 the `org.lovr.app` app.  You should see the no game screen.
