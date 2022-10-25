@@ -16,6 +16,11 @@ return {
     - `compute` passes run compute shaders.
     - `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.
   ]],
+  constructors = {
+    'lovr.graphics.getPass',
+    'lovr.graphics.getWindowPass',
+    'lovr.headset.getPass'
+  },
   sections = {
     {
       name = 'Drawing',
