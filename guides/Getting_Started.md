@@ -34,11 +34,9 @@ file in your project folder, LÖVR will run the code in there when the project s
 
 Create a file called `main.lua` in a project folder and type the following Lua code in it:
 
-```
-function lovr.draw(pass)
-  pass:text('hello world', 0, 1.7, -3, .5)
-end
-```
+    function lovr.draw(pass)
+      pass:text('hello world', 0, 1.7, -3, .5)
+    end
 
 Don't worry if you're confused about the code, it's not important to understand it all right now.
 In short, we declared the `lovr.draw` callback and used `lovr.graphics.print` in there to render

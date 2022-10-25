@@ -28,9 +28,7 @@ Skybox
 
 TODO
 
-```
-$ ./bin/cmgen --type=cubemap --format=png -x out env.hdr
-```
+    $ ./bin/cmgen --type=cubemap --format=png -x out env.hdr
 
 Shader Setup
 ---

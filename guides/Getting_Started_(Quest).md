@@ -36,17 +36,13 @@ Running a Project
 Now we can create a LÖVR project, which is a folder with some code and assets in it.  Create a
 folder called `hello-world` and add this code to a file named `main.lua` in there:
 
-```
-function lovr.draw(pass)
-  pass:text('hello world', 0, 1.7, -3, .5)
-end
-```
+    function lovr.draw(pass)
+      pass:text('hello world', 0, 1.7, -3, .5)
+    end
 
 Then use `adb` to sync it to the device:
 
-```
-$ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.app/files
-```
+    $ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.app/files
 
 Note the trailing `.` in the path to the project, it's important.
 
@@ -57,10 +53,8 @@ Tips
 
 - It is possible to restart the app from the command line by running:
 
-```
-adb shell am force-stop org.lovr.app
-adb shell am start org.lovr.app/org.lovr.app.Activity
-```
+    adb shell am force-stop org.lovr.app
+    adb shell am start org.lovr.app/org.lovr.app.Activity
 
 - For even faster restarts, use [`lodr`](https://github.com/mcclure/lodr) for live reloading.
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
