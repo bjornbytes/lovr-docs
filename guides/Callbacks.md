@@ -52,19 +52,17 @@ the virtual world.  Usually we'll do things like draw 3D models or render visual
 
 Here's a simple example to help explain things better:
 
-```
-function lovr.load()
-  cubeSize = 0
-end
+    function lovr.load()
+      cubeSize = 0
+    end
 
-function lovr.update()
-  cubeSize = cubeSize + .0001
-end
+    function lovr.update()
+      cubeSize = cubeSize + .0001
+    end
 
-function lovr.draw()
-  lovr.graphics.cube('line', 0, 1, 0, size)
-end
-```
+    function lovr.draw()
+      lovr.graphics.cube('line', 0, 1, 0, size)
+    end
 
 This program will draw a cube in the middle of the play area, and make it get bigger and bigger over
 time.  In lovr.load we define a variable to keep track of the size of the cube.  In lovr.update we
@@ -87,11 +85,9 @@ can base the speed on real world time.  There is a single function parameter pas
 called `dt`, which stands for **delta time**.  It represents the amount of time that has passed
 since the last call to lovr.update.  Try changing the lovr.update function to this:
 
-```
-function lovr.update(dt)
-  cubeSize = cubeSize + dt * .5
-end
-```
+    function lovr.update(dt)
+      cubeSize = cubeSize + dt * .5
+    end
 
 How is this different?  Instead of adding .001 to the cube size every time lovr.update is called,
 we're basing that number on actual time values.  A computer that's only able to call lovr.update 10
