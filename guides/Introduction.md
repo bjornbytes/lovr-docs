@@ -24,18 +24,16 @@ Example
 What does LÖVR look like?  Here's a simple example that draws a cube at the position of each
 motion controller:
 
-```
-function lovr.load()
-  controllers = lovr.headset.getControllers()
-end
+    function lovr.load()
+      controllers = lovr.headset.getControllers()
+    end
 
-function lovr.draw()
-  for i, controller in pairs(controllers) do
-    local x, y, z = controller:getPosition()
-    lovr.graphics.cube('line', x, y, z, .2, controller:getOrientation())
-  end
-end
-```
+    function lovr.draw()
+      for i, controller in pairs(controllers) do
+        local x, y, z = controller:getPosition()
+        lovr.graphics.cube('line', x, y, z, .2, controller:getOrientation())
+      end
+    end
 
 Onward!
 ---
