@@ -23,9 +23,7 @@ Download the latest Android APK from the [Downloads page](https://lovr.org/downl
 
 Install it to the device:
 
-```
-$ adb install lovr.apk
-```
+    $ adb install lovr.apk
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
 the `org.lovr.app` app.  You should see the no game screen.
@@ -36,17 +34,13 @@ Running a Project
 Now we can create a LÖVR project, which is a folder with some code and assets in it.  Create a
 folder called `hello-world` and add this code to a file named `main.lua` in there:
 
-```
-function lovr.draw()
-  lovr.graphics.print('hello world', 0, 1.7, -3, .5)
-end
-```
+    function lovr.draw()
+      lovr.graphics.print('hello world', 0, 1.7, -3, .5)
+    end
 
 Then use `adb` to sync it to the device:
 
-```
-$ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.app/files
-```
+    $ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.app/files
 
 Note the trailing `.` in the path to the project, it's important.
 
@@ -57,11 +51,10 @@ Tips
 
 - It is possible to restart the app from the command line by running:
 
-```
-adb shell am force-stop org.lovr.app
+<pre><code>adb shell am force-stop org.lovr.app
 adb shell am start org.lovr.app/org.lovr.app.Activity
-```
+</code></pre>
 
-- For even faster restarts, use [`lodr`](https://github.com/mcclure/lodr) for live reloading.
+- For even faster restarts, use [lodr](https://github.com/mcclure/lodr) for live reloading.
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
   `adb logcat -s LOVR`.

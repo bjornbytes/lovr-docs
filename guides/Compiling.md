@@ -36,12 +36,10 @@ Windows
 From the lovr folder, run these commands to create a build folder and compile the project using
 CMake:
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ cmake --build .
 
 The executable will then exist at `/path/to/lovr/build/Debug/lovr.exe`.  A LÖVR project (a folder
 containing a `main.lua` script) can then be dropped onto `lovr.exe` to run it, or it can be run
@@ -52,48 +50,38 @@ macOS
 
 Build using CMake, as above:
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ cmake --build .
 
 The lovr executable should exist in `lovr/build` now.  It's recommended to set up an alias or
 symlink so that this executable can be found in your PATH environment variable.  Once that's done,
 you can run a project like this:
 
-```
-$ lovr /path/to/myGame
-```
+    $ lovr /path/to/myGame
 
 Linux
 ---
 
 Install a C compiler and CMake, then run:
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ cmake --build .
 
 On Linux, LÖVR needs to run within the Steam Runtime.  To do this, first [install
 Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next, [install the Steam udev
 rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).  Then, run LÖVR
 within the Steam runtime:
 
-```
-$ ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
-```
+    $ ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 
 If you receive errors related to `libstdc++`, set the `LD_PRELOAD` environment variable when running
 the command:
 
-```
-$ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
-```
+    $ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 
 WebXR
 ---
@@ -102,41 +90,33 @@ First, [install the Emscripten SDK](https://emscripten.org/docs/getting_started/
 
 Unix:
 
-```
-$ mkdir build
-$ cd build
-$ emcmake cmake ..
-$ emmake make -j2
-```
+    $ mkdir build
+    $ cd build
+    $ emcmake cmake ..
+    $ emmake make -j2
 
 Windows (from a Visual Studio Command Prompt, make sure the Emscripten SDK is on PATH):
 
-```
-$ mkdir build
-$ cd build
-$ emcmake cmake -G "NMake Makefiles" ..
-$ emmake nmake
-```
+    $ mkdir build
+    $ cd build
+    $ emcmake cmake -G "NMake Makefiles" ..
+    $ emmake nmake
 
 The above commands will output `lovr.js`, `lovr.wasm`, and `lovr.html`.  The easiest way to run LÖVR
 from here is to use `emrun`:
 
-```
-$ emrun --browser firefox lovr.html
-```
+    $ emrun --browser firefox lovr.html
 
 To add a project, create a .zip of its contents and serve it alongside the HTML and JS files.  The
 following JS can be added to the page to download the zip file, add it to the emscripten virtual
 filesystem, and add it as a command line argument:
 
-```
-var filename = 'game.zip';
-var url = '/game.zip';
-Module.arguments.push(filename);
-Module.preRun.push(function() {
-  Module.FS_createPreloadedFile('/', filename, url, true, false);
-});
-```
+    var filename = 'game.zip';
+    var url = '/game.zip';
+    Module.arguments.push(filename);
+    Module.preRun.push(function() {
+      Module.FS_createPreloadedFile('/', filename, url, true, false);
+    });
 
 See `lovr.html` (or `src/resources/lovr.html`) for a full example page, including a button that
 can be used to enter/exit immersive mode.
@@ -197,9 +177,7 @@ found at `config/default`.  Some android-specific configuration needs to be fill
 
 Once all of this is set up, run `tup init` if tup hasn't been initialized yet.  Then run
 
-```
-$ tup
-```
+    $ tup
 
 to build the apk.
 
@@ -224,35 +202,29 @@ the command line:
 
 The usual CMake incantation with all of the above variables set up should produce `lovr.apk`:
 
-```
-$ mkdir build
-$ cd build
-$ cmake \
-    -D LOVR_USE_VRAPI=ON \
-    -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk-bundle/build/cmake/android.toolchain.cmake \
-    -D ANDROID_SDK=/path/to/android/sdk \
-    -D ANDROID_ABI=arm64-v8a \
-    -D ANDROID_NATIVE_API_LEVEL=26 \
-    -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
-    -D ANDROID_KEYSTORE=/path/to/test.keystore \
-    -D ANDROID_KEYSTORE_PASS=pass:hunter2 \
-    ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake \
+        -D LOVR_USE_VRAPI=ON \
+        -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk-bundle/build/cmake/android.toolchain.cmake \
+        -D ANDROID_SDK=/path/to/android/sdk \
+        -D ANDROID_ABI=arm64-v8a \
+        -D ANDROID_NATIVE_API_LEVEL=26 \
+        -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
+        -D ANDROID_KEYSTORE=/path/to/test.keystore \
+        -D ANDROID_KEYSTORE_PASS=pass:hunter2 \
+        ..
+    $ cmake --build .
 
 ### Installing the APK
 
 To install the APK, an Android device needs to be connected.  Run
 
-```
-$ adb devices
-```
+    $ adb devices
 
 to ensure that a device is connected, then run
 
-```
-$ adb install lovr.apk
-```
+    $ adb install lovr.apk
 
 To install the apk.  The `-r` flag can be used to overwrite an existing apk.
 
@@ -278,9 +250,7 @@ A keystore file needs to be generated, which is used to sign the APK after it's 
 
 To generate a keystore, use Java's `keytool` tool:
 
-```
-$ keytool -genkey -keystore <name>.keystore -alias <name> -keyalg RSA -keysize 2048 -validity 10000
-```
+    $ keytool -genkey -keystore <name>.keystore -alias <name> -keyalg RSA -keysize 2048 -validity 10000
 
 When specifying the password for the keystore, it can be done in multiple ways:
 

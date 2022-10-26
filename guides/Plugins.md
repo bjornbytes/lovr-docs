@@ -11,14 +11,12 @@ Using Plugins
 
 To use a plugin, place its library file next to the lovr executable and `require` it from Lua:
 
-```
--- myplugin.dll is next to lovr.exe
-local myplugin = require 'myplugin'
+    -- myplugin.dll is next to lovr.exe
+    local myplugin = require 'myplugin'
 
-function lovr.load()
-  myplugin.dothething()
-end
-```
+    function lovr.load()
+      myplugin.dothething()
+    end
 
 > On Unix systems, some plugin files might be prefixed with `lib` (e.g. `liblovr-plugin.so`).
 > In this case, be sure to require the plugin with the lib prefix: `require 'liblovr-plugin'`.
@@ -79,13 +77,11 @@ Creating Plugins
 Internally, a plugin is no different from a regular native Lua library.  A plugin library only needs
 to have a Lua C function with a symbol named after the plugin:
 
-```
-int luaopen_supermegaplugin(lua_State* L) {
-  // This code gets run when the plugin is required,
-  // and anything it returns on the stack is used
-  // as the require's return value.
-}
-```
+    int luaopen_supermegaplugin(lua_State* L) {
+      // This code gets run when the plugin is required,
+      // and anything it returns on the stack is used
+      // as the require's return value.
+    }
 
 All of [Lua's rules](https://www.lua.org/manual/5.1/manual.html#pdf-package.loaders) for native
 plugin loading, including processing of dots and hyphens and all-in-one loading, apply to LÖVR
