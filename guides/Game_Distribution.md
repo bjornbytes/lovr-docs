@@ -24,9 +24,7 @@ file in the same folder as `lovr.exe`.  Next, press Windows + R and type `cmd.ex
 command prompt.  From there, type `cd C:\Users\Cena\Desktop\lovr`, or wherever the LÖVR folder is.
 Finally, use the following command to create the executable:
 
-```
-copy /b lovr.exe+MyGame.lovr MyGame.exe
-```
+    copy /b lovr.exe+MyGame.lovr MyGame.exe
 
 On unix systems, the `cat` utility can be used to concatenate the `lovr` file with `lovr.exe`.
 

@@ -16,48 +16,38 @@ darkish blue.  Note that the color will remain active until it's changed again.
 Points
 ---
 
-```
-lovr.graphics.points(x, y, z)
-```
+    lovr.graphics.points(x, y, z)
 
 This draws a single point at an x, y, z position in 3D space.  If you try it out and draw a point at
 `(0, 0, 0)`, the point will be **really** hard to see because it's only 1 pixel big!  To change
 this, have a look at the `lovr.graphics.setPointSize` function.  You can also draw more than one
 point by passing in more point coordinates after the first.  Finally, you can also pass in a table:
 
-```
-local points = {
-  0, 0, 0,
-  1, 1, 1
-}
+    local points = {
+      0, 0, 0,
+      1, 1, 1
+    }
 
-lovr.graphics.points(points)
-```
+    lovr.graphics.points(points)
 
 Lines
 ---
 
-```
-lovr.graphics.line(x1, y1, z1, x2, y2, z2, ...)
-```
+    lovr.graphics.line(x1, y1, z1, x2, y2, z2, ...)
 
 This function draws lines between points.  Here's how you would draw a square on the floor:
 
-```
-lovr.graphics.line(
-  -1, 0, -1,
-  -1, 0,  1,
-   1, 0,  1,
-   1, 0, -1
-)
-```
+    lovr.graphics.line(
+      -1, 0, -1,
+      -1, 0,  1,
+       1, 0,  1,
+       1, 0, -1
+    )
 
 Triangles
 ---
 
-```
-lovr.graphics.triangle(mode, x1, y1, z1, x2, y2, z2, x3, y3, z3)
-```
+    lovr.graphics.triangle(mode, x1, y1, z1, x2, y2, z2, x3, y3, z3)
 
 This function draws a triangle from the specified 3 points.  `mode` can either be `line` for a
 wireframe triangle or `fill` for a solid triangle.
@@ -67,9 +57,7 @@ Planes
 
 A plane is a flat rectangle.  They can be used for simple floors and walls.
 
-```
-lovr.graphics.plane(mode, x, y, z, size, nx, ny, nz)
-```
+    lovr.graphics.plane(mode, x, y, z, size, nx, ny, nz)
 
 This draws a plane `size` meters big centered at `(x, y, z)`.  To control the direction the plane
 is facing, you gotta specify a _normal_ vector.  The normal vector is a direction specified using
@@ -82,9 +70,7 @@ Cubes
 
 Finally, cubes, the pinnacle of primitives.
 
-```
-lovr.graphics.cube(mode, x, y, z, size, angle, ax, ay, az)
-```
+    lovr.graphics.cube(mode, x, y, z, size, angle, ax, ay, az)
 
 This function draws a cube.  You can draw it as a wireframe or as a filled cube using the `mode`
 parameter, similar to triangles and planes.  The `x`, `y`, and `z` parameters control the position.
@@ -100,15 +86,13 @@ Bonus!!
 Planes and cubes can have **textures** applied to them.  Here's how you would draw a plane on the
 ground with a ground texture applied to it:
 
-```
-function lovr.load()
-  texture = lovr.graphics.newTexture('ground.png')
-end
+    function lovr.load()
+      texture = lovr.graphics.newTexture('ground.png')
+    end
 
-function lovr.draw()
-  lovr.graphics.plane(texture, 0, 0, 0, 2, 0, 1, 0)
-end
-```
+    function lovr.draw()
+      lovr.graphics.plane(texture, 0, 0, 0, 2, 0, 1, 0)
+    end
 
 For this to work, put an image named `ground.png` in the same folder that `main.lua` is in.
 
