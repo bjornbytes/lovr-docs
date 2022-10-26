@@ -19,10 +19,6 @@ return {
         <td>Linux</td>
         <td><code>/home/&lt;user&gt;/.local/share/LOVR/&lt;identity&gt;</code></td>
       </tr>
-      <tr>
-        <td>Android</td>
-        <td><code>/sdcard/Android/data/&lt;identity&gt;/files</code></td>
-      </tr>
     </table>
 
     `<identity>` should be a unique identifier for your app.  It can be set either in `lovr.conf` or
