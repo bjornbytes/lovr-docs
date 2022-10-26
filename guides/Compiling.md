@@ -27,25 +27,19 @@ Windows (CMake)
 
 First, install [lovr-deps](https://github.com/bjornbytes/lovr-deps):
 
-```
-cd lovr
-git clone --recursive https://github.com/bjornbytes/lovr-deps deps
-```
+    cd lovr
+    git clone --recursive https://github.com/bjornbytes/lovr-deps deps
 
 Next, use CMake to generate the build files:
 
-```
-mkdir build
-cd build
-cmake ..
-```
+    mkdir build
+    cd build
+    cmake ..
 
 This should output a Visual Studio solution, which can be built using Visual Studio.  Or you can
 just build it with CMake:
 
-```
-cmake --build .
-```
+    cmake --build .
 
 The executable will then exist at `/path/to/lovr/build/Debug/lovr.exe`.  The recommended way to
 create and run a game from this point is:
@@ -61,33 +55,25 @@ Unix (CMake)
 First, clone [OpenVR](https://github.com/ValveSoftware/openvr).  For this example, we'll clone
 `openvr` into the same directory that lovr was cloned into.
 
-```
-git clone --branch v1.0.5 https://github.com/ValveSoftware/openvr.git
-```
+    git clone --branch v1.0.5 https://github.com/ValveSoftware/openvr.git
 
 Next, install the other dependencies above using your package manager of choice:
 
-```
-brew install assimp glfw3 luajit physfs freetype openal-soft
-```
+    brew install assimp glfw3 luajit physfs freetype openal-soft
 
 On OSX, you'll need to set the `DYLD_LIBRARY_PATH` environment variable to be
 `/path/to/openvr/lib/osx32`.
 
 Next, build using CMake:
 
-```
-mkdir build
-cd build
-cmake .. -DOPENVR_DIR=../../openvr
-cmake --build .
-```
+    mkdir build
+    cd build
+    cmake .. -DOPENVR_DIR=../../openvr
+    cmake --build .
 
 The lovr executable should exist in `lovr/build` now.  You can run a game like this:
 
-```
-./lovr /path/to/myGame
-```
+    ./lovr /path/to/myGame
 
 You can also copy or symlink LÖVR into a directory on your `PATH` environment variable (e.g.
 `/usr/local/bin`) and run games from anywhere by just typing 'lovr'.
@@ -100,27 +86,21 @@ branch](https://github.com/bjornbytes/emscripten/tree/lovr) of Emscripten.
 
 Unix:
 
-```
-mkdir build
-cd build
-emcmake cmake -DCMAKE_BUILD_TYPE=Release ..
-emmake make -j2
-```
+    mkdir build
+    cd build
+    emcmake cmake -DCMAKE_BUILD_TYPE=Release ..
+    emmake make -j2
 
 Windows (from a Visual Studio Command Prompt, make sure the Emscripten SDK is on PATH):
 
-```
-mkdir build
-cd build
-emcmake cmake -G "NMake Makefiles" ..
-emmake nmake
-```
+    mkdir build
+    cd build
+    emcmake cmake -G "NMake Makefiles" ..
+    emmake nmake
 
 The above commands will output `lovr.html`, `lovr.js`, and `lovr.js.mem`.  To package a game, run:
 
-```
-python /path/to/emscripten/tools/file_packager.py game.data --preload /path/to/game@/ --js-output=game.js
-```
+    python /path/to/emscripten/tools/file_packager.py game.data --preload /path/to/game@/ --js-output=game.js
 
 Which will output `game.js` and `game.data`.  The `lovr.html` file will need to be modified to
 include `game.js` in a script tag.
