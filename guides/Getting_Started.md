@@ -40,27 +40,15 @@ details of the code right now.  *However*, I recommend that you avoid just copyi
 Typing out each line does this magical thing to your brain that helps you read, write, and
 understand the code better.  I promise.
 
-<<<<<<< HEAD
-```
-function lovr.draw()
-  lovr.graphics.cube('line', 0, 1, 0)
-end
-```
+    function lovr.draw()
+      lovr.graphics.cube('line', 0, 1, 0)
+    end
 
 Whew, that wasn't so bad.  Okay, save the file inside the `SuperEpicCube` folder and be sure to
 name it `main.lua`.  Now we're ready to run our project!
 
 > Note: If you're trying this out without a VR headset, use the coordinates `0, 0, -2` instead of
 > `0, 1, 0` so the cube shows up correctly!
-=======
-    function lovr.draw()
-      lovr.graphics.print('hello world', 0, 1.7, -3, .5)
-    end
-
-Don't worry if you're confused about the code, it's not important to understand it all right now.
-In short, we declared the `lovr.draw` callback and used `Pass:text` in there to render some text in
-the world.  We'll learn more about how this works in the next guide.
->>>>>>> afca132 (rm fenced codeblocks;)
 
 Running a Project
 ---
