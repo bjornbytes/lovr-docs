@@ -20,32 +20,30 @@ Callbacks
 There are various callbacks that can be used for interesting things.  Three of the most used ones
 are `lovr.load`, `lovr.update`, and `lovr.draw`.  A simple project skeleton might look like this:
 
-```
-function lovr.load()
-  -- This is called once on load.
-  --
-  -- You can use it to load assets and set everything up.
+    function lovr.load()
+      -- This is called once on load.
+      --
+      -- You can use it to load assets and set everything up.
 
-  print('loaded!')
-end
+      print('loaded!')
+    end
 
-function lovr.update(dt)
-  -- This is called continuously and is passed the "delta time" as dt, which
-  -- is the number of seconds elapsed since the last update.
-  --
-  -- You can use it to simulate physics or update game logic.
+    function lovr.update(dt)
+      -- This is called continuously and is passed the "delta time" as dt, which
+      -- is the number of seconds elapsed since the last update.
+      --
+      -- You can use it to simulate physics or update game logic.
 
-  print('updating', dt)
-end
+      print('updating', dt)
+    end
 
-function lovr.draw()
-  -- This is called once every frame.
-  --
-  -- You can use it to render the scene.
+    function lovr.draw()
+      -- This is called once every frame.
+      --
+      -- You can use it to render the scene.
 
-  print('rendering')
-end
-```
+      print('rendering')
+    end
 
 By filling in the different callbacks you can start to define the behavior of an app.
 
@@ -99,25 +97,23 @@ play area, so the origin is on the ground in the middle of the play space.
 
 You've already seen `lovr.graphics.print`, but here's another example:
 
-```
-function lovr.load()
-  -- Load a 3D model
-  model = lovr.graphics.newModel('monkey.obj')
-end
+    function lovr.load()
+      -- Load a 3D model
+      model = lovr.graphics.newModel('monkey.obj')
+    end
 
-function lovr.draw()
-  -- Use a dark grey background
-  lovr.graphics.setBackgroundColor(.2, .2, .2)
+    function lovr.draw()
+      -- Use a dark grey background
+      lovr.graphics.setBackgroundColor(.2, .2, .2)
 
-  -- Draw the model
-  lovr.graphics.setColor(1.0, 1.0, 1.0)
-  model:draw(-.5, 1, -3)
+      -- Draw the model
+      lovr.graphics.setColor(1.0, 1.0, 1.0)
+      model:draw(-.5, 1, -3)
 
-  -- Draw a red cube using the "cube" primitive
-  lovr.graphics.setColor(1.0, 0, 0)
-  lovr.graphics.cube('fill', .5, 1, -3, .5, lovr.timer.getTime())
-end
-```
+      -- Draw a red cube using the "cube" primitive
+      lovr.graphics.setColor(1.0, 0, 0)
+      lovr.graphics.cube('fill', .5, 1, -3, .5, lovr.timer.getTime())
+    end
 
 lovr.headset
 ---
@@ -139,12 +135,10 @@ functions can be used to figure out the state of buttons and other controls on t
 
 Here's a simple example that draws a sphere in the "opposite" position of the headset:
 
-```
-function lovr.draw()
-  local x, y, z = lovr.headset.getPosition()
-  lovr.graphics.sphere(-x, y, -z, .1)
-end
-```
+    function lovr.draw()
+      local x, y, z = lovr.headset.getPosition()
+      lovr.graphics.sphere(-x, y, -z, .1)
+    end
 
 lovr.audio
 ---
@@ -155,13 +149,11 @@ directions, which are used to make things sound realistic as the headset moves a
 Each instance of a sound is called a `Source`.  To create a sources, use `lovr.audio.newSource` and
 pass it an ogg file.  You can then call `play` on the source to play it.
 
-```
-function lovr.load()
-  ambience = lovr.audio.newSource('background.ogg')
-  ambience:setLooping(true)
-  ambience:play()
-end
-```
+    function lovr.load()
+      ambience = lovr.audio.newSource('background.ogg')
+      ambience:setLooping(true)
+      ambience:play()
+    end
 
 See the `Source` page for more information.
 
@@ -181,59 +173,63 @@ forces applied it.  The world should be updated in `lovr.update` using the `dt` 
 
 Here's an example that makes a tower of boxes that you can knock down with controllers:
 
-```
-function lovr.load()
-  world = lovr.physics.newWorld()
+    function lovr.load()
+      world = lovr.physics.newWorld()
 
-  -- Create the ground
-  world:newBoxCollider(0, 0, 0, 5, .01, 5):setKinematic(true)
+      -- Create the ground
+      world:newBoxCollider(0, 0, 0, 5, .01, 5):setKinematic(true)
 
-  -- Create boxes!
-  boxes = {}
-  for x = -1, 1, .25 do
-    for y = .125, 2, .25 do
-      local box = world:newBoxCollider(x, y, -1, .25)
-      table.insert(boxes, box)
+      -- Create boxes!
+      boxes = {}
+      for x = -1, 1, .25 do
+        for y = .125, 2, .25 do
+          local box = world:newBoxCollider(x, y, -1, .25)
+          table.insert(boxes, box)
+        end
+      end
+
+      -- Each controller is going to have a collider attached to it
+      controllerBoxes = {}
     end
-  end
 
-  -- Each controller is going to have a collider attached to it
-  controllerBoxes = {}
-end
+    function lovr.update(dt)
+      -- Synchronize controllerBoxes with the active controllers
+      for i, hand in ipairs(lovr.headset.getHands()) do
+        if not controllerBoxes[i] then
+          controllerBoxes[i] = world:newBoxCollider(0, 0, 0, .25)
+          controllerBoxes[i]:setKinematic(true)
+        end
+        controllerBoxes[i]:setPosition(lovr.headset.getPosition(hand))
+        controllerBoxes[i]:setOrientation(lovr.headset.getOrientation(hand))
+      end
 
-function lovr.update(dt)
-  -- Synchronize controllerBoxes with the active controllers
-  for i, hand in ipairs(lovr.headset.getHands()) do
-    if not controllerBoxes[i] then
-      controllerBoxes[i] = world:newBoxCollider(0, 0, 0, .25)
-      controllerBoxes[i]:setKinematic(true)
+      -- Update the physics simulation
+      world:update(dt)
     end
-    controllerBoxes[i]:setPosition(lovr.headset.getPosition(hand))
-    controllerBoxes[i]:setOrientation(lovr.headset.getOrientation(hand))
-  end
 
-  -- Update the physics simulation
-  world:update(dt)
-end
+    -- A helper function for drawing boxes
+    function drawBox(pass, box)
+      local x, y, z = box:getPosition()
+      pass:cube(x, y, z, .25, quat(box:getOrientation()), 'line')
+    end
 
--- A helper function for drawing boxes
-function drawBox(box)
-  local x, y, z = box:getPosition()
-  lovr.graphics.cube('line', x, y, z, .25, box:getOrientation())
-end
+    -- A helper function for drawing boxes
+    function drawBox(box)
+      local x, y, z = box:getPosition()
+      lovr.graphics.cube('line', x, y, z, .25, box:getOrientation())
+    end
 
-function lovr.draw()
-  lovr.graphics.setColor(1.0, 0, 0)
-  for i, box in ipairs(boxes) do
-    drawBox(box)
-  end
+    function lovr.draw()
+      lovr.graphics.setColor(1.0, 0, 0)
+      for i, box in ipairs(boxes) do
+        drawBox(box)
+      end
 
-  lovr.graphics.setColor(0, 0, 1.0)
-  for i, box in ipairs(controllerBoxes) do
-    drawBox(box)
-  end
-end
-```
+      lovr.graphics.setColor(0, 0, 1.0)
+      for i, box in ipairs(controllerBoxes) do
+        drawBox(box)
+      end
+    end
 
 Next Steps
 ---
