@@ -26,9 +26,7 @@ page](https://github.com/mcclure/lovr-oculus-mobile/releases).
 
 Install it to the device:
 
-```
-$ adb install /path/to/test-release.apk
-```
+    $ adb install /path/to/test-release.apk
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
 the `org.lovr.test` app.  You should see a message about how to upload files.
@@ -39,17 +37,13 @@ Running a Project
 Now we can create a LÖVR project, which is a folder with some code and assets in it.  Create a
 folder called `hello-world` and add this code to a file named `main.lua` in there:
 
-```
-function lovr.draw()
-  lovr.graphics.print('hello world', 0, 1.7, -3, .5)
-end
-```
+    function lovr.draw()
+      lovr.graphics.print('hello world', 0, 1.7, -3, .5)
+    end
 
 Then use `adb` to sync it to the device:
 
-```
-$ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.test/files/.lodr
-```
+    $ adb push --sync /path/to/hello-world/. /sdcard/Android/data/org.lovr.test/files/.lodr
 
 You should see the "hello world" message!
 

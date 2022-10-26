@@ -6,14 +6,12 @@ the capabilities of LÖVR and others just make it easier to get stuff done.  Lib
 distributed as a single Lua file.  You can copy the Lua file into your project and `require` it to
 use the library:
 
-```
--- library.lua is sitting next to our main.lua here
-local lib = require('library')
+    -- library.lua is sitting next to our main.lua here
+    local lib = require('library')
 
-function lovr.load()
-  lib.doStuff()
-end
-```
+    function lovr.load()
+      lib.doStuff()
+    end
 
 Below is a catalog of useful libraries.  All of them can be used with LÖVR, although some of them
 only depend on Lua and aren't specific to LÖVR.
