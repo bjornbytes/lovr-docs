@@ -9,16 +9,12 @@ return {
     The `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds
     the most padding between fields, and requires the stride to be a multiple of 16.  Example:
 
-    ```
-    layout(std140) uniform ObjectScales { float scales[64]; };
-    ```
+        layout(std140) uniform ObjectScales { float scales[64]; };
 
     The `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds
     some padding between certain types, and may round up the stride.  Example:
 
-    ```
-    layout(std430) buffer TileSizes { vec2 sizes[]; }
-    ```
+        layout(std430) buffer TileSizes { vec2 sizes[]; }
   ]],
   values = {
     {

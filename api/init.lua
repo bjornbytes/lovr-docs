@@ -7778,7 +7778,7 @@ return {
       description = "The `lovr.filesystem` module provides access to the filesystem.",
       key = "lovr.filesystem",
       enums = {},
-      notes = "LÖVR programs can only write to a single directory, called the save directory.  The location of the save directory is platform-specific:\n\n<table>\n  <tr>\n    <td>Windows</td>\n    <td><code>C:\\Users\\&lt;user&gt;\\AppData\\Roaming\\LOVR\\&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>macOS</td>\n    <td><code>/Users/&lt;user&gt;/Library/Application Support/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Linux</td>\n    <td><code>/home/&lt;user&gt;/.local/share/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Android</td>\n    <td><code>/sdcard/Android/data/<identity>/files</code></td>\n  </tr> </table>\n\n`<identity>` should be a unique identifier for your app.  It can be set either in `lovr.conf` or by using `lovr.filesystem.setIdentity`.  On Android, the identity can not be changed and will always be the package id, like `org.lovr.app`.\n\nAll filenames are relative to either the save directory or the directory containing the project source.  Files in the save directory take precedence over files in the project.",
+      notes = "LÖVR programs can only write to a single directory, called the save directory.  The location of the save directory is platform-specific:\n\n<table>\n  <tr>\n    <td>Windows</td>\n    <td><code>C:\\Users\\&lt;user&gt;\\AppData\\Roaming\\LOVR\\&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>macOS</td>\n    <td><code>/Users/&lt;user&gt;/Library/Application Support/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Linux</td>\n    <td><code>/home/&lt;user&gt;/.local/share/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Android</td>\n    <td><code>/sdcard/Android/data/&lt;identity&gt;/files</code></td>\n  </tr> </table>\n\n`<identity>` should be a unique identifier for your app.  It can be set either in `lovr.conf` or by using `lovr.filesystem.setIdentity`.  On Android, the identity can not be changed and will always be the package id, like `org.lovr.app`.\n\nAll filenames are relative to either the save directory or the directory containing the project source.  Files in the save directory take precedence over files in the project.",
       functions = {
         {
           name = "append",
@@ -8033,7 +8033,7 @@ return {
               }
             }
           },
-          notes = "The save directory takes the following form:\n\n``` <appdata>/LOVR/<identity> ```\n\nWhere `<appdata>` is `lovr.filesystem.getAppdataDirectory` and `<identity>` is `lovr.filesystem.getIdentity` and can be customized using `lovr.conf`."
+          notes = "The save directory takes the following form:\n\n    <appdata>/LOVR/<identity>\n\nWhere `<appdata>` is `lovr.filesystem.getAppdataDirectory` and `<identity>` is `lovr.filesystem.getIdentity` and can be customized using `lovr.conf`."
         },
         {
           name = "getSize",
@@ -8602,7 +8602,7 @@ return {
         },
         {
           name = "BufferLayout",
-          description = "The different ways to pack Buffer fields into memory.\n\nThe default is `packed`, which is suitable for vertex buffers and index buffers.  It doesn't add any padding between elements, and so it doesn't waste any space.  However, this layout won't necessarily work for uniform buffers and storage buffers.\n\nThe `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds the most padding between fields, and requires the stride to be a multiple of 16.  Example:\n\n``` layout(std140) uniform ObjectScales { float scales[64]; }; ```\n\nThe `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds some padding between certain types, and may round up the stride.  Example:\n\n``` layout(std430) buffer TileSizes { vec2 sizes[]; } ```",
+          description = "The different ways to pack Buffer fields into memory.\n\nThe default is `packed`, which is suitable for vertex buffers and index buffers.  It doesn't add any padding between elements, and so it doesn't waste any space.  However, this layout won't necessarily work for uniform buffers and storage buffers.\n\nThe `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds the most padding between fields, and requires the stride to be a multiple of 16.  Example:\n\n    layout(std140) uniform ObjectScales { float scales[64]; };\n\nThe `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds some padding between certain types, and may round up the stride.  Example:\n\n    layout(std430) buffer TileSizes { vec2 sizes[]; }",
           key = "BufferLayout",
           module = "lovr.graphics",
           values = {

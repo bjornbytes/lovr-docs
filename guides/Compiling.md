@@ -39,12 +39,10 @@ Windows
 From the lovr folder, run these commands to create a build folder and compile the project using
 CMake:
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ cmake --build .
 
 The executable will then exist at `/path/to/lovr/build/Debug/lovr.exe`.  A LÖVR project (a folder
 containing a `main.lua` script) can then be dropped onto `lovr.exe` to run it, or it can be run
@@ -55,48 +53,38 @@ macOS
 
 Build using CMake, as above:
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ cmake --build .
 
 The lovr executable should exist in `lovr/build/bin` now.  It's recommended to set up an alias or
 symlink so that this executable can be found in your PATH environment variable.  Once that's done,
 you can run a project like this:
 
-```
-$ lovr /path/to/myGame
-```
+    $ lovr /path/to/myGame
 
 Linux
 ---
 
 Install a C compiler and CMake, then run:
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ cmake --build .
 
 On Linux, LÖVR needs to run within the Steam Runtime.  To do this, first
 [install Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next,
 [install the Steam udev rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).
 Then, run LÖVR within the Steam runtime:
 
-```
-$ ~/.local/share/Steam/ubuntu12_32/steam-runtime/run.sh lovr
-```
+    $ ~/.local/share/Steam/ubuntu12_32/steam-runtime/run.sh lovr
 
 If you receive errors related to `libstdc++`, set the `LD_PRELOAD` environment variable when running
 the command:
 
-```
-$ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
-```
+    $ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1' ~/.steam/steam/ubuntu12_32/steam-runtime/run.sh lovr
 
 Android
 ---
@@ -160,34 +148,28 @@ the command line:
 
 The usual CMake incantation with all of the above variables set up should produce `lovr.apk`:
 
-```
-$ mkdir build
-$ cd build
-$ cmake \
-    -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
-    -D ANDROID_SDK=/path/to/android \
-    -D ANDROID_ABI=arm64-v8a \
-    -D ANDROID_NATIVE_API_LEVEL=26 \
-    -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
-    -D ANDROID_KEYSTORE=/path/to/test.keystore \
-    -D ANDROID_KEYSTORE_PASS=PASS:hunter2 \
-    ..
-$ cmake --build .
-```
+    $ mkdir build
+    $ cd build
+    $ cmake \
+        -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
+        -D ANDROID_SDK=/path/to/android \
+        -D ANDROID_ABI=arm64-v8a \
+        -D ANDROID_NATIVE_API_LEVEL=26 \
+        -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
+        -D ANDROID_KEYSTORE=/path/to/test.keystore \
+        -D ANDROID_KEYSTORE_PASS=PASS:hunter2 \
+        ..
+    $ cmake --build .
 
 ### Installing the APK
 
 To install the APK, an Android device needs to be connected.  Run
 
-```
-$ adb devices
-```
+    $ adb devices
 
 to ensure that a device is connected, then run
 
-```
-$ adb install lovr.apk
-```
+    $ adb install lovr.apk
 
 To install the apk.  The `-r` flag can be used to overwrite an existing apk.
 
@@ -213,9 +195,7 @@ A keystore file needs to be generated, which is used to sign the APK after it's 
 
 To generate a keystore, use Java's `keytool` tool:
 
-```
-$ keytool -genkey -keystore <name>.keystore -alias <name> -keyalg RSA -keysize 2048 -validity 10000
-```
+    $ keytool -genkey -keystore <name>.keystore -alias <name> -keyalg RSA -keysize 2048 -validity 10000
 
 When specifying the password for the keystore, it can be done in multiple ways:
 

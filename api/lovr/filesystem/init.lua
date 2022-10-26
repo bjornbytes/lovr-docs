@@ -21,7 +21,7 @@ return {
       </tr>
       <tr>
         <td>Android</td>
-        <td><code>/sdcard/Android/data/<identity>/files</code></td>
+        <td><code>/sdcard/Android/data/&lt;identity&gt;/files</code></td>
       </tr>
     </table>
 
