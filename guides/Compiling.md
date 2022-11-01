@@ -99,6 +99,14 @@ The Android command line tools can be found on the Android website or installed 
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
 various versions of Android, the Android build tools, and the NDK.
 
+Installation via `sdkmanager` command line tool:
+
+    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/Android/Sdk "build-tools;30.0.3" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-26
+
+To reduce the SDK size, `emulator` package can be safely uninstalled:
+
+    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/Android/Sdk --uninstall emulator
+
 Android Studio isn't required, but can be used to install the SDK, NDK, and Java as well.
 
 Note where the SDK is installed.  Some paths in the SDK will need to be specified.
