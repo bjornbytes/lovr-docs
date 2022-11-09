@@ -93,13 +93,13 @@ Here be dragons.
 
 First, make sure the Java JDK is installed (version 8 is known to work).
 
-Then, the Android SDK and NDK need to be installed.  SDK version 26 should be installed.
+Then, the Android SDK and NDK need to be installed.  SDK version 29 should be installed.
 
 The Android command line tools can be found on the Android website or installed using a package
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
 various versions of Android, the Android build tools, and the NDK:
 
-    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;30.0.3" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-26"
+    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;30.0.3" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-29"
 
 The SDK will be installed to the chosen `sdk_root` path.  To reduce the SDK size, the `emulator`
 package can be safely uninstalled:
@@ -119,7 +119,7 @@ Add a `tup.config` file in the repository root.  The config values to fill in ar
 - Set `CONFIG_TARGET` to `android`.
 - Set `CONFIG_ANDROID_SDK` to the path to the Android SDK.
 - Set `CONFIG_ANDROID_NDK` to the path to the NDK.
-- Set `CONFIG_ANDROID_VERSION` to the version of Android to use (e.g. 26).  Check the
+- Set `CONFIG_ANDROID_VERSION` to the version of Android to use (e.g. 29).  Check the
   `sdk/platforms` folder to see which Android versions are installed.
 - Set `CONFIG_ANDROID_BUILDTOOLS` to the build tools version.  Check the `sdk/build-tools` folder to
   see which versions are installed.
@@ -143,7 +143,7 @@ the command line:
   `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
 - Set `ANDROID_SDK` to the path to the Android SDK.
 - Set `ANDROID_ABI` to `arm64-v8a`.
-- Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use (e.g. `26`).
+- Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use (e.g. `29`).
 - Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
 - Set `ANDROID_KEYSTORE` to the path to they keystore file.  See "Creating a Keystore" below.
 - Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
@@ -161,7 +161,7 @@ The usual CMake incantation with all of the above variables set up should produc
         -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
         -D ANDROID_SDK=/path/to/android \
         -D ANDROID_ABI=arm64-v8a \
-        -D ANDROID_NATIVE_API_LEVEL=26 \
+        -D ANDROID_NATIVE_API_LEVEL=29 \
         -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
         -D ANDROID_KEYSTORE=/path/to/test.keystore \
         -D ANDROID_KEYSTORE_PASS=PASS:hunter2 \
