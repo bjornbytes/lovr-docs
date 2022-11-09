@@ -43,6 +43,7 @@ return {
     'World:newBoxCollider',
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
-    'World:newMeshCollider'
+    'World:newMeshCollider',
+    'World:newTerrainCollider'
   }
 }
