@@ -63,7 +63,8 @@ return {
     },
     base = {
       type = 'number',
-      default = 'A base offset to apply to vertex indices.'
+      default = '0',
+      description = 'A base offset to apply to vertex indices.'
     }
   },
   returns = {},
