@@ -1,752 +1,4 @@
 return {
-  callbacks = {
-    {
-      name = "conf",
-      tag = "callbacks",
-      summary = "Called to read configuration settings at startup.",
-      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.  Make sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes.",
-      key = "lovr.conf",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "t",
-              type = "table",
-              description = "The table to edit the configuration settings on.",
-              table = {
-                {
-                  name = "version",
-                  type = "string",
-                  description = "The version of LÖVR this project targets (not used yet)."
-                },
-                {
-                  name = "identity",
-                  type = "string",
-                  description = "A unique label for this project."
-                },
-                {
-                  name = "saveprecedence",
-                  type = "boolean",
-                  description = "Whether the files in the save directory should have precedence over files in the source archive."
-                },
-                {
-                  name = "modules",
-                  type = "table",
-                  description = "The set of enabled modules to use.",
-                  table = {
-                    {
-                      name = "audio",
-                      type = "boolean",
-                      description = "Whether the audio module should be enabled."
-                    },
-                    {
-                      name = "data",
-                      type = "boolean",
-                      description = "Whether the data module should be enabled."
-                    },
-                    {
-                      name = "event",
-                      type = "boolean",
-                      description = "Whether the event module should be enabled."
-                    },
-                    {
-                      name = "graphics",
-                      type = "boolean",
-                      description = "Whether the graphics module should be enabled."
-                    },
-                    {
-                      name = "headset",
-                      type = "boolean",
-                      description = "Whether the headset module should be enabled."
-                    },
-                    {
-                      name = "math",
-                      type = "boolean",
-                      description = "Whether the math module should be enabled."
-                    },
-                    {
-                      name = "physics",
-                      type = "boolean",
-                      description = "Whether the physics module should be enabled."
-                    },
-                    {
-                      name = "system",
-                      type = "boolean",
-                      description = "Whether the system module should be enabled."
-                    },
-                    {
-                      name = "thread",
-                      type = "boolean",
-                      description = "Whether the thread module should be enabled."
-                    },
-                    {
-                      name = "timer",
-                      type = "boolean",
-                      description = "Whether the timer module should be enabled."
-                    }
-                  }
-                },
-                {
-                  name = "audio",
-                  type = "table",
-                  description = "Configuration for the audio module.",
-                  table = {
-                    {
-                      name = "spatializer",
-                      type = "string",
-                      description = "An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of them are attempted."
-                    },
-                    {
-                      name = "samplerate",
-                      type = "number",
-                      description = "The sample rate to use for audio playback."
-                    },
-                    {
-                      name = "start",
-                      type = "boolean",
-                      description = "Whether the playback device should be automatically started."
-                    }
-                  }
-                },
-                {
-                  name = "graphics",
-                  type = "table",
-                  description = "Configuration for the graphics module.",
-                  table = {
-                    {
-                      name = "debug",
-                      type = "boolean",
-                      description = "Whether debug messages from the GPU should get sent to lovr.log."
-                    },
-                    {
-                      name = "vsync",
-                      type = "boolean",
-                      description = "Whether vsync is enabled (forced off when VR is active)."
-                    },
-                    {
-                      name = "stencil",
-                      type = "boolean",
-                      description = "Whether the desktop window should have a stencil buffer."
-                    },
-                    {
-                      name = "antialias",
-                      type = "boolean",
-                      description = "Whether the desktop window rendering should be antialiased."
-                    },
-                    {
-                      name = "shadercache",
-                      type = "boolean",
-                      description = "Whether the shader cache should be loaded and saved to disk."
-                    }
-                  }
-                },
-                {
-                  name = "headset",
-                  type = "table",
-                  description = "Configuration for the headset.",
-                  table = {
-                    {
-                      name = "drivers",
-                      type = "table",
-                      description = "An ordered list of preferred headset drivers."
-                    },
-                    {
-                      name = "supersample",
-                      type = "number",
-                      description = "A scaling factor to apply to the headset texture.  Improves visual quality but reduces performance.  Can also be a boolean."
-                    },
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "The vertical offset for seated experiences."
-                    },
-                    {
-                      name = "antialias",
-                      type = "boolean",
-                      description = "Whether headset rendering should be antialiased."
-                    },
-                    {
-                      name = "stencil",
-                      type = "boolean",
-                      description = "Whether headset rendering should have a stencil buffer."
-                    },
-                    {
-                      name = "submitdepth",
-                      type = "boolean",
-                      description = "Whether the depth buffer should be sent to the VR runtime (improves reprojection)."
-                    },
-                    {
-                      name = "overlay",
-                      type = "boolean",
-                      description = "Whether the project should run as an overlay."
-                    }
-                  }
-                },
-                {
-                  name = "math",
-                  type = "table",
-                  description = "Configuration for the math module.",
-                  table = {
-                    {
-                      name = "globals",
-                      type = "boolean",
-                      description = "Whether vector object functions should be added to the global scope."
-                    }
-                  }
-                },
-                {
-                  name = "window",
-                  type = "table",
-                  description = "Configuration for the window.",
-                  table = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the window."
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the window."
-                    },
-                    {
-                      name = "fullscreen",
-                      type = "boolean",
-                      description = "Whether the window is fullscreen."
-                    },
-                    {
-                      name = "resizable",
-                      type = "boolean",
-                      description = "Whether the window is resizable."
-                    },
-                    {
-                      name = "title",
-                      type = "string",
-                      description = "The window title."
-                    },
-                    {
-                      name = "icon",
-                      type = "string",
-                      description = "The path to the window icon file."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.load"
-      },
-      examples = {
-        {
-          description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.16.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.antialias = true\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
-        }
-      },
-      notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
-    },
-    {
-      name = "draw",
-      tag = "callbacks",
-      summary = "Called continuously to render frames to the display.",
-      description = "This callback is called every frame, and receives a `Pass` object as an argument which can be used to render graphics to the display.  If a VR headset is connected, this function renders to the headset display, otherwise it will render to the desktop window.",
-      key = "lovr.draw",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "pass",
-              type = "Pass",
-              description = "A render pass targeting the main display (headset or window)."
-            }
-          },
-          returns = {
-            {
-              name = "skip",
-              type = "boolean",
-              description = "If truthy, the input Pass will not be submitted to the GPU."
-            }
-          }
-        }
-      },
-      related = {
-        "lovr.mirror",
-        "lovr.headset.getPass",
-        "lovr.graphics.getWindowPass",
-        "lovr.graphics.setBackgroundColor"
-      },
-      notes = "To render to the desktop window when a VR headset is connected, use the `lovr.mirror` callback.\n\nThe display is cleared to the global background color before this callback is called, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nSince the `lovr.graphics.submit` function always returns true, the following idiom can be used to submit graphics work manually and override the default submission:\n\n    function lovr.draw(pass)\n      local passes = {}\n\n      -- ... record multiple passes and add to passes table\n\n      return lovr.graphics.submit(passes)\n    end"
-    },
-    {
-      name = "errhand",
-      tag = "callbacks",
-      summary = "Called when an error occurs.",
-      description = "The \"lovr.errhand\" callback is run whenever an error occurs.  It receives two parameters. The first is a string containing the error message. The second is either nil, or a string containing a traceback (as returned by \"debug.traceback()\"); if nil, this means \"lovr.errhand\" is being called in the stack where the error occurred, and it can call \"debug.traceback()\" itself.\n\n\"lovr.errhand\" should return a handler function to run in a loop to show the error screen. This handler function is of the same type as the one returned by \"lovr.run\" and has the same requirements (such as pumping events). If an error occurs while this handler is running, the program will terminate immediately-- \"lovr.errhand\" will not be given a second chance. Errors which occur inside \"lovr.errhand\" or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
-      key = "lovr.errhand",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "message",
-              type = "string",
-              description = "The error message."
-            },
-            {
-              name = "traceback",
-              type = "string",
-              description = "A traceback string, or nil."
-            }
-          },
-          returns = {
-            {
-              name = "handler",
-              type = "function",
-              description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
-              arguments = {},
-              returns = {
-                {
-                  name = "result",
-                  type = "*"
-                }
-              }
-            }
-          }
-        }
-      },
-      examples = {
-        {
-          code = "function lovr.errhand(message, traceback)\n  traceback = traceback or debug.traceback('', 3)\n  print('ohh NOOOO!', message)\n  print(traceback)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
-        }
-      },
-      related = {
-        "lovr.quit"
-      }
-    },
-    {
-      name = "focus",
-      tag = "callbacks",
-      summary = "Called when the application gets or loses focus.",
-      description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
-      key = "lovr.focus",
-      module = "lovr",
-      related = {
-        "lovr.headset.isFocused"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "focused",
-              type = "boolean",
-              description = "Whether the program is now focused."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "keypressed",
-      tag = "callbacks",
-      summary = "Called when a key is pressed.",
-      description = "This callback is called when a key is pressed.",
-      key = "lovr.keypressed",
-      module = "lovr",
-      related = {
-        "lovr.keyreleased",
-        "lovr.textinput"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "key",
-              type = "KeyCode",
-              description = "The key that was pressed."
-            },
-            {
-              name = "scancode",
-              type = "number",
-              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
-            },
-            {
-              name = "repeating",
-              type = "boolean",
-              description = "Whether the event is the result of a key repeat instead of an actual press."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "keyreleased",
-      tag = "callbacks",
-      summary = "Called when a key is released.",
-      description = "This callback is called when a key is released.",
-      key = "lovr.keyreleased",
-      module = "lovr",
-      related = {
-        "lovr.keypressed",
-        "lovr.textinput"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "key",
-              type = "KeyCode",
-              description = "The key that was released."
-            },
-            {
-              name = "scancode",
-              type = "number",
-              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "load",
-      tag = "callbacks",
-      summary = "Called once at startup.",
-      description = "This callback is called once when the app starts.  It should be used to perform initial setup work, like loading resources and initializing classes and variables.",
-      key = "lovr.load",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "arg",
-              type = "table",
-              description = "The command line arguments provided to the program."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.quit"
-      },
-      examples = {
-        {
-          code = "function lovr.load(arg)\n  model = lovr.graphics.newModel('sponza.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
-        }
-      },
-      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `arg` table.\n\nThe `arg` table follows the [Lua standard](https://en.wikibooks.org/wiki/Lua_Programming/command_line_parameter).  The arguments passed in from the shell are put into a global table named `arg` and passed to `lovr.load`, but with indices offset such that the \"script\" (the project path) is at index 0.  So all arguments (if any) intended for the project are at successive indices starting with 1, and the executable and its \"internal\" arguments are in normal order but stored in negative indices."
-    },
-    {
-      name = "log",
-      tag = "callbacks",
-      summary = "Called when a message is logged.",
-      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GPU`).  It is also possible to emit customlog messages using `lovr.event.push`, or by calling the callback.",
-      key = "lovr.log",
-      module = "lovr",
-      related = {
-        "lovr.graphics.print"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "message",
-              type = "string",
-              description = "The log message.  It may end in a newline."
-            },
-            {
-              name = "level",
-              type = "string",
-              description = "The log level (`debug`, `info`, `warn`, or `error`)."
-            },
-            {
-              name = "tag",
-              type = "string",
-              description = "The log tag."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "mirror",
-      tag = "callbacks",
-      summary = "Called to render content to the desktop window.",
-      description = "This callback is called every frame after rendering to the headset and is usually used to render a mirror of the headset display onto the desktop window.  It can be overridden for custom mirroring behavior.  For example, a stereo view could be drawn instead of a single eye or a 2D HUD could be rendered.",
-      key = "lovr.mirror",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {}
-        }
-      },
-      examples = {
-        {
-          description = "The default `lovr.mirror` implementation draws the headset mirror texture to the window if the headset is active, or just calls `lovr.draw` if there isn't a headset.",
-          code = "function lovr.mirror(pass)\n  if lovr.headset then\n    local texture = lovr.headset.getTexture()\n    if texture then\n      pass:fill(texture)\n    else\n      return true\n    end\n  else\n    return lovr.draw and lovr.draw(pass)\n  end\nend"
-        }
-      },
-      related = {
-        "lovr.system.openWindow",
-        "lovr.draw"
-      }
-    },
-    {
-      name = "permission",
-      tag = "callbacks",
-      summary = "Called when a permission request is answered.",
-      description = "This callback contains a permission response previously requested with `lovr.system.requestPermission`.  The callback contains information on whether permission was granted or denied.",
-      key = "lovr.permission",
-      module = "lovr",
-      related = {
-        "lovr.system.requestPermission"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "permission",
-              type = "Permission",
-              description = "The type of permission."
-            },
-            {
-              name = "granted",
-              type = "boolean",
-              description = "Whether permission was granted or denied."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "quit",
-      tag = "callbacks",
-      summary = "Called before quitting.",
-      description = "This callback is called right before the application is about to quit.  Use it to perform any necessary cleanup work.  A truthy value can be returned from this callback to abort quitting.",
-      key = "lovr.quit",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {
-            {
-              name = "abort",
-              type = "boolean",
-              description = "Whether quitting should be aborted."
-            }
-          }
-        }
-      },
-      examples = {
-        {
-          code = "function lovr.quit()\n  if shouldQuit() then\n    return false\n  else\n    return true\n  end\nend"
-        }
-      },
-      related = {
-        "lovr.event.quit",
-        "lovr.load"
-      }
-    },
-    {
-      name = "resize",
-      tag = "callbacks",
-      summary = "Called when the window is resized.",
-      description = "This callback is called when the desktop window is resized.",
-      key = "lovr.resize",
-      module = "lovr",
-      related = {
-        "lovr.graphics.getDimensions",
-        "lovr.graphics.getWidth",
-        "lovr.graphics.getHeight",
-        "lovr.headset.getDisplayDimensions",
-        "lovr.conf"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "width",
-              type = "number",
-              description = "The new width of the window."
-            },
-            {
-              name = "height",
-              type = "number",
-              description = "The new height of the window."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "restart",
-      tag = "callbacks",
-      summary = "Called when restarting.",
-      description = "This callback is called when a restart from `lovr.event.restart` is happening.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
-      key = "lovr.restart",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {
-            {
-              name = "cookie",
-              type = "*",
-              description = "The value to send to the next `lovr.load`."
-            }
-          }
-        }
-      },
-      related = {
-        "lovr.event.restart",
-        "lovr.load",
-        "lovr.quit"
-      },
-      examples = {
-        {
-          code = "function lovr.restart()\n  return currentLevel:getName()\nend"
-        }
-      },
-      notes = "Only nil, booleans, numbers, and strings are supported types for the return value."
-    },
-    {
-      name = "run",
-      tag = "callbacks",
-      summary = "The main entry point.",
-      description = "This callback is the main entry point for a LÖVR program.  It calls `lovr.load` and returns a function that will be called every frame.",
-      key = "lovr.run",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {},
-          returns = {
-            {
-              name = "loop",
-              type = "function",
-              description = "The main loop function.",
-              arguments = {},
-              returns = {
-                {
-                  name = "result",
-                  type = "*"
-                }
-              }
-            }
-          }
-        }
-      },
-      related = {
-        "lovr.load",
-        "lovr.quit"
-      },
-      examples = {
-        {
-          description = "The default `lovr.run`:",
-          code = "function lovr.run()\n  if lovr.timer then lovr.timer.step() end\n  if lovr.load then lovr.load(arg) end\n  return function()\n    if lovr.event then\n      lovr.event.pump()\n      for name, a, b, c, d in lovr.event.poll() do\n        if name == 'restart' then\n          local cookie = lovr.restart and lovr.restart()\n          return 'restart', cookie\n        elseif name == 'quit' and (not lovr.quit or not lovr.quit(a)) then\n          return a or 0\n        end\n        if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n      end\n    end\n    local dt = 0\n    if lovr.timer then dt = lovr.timer.step() end\n    if lovr.headset then dt = lovr.headset.update() end\n    if lovr.update then lovr.update(dt) end\n    if lovr.graphics then\n      if lovr.headset then\n        local pass = lovr.headset.getPass()\n        if pass then\n          local skip = lovr.draw and lovr.draw(pass)\n          if not skip then lovr.graphics.submit(pass) end\n        end\n      end\n      if lovr.system.isWindowOpen() then\n        if lovr.mirror then\n          local pass = lovr.graphics.getWindowPass()\n          local skip = lovr.mirror(pass)\n          if not skip then lovr.graphics.submit(pass) end\n        end\n        lovr.graphics.present()\n      end\n    end\n    if lovr.headset then lovr.headset.submit() end\n    if lovr.math then lovr.math.drain() end\n  end\nend"
-        }
-      },
-      notes = "The main loop function can return one of the following values:\n\n- Returning `nil` will keep the main loop running.\n- Returning the string 'restart' plus an optional value will restart LÖVR.  The value can be\n  accessed in the `restart` key of the `arg` global.\n- Returning a number will exit LÖVR using the number as the exit code (0 means success).\n\nCare should be taken when overriding this callback.  For example, if the main loop does not call `lovr.event.pump` then the OS will think LÖVR is unresponsive, and if the quit event is not handled then closing the window won't work."
-    },
-    {
-      name = "textinput",
-      tag = "callbacks",
-      summary = "Called when text has been entered.",
-      description = "This callback is called when text has been entered.\n\nFor example, when `shift + 1` is pressed on an American keyboard, `lovr.textinput` will be called with `!`.",
-      key = "lovr.textinput",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "text",
-              type = "string",
-              description = "The UTF-8 encoded character."
-            },
-            {
-              name = "code",
-              type = "number",
-              description = "The integer codepoint of the character."
-            }
-          },
-          returns = {}
-        }
-      },
-      related = {
-        "lovr.keypressed",
-        "lovr.keyreleased"
-      },
-      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `lovr.graphics.print` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings."
-    },
-    {
-      name = "threaderror",
-      tag = "callbacks",
-      summary = "Called when an error occurs in a thread.",
-      description = "The `lovr.threaderror` callback is called whenever an error occurs in a Thread.  It receives the Thread object where the error occurred and an error message.\n\nThe default implementation of this callback will call `lovr.errhand` with the error.",
-      key = "lovr.threaderror",
-      module = "lovr",
-      related = {
-        "Thread",
-        "Thread:getError",
-        "lovr.errhand"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "thread",
-              type = "Thread",
-              description = "The Thread that errored."
-            },
-            {
-              name = "message",
-              type = "string",
-              description = "The error message."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "update",
-      tag = "callbacks",
-      summary = "Called every frame to update the application logic.",
-      description = "The `lovr.update` callback should be used to update your game's logic.  It receives a single parameter, `dt`, which represents the amount of elapsed time between frames.  You can use this value to scale timers, physics, and animations in your game so they play at a smooth, consistent speed.",
-      key = "lovr.update",
-      module = "lovr",
-      variants = {
-        {
-          arguments = {
-            {
-              name = "dt",
-              type = "number",
-              description = "The number of seconds elapsed since the last update."
-            }
-          },
-          returns = {}
-        }
-      },
-      examples = {
-        {
-          code = "function lovr.update(dt)\n  ball.vy = ball.vy + ball.gravity * dt\n  ball.y = ball.y + ball.vy * dt\nend"
-        }
-      },
-      related = {
-        "lovr.timer.getDelta"
-      }
-    }
-  },
   modules = {
     {
       name = "lovr",
@@ -754,23 +6,6 @@ return {
       description = "`lovr` is the single global table that is exposed to every LÖVR app. It contains a set of **modules** and a set of **callbacks**.",
       key = "lovr",
       enums = {},
-      sections = {
-        {
-          name = "Modules",
-          tag = "modules",
-          description = "Modules are the **what** of your app; you can use the functions in modules to tell LÖVR to do things. For example, you can draw things on the screen, figure out what buttons on a controller are pressed, or load a 3D model from a file.  Each module does what it says on the tin, so the `lovr.graphics` module deals with rendering graphics and `lovr.headset` allows you to interact with VR hardware."
-        },
-        {
-          name = "Callbacks",
-          tag = "callbacks",
-          description = "Callbacks are the **when** of the application; you write code inside callbacks which LÖVR then calls at certain points in time.  For example, the `lovr.load` callback is called once at startup, and `lovr.focus` is called when the VR application gains or loses input focus."
-        },
-        {
-          name = "Version",
-          tag = "version",
-          description = "This function can be used to get the current version of LÖVR."
-        }
-      },
       functions = {
         {
           name = "getVersion",
@@ -828,6 +63,23 @@ return {
             }
           }
         }
+      },
+      sections = {
+        {
+          name = "Modules",
+          tag = "modules",
+          description = "Modules are the **what** of your app; you can use the functions in modules to tell LÖVR to do things. For example, you can draw things on the screen, figure out what buttons on a controller are pressed, or load a 3D model from a file.  Each module does what it says on the tin, so the `lovr.graphics` module deals with rendering graphics and `lovr.headset` allows you to interact with VR hardware."
+        },
+        {
+          name = "Callbacks",
+          tag = "callbacks",
+          description = "Callbacks are the **when** of the application; you write code inside callbacks which LÖVR then calls at certain points in time.  For example, the `lovr.load` callback is called once at startup, and `lovr.focus` is called when the VR application gains or loses input focus."
+        },
+        {
+          name = "Version",
+          tag = "version",
+          description = "This function can be used to get the current version of LÖVR."
+        }
       }
     },
     {
@@ -836,23 +88,6 @@ return {
       summary = "Plays sound.",
       description = "The `lovr.audio` module is responsible for playing sound effects and music.  To play a sound, create a `Source` object and call `Source:play` on it.  Currently ogg, wav, and mp3 audio formats are supported.",
       key = "lovr.audio",
-      sections = {
-        {
-          name = "Sources",
-          tag = "sources",
-          description = "Sources are objects that represent a single sound instance."
-        },
-        {
-          name = "Listener",
-          tag = "listener",
-          description = "The listener is a virtual object in 3D space that \"hears\" all the sounds that are playing. It can be positioned and oriented in 3D space, which controls how Sources in the world are heard.  Usually this would be locked to the headset pose."
-        },
-        {
-          name = "Devices",
-          tag = "devices",
-          description = "It's possible to list the available audio devices on the system, and pick a specific device to use for either playback or capture.  Devices can also be manually started and stopped. Other useful features of `lovr.audio.setDevice` include the ability to stream all audio data to a custom sink and the option to create a device in exclusive mode for higher performance. By default, the default playback device is automatically initialized and started, but this can be configured using `lovr.conf`."
-        }
-      },
       enums = {
         {
           name = "AudioMaterial",
@@ -913,6 +148,9 @@ return {
           description = "Audio devices can be created in shared mode or exclusive mode.  In exclusive mode, the audio device is the only one active on the system, which gives better performance and lower latency. However, exclusive devices aren't always supported and might not be allowed, so there is a higher chance that creating one will fail.",
           key = "AudioShareMode",
           module = "lovr.audio",
+          related = {
+            "lovr.audio.setDevice"
+          },
           values = {
             {
               name = "shared",
@@ -922,9 +160,6 @@ return {
               name = "exclusive",
               description = "Exclusive mode."
             }
-          },
-          related = {
-            "lovr.audio.setDevice"
           }
         },
         {
@@ -933,6 +168,13 @@ return {
           description = "When referencing audio devices, this indicates whether it's the playback or capture device.",
           key = "AudioType",
           module = "lovr.audio",
+          related = {
+            "lovr.audio.getDevices",
+            "lovr.audio.setDevice",
+            "lovr.audio.start",
+            "lovr.audio.stop",
+            "lovr.audio.isStarted"
+          },
           values = {
             {
               name = "playback",
@@ -942,13 +184,6 @@ return {
               name = "capture",
               description = "The capture device (microphone)."
             }
-          },
-          related = {
-            "lovr.audio.getDevices",
-            "lovr.audio.setDevice",
-            "lovr.audio.start",
-            "lovr.audio.stop",
-            "lovr.audio.isStarted"
           }
         },
         {
@@ -957,7 +192,6 @@ return {
           description = "Different types of effects that can be applied with `Source:setEffectEnabled`.",
           key = "Effect",
           module = "lovr.audio",
-          notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nSee `lovr.audio.getSpatializer` for a table of the supported effects for each spatializer.",
           values = {
             {
               name = "absorption",
@@ -983,7 +217,8 @@ return {
               name = "transmission",
               description = "Causes audio to be heard through walls when occluded, based on audio materials."
             }
-          }
+          },
+          notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.\n\nSee `lovr.audio.getSpatializer` for a table of the supported effects for each spatializer."
         },
         {
           name = "TimeUnit",
@@ -1020,6 +255,23 @@ return {
           }
         }
       },
+      sections = {
+        {
+          name = "Sources",
+          tag = "sources",
+          description = "Sources are objects that represent a single sound instance."
+        },
+        {
+          name = "Listener",
+          tag = "listener",
+          description = "The listener is a virtual object in 3D space that \"hears\" all the sounds that are playing. It can be positioned and oriented in 3D space, which controls how Sources in the world are heard.  Usually this would be locked to the headset pose."
+        },
+        {
+          name = "Devices",
+          tag = "devices",
+          description = "It's possible to list the available audio devices on the system, and pick a specific device to use for either playback or capture.  Devices can also be manually started and stopped. Other useful features of `lovr.audio.setDevice` include the ability to stream all audio data to a custom sink and the option to create a device in exclusive mode for higher performance. By default, the default playback device is automatically initialized and started, but this can be configured using `lovr.conf`."
+        }
+      },
       functions = {
         {
           name = "getAbsorption",
@@ -1027,7 +279,6 @@ return {
           description = "Returns the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and falloff is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones.  This can be used to apply \"underwater\" effects and stuff.",
           key = "lovr.audio.getAbsorption",
           module = "lovr.audio",
-          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high.",
           variants = {
             {
               arguments = {},
@@ -1049,7 +300,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high."
         },
         {
           name = "getDevices",
@@ -1058,11 +310,6 @@ return {
           description = "Returns a list of playback or capture devices.  Each device has an `id`, `name`, and a `default` flag indicating whether it's the default device.\n\nTo use a specific device id for playback or capture, pass it to `lovr.audio.setDevice`.",
           key = "lovr.audio.getDevices",
           module = "lovr.audio",
-          related = {
-            "lovr.audio.setDevice",
-            "lovr.audio.start",
-            "lovr.audio.stop"
-          },
           variants = {
             {
               arguments = {
@@ -1098,6 +345,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.audio.setDevice",
+            "lovr.audio.start",
+            "lovr.audio.stop"
           }
         },
         {
@@ -1107,11 +359,6 @@ return {
           description = "Returns the orientation of the virtual audio listener in angle/axis representation.",
           key = "lovr.audio.getOrientation",
           module = "lovr.audio",
-          related = {
-            "lovr.audio.getPosition",
-            "lovr.audio.getPose",
-            "Source:getOrientation"
-          },
           variants = {
             {
               arguments = {},
@@ -1138,6 +385,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.audio.getPosition",
+            "lovr.audio.getPose",
+            "Source:getOrientation"
           }
         },
         {
@@ -1147,11 +399,6 @@ return {
           description = "Returns the position and orientation of the virtual audio listener.",
           key = "lovr.audio.getPose",
           module = "lovr.audio",
-          related = {
-            "lovr.audio.getPosition",
-            "lovr.audio.getOrientation",
-            "Source:getPose"
-          },
           variants = {
             {
               arguments = {},
@@ -1193,6 +440,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.audio.getPosition",
+            "lovr.audio.getOrientation",
+            "Source:getPose"
           }
         },
         {
@@ -1232,9 +484,6 @@ return {
           description = "Returns the sample rate used by the playback device.  This can be changed using `lovr.conf`.",
           key = "lovr.audio.getSampleRate",
           module = "lovr.audio",
-          related = {
-            "lovr.conf"
-          },
           variants = {
             {
               arguments = {},
@@ -1246,6 +495,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.conf"
           }
         },
         {
@@ -1255,7 +507,9 @@ return {
           description = "Returns the name of the active spatializer (`simple`, `oculus`, or `phonon`).\n\nThe `t.audio.spatializer` setting in `lovr.conf` can be used to express a preference for a particular spatializer.  If it's `nil`, all spatializers will be tried in the following order: `phonon`, `oculus`, `simple`.",
           key = "lovr.audio.getSpatializer",
           module = "lovr.audio",
-          notes = "Using a feature or effect that is not supported by the current spatializer will not error, it just won't do anything.\n\n<table>\n  <thead>\n    <tr>\n      <td>Feature</td>\n      <td>simple</td>\n      <td>phonon</td>\n      <td>oculus</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Effect: Spatialization</td>\n      <td>x</td>\n      <td>x</td>\n      <td>x</td>\n    </tr>\n    <tr>\n      <td>Effect: Attenuation</td>\n      <td>x</td>\n      <td>x</td>\n      <td>x</td>\n    </tr>\n    <tr>\n      <td>Effect: Absorption</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Occlusion</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Transmission</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Reverb</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>lovr.audio.setGeometry</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Source:setDirectivity</td>\n      <td>x</td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Source:setRadius</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n  </tbody> </table>",
+          related = {
+            "lovr.conf"
+          },
           variants = {
             {
               arguments = {},
@@ -1268,9 +522,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.conf"
-          }
+          notes = "Using a feature or effect that is not supported by the current spatializer will not error, it just won't do anything.\n\n<table>\n  <thead>\n    <tr>\n      <td>Feature</td>\n      <td>simple</td>\n      <td>phonon</td>\n      <td>oculus</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Effect: Spatialization</td>\n      <td>x</td>\n      <td>x</td>\n      <td>x</td>\n    </tr>\n    <tr>\n      <td>Effect: Attenuation</td>\n      <td>x</td>\n      <td>x</td>\n      <td>x</td>\n    </tr>\n    <tr>\n      <td>Effect: Absorption</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Occlusion</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Transmission</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Reverb</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>lovr.audio.setGeometry</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Source:setDirectivity</td>\n      <td>x</td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Source:setRadius</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n  </tbody> </table>"
         },
         {
           name = "getVolume",
@@ -1307,10 +559,6 @@ return {
           description = "Returns whether an audio device is started.",
           key = "lovr.audio.isStarted",
           module = "lovr.audio",
-          related = {
-            "lovr.audio.start",
-            "lovr.audio.stop"
-          },
           variants = {
             {
               arguments = {
@@ -1329,6 +577,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.audio.start",
+            "lovr.audio.stop"
           }
         },
         {
@@ -1338,10 +590,8 @@ return {
           description = "Creates a new Source from an ogg, wav, or mp3 file.",
           key = "lovr.audio.newSource",
           module = "lovr.audio",
-          examples = {
-            {
-              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', {\n    decode = false,\n    effects = { 'spatialization', attenuation = false, reverb = true }\n  })\n\n  sandstorm:play()\nend"
-            }
+          related = {
+            "Source:clone"
           },
           variants = {
             {
@@ -1450,8 +700,10 @@ return {
               }
             }
           },
-          related = {
-            "Source:clone"
+          examples = {
+            {
+              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', {\n    decode = false,\n    effects = { 'spatialization', attenuation = false, reverb = true }\n  })\n\n  sandstorm:play()\nend"
+            }
           }
         },
         {
@@ -1460,7 +712,6 @@ return {
           description = "Sets the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and falloff is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones.  This can be used to apply \"underwater\" effects and stuff.",
           key = "lovr.audio.setAbsorption",
           module = "lovr.audio",
-          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high.",
           variants = {
             {
               arguments = {
@@ -1482,7 +733,8 @@ return {
               },
               returns = {}
             }
-          }
+          },
+          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high."
         },
         {
           name = "setDevice",
@@ -1491,11 +743,6 @@ return {
           description = "Switches either the playback or capture device to a new one.\n\nIf a device for the given type is already active, it will be stopped and destroyed.  The new device will not be started automatically, use `lovr.audio.start` to start it.\n\nA device id (previously retrieved using `lovr.audio.getDevices`) can be given to use a specific audio device, or `nil` can be used for the id to use the default audio device.\n\nA sink can be also be provided when changing the device.  A sink is an audio stream (`Sound` object with a `stream` type) that will receive all audio samples played (for playback) or all audio samples captured (for capture).  When an audio device with a sink is started, be sure to periodically call `Sound:read` on the sink to read audio samples from it, otherwise it will overflow and discard old data.  The sink can have any format, data will be converted as needed. Using a sink for the playback device will reduce performance, but this isn't the case for capture devices.\n\nAudio devices can be started in `shared` or `exclusive` mode.  Exclusive devices may have lower latency than shared devices, but there's a higher chance that requesting exclusive access to an audio device will fail (either because it isn't supported or allowed).  One strategy is to first try the device in exclusive mode, switching to shared if it doesn't work.",
           key = "lovr.audio.setDevice",
           module = "lovr.audio",
-          related = {
-            "lovr.audio.getDevices",
-            "lovr.audio.start",
-            "lovr.audio.stop"
-          },
           variants = {
             {
               arguments = {
@@ -1532,6 +779,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.audio.getDevices",
+            "lovr.audio.start",
+            "lovr.audio.stop"
           }
         },
         {
@@ -1541,7 +793,10 @@ return {
           description = "Sets a mesh of triangles to use for modeling audio effects, using a table of vertices or a Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls and bounce around to create realistic reverb.\n\nAn optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.",
           key = "lovr.audio.setGeometry",
           module = "lovr.audio",
-          notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.\n\nThe triangles must use counterclockwise winding.",
+          related = {
+            "lovr.audio.getSpatializer",
+            "Source:setEffectEnabled"
+          },
           variants = {
             {
               arguments = {
@@ -1593,10 +848,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.audio.getSpatializer",
-            "Source:setEffectEnabled"
-          }
+          notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.\n\nThe triangles must use counterclockwise winding."
         },
         {
           name = "setOrientation",
@@ -1640,11 +892,6 @@ return {
           description = "Sets the position and orientation of the virtual audio listener.",
           key = "lovr.audio.setPose",
           module = "lovr.audio",
-          related = {
-            "lovr.audio.setPosition",
-            "lovr.audio.setOrientation",
-            "Source:setPose"
-          },
           variants = {
             {
               arguments = {
@@ -1686,6 +933,11 @@ return {
               },
               returns = {}
             }
+          },
+          related = {
+            "lovr.audio.setPosition",
+            "lovr.audio.setOrientation",
+            "Source:setPose"
           }
         },
         {
@@ -1752,7 +1004,14 @@ return {
           description = "Starts the active playback or capture device.  By default the playback device is initialized and started, but this can be controlled using the `t.audio.start` flag in `lovr.conf`.",
           key = "lovr.audio.start",
           module = "lovr.audio",
-          notes = "Starting an audio device may fail if:\n\n- The device is already started\n- No device was initialized with `lovr.audio.setDevice`\n- Lack of `audiocapture` permission on Android (see `lovr.system.requestPermission`)\n- Some other problem accessing the audio device",
+          related = {
+            "lovr.audio.getDevices",
+            "lovr.audio.setDevice",
+            "lovr.audio.stop",
+            "lovr.audio.isStarted",
+            "lovr.system.requestPermission",
+            "lovr.permission"
+          },
           variants = {
             {
               arguments = {
@@ -1772,14 +1031,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.audio.getDevices",
-            "lovr.audio.setDevice",
-            "lovr.audio.stop",
-            "lovr.audio.isStarted",
-            "lovr.system.requestPermission",
-            "lovr.permission"
-          }
+          notes = "Starting an audio device may fail if:\n\n- The device is already started\n- No device was initialized with `lovr.audio.setDevice`\n- Lack of `audiocapture` permission on Android (see `lovr.system.requestPermission`)\n- Some other problem accessing the audio device"
         },
         {
           name = "stop",
@@ -1788,7 +1040,12 @@ return {
           description = "Stops the active playback or capture device.  This may fail if:\n\n- The device is not started\n- No device was initialized with `lovr.audio.setDevice`",
           key = "lovr.audio.stop",
           module = "lovr.audio",
-          notes = "Switching devices with `lovr.audio.setDevice` will stop the existing one.",
+          related = {
+            "lovr.audio.getDevices",
+            "lovr.audio.setDevice",
+            "lovr.audio.start",
+            "lovr.audio.isStarted"
+          },
           variants = {
             {
               arguments = {
@@ -1808,12 +1065,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.audio.getDevices",
-            "lovr.audio.setDevice",
-            "lovr.audio.start",
-            "lovr.audio.isStarted"
-          }
+          notes = "Switching devices with `lovr.audio.setDevice` will stop the existing one."
         }
       },
       objects = {
@@ -1849,7 +1101,9 @@ return {
               description = "Creates a copy of the Source, referencing the same `Sound` object and inheriting all of the settings of this Source.  However, it will be created in the stopped state and will be rewound to the beginning.",
               key = "Source:clone",
               module = "lovr.audio",
-              notes = "This is a good way to create multiple Sources that play the same sound, since the audio data won't be loaded multiple times and can just be reused.  You can also create multiple `Source` objects and pass in the same `Sound` object for each one, which will have the same effect.",
+              related = {
+                "lovr.audio.newSource"
+              },
               variants = {
                 {
                   arguments = {},
@@ -1862,9 +1116,7 @@ return {
                   }
                 }
               },
-              related = {
-                "lovr.audio.newSource"
-              }
+              notes = "This is a good way to create multiple Sources that play the same sound, since the audio data won't be loaded multiple times and can just be reused.  You can also create multiple `Source` objects and pass in the same `Sound` object for each one, which will have the same effect."
             },
             {
               name = "getDirectivity",
@@ -1898,9 +1150,6 @@ return {
               description = "Returns the duration of the Source.",
               key = "Source:getDuration",
               module = "lovr.audio",
-              related = {
-                "Sound:getDuration"
-              },
               variants = {
                 {
                   arguments = {
@@ -1919,6 +1168,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:getDuration"
               }
             },
             {
@@ -1928,11 +1180,6 @@ return {
               description = "Returns the orientation of the Source, in angle/axis representation.",
               key = "Source:getOrientation",
               module = "lovr.audio",
-              related = {
-                "Source:getPosition",
-                "Source:getPose",
-                "lovr.audio.getOrientation"
-              },
               variants = {
                 {
                   arguments = {},
@@ -1959,6 +1206,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Source:getPosition",
+                "Source:getPose",
+                "lovr.audio.getOrientation"
               }
             },
             {
@@ -1968,11 +1220,6 @@ return {
               description = "Returns the position and orientation of the Source.",
               key = "Source:getPose",
               module = "lovr.audio",
-              related = {
-                "Source:getPosition",
-                "Source:getOrientation",
-                "lovr.audio.getPose"
-              },
               variants = {
                 {
                   arguments = {},
@@ -2014,6 +1261,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Source:getPosition",
+                "Source:getOrientation",
+                "lovr.audio.getPose"
               }
             },
             {
@@ -2023,11 +1275,6 @@ return {
               description = "Returns the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.",
               key = "Source:getPosition",
               module = "lovr.audio",
-              related = {
-                "Source:getOrientation",
-                "Source:getPose",
-                "lovr.audio.getPosition"
-              },
               variants = {
                 {
                   arguments = {},
@@ -2049,6 +1296,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Source:getOrientation",
+                "Source:getPose",
+                "lovr.audio.getPosition"
               }
             },
             {
@@ -2078,10 +1330,6 @@ return {
               description = "Returns the `Sound` object backing the Source.  Multiple Sources can share one Sound, allowing its data to only be loaded once.  An easy way to do this sharing is by using `Source:clone`.",
               key = "Source:getSound",
               module = "lovr.audio",
-              related = {
-                "Source:clone",
-                "lovr.audio.newSource"
-              },
               variants = {
                 {
                   arguments = {},
@@ -2093,6 +1341,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Source:clone",
+                "lovr.audio.newSource"
               }
             },
             {
@@ -2176,11 +1428,6 @@ return {
               description = "Returns whether or not the Source is playing.",
               key = "Source:isPlaying",
               module = "lovr.audio",
-              related = {
-                "Source:play",
-                "Source:pause",
-                "Source:stop"
-              },
               variants = {
                 {
                   arguments = {},
@@ -2192,6 +1439,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Source:play",
+                "Source:pause",
+                "Source:stop"
               }
             },
             {
@@ -2335,11 +1587,6 @@ return {
               description = "Sets the orientation of the Source in angle/axis representation.",
               key = "Source:setOrientation",
               module = "lovr.audio",
-              related = {
-                "Source:setPosition",
-                "Source:setPose",
-                "lovr.audio.setOrientation"
-              },
               variants = {
                 {
                   arguments = {
@@ -2366,6 +1613,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Source:setPosition",
+                "Source:setPose",
+                "lovr.audio.setOrientation"
               }
             },
             {
@@ -2375,11 +1627,6 @@ return {
               description = "Sets the position and orientation of the Source.",
               key = "Source:setPose",
               module = "lovr.audio",
-              related = {
-                "Source:setPosition",
-                "Source:setOrientation",
-                "lovr.audio.setPose"
-              },
               variants = {
                 {
                   arguments = {
@@ -2421,6 +1668,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Source:setPosition",
+                "Source:setOrientation",
+                "lovr.audio.setPose"
               }
             },
             {
@@ -2507,16 +1759,16 @@ return {
               description = "Stops the source, also rewinding it to the beginning.",
               key = "Source:stop",
               module = "lovr.audio",
-              related = {
-                "Source:play",
-                "Source:pause",
-                "Source:isPlaying"
-              },
               variants = {
                 {
                   arguments = {},
                   returns = {}
                 }
+              },
+              related = {
+                "Source:play",
+                "Source:pause",
+                "Source:isPlaying"
               }
             },
             {
@@ -2557,788 +1809,6 @@ return {
       summary = "Exposes low level functions for working with data.",
       description = "The `lovr.data` module provides functions for accessing underlying data representations for several LÖVR objects.",
       key = "lovr.data",
-      functions = {
-        {
-          name = "newBlob",
-          summary = "Create a new Blob.",
-          description = "Creates a new Blob.",
-          key = "lovr.data.newBlob",
-          module = "lovr.data",
-          related = {
-            "lovr.filesystem.newBlob"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The amount of data to allocate for the Blob, in bytes.  All of the bytes will be filled with zeroes."
-                },
-                {
-                  name = "name",
-                  type = "string",
-                  description = "A name for the Blob (used in error messages)",
-                  default = "''"
-                }
-              },
-              returns = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The new Blob."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "contents",
-                  type = "string",
-                  description = "A string to use for the Blob's contents."
-                },
-                {
-                  name = "name",
-                  type = "string",
-                  description = "A name for the Blob (used in error messages)",
-                  default = "''"
-                }
-              },
-              returns = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The new Blob."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "source",
-                  type = "Blob",
-                  description = "A Blob to copy the contents from."
-                },
-                {
-                  name = "name",
-                  type = "string",
-                  description = "A name for the Blob (used in error messages)",
-                  default = "''"
-                }
-              },
-              returns = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The new Blob."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "newImage",
-          summary = "Create a new Image.",
-          description = "Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
-          key = "lovr.data.newImage",
-          module = "lovr.data",
-          notes = "The supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.\n\nOnly 2D textures are supported for DXT/ASTC.\n\nCurrently textures loaded as KTX need to be in DXT/ASTC formats.",
-          variants = {
-            {
-              description = "Load image data from a file.",
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the image to load."
-                },
-                {
-                  name = "flip",
-                  type = "boolean",
-                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
-                  default = "true"
-                }
-              },
-              returns = {
-                {
-                  name = "image",
-                  type = "Image",
-                  description = "The new Image."
-                }
-              }
-            },
-            {
-              description = "Create an Image with a given size and pixel format.",
-              arguments = {
-                {
-                  name = "width",
-                  type = "number",
-                  description = "The width of the texture."
-                },
-                {
-                  name = "height",
-                  type = "number",
-                  description = "The height of the texture."
-                },
-                {
-                  name = "format",
-                  type = "TextureFormat",
-                  description = "The format of the texture's pixels.",
-                  default = "rgba"
-                },
-                {
-                  name = "data",
-                  type = "Blob",
-                  description = "Raw pixel values to use as the contents.  If `nil`, the data will all be zero.",
-                  default = "nil"
-                }
-              },
-              returns = {
-                {
-                  name = "image",
-                  type = "Image",
-                  description = "The new Image."
-                }
-              }
-            },
-            {
-              description = "Clone an existing Image.",
-              arguments = {
-                {
-                  name = "source",
-                  type = "Image",
-                  description = "The Image to clone."
-                }
-              },
-              returns = {
-                {
-                  name = "image",
-                  type = "Image",
-                  description = "The new Image."
-                }
-              }
-            },
-            {
-              description = "Decode image data from a Blob.",
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing image data to decode."
-                },
-                {
-                  name = "flip",
-                  type = "boolean",
-                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
-                  default = "true"
-                }
-              },
-              returns = {
-                {
-                  name = "image",
-                  type = "Image",
-                  description = "The new Image."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "newModelData",
-          summary = "Create a new ModelData.",
-          description = "Loads a 3D model from a file.  The supported 3D file formats are OBJ and glTF.",
-          key = "lovr.data.newModelData",
-          module = "lovr.data",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the model to load."
-                }
-              },
-              returns = {
-                {
-                  name = "modelData",
-                  type = "ModelData",
-                  description = "The new ModelData."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing data for a model to decode."
-                }
-              },
-              returns = {
-                {
-                  name = "modelData",
-                  type = "ModelData",
-                  description = "The new ModelData."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "newRasterizer",
-          summary = "Create a new Rasterizer.",
-          description = "Creates a new Rasterizer from a TTF file.",
-          key = "lovr.data.newRasterizer",
-          module = "lovr.data",
-          variants = {
-            {
-              description = "Create a Rasterizer for the default font included with LÖVR (Varela Round).",
-              arguments = {
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
-                  default = "32"
-                }
-              },
-              returns = {
-                {
-                  name = "rasterizer",
-                  type = "Rasterizer",
-                  description = "The new Rasterizer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the font file to load."
-                },
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
-                  default = "32"
-                }
-              },
-              returns = {
-                {
-                  name = "rasterizer",
-                  type = "Rasterizer",
-                  description = "The new Rasterizer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing font data."
-                },
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
-                  default = "32"
-                }
-              },
-              returns = {
-                {
-                  name = "rasterizer",
-                  type = "Rasterizer",
-                  description = "The new Rasterizer."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "newSound",
-          summary = "Create a new Sound.",
-          description = "Creates a new Sound.  A sound can be loaded from an audio file, or it can be created empty with capacity for a certain number of audio frames.\n\nWhen loading audio from a file, use the `decode` option to control whether compressed audio should remain compressed or immediately get decoded to raw samples.\n\nWhen creating an empty sound, the `contents` parameter can be set to `'stream'` to create an audio stream.  On streams, `Sound:setFrames` will always write to the end of the stream, and `Sound:getFrames` will always read the oldest samples from the beginning.  The number of frames in the sound is the total capacity of the stream's buffer.",
-          key = "lovr.data.newSound",
-          module = "lovr.data",
-          notes = "It is highly recommended to use an audio format that matches the format of the audio module: `f32` sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2 channels for unspatialized sources.  This will avoid the need to convert audio during playback, which boosts performance of the audio thread.\n\nThe WAV importer supports 16, 24, and 32 bit integer data and 32 bit floating point data.  The data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE` extension is supported.\n\nAmbisonic channel layouts are supported for import (but not yet for playback).  Ambisonic data can be loaded from WAV files.  It must be first-order full-sphere ambisonic data with 4 channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an `AMBISONIC_B_FORMAT` format GUID, then the data is understood as using the AMB format with Furse-Malham channel ordering and normalization.  *All other* 4-channel files are assumed to be using the AmbiX format with ACN channel ordering and SN3D normalization.  AMB files will get automatically converted to AmbiX on import, so ambisonic Sounds will always be in a consistent format.\n\nOGG and MP3 files will always have the `f32` format when loaded.",
-          variants = {
-            {
-              description = "Create a raw or stream Sound from a frame count and format info:",
-              arguments = {
-                {
-                  name = "frames",
-                  type = "number",
-                  description = "The number of frames the Sound can hold."
-                },
-                {
-                  name = "format",
-                  type = "SampleFormat",
-                  description = "The sample data type.",
-                  default = "'f32'"
-                },
-                {
-                  name = "channels",
-                  type = "ChannelLayout",
-                  description = "The channel layout.",
-                  default = "'stereo'"
-                },
-                {
-                  name = "sampleRate",
-                  type = "number",
-                  description = "The sample rate, in Hz.",
-                  default = "48000"
-                },
-                {
-                  name = "contents",
-                  type = "*",
-                  description = "A Blob containing raw audio samples to use as the initial contents, 'stream' to create an audio stream, or `nil` to leave the data initialized to zero.",
-                  default = "nil"
-                }
-              },
-              returns = {
-                {
-                  name = "sound",
-                  type = "Sound",
-                  description = "Sounds good."
-                }
-              }
-            },
-            {
-              description = "Load a sound from a file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.",
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of a sound to load."
-                },
-                {
-                  name = "decode",
-                  type = "boolean",
-                  description = "Whether compressed audio files should be immediately decoded."
-                }
-              },
-              returns = {
-                {
-                  name = "sound",
-                  type = "Sound",
-                  description = "Sounds good."
-                }
-              }
-            },
-            {
-              description = "Load a sound from a Blob containing the data of an audio file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.\n\nIf the Blob contains raw audio samples, use the first variant instead of this one.",
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing audio file data to load."
-                },
-                {
-                  name = "decode",
-                  type = "boolean",
-                  description = "Whether compressed audio files should be immediately decoded."
-                }
-              },
-              returns = {
-                {
-                  name = "sound",
-                  type = "Sound",
-                  description = "Sounds good."
-                }
-              }
-            }
-          }
-        }
-      },
-      enums = {
-        {
-          name = "AnimationProperty",
-          summary = "Different animated properties.",
-          description = "This indicates the different transform properties that can be animated.",
-          key = "AnimationProperty",
-          module = "lovr.data",
-          values = {
-            {
-              name = "translation",
-              description = "Node translation."
-            },
-            {
-              name = "rotation",
-              description = "Node rotation."
-            },
-            {
-              name = "scale",
-              description = "Node scale."
-            }
-          }
-        },
-        {
-          name = "AttributeType",
-          summary = "Data types for vertex attributes in meshes.",
-          description = "These are the data types that can be used by vertex data in meshes.",
-          key = "AttributeType",
-          module = "lovr.data",
-          values = {
-            {
-              name = "i8",
-              description = "Signed 8 bit integers (-128 to 127)."
-            },
-            {
-              name = "u8",
-              description = "Unsigned 8 bit integers (0 to 255)."
-            },
-            {
-              name = "i16",
-              description = "Signed 16 bit integers (-32768 to 32767)."
-            },
-            {
-              name = "u16",
-              description = "Unsigned 16 bit integers (0 to 65535)."
-            },
-            {
-              name = "i32",
-              description = "Signed 32 bit integers (-2147483648 to 2147483647)."
-            },
-            {
-              name = "u32",
-              description = "Unsigned 32 bit integers (0 to 429467295)."
-            },
-            {
-              name = "f32",
-              description = "Floating point numbers."
-            }
-          }
-        },
-        {
-          name = "ChannelLayout",
-          summary = "Different channel layouts for Sounds.",
-          description = "Sounds can have different numbers of channels, and those channels can map to various speaker layouts.",
-          key = "ChannelLayout",
-          module = "lovr.data",
-          values = {
-            {
-              name = "mono",
-              description = "1 channel."
-            },
-            {
-              name = "stereo",
-              description = "2 channels.  The first channel is for the left speaker and the second is for the right."
-            },
-            {
-              name = "ambisonic",
-              description = "4 channels.  Ambisonic channels don't map directly to speakers but instead represent directions in 3D space, sort of like the images of a skybox.  Currently, ambisonic sounds can only be loaded, not played."
-            }
-          },
-          related = {
-            "lovr.data.newSound",
-            "Sound:getFormat"
-          }
-        },
-        {
-          name = "DefaultAttribute",
-          summary = "Attributes that can be loaded from a model.",
-          description = "These are the different types of attributes that may be present in meshes loaded from models.",
-          key = "DefaultAttribute",
-          module = "lovr.data",
-          values = {
-            {
-              name = "position",
-              description = "Vertex positions."
-            },
-            {
-              name = "normal",
-              description = "Vertex normal vectors."
-            },
-            {
-              name = "uv",
-              description = "Vertex texture coordinates."
-            },
-            {
-              name = "color",
-              description = "Vertex colors."
-            },
-            {
-              name = "tangent",
-              description = "Vertex tangent vectors."
-            },
-            {
-              name = "joints",
-              description = "Vertex joint indices."
-            },
-            {
-              name = "weights",
-              description = "Vertex joint weights."
-            }
-          }
-        },
-        {
-          name = "DrawMode",
-          summary = "Different draw modes for meshes in ModelDatas.",
-          description = "The DrawMode of a mesh determines how its vertices are connected together.",
-          key = "DrawMode",
-          module = "lovr.data",
-          values = {
-            {
-              name = "points",
-              description = "Each vertex is draw as a single point."
-            },
-            {
-              name = "lines",
-              description = "Every pair of vertices is drawn as a line."
-            },
-            {
-              name = "linestrip",
-              description = "Draws a single line through all of the vertices."
-            },
-            {
-              name = "lineloop",
-              description = "Draws a single line through all of the vertices, then connects back to the first vertex."
-            },
-            {
-              name = "strip",
-              description = "Vertices are rendered as triangles.  After the first 3 vertices, each subsequent vertex connects to the previous two."
-            },
-            {
-              name = "triangles",
-              description = "Every 3 vertices forms a triangle."
-            },
-            {
-              name = "fan",
-              description = "Vertices are rendered as triangles.  After the first 3 vertices, each subsequent vertex is connected to the previous vertex and the first vertex."
-            }
-          },
-          related = {
-            "ModelData:getMeshDrawMode"
-          }
-        },
-        {
-          name = "SampleFormat",
-          summary = "Different data types for samples in a Sound.",
-          description = "Sounds can store audio samples as 16 bit integers or 32 bit floats.",
-          key = "SampleFormat",
-          module = "lovr.data",
-          values = {
-            {
-              name = "f32",
-              description = "32 bit floating point samples (between -1.0 and 1.0)."
-            },
-            {
-              name = "i16",
-              description = "16 bit integer samples (between -32768 and 32767)."
-            }
-          },
-          related = {
-            "lovr.data.newSound",
-            "Sound:getFormat"
-          }
-        },
-        {
-          name = "SmoothMode",
-          summary = "Different ways to interpolate between animation keyframes.",
-          description = "Different ways to interpolate between animation keyframes.",
-          key = "SmoothMode",
-          module = "lovr.data",
-          values = {
-            {
-              name = "step",
-              description = "The animated property will snap to the nearest keyframe."
-            },
-            {
-              name = "linear",
-              description = "The animated property will linearly interpolate between keyframes."
-            },
-            {
-              name = "cubic",
-              description = "The animated property will follow a smooth curve between nearby keyframes."
-            }
-          }
-        },
-        {
-          name = "TextureFormat",
-          description = "Different data layouts for pixels in `Image` and `Texture` objects.\n\nFormats starting with `d` are depth formats, used for depth/stencil render targets.\n\nFormats starting with `bc` and `astc` are compressed formats.  Compressed formats have better performance since they stay compressed on the CPU and GPU, reducing the amount of memory bandwidth required to look up all the pixels needed for shading.\n\nFormats without the `f` suffix are unsigned normalized formats, which store values in the range `[0,1]`.  The `f` suffix indicates a floating point format which can store values outside this range, and is used for HDR rendering or storing data in a texture.",
-          key = "TextureFormat",
-          module = "lovr.data",
-          values = {
-            {
-              name = "r8",
-              description = "One 8-bit channel.  1 byte per pixel."
-            },
-            {
-              name = "rg8",
-              description = "Two 8-bit channels.  2 bytes per pixel."
-            },
-            {
-              name = "rgba8",
-              description = "Four 8-bit channels.  4 bytes per pixel."
-            },
-            {
-              name = "r16",
-              description = "One 16-bit channel.  2 bytes per pixel."
-            },
-            {
-              name = "rg16",
-              description = "Two 16-bit channels.  4 bytes per pixel."
-            },
-            {
-              name = "rgba16",
-              description = "Four 16-bit channels.  8 bytes per pixel."
-            },
-            {
-              name = "r16f",
-              description = "One 16-bit floating point channel.  2 bytes per pixel."
-            },
-            {
-              name = "rg16f",
-              description = "Two 16-bit floating point channels.  4 bytes per pixel."
-            },
-            {
-              name = "rgba16f",
-              description = "Four 16-bit floating point channels.  8 bytes per pixel."
-            },
-            {
-              name = "r32f",
-              description = "One 32-bit floating point channel.  4 bytes per pixel."
-            },
-            {
-              name = "rg32f",
-              description = "Two 32-bit floating point channels.  8 bytes per pixel."
-            },
-            {
-              name = "rgba32f",
-              description = "Four 32-bit floating point channels.  16 bytes per pixel."
-            },
-            {
-              name = "rgb565",
-              description = "Packs three channels into 16 bits.  2 bytes per pixel."
-            },
-            {
-              name = "rgb5a1",
-              description = "Packs four channels into 16 bits, with \"cutout\" alpha.  2 bytes per pixel."
-            },
-            {
-              name = "rgb10a2",
-              description = "Packs four channels into 32 bits.  4 bytes per pixel."
-            },
-            {
-              name = "rg11b10f",
-              description = "Packs three unsigned floating point channels into 32 bits.  4 bytes per pixel."
-            },
-            {
-              name = "d16",
-              description = "One 16-bit depth channel.  2 bytes per pixel."
-            },
-            {
-              name = "d24s8",
-              description = "One 24-bit depth channel and one 8-bit stencil channel.  4 bytes per pixel."
-            },
-            {
-              name = "d32f",
-              description = "One 32-bit floating point depth channel.  4 bytes per pixel."
-            },
-            {
-              name = "d32fs8",
-              description = "One 32-bit floating point depth channel and one 8-bit stencil channel.  5 bytes per pixel."
-            },
-            {
-              name = "bc1",
-              description = "3 channels.  8 bytes per 4x4 block, or 0.5 bytes per pixel.  Good for opaque images."
-            },
-            {
-              name = "bc2",
-              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  Not good for anything, because it only has 16 distinct levels of alpha."
-            },
-            {
-              name = "bc3",
-              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for color images with transparency."
-            },
-            {
-              name = "bc4u",
-              description = "One unsigned normalized channel.  8 bytes per 4x4 block or 0.5 bytes per pixel.  Good for grayscale images, like heightmaps."
-            },
-            {
-              name = "bc4s",
-              description = "One signed normalized channel.  8 bytes per 4x4 block or 0.5 bytes per pixel.  Similar to bc4u but has a range of -1 to 1."
-            },
-            {
-              name = "bc5u",
-              description = "Two unsigned normalized channels.  16 bytes per 4x4 block, or 1 byte per pixel.  Good for normal maps."
-            },
-            {
-              name = "bc5s",
-              description = "Two signed normalized channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for normal maps."
-            },
-            {
-              name = "bc6uf",
-              description = "Three unsigned floating point channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for HDR images."
-            },
-            {
-              name = "bc6sf",
-              description = "Three floating point channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for HDR images."
-            },
-            {
-              name = "bc7",
-              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  High quality.  Good for most color images, including transparency."
-            },
-            {
-              name = "astc4x4",
-              description = "Four channels, 16 bytes per 4x4 block or 1 byte per pixel."
-            },
-            {
-              name = "astc5x4",
-              description = "Four channels, 16 bytes per 5x4 block or 0.80 bytes per pixel."
-            },
-            {
-              name = "astc5x5",
-              description = "Four channels, 16 bytes per 5x5 block or 0.64 bytes per pixel."
-            },
-            {
-              name = "astc6x5",
-              description = "Four channels, 16 bytes per 6x5 block or 0.53 bytes per pixel."
-            },
-            {
-              name = "astc6x6",
-              description = "Four channels, 16 bytes per 6x6 block or 0.44 bytes per pixel."
-            },
-            {
-              name = "astc8x5",
-              description = "Four channels, 16 bytes per 8x5 block or 0.40 bytes per pixel."
-            },
-            {
-              name = "astc8x6",
-              description = "Four channels, 16 bytes per 8x6 block or 0.33 bytes per pixel."
-            },
-            {
-              name = "astc8x8",
-              description = "Four channels, 16 bytes per 8x8 block or 0.25 bytes per pixel."
-            },
-            {
-              name = "astc10x5",
-              description = "Four channels, 16 bytes per 10x5 block or 0.32 bytes per pixel."
-            },
-            {
-              name = "astc10x6",
-              description = "Four channels, 16 bytes per 10x6 block or 0.27 bytes per pixel."
-            },
-            {
-              name = "astc10x8",
-              description = "Four channels, 16 bytes per 10x8 block or 0.20 bytes per pixel."
-            },
-            {
-              name = "astc10x10",
-              description = "Four channels, 16 bytes per 10x10 block or 0.16 bytes per pixel."
-            },
-            {
-              name = "astc12x10",
-              description = "Four channels, 16 bytes per 12x10 block or 0.13 bytes per pixel."
-            },
-            {
-              name = "astc12x12",
-              description = "Four channels, 16 bytes per 12x12 block or 0.11 bytes per pixel."
-            }
-          }
-        }
-      },
       objects = {
         {
           name = "Blob",
@@ -3346,6 +1816,10 @@ return {
           description = "A Blob is an object that holds binary data.  It can be passed to most functions that take filename arguments, like `lovr.graphics.newModel` or `lovr.audio.newSource`.  Blobs aren't usually necessary for simple projects, but they can be really helpful if:\n\n- You need to work with low level binary data, potentially using the LuaJIT FFI for increased\n  performance.\n- You are working with data that isn't stored as a file, such as programmatically generated data\n  or a string from a network request.\n- You want to load data from a file once and then use it to create many different objects.\n\nA Blob's size cannot be changed once it is created.",
           key = "Blob",
           module = "lovr.data",
+          constructors = {
+            "lovr.data.newBlob",
+            "lovr.filesystem.newBlob"
+          },
           methods = {
             {
               name = "getName",
@@ -3429,10 +1903,6 @@ return {
                 }
               }
             }
-          },
-          constructors = {
-            "lovr.data.newBlob",
-            "lovr.filesystem.newBlob"
           }
         },
         {
@@ -3441,6 +1911,9 @@ return {
           description = "An Image stores raw 2D pixel info for `Texture`s.  It has a width, height, and format.  The Image can be initialized with the contents of an image file or it can be created with uninitialized contents.  The supported image formats are `png`, `jpg`, `hdr`, `dds`, `ktx`, and `astc`.\n\nUsually you can just use Textures, but Image can be useful if you want to manipulate individual pixels, load Textures in a background thread, or use the FFI to efficiently access the raw image data.",
           key = "Image",
           module = "lovr.data",
+          constructors = {
+            "lovr.data.newImage"
+          },
           methods = {
             {
               name = "encode",
@@ -3448,9 +1921,6 @@ return {
               description = "Encodes the Image to an uncompressed png.  This intended mainly for debugging.",
               key = "Image:encode",
               module = "lovr.data",
-              related = {
-                "lovr.filesystem.write"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3462,6 +1932,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.filesystem.write"
               }
             },
             {
@@ -3470,10 +1943,6 @@ return {
               description = "Returns a Blob containing the raw bytes of the Image.",
               key = "Image:getBlob",
               module = "lovr.data",
-              related = {
-                "Blob:getPointer",
-                "Sound:getBlob"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3485,6 +1954,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Blob:getPointer",
+                "Sound:getBlob"
               }
             },
             {
@@ -3493,11 +1966,6 @@ return {
               description = "Returns the dimensions of the Image, in pixels.",
               key = "Image:getDimensions",
               module = "lovr.data",
-              related = {
-                "Image:getWidth",
-                "Image:getHeight",
-                "Texture:getDimensions"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3514,6 +1982,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Image:getWidth",
+                "Image:getHeight",
+                "Texture:getDimensions"
               }
             },
             {
@@ -3522,10 +1995,6 @@ return {
               description = "Returns the format of the Image.",
               key = "Image:getFormat",
               module = "lovr.data",
-              related = {
-                "TextureFormat",
-                "Texture:getFormat"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3537,6 +2006,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "TextureFormat",
+                "Texture:getFormat"
               }
             },
             {
@@ -3545,11 +2018,6 @@ return {
               description = "Returns the height of the Image, in pixels.",
               key = "Image:getHeight",
               module = "lovr.data",
-              related = {
-                "Image:getWidth",
-                "Image:getDimensions",
-                "Texture:getHeight"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3561,6 +2029,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Image:getWidth",
+                "Image:getDimensions",
+                "Texture:getHeight"
               }
             },
             {
@@ -3569,11 +2042,6 @@ return {
               description = "Returns the value of a pixel of the Image.",
               key = "Image:getPixel",
               module = "lovr.data",
-              related = {
-                "Image:setPixel",
-                "TextureFormat",
-                "Pass:copy"
-              },
               variants = {
                 {
                   arguments = {
@@ -3612,7 +2080,12 @@ return {
                   }
                 }
               },
-              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
+              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`.",
+              related = {
+                "Image:setPixel",
+                "TextureFormat",
+                "Pass:copy"
+              }
             },
             {
               name = "getWidth",
@@ -3620,11 +2093,6 @@ return {
               description = "Returns the width of the Image, in pixels.",
               key = "Image:getWidth",
               module = "lovr.data",
-              related = {
-                "Image:getHeight",
-                "Image:getDimensions",
-                "Texture:getWidth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3636,6 +2104,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Image:getHeight",
+                "Image:getDimensions",
+                "Texture:getWidth"
               }
             },
             {
@@ -3644,11 +2117,6 @@ return {
               description = "Copies a rectangle of pixels from one Image to this one.",
               key = "Image:paste",
               module = "lovr.data",
-              related = {
-                "Image:getPixel",
-                "Image:setPixel",
-                "Pass:copy"
-              },
               variants = {
                 {
                   arguments = {
@@ -3697,7 +2165,12 @@ return {
                   returns = {}
                 }
               },
-              notes = "The two Images must have the same pixel format.\n\nCompressed images cannot be copied.\n\nThe rectangle cannot go outside the dimensions of the source or destination textures."
+              notes = "The two Images must have the same pixel format.\n\nCompressed images cannot be copied.\n\nThe rectangle cannot go outside the dimensions of the source or destination textures.",
+              related = {
+                "Image:getPixel",
+                "Image:setPixel",
+                "Pass:copy"
+              }
             },
             {
               name = "setPixel",
@@ -3705,11 +2178,6 @@ return {
               description = "Sets the value of a pixel of the Image.",
               key = "Image:setPixel",
               module = "lovr.data",
-              related = {
-                "Image:getPixel",
-                "TextureFormat",
-                "Pass:copy"
-              },
               variants = {
                 {
                   arguments = {
@@ -3748,11 +2216,13 @@ return {
                   returns = {}
                 }
               },
-              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
+              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`.",
+              related = {
+                "Image:getPixel",
+                "TextureFormat",
+                "Pass:copy"
+              }
             }
-          },
-          constructors = {
-            "lovr.data.newImage"
           }
         },
         {
@@ -3768,10 +2238,6 @@ return {
               description = "Returns the number of channels in an animation.\n\nA channel is a set of keyframes for a single property of a node.",
               key = "ModelData:getAnimationChannelCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getAnimationNode",
-                "ModelData:getAnimationProperty"
-              },
               variants = {
                 {
                   arguments = {
@@ -3805,6 +2271,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty"
               }
             },
             {
@@ -3813,9 +2283,6 @@ return {
               description = "Returns the number of animations in the model.",
               key = "ModelData:getAnimationCount",
               module = "lovr.data",
-              related = {
-                "Model:getAnimationCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3827,6 +2294,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getAnimationCount"
               }
             },
             {
@@ -3835,9 +2305,6 @@ return {
               description = "Returns the duration of an animation.",
               key = "ModelData:getAnimationDuration",
               module = "lovr.data",
-              related = {
-                "Model:getAnimationDuration"
-              },
               variants = {
                 {
                   arguments = {
@@ -3872,7 +2339,10 @@ return {
                   }
                 }
               },
-              notes = "The duration of the animation is calculated as the latest timestamp of all of its channels."
+              notes = "The duration of the animation is calculated as the latest timestamp of all of its channels.",
+              related = {
+                "Model:getAnimationDuration"
+              }
             },
             {
               name = "getAnimationKeyframe",
@@ -3880,10 +2350,6 @@ return {
               description = "Returns a single keyframe in a channel of an animation.",
               key = "ModelData:getAnimationKeyframe",
               module = "lovr.data",
-              related = {
-                "ModelData:getAnimationSmoothMode",
-                "ModelData:getAnimationKeyframeCount"
-              },
               variants = {
                 {
                   arguments = {
@@ -3947,6 +2413,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getAnimationSmoothMode",
+                "ModelData:getAnimationKeyframeCount"
               }
             },
             {
@@ -3955,10 +2425,6 @@ return {
               description = "Returns the number of keyframes in a channel of an animation.",
               key = "ModelData:getAnimationKeyframeCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getAnimationSmoothMode",
-                "ModelData:getAnimationKeyframe"
-              },
               variants = {
                 {
                   arguments = {
@@ -4002,6 +2468,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getAnimationSmoothMode",
+                "ModelData:getAnimationKeyframe"
               }
             },
             {
@@ -4010,9 +2480,6 @@ return {
               description = "Returns the name of an animation.",
               key = "ModelData:getAnimationName",
               module = "lovr.data",
-              related = {
-                "Model:getAnimationName"
-              },
               variants = {
                 {
                   arguments = {
@@ -4031,7 +2498,10 @@ return {
                   }
                 }
               },
-              notes = "If the animation does not have a name, this function returns `nil`."
+              notes = "If the animation does not have a name, this function returns `nil`.",
+              related = {
+                "Model:getAnimationName"
+              }
             },
             {
               name = "getAnimationNode",
@@ -4039,10 +2509,6 @@ return {
               description = "Returns the index of a node targeted by an animation's channel.",
               key = "ModelData:getAnimationNode",
               module = "lovr.data",
-              related = {
-                "ModelData:getAnimationProperty",
-                "ModelData:getAnimationSmoothMode"
-              },
               variants = {
                 {
                   arguments = {
@@ -4086,6 +2552,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getAnimationProperty",
+                "ModelData:getAnimationSmoothMode"
               }
             },
             {
@@ -4094,10 +2564,6 @@ return {
               description = "Returns the property targeted by an animation's channel.",
               key = "ModelData:getAnimationProperty",
               module = "lovr.data",
-              related = {
-                "ModelData:getAnimationNode",
-                "ModelData:getAnimationSmoothMode"
-              },
               variants = {
                 {
                   arguments = {
@@ -4141,6 +2607,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationSmoothMode"
               }
             },
             {
@@ -4149,10 +2619,6 @@ return {
               description = "Returns the smooth mode of a channel in an animation.",
               key = "ModelData:getAnimationSmoothMode",
               module = "lovr.data",
-              related = {
-                "ModelData:getAnimationNode",
-                "ModelData:getAnimationProperty"
-              },
               variants = {
                 {
                   arguments = {
@@ -4196,6 +2662,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty"
               }
             },
             {
@@ -4204,10 +2674,6 @@ return {
               description = "Returns one of the Blobs in the model, by index.",
               key = "ModelData:getBlob",
               module = "lovr.data",
-              related = {
-                "ModelData:getBlobCount",
-                "ModelData:getImage"
-              },
               variants = {
                 {
                   arguments = {
@@ -4225,6 +2691,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getBlobCount",
+                "ModelData:getImage"
               }
             },
             {
@@ -4233,10 +2703,6 @@ return {
               description = "Returns the number of Blobs in the model.",
               key = "ModelData:getBlobCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getBlob",
-                "ModelData:getImageCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4248,6 +2714,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getBlob",
+                "ModelData:getImageCount"
               }
             },
             {
@@ -4256,15 +2726,6 @@ return {
               description = "Returns the 6 values of the model's axis-aligned bounding box.",
               key = "ModelData:getBoundingBox",
               module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingSphere",
-                "Model:getBoundingBox"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4301,6 +2762,15 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingSphere",
+                "Model:getBoundingBox"
               }
             },
             {
@@ -4309,15 +2779,6 @@ return {
               description = "Returns a sphere approximately enclosing the vertices in the model.",
               key = "ModelData:getBoundingSphere",
               module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox",
-                "Model:getBoundingSphere"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4344,6 +2805,15 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox",
+                "Model:getBoundingSphere"
               }
             },
             {
@@ -4352,14 +2822,6 @@ return {
               description = "Returns the center of the model's axis-aligned bounding box, relative to the model's origin.",
               key = "ModelData:getCenter",
               module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getBoundingBox",
-                "Model:getCenter"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4381,6 +2843,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getBoundingBox",
+                "Model:getCenter"
               }
             },
             {
@@ -4389,14 +2859,6 @@ return {
               description = "Returns the depth of the model, computed from its axis-aligned bounding box.",
               key = "ModelData:getDepth",
               module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox",
-                "Model:getDepth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4408,6 +2870,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox",
+                "Model:getDepth"
               }
             },
             {
@@ -4416,14 +2886,6 @@ return {
               description = "Returns the width, height, and depth of the model, computed from its axis-aligned bounding box.",
               key = "ModelData:getDimensions",
               module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox",
-                "Model:getDimensions"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4445,6 +2907,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox",
+                "Model:getDimensions"
               }
             },
             {
@@ -4453,14 +2923,6 @@ return {
               description = "Returns the height of the model, computed from its axis-aligned bounding box.",
               key = "ModelData:getHeight",
               module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox",
-                "Model:getHeight"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4472,6 +2934,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getWidth",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox",
+                "Model:getHeight"
               }
             },
             {
@@ -4480,10 +2950,6 @@ return {
               description = "Returns one of the Images in the model, by index.",
               key = "ModelData:getImage",
               module = "lovr.data",
-              related = {
-                "ModelData:getImageCount",
-                "ModelData:getBlob"
-              },
               variants = {
                 {
                   arguments = {
@@ -4501,6 +2967,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getImageCount",
+                "ModelData:getBlob"
               }
             },
             {
@@ -4509,10 +2979,6 @@ return {
               description = "Returns the number of Images in the model.",
               key = "ModelData:getImageCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getImage",
-                "ModelData:getBlobCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4524,6 +2990,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getImage",
+                "ModelData:getBlobCount"
               }
             },
             {
@@ -4532,12 +3002,6 @@ return {
               description = "Returns a table with all of the properties of a material.",
               key = "ModelData:getMaterial",
               module = "lovr.data",
-              related = {
-                "ModelData:getMaterialCount",
-                "ModelData:getMeshMaterial",
-                "lovr.graphics.newMaterial",
-                "Model:getMaterial"
-              },
               variants = {
                 {
                   arguments = {
@@ -4756,7 +3220,13 @@ return {
                   }
                 }
               },
-              notes = "All images are optional and may be `nil`."
+              notes = "All images are optional and may be `nil`.",
+              related = {
+                "ModelData:getMaterialCount",
+                "ModelData:getMeshMaterial",
+                "lovr.graphics.newMaterial",
+                "Model:getMaterial"
+              }
             },
             {
               name = "getMaterialCount",
@@ -4764,12 +3234,6 @@ return {
               description = "Returns the number of materials in the model.",
               key = "ModelData:getMaterialCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getMaterialName",
-                "ModelData:getMeshMaterial",
-                "ModelData:getMaterial",
-                "Model:getMaterialCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4781,6 +3245,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMaterialName",
+                "ModelData:getMeshMaterial",
+                "ModelData:getMaterial",
+                "Model:getMaterialCount"
               }
             },
             {
@@ -4789,12 +3259,6 @@ return {
               description = "Returns the name of a material in the model.",
               key = "ModelData:getMaterialName",
               module = "lovr.data",
-              related = {
-                "ModelData:getMaterialCount",
-                "ModelData:getMeshMaterial",
-                "ModelData:getMaterial",
-                "Model:getMaterialName"
-              },
               variants = {
                 {
                   arguments = {
@@ -4812,6 +3276,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMaterialCount",
+                "ModelData:getMeshMaterial",
+                "ModelData:getMaterial",
+                "Model:getMaterialName"
               }
             },
             {
@@ -4820,9 +3290,6 @@ return {
               description = "Returns the number of meshes in the model.",
               key = "ModelData:getMeshCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodeMeshes"
-              },
               variants = {
                 {
                   arguments = {},
@@ -4834,6 +3301,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodeMeshes"
               }
             },
             {
@@ -4867,12 +3337,6 @@ return {
               description = "Returns one of the vertex indices in a mesh.  If a mesh has vertex indices, they define the order and connectivity of the vertices in the mesh, allowing a vertex to be reused multiple times without duplicating its data.",
               key = "ModelData:getMeshIndex",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshIndexFormat",
-                "ModelData:getMeshIndexCount",
-                "ModelData:getMeshVertex",
-                "ModelData:getTriangles"
-              },
               variants = {
                 {
                   arguments = {
@@ -4895,6 +3359,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMeshIndexFormat",
+                "ModelData:getMeshIndexCount",
+                "ModelData:getMeshVertex",
+                "ModelData:getTriangles"
               }
             },
             {
@@ -4903,7 +3373,6 @@ return {
               description = "Returns the number of vertex indices in a mesh.  Vertex indices allow for vertices to be reused when defining triangles.",
               key = "ModelData:getMeshIndexCount",
               module = "lovr.data",
-              notes = "This may return zero if the mesh does not use indices.",
               variants = {
                 {
                   arguments = {
@@ -4921,7 +3390,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "This may return zero if the mesh does not use indices."
             },
             {
               name = "getMeshIndexFormat",
@@ -4929,9 +3399,6 @@ return {
               description = "Returns the data format of vertex indices in a mesh.  If a mesh doesn't use vertex indices, this function returns nil.",
               key = "ModelData:getMeshIndexFormat",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshVertexFormat"
-              },
               variants = {
                 {
                   arguments = {
@@ -4964,6 +3431,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMeshVertexFormat"
               }
             },
             {
@@ -4997,12 +3467,6 @@ return {
               description = "Returns the data for a single vertex in a mesh.  The data returned depends on the vertex format of a mesh, which is given by `ModelData:getMeshVertexFormat`.",
               key = "ModelData:getMeshVertex",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshVertexFormat",
-                "ModelData:getMeshVertexCount",
-                "ModelData:getMeshIndex",
-                "ModelData:getTriangles"
-              },
               variants = {
                 {
                   arguments = {
@@ -5025,6 +3489,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMeshVertexFormat",
+                "ModelData:getMeshVertexCount",
+                "ModelData:getMeshIndex",
+                "ModelData:getTriangles"
               }
             },
             {
@@ -5033,9 +3503,6 @@ return {
               description = "Returns the number of vertices in a mesh.",
               key = "ModelData:getMeshVertexCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshIndexCount"
-              },
               variants = {
                 {
                   arguments = {
@@ -5053,6 +3520,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMeshIndexCount"
               }
             },
             {
@@ -5061,9 +3531,6 @@ return {
               description = "Returns the vertex format of a mesh.  The vertex format defines the properties associated with each vertex (position, color, etc.), including their types and binary data layout.",
               key = "ModelData:getMeshVertexFormat",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshIndexFormat"
-              },
               variants = {
                 {
                   arguments = {
@@ -5082,7 +3549,10 @@ return {
                   }
                 }
               },
-              notes = "The format is given as a table of vertex attributes.  Each attribute is a table containing the following:\n\n    { name, type, components, blob, offset, stride }\n\n- The `name` will be a `DefaultAttribute`.\n- The `type` will be an `AttributeType`.\n- The `component` count will be 1-4.\n- The `blob` is an index of one of the Blobs in the model (see `ModelData:getBlob`).\n- The `offset` is a byte offset from the start of the Blob where the attribute's data starts.\n- The `stride` is the number of bytes between consecutive values."
+              notes = "The format is given as a table of vertex attributes.  Each attribute is a table containing the following:\n\n    { name, type, components, blob, offset, stride }\n\n- The `name` will be a `DefaultAttribute`.\n- The `type` will be an `AttributeType`.\n- The `component` count will be 1-4.\n- The `blob` is an index of one of the Blobs in the model (see `ModelData:getBlob`).\n- The `offset` is a byte offset from the start of the Blob where the attribute's data starts.\n- The `stride` is the number of bytes between consecutive values.",
+              related = {
+                "ModelData:getMeshIndexFormat"
+              }
             },
             {
               name = "getMetadata",
@@ -5090,9 +3560,6 @@ return {
               description = "Returns extra information stored in the model file.  Currently this is only implemented for glTF models and returns the JSON string from the glTF or glb file.  The metadata can be used to get application-specific data or add support for glTF extensions not supported by LÖVR.",
               key = "ModelData:getMetadata",
               module = "lovr.data",
-              related = {
-                "Model:getMetadata"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5104,6 +3571,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getMetadata"
               }
             },
             {
@@ -5112,11 +3582,6 @@ return {
               description = "Given a parent node, this function returns a table with the indices of its children.",
               key = "ModelData:getNodeChildren",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodeParent",
-                "ModelData:getRootNode",
-                "Model:getNodeChildren"
-              },
               variants = {
                 {
                   arguments = {
@@ -5151,7 +3616,12 @@ return {
                   }
                 }
               },
-              notes = "If the node does not have any children, this function returns an empty table."
+              notes = "If the node does not have any children, this function returns an empty table.",
+              related = {
+                "ModelData:getNodeParent",
+                "ModelData:getRootNode",
+                "Model:getNodeChildren"
+              }
             },
             {
               name = "getNodeCount",
@@ -5159,9 +3629,6 @@ return {
               description = "Returns the number of nodes in the model.",
               key = "ModelData:getNodeCount",
               module = "lovr.data",
-              related = {
-                "Model:getNodeCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5173,6 +3640,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodeCount"
               }
             },
             {
@@ -5181,9 +3651,6 @@ return {
               description = "Returns a table of mesh indices attached to a node.  Meshes define the geometry and materials of a model, as opposed to the nodes which define the transforms and hierarchy.  A node can have multiple meshes, and meshes can be reused in multiple nodes.",
               key = "ModelData:getNodeMeshes",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshCount"
-              },
               variants = {
                 {
                   arguments = {
@@ -5217,6 +3684,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMeshCount"
               }
             },
             {
@@ -5225,9 +3695,6 @@ return {
               description = "Returns the name of a node.",
               key = "ModelData:getNodeName",
               module = "lovr.data",
-              related = {
-                "Model:getNodeName"
-              },
               variants = {
                 {
                   arguments = {
@@ -5246,7 +3713,10 @@ return {
                   }
                 }
               },
-              notes = "If the node does not have a name, this function returns `nil`."
+              notes = "If the node does not have a name, this function returns `nil`.",
+              related = {
+                "Model:getNodeName"
+              }
             },
             {
               name = "getNodeOrientation",
@@ -5254,12 +3724,6 @@ return {
               description = "Returns local orientation of a node, relative to its parent.",
               key = "ModelData:getNodeOrientation",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodePosition",
-                "ModelData:getNodeScale",
-                "ModelData:getNodePose",
-                "ModelData:getNodeTransform"
-              },
               variants = {
                 {
                   arguments = {
@@ -5323,6 +3787,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
               }
             },
             {
@@ -5331,11 +3801,6 @@ return {
               description = "Given a child node, this function returns the index of its parent.",
               key = "ModelData:getNodeParent",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodeChildren",
-                "ModelData:getRootNode",
-                "Model:getNodeParent"
-              },
               variants = {
                 {
                   arguments = {
@@ -5369,6 +3834,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodeChildren",
+                "ModelData:getRootNode",
+                "Model:getNodeParent"
               }
             },
             {
@@ -5377,12 +3847,6 @@ return {
               description = "Returns local pose (position and orientation) of a node, relative to its parent.",
               key = "ModelData:getNodePose",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodePosition",
-                "ModelData:getNodeOrientation",
-                "ModelData:getNodeScale",
-                "ModelData:getNodeTransform"
-              },
               variants = {
                 {
                   arguments = {
@@ -5476,6 +3940,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodeTransform"
               }
             },
             {
@@ -5484,12 +3954,6 @@ return {
               description = "Returns local position of a node, relative to its parent.",
               key = "ModelData:getNodePosition",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodeOrientation",
-                "ModelData:getNodeScale",
-                "ModelData:getNodePose",
-                "ModelData:getNodeTransform"
-              },
               variants = {
                 {
                   arguments = {
@@ -5543,6 +4007,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
               }
             },
             {
@@ -5551,12 +4021,6 @@ return {
               description = "Returns local scale of a node, relative to its parent.",
               key = "ModelData:getNodeScale",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodePosition",
-                "ModelData:getNodeOrientation",
-                "ModelData:getNodePose",
-                "ModelData:getNodeTransform"
-              },
               variants = {
                 {
                   arguments = {
@@ -5610,6 +4074,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
               }
             },
             {
@@ -5618,9 +4088,6 @@ return {
               description = "Returns the index of the skin used by a node.  Skins are collections of joints used for skeletal animation.  A model can have multiple skins, and each node can use at most one skin to drive the animation of its meshes.",
               key = "ModelData:getNodeSkin",
               module = "lovr.data",
-              related = {
-                "ModelData:getSkinCount"
-              },
               variants = {
                 {
                   arguments = {
@@ -5654,6 +4121,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getSkinCount"
               }
             },
             {
@@ -5662,12 +4132,6 @@ return {
               description = "Returns local transform (position, orientation, and scale) of a node, relative to its parent.",
               key = "ModelData:getNodeTransform",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodePosition",
-                "ModelData:getNodeOrientation",
-                "ModelData:getNodeScale",
-                "ModelData:getNodePose"
-              },
               variants = {
                 {
                   arguments = {
@@ -5792,7 +4256,13 @@ return {
                   }
                 }
               },
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same."
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
+              related = {
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose"
+              }
             },
             {
               name = "getRootNode",
@@ -5800,11 +4270,6 @@ return {
               description = "Returns the index of the model's root node.",
               key = "ModelData:getRootNode",
               module = "lovr.data",
-              related = {
-                "ModelData:getNodeCount",
-                "ModelData:getNodeParent",
-                "Model:getRootNode"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5816,6 +4281,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getNodeCount",
+                "ModelData:getNodeParent",
+                "Model:getRootNode"
               }
             },
             {
@@ -5824,9 +4294,6 @@ return {
               description = "Returns the number of skins in the model.  A skin is a collection of joints targeted by an animation.",
               key = "ModelData:getSkinCount",
               module = "lovr.data",
-              related = {
-                "Model:hasJoints"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5839,7 +4306,10 @@ return {
                   }
                 }
               },
-              notes = "There is currently a maximum of 256 skins."
+              notes = "There is currently a maximum of 256 skins.",
+              related = {
+                "Model:hasJoints"
+              }
             },
             {
               name = "getSkinInverseBindMatrix",
@@ -5902,11 +4372,6 @@ return {
               description = "Returns the total number of triangles in the model.  This count includes meshes that are attached to multiple nodes, and the count corresponds to the triangles returned by `ModelData:getTriangles`.",
               key = "ModelData:getTriangleCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getTriangles",
-                "ModelData:getVertexCount",
-                "Model:getTriangleCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5918,6 +4383,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getTriangles",
+                "ModelData:getVertexCount",
+                "Model:getTriangleCount"
               }
             },
             {
@@ -5926,11 +4396,6 @@ return {
               description = "Returns the data for all triangles in the model.  There are a few differences between this and the mesh-specific functions like `ModelData:getMeshVertex` and `ModelData:getMeshIndex`:\n\n- Only vertex positions are returned, not other vertex attributes.\n- Positions are relative to the origin of the whole model, instead of local to a node.\n- If a mesh is attached to more than one node, its vertices will be in the table multiple times.\n- Vertex indices will be relative to the whole triangle list instead of a mesh.",
               key = "ModelData:getTriangles",
               module = "lovr.data",
-              related = {
-                "ModelData:getTriangleCount",
-                "ModelData:getVertexCount",
-                "Model:getTriangles"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5948,7 +4413,12 @@ return {
                   }
                 }
               },
-              notes = "After this function is called on a ModelData once, the result is cached."
+              notes = "After this function is called on a ModelData once, the result is cached.",
+              related = {
+                "ModelData:getTriangleCount",
+                "ModelData:getVertexCount",
+                "Model:getTriangles"
+              }
             },
             {
               name = "getVertexCount",
@@ -5956,11 +4426,6 @@ return {
               description = "Returns the total vertex count of a model.  This count includes meshes that are attached to multiple nodes, and the count corresponds to the vertices returned by `ModelData:getTriangles`.",
               key = "ModelData:getVertexCount",
               module = "lovr.data",
-              related = {
-                "ModelData:getTriangles",
-                "ModelData:getTriangleCount",
-                "Model:getVertexCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5972,6 +4437,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getTriangles",
+                "ModelData:getTriangleCount",
+                "Model:getVertexCount"
               }
             },
             {
@@ -5980,14 +4450,6 @@ return {
               description = "Returns the width of the model, computed from its axis-aligned bounding box.",
               key = "ModelData:getWidth",
               module = "lovr.data",
-              related = {
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox",
-                "Model:getWidth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -5999,6 +4461,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox",
+                "Model:getWidth"
               }
             }
           },
@@ -6060,10 +4530,6 @@ return {
               description = "Returns the ascent metric of the font, in pixels.  The ascent represents how far any glyph of the font ascends above the baseline.",
               key = "Rasterizer:getAscent",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getDescent",
-                "Font:getAscent"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6075,6 +4541,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getDescent",
+                "Font:getAscent"
               }
             },
             {
@@ -6124,11 +4594,6 @@ return {
               description = "Returns the bounding box of a glyph, or the bounding box surrounding all glyphs.  Note that font coordinates use a cartesian \"y up\" coordinate system.",
               key = "Rasterizer:getBoundingBox",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getWidth",
-                "Rasterizer:getHeight",
-                "Rasterizer:getDimensions"
-              },
               variants = {
                 {
                   arguments = {
@@ -6217,6 +4682,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getWidth",
+                "Rasterizer:getHeight",
+                "Rasterizer:getDimensions"
               }
             },
             {
@@ -6225,10 +4695,6 @@ return {
               description = "Returns the bezier curve control points defining the shape of a glyph.",
               key = "Rasterizer:getCurves",
               module = "lovr.data",
-              related = {
-                "Curve",
-                "Rasterizer:newImage"
-              },
               variants = {
                 {
                   arguments = {
@@ -6272,6 +4738,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Curve",
+                "Rasterizer:newImage"
               }
             },
             {
@@ -6280,10 +4750,6 @@ return {
               description = "Returns the descent metric of the font, in pixels.  The descent represents how far any glyph of the font descends below the baseline.",
               key = "Rasterizer:getDescent",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getAscent",
-                "Font:getDescent"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6295,6 +4761,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getAscent",
+                "Font:getDescent"
               }
             },
             {
@@ -6303,11 +4773,6 @@ return {
               description = "Returns the dimensions of a glyph, or the dimensions of any glyph.",
               key = "Rasterizer:getDimensions",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getWidth",
-                "Rasterizer:getHeight",
-                "Rasterizer:getBoundingBox"
-              },
               variants = {
                 {
                   arguments = {
@@ -6366,6 +4831,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getWidth",
+                "Rasterizer:getHeight",
+                "Rasterizer:getBoundingBox"
               }
             },
             {
@@ -6374,9 +4844,6 @@ return {
               description = "Returns the size of the font, in pixels.  This is the size the rasterizer was created with, and defines the size of images it rasterizes.",
               key = "Rasterizer:getFontSize",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getHeight"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6388,6 +4855,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getHeight"
               }
             },
             {
@@ -6396,9 +4866,6 @@ return {
               description = "Returns the number of glyphs stored in the font file.",
               key = "Rasterizer:getGlyphCount",
               module = "lovr.data",
-              related = {
-                "Rasterizer:hasGlyphs"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6410,6 +4877,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:hasGlyphs"
               }
             },
             {
@@ -6418,11 +4888,6 @@ return {
               description = "Returns the height of a glyph, or the maximum height of any glyph.",
               key = "Rasterizer:getHeight",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getWidth",
-                "Rasterizer:getDimensions",
-                "Rasterizer:getBoundingBox"
-              },
               variants = {
                 {
                   arguments = {
@@ -6466,6 +4931,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getWidth",
+                "Rasterizer:getDimensions",
+                "Rasterizer:getBoundingBox"
               }
             },
             {
@@ -6474,9 +4944,6 @@ return {
               description = "Returns the kerning between 2 glyphs, in pixels.  Kerning is a slight horizontal adjustment between 2 glyphs to improve the visual appearance.  It will often be negative.",
               key = "Rasterizer:getKerning",
               module = "lovr.data",
-              related = {
-                "Font:getKerning"
-              },
               variants = {
                 {
                   arguments = {
@@ -6562,6 +5029,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Font:getKerning"
               }
             },
             {
@@ -6570,10 +5040,6 @@ return {
               description = "Returns the leading metric of the font, in pixels.  This is the full amount of space between lines.",
               key = "Rasterizer:getLeading",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getAscent",
-                "Rasterizer:getDescent"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6585,6 +5051,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getAscent",
+                "Rasterizer:getDescent"
               }
             },
             {
@@ -6593,11 +5063,6 @@ return {
               description = "Returns the width of a glyph, or the maximum width of any glyph.",
               key = "Rasterizer:getWidth",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getHeight",
-                "Rasterizer:getDimensions",
-                "Rasterizer:getBoundingBox"
-              },
               variants = {
                 {
                   arguments = {
@@ -6641,6 +5106,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getHeight",
+                "Rasterizer:getDimensions",
+                "Rasterizer:getBoundingBox"
               }
             },
             {
@@ -6649,9 +5119,6 @@ return {
               description = "Returns whether the Rasterizer can rasterize a set of glyphs.",
               key = "Rasterizer:hasGlyphs",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getGlyphCount"
-              },
               variants = {
                 {
                   arguments = {
@@ -6669,6 +5136,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getGlyphCount"
               }
             },
             {
@@ -6677,9 +5147,6 @@ return {
               description = "Returns an `Image` containing a rasterized glyph.",
               key = "Rasterizer:newImage",
               module = "lovr.data",
-              related = {
-                "Rasterizer:getCurves"
-              },
               variants = {
                 {
                   arguments = {
@@ -6737,6 +5204,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getCurves"
               }
             }
           },
@@ -6757,10 +5227,6 @@ return {
               description = "Returns a Blob containing the raw bytes of the Sound.",
               key = "Sound:getBlob",
               module = "lovr.data",
-              related = {
-                "Blob:getPointer",
-                "Image:getBlob"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6773,7 +5239,11 @@ return {
                   }
                 }
               },
-              notes = "Samples for each channel are stored interleaved.  The data type of each sample is given by `Sound:getFormat`."
+              notes = "Samples for each channel are stored interleaved.  The data type of each sample is given by `Sound:getFormat`.",
+              related = {
+                "Blob:getPointer",
+                "Image:getBlob"
+              }
             },
             {
               name = "getCapacity",
@@ -6781,11 +5251,6 @@ return {
               description = "Returns the number of frames that can be written to the Sound.  For stream sounds, this is the number of frames that can be written without overwriting existing data.  For normal sounds, this returns the same value as `Sound:getFrameCount`.",
               key = "Sound:getCapacity",
               module = "lovr.data",
-              related = {
-                "Sound:getFrameCount",
-                "Sound:getSampleCount",
-                "Source:getDuration"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6797,6 +5262,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:getFrameCount",
+                "Sound:getSampleCount",
+                "Source:getDuration"
               }
             },
             {
@@ -6805,9 +5275,6 @@ return {
               description = "Returns the number of channels in the Sound.  Mono sounds have 1 channel, stereo sounds have 2 channels, and ambisonic sounds have 4 channels.",
               key = "Sound:getChannelCount",
               module = "lovr.data",
-              related = {
-                "Sound:getChannelLayout"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6819,6 +5286,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:getChannelLayout"
               }
             },
             {
@@ -6827,9 +5297,6 @@ return {
               description = "Returns the channel layout of the Sound.",
               key = "Sound:getChannelLayout",
               module = "lovr.data",
-              related = {
-                "Sound:getChannelCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6841,6 +5308,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:getChannelCount"
               }
             },
             {
@@ -6849,12 +5319,6 @@ return {
               description = "Returns the duration of the Sound, in seconds.",
               key = "Sound:getDuration",
               module = "lovr.data",
-              related = {
-                "Sound:getFrameCount",
-                "Sound:getSampleCount",
-                "Sound:getSampleRate",
-                "Source:getDuration"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6867,7 +5331,13 @@ return {
                   }
                 }
               },
-              notes = "This can be computed as `(frameCount / sampleRate)`."
+              notes = "This can be computed as `(frameCount / sampleRate)`.",
+              related = {
+                "Sound:getFrameCount",
+                "Sound:getSampleCount",
+                "Sound:getSampleRate",
+                "Source:getDuration"
+              }
             },
             {
               name = "getFormat",
@@ -6875,10 +5345,6 @@ return {
               description = "Returns the sample format of the Sound.",
               key = "Sound:getFormat",
               module = "lovr.data",
-              related = {
-                "Sound:getChannelLayout",
-                "Sound:getSampleRate"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6890,6 +5356,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:getChannelLayout",
+                "Sound:getSampleRate"
               }
             },
             {
@@ -6898,11 +5368,6 @@ return {
               description = "Returns the number of frames in the Sound.  A frame stores one sample for each channel.",
               key = "Sound:getFrameCount",
               module = "lovr.data",
-              related = {
-                "Sound:getDuration",
-                "Sound:getSampleCount",
-                "Sound:getChannelCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -6915,7 +5380,12 @@ return {
                   }
                 }
               },
-              notes = "For streams, this returns the number of frames in the stream's buffer."
+              notes = "For streams, this returns the number of frames in the stream's buffer.",
+              related = {
+                "Sound:getDuration",
+                "Sound:getSampleCount",
+                "Sound:getChannelCount"
+              }
             },
             {
               name = "getFrames",
@@ -7067,11 +5537,6 @@ return {
               description = "Returns the total number of samples in the Sound.",
               key = "Sound:getSampleCount",
               module = "lovr.data",
-              related = {
-                "Sound:getDuration",
-                "Sound:getFrameCount",
-                "Sound:getChannelCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -7084,7 +5549,12 @@ return {
                   }
                 }
               },
-              notes = "For streams, this returns the number of samples in the stream's buffer."
+              notes = "For streams, this returns the number of samples in the stream's buffer.",
+              related = {
+                "Sound:getDuration",
+                "Sound:getFrameCount",
+                "Sound:getChannelCount"
+              }
             },
             {
               name = "getSampleRate",
@@ -7111,10 +5581,6 @@ return {
               description = "Returns whether the Sound is compressed.  Compressed sounds are loaded from compressed audio formats like MP3 and OGG.  They use a lot less memory but require some extra CPU work during playback.  Compressed sounds can not be modified using `Sound:setFrames`.",
               key = "Sound:isCompressed",
               module = "lovr.data",
-              related = {
-                "Sound:isStream",
-                "lovr.data.newSound"
-              },
               variants = {
                 {
                   arguments = {},
@@ -7126,6 +5592,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:isStream",
+                "lovr.data.newSound"
               }
             },
             {
@@ -7134,10 +5604,6 @@ return {
               description = "Returns whether the Sound is a stream.",
               key = "Sound:isStream",
               module = "lovr.data",
-              related = {
-                "Sound:isCompressed",
-                "lovr.data.newSound"
-              },
               variants = {
                 {
                   arguments = {},
@@ -7149,6 +5615,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sound:isCompressed",
+                "lovr.data.newSound"
               }
             },
             {
@@ -7273,6 +5743,788 @@ return {
             "lovr.data.newSound"
           }
         }
+      },
+      functions = {
+        {
+          name = "newBlob",
+          summary = "Create a new Blob.",
+          description = "Creates a new Blob.",
+          key = "lovr.data.newBlob",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The amount of data to allocate for the Blob, in bytes.  All of the bytes will be filled with zeroes."
+                },
+                {
+                  name = "name",
+                  type = "string",
+                  description = "A name for the Blob (used in error messages)",
+                  default = "''"
+                }
+              },
+              returns = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The new Blob."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "contents",
+                  type = "string",
+                  description = "A string to use for the Blob's contents."
+                },
+                {
+                  name = "name",
+                  type = "string",
+                  description = "A name for the Blob (used in error messages)",
+                  default = "''"
+                }
+              },
+              returns = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The new Blob."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "source",
+                  type = "Blob",
+                  description = "A Blob to copy the contents from."
+                },
+                {
+                  name = "name",
+                  type = "string",
+                  description = "A name for the Blob (used in error messages)",
+                  default = "''"
+                }
+              },
+              returns = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The new Blob."
+                }
+              }
+            }
+          },
+          related = {
+            "lovr.filesystem.newBlob"
+          }
+        },
+        {
+          name = "newImage",
+          summary = "Create a new Image.",
+          description = "Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
+          key = "lovr.data.newImage",
+          module = "lovr.data",
+          variants = {
+            {
+              description = "Load image data from a file.",
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the image to load."
+                },
+                {
+                  name = "flip",
+                  type = "boolean",
+                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
+                  default = "true"
+                }
+              },
+              returns = {
+                {
+                  name = "image",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            },
+            {
+              description = "Create an Image with a given size and pixel format.",
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the texture."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the texture."
+                },
+                {
+                  name = "format",
+                  type = "TextureFormat",
+                  description = "The format of the texture's pixels.",
+                  default = "rgba"
+                },
+                {
+                  name = "data",
+                  type = "Blob",
+                  description = "Raw pixel values to use as the contents.  If `nil`, the data will all be zero.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "image",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            },
+            {
+              description = "Clone an existing Image.",
+              arguments = {
+                {
+                  name = "source",
+                  type = "Image",
+                  description = "The Image to clone."
+                }
+              },
+              returns = {
+                {
+                  name = "image",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            },
+            {
+              description = "Decode image data from a Blob.",
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing image data to decode."
+                },
+                {
+                  name = "flip",
+                  type = "boolean",
+                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
+                  default = "true"
+                }
+              },
+              returns = {
+                {
+                  name = "image",
+                  type = "Image",
+                  description = "The new Image."
+                }
+              }
+            }
+          },
+          notes = "The supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.\n\nOnly 2D textures are supported for DXT/ASTC.\n\nCurrently textures loaded as KTX need to be in DXT/ASTC formats."
+        },
+        {
+          name = "newModelData",
+          summary = "Create a new ModelData.",
+          description = "Loads a 3D model from a file.  The supported 3D file formats are OBJ and glTF.",
+          key = "lovr.data.newModelData",
+          module = "lovr.data",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the model to load."
+                }
+              },
+              returns = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The new ModelData."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing data for a model to decode."
+                }
+              },
+              returns = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The new ModelData."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newRasterizer",
+          summary = "Create a new Rasterizer.",
+          description = "Creates a new Rasterizer from a TTF file.",
+          key = "lovr.data.newRasterizer",
+          module = "lovr.data",
+          variants = {
+            {
+              description = "Create a Rasterizer for the default font included with LÖVR (Varela Round).",
+              arguments = {
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of the font file to load."
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing font data."
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newSound",
+          summary = "Create a new Sound.",
+          description = "Creates a new Sound.  A sound can be loaded from an audio file, or it can be created empty with capacity for a certain number of audio frames.\n\nWhen loading audio from a file, use the `decode` option to control whether compressed audio should remain compressed or immediately get decoded to raw samples.\n\nWhen creating an empty sound, the `contents` parameter can be set to `'stream'` to create an audio stream.  On streams, `Sound:setFrames` will always write to the end of the stream, and `Sound:getFrames` will always read the oldest samples from the beginning.  The number of frames in the sound is the total capacity of the stream's buffer.",
+          key = "lovr.data.newSound",
+          module = "lovr.data",
+          variants = {
+            {
+              description = "Create a raw or stream Sound from a frame count and format info:",
+              arguments = {
+                {
+                  name = "frames",
+                  type = "number",
+                  description = "The number of frames the Sound can hold."
+                },
+                {
+                  name = "format",
+                  type = "SampleFormat",
+                  description = "The sample data type.",
+                  default = "'f32'"
+                },
+                {
+                  name = "channels",
+                  type = "ChannelLayout",
+                  description = "The channel layout.",
+                  default = "'stereo'"
+                },
+                {
+                  name = "sampleRate",
+                  type = "number",
+                  description = "The sample rate, in Hz.",
+                  default = "48000"
+                },
+                {
+                  name = "contents",
+                  type = "*",
+                  description = "A Blob containing raw audio samples to use as the initial contents, 'stream' to create an audio stream, or `nil` to leave the data initialized to zero.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "sound",
+                  type = "Sound",
+                  description = "Sounds good."
+                }
+              }
+            },
+            {
+              description = "Load a sound from a file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.",
+              arguments = {
+                {
+                  name = "filename",
+                  type = "string",
+                  description = "The filename of a sound to load."
+                },
+                {
+                  name = "decode",
+                  type = "boolean",
+                  description = "Whether compressed audio files should be immediately decoded."
+                }
+              },
+              returns = {
+                {
+                  name = "sound",
+                  type = "Sound",
+                  description = "Sounds good."
+                }
+              }
+            },
+            {
+              description = "Load a sound from a Blob containing the data of an audio file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.\n\nIf the Blob contains raw audio samples, use the first variant instead of this one.",
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "The Blob containing audio file data to load."
+                },
+                {
+                  name = "decode",
+                  type = "boolean",
+                  description = "Whether compressed audio files should be immediately decoded."
+                }
+              },
+              returns = {
+                {
+                  name = "sound",
+                  type = "Sound",
+                  description = "Sounds good."
+                }
+              }
+            }
+          },
+          notes = "It is highly recommended to use an audio format that matches the format of the audio module: `f32` sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2 channels for unspatialized sources.  This will avoid the need to convert audio during playback, which boosts performance of the audio thread.\n\nThe WAV importer supports 16, 24, and 32 bit integer data and 32 bit floating point data.  The data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE` extension is supported.\n\nAmbisonic channel layouts are supported for import (but not yet for playback).  Ambisonic data can be loaded from WAV files.  It must be first-order full-sphere ambisonic data with 4 channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an `AMBISONIC_B_FORMAT` format GUID, then the data is understood as using the AMB format with Furse-Malham channel ordering and normalization.  *All other* 4-channel files are assumed to be using the AmbiX format with ACN channel ordering and SN3D normalization.  AMB files will get automatically converted to AmbiX on import, so ambisonic Sounds will always be in a consistent format.\n\nOGG and MP3 files will always have the `f32` format when loaded."
+        }
+      },
+      enums = {
+        {
+          name = "AnimationProperty",
+          summary = "Different animated properties.",
+          description = "This indicates the different transform properties that can be animated.",
+          key = "AnimationProperty",
+          module = "lovr.data",
+          values = {
+            {
+              name = "translation",
+              description = "Node translation."
+            },
+            {
+              name = "rotation",
+              description = "Node rotation."
+            },
+            {
+              name = "scale",
+              description = "Node scale."
+            }
+          }
+        },
+        {
+          name = "AttributeType",
+          summary = "Data types for vertex attributes in meshes.",
+          description = "These are the data types that can be used by vertex data in meshes.",
+          key = "AttributeType",
+          module = "lovr.data",
+          values = {
+            {
+              name = "i8",
+              description = "Signed 8 bit integers (-128 to 127)."
+            },
+            {
+              name = "u8",
+              description = "Unsigned 8 bit integers (0 to 255)."
+            },
+            {
+              name = "i16",
+              description = "Signed 16 bit integers (-32768 to 32767)."
+            },
+            {
+              name = "u16",
+              description = "Unsigned 16 bit integers (0 to 65535)."
+            },
+            {
+              name = "i32",
+              description = "Signed 32 bit integers (-2147483648 to 2147483647)."
+            },
+            {
+              name = "u32",
+              description = "Unsigned 32 bit integers (0 to 429467295)."
+            },
+            {
+              name = "f32",
+              description = "Floating point numbers."
+            }
+          }
+        },
+        {
+          name = "ChannelLayout",
+          summary = "Different channel layouts for Sounds.",
+          description = "Sounds can have different numbers of channels, and those channels can map to various speaker layouts.",
+          key = "ChannelLayout",
+          module = "lovr.data",
+          related = {
+            "lovr.data.newSound",
+            "Sound:getFormat"
+          },
+          values = {
+            {
+              name = "mono",
+              description = "1 channel."
+            },
+            {
+              name = "stereo",
+              description = "2 channels.  The first channel is for the left speaker and the second is for the right."
+            },
+            {
+              name = "ambisonic",
+              description = "4 channels.  Ambisonic channels don't map directly to speakers but instead represent directions in 3D space, sort of like the images of a skybox.  Currently, ambisonic sounds can only be loaded, not played."
+            }
+          }
+        },
+        {
+          name = "DefaultAttribute",
+          summary = "Attributes that can be loaded from a model.",
+          description = "These are the different types of attributes that may be present in meshes loaded from models.",
+          key = "DefaultAttribute",
+          module = "lovr.data",
+          values = {
+            {
+              name = "position",
+              description = "Vertex positions."
+            },
+            {
+              name = "normal",
+              description = "Vertex normal vectors."
+            },
+            {
+              name = "uv",
+              description = "Vertex texture coordinates."
+            },
+            {
+              name = "color",
+              description = "Vertex colors."
+            },
+            {
+              name = "tangent",
+              description = "Vertex tangent vectors."
+            },
+            {
+              name = "joints",
+              description = "Vertex joint indices."
+            },
+            {
+              name = "weights",
+              description = "Vertex joint weights."
+            }
+          }
+        },
+        {
+          name = "DrawMode",
+          summary = "Different draw modes for meshes in ModelDatas.",
+          description = "The DrawMode of a mesh determines how its vertices are connected together.",
+          key = "DrawMode",
+          module = "lovr.data",
+          related = {
+            "ModelData:getMeshDrawMode"
+          },
+          values = {
+            {
+              name = "points",
+              description = "Each vertex is draw as a single point."
+            },
+            {
+              name = "lines",
+              description = "Every pair of vertices is drawn as a line."
+            },
+            {
+              name = "linestrip",
+              description = "Draws a single line through all of the vertices."
+            },
+            {
+              name = "lineloop",
+              description = "Draws a single line through all of the vertices, then connects back to the first vertex."
+            },
+            {
+              name = "strip",
+              description = "Vertices are rendered as triangles.  After the first 3 vertices, each subsequent vertex connects to the previous two."
+            },
+            {
+              name = "triangles",
+              description = "Every 3 vertices forms a triangle."
+            },
+            {
+              name = "fan",
+              description = "Vertices are rendered as triangles.  After the first 3 vertices, each subsequent vertex is connected to the previous vertex and the first vertex."
+            }
+          }
+        },
+        {
+          name = "SampleFormat",
+          summary = "Different data types for samples in a Sound.",
+          description = "Sounds can store audio samples as 16 bit integers or 32 bit floats.",
+          key = "SampleFormat",
+          module = "lovr.data",
+          related = {
+            "lovr.data.newSound",
+            "Sound:getFormat"
+          },
+          values = {
+            {
+              name = "f32",
+              description = "32 bit floating point samples (between -1.0 and 1.0)."
+            },
+            {
+              name = "i16",
+              description = "16 bit integer samples (between -32768 and 32767)."
+            }
+          }
+        },
+        {
+          name = "SmoothMode",
+          summary = "Different ways to interpolate between animation keyframes.",
+          description = "Different ways to interpolate between animation keyframes.",
+          key = "SmoothMode",
+          module = "lovr.data",
+          values = {
+            {
+              name = "step",
+              description = "The animated property will snap to the nearest keyframe."
+            },
+            {
+              name = "linear",
+              description = "The animated property will linearly interpolate between keyframes."
+            },
+            {
+              name = "cubic",
+              description = "The animated property will follow a smooth curve between nearby keyframes."
+            }
+          }
+        },
+        {
+          name = "TextureFormat",
+          description = "Different data layouts for pixels in `Image` and `Texture` objects.\n\nFormats starting with `d` are depth formats, used for depth/stencil render targets.\n\nFormats starting with `bc` and `astc` are compressed formats.  Compressed formats have better performance since they stay compressed on the CPU and GPU, reducing the amount of memory bandwidth required to look up all the pixels needed for shading.\n\nFormats without the `f` suffix are unsigned normalized formats, which store values in the range `[0,1]`.  The `f` suffix indicates a floating point format which can store values outside this range, and is used for HDR rendering or storing data in a texture.",
+          key = "TextureFormat",
+          module = "lovr.data",
+          values = {
+            {
+              name = "r8",
+              description = "One 8-bit channel.  1 byte per pixel."
+            },
+            {
+              name = "rg8",
+              description = "Two 8-bit channels.  2 bytes per pixel."
+            },
+            {
+              name = "rgba8",
+              description = "Four 8-bit channels.  4 bytes per pixel."
+            },
+            {
+              name = "r16",
+              description = "One 16-bit channel.  2 bytes per pixel."
+            },
+            {
+              name = "rg16",
+              description = "Two 16-bit channels.  4 bytes per pixel."
+            },
+            {
+              name = "rgba16",
+              description = "Four 16-bit channels.  8 bytes per pixel."
+            },
+            {
+              name = "r16f",
+              description = "One 16-bit floating point channel.  2 bytes per pixel."
+            },
+            {
+              name = "rg16f",
+              description = "Two 16-bit floating point channels.  4 bytes per pixel."
+            },
+            {
+              name = "rgba16f",
+              description = "Four 16-bit floating point channels.  8 bytes per pixel."
+            },
+            {
+              name = "r32f",
+              description = "One 32-bit floating point channel.  4 bytes per pixel."
+            },
+            {
+              name = "rg32f",
+              description = "Two 32-bit floating point channels.  8 bytes per pixel."
+            },
+            {
+              name = "rgba32f",
+              description = "Four 32-bit floating point channels.  16 bytes per pixel."
+            },
+            {
+              name = "rgb565",
+              description = "Packs three channels into 16 bits.  2 bytes per pixel."
+            },
+            {
+              name = "rgb5a1",
+              description = "Packs four channels into 16 bits, with \"cutout\" alpha.  2 bytes per pixel."
+            },
+            {
+              name = "rgb10a2",
+              description = "Packs four channels into 32 bits.  4 bytes per pixel."
+            },
+            {
+              name = "rg11b10f",
+              description = "Packs three unsigned floating point channels into 32 bits.  4 bytes per pixel."
+            },
+            {
+              name = "d16",
+              description = "One 16-bit depth channel.  2 bytes per pixel."
+            },
+            {
+              name = "d24s8",
+              description = "One 24-bit depth channel and one 8-bit stencil channel.  4 bytes per pixel."
+            },
+            {
+              name = "d32f",
+              description = "One 32-bit floating point depth channel.  4 bytes per pixel."
+            },
+            {
+              name = "d32fs8",
+              description = "One 32-bit floating point depth channel and one 8-bit stencil channel.  5 bytes per pixel."
+            },
+            {
+              name = "bc1",
+              description = "3 channels.  8 bytes per 4x4 block, or 0.5 bytes per pixel.  Good for opaque images."
+            },
+            {
+              name = "bc2",
+              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  Not good for anything, because it only has 16 distinct levels of alpha."
+            },
+            {
+              name = "bc3",
+              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for color images with transparency."
+            },
+            {
+              name = "bc4u",
+              description = "One unsigned normalized channel.  8 bytes per 4x4 block or 0.5 bytes per pixel.  Good for grayscale images, like heightmaps."
+            },
+            {
+              name = "bc4s",
+              description = "One signed normalized channel.  8 bytes per 4x4 block or 0.5 bytes per pixel.  Similar to bc4u but has a range of -1 to 1."
+            },
+            {
+              name = "bc5u",
+              description = "Two unsigned normalized channels.  16 bytes per 4x4 block, or 1 byte per pixel.  Good for normal maps."
+            },
+            {
+              name = "bc5s",
+              description = "Two signed normalized channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for normal maps."
+            },
+            {
+              name = "bc6uf",
+              description = "Three unsigned floating point channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for HDR images."
+            },
+            {
+              name = "bc6sf",
+              description = "Three floating point channels.  16 bytes per 4x4 block or 1 byte per pixel.  Good for HDR images."
+            },
+            {
+              name = "bc7",
+              description = "Four channels.  16 bytes per 4x4 block or 1 byte per pixel.  High quality.  Good for most color images, including transparency."
+            },
+            {
+              name = "astc4x4",
+              description = "Four channels, 16 bytes per 4x4 block or 1 byte per pixel."
+            },
+            {
+              name = "astc5x4",
+              description = "Four channels, 16 bytes per 5x4 block or 0.80 bytes per pixel."
+            },
+            {
+              name = "astc5x5",
+              description = "Four channels, 16 bytes per 5x5 block or 0.64 bytes per pixel."
+            },
+            {
+              name = "astc6x5",
+              description = "Four channels, 16 bytes per 6x5 block or 0.53 bytes per pixel."
+            },
+            {
+              name = "astc6x6",
+              description = "Four channels, 16 bytes per 6x6 block or 0.44 bytes per pixel."
+            },
+            {
+              name = "astc8x5",
+              description = "Four channels, 16 bytes per 8x5 block or 0.40 bytes per pixel."
+            },
+            {
+              name = "astc8x6",
+              description = "Four channels, 16 bytes per 8x6 block or 0.33 bytes per pixel."
+            },
+            {
+              name = "astc8x8",
+              description = "Four channels, 16 bytes per 8x8 block or 0.25 bytes per pixel."
+            },
+            {
+              name = "astc10x5",
+              description = "Four channels, 16 bytes per 10x5 block or 0.32 bytes per pixel."
+            },
+            {
+              name = "astc10x6",
+              description = "Four channels, 16 bytes per 10x6 block or 0.27 bytes per pixel."
+            },
+            {
+              name = "astc10x8",
+              description = "Four channels, 16 bytes per 10x8 block or 0.20 bytes per pixel."
+            },
+            {
+              name = "astc10x10",
+              description = "Four channels, 16 bytes per 10x10 block or 0.16 bytes per pixel."
+            },
+            {
+              name = "astc12x10",
+              description = "Four channels, 16 bytes per 12x10 block or 0.13 bytes per pixel."
+            },
+            {
+              name = "astc12x12",
+              description = "Four channels, 16 bytes per 12x12 block or 0.11 bytes per pixel."
+            }
+          }
+        }
       }
     },
     {
@@ -7281,132 +6533,6 @@ return {
       summary = "Handles events from the operating system.",
       description = "The `lovr.event` module handles events from the operating system.\n\nDue to its low-level nature, it's rare to use `lovr.event` in simple projects.",
       key = "lovr.event",
-      functions = {
-        {
-          name = "clear",
-          summary = "Clear the event queue.",
-          description = "Clears the event queue, removing any unprocessed events.",
-          key = "lovr.event.clear",
-          module = "lovr.event",
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "poll",
-          summary = "Iterate over unprocessed events in the queue.",
-          description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  This function is called in the default implementation of `lovr.run`, so it is normally not necessary to poll for events yourself.",
-          key = "lovr.event.poll",
-          module = "lovr.event",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "iterator",
-                  type = "function",
-                  description = "The iterator function, usable in a for loop.",
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "pump",
-          summary = "Pump new events into the queue for processing.",
-          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider the application unresponsive. This function is called in the default implementation of `lovr.run`.",
-          key = "lovr.event.pump",
-          module = "lovr.event",
-          related = {
-            "lovr.event.poll"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          }
-        },
-        {
-          name = "push",
-          summary = "Manually push an event onto the queue.",
-          description = "Pushes an event onto the event queue.  It will be processed the next time `lovr.event.poll` is called.  For an event to be processed properly, there needs to be a function in the `lovr.handlers` table with a key that's the same as the event name.",
-          key = "lovr.event.push",
-          module = "lovr.event",
-          related = {
-            "lovr.event.poll",
-            "lovr.event.quit"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "name",
-                  type = "string",
-                  description = "The name of the event."
-                },
-                {
-                  name = "...",
-                  type = "*",
-                  description = "The arguments for the event.  Currently, up to 4 are supported."
-                }
-              },
-              returns = {}
-            }
-          },
-          notes = "Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event data."
-        },
-        {
-          name = "quit",
-          summary = "Quit the application.",
-          description = "Pushes an event to quit.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.",
-          key = "lovr.event.quit",
-          module = "lovr.event",
-          related = {
-            "lovr.quit",
-            "lovr.event.poll",
-            "lovr.event.restart"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "code",
-                  type = "number",
-                  description = "The exit code of the program.",
-                  default = "0"
-                }
-              },
-              returns = {}
-            }
-          },
-          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to abort the quitting process."
-        },
-        {
-          name = "restart",
-          summary = "Restart the application.",
-          description = "Pushes an event to restart the framework.",
-          key = "lovr.event.restart",
-          module = "lovr.event",
-          related = {
-            "lovr.restart",
-            "lovr.event.poll",
-            "lovr.event.quit"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {}
-            }
-          },
-          notes = "The event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.restart` callback can be used to persist a value between restarts."
-        }
-      },
       examples = {
         {
           description = "Adding a custom event.",
@@ -7420,6 +6546,10 @@ return {
           description = "Keys that can be pressed on a keyboard.  Notably, numpad keys are missing right now.",
           key = "KeyCode",
           module = "lovr.event",
+          related = {
+            "lovr.keypressed",
+            "lovr.keyreleased"
+          },
           values = {
             {
               name = "a",
@@ -7761,15 +6891,137 @@ return {
               name = "numlock",
               description = "The numlock key."
             }
-          },
-          related = {
-            "lovr.keypressed",
-            "lovr.keyreleased"
           }
         }
       },
-      objects = {},
-      notes = "You can define your own custom events by adding a function to the `lovr.handlers` table with a key of the name of the event you want to add.  Then, push the event using `lovr.event.push`."
+      notes = "You can define your own custom events by adding a function to the `lovr.handlers` table with a key of the name of the event you want to add.  Then, push the event using `lovr.event.push`.",
+      functions = {
+        {
+          name = "clear",
+          summary = "Clear the event queue.",
+          description = "Clears the event queue, removing any unprocessed events.",
+          key = "lovr.event.clear",
+          module = "lovr.event",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "poll",
+          summary = "Iterate over unprocessed events in the queue.",
+          description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  This function is called in the default implementation of `lovr.run`, so it is normally not necessary to poll for events yourself.",
+          key = "lovr.event.poll",
+          module = "lovr.event",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "iterator",
+                  type = "function",
+                  description = "The iterator function, usable in a for loop.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "pump",
+          summary = "Pump new events into the queue for processing.",
+          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider the application unresponsive. This function is called in the default implementation of `lovr.run`.",
+          key = "lovr.event.pump",
+          module = "lovr.event",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          related = {
+            "lovr.event.poll"
+          }
+        },
+        {
+          name = "push",
+          summary = "Manually push an event onto the queue.",
+          description = "Pushes an event onto the event queue.  It will be processed the next time `lovr.event.poll` is called.  For an event to be processed properly, there needs to be a function in the `lovr.handlers` table with a key that's the same as the event name.",
+          key = "lovr.event.push",
+          module = "lovr.event",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "name",
+                  type = "string",
+                  description = "The name of the event."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "The arguments for the event.  Currently, up to 4 are supported."
+                }
+              },
+              returns = {}
+            }
+          },
+          notes = "Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event data.",
+          related = {
+            "lovr.event.poll",
+            "lovr.event.quit"
+          }
+        },
+        {
+          name = "quit",
+          summary = "Quit the application.",
+          description = "Pushes an event to quit.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.",
+          key = "lovr.event.quit",
+          module = "lovr.event",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "code",
+                  type = "number",
+                  description = "The exit code of the program.",
+                  default = "0"
+                }
+              },
+              returns = {}
+            }
+          },
+          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to abort the quitting process.",
+          related = {
+            "lovr.quit",
+            "lovr.event.poll",
+            "lovr.event.restart"
+          }
+        },
+        {
+          name = "restart",
+          summary = "Restart the application.",
+          description = "Pushes an event to restart the framework.",
+          key = "lovr.event.restart",
+          module = "lovr.event",
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          },
+          notes = "The event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.restart` callback can be used to persist a value between restarts.",
+          related = {
+            "lovr.restart",
+            "lovr.event.poll",
+            "lovr.event.quit"
+          }
+        }
+      },
+      objects = {}
     },
     {
       name = "filesystem",
@@ -7786,7 +7038,6 @@ return {
           description = "Appends content to the end of a file.",
           key = "lovr.filesystem.append",
           module = "lovr.filesystem",
-          notes = "If the file does not exist, it is created.",
           variants = {
             {
               arguments = {
@@ -7830,7 +7081,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "If the file does not exist, it is created."
         },
         {
           name = "createDirectory",
@@ -7882,7 +7134,6 @@ return {
           description = "Returns a sorted table containing all files and folders in a single directory.",
           key = "lovr.filesystem.getDirectoryItems",
           module = "lovr.filesystem",
-          notes = "This function calls `table.sort` to sort the results, so if `table.sort` is not available in the global scope the results are not guaranteed to be sorted.",
           variants = {
             {
               arguments = {
@@ -7900,7 +7151,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "This function calls `table.sort` to sort the results, so if `table.sort` is not available in the global scope the results are not guaranteed to be sorted."
         },
         {
           name = "getExecutablePath",
@@ -7927,7 +7179,6 @@ return {
           description = "Returns the identity of the game, which is used as the name of the save directory.  The default is `default`.  It can be changed using `t.identity` in `lovr.conf`.",
           key = "lovr.filesystem.getIdentity",
           module = "lovr.filesystem",
-          notes = "On Android, this is always the package id (like `org.lovr.app`).",
           variants = {
             {
               arguments = {},
@@ -7939,7 +7190,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "On Android, this is always the package id (like `org.lovr.app`)."
         },
         {
           name = "getLastModified",
@@ -7997,7 +7249,6 @@ return {
           description = "Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the virtual filesystem.",
           key = "lovr.filesystem.getRequirePath",
           module = "lovr.filesystem",
-          notes = "The default reqiure path is '?.lua;?/init.lua'.",
           variants = {
             {
               arguments = {},
@@ -8009,7 +7260,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "The default reqiure path is '?.lua;?/init.lua'."
         },
         {
           name = "getSaveDirectory",
@@ -8017,10 +7269,6 @@ return {
           description = "Returns the absolute path to the save directory.",
           key = "lovr.filesystem.getSaveDirectory",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.getIdentity",
-            "lovr.filesystem.getAppdataDirectory"
-          },
           variants = {
             {
               arguments = {},
@@ -8033,7 +7281,11 @@ return {
               }
             }
           },
-          notes = "The save directory takes the following form:\n\n    <appdata>/LOVR/<identity>\n\nWhere `<appdata>` is `lovr.filesystem.getAppdataDirectory` and `<identity>` is `lovr.filesystem.getIdentity` and can be customized using `lovr.conf`."
+          notes = "The save directory takes the following form:\n\n    <appdata>/LOVR/<identity>\n\nWhere `<appdata>` is `lovr.filesystem.getAppdataDirectory` and `<identity>` is `lovr.filesystem.getIdentity` and can be customized using `lovr.conf`.",
+          related = {
+            "lovr.filesystem.getIdentity",
+            "lovr.filesystem.getAppdataDirectory"
+          }
         },
         {
           name = "getSize",
@@ -8041,7 +7293,6 @@ return {
           description = "Returns the size of a file, in bytes.",
           key = "lovr.filesystem.getSize",
           module = "lovr.filesystem",
-          notes = "If the file does not exist, an error is thrown.",
           variants = {
             {
               arguments = {
@@ -8059,7 +7310,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "If the file does not exist, an error is thrown."
         },
         {
           name = "getSource",
@@ -8124,9 +7376,6 @@ return {
           description = "Check if a path exists and is a directory.",
           key = "lovr.filesystem.isDirectory",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.isFile"
-          },
           variants = {
             {
               arguments = {
@@ -8144,6 +7393,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.filesystem.isFile"
           }
         },
         {
@@ -8152,9 +7404,6 @@ return {
           description = "Check if a path exists and is a file.",
           key = "lovr.filesystem.isFile",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.isDirectory"
-          },
           variants = {
             {
               arguments = {
@@ -8172,6 +7421,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.filesystem.isDirectory"
           }
         },
         {
@@ -8200,6 +7452,12 @@ return {
           key = "lovr.filesystem.load",
           module = "lovr.filesystem",
           notes = "An error is thrown if the file contains syntax errors.",
+          examples = {
+            {
+              description = "Safely loading code:",
+              code = "local success, chunk = pcall(lovr.filesystem.load, filename)\nif not success then\n  print('Oh no! There was an error: ' .. tostring(chunk))\nelse\n  local success, result = pcall(chunk)\n  print(success, result)\nend"
+            }
+          },
           variants = {
             {
               arguments = {
@@ -8229,12 +7487,6 @@ return {
                 }
               }
             }
-          },
-          examples = {
-            {
-              description = "Safely loading code:",
-              code = "local success, chunk = pcall(lovr.filesystem.load, filename)\nif not success then\n  print('Oh no! There was an error: ' .. tostring(chunk))\nelse\n  local success, result = pcall(chunk)\n  print(success, result)\nend"
-            }
           }
         },
         {
@@ -8243,8 +7495,11 @@ return {
           description = "Mounts a directory or `.zip` archive, adding it to the virtual filesystem.  This allows you to read files from it.",
           key = "lovr.filesystem.mount",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.unmount"
+          examples = {
+            {
+              description = "Mount `data.zip` with a file `images/background.png`:",
+              code = "lovr.filesystem.mount('data.zip', 'assets')\nprint(lovr.filesystem.isFile('assets/images/background.png')) -- true"
+            }
           },
           notes = "The `append` option lets you control the priority of the archive's files in the event of naming collisions.\n\nThis function is not thread safe.  Mounting or unmounting an archive while other threads call lovr.filesystem functions is not supported.",
           variants = {
@@ -8283,11 +7538,8 @@ return {
               }
             }
           },
-          examples = {
-            {
-              description = "Mount `data.zip` with a file `images/background.png`:",
-              code = "lovr.filesystem.mount('data.zip', 'assets')\nprint(lovr.filesystem.isFile('assets/images/background.png')) -- true"
-            }
+          related = {
+            "lovr.filesystem.unmount"
           }
         },
         {
@@ -8296,10 +7548,6 @@ return {
           description = "Creates a new Blob that contains the contents of a file.",
           key = "lovr.filesystem.newBlob",
           module = "lovr.filesystem",
-          related = {
-            "lovr.data.newBlob",
-            "Blob"
-          },
           variants = {
             {
               arguments = {
@@ -8317,6 +7565,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.data.newBlob",
+            "Blob"
           }
         },
         {
@@ -8325,7 +7577,6 @@ return {
           description = "Read the contents of a file.",
           key = "lovr.filesystem.read",
           module = "lovr.filesystem",
-          notes = "If the file does not exist or cannot be read, nil is returned.",
           variants = {
             {
               arguments = {
@@ -8354,7 +7605,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "If the file does not exist or cannot be read, nil is returned."
         },
         {
           name = "remove",
@@ -8362,7 +7614,6 @@ return {
           description = "Remove a file or directory in the save directory.",
           key = "lovr.filesystem.remove",
           module = "lovr.filesystem",
-          notes = "A directory can only be removed if it is empty.\n\nTo recursively remove a folder, use this function with `lovr.filesystem.getDirectoryItems`.",
           variants = {
             {
               arguments = {
@@ -8380,7 +7631,8 @@ return {
                 }
               }
             }
-          }
+          },
+          notes = "A directory can only be removed if it is empty.\n\nTo recursively remove a folder, use this function with `lovr.filesystem.getDirectoryItems`."
         },
         {
           name = "setIdentity",
@@ -8407,7 +7659,6 @@ return {
           description = "Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.",
           key = "lovr.filesystem.setRequirePath",
           module = "lovr.filesystem",
-          notes = "The default reqiure path is '?.lua;?/init.lua'.",
           variants = {
             {
               arguments = {
@@ -8420,7 +7671,8 @@ return {
               },
               returns = {}
             }
-          }
+          },
+          notes = "The default reqiure path is '?.lua;?/init.lua'."
         },
         {
           name = "unmount",
@@ -8428,9 +7680,6 @@ return {
           description = "Unmounts a directory or archive previously mounted with `lovr.filesystem.mount`.",
           key = "lovr.filesystem.unmount",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.mount"
-          },
           variants = {
             {
               arguments = {
@@ -8449,7 +7698,10 @@ return {
               }
             }
           },
-          notes = "This function is not thread safe.  Mounting or unmounting an archive while other threads call lovr.filesystem functions is not supported."
+          notes = "This function is not thread safe.  Mounting or unmounting an archive while other threads call lovr.filesystem functions is not supported.",
+          related = {
+            "lovr.filesystem.mount"
+          }
         },
         {
           name = "write",
@@ -8457,10 +7709,6 @@ return {
           description = "Write to a file.",
           key = "lovr.filesystem.write",
           module = "lovr.filesystem",
-          related = {
-            "lovr.filesystem.append",
-            "lovr.filesystem.read"
-          },
           variants = {
             {
               arguments = {
@@ -8505,7 +7753,11 @@ return {
               }
             }
           },
-          notes = "If the file does not exist, it is created.\n\nIf the file already has data in it, it will be replaced with the new content."
+          notes = "If the file does not exist, it is created.\n\nIf the file already has data in it, it will be replaced with the new content.",
+          related = {
+            "lovr.filesystem.append",
+            "lovr.filesystem.read"
+          }
         }
       },
       objects = {}
@@ -8516,26 +7768,6 @@ return {
       summary = "Renders graphics using the GPU.",
       description = "The graphics module renders graphics and performs computation using the GPU.\n\nMost of the graphics functions are on the `Pass` object.",
       key = "lovr.graphics",
-      sections = {
-        {
-          name = "Objects",
-          tag = "graphics-objects"
-        },
-        {
-          name = "Global State",
-          tag = "graphics-global"
-        },
-        {
-          name = "Work Submission",
-          tag = "work-submission",
-          description = "The only way to get the GPU to do anything is to submit `Pass` objects to it.  LÖVR submits the default pass automatically at the end of `lovr.draw`, but work can also be submitted manually."
-        },
-        {
-          name = "System Info",
-          tag = "graphics-misc",
-          description = "Information about the GPU hardware and the features it supports."
-        }
-      },
       enums = {
         {
           name = "BlendAlphaMode",
@@ -8544,10 +7776,6 @@ return {
           key = "BlendAlphaMode",
           module = "lovr.graphics",
           notes = "The premultiplied mode should be used if pixels being drawn have already been blended, or \"pre-multiplied\", by the alpha channel.  This happens when rendering to a texture that contains pixels with transparent alpha values, since the stored color values have already been faded by alpha and don't need to be faded a second time with the alphamultiply blend mode.",
-          related = {
-            "BlendMode",
-            "Pass:setBlendMode"
-          },
           values = {
             {
               name = "alphamultiply",
@@ -8557,6 +7785,10 @@ return {
               name = "premultiplied",
               description = "Color channel values are not multiplied by the alpha.  Instead, it's assumed that the colors have already been multiplied by the alpha.  This should be used if the pixels being drawn have already been blended, or \"pre-multiplied\"."
             }
+          },
+          related = {
+            "BlendMode",
+            "Pass:setBlendMode"
           }
         },
         {
@@ -8565,6 +7797,10 @@ return {
           description = "Different ways pixels can blend with the pixels behind them.",
           key = "BlendMode",
           module = "lovr.graphics",
+          related = {
+            "BlendAlphaMode",
+            "Pass:setBlendMode"
+          },
           values = {
             {
               name = "alpha",
@@ -8594,10 +7830,6 @@ return {
               name = "screen",
               description = "The opposite of multiply: the pixel colors are inverted, multiplied, and inverted again, producing a lightening effect."
             }
-          },
-          related = {
-            "BlendAlphaMode",
-            "Pass:setBlendMode"
           }
         },
         {
@@ -8634,12 +7866,6 @@ return {
           key = "CompareMode",
           module = "lovr.graphics",
           notes = "This type can also be specified using mathematical notation, e.g. `=`, `>`, `<=`, etc. `notequal` can be provided as `~=` or `!=`.",
-          related = {
-            "Pass:setDepthTest",
-            "Pass:setStencilTest",
-            "Pass:setDepthWrite",
-            "Pass:setStencilWrite"
-          },
           values = {
             {
               name = "none",
@@ -8669,6 +7895,12 @@ return {
               name = "gequal",
               description = "The test passes if the value is greater than or equal to the existing one."
             }
+          },
+          related = {
+            "Pass:setDepthTest",
+            "Pass:setStencilTest",
+            "Pass:setDepthWrite",
+            "Pass:setStencilWrite"
           }
         },
         {
@@ -8677,6 +7909,11 @@ return {
           description = "The different ways of doing triangle backface culling.",
           key = "CullMode",
           module = "lovr.graphics",
+          related = {
+            "Winding",
+            "Pass:setCullMode",
+            "Pass:setWinding"
+          },
           values = {
             {
               name = "none",
@@ -8690,11 +7927,6 @@ return {
               name = "front",
               description = "Skips rendering the front side of triangles."
             }
-          },
-          related = {
-            "Winding",
-            "Pass:setCullMode",
-            "Pass:setWinding"
           }
         },
         {
@@ -8736,6 +7968,12 @@ return {
           description = "Whether a shape should be drawn filled or outlined.",
           key = "DrawStyle",
           module = "lovr.graphics",
+          related = {
+            "Pass:plane",
+            "Pass:cube",
+            "Pass:box",
+            "Pass:circle"
+          },
           values = {
             {
               name = "fill",
@@ -8745,12 +7983,6 @@ return {
               name = "line",
               description = "The shape will be outlined."
             }
-          },
-          related = {
-            "Pass:plane",
-            "Pass:cube",
-            "Pass:box",
-            "Pass:circle"
           }
         },
         {
@@ -8759,6 +7991,11 @@ return {
           key = "FieldType",
           module = "lovr.graphics",
           notes = "In addition to these values, the following aliases can be used:\n\n<table>\n  <thead>\n    <tr>\n      <td>Alias</td>\n      <td>Maps to</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>vec2</code></td>\n      <td><code>f32x2</code></td>\n    </tr>\n    <tr>\n      <td><code>vec3</code></td>\n      <td><code>f32x3</code></td>\n    </tr>\n    <tr>\n      <td><code>vec4</code></td>\n      <td><code>f32x4</code></td>\n    </tr>\n    <tr>\n      <td><code>int</code></td>\n      <td><code>i32</code></td>\n    </tr>\n    <tr>\n      <td><code>uint</code></td>\n      <td><code>u32</code></td>\n    </tr>\n    <tr>\n      <td><code>float</code></td>\n      <td><code>f32</code></td>\n    </tr>\n    <tr>\n      <td><code>color</code></td>\n      <td><code>un8x4</code></td>\n    </tr>\n  </tbody> </table>\n\nAdditionally, the following convenience rules apply:\n\n- Field types can end in an `s`, which will be stripped off.\n- Field types can end in `x1`, which will be stripped off.\n\nSo you can write, e.g. `lovr.graphics.newBuffer(4, 'floats')`, which is cute!",
+          related = {
+            "lovr.graphics.newBuffer",
+            "lovr.graphics.getBuffer",
+            "Buffer:getFormat"
+          },
           values = {
             {
               name = "i8x4",
@@ -8892,11 +8129,6 @@ return {
               name = "mat4",
               description = "A 4x4 matrix containing sixteen 32-bit floats."
             }
-          },
-          related = {
-            "lovr.graphics.newBuffer",
-            "lovr.graphics.getBuffer",
-            "Buffer:getFormat"
           }
         },
         {
@@ -8905,6 +8137,9 @@ return {
           description = "Controls how `Sampler` objects smooth pixels in textures.",
           key = "FilterMode",
           module = "lovr.graphics",
+          related = {
+            "Pass:blit"
+          },
           values = {
             {
               name = "nearest",
@@ -8914,9 +8149,6 @@ return {
               name = "linear",
               description = "A smooth appearance where neighboring pixels are averaged."
             }
-          },
-          related = {
-            "Pass:blit"
           }
         },
         {
@@ -8925,6 +8157,11 @@ return {
           description = "Different ways to horizontally align text with `Pass:text`.",
           key = "HorizontalAlign",
           module = "lovr.graphics",
+          related = {
+            "VerticalAlign",
+            "Pass:text",
+            "Font:getVertices"
+          },
           values = {
             {
               name = "left",
@@ -8938,11 +8175,6 @@ return {
               name = "right",
               description = "Right-aligned text."
             }
-          },
-          related = {
-            "VerticalAlign",
-            "Pass:text",
-            "Font:getVertices"
           }
         },
         {
@@ -8972,6 +8204,15 @@ return {
           description = "Different coordinate spaces for nodes in a `Model`.",
           key = "OriginType",
           module = "lovr.graphics",
+          related = {
+            "Model:getNodePosition",
+            "Model:getNodeOrientation",
+            "Model:getNodeScale",
+            "Model:getNodePose",
+            "Model:getNodeTransform",
+            "Model:getRootNode",
+            "Model:getNodeParent"
+          },
           values = {
             {
               name = "root",
@@ -8981,15 +8222,6 @@ return {
               name = "parent",
               description = "Transforms are relative to the parent of the node."
             }
-          },
-          related = {
-            "Model:getNodePosition",
-            "Model:getNodeOrientation",
-            "Model:getNodeScale",
-            "Model:getNodePose",
-            "Model:getNodeTransform",
-            "Model:getRootNode",
-            "Model:getNodeParent"
           }
         },
         {
@@ -8998,6 +8230,11 @@ return {
           description = "The three different types of `Pass` objects.  Each Pass has a single type, which determines the type of work it does and which functions can be called on it.",
           key = "PassType",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.getPass",
+            "lovr.graphics.submit",
+            "Pass:getType"
+          },
           values = {
             {
               name = "render",
@@ -9011,11 +8248,6 @@ return {
               name = "transfer",
               description = "A transfer pass copies data to and from GPU memory in `Buffer` and `Texture` objects. Transfer passes use `Pass:copy`, `Pass:clear`, `Pass:blit`, `Pass:mipmap`, and `Pass:read`. Similar to compute passes, all the work in a transfer pass happens in parallel, so multiple passes should be used if the transfers need to be ordered."
             }
-          },
-          related = {
-            "lovr.graphics.getPass",
-            "lovr.graphics.submit",
-            "Pass:getType"
           }
         },
         {
@@ -9045,6 +8277,11 @@ return {
           description = "The two types of shaders that can be created.",
           key = "ShaderType",
           module = "lovr.graphics",
+          related = {
+            "lovr.graphics.newShader",
+            "Shader:getType",
+            "ShaderStage"
+          },
           values = {
             {
               name = "graphics",
@@ -9054,11 +8291,6 @@ return {
               name = "compute",
               description = "A compute shader with a single compute stage."
             }
-          },
-          related = {
-            "lovr.graphics.newShader",
-            "Shader:getType",
-            "ShaderStage"
           }
         },
         {
@@ -9084,6 +8316,11 @@ return {
           description = "Different ways of updating the stencil buffer with `Pass:setStencilWrite`.",
           key = "StencilAction",
           module = "lovr.graphics",
+          related = {
+            "Pass:setStencilWrite",
+            "Pass:setStencilTest",
+            "Pass:setColorWrite"
+          },
           values = {
             {
               name = "keep",
@@ -9117,11 +8354,6 @@ return {
               name = "invert",
               description = "The bits in the stencil buffer pixels will be inverted."
             }
-          },
-          related = {
-            "Pass:setStencilWrite",
-            "Pass:setStencilTest",
-            "Pass:setColorWrite"
           }
         },
         {
@@ -9240,6 +8472,11 @@ return {
           description = "Different ways to vertically align text with `Pass:text`.",
           key = "VerticalAlign",
           module = "lovr.graphics",
+          related = {
+            "HorizontalAlign",
+            "Pass:text",
+            "Font:getVertices"
+          },
           values = {
             {
               name = "top",
@@ -9253,11 +8490,6 @@ return {
               name = "bottom",
               description = "Bottom-aligned text."
             }
-          },
-          related = {
-            "HorizontalAlign",
-            "Pass:text",
-            "Font:getVertices"
           }
         },
         {
@@ -9266,6 +8498,10 @@ return {
           description = "Indicates whether the front face of a triangle uses the clockwise or counterclockwise vertex order.",
           key = "Winding",
           module = "lovr.graphics",
+          related = {
+            "Pass:setWinding",
+            "Pass:setCullMode"
+          },
           values = {
             {
               name = "clockwise",
@@ -9275,10 +8511,6 @@ return {
               name = "counterclockwise",
               description = "Counterclockwise winding."
             }
-          },
-          related = {
-            "Pass:setWinding",
-            "Pass:setCullMode"
           }
         },
         {
@@ -9299,6 +8531,26 @@ return {
           }
         }
       },
+      sections = {
+        {
+          name = "Objects",
+          tag = "graphics-objects"
+        },
+        {
+          name = "Global State",
+          tag = "graphics-global"
+        },
+        {
+          name = "Work Submission",
+          tag = "work-submission",
+          description = "The only way to get the GPU to do anything is to submit `Pass` objects to it.  LÖVR submits the default pass automatically at the end of `lovr.draw`, but work can also be submitted manually."
+        },
+        {
+          name = "System Info",
+          tag = "graphics-misc",
+          description = "Information about the GPU hardware and the features it supports."
+        }
+      },
       functions = {
         {
           name = "compileShader",
@@ -9307,7 +8559,10 @@ return {
           description = "Compiles shader code to SPIR-V bytecode.  The bytecode can be passed to `lovr.graphics.newShader` to create shaders, which will be faster than creating it from GLSL. The bytecode is portable, so bytecode compiled on one platform will work on other platforms. This allows shaders to be precompiled in a build step.",
           key = "lovr.graphics.compileShader",
           module = "lovr.graphics",
-          notes = "The input can be GLSL or SPIR-V.  If it's SPIR-V, it will be returned unchanged as a Blob.\n\nIf the shader fails to compile, an error will be thrown with the error message.",
+          related = {
+            "lovr.graphics.newShader",
+            "Shader"
+          },
           variants = {
             {
               arguments = {
@@ -9352,10 +8607,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.newShader",
-            "Shader"
-          }
+          notes = "The input can be GLSL or SPIR-V.  If it's SPIR-V, it will be returned unchanged as a Blob.\n\nIf the shader fails to compile, an error will be thrown with the error message."
         },
         {
           name = "getBackgroundColor",
@@ -9364,7 +8616,11 @@ return {
           description = "Returns the global background color.  The textures in a render pass will be cleared to this color at the beginning of the pass if no other clear option is specified.  Additionally, the headset and window will be cleared to this color before rendering.",
           key = "lovr.graphics.getBackgroundColor",
           module = "lovr.graphics",
-          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
+          related = {
+            "lovr.graphics.getPass",
+            "Pass:clear",
+            "Pass:fill"
+          },
           variants = {
             {
               arguments = {},
@@ -9392,11 +8648,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.getPass",
-            "Pass:clear",
-            "Pass:fill"
-          }
+          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs."
         },
         {
           name = "getBuffer",
@@ -9405,7 +8657,9 @@ return {
           description = "Creates a temporary Buffer.",
           key = "lovr.graphics.getBuffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that an `offset` should be set for either all of the fields or none of\n  them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
+          related = {
+            "lovr.graphics.newBuffer"
+          },
           variants = {
             {
               arguments = {
@@ -9576,9 +8830,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.newBuffer"
-          }
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that an `offset` should be set for either all of the fields or none of\n  them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields."
         },
         {
           name = "getDefaultFont",
@@ -9587,10 +8839,6 @@ return {
           description = "Returns the default Font.  The default font is Varela Round, created at 32px with a spread value of `4.0`.  It's used by `Pass:text` if no Font is provided.",
           key = "lovr.graphics.getDefaultFont",
           module = "lovr.graphics",
-          related = {
-            "Pass:text",
-            "lovr.graphics.newFont"
-          },
           variants = {
             {
               arguments = {},
@@ -9602,6 +8850,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "Pass:text",
+            "lovr.graphics.newFont"
           }
         },
         {
@@ -9611,7 +8863,10 @@ return {
           description = "Returns information about the graphics device and driver.",
           key = "lovr.graphics.getDevice",
           module = "lovr.graphics",
-          notes = "The device and vendor ID numbers will usually be PCI IDs, which are standardized numbers consisting of 4 hex digits.  Various online databases and system utilities can be used to look up these numbers.  Here are some example vendor IDs for a few popular GPU manufacturers:\n\n<table>\n  <thead>\n    <tr>\n      <td>ID</td>\n      <td>Vendor</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>0x1002</code></td>\n      <td>Advanced Micro Devices, Inc.</td>\n    </tr>\n    <tr>\n      <td><code>0x8086</code></td>\n      <td>Intel Corporation</td>\n    </tr>\n    <tr>\n      <td><code>0x10de</code></td>\n      <td>NVIDIA Corporation</td>\n    </tr>\n  </tbody> </table>\n\nIt is not currently possible to get the version of the driver, although this could be added.\n\nRegarding multiple GPUs: If OpenXR is enabled, the OpenXR runtime has control over which GPU is used, which ensures best compatibility with the VR headset.  Otherwise, the \"first\" GPU returned by the renderer will be used.  There is currently no other way to pick a GPU to use.",
+          related = {
+            "lovr.graphics.getFeatures",
+            "lovr.graphics.getLimits"
+          },
           variants = {
             {
               arguments = {},
@@ -9655,10 +8910,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.getFeatures",
-            "lovr.graphics.getLimits"
-          }
+          notes = "The device and vendor ID numbers will usually be PCI IDs, which are standardized numbers consisting of 4 hex digits.  Various online databases and system utilities can be used to look up these numbers.  Here are some example vendor IDs for a few popular GPU manufacturers:\n\n<table>\n  <thead>\n    <tr>\n      <td>ID</td>\n      <td>Vendor</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>0x1002</code></td>\n      <td>Advanced Micro Devices, Inc.</td>\n    </tr>\n    <tr>\n      <td><code>0x8086</code></td>\n      <td>Intel Corporation</td>\n    </tr>\n    <tr>\n      <td><code>0x10de</code></td>\n      <td>NVIDIA Corporation</td>\n    </tr>\n  </tbody> </table>\n\nIt is not currently possible to get the version of the driver, although this could be added.\n\nRegarding multiple GPUs: If OpenXR is enabled, the OpenXR runtime has control over which GPU is used, which ensures best compatibility with the VR headset.  Otherwise, the \"first\" GPU returned by the renderer will be used.  There is currently no other way to pick a GPU to use."
         },
         {
           name = "getFeatures",
@@ -9667,11 +8919,6 @@ return {
           description = "Returns a table indicating which features are supported by the GPU.",
           key = "lovr.graphics.getFeatures",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.isFormatSupported",
-            "lovr.graphics.getDevice",
-            "lovr.graphics.getLimits"
-          },
           variants = {
             {
               arguments = {},
@@ -9725,6 +8972,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.isFormatSupported",
+            "lovr.graphics.getDevice",
+            "lovr.graphics.getLimits"
           }
         },
         {
@@ -9734,7 +8986,11 @@ return {
           description = "Returns limits of the current GPU.",
           key = "lovr.graphics.getLimits",
           module = "lovr.graphics",
-          notes = "The limit ranges are as follows:\n\n<table>\n  <thead>\n    <tr>\n      <td>Limit</td>\n      <td>Minimum</td>\n      <td>Maximum</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>textureSize2D</code></td>\n      <td>4096</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureSize3D</code></td>\n      <td>256</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureSizeCube</code></td>\n      <td>4096</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureLayers</code></td>\n      <td>256</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>renderSize</code></td>\n      <td>{ 4096, 4096, 6 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>uniformBuffersPerStage</code></td>\n      <td>9</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>storageBuffersPerStage</code></td>\n      <td>4</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>sampledTexturesPerStage</code></td>\n      <td>32</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>storageTexturesPerStage</code></td>\n      <td>4</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>samplersPerStage</code></td>\n      <td>15</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>resourcesPerShader</code></td>\n      <td>32</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferRange</code></td>\n      <td>65536</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>storageBufferRange</code></td>\n      <td>134217728 (128MB)</td>\n      <td>1073741824 (1GB)*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferAlign</code></td>\n      <td></td>\n      <td>256</td>\n    </tr>\n    <tr>\n      <td><code>storageBufferAlign</code></td>\n      <td></td>\n      <td>64</td>\n    </tr>\n    <tr>\n      <td><code>vertexAttributes</code></td>\n      <td>16</td>\n      <td>16*</td>\n    </tr>\n    <tr>\n      <td><code>vertexBufferStride</code></td>\n      <td>2048</td>\n      <td>65535*</td>\n    </tr>\n    <tr>\n      <td><code>vertexShaderOutputs</code></td>\n      <td>64</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>cullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipAndCullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeDispatchCount</code></td>\n      <td>{ 65536, 65536, 65536 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupSize</code></td>\n      <td>{ 128, 128, 64 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupVolume</code></td>\n      <td>128</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeSharedMemory</code></td>\n      <td>16384 (16KB)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pushConstantSize</code></td>\n      <td>128</td>\n      <td>256*</td>\n    </tr>\n    <tr>\n      <td><code>indirectDrawCount</code></td>\n      <td>1</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>instances</code></td>\n      <td>134217727</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>anisotropy</code></td>\n      <td>0.0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pointSize</code></td>\n      <td>1.0</td>\n      <td></td>\n    </tr>\n  </tbody> </table>\n\nNote: in the table above, `*` means that LÖVR itself is imposing a cap on the limit, instead of the GPU.",
+          related = {
+            "lovr.graphics.isFormatSupported",
+            "lovr.graphics.getDevice",
+            "lovr.graphics.getFeatures"
+          },
           variants = {
             {
               arguments = {},
@@ -9899,11 +9155,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.isFormatSupported",
-            "lovr.graphics.getDevice",
-            "lovr.graphics.getFeatures"
-          }
+          notes = "The limit ranges are as follows:\n\n<table>\n  <thead>\n    <tr>\n      <td>Limit</td>\n      <td>Minimum</td>\n      <td>Maximum</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>textureSize2D</code></td>\n      <td>4096</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureSize3D</code></td>\n      <td>256</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureSizeCube</code></td>\n      <td>4096</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>textureLayers</code></td>\n      <td>256</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>renderSize</code></td>\n      <td>{ 4096, 4096, 6 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>uniformBuffersPerStage</code></td>\n      <td>9</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>storageBuffersPerStage</code></td>\n      <td>4</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>sampledTexturesPerStage</code></td>\n      <td>32</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>storageTexturesPerStage</code></td>\n      <td>4</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>samplersPerStage</code></td>\n      <td>15</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>resourcesPerShader</code></td>\n      <td>32</td>\n      <td>32*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferRange</code></td>\n      <td>65536</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>storageBufferRange</code></td>\n      <td>134217728 (128MB)</td>\n      <td>1073741824 (1GB)*</td>\n    </tr>\n    <tr>\n      <td><code>uniformBufferAlign</code></td>\n      <td></td>\n      <td>256</td>\n    </tr>\n    <tr>\n      <td><code>storageBufferAlign</code></td>\n      <td></td>\n      <td>64</td>\n    </tr>\n    <tr>\n      <td><code>vertexAttributes</code></td>\n      <td>16</td>\n      <td>16*</td>\n    </tr>\n    <tr>\n      <td><code>vertexBufferStride</code></td>\n      <td>2048</td>\n      <td>65535*</td>\n    </tr>\n    <tr>\n      <td><code>vertexShaderOutputs</code></td>\n      <td>64</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>cullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>clipAndCullDistances</code></td>\n      <td>0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeDispatchCount</code></td>\n      <td>{ 65536, 65536, 65536 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupSize</code></td>\n      <td>{ 128, 128, 64 }</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeWorkgroupVolume</code></td>\n      <td>128</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>computeSharedMemory</code></td>\n      <td>16384 (16KB)</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pushConstantSize</code></td>\n      <td>128</td>\n      <td>256*</td>\n    </tr>\n    <tr>\n      <td><code>indirectDrawCount</code></td>\n      <td>1</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>instances</code></td>\n      <td>134217727</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>anisotropy</code></td>\n      <td>0.0</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td><code>pointSize</code></td>\n      <td>1.0</td>\n      <td></td>\n    </tr>\n  </tbody> </table>\n\nNote: in the table above, `*` means that LÖVR itself is imposing a cap on the limit, instead of the GPU."
         },
         {
           name = "getPass",
@@ -9912,7 +9164,11 @@ return {
           description = "Creates and returns a temporary Pass object.",
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
-          notes = "Fun facts about render passes:\n\n- Textures must have the same dimensions, layer counts, and sample counts.\n- Textures must have been created with the `render` `TextureUsage`.\n- If `mipmap` is true, then any textures with mipmaps must have the `transfer` `TextureUsage`.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- Setting `clear` to `false` for textures is usually very slow on mobile GPUs.\n\nFor `compute` and `transfer` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  LÖVR is not currently able to check for this.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
+          related = {
+            "lovr.graphics.submit",
+            "lovr.graphics.getWindowPass",
+            "lovr.headset.getPass"
+          },
           variants = {
             {
               description = "Create a compute or transfer pass.",
@@ -10019,11 +9275,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.submit",
-            "lovr.graphics.getWindowPass",
-            "lovr.headset.getPass"
-          }
+          notes = "Fun facts about render passes:\n\n- Textures must have the same dimensions, layer counts, and sample counts.\n- Textures must have been created with the `render` `TextureUsage`.\n- If `mipmap` is true, then any textures with mipmaps must have the `transfer` `TextureUsage`.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- Setting `clear` to `false` for textures is usually very slow on mobile GPUs.\n\nFor `compute` and `transfer` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  LÖVR is not currently able to check for this.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture."
         },
         {
           name = "getWindowPass",
@@ -10053,11 +9305,6 @@ return {
           description = "Returns the type of operations the GPU supports for a texture format, if any.",
           key = "lovr.graphics.isFormatSupported",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.getDevice",
-            "lovr.graphics.getFeatures",
-            "lovr.graphics.getLimits"
-          },
           variants = {
             {
               arguments = {
@@ -10080,6 +9327,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.getDevice",
+            "lovr.graphics.getFeatures",
+            "lovr.graphics.getLimits"
           }
         },
         {
@@ -10089,7 +9341,9 @@ return {
           description = "Creates a Buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
+          related = {
+            "lovr.graphics.getBuffer"
+          },
           variants = {
             {
               arguments = {
@@ -10260,9 +9514,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.getBuffer"
-          }
+          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields."
         },
         {
           name = "newFont",
@@ -10271,11 +9523,6 @@ return {
           description = "Creates a new Font.",
           key = "lovr.graphics.newFont",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.getDefaultFont",
-            "lovr.data.newRasterizer",
-            "Pass:text"
-          },
           variants = {
             {
               description = "Creates a new Font from a TTF file.",
@@ -10382,6 +9629,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.getDefaultFont",
+            "lovr.data.newRasterizer",
+            "Pass:text"
           }
         },
         {
@@ -10521,7 +9773,10 @@ return {
           description = "Loads a 3D model from a file.  Currently, OBJ, glTF, and binary STL files are supported.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "Currently, the following features are not supported by the model importer:\n\n- glTF: Morph targets are not supported.\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 256 joints.\n- glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need\n  to use 1 skin consistently.\n- glTF: `KHR_texture_transform` is supported, but all textures in a material will use the same\n  transform.\n- STL: ASCII STL files are not supported.\n\nDiffuse and emissive textures will be loaded using sRGB encoding, all other textures will be loaded as linear.",
+          related = {
+            "lovr.data.newModelData",
+            "Pass:draw"
+          },
           variants = {
             {
               arguments = {
@@ -10611,10 +9866,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.data.newModelData",
-            "Pass:draw"
-          }
+          notes = "Currently, the following features are not supported by the model importer:\n\n- glTF: Morph targets are not supported.\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 256 joints.\n- glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need\n  to use 1 skin consistently.\n- glTF: `KHR_texture_transform` is supported, but all textures in a material will use the same\n  transform.\n- STL: ASCII STL files are not supported.\n\nDiffuse and emissive textures will be loaded using sRGB encoding, all other textures will be loaded as linear."
         },
         {
           name = "newSampler",
@@ -10623,9 +9875,6 @@ return {
           description = "Creates a new Sampler.  Samplers are immutable, meaning their parameters can not be changed after the sampler is created.  Instead, a new sampler should be created with the updated properties.",
           key = "lovr.graphics.newSampler",
           module = "lovr.graphics",
-          related = {
-            "Pass:setSampler"
-          },
           variants = {
             {
               arguments = {
@@ -10708,6 +9957,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "Pass:setSampler"
           }
         },
         {
@@ -10717,11 +9969,6 @@ return {
           description = "Creates a Shader, which is a small program that runs on the GPU.\n\nShader code is usually written in GLSL and compiled to SPIR-V bytecode.  SPIR-V is faster to load but requires a build step.  Either form can be used to create a shader.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.compileShader",
-            "ShaderType",
-            "ShaderStage"
-          },
           variants = {
             {
               description = "Create a graphics shader.  It has a vertex stage that computes vertex positions, and a fragment stage that computes pixel colors.",
@@ -10830,6 +10077,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.graphics.compileShader",
+            "ShaderType",
+            "ShaderStage"
           }
         },
         {
@@ -10839,10 +10091,6 @@ return {
           description = "Creates a new Tally.",
           key = "lovr.graphics.newTally",
           module = "lovr.graphics",
-          related = {
-            "Pass:tick",
-            "Pass:tock"
-          },
           variants = {
             {
               arguments = {
@@ -10871,6 +10119,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "Pass:tick",
+            "Pass:tock"
           }
         },
         {
@@ -10880,7 +10132,9 @@ return {
           description = "Creates a new Texture.  Image filenames or `Image` objects can be used to provide the initial pixel data and the dimensions, format, and type.  Alternatively, dimensions can be provided, which will create an empty texture.",
           key = "lovr.graphics.newTexture",
           module = "lovr.graphics",
-          notes = "If no `type` is provided in the options table, LÖVR will guess the `TextureType` of the Texture based on the number of layers:\n\n- If there's 1 layer, the type will be `2d`.\n- If there are 6 layers, the type will be `cube`.\n- Otherwise, the type will be `array`.\n\nNote that an Image can contain multiple layers and mipmaps.  When a single Image is provided, its layer count will be used as the Texture's layer count.\n\nIf multiple Images are used to initialize the Texture, they must all have a single layer, and their dimensions, format, and mipmap counts must match.\n\nWhen providing cubemap images in a table, they can be in one of the following forms:\n\n    { 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' }\n    { right = 'px.png', left = 'nx.png', top = 'py.png', bottom = 'ny.png', back = 'pz.png', front = 'nz.png' }\n    { px = 'px.png', nx = 'nx.png', py = 'py.png', ny = 'ny.png', pz = 'pz.png', nz = 'nz.png' }\n\n(Where 'p' stands for positive and 'n' stands for negative).\n\nIf no `usage` is provided in the options table, LÖVR will guess the `TextureUsage` of the Texture.  The `sample` usage is always included, but if the texture was created without any images then the texture will have the `render` usage as well.\n\nThe supported image formats are png, jpg, hdr, dds, ktx1, ktx2, and astc.\n\nIf image data is provided, mipmaps will be generated for any missing mipmap levels.",
+          related = {
+            "Texture:newView"
+          },
           variants = {
             {
               arguments = {
@@ -11270,9 +10524,7 @@ return {
               }
             }
           },
-          related = {
-            "Texture:newView"
-          }
+          notes = "If no `type` is provided in the options table, LÖVR will guess the `TextureType` of the Texture based on the number of layers:\n\n- If there's 1 layer, the type will be `2d`.\n- If there are 6 layers, the type will be `cube`.\n- Otherwise, the type will be `array`.\n\nNote that an Image can contain multiple layers and mipmaps.  When a single Image is provided, its layer count will be used as the Texture's layer count.\n\nIf multiple Images are used to initialize the Texture, they must all have a single layer, and their dimensions, format, and mipmap counts must match.\n\nWhen providing cubemap images in a table, they can be in one of the following forms:\n\n    { 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' }\n    { right = 'px.png', left = 'nx.png', top = 'py.png', bottom = 'ny.png', back = 'pz.png', front = 'nz.png' }\n    { px = 'px.png', nx = 'nx.png', py = 'py.png', ny = 'ny.png', pz = 'pz.png', nz = 'nz.png' }\n\n(Where 'p' stands for positive and 'n' stands for negative).\n\nIf no `usage` is provided in the options table, LÖVR will guess the `TextureUsage` of the Texture.  The `sample` usage is always included, but if the texture was created without any images then the texture will have the `render` usage as well.\n\nThe supported image formats are png, jpg, hdr, dds, ktx1, ktx2, and astc.\n\nIf image data is provided, mipmaps will be generated for any missing mipmap levels."
         },
         {
           name = "present",
@@ -11281,17 +10533,17 @@ return {
           description = "Presents the window texture to the desktop window.  This function is called automatically by the default implementation of `lovr.run`, so it normally does not need to be called.",
           key = "lovr.graphics.present",
           module = "lovr.graphics",
-          notes = "This should be called after submitting the window pass (`lovr.graphics.getWindowPass`).  If the window texture has not been rendered to since the last present, this function does nothing.",
+          related = {
+            "lovr.graphics.submit",
+            "lovr.graphics.getWindowPass"
+          },
           variants = {
             {
               arguments = {},
               returns = {}
             }
           },
-          related = {
-            "lovr.graphics.submit",
-            "lovr.graphics.getWindowPass"
-          }
+          notes = "This should be called after submitting the window pass (`lovr.graphics.getWindowPass`).  If the window texture has not been rendered to since the last present, this function does nothing."
         },
         {
           name = "setBackgroundColor",
@@ -11300,7 +10552,11 @@ return {
           description = "Changes the global background color.  The textures in a render pass will be cleared to this color at the beginning of the pass if no other clear option is specified.  Additionally, the headset and window will be cleared to this color before rendering.",
           key = "lovr.graphics.setBackgroundColor",
           module = "lovr.graphics",
-          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
+          related = {
+            "lovr.graphics.getPass",
+            "Pass:clear",
+            "Pass:fill"
+          },
           variants = {
             {
               arguments = {
@@ -11355,11 +10611,7 @@ return {
               returns = {}
             }
           },
-          related = {
-            "lovr.graphics.getPass",
-            "Pass:clear",
-            "Pass:fill"
-          }
+          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs."
         },
         {
           name = "submit",
@@ -11368,7 +10620,9 @@ return {
           description = "Submits work to the GPU.",
           key = "lovr.graphics.submit",
           module = "lovr.graphics",
-          notes = "The submitted `Pass` objects will run in the order specified.  Commands within a single Pass do not have any ordering guarantees.\n\nSubmitting work to the GPU is not thread safe.  No other `lovr.graphics` or `Pass` functions may run at the same time as `lovr.graphics.submit`.\n\nCalling this function will invalidate any temporary buffers or passes that were created during the frame.\n\nSubmitting work to the GPU is a relatively expensive operation.  It's a good idea to batch all `Pass` objects into 1 submission if possible, unless there's a good reason not to.  One such reason would be that the frame has so much work that some of it needs to be submitted early to prevent the GPU from running out of things to do.  Another would be for `Readback` objects.\n\nBy default, this function is called with the default pass at the end of `lovr.draw` and `lovr.mirror`.\n\nIt is valid to submit zero passes.  This will send an empty batch of work to the GPU.",
+          related = {
+            "lovr.graphics.wait"
+          },
           variants = {
             {
               arguments = {
@@ -11403,9 +10657,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.graphics.wait"
-          }
+          notes = "The submitted `Pass` objects will run in the order specified.  Commands within a single Pass do not have any ordering guarantees.\n\nSubmitting work to the GPU is not thread safe.  No other `lovr.graphics` or `Pass` functions may run at the same time as `lovr.graphics.submit`.\n\nCalling this function will invalidate any temporary buffers or passes that were created during the frame.\n\nSubmitting work to the GPU is a relatively expensive operation.  It's a good idea to batch all `Pass` objects into 1 submission if possible, unless there's a good reason not to.  One such reason would be that the frame has so much work that some of it needs to be submitted early to prevent the GPU from running out of things to do.  Another would be for `Readback` objects.\n\nBy default, this function is called with the default pass at the end of `lovr.draw` and `lovr.mirror`.\n\nIt is valid to submit zero passes.  This will send an empty batch of work to the GPU."
         },
         {
           name = "wait",
@@ -11414,14 +10666,14 @@ return {
           description = "Waits for all submitted GPU work to finish.  A normal application that is trying to render graphics at a high framerate should never use this function, since waiting like this prevents the CPU from doing other useful work.  Otherwise, reasons to use this function might be for debugging or to force a `Readback` to finish immediately.",
           key = "lovr.graphics.wait",
           module = "lovr.graphics",
-          related = {
-            "lovr.graphics.submit"
-          },
           variants = {
             {
               arguments = {},
               returns = {}
             }
+          },
+          related = {
+            "lovr.graphics.submit"
           }
         }
       },
@@ -11432,6 +10684,10 @@ return {
           description = "A Buffer is a block of GPU memory.  Buffers are similar to Lua tables or arrays: they have a length and store a list of values.  The length of a Buffer and its format (the type of each value) are declared upfront and can't be changed.  Each value of a Buffer consists of one or more fields, and each field has a type.  For example, if a Buffer is used to store vertices, each value might store 3 fields for the position, normal vector, and UV coordinates of a vertex.\n\nBuffers are commonly used for:\n\n- Mesh data: Buffers hold the data that define the vertices in a mesh. Buffers also store the\n  vertex indices of a mesh, which define the order the vertices are connected together into\n  triangles. These are often called vertex buffers and index buffers.\n- Shader data: Buffers can be bound to a Shader, letting the Shader read arbitrary data. For\n  example, Lua code could create a Buffer with the positions and colors of all the lights in a\n  scene, which a Shader can use to do lighting calculations.\n- Compute: Compute shaders can write data to Buffers.  This GPU-generated data can be used in\n  later rendering work or sent back to Lua.\n- Indirect: Indirect rendering is an advanced technique where instructions for rendering work\n  are recorded to a Buffer (potentially by a compute shader) and later drawn.\n\nThere are two types of Buffers:\n\n- **Temporary** buffers are very inexpensive to create, and writing to them from Lua is fast.\n  However, they become invalid at the end of `lovr.draw` (i.e. when `lovr.graphics.submit` is\n  called).  The GPU is slightly slower at accessing data from temporary buffers, and compute\n  shaders can not write to them.  They are designed for storing data that changes every frame.\n- **Permanent** buffers are more expensive to create, and updating their contents requires a\n  transfer from CPU memory to VRAM.  They act like normal LÖVR objects and don't need to be\n  recreated every frame.  They often have faster performance when used by the GPU, and compute\n  shaders can write to them.  They are great for large pieces of data that are initialized once\n  at load time, or data that is updated infrequently.",
           key = "Buffer",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.getBuffer",
+            "lovr.graphics.newBuffer"
+          },
           methods = {
             {
               name = "clear",
@@ -11439,9 +10695,6 @@ return {
               description = "Clears some or all of the data in the **temporary** Buffer to zero.  Permanent Buffers can be cleared in a transfer pass using `Pass:clear`.",
               key = "Buffer:clear",
               module = "lovr.graphics",
-              related = {
-                "Pass:clear"
-              },
               variants = {
                 {
                   arguments = {
@@ -11461,7 +10714,10 @@ return {
                   returns = {}
                 }
               },
-              notes = "Clearing a permanent buffer requires the byte offset and byte count of the cleared range to be a multiple of 4.  This will usually be true for most data types."
+              notes = "Clearing a permanent buffer requires the byte offset and byte count of the cleared range to be a multiple of 4.  This will usually be true for most data types.",
+              related = {
+                "Pass:clear"
+              }
             },
             {
               name = "getFormat",
@@ -11469,16 +10725,6 @@ return {
               description = "Returns the format of the Buffer.  This is the list of fields that comprise each item in the buffer.  Each field has a type, byte offset, and vertex attribute location.",
               key = "Buffer:getFormat",
               module = "lovr.graphics",
-              related = {
-                "Buffer:getSize",
-                "Buffer:getLength",
-                "Buffer:getStride"
-              },
-              examples = {
-                {
-                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer(1, { 'vec3', 'vec3', 'vec2' })\n\n  for i, field in ipairs(buffer:getFormat()) do\n    local type, offset, location = field.type, field.offset, field.location\n    local template = 'Field: %d: Type = %s, Offset = %d, Location = %d'\n    print(template:format(i, type, offset, location))\n  end\n\n  -- prints the following:\n  -- Field 1: Type = f32x3, Offset = 0, Location = 0\n  -- Field 2: Type = f32x3, Offset = 12, Location = 1\n  -- Field 3: Type = f32x2, Offset = 24, Location = 2\nend"
-                }
-              },
               variants = {
                 {
                   arguments = {},
@@ -11490,6 +10736,16 @@ return {
                     }
                   }
                 }
+              },
+              examples = {
+                {
+                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer(1, { 'vec3', 'vec3', 'vec2' })\n\n  for i, field in ipairs(buffer:getFormat()) do\n    local type, offset, location = field.type, field.offset, field.location\n    local template = 'Field: %d: Type = %s, Offset = %d, Location = %d'\n    print(template:format(i, type, offset, location))\n  end\n\n  -- prints the following:\n  -- Field 1: Type = f32x3, Offset = 0, Location = 0\n  -- Field 2: Type = f32x3, Offset = 12, Location = 1\n  -- Field 3: Type = f32x2, Offset = 24, Location = 2\nend"
+                }
+              },
+              related = {
+                "Buffer:getSize",
+                "Buffer:getLength",
+                "Buffer:getStride"
               }
             },
             {
@@ -11498,10 +10754,6 @@ return {
               description = "Returns the length of the Buffer.",
               key = "Buffer:getLength",
               module = "lovr.graphics",
-              related = {
-                "Buffer:getSize",
-                "Buffer:getStride"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11513,6 +10765,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Buffer:getSize",
+                "Buffer:getStride"
               }
             },
             {
@@ -11521,9 +10777,6 @@ return {
               description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.  This is only available for temporary buffers, so the pointer is only valid until `lovr.graphics.submit` is called.",
               key = "Buffer:getPointer",
               module = "lovr.graphics",
-              related = {
-                "Blob:getPointer"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11535,6 +10788,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Blob:getPointer"
               }
             },
             {
@@ -11543,10 +10799,6 @@ return {
               description = "Returns the size of the Buffer, in bytes.  This is the same as `length * stride`.",
               key = "Buffer:getSize",
               module = "lovr.graphics",
-              related = {
-                "Buffer:getLength",
-                "Buffer:getStride"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11558,6 +10810,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Buffer:getLength",
+                "Buffer:getStride"
               }
             },
             {
@@ -11566,10 +10822,6 @@ return {
               description = "Returns the distance between each item in the Buffer, in bytes.",
               key = "Buffer:getStride",
               module = "lovr.graphics",
-              related = {
-                "Buffer:getSize",
-                "Buffer:getLength"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11582,7 +10834,11 @@ return {
                   }
                 }
               },
-              notes = "When a Buffer is created, the stride can be set explicitly, otherwise it will be automatically computed based on the fields in the Buffer.\n\nStrides can not be zero, and can not be smaller than the size of a single item.  To work around this, bind the Buffer as a storage buffer and fetch data from the buffer manually."
+              notes = "When a Buffer is created, the stride can be set explicitly, otherwise it will be automatically computed based on the fields in the Buffer.\n\nStrides can not be zero, and can not be smaller than the size of a single item.  To work around this, bind the Buffer as a storage buffer and fetch data from the buffer manually.",
+              related = {
+                "Buffer:getSize",
+                "Buffer:getLength"
+              }
             },
             {
               name = "isTemporary",
@@ -11590,9 +10846,6 @@ return {
               description = "Returns whether the Buffer is temporary.",
               key = "Buffer:isTemporary",
               module = "lovr.graphics",
-              related = {
-                "lovr.graphics.getBuffer"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11604,6 +10857,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.graphics.getBuffer"
               }
             },
             {
@@ -11612,8 +10868,10 @@ return {
               description = "Changes data in a temporary Buffer using a table or a Blob.  Permanent buffers can be changed using `Pass:copy`.",
               key = "Buffer:setData",
               module = "lovr.graphics",
-              related = {
-                "Pass:copy"
+              examples = {
+                {
+                  code = "function lovr.draw(pass)\n  buffer = lovr.graphics.getBuffer(3, 'floats')\n  buffer:setData({ { 1.0 }, { 2.0 }, { 3.0 } })\n  buffer:setData({ 1.0, 2.0, 3.0 })\n\n  buffer = lovr.graphics.getBuffer(5, { 'vec3', 'vec3', 'vec2' })\n  buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6), vec2(7, 8) })\n  buffer:setData({ { 1, 2, 3, 4, 5, 6, 7, 8 } })\n  buffer:setData({ 1, 2, 3, 4, 5, 6, 7, 8 })\n  buffer:setData({\n    { x1, y1, z1, nx1, ny1, nz1, u1, v1 },\n    { x2, y2, z2, vec3(nx, ny, nz) }\n  }, 1, 3, 2)\nend"
+                }
               },
               notes = "When using a table, the table can contain a nested table for each value in the Buffer, or it can be a flat list of field component values.  It is not possible to mix both nested tables and flat values.\n\nFor each item updated, components of each field in the item (according to the Buffer's format) are read from either the nested subtable or the table itself.  A single number can be used to update a field with a scalar type.  Multiple numbers or a `lovr.math` vector can be used to update a field with a vector or mat4 type.  Multiple numbers can be used to update mat2 and mat3 fields.  When updating normalized field types, components read from the table will be clamped to the normalized range ([0,1] or [-1,1]).  In the Buffer, each field is written at its byte offset according to the Buffer's format, and subsequent items are separated by the byte stride of the Buffer.  Any missing components for an updated field will be set to zero.",
               variants = {
@@ -11674,16 +10932,10 @@ return {
                   returns = {}
                 }
               },
-              examples = {
-                {
-                  code = "function lovr.draw(pass)\n  buffer = lovr.graphics.getBuffer(3, 'floats')\n  buffer:setData({ { 1.0 }, { 2.0 }, { 3.0 } })\n  buffer:setData({ 1.0, 2.0, 3.0 })\n\n  buffer = lovr.graphics.getBuffer(5, { 'vec3', 'vec3', 'vec2' })\n  buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6), vec2(7, 8) })\n  buffer:setData({ { 1, 2, 3, 4, 5, 6, 7, 8 } })\n  buffer:setData({ 1, 2, 3, 4, 5, 6, 7, 8 })\n  buffer:setData({\n    { x1, y1, z1, nx1, ny1, nz1, u1, v1 },\n    { x2, y2, z2, vec3(nx, ny, nz) }\n  }, 1, 3, 2)\nend"
-                }
+              related = {
+                "Pass:copy"
               }
             }
-          },
-          constructors = {
-            "lovr.graphics.getBuffer",
-            "lovr.graphics.newBuffer"
           }
         },
         {
@@ -11692,11 +10944,6 @@ return {
           description = "Font objects are used to render text with `Pass:text`.  The active font can be changed using `Pass:setFont`.  The default font is Varela Round, which is used when no font is active, and can be retrieved using `lovr.graphics.getDefaultFont`.  Custom fonts can be loaded from TTF files using `lovr.graphics.newFont`.\n\nEach Font uses a `Rasterizer` to load the TTF file and create images for each glyph. As text is drawn, the Font uploads images from the Rasterizer to a GPU texture atlas as needed.  The Font also performs text layout and mesh generation for strings of text.\n\nLÖVR uses a text rendering technique called \"multichannel signed distance fields\" (MSDF), which makes the font rendering remain crisp when text is viewed up close.",
           key = "Font",
           module = "lovr.graphics",
-          notes = "MSDF text requires a special shader to work.  LÖVR will automatically switch to this shader if no shader is active on the `Pass`.  This font shader is also available as a `DefaultShader`.",
-          constructors = {
-            "lovr.graphics.newFont",
-            "lovr.graphics.getDefaultFont"
-          },
           methods = {
             {
               name = "getAscent",
@@ -11704,13 +10951,6 @@ return {
               description = "Returns the ascent of the font.  The ascent is the maximum amount glyphs ascend above the baseline.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getAscent",
               module = "lovr.graphics",
-              related = {
-                "Rasterizer:getAscent",
-                "Font:getDescent",
-                "Font:getHeight",
-                "Font:getKerning",
-                "Font:getWidth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11722,6 +10962,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getAscent",
+                "Font:getDescent",
+                "Font:getHeight",
+                "Font:getKerning",
+                "Font:getWidth"
               }
             },
             {
@@ -11730,13 +10977,6 @@ return {
               description = "Returns the descent of the font.  The descent is the maximum amount glyphs descend below the baseline.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getDescent",
               module = "lovr.graphics",
-              related = {
-                "Rasterizer:getDescent",
-                "Font:getAscent",
-                "Font:getHeight",
-                "Font:getKerning",
-                "Font:getWidth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11748,6 +10988,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getDescent",
+                "Font:getAscent",
+                "Font:getHeight",
+                "Font:getKerning",
+                "Font:getWidth"
               }
             },
             {
@@ -11756,16 +11003,6 @@ return {
               description = "Returns the height of the font, sometimes also called the leading.  This is the full height of a line of text, including the space between lines.  Each line of a multiline string is separated on the y axis by this height, multiplied by the font's line spacing.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getHeight",
               module = "lovr.graphics",
-              related = {
-                "Rasterizer:getLeading",
-                "Font:getLineSpacing",
-                "Font:setLineSpacing",
-                "Font:getAscent",
-                "Font:getDescent",
-                "Font:getKerning",
-                "Font:getWidth",
-                "Font:getLines"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11777,6 +11014,16 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getLeading",
+                "Font:getLineSpacing",
+                "Font:setLineSpacing",
+                "Font:getAscent",
+                "Font:getDescent",
+                "Font:getKerning",
+                "Font:getWidth",
+                "Font:getLines"
               }
             },
             {
@@ -11785,13 +11032,6 @@ return {
               description = "Returns the kerning between 2 glyphs.  Kerning is a slight horizontal adjustment between 2 glyphs to improve the visual appearance.  It will often be negative.  The units depend on the font's pixel density.  With the default density, the units correspond to meters.",
               key = "Font:getKerning",
               module = "lovr.graphics",
-              related = {
-                "Rasterizer:getKerning",
-                "Font:getAscent",
-                "Font:getDescent",
-                "Font:getHeight",
-                "Font:getWidth"
-              },
               variants = {
                 {
                   arguments = {
@@ -11877,6 +11117,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Rasterizer:getKerning",
+                "Font:getAscent",
+                "Font:getDescent",
+                "Font:getHeight",
+                "Font:getWidth"
               }
             },
             {
@@ -11885,9 +11132,6 @@ return {
               description = "Returns the line spacing of the Font.  When spacing out lines, the height of the font is multiplied the line spacing to get the final spacing value.  The default is 1.0.",
               key = "Font:getLineSpacing",
               module = "lovr.graphics",
-              related = {
-                "Font:getHeight"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11899,6 +11143,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Font:getHeight"
               }
             },
             {
@@ -11907,11 +11154,6 @@ return {
               description = "Returns a table of wrapped lines for a piece of text, given a line length limit.  Newlines are handled correctly.  The wrap limit units depend on the pixel density of the font.  With the default pixel density, the units correspond to meters when the font is drawn at 1.0 scale.",
               key = "Font:getLines",
               module = "lovr.graphics",
-              related = {
-                "Font:getWidth",
-                "Font:getHeight",
-                "Pass:text"
-              },
               variants = {
                 {
                   arguments = {
@@ -11955,6 +11197,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Font:getWidth",
+                "Font:getHeight",
+                "Pass:text"
               }
             },
             {
@@ -11982,10 +11229,6 @@ return {
               description = "Returns the Rasterizer object backing the Font.",
               key = "Font:getRasterizer",
               module = "lovr.graphics",
-              related = {
-                "lovr.graphics.newFont",
-                "lovr.data.newRasterizer"
-              },
               variants = {
                 {
                   arguments = {},
@@ -11997,6 +11240,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.graphics.newFont",
+                "lovr.data.newRasterizer"
               }
             },
             {
@@ -12005,7 +11252,6 @@ return {
               description = "Returns a table of vertices for a piece of text, along with a Material to use when rendering it. The Material returned by this function may not be the same if the Font's texture atlas needs to be recreated with a bigger size to make room for more glyphs.",
               key = "Font:getVertices",
               module = "lovr.graphics",
-              notes = "Each vertex is a table of 4 floating point numbers with the following data:\n\n    { x, y, u, v }\n\nThese could be placed in a vertex buffer using the following buffer format:\n\n    { 'vec2:VertexPosition', 'vec2:VertexUV' }",
               variants = {
                 {
                   arguments = {
@@ -12033,7 +11279,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "Each vertex is a table of 4 floating point numbers with the following data:\n\n    { x, y, u, v }\n\nThese could be placed in a vertex buffer using the following buffer format:\n\n    { 'vec2:VertexPosition', 'vec2:VertexUV' }"
             },
             {
               name = "getWidth",
@@ -12041,13 +11288,6 @@ return {
               description = "Returns the maximum width of a piece of text.  This function does not perform wrapping but does respect newlines in the text.",
               key = "Font:getWidth",
               module = "lovr.graphics",
-              related = {
-                "Font:getAscent",
-                "Font:getDescent",
-                "Font:getHeight",
-                "Font:getKerning",
-                "Font:getLines"
-              },
               variants = {
                 {
                   arguments = {
@@ -12081,6 +11321,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Font:getAscent",
+                "Font:getDescent",
+                "Font:getHeight",
+                "Font:getKerning",
+                "Font:getLines"
               }
             },
             {
@@ -12089,9 +11336,6 @@ return {
               description = "Sets the line spacing of the Font.  When spacing out lines, the height of the font is multiplied by the line spacing to get the final spacing value.  The default is 1.0.",
               key = "Font:setLineSpacing",
               module = "lovr.graphics",
-              related = {
-                "Font:getHeight"
-              },
               variants = {
                 {
                   arguments = {
@@ -12103,6 +11347,9 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Font:getHeight"
               }
             },
             {
@@ -12129,7 +11376,12 @@ return {
                 }
               }
             }
-          }
+          },
+          constructors = {
+            "lovr.graphics.newFont",
+            "lovr.graphics.getDefaultFont"
+          },
+          notes = "MSDF text requires a special shader to work.  LÖVR will automatically switch to this shader if no shader is active on the `Pass`.  This font shader is also available as a `DefaultShader`."
         },
         {
           name = "Material",
@@ -12137,6 +11389,9 @@ return {
           description = "Materials are a set of properties and textures that define the properties of a surface, like what color it is, how bumpy or shiny it is, etc. `Shader` code can use the data from a material to compute lighting.\n\nMaterials are immutable, and can't be changed after they are created.  Instead, a new Material should be created with the updated properties.\n\n`Pass:setMaterial` changes the active material, causing it to affect rendering until the active material is changed again.\n\nUsing material objects is optional.  `Pass:setMaterial` can take a `Texture`, and `Pass:setColor` can change the color of objects, so basic tinting and texturing of surfaces does not require a full material to be created.  Also, a custom material system could be developed by sending textures and other data to shaders manually.\n\n`Model` objects will create materials for all of the materials defined in the model file.\n\nIn shader code, non-texture material properties can be accessed as `Material.<property>`, and material textures can be accessed as `<Type>Texture`, e.g. `RoughnessTexture`.",
           key = "Material",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newMaterial"
+          },
           methods = {
             {
               name = "getProperties",
@@ -12157,9 +11412,6 @@ return {
                 }
               }
             }
-          },
-          constructors = {
-            "lovr.graphics.newMaterial"
           }
         },
         {
@@ -12168,6 +11420,10 @@ return {
           description = "Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are supported.\n\nA model can be drawn using `Pass:draw`.\n\nThe raw CPU data for a model is held in a `ModelData` object, which can be loaded on threads or reused for multiple Model instances.\n\nModels have a hierarchy of nodes which can have their transforms modified.  Meshes are attached to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn multiple times while only storing a single copy of its data.\n\nModels can have animations.  Animations have keyframes which affect the transforms of nodes. Right now each model can only be drawn with a single animated pose per frame.\n\nModels can have materials, which are collections of properties and textures that define how its surface is affected by lighting.  Each mesh in the model can use a single material.",
           key = "Model",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newModel",
+            "lovr.headset.newModel"
+          },
           methods = {
             {
               name = "animate",
@@ -12175,20 +11431,6 @@ return {
               description = "Animates a Model by setting or blending the transforms of nodes using data stored in the keyframes of an animation.\n\nThe animation from the model file is evaluated at the timestamp, resulting in a set of node properties.  These properties are then applied to the nodes in the model, using an optional blend factor.  If the animation doesn't have keyframes that target a given node, the node will remain unchanged.",
               key = "Model:animate",
               module = "lovr.graphics",
-              related = {
-                "Model:resetNodeTransforms",
-                "Model:getAnimationCount",
-                "Model:getAnimationName",
-                "Model:getAnimationDuration",
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform"
-              },
               variants = {
                 {
                   arguments = {
@@ -12233,7 +11475,21 @@ return {
                   returns = {}
                 }
               },
-              notes = "If the timestamp is larger than the duration of the animation, it will wrap back around to zero, so looping an animation doesn't require using the modulo operator.\n\nTo change the speed of the animation, multiply the timestamp by a speed factor.\n\nFor each animated property in the animation, if the timestamp used for the animation is less than the timestamp of the first keyframe, the data of the first keyframe will be used.\n\nThis function can be called multiple times to layer and blend animations.  The model joints will be drawn in the final resulting pose.\n\n`Model:resetNodeTransforms` can be used to reset the model nodes to their initial transforms, which is helpful to ensure animating starts from a clean slate."
+              notes = "If the timestamp is larger than the duration of the animation, it will wrap back around to zero, so looping an animation doesn't require using the modulo operator.\n\nTo change the speed of the animation, multiply the timestamp by a speed factor.\n\nFor each animated property in the animation, if the timestamp used for the animation is less than the timestamp of the first keyframe, the data of the first keyframe will be used.\n\nThis function can be called multiple times to layer and blend animations.  The model joints will be drawn in the final resulting pose.\n\n`Model:resetNodeTransforms` can be used to reset the model nodes to their initial transforms, which is helpful to ensure animating starts from a clean slate.",
+              related = {
+                "Model:resetNodeTransforms",
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:getAnimationDuration",
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform"
+              }
             },
             {
               name = "getAnimationCount",
@@ -12241,11 +11497,6 @@ return {
               description = "Returns the number of animations in the Model.",
               key = "Model:getAnimationCount",
               module = "lovr.graphics",
-              related = {
-                "Model:getAnimationName",
-                "Model:getAnimationDuration",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12257,6 +11508,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getAnimationName",
+                "Model:getAnimationDuration",
+                "Model:animate"
               }
             },
             {
@@ -12265,11 +11521,6 @@ return {
               description = "Returns the duration of an animation in the Model, in seconds.",
               key = "Model:getAnimationDuration",
               module = "lovr.graphics",
-              related = {
-                "Model:getAnimationCount",
-                "Model:getAnimationName",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -12304,7 +11555,12 @@ return {
                   }
                 }
               },
-              notes = "The duration of an animation is calculated as the largest timestamp of all of its keyframes."
+              notes = "The duration of an animation is calculated as the largest timestamp of all of its keyframes.",
+              related = {
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:animate"
+              }
             },
             {
               name = "getAnimationName",
@@ -12312,10 +11568,6 @@ return {
               description = "Returns the name of an animation in the Model.",
               key = "Model:getAnimationName",
               module = "lovr.graphics",
-              related = {
-                "Model:getAnimationCount",
-                "Model:getAnimationDuration"
-              },
               variants = {
                 {
                   arguments = {
@@ -12333,6 +11585,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getAnimationCount",
+                "Model:getAnimationDuration"
               }
             },
             {
@@ -12341,16 +11597,6 @@ return {
               description = "Returns the 6 values of the Model's axis-aligned bounding box.",
               key = "Model:getBoundingBox",
               module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getHeight",
-                "Model:getDepth",
-                "Model:getDimensions",
-                "Model:getCenter",
-                "Model:getBoundingSphere",
-                "ModelData:getBoundingBox",
-                "Collider:getAABB"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12387,6 +11633,16 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getWidth",
+                "Model:getHeight",
+                "Model:getDepth",
+                "Model:getDimensions",
+                "Model:getCenter",
+                "Model:getBoundingSphere",
+                "ModelData:getBoundingBox",
+                "Collider:getAABB"
               }
             },
             {
@@ -12395,15 +11651,6 @@ return {
               description = "Returns a sphere approximately enclosing the vertices in the Model.",
               key = "Model:getBoundingSphere",
               module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getHeight",
-                "Model:getDepth",
-                "Model:getDimensions",
-                "Model:getCenter",
-                "Model:getBoundingBox",
-                "ModelData:getBoundingSphere"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12430,6 +11677,15 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getWidth",
+                "Model:getHeight",
+                "Model:getDepth",
+                "Model:getDimensions",
+                "Model:getCenter",
+                "Model:getBoundingBox",
+                "ModelData:getBoundingSphere"
               }
             },
             {
@@ -12438,14 +11694,6 @@ return {
               description = "Returns the center of the Model's axis-aligned bounding box, relative to the Model's origin.",
               key = "Model:getCenter",
               module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getHeight",
-                "Model:getDepth",
-                "Model:getDimensions",
-                "Model:getBoundingBox",
-                "ModelData:getCenter"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12467,6 +11715,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getWidth",
+                "Model:getHeight",
+                "Model:getDepth",
+                "Model:getDimensions",
+                "Model:getBoundingBox",
+                "ModelData:getCenter"
               }
             },
             {
@@ -12475,9 +11731,6 @@ return {
               description = "Returns the ModelData this Model was created from.",
               key = "Model:getData",
               module = "lovr.graphics",
-              related = {
-                "lovr.data.newModelData"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12489,6 +11742,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.data.newModelData"
               }
             },
             {
@@ -12497,14 +11753,6 @@ return {
               description = "Returns the depth of the Model, computed from its axis-aligned bounding box.",
               key = "Model:getDepth",
               module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getHeight",
-                "Model:getDimensions",
-                "Model:getCenter",
-                "Model:getBoundingBox",
-                "ModelData:getDepth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12516,6 +11764,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getWidth",
+                "Model:getHeight",
+                "Model:getDimensions",
+                "Model:getCenter",
+                "Model:getBoundingBox",
+                "ModelData:getDepth"
               }
             },
             {
@@ -12524,14 +11780,6 @@ return {
               description = "Returns the width, height, and depth of the Model, computed from its axis-aligned bounding box.",
               key = "Model:getDimensions",
               module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getHeight",
-                "Model:getDepth",
-                "Model:getCenter",
-                "Model:getBoundingBox",
-                "ModelData:getDimensions"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12553,6 +11801,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getWidth",
+                "Model:getHeight",
+                "Model:getDepth",
+                "Model:getCenter",
+                "Model:getBoundingBox",
+                "ModelData:getDimensions"
               }
             },
             {
@@ -12561,14 +11817,6 @@ return {
               description = "Returns the height of the Model, computed from its axis-aligned bounding box.",
               key = "Model:getHeight",
               module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getDepth",
-                "Model:getDimensions",
-                "Model:getCenter",
-                "Model:getBoundingBox",
-                "ModelData:getHeight"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12580,6 +11828,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getWidth",
+                "Model:getDepth",
+                "Model:getDimensions",
+                "Model:getCenter",
+                "Model:getBoundingBox",
+                "ModelData:getHeight"
               }
             },
             {
@@ -12588,9 +11844,6 @@ return {
               description = "Returns the index buffer used by the Model.  The index buffer describes the order used to draw the vertices in each mesh.",
               key = "Model:getIndexBuffer",
               module = "lovr.graphics",
-              related = {
-                "Model:getVertexBuffer"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12602,6 +11855,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getVertexBuffer"
               }
             },
             {
@@ -12610,11 +11866,6 @@ return {
               description = "Returns a `Material` loaded from the Model.",
               key = "Model:getMaterial",
               module = "lovr.graphics",
-              related = {
-                "Model:getMaterialCount",
-                "Model:getMaterialName",
-                "Model:getNodeDraw"
-              },
               variants = {
                 {
                   arguments = {
@@ -12648,6 +11899,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getMaterialCount",
+                "Model:getMaterialName",
+                "Model:getNodeDraw"
               }
             },
             {
@@ -12656,10 +11912,6 @@ return {
               description = "Returns the number of materials in the Model.",
               key = "Model:getMaterialCount",
               module = "lovr.graphics",
-              related = {
-                "Model:getMaterialName",
-                "Model:getMaterial"
-              },
               variants = {
                 {
                   arguments = {},
@@ -12671,6 +11923,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getMaterialName",
+                "Model:getMaterial"
               }
             },
             {
@@ -12679,10 +11935,6 @@ return {
               description = "Returns the name of a material in the Model.",
               key = "Model:getMaterialName",
               module = "lovr.graphics",
-              related = {
-                "Model:getMaterialCount",
-                "Model:getMaterial"
-              },
               variants = {
                 {
                   arguments = {
@@ -12700,6 +11952,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getMaterialCount",
+                "Model:getMaterial"
               }
             },
             {
@@ -12727,10 +11983,6 @@ return {
               description = "Given a parent node, this function returns a table with the indices of its children.",
               key = "Model:getNodeChildren",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodeParent",
-                "Model:getRootNode"
-              },
               variants = {
                 {
                   arguments = {
@@ -12765,7 +12017,11 @@ return {
                   }
                 }
               },
-              notes = "If the node does not have any children, this function returns an empty table."
+              notes = "If the node does not have any children, this function returns an empty table.",
+              related = {
+                "Model:getNodeParent",
+                "Model:getRootNode"
+              }
             },
             {
               name = "getNodeCount",
@@ -12792,18 +12048,6 @@ return {
               description = "Returns the draw mode, material, and vertex range of a mesh in the model.",
               key = "Model:getNodeDraw",
               module = "lovr.graphics",
-              related = {
-                "Pass:setMeshMode",
-                "Pass:setMaterial",
-                "Pass:mesh",
-                "Model:getVertexBuffer",
-                "Model:getIndexBuffer"
-              },
-              examples = {
-                {
-                  code = "function lovr.load()\n  local m = lovr.graphics.newModel('enraged-gorilla.gltf')\n\n  model = {\n    object = m,\n    data = m:getData(),\n    vertices = m:getVertexBuffer(),\n    indices = m:getIndexBuffer()\n  }\nend\n\nlocal function drawNode(model, pass, i)\n  for j = 1, model.object:getNodeDrawCount(i) do\n    local mode, material, start, count, base = model.object:getNodeDraw(i, j)\n    local transform = mat4(model.object:getNodeTransform(i))\n\n    pass:setMeshMode(mode)\n    pass:setMaterial(material)\n\n    if base then\n      pass:mesh(model.vertices, model.indices, transform, start, count, 1, base)\n    else\n      pass:mesh(model.vertices, transform, start, count)\n    end\n  end\n\n  for _, index in ipairs(model.data:getNodeChildren(i)) do\n    drawNode(model, pass, index)\n  end\nend\n\nfunction lovr.draw(pass)\n  drawNode(model, pass, model.data:getRootNode())\nend"
-                }
-              },
               variants = {
                 {
                   arguments = {
@@ -12887,6 +12131,18 @@ return {
                     }
                   }
                 }
+              },
+              examples = {
+                {
+                  code = "function lovr.load()\n  local m = lovr.graphics.newModel('enraged-gorilla.gltf')\n\n  model = {\n    object = m,\n    data = m:getData(),\n    vertices = m:getVertexBuffer(),\n    indices = m:getIndexBuffer()\n  }\nend\n\nlocal function drawNode(model, pass, i)\n  for j = 1, model.object:getNodeDrawCount(i) do\n    local mode, material, start, count, base = model.object:getNodeDraw(i, j)\n    local transform = mat4(model.object:getNodeTransform(i))\n\n    pass:setMeshMode(mode)\n    pass:setMaterial(material)\n\n    if base then\n      pass:mesh(model.vertices, model.indices, transform, start, count, 1, base)\n    else\n      pass:mesh(model.vertices, transform, start, count)\n    end\n  end\n\n  for _, index in ipairs(model.data:getNodeChildren(i)) do\n    drawNode(model, pass, index)\n  end\nend\n\nfunction lovr.draw(pass)\n  drawNode(model, pass, model.data:getRootNode())\nend"
+                }
+              },
+              related = {
+                "Pass:setMeshMode",
+                "Pass:setMaterial",
+                "Pass:mesh",
+                "Model:getVertexBuffer",
+                "Model:getIndexBuffer"
               }
             },
             {
@@ -12895,10 +12151,6 @@ return {
               description = "Returns the number of meshes attached to a node.  Each mesh is drawn individually.",
               key = "Model:getNodeDrawCount",
               module = "lovr.graphics",
-              related = {
-                "ModelData:getMeshCount",
-                "Model:getNodeDraw"
-              },
               variants = {
                 {
                   arguments = {
@@ -12932,6 +12184,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ModelData:getMeshCount",
+                "Model:getNodeDraw"
               }
             },
             {
@@ -12940,11 +12196,6 @@ return {
               description = "Returns the name of a node.",
               key = "Model:getNodeName",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodeCount",
-                "Model:getAnimationName",
-                "Model:getMaterialName"
-              },
               variants = {
                 {
                   arguments = {
@@ -12962,6 +12213,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodeCount",
+                "Model:getAnimationName",
+                "Model:getMaterialName"
               }
             },
             {
@@ -12970,17 +12226,6 @@ return {
               description = "Returns the orientation of a node.",
               key = "Model:getNodeOrientation",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13056,6 +12301,17 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
@@ -13064,10 +12320,6 @@ return {
               description = "Given a child node, this function returns the index of its parent.",
               key = "Model:getNodeParent",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodeChildren",
-                "Model:getRootNode"
-              },
               variants = {
                 {
                   arguments = {
@@ -13101,6 +12353,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodeChildren",
+                "Model:getRootNode"
               }
             },
             {
@@ -13109,17 +12365,6 @@ return {
               description = "Returns the pose (position and orientation) of a node.",
               key = "Model:getNodePose",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13225,6 +12470,17 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
@@ -13233,17 +12489,6 @@ return {
               description = "Returns the position of a node.",
               key = "Model:getNodePosition",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13309,6 +12554,17 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
@@ -13317,17 +12573,6 @@ return {
               description = "Returns the scale of a node.",
               key = "Model:getNodeScale",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13394,7 +12639,18 @@ return {
                   }
                 }
               },
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same."
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
+              }
             },
             {
               name = "getNodeTransform",
@@ -13402,17 +12658,6 @@ return {
               description = "Returns the transform (position, scale, and rotation) of a node.",
               key = "Model:getNodeTransform",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13548,6 +12793,17 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:animate"
               }
             },
             {
@@ -13556,10 +12812,6 @@ return {
               description = "Returns the index of the model's root node.",
               key = "Model:getRootNode",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodeCount",
-                "Model:getNodeParent"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13571,6 +12823,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getNodeCount",
+                "Model:getNodeParent"
               }
             },
             {
@@ -13579,10 +12835,6 @@ return {
               description = "Returns one of the textures in the Model.",
               key = "Model:getTexture",
               module = "lovr.graphics",
-              related = {
-                "Model:getTextureCount",
-                "Model:getMaterial"
-              },
               variants = {
                 {
                   arguments = {
@@ -13600,6 +12852,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getTextureCount",
+                "Model:getMaterial"
               }
             },
             {
@@ -13608,9 +12864,6 @@ return {
               description = "Returns the number of textures in the Model.",
               key = "Model:getTextureCount",
               module = "lovr.graphics",
-              related = {
-                "Model:getTexture"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13622,6 +12875,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getTexture"
               }
             },
             {
@@ -13630,11 +12886,6 @@ return {
               description = "Returns the total number of triangles in the Model.",
               key = "Model:getTriangleCount",
               module = "lovr.graphics",
-              related = {
-                "Model:getTriangles",
-                "Model:getVertexCount",
-                "ModelData:getTriangleCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13647,7 +12898,12 @@ return {
                   }
                 }
               },
-              notes = "This isn't always related to the length of the vertex buffer, since a mesh in the Model could be drawn by multiple nodes."
+              notes = "This isn't always related to the length of the vertex buffer, since a mesh in the Model could be drawn by multiple nodes.",
+              related = {
+                "Model:getTriangles",
+                "Model:getVertexCount",
+                "ModelData:getTriangleCount"
+              }
             },
             {
               name = "getTriangles",
@@ -13655,11 +12911,6 @@ return {
               description = "Returns 2 tables containing mesh data for the Model.\n\nThe first table is a list of vertex positions and contains 3 numbers for the x, y, and z coordinate of each vertex.  The second table is a list of triangles and contains 1-based indices into the first table representing the first, second, and third vertices that make up each triangle.\n\nThe vertex positions will be affected by node transforms.",
               key = "Model:getTriangles",
               module = "lovr.graphics",
-              related = {
-                "Model:getTriangleCount",
-                "Model:getVertexCount",
-                "ModelData:getTriangles"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13677,7 +12928,12 @@ return {
                   }
                 }
               },
-              notes = "After this function is called on a Model once, the result is cached (in its ModelData)."
+              notes = "After this function is called on a Model once, the result is cached (in its ModelData).",
+              related = {
+                "Model:getTriangleCount",
+                "Model:getVertexCount",
+                "ModelData:getTriangles"
+              }
             },
             {
               name = "getVertexBuffer",
@@ -13685,9 +12941,6 @@ return {
               description = "Returns a `Buffer` that holds the vertices of all of the meshes in the Model.",
               key = "Model:getVertexBuffer",
               module = "lovr.graphics",
-              related = {
-                "Model:getIndexBuffer"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13699,6 +12952,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getIndexBuffer"
               }
             },
             {
@@ -13707,11 +12963,6 @@ return {
               description = "Returns the total vertex count of the Model.",
               key = "Model:getVertexCount",
               module = "lovr.graphics",
-              related = {
-                "Model:getTriangles",
-                "Model:getTriangleCount",
-                "ModelData:getVertexCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13724,7 +12975,12 @@ return {
                   }
                 }
               },
-              notes = "This isn't always the same as the length of the vertex buffer, since a mesh in the Model could be drawn by multiple nodes."
+              notes = "This isn't always the same as the length of the vertex buffer, since a mesh in the Model could be drawn by multiple nodes.",
+              related = {
+                "Model:getTriangles",
+                "Model:getTriangleCount",
+                "ModelData:getVertexCount"
+              }
             },
             {
               name = "getWidth",
@@ -13732,14 +12988,6 @@ return {
               description = "Returns the width of the Model, computed from its axis-aligned bounding box.",
               key = "Model:getWidth",
               module = "lovr.graphics",
-              related = {
-                "Model:getHeight",
-                "Model:getDepth",
-                "Model:getDimensions",
-                "Model:getCenter",
-                "Model:getBoundingBox",
-                "ModelData:getWidth"
-              },
               variants = {
                 {
                   arguments = {},
@@ -13751,6 +12999,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Model:getHeight",
+                "Model:getDepth",
+                "Model:getDimensions",
+                "Model:getCenter",
+                "Model:getBoundingBox",
+                "ModelData:getWidth"
               }
             },
             {
@@ -13759,7 +13015,6 @@ return {
               description = "Returns whether the Model has any skeletal animations.",
               key = "Model:hasJoints",
               module = "lovr.graphics",
-              notes = "This will return when there's at least one skin in the model, as returned by `ModelData:getSkinCount`.\n\nEven if this function returns true, the model could still have non-skeletal animations.\n\nRight now a model can only be drawn with one skeletal pose per frame.",
               variants = {
                 {
                   arguments = {},
@@ -13771,7 +13026,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "This will return when there's at least one skin in the model, as returned by `ModelData:getSkinCount`.\n\nEven if this function returns true, the model could still have non-skeletal animations.\n\nRight now a model can only be drawn with one skeletal pose per frame."
             },
             {
               name = "resetNodeTransforms",
@@ -13792,17 +13048,6 @@ return {
               description = "Sets or blends the orientation of a node to a new orientation.",
               key = "Model:setNodeOrientation",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13846,6 +13091,17 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
@@ -13854,17 +13110,6 @@ return {
               description = "Sets or blends the pose (position and orientation) of a node to a new pose.",
               key = "Model:setNodePose",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13918,6 +13163,17 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
@@ -13926,17 +13182,6 @@ return {
               description = "Sets or blends the position of a node to a new position.",
               key = "Model:setNodePosition",
               module = "lovr.graphics",
-              related = {
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodeScale",
-                "Model:setNodeScale",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
-              },
               variants = {
                 {
                   arguments = {
@@ -13980,6 +13225,17 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
               }
             },
             {
@@ -13988,6 +13244,51 @@ return {
               description = "Sets or blends the scale of a node to a new scale.",
               key = "Model:setNodeScale",
               module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The target scale.  Can also be provided as 3 numbers."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The target scale.  Can also be provided as 3 numbers."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              },
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
               related = {
                 "Model:getNodePosition",
                 "Model:setNodePosition",
@@ -13998,7 +13299,14 @@ return {
                 "Model:getNodeTransform",
                 "Model:setNodeTransform",
                 "Model:animate"
-              },
+              }
+            },
+            {
+              name = "setNodeTransform",
+              summary = "Set or blend the transform of a node.",
+              description = "Sets or blends the transform of a node to a new transform.",
+              key = "Model:setNodeTransform",
+              module = "lovr.graphics",
               variants = {
                 {
                   arguments = {
@@ -14008,14 +13316,14 @@ return {
                       description = "The index of the node."
                     },
                     {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The target scale.  Can also be provided as 3 numbers."
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
                   },
@@ -14029,28 +13337,21 @@ return {
                       description = "The name of the node."
                     },
                     {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The target scale.  Can also be provided as 3 numbers."
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
                   },
                   returns = {}
                 }
               },
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same."
-            },
-            {
-              name = "setNodeTransform",
-              summary = "Set or blend the transform of a node.",
-              description = "Sets or blends the transform of a node to a new transform.",
-              key = "Model:setNodeTransform",
-              module = "lovr.graphics",
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
               related = {
                 "Model:getNodePosition",
                 "Model:setNodePosition",
@@ -14061,57 +13362,8 @@ return {
                 "Model:getNodePose",
                 "Model:setNodePose",
                 "Model:animate"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                }
-              },
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same."
+              }
             }
-          },
-          constructors = {
-            "lovr.graphics.newModel",
-            "lovr.headset.newModel"
           }
         },
         {
@@ -14290,9 +13542,6 @@ return {
               description = "Draw a box.  This is like `Pass:cube`, except it takes 3 separate values for the scale.",
               key = "Pass:box",
               module = "lovr.graphics",
-              related = {
-                "Pass:cube"
-              },
               variants = {
                 {
                   arguments = {
@@ -14310,6 +13559,9 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:cube"
               }
             },
             {
@@ -14419,10 +13671,6 @@ return {
               description = "Clears a Buffer or Texture.",
               key = "Pass:clear",
               module = "lovr.graphics",
-              related = {
-                "Buffer:clear",
-                "Pass:copy"
-              },
               variants = {
                 {
                   description = "Clears a range of a Buffer, setting the values to zero.",
@@ -14487,6 +13735,10 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Buffer:clear",
+                "Pass:copy"
               }
             },
             {
@@ -15101,9 +14353,6 @@ return {
               description = "Returns the clear values of the pass.",
               key = "Pass:getClear",
               module = "lovr.graphics",
-              related = {
-                "Pass:getTarget"
-              },
               variants = {
                 {
                   arguments = {},
@@ -15115,6 +14364,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:getTarget"
               }
             },
             {
@@ -15124,7 +14376,14 @@ return {
               description = "Returns the dimensions of the textures attached to the render pass.",
               key = "Pass:getDimensions",
               module = "lovr.graphics",
-              notes = "If the pass is not a render pass, this function returns zeros.",
+              related = {
+                "Pass:getWidth",
+                "Pass:getHeight",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowDimensions",
+                "lovr.headset.getDisplayDimensions"
+              },
               variants = {
                 {
                   arguments = {},
@@ -15142,14 +14401,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Pass:getWidth",
-                "Pass:getHeight",
-                "Pass:getViewCount",
-                "lovr.graphics.getPass",
-                "lovr.system.getWindowDimensions",
-                "lovr.headset.getDisplayDimensions"
-              }
+              notes = "If the pass is not a render pass, this function returns zeros."
             },
             {
               name = "getHeight",
@@ -15158,7 +14410,14 @@ return {
               description = "Returns the height of the textures attached to the render pass.",
               key = "Pass:getHeight",
               module = "lovr.graphics",
-              notes = "If the pass is not a render pass, this function returns zero.",
+              related = {
+                "Pass:getWidth",
+                "Pass:getDimensions",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowHeight",
+                "lovr.headset.getDisplayHeight"
+              },
               variants = {
                 {
                   arguments = {},
@@ -15171,14 +14430,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Pass:getWidth",
-                "Pass:getDimensions",
-                "Pass:getViewCount",
-                "lovr.graphics.getPass",
-                "lovr.system.getWindowHeight",
-                "lovr.headset.getDisplayHeight"
-              }
+              notes = "If the pass is not a render pass, this function returns zero."
             },
             {
               name = "getProjection",
@@ -15187,12 +14439,6 @@ return {
               description = "Returns the projection for a single view.",
               key = "Pass:getProjection",
               module = "lovr.graphics",
-              related = {
-                "lovr.headset.getViewAngles",
-                "lovr.headset.getViewCount",
-                "Pass:getViewPose",
-                "Pass:setViewPose"
-              },
               variants = {
                 {
                   arguments = {
@@ -15246,6 +14492,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.headset.getViewAngles",
+                "lovr.headset.getViewCount",
+                "Pass:getViewPose",
+                "Pass:setViewPose"
               }
             },
             {
@@ -15275,9 +14527,6 @@ return {
               description = "Returns the textures a render pass is rendering to.",
               key = "Pass:getTarget",
               module = "lovr.graphics",
-              related = {
-                "Pass:getClear"
-              },
               variants = {
                 {
                   arguments = {},
@@ -15289,6 +14538,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:getClear"
               }
             },
             {
@@ -15312,7 +14564,13 @@ return {
               description = "Returns the view count of a render pass.  This is the layer count of the textures it is rendering to.",
               key = "Pass:getViewCount",
               module = "lovr.graphics",
-              notes = "A render pass has one \"camera\" for each view.  Whenever something is drawn, it is broadcast to each view (layer) of each texture, using the corresponding camera.",
+              related = {
+                "Pass:getViewPose",
+                "Pass:setViewPose",
+                "Pass:getProjection",
+                "Pass:setProjection",
+                "lovr.headset.getViewCount"
+              },
               variants = {
                 {
                   arguments = {},
@@ -15325,13 +14583,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Pass:getViewPose",
-                "Pass:setViewPose",
-                "Pass:getProjection",
-                "Pass:setProjection",
-                "lovr.headset.getViewCount"
-              }
+              notes = "A render pass has one \"camera\" for each view.  Whenever something is drawn, it is broadcast to each view (layer) of each texture, using the corresponding camera."
             },
             {
               name = "getViewPose",
@@ -15340,12 +14592,6 @@ return {
               description = "Get the pose of a single view.",
               key = "Pass:getViewPose",
               module = "lovr.graphics",
-              related = {
-                "lovr.headset.getViewPose",
-                "lovr.headset.getViewCount",
-                "Pass:getProjection",
-                "Pass:setProjection"
-              },
               variants = {
                 {
                   arguments = {
@@ -15419,6 +14665,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.headset.getViewPose",
+                "lovr.headset.getViewCount",
+                "Pass:getProjection",
+                "Pass:setProjection"
               }
             },
             {
@@ -15428,7 +14680,14 @@ return {
               description = "Returns the width of the textures attached to the render pass.",
               key = "Pass:getWidth",
               module = "lovr.graphics",
-              notes = "If the pass is not a render pass, this function returns zero.",
+              related = {
+                "Pass:getHeight",
+                "Pass:getDimensions",
+                "Pass:getViewCount",
+                "lovr.graphics.getPass",
+                "lovr.system.getWindowWidth",
+                "lovr.headset.getDisplayWidth"
+              },
               variants = {
                 {
                   arguments = {},
@@ -15441,14 +14700,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Pass:getHeight",
-                "Pass:getDimensions",
-                "Pass:getViewCount",
-                "lovr.graphics.getPass",
-                "lovr.system.getWindowWidth",
-                "lovr.headset.getDisplayWidth"
-              }
+              notes = "If the pass is not a render pass, this function returns zero."
             },
             {
               name = "line",
@@ -15574,7 +14826,8 @@ return {
                     {
                       name = "base",
                       type = "number",
-                      default = "A base offset to apply to vertex indices."
+                      description = "A base offset to apply to vertex indices.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -15618,7 +14871,8 @@ return {
                     {
                       name = "base",
                       type = "number",
-                      default = "A base offset to apply to vertex indices."
+                      description = "A base offset to apply to vertex indices.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -15740,6 +14994,12 @@ return {
               description = "Resets the transform back to the origin.",
               key = "Pass:origin",
               module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              },
               related = {
                 "Pass:translate",
                 "Pass:rotate",
@@ -15747,12 +15007,6 @@ return {
                 "Pass:transform",
                 "Pass:push",
                 "Pass:pop"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
               }
             },
             {
@@ -15861,7 +15115,10 @@ return {
               description = "Pops the transform or render state stack, restoring it to the state it was in when it was last pushed.",
               key = "Pass:pop",
               module = "lovr.graphics",
-              notes = "If a stack is popped without a corresponding push, the stack \"underflows\" which causes an error.",
+              related = {
+                "Pass:push",
+                "StackType"
+              },
               variants = {
                 {
                   arguments = {
@@ -15875,10 +15132,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:push",
-                "StackType"
-              }
+              notes = "If a stack is popped without a corresponding push, the stack \"underflows\" which causes an error."
             },
             {
               name = "push",
@@ -15887,7 +15141,10 @@ return {
               description = "Saves a copy of the transform or render states.  Further changes can be made to the transform or render states, and afterwards `Pass:pop` can be used to restore the original state.  Pushes and pops can be nested, but it's an error to pop without a corresponding push.",
               key = "Pass:push",
               module = "lovr.graphics",
-              notes = "Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4 render states saved.\n\nThe `state` stack does not save the camera info or shader variables changed with `Pass:send`.",
+              related = {
+                "Pass:pop",
+                "StackType"
+              },
               variants = {
                 {
                   arguments = {
@@ -15901,10 +15158,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:pop",
-                "StackType"
-              }
+              notes = "Each stack has a limit of the number of copies it can store.  There can be 16 transforms and 4 render states saved.\n\nThe `state` stack does not save the camera info or shader variables changed with `Pass:send`."
             },
             {
               name = "read",
@@ -16027,14 +15281,6 @@ return {
               description = "Rotates the coordinate system.",
               key = "Pass:rotate",
               module = "lovr.graphics",
-              related = {
-                "Pass:translate",
-                "Pass:scale",
-                "Pass:transform",
-                "Pass:origin",
-                "Pass:push",
-                "Pass:pop"
-              },
               variants = {
                 {
                   arguments = {
@@ -16046,6 +15292,14 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:translate",
+                "Pass:scale",
+                "Pass:transform",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
               }
             },
             {
@@ -16055,14 +15309,6 @@ return {
               description = "Scales the coordinate system.",
               key = "Pass:scale",
               module = "lovr.graphics",
-              related = {
-                "Pass:translate",
-                "Pass:rotate",
-                "Pass:transform",
-                "Pass:origin",
-                "Pass:push",
-                "Pass:pop"
-              },
               variants = {
                 {
                   arguments = {
@@ -16074,6 +15320,14 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:translate",
+                "Pass:rotate",
+                "Pass:transform",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
               }
             },
             {
@@ -16314,7 +15568,10 @@ return {
               description = "Sets the color channels affected by drawing, on a per-channel basis.  Disabling color writes is often used to render to the depth or stencil buffer without affecting existing pixel colors.",
               key = "Pass:setColorWrite",
               module = "lovr.graphics",
-              notes = "By default, color writes are enabled for all channels.",
+              related = {
+                "Pass:setDepthWrite",
+                "Pass:setStencilWrite"
+              },
               variants = {
                 {
                   arguments = {
@@ -16352,10 +15609,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setDepthWrite",
-                "Pass:setStencilWrite"
-              }
+              notes = "By default, color writes are enabled for all channels."
             },
             {
               name = "setCullMode",
@@ -16364,7 +15618,9 @@ return {
               description = "Sets whether the front or back faces of triangles are culled.",
               key = "Pass:setCullMode",
               module = "lovr.graphics",
-              notes = "The default cull mode is `none`.",
+              related = {
+                "Pass:setWinding"
+              },
               variants = {
                 {
                   arguments = {
@@ -16378,9 +15634,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setWinding"
-              }
+              notes = "The default cull mode is `none`."
             },
             {
               name = "setDepthClamp",
@@ -16389,7 +15643,11 @@ return {
               description = "Enables or disables depth clamp.  Normally, when pixels fall outside of the clipping planes, they are clipped (not rendered).  Depth clamp will instead render these pixels, clamping their depth on to the clipping planes.",
               key = "Pass:setDepthClamp",
               module = "lovr.graphics",
-              notes = "This isn\\'t supported on all GPUs.  Use the `depthClamp` feature of `lovr.graphics.getFeatures` to check for support.  If depth clamp is enabled when unsupported, it will silently fall back to depth clipping.\n\nDepth clamping is not enabled by default.",
+              related = {
+                "Pass:setDepthTest",
+                "Pass:setDepthWrite",
+                "Pass:setDepthOffset"
+              },
               variants = {
                 {
                   arguments = {
@@ -16402,11 +15660,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setDepthTest",
-                "Pass:setDepthWrite",
-                "Pass:setDepthOffset"
-              }
+              notes = "This isn\\'t supported on all GPUs.  Use the `depthClamp` feature of `lovr.graphics.getFeatures` to check for support.  If depth clamp is enabled when unsupported, it will silently fall back to depth clipping.\n\nDepth clamping is not enabled by default."
             },
             {
               name = "setDepthOffset",
@@ -16415,7 +15669,10 @@ return {
               description = "Set the depth offset.  This is a constant offset added to the depth value of pixels.  It can be used to fix Z fighting when rendering decals or other nearly-overlapping objects.",
               key = "Pass:setDepthOffset",
               module = "lovr.graphics",
-              notes = "The default depth offset is zero for both values.",
+              related = {
+                "Pass:setDepthTest",
+                "Pass:setDepthWrite"
+              },
               variants = {
                 {
                   arguments = {
@@ -16435,10 +15692,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setDepthTest",
-                "Pass:setDepthWrite"
-              }
+              notes = "The default depth offset is zero for both values."
             },
             {
               name = "setDepthTest",
@@ -16447,7 +15701,12 @@ return {
               description = "Sets the depth test.",
               key = "Pass:setDepthTest",
               module = "lovr.graphics",
-              notes = "When using LÖVR's default projection (reverse Z with infinite far plane) the default depth test is `gequal`, depth values of 0.0 are on the far plane and depth values of 1.0 are on the near plane, closer to the camera.\n\nA depth buffer must be present to use the depth test, but this is enabled by default.",
+              related = {
+                "Pass:setDepthWrite",
+                "Pass:setDepthOffset",
+                "Pass:setDepthClamp",
+                "Pass:setStencilTest"
+              },
               variants = {
                 {
                   arguments = {
@@ -16465,12 +15724,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setDepthWrite",
-                "Pass:setDepthOffset",
-                "Pass:setDepthClamp",
-                "Pass:setStencilTest"
-              }
+              notes = "When using LÖVR's default projection (reverse Z with infinite far plane) the default depth test is `gequal`, depth values of 0.0 are on the far plane and depth values of 1.0 are on the near plane, closer to the camera.\n\nA depth buffer must be present to use the depth test, but this is enabled by default."
             },
             {
               name = "setDepthWrite",
@@ -16479,7 +15733,11 @@ return {
               description = "Sets whether draws write to the depth buffer.  When a pixel is drawn, if depth writes are enabled and the pixel passes the depth test, the depth buffer will be updated with the pixel's depth value.",
               key = "Pass:setDepthWrite",
               module = "lovr.graphics",
-              notes = "The default depth write is `true`.",
+              related = {
+                "Pass:setStencilWrite",
+                "Pass:setColorWrite",
+                "Pass:setDepthTest"
+              },
               variants = {
                 {
                   arguments = {
@@ -16492,11 +15750,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setStencilWrite",
-                "Pass:setColorWrite",
-                "Pass:setDepthTest"
-              }
+              notes = "The default depth write is `true`."
             },
             {
               name = "setFont",
@@ -16505,11 +15759,6 @@ return {
               description = "Sets the font used for `Pass:text`.",
               key = "Pass:setFont",
               module = "lovr.graphics",
-              related = {
-                "Pass:text",
-                "lovr.graphics.newFont",
-                "lovr.graphics.getDefaultFont"
-              },
               variants = {
                 {
                   arguments = {
@@ -16521,6 +15770,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:text",
+                "lovr.graphics.newFont",
+                "lovr.graphics.getDefaultFont"
               }
             },
             {
@@ -16586,7 +15840,12 @@ return {
               description = "Sets the projection for a single view.  4 field of view angles can be used, similar to the field of view returned by `lovr.headset.getViewAngles`.  Alternatively, a projection matrix can be used for other types of projections like orthographic, oblique, etc.  There is also a shorthand string \"orthographic\" that can be used to configure an orthographic projection.\n\nUp to 6 views are supported.  When rendering to the headset, both projections are changed to match the ones used by the headset.  This is also available by calling `lovr.headset.getViewAngles`.",
               key = "Pass:setProjection",
               module = "lovr.graphics",
-              notes = "A far clipping plane of 0.0 can be used for an infinite far plane with reversed Z range.  This is the default.",
+              related = {
+                "lovr.headset.getViewAngles",
+                "lovr.headset.getViewCount",
+                "Pass:getViewPose",
+                "Pass:setViewPose"
+              },
               variants = {
                 {
                   arguments = {
@@ -16646,12 +15905,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "lovr.headset.getViewAngles",
-                "lovr.headset.getViewCount",
-                "Pass:getViewPose",
-                "Pass:setViewPose"
-              }
+              notes = "A far clipping plane of 0.0 can be used for an infinite far plane with reversed Z range.  This is the default."
             },
             {
               name = "setSampler",
@@ -16697,7 +15951,9 @@ return {
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "`x` and `y` can not be negative.\n\nThe default scissor rectangle covers the entire dimensions of the render pass textures.",
+              related = {
+                "Pass:setViewport"
+              },
               variants = {
                 {
                   arguments = {
@@ -16725,9 +15981,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setViewport"
-              }
+              notes = "`x` and `y` can not be negative.\n\nThe default scissor rectangle covers the entire dimensions of the render pass textures."
             },
             {
               name = "setShader",
@@ -16736,7 +15990,10 @@ return {
               description = "Sets the active shader.  In a render pass, the Shader will affect all drawing operations until it is changed again.  In a compute pass, the Shader will be run when `Pass:compute` is called.",
               key = "Pass:setShader",
               module = "lovr.graphics",
-              notes = "Changing the shader will preserve resource bindings (the ones set using `Pass:send`) **unless** the new shader declares a resource for a binding number using a different type than the current shader.  In this case, the resource \"type\" means one of the following:\n\n- Uniform buffer (`uniform`).\n- Storage buffer (`buffer`).\n- Sampled texture, (`uniform texture<type>`).\n- Storage texture, (`uniform image<type>`).\n- Sampler (`uniform sampler`).\n\nIf the new shader doesn't declare a resource in a particular binding number, any resource there will be preserved.\n\nIf there's a clash in resource types like this, the variable will be \"cleared\".  Using a buffer variable that has been cleared is not well-defined, and may return random data or even crash the GPU.  For textures, white pixels will be returned.  Samplers will use `linear` filtering and the `repeat` wrap mode.\n\nChanging the shader will not clear push constants set in the `Constants` block.",
+              related = {
+                "Pass:send",
+                "Pass:compute"
+              },
               variants = {
                 {
                   arguments = {
@@ -16765,10 +16022,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:send",
-                "Pass:compute"
-              }
+              notes = "Changing the shader will preserve resource bindings (the ones set using `Pass:send`) **unless** the new shader declares a resource for a binding number using a different type than the current shader.  In this case, the resource \"type\" means one of the following:\n\n- Uniform buffer (`uniform`).\n- Storage buffer (`buffer`).\n- Sampled texture, (`uniform texture<type>`).\n- Storage texture, (`uniform image<type>`).\n- Sampler (`uniform sampler`).\n\nIf the new shader doesn't declare a resource in a particular binding number, any resource there will be preserved.\n\nIf there's a clash in resource types like this, the variable will be \"cleared\".  Using a buffer variable that has been cleared is not well-defined, and may return random data or even crash the GPU.  For textures, white pixels will be returned.  Samplers will use `linear` filtering and the `repeat` wrap mode.\n\nChanging the shader will not clear push constants set in the `Constants` block."
             },
             {
               name = "setStencilTest",
@@ -16777,7 +16031,10 @@ return {
               description = "Sets the stencil test.  Any pixels that fail the stencil test won't be drawn.  For example, setting the stencil test to `('equal', 1)` will only draw pixels that have a stencil value of 1. The stencil buffer can be modified by drawing while stencil writes are enabled with `lovr.graphics.setStencilWrite`.",
               key = "Pass:setStencilTest",
               module = "lovr.graphics",
-              notes = "The stencil test is disabled by default.",
+              related = {
+                "Pass:setStencilWrite",
+                "Pass:setDepthTest"
+              },
               variants = {
                 {
                   arguments = {
@@ -16806,10 +16063,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setStencilWrite",
-                "Pass:setDepthTest"
-              }
+              notes = "The stencil test is disabled by default."
             },
             {
               name = "setStencilWrite",
@@ -16818,7 +16072,10 @@ return {
               description = "Sets or disables stencil writes.  When stencil writes are enabled, any pixels drawn will update the values in the stencil buffer using the `StencilAction` set.",
               key = "Pass:setStencilWrite",
               module = "lovr.graphics",
-              notes = "By default, stencil writes are disabled.",
+              related = {
+                "Pass:setStencilTest",
+                "Pass:setDepthTest"
+              },
               variants = {
                 {
                   arguments = {
@@ -16870,10 +16127,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setStencilTest",
-                "Pass:setDepthTest"
-              }
+              notes = "By default, stencil writes are disabled."
             },
             {
               name = "setViewPose",
@@ -16882,12 +16136,6 @@ return {
               description = "Sets the pose for a single view.  Objects rendered in this view will appear as though the camera is positioned using the given pose.\n\nUp to 6 views are supported.  When rendering to the headset, views are changed to match the eye positions.  These view poses are also available using `lovr.headset.getViewPose`.",
               key = "Pass:setViewPose",
               module = "lovr.graphics",
-              related = {
-                "lovr.headset.getViewPose",
-                "lovr.headset.getViewCount",
-                "Pass:getProjection",
-                "Pass:setProjection"
-              },
               variants = {
                 {
                   arguments = {
@@ -16954,6 +16202,12 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "lovr.headset.getViewPose",
+                "lovr.headset.getViewCount",
+                "Pass:getProjection",
+                "Pass:setProjection"
               }
             },
             {
@@ -16963,7 +16217,10 @@ return {
               description = "Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
               key = "Pass:setViewport",
               module = "lovr.graphics",
-              notes = "The viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
+              related = {
+                "Pass:setScissor",
+                "Pass:getDimensions"
+              },
               variants = {
                 {
                   arguments = {
@@ -17003,10 +16260,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setScissor",
-                "Pass:getDimensions"
-              }
+              notes = "The viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1."
             },
             {
               name = "setWinding",
@@ -17015,7 +16269,9 @@ return {
               description = "Sets whether vertices in the clockwise or counterclockwise order vertices are considered the \"front\" face of a triangle.  This is used for culling with `Pass:setCullMode`.",
               key = "Pass:setWinding",
               module = "lovr.graphics",
-              notes = "The default winding is counterclockwise.  LÖVR's builtin shapes are wound counterclockwise.",
+              related = {
+                "Pass:setCullMode"
+              },
               variants = {
                 {
                   arguments = {
@@ -17028,9 +16284,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setCullMode"
-              }
+              notes = "The default winding is counterclockwise.  LÖVR's builtin shapes are wound counterclockwise."
             },
             {
               name = "setWireframe",
@@ -17039,7 +16293,9 @@ return {
               description = "Enables or disables wireframe rendering.  This will draw all triangles as lines while active. It's intended to be used for debugging, since it usually has a performance cost.",
               key = "Pass:setWireframe",
               module = "lovr.graphics",
-              notes = "Wireframe rendering is disabled by default.\n\nThere is currently no way to change the thickness of the lines.",
+              related = {
+                "Pass:setMeshMode"
+              },
               variants = {
                 {
                   arguments = {
@@ -17052,9 +16308,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setMeshMode"
-              }
+              notes = "Wireframe rendering is disabled by default.\n\nThere is currently no way to change the thickness of the lines."
             },
             {
               name = "skybox",
@@ -17121,7 +16375,16 @@ return {
               description = "Draws text.  The font can be changed using `Pass:setFont`.",
               key = "Pass:text",
               module = "lovr.graphics",
-              notes = "Strings should be encoded as UTF-8.\n\nNewlines will start a new line of text.  Tabs will be rendered as four spaces.  Carriage returns are ignored.\n\nWith the default font pixel density, a scale of 1.0 makes the text height 1 meter.\n\nThe wrap value does not take into account the text's scale.\n\nText rendering requires a special shader, which will only be automatically used when the active shader is set to `nil`.\n\nBlending should be enabled when rendering text (it's on by default).\n\nThis function can draw up to 16384 visible characters at a time.",
+              related = {
+                "Pass:setFont",
+                "lovr.graphics.getDefaultFont",
+                "Pass:setShader",
+                "Font:getWidth",
+                "Font:getHeight",
+                "Font:getLines",
+                "Font:getVertices",
+                "Font"
+              },
               variants = {
                 {
                   arguments = {
@@ -17191,16 +16454,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:setFont",
-                "lovr.graphics.getDefaultFont",
-                "Pass:setShader",
-                "Font:getWidth",
-                "Font:getHeight",
-                "Font:getLines",
-                "Font:getVertices",
-                "Font"
-              }
+              notes = "Strings should be encoded as UTF-8.\n\nNewlines will start a new line of text.  Tabs will be rendered as four spaces.  Carriage returns are ignored.\n\nWith the default font pixel density, a scale of 1.0 makes the text height 1 meter.\n\nThe wrap value does not take into account the text's scale.\n\nText rendering requires a special shader, which will only be automatically used when the active shader is set to `nil`.\n\nBlending should be enabled when rendering text (it's on by default).\n\nThis function can draw up to 16384 visible characters at a time."
             },
             {
               name = "tick",
@@ -17209,7 +16463,11 @@ return {
               description = "Starts a GPU measurement.  One of the slots in a `Tally` object will be used to hold the result. Commands on the Pass will continue being measured until `Pass:tock` is called with the same tally and slot combination.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be copied to a `Buffer`.",
               key = "Pass:tick",
               module = "lovr.graphics",
-              notes = "`pixel` and `shader` measurements can not be nested, but `time` measurements can be nested.\n\nFor `time` measurements, the view count of the pass (`Pass:getViewCount`) must match the view count of the tally, which defaults to `2`.",
+              related = {
+                "Pass:tock",
+                "TallyType",
+                "Pass:read"
+              },
               variants = {
                 {
                   arguments = {
@@ -17227,11 +16485,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:tock",
-                "TallyType",
-                "Pass:read"
-              }
+              notes = "`pixel` and `shader` measurements can not be nested, but `time` measurements can be nested.\n\nFor `time` measurements, the view count of the pass (`Pass:getViewCount`) must match the view count of the tally, which defaults to `2`."
             },
             {
               name = "tock",
@@ -17240,11 +16494,6 @@ return {
               description = "Stops a GPU measurement.  `Pass:tick` must be called to start the measurement before this can be called.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be copied to a `Buffer`.",
               key = "Pass:tock",
               module = "lovr.graphics",
-              related = {
-                "Pass:tick",
-                "TallyType",
-                "Pass:read"
-              },
               variants = {
                 {
                   arguments = {
@@ -17261,6 +16510,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:tick",
+                "TallyType",
+                "Pass:read"
               }
             },
             {
@@ -17303,14 +16557,6 @@ return {
               description = "Transforms the coordinate system.",
               key = "Pass:transform",
               module = "lovr.graphics",
-              related = {
-                "Pass:translate",
-                "Pass:rotate",
-                "Pass:scale",
-                "Pass:origin",
-                "Pass:push",
-                "Pass:pop"
-              },
               variants = {
                 {
                   arguments = {
@@ -17322,6 +16568,14 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:translate",
+                "Pass:rotate",
+                "Pass:scale",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
               }
             },
             {
@@ -17331,7 +16585,14 @@ return {
               description = "Translates the coordinate system.",
               key = "Pass:translate",
               module = "lovr.graphics",
-              notes = "Order matters when scaling, translating, and rotating the coordinate system.",
+              related = {
+                "Pass:rotate",
+                "Pass:scale",
+                "Pass:transform",
+                "Pass:origin",
+                "Pass:push",
+                "Pass:pop"
+              },
               variants = {
                 {
                   arguments = {
@@ -17344,14 +16605,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Pass:rotate",
-                "Pass:scale",
-                "Pass:transform",
-                "Pass:origin",
-                "Pass:push",
-                "Pass:pop"
-              }
+              notes = "Order matters when scaling, translating, and rotating the coordinate system."
             }
           }
         },
@@ -17368,10 +16622,6 @@ return {
               description = "Returns the Readback's data as a Blob.",
               key = "Readback:getBlob",
               module = "lovr.graphics",
-              related = {
-                "Readback:getData",
-                "Readback:getImage"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17384,7 +16634,11 @@ return {
                   }
                 }
               },
-              notes = "If the Readback is reading back a Texture, returns `nil`."
+              notes = "If the Readback is reading back a Texture, returns `nil`.",
+              related = {
+                "Readback:getData",
+                "Readback:getImage"
+              }
             },
             {
               name = "getData",
@@ -17392,10 +16646,6 @@ return {
               description = "Returns the data from the Readback, as a table.",
               key = "Readback:getData",
               module = "lovr.graphics",
-              related = {
-                "Readback:getBlob",
-                "Readback:getImage"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17408,7 +16658,11 @@ return {
                   }
                 }
               },
-              notes = "This currently returns `nil` for readbacks of `Buffer` and `Texture` objects.  Only readbacks of `Tally` objects return valid data.\n\nFor `time` and `pixel` tallies, the table will have 1 number per slot that was read.  For `shader` tallies, there will be 4 numbers for each slot."
+              notes = "This currently returns `nil` for readbacks of `Buffer` and `Texture` objects.  Only readbacks of `Tally` objects return valid data.\n\nFor `time` and `pixel` tallies, the table will have 1 number per slot that was read.  For `shader` tallies, there will be 4 numbers for each slot.",
+              related = {
+                "Readback:getBlob",
+                "Readback:getImage"
+              }
             },
             {
               name = "getImage",
@@ -17416,10 +16670,6 @@ return {
               description = "Returns the Readback's data as an Image.",
               key = "Readback:getImage",
               module = "lovr.graphics",
-              related = {
-                "Readback:getData",
-                "Readback:getBlob"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17432,7 +16682,11 @@ return {
                   }
                 }
               },
-              notes = "If the Readback is not reading back a Texture, returns `nil`."
+              notes = "If the Readback is not reading back a Texture, returns `nil`.",
+              related = {
+                "Readback:getData",
+                "Readback:getBlob"
+              }
             },
             {
               name = "isComplete",
@@ -17459,7 +16713,6 @@ return {
               description = "Blocks the CPU until the Readback is finished on the GPU.",
               key = "Readback:wait",
               module = "lovr.graphics",
-              notes = "If the transfer pass that created the readback has not been submitted yet, no wait will occur and this function will return `false`.",
               variants = {
                 {
                   arguments = {},
@@ -17471,7 +16724,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "If the transfer pass that created the readback has not been submitted yet, no wait will occur and this function will return `false`."
             }
           },
           constructors = {
@@ -17484,6 +16738,9 @@ return {
           description = "Samplers are objects that control how pixels are read from a texture.  They can control whether the pixels are smoothed, whether the texture wraps at the edge of its UVs, and more.\n\nEach `Pass` has a default sampler that will be used by default, which can be changed using `Pass:setSampler`.  Also, samplers can be declared in shaders using the following syntax:\n\n    layout(set = 2, binding = X) uniform sampler mySampler;\n\nA Sampler can be sent to the variable using `Pass:send('mySampler', sampler)`.\n\nThe properties of a Sampler are immutable, and can't be changed after it's created.",
           key = "Sampler",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newSampler"
+          },
           methods = {
             {
               name = "getAnisotropy",
@@ -17491,12 +16748,6 @@ return {
               description = "Returns the anisotropy level of the Sampler.  Anisotropy smooths out a texture's appearance when viewed at grazing angles.",
               key = "Sampler:getAnisotropy",
               module = "lovr.graphics",
-              related = {
-                "Sampler:getFilter",
-                "Sampler:getWrap",
-                "Sampler:getCompareMode",
-                "Sampler:getMipmapRange"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17509,7 +16760,13 @@ return {
                   }
                 }
               },
-              notes = "Not all GPUs support anisotropy.  The maximum anisotropy level is given by the `anisotropy` limit of `lovr.graphics.getLimits`, which may be zero.  It's very common for the maximum to be 16, however."
+              notes = "Not all GPUs support anisotropy.  The maximum anisotropy level is given by the `anisotropy` limit of `lovr.graphics.getLimits`, which may be zero.  It's very common for the maximum to be 16, however.",
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getMipmapRange"
+              }
             },
             {
               name = "getCompareMode",
@@ -17517,12 +16774,6 @@ return {
               description = "Returns the compare mode of the Sampler.  This is a feature typically only used for shadow mapping.  Using a sampler with a compare mode requires it to be declared in a shader as a `samplerShadow` instead of a `sampler` variable, and used with a texture that has a depth format.  The result of sampling a depth texture with a shadow sampler is a number between 0 and 1, indicating the percentage of sampled pixels that passed the comparison.",
               key = "Sampler:getCompareMode",
               module = "lovr.graphics",
-              related = {
-                "Sampler:getFilter",
-                "Sampler:getWrap",
-                "Sampler:getAnisotropy",
-                "Sampler:getMipmapRange"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17534,6 +16785,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getAnisotropy",
+                "Sampler:getMipmapRange"
               }
             },
             {
@@ -17542,12 +16799,6 @@ return {
               description = "Returns the filter mode of the Sampler.",
               key = "Sampler:getFilter",
               module = "lovr.graphics",
-              related = {
-                "Sampler:getWrap",
-                "Sampler:getCompareMode",
-                "Sampler:getAnisotropy",
-                "Sampler:getMipmapRange"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17569,6 +16820,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getAnisotropy",
+                "Sampler:getMipmapRange"
               }
             },
             {
@@ -17577,12 +16834,6 @@ return {
               description = "Returns the mipmap range of the Sampler.  This is used to clamp the range of mipmap levels that can be accessed from a texture.",
               key = "Sampler:getMipmapRange",
               module = "lovr.graphics",
-              related = {
-                "Sampler:getFilter",
-                "Sampler:getWrap",
-                "Sampler:getCompareMode",
-                "Sampler:getAnisotropy"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17599,6 +16850,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getWrap",
+                "Sampler:getCompareMode",
+                "Sampler:getAnisotropy"
               }
             },
             {
@@ -17607,12 +16864,6 @@ return {
               description = "Returns the wrap mode of the sampler, used to wrap or clamp texture coordinates when the extend outside of the 0-1 range.",
               key = "Sampler:getWrap",
               module = "lovr.graphics",
-              related = {
-                "Sampler:getFilter",
-                "Sampler:getCompareMode",
-                "Sampler:getAnisotropy",
-                "Sampler:getMipmapRange"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17634,11 +16885,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Sampler:getFilter",
+                "Sampler:getCompareMode",
+                "Sampler:getAnisotropy",
+                "Sampler:getMipmapRange"
               }
             }
-          },
-          constructors = {
-            "lovr.graphics.newSampler"
           }
         },
         {
@@ -17647,6 +16901,10 @@ return {
           description = "Shaders are small GPU programs.  See the `Shaders` guide for a full introduction to Shaders.",
           key = "Shader",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newShader",
+            "Shader:clone"
+          },
           methods = {
             {
               name = "clone",
@@ -17684,10 +16942,6 @@ return {
               description = "Returns whether the shader is a graphics or compute shader.",
               key = "Shader:getType",
               module = "lovr.graphics",
-              related = {
-                "Shader:hasStage",
-                "lovr.graphics.newShader"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17699,6 +16953,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Shader:hasStage",
+                "lovr.graphics.newShader"
               }
             },
             {
@@ -17707,7 +16965,6 @@ return {
               description = "Returns the workgroup size of a compute shader.  The workgroup size defines how many times a compute shader is invoked for each workgroup dispatched by `Pass:compute`.",
               key = "Shader:getWorkgroupSize",
               module = "lovr.graphics",
-              notes = "For example, if the workgroup size is `8x8x1` and `16x16x16` workgroups are dispatched, then the compute shader will run `16 * 16 * 16 * (8 * 8 * 1) = 262144` times.",
               variants = {
                 {
                   arguments = {},
@@ -17729,7 +16986,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "For example, if the workgroup size is `8x8x1` and `16x16x16` workgroups are dispatched, then the compute shader will run `16 * 16 * 16 * (8 * 8 * 1) = 262144` times."
             },
             {
               name = "hasAttribute",
@@ -17783,9 +17041,6 @@ return {
               description = "Returns whether the Shader has a given stage.",
               key = "Shader:hasStage",
               module = "lovr.graphics",
-              related = {
-                "Shader:getType"
-              },
               variants = {
                 {
                   arguments = {
@@ -17803,12 +17058,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Shader:getType"
               }
             }
-          },
-          constructors = {
-            "lovr.graphics.newShader",
-            "Shader:clone"
           }
         },
         {
@@ -17817,6 +17071,9 @@ return {
           description = "Tally objects are able to measure events on the GPU.  Tallies can measure three types of things:\n\n- `time` - measures elapsed GPU time.\n- `pixel` - measures how many pixels were rendered, which can be used for occlusion culling.\n- `shader` - measure how many times shaders were run.\n\nTally objects can be created with up to 4096 slots.  Each slot can hold a single measurement value.  `Pass:tick` is used to begin a measurement, storing the result in one of the slots.  All commands recorded on the Pass will be measured until `Pass:tock` is called with the same tally and slot.\n\nThe measurement value stored in the slots can be copied to a `Buffer` using `Pass:copy`, or they can be read back to Lua using `Pass:read`.",
           key = "Tally",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newTally"
+          },
           methods = {
             {
               name = "getCount",
@@ -17843,9 +17100,6 @@ return {
               description = "Returns the type of the tally, which is the thing it measures between `Pass:tick` and `Pass:tock`.",
               key = "Tally:getType",
               module = "lovr.graphics",
-              related = {
-                "lovr.graphics.newTally"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17857,6 +17111,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.graphics.newTally"
               }
             },
             {
@@ -17878,9 +17135,6 @@ return {
                 }
               }
             }
-          },
-          constructors = {
-            "lovr.graphics.newTally"
           }
         },
         {
@@ -17889,6 +17143,10 @@ return {
           description = "Textures are multidimensional blocks of memory on the GPU, contrasted with `Buffer` objects which are one-dimensional.  Textures are used as the destination for rendering operations, and textures loaded from images provide surface data to `Material` objects.",
           key = "Texture",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newTexture",
+            "Texture:newView"
+          },
           methods = {
             {
               name = "getDimensions",
@@ -17896,11 +17154,6 @@ return {
               description = "Returns the width, height, and depth of the Texture.",
               key = "Texture:getDimensions",
               module = "lovr.graphics",
-              related = {
-                "Texture:getWidth",
-                "Texture:getHeight",
-                "Texture:getLayerCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17922,6 +17175,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:getWidth",
+                "Texture:getHeight",
+                "Texture:getLayerCount"
               }
             },
             {
@@ -17949,11 +17207,6 @@ return {
               description = "Returns the height of the Texture, in pixels.",
               key = "Texture:getHeight",
               module = "lovr.graphics",
-              related = {
-                "Texture:getWidth",
-                "Texture:getLayerCount",
-                "Texture:getDimensions"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17965,6 +17218,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:getWidth",
+                "Texture:getLayerCount",
+                "Texture:getDimensions"
               }
             },
             {
@@ -17973,11 +17231,6 @@ return {
               description = "Returns the layer count of the Texture.  2D textures always have 1 layer and cubemaps always have 6 layers.  3D and array textures have a variable number of layers.",
               key = "Texture:getLayerCount",
               module = "lovr.graphics",
-              related = {
-                "Texture:getWidth",
-                "Texture:getHeight",
-                "Texture:getDimensions"
-              },
               variants = {
                 {
                   arguments = {},
@@ -17989,6 +17242,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:getWidth",
+                "Texture:getHeight",
+                "Texture:getDimensions"
               }
             },
             {
@@ -17997,11 +17255,6 @@ return {
               description = "Returns the number of mipmap levels in the Texture.",
               key = "Texture:getMipmapCount",
               module = "lovr.graphics",
-              related = {
-                "lovr.graphics.newTexture",
-                "Sampler:getMipmapRange",
-                "Pass:mipmap"
-              },
               variants = {
                 {
                   arguments = {},
@@ -18013,6 +17266,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.graphics.newTexture",
+                "Sampler:getMipmapRange",
+                "Pass:mipmap"
               }
             },
             {
@@ -18021,10 +17279,6 @@ return {
               description = "Returns the parent of a Texture view, which is the Texture that it references.  Returns `nil` if the Texture is not a view.",
               key = "Texture:getParent",
               module = "lovr.graphics",
-              related = {
-                "Texture:isView",
-                "Texture:newView"
-              },
               variants = {
                 {
                   arguments = {},
@@ -18036,6 +17290,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:isView",
+                "Texture:newView"
               }
             },
             {
@@ -18044,10 +17302,6 @@ return {
               description = "Returns the number of samples in the texture.  Multiple samples are used for multisample antialiasing when rendering to the texture.  Currently, the sample count is either 1 (not antialiased) or 4 (antialiased).",
               key = "Texture:getSampleCount",
               module = "lovr.graphics",
-              related = {
-                "lovr.graphics.newTexture",
-                "Pass:getSampleCount"
-              },
               variants = {
                 {
                   arguments = {},
@@ -18059,6 +17313,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.graphics.newTexture",
+                "Pass:getSampleCount"
               }
             },
             {
@@ -18086,11 +17344,6 @@ return {
               description = "Returns the width of the Texture, in pixels.",
               key = "Texture:getWidth",
               module = "lovr.graphics",
-              related = {
-                "Texture:getHeight",
-                "Texture:getLayerCount",
-                "Texture:getDimensions"
-              },
               variants = {
                 {
                   arguments = {},
@@ -18102,6 +17355,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:getHeight",
+                "Texture:getLayerCount",
+                "Texture:getDimensions"
               }
             },
             {
@@ -18110,9 +17368,6 @@ return {
               description = "Returns whether a Texture was created with a set of `TextureUsage` flags.  Usage flags are specified when the Texture is created, and restrict what you can do with a Texture object.  By default, only the `sample` usage is enabled.  Applying a smaller set of usage flags helps LÖVR optimize things better.",
               key = "Texture:hasUsage",
               module = "lovr.graphics",
-              related = {
-                "lovr.graphics.newTexture"
-              },
               variants = {
                 {
                   arguments = {
@@ -18130,6 +17385,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.graphics.newTexture"
               }
             },
             {
@@ -18138,10 +17396,6 @@ return {
               description = "Returns whether a Texture is a texture view, created with `Texture:newView`.",
               key = "Texture:isView",
               module = "lovr.graphics",
-              related = {
-                "Texture:getParent",
-                "Texture:newView"
-              },
               variants = {
                 {
                   arguments = {},
@@ -18153,6 +17407,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:getParent",
+                "Texture:newView"
               }
             },
             {
@@ -18161,11 +17419,6 @@ return {
               description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType` from the parent, and it may reference a subset of the parent texture's layers and mipmap levels.\n\nTexture views can be used as render targets in a render pass and they can be bound to Shaders. They can not currently be used for transfer operations.  They are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as\n  an array texture.\n- Rendering to a particular image or mipmap level of a texture.\n- Binding a particular image or mipmap level to a shader.",
               key = "Texture:newView",
               module = "lovr.graphics",
-              related = {
-                "Texture:isView",
-                "Texture:getParent",
-                "lovr.graphics.newTexture"
-              },
               variants = {
                 {
                   arguments = {
@@ -18212,12 +17465,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Texture:isView",
+                "Texture:getParent",
+                "lovr.graphics.newTexture"
               }
             }
-          },
-          constructors = {
-            "lovr.graphics.newTexture",
-            "Texture:newView"
           }
         }
       }
@@ -18228,23 +17482,6 @@ return {
       summary = "Connects to VR hardware.",
       description = "The `lovr.headset` module is where all the magical VR functionality is.  With it, you can access connected VR hardware and get information about the available space the player has.  Note that all units are reported in meters.  Position `(0, 0, 0)` is on the floor in the center of the play area.",
       key = "lovr.headset",
-      sections = {
-        {
-          name = "Headset",
-          tag = "headset",
-          description = "Functions that return information about the active head mounted display (HMD)."
-        },
-        {
-          name = "Input",
-          tag = "input",
-          description = "Functions for accessing input devices, like controllers, hands, trackers, or gamepads."
-        },
-        {
-          name = "Play area",
-          tag = "playArea",
-          description = "Retrieve information about the size and shape of the room the player is in, and provides information about the \"chaperone\", a visual indicator that appears whenever a player is about to run into a wall."
-        }
-      },
       enums = {
         {
           name = "Device",
@@ -18459,6 +17696,23 @@ return {
           }
         }
       },
+      sections = {
+        {
+          name = "Headset",
+          tag = "headset",
+          description = "Functions that return information about the active head mounted display (HMD)."
+        },
+        {
+          name = "Input",
+          tag = "input",
+          description = "Functions for accessing input devices, like controllers, hands, trackers, or gamepads."
+        },
+        {
+          name = "Play area",
+          tag = "playArea",
+          description = "Retrieve information about the size and shape of the room the player is in, and provides information about the \"chaperone\", a visual indicator that appears whenever a player is about to run into a wall."
+        }
+      },
       functions = {
         {
           name = "animate",
@@ -18467,7 +17721,9 @@ return {
           description = "Animates a device model to match its current input state.  The buttons and joysticks on a controller will move as they're pressed/moved and hand models will move to match skeletal input.\n\nThe model should have been created using `lovr.headset.newModel` with the `animated` flag set to `true`.",
           key = "lovr.headset.animate",
           module = "lovr.headset",
-          notes = "Currently this function is only supported for hand models on the Oculus Quest.\n\nIt's possible to use models that weren't created with `lovr.headset.newModel` but they need to be set up carefully to have the same structure as the models provided by the headset SDK.",
+          related = {
+            "lovr.headset.newModel"
+          },
           variants = {
             {
               arguments = {
@@ -18492,9 +17748,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.newModel"
-          }
+          notes = "Currently this function is only supported for hand models on the Oculus Quest.\n\nIt's possible to use models that weren't created with `lovr.headset.newModel` but they need to be set up carefully to have the same structure as the models provided by the headset SDK."
         },
         {
           name = "getAngularVelocity",
@@ -18503,11 +17757,6 @@ return {
           description = "Returns the current angular velocity of a device.",
           key = "lovr.headset.getAngularVelocity",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getVelocity",
-            "lovr.headset.getPosition",
-            "lovr.headset.getOrientation"
-          },
           variants = {
             {
               arguments = {
@@ -18536,6 +17785,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getVelocity",
+            "lovr.headset.getPosition",
+            "lovr.headset.getOrientation"
           }
         },
         {
@@ -18545,7 +17799,10 @@ return {
           description = "Get the current state of an analog axis on a device.  Some axes are multidimensional, for example a 2D touchpad or thumbstick with x/y axes.  For multidimensional axes, this function will return multiple values, one number for each axis.  In these cases, it can be useful to use the `select` function built in to Lua to select a particular axis component.",
           key = "lovr.headset.getAxis",
           module = "lovr.headset",
-          notes = "The axis values will be between 0 and 1 for 1D axes, and between -1 and 1 for each component of a multidimensional axis.\n\nWhen hand tracking is active, pinch strength will be mapped to the `trigger` axis.",
+          related = {
+            "DeviceAxis",
+            "lovr.headset.isDown"
+          },
           variants = {
             {
               arguments = {
@@ -18569,10 +17826,7 @@ return {
               }
             }
           },
-          related = {
-            "DeviceAxis",
-            "lovr.headset.isDown"
-          }
+          notes = "The axis values will be between 0 and 1 for 1D axes, and between -1 and 1 for each component of a multidimensional axis.\n\nWhen hand tracking is active, pinch strength will be mapped to the `trigger` axis."
         },
         {
           name = "getBoundsDepth",
@@ -18581,7 +17835,10 @@ return {
           description = "Returns the depth of the play area, in meters.",
           key = "lovr.headset.getBoundsDepth",
           module = "lovr.headset",
-          notes = "This currently returns 0 on the Quest.",
+          related = {
+            "lovr.headset.getBoundsWidth",
+            "lovr.headset.getBoundsDimensions"
+          },
           variants = {
             {
               arguments = {},
@@ -18594,10 +17851,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getBoundsWidth",
-            "lovr.headset.getBoundsDimensions"
-          }
+          notes = "This currently returns 0 on the Quest."
         },
         {
           name = "getBoundsDimensions",
@@ -18606,7 +17860,11 @@ return {
           description = "Returns the size of the play area, in meters.",
           key = "lovr.headset.getBoundsDimensions",
           module = "lovr.headset",
-          notes = "This currently returns 0 on the Quest.",
+          related = {
+            "lovr.headset.getBoundsWidth",
+            "lovr.headset.getBoundsDepth",
+            "lovr.headset.getBoundsGeometry"
+          },
           variants = {
             {
               arguments = {},
@@ -18624,11 +17882,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getBoundsWidth",
-            "lovr.headset.getBoundsDepth",
-            "lovr.headset.getBoundsGeometry"
-          }
+          notes = "This currently returns 0 on the Quest."
         },
         {
           name = "getBoundsGeometry",
@@ -18637,9 +17891,6 @@ return {
           description = "Returns a list of points representing the boundaries of the play area, or `nil` if the current headset driver does not expose this information.",
           key = "lovr.headset.getBoundsGeometry",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getBoundsDimensions"
-          },
           variants = {
             {
               arguments = {
@@ -18658,6 +17909,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getBoundsDimensions"
           }
         },
         {
@@ -18667,7 +17921,10 @@ return {
           description = "Returns the width of the play area, in meters.",
           key = "lovr.headset.getBoundsWidth",
           module = "lovr.headset",
-          notes = "This currently returns 0 on the Quest.",
+          related = {
+            "lovr.headset.getBoundsDepth",
+            "lovr.headset.getBoundsDimensions"
+          },
           variants = {
             {
               arguments = {},
@@ -18680,10 +17937,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getBoundsDepth",
-            "lovr.headset.getBoundsDimensions"
-          }
+          notes = "This currently returns 0 on the Quest."
         },
         {
           name = "getClipDistance",
@@ -18718,11 +17972,6 @@ return {
           description = "Returns the headset delta time, which is the difference between the current and previous predicted display times.  When the headset is active, this will be the `dt` value passed in to `lovr.update`.",
           key = "lovr.headset.getDeltaTime",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getTime",
-            "lovr.timer.getTime",
-            "lovr.timer.getDelta"
-          },
           variants = {
             {
               arguments = {},
@@ -18734,6 +17983,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getTime",
+            "lovr.timer.getTime",
+            "lovr.timer.getDelta"
           }
         },
         {
@@ -18743,10 +17997,6 @@ return {
           description = "Returns the texture dimensions of the headset display (for one eye), in pixels.",
           key = "lovr.headset.getDisplayDimensions",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getDisplayWidth",
-            "lovr.headset.getDisplayHeight"
-          },
           variants = {
             {
               arguments = {},
@@ -18763,6 +18013,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getDisplayWidth",
+            "lovr.headset.getDisplayHeight"
           }
         },
         {
@@ -18772,9 +18026,6 @@ return {
           description = "Returns a table with all the refresh rates supported by the headset display, in Hz.",
           key = "lovr.headset.getDisplayFrequencies",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.setDisplayFrequency"
-          },
           variants = {
             {
               arguments = {},
@@ -18786,6 +18037,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.setDisplayFrequency"
           }
         },
         {
@@ -18815,10 +18069,6 @@ return {
           description = "Returns the height of the headset display (for one eye), in pixels.",
           key = "lovr.headset.getDisplayHeight",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getDisplayWidth",
-            "lovr.headset.getDisplayDimensions"
-          },
           variants = {
             {
               arguments = {},
@@ -18830,6 +18080,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getDisplayWidth",
+            "lovr.headset.getDisplayDimensions"
           }
         },
         {
@@ -18839,10 +18093,6 @@ return {
           description = "Returns the width of the headset display (for one eye), in pixels.",
           key = "lovr.headset.getDisplayWidth",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getDisplayHeight",
-            "lovr.headset.getDisplayDimensions"
-          },
           variants = {
             {
               arguments = {},
@@ -18854,6 +18104,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getDisplayHeight",
+            "lovr.headset.getDisplayDimensions"
           }
         },
         {
@@ -18950,7 +18204,14 @@ return {
           description = "Returns the current orientation of a device, in angle/axis form.",
           key = "lovr.headset.getOrientation",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.",
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.getPosition",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
+          },
           variants = {
             {
               arguments = {
@@ -18985,14 +18246,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getPose",
-            "lovr.headset.getPosition",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.isTracked",
-            "lovr.headset.getDriver"
-          }
+          notes = "If the device isn't tracked, all zeroes will be returned."
         },
         {
           name = "getOriginType",
@@ -19001,9 +18255,6 @@ return {
           description = "Returns the type of origin used for the tracking volume.  The different types of origins are explained on the `HeadsetOrigin` page.",
           key = "lovr.headset.getOriginType",
           module = "lovr.headset",
-          related = {
-            "HeadsetOrigin"
-          },
           variants = {
             {
               arguments = {},
@@ -19015,6 +18266,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "HeadsetOrigin"
           }
         },
         {
@@ -19023,11 +18277,6 @@ return {
           description = "Returns a `Pass` that renders to the headset display.",
           key = "lovr.headset.getPass",
           module = "lovr.headset",
-          related = {
-            "lovr.graphics.getPass",
-            "lovr.graphics.getWindowPass",
-            "lovr.conf"
-          },
           variants = {
             {
               arguments = {},
@@ -19040,7 +18289,12 @@ return {
               }
             }
           },
-          notes = "The same Pass will be returned until `lovr.headset.submit` is called.\n\nThe first time this function is called during a frame, the views of the Pass will be initialized with the headset view poses and view angles.\n\nThe pass will be cleared to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nThe pass will have a depth buffer.  If `t.headset.stencil` was set to a truthy value in `lovr.conf`, the depth buffer will use the `d32fs8` format, otherwise `d32f` will be used.\n\nIf `t.headset.antialias` was set to a truthy value in `lovr.conf`, the pass will be multisampled."
+          notes = "The same Pass will be returned until `lovr.headset.submit` is called.\n\nThe first time this function is called during a frame, the views of the Pass will be initialized with the headset view poses and view angles.\n\nThe pass will be cleared to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nThe pass will have a depth buffer.  If `t.headset.stencil` was set to a truthy value in `lovr.conf`, the depth buffer will use the `d32fs8` format, otherwise `d32f` will be used.\n\nIf `t.headset.antialias` was set to a truthy value in `lovr.conf`, the pass will be multisampled.",
+          related = {
+            "lovr.graphics.getPass",
+            "lovr.graphics.getWindowPass",
+            "lovr.conf"
+          }
         },
         {
           name = "getPose",
@@ -19049,7 +18303,15 @@ return {
           description = "Returns the current position and orientation of a device.",
           key = "lovr.headset.getPose",
           module = "lovr.headset",
-          notes = "Units are in meters.\n\nIf the device isn't tracked, all zeroes will be returned.",
+          related = {
+            "lovr.headset.getPosition",
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.getSkeleton",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
+          },
           variants = {
             {
               arguments = {
@@ -19099,15 +18361,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getPosition",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getSkeleton",
-            "lovr.headset.isTracked",
-            "lovr.headset.getDriver"
-          }
+          notes = "Units are in meters.\n\nIf the device isn't tracked, all zeroes will be returned."
         },
         {
           name = "getPosition",
@@ -19116,7 +18370,14 @@ return {
           description = "Returns the current position of a device, in meters, relative to the play area.",
           key = "lovr.headset.getPosition",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.",
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
+          },
           variants = {
             {
               arguments = {
@@ -19146,14 +18407,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getPose",
-            "lovr.headset.getOrientation",
-            "lovr.headset.getVelocity",
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.isTracked",
-            "lovr.headset.getDriver"
-          }
+          notes = "If the device isn't tracked, all zeroes will be returned."
         },
         {
           name = "getSkeleton",
@@ -19162,6 +18416,11 @@ return {
           description = "Returns a list of joint transforms tracked by a device.  Currently, only hand devices are able to track joints.",
           key = "lovr.headset.getSkeleton",
           module = "lovr.headset",
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.animate"
+          },
+          notes = "If the Device does not support tracking joints or the transforms are unavailable, `nil` is returned.\n\nThe joint orientation is similar to the graphics coordinate system: -Z is the forwards direction, pointing towards the fingertips.  The +Y direction is \"up\", pointing out of the back of the hand.  The +X direction is to the right, perpendicular to X and Z.\n\nHand joints are returned in the following order:\n\n<table>\n  <thead>\n    <tr>\n      <td colspan=\"2\">Joint</td>\n      <td>Index</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td colspan=\"2\">Palm</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <td colspan=\"2\">Wrist</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Thumb</td>\n      <td>Metacarpal</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Index</td>\n      <td>Metacarpal</td>\n      <td>7</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>9</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Middle</td>\n      <td>Metacarpal</td>\n      <td>12</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>13</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>16</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Ring</td>\n      <td>Metacarpal</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>19</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>20</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Pinky</td>\n      <td>Metacarpal</td>\n      <td>22</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>23</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>26</td>\n    </tr>\n  </tbody> </table>",
           variants = {
             {
               arguments = {
@@ -19201,16 +18460,11 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getPose",
-            "lovr.headset.animate"
-          },
           examples = {
             {
               code = "function lovr.draw(pass)\n  for _, hand in ipairs({ 'left', 'right' }) do\n    for _, joint in ipairs(lovr.headset.getSkeleton(hand) or {}) do\n      pass:points(unpack(joint, 1, 3))\n    end\n  end\nend"
             }
-          },
-          notes = "If the Device does not support tracking joints or the transforms are unavailable, `nil` is returned.\n\nThe joint orientation is similar to the graphics coordinate system: -Z is the forwards direction, pointing towards the fingertips.  The +Y direction is \"up\", pointing out of the back of the hand.  The +X direction is to the right, perpendicular to X and Z.\n\nHand joints are returned in the following order:\n\n<table>\n  <thead>\n    <tr>\n      <td colspan=\"2\">Joint</td>\n      <td>Index</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td colspan=\"2\">Palm</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <td colspan=\"2\">Wrist</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <td rowspan=\"4\">Thumb</td>\n      <td>Metacarpal</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Index</td>\n      <td>Metacarpal</td>\n      <td>7</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>9</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Middle</td>\n      <td>Metacarpal</td>\n      <td>12</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>13</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>16</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Ring</td>\n      <td>Metacarpal</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>19</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>20</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Pinky</td>\n      <td>Metacarpal</td>\n      <td>22</td>\n    </tr>\n    <tr>\n      <td>Proximal</td>\n      <td>23</td>\n    </tr>\n    <tr>\n      <td>Intermediate</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <td>Distal</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <td>Tip</td>\n      <td>26</td>\n    </tr>\n  </tbody> </table>"
+          }
         },
         {
           name = "getTexture",
@@ -19219,7 +18473,10 @@ return {
           description = "Returns a Texture that will be submitted to the headset display.  This will be the render target used in the headset's render pass.  The texture is not guaranteed to be the same every frame, and must be called every frame to get the current texture.",
           key = "lovr.headset.getTexture",
           module = "lovr.headset",
-          notes = "This function may return `nil` if the headset is not being rendered to this frame.",
+          related = {
+            "lovr.headset.getPass",
+            "lovr.mirror"
+          },
           variants = {
             {
               arguments = {},
@@ -19232,10 +18489,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.getPass",
-            "lovr.mirror"
-          }
+          notes = "This function may return `nil` if the headset is not being rendered to this frame."
         },
         {
           name = "getTime",
@@ -19243,10 +18497,6 @@ return {
           description = "Returns the estimated time in the future at which the light from the pixels of the current frame will hit the eyes of the user.\n\nThis can be used as a replacement for `lovr.timer.getTime` for timestamps that are used for rendering to get a smoother result that is synchronized with the display of the headset.",
           key = "lovr.headset.getTime",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getDeltaTime",
-            "lovr.timer.getTime"
-          },
           variants = {
             {
               arguments = {},
@@ -19259,7 +18509,11 @@ return {
               }
             }
           },
-          notes = "This has a different epoch than `lovr.timer.getTime`, so it is not guaranteed to be close to that value."
+          notes = "This has a different epoch than `lovr.timer.getTime`, so it is not guaranteed to be close to that value.",
+          related = {
+            "lovr.headset.getDeltaTime",
+            "lovr.timer.getTime"
+          }
         },
         {
           name = "getVelocity",
@@ -19268,12 +18522,6 @@ return {
           description = "Returns the current linear velocity of a device, in meters per second.",
           key = "lovr.headset.getVelocity",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getAngularVelocity",
-            "lovr.headset.getPose",
-            "lovr.headset.getPosition",
-            "lovr.headset.getOrientation"
-          },
           variants = {
             {
               arguments = {
@@ -19302,6 +18550,12 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.getPose",
+            "lovr.headset.getPosition",
+            "lovr.headset.getOrientation"
           }
         },
         {
@@ -19311,10 +18565,6 @@ return {
           description = "Returns the view angles of one of the headset views.\n\nThese can be used with `Mat4:fov` to create a projection matrix.\n\nIf tracking data is unavailable for the view or the index is invalid, `nil` is returned.",
           key = "lovr.headset.getViewAngles",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getViewCount",
-            "lovr.headset.getViewPose"
-          },
           variants = {
             {
               arguments = {
@@ -19347,6 +18597,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getViewCount",
+            "lovr.headset.getViewPose"
           }
         },
         {
@@ -19356,10 +18610,6 @@ return {
           description = "Returns the number of views used for rendering.  Each view consists of a pose in space and a set of angle values that determine the field of view.\n\nThis is usually 2 for stereo rendering configurations, but it can also be different.  For example, one way of doing foveated rendering uses 2 views for each eye -- one low quality view with a wider field of view, and a high quality view with a narrower field of view.",
           key = "lovr.headset.getViewCount",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getViewPose",
-            "lovr.headset.getViewAngles"
-          },
           variants = {
             {
               arguments = {},
@@ -19371,6 +18621,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getViewPose",
+            "lovr.headset.getViewAngles"
           }
         },
         {
@@ -19380,10 +18634,6 @@ return {
           description = "Returns the pose of one of the headset views.  This info can be used to create view matrices or do other eye-dependent calculations.\n\nIf tracking data is unavailable for the view or the index is invalid, `nil` is returned.",
           key = "lovr.headset.getViewPose",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getViewCount",
-            "lovr.headset.getViewAngles"
-          },
           variants = {
             {
               arguments = {
@@ -19431,6 +18681,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getViewCount",
+            "lovr.headset.getViewAngles"
           }
         },
         {
@@ -19440,7 +18694,13 @@ return {
           description = "Returns whether a button on a device is pressed.",
           key = "lovr.headset.isDown",
           module = "lovr.headset",
-          notes = "When hand tracking is active, pinching will be mapped to the `trigger` button.",
+          related = {
+            "DeviceButton",
+            "lovr.headset.wasPressed",
+            "lovr.headset.wasReleased",
+            "lovr.headset.isTouched",
+            "lovr.headset.getAxis"
+          },
           variants = {
             {
               arguments = {
@@ -19464,13 +18724,7 @@ return {
               }
             }
           },
-          related = {
-            "DeviceButton",
-            "lovr.headset.wasPressed",
-            "lovr.headset.wasReleased",
-            "lovr.headset.isTouched",
-            "lovr.headset.getAxis"
-          }
+          notes = "When hand tracking is active, pinching will be mapped to the `trigger` button."
         },
         {
           name = "isFocused",
@@ -19478,9 +18732,6 @@ return {
           description = "Returns whether LÖVR has VR input focus.  Focus is lost when the VR system menu is shown.  The `lovr.focus` callback can be used to detect when this changes.",
           key = "lovr.headset.isFocused",
           module = "lovr.headset",
-          related = {
-            "lovr.focus"
-          },
           variants = {
             {
               arguments = {},
@@ -19492,6 +18743,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.focus"
           }
         },
         {
@@ -19501,11 +18755,6 @@ return {
           description = "Returns whether a button on a device is currently touched.",
           key = "lovr.headset.isTouched",
           module = "lovr.headset",
-          related = {
-            "DeviceButton",
-            "lovr.headset.isDown",
-            "lovr.headset.getAxis"
-          },
           variants = {
             {
               arguments = {
@@ -19528,6 +18777,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "DeviceButton",
+            "lovr.headset.isDown",
+            "lovr.headset.getAxis"
           }
         },
         {
@@ -19565,6 +18819,10 @@ return {
           description = "Returns a new Model for the specified device.",
           key = "lovr.headset.newModel",
           module = "lovr.headset",
+          related = {
+            "lovr.headset.animate"
+          },
+          notes = "Currently this is only implemented for hand models on the Oculus Quest.",
           variants = {
             {
               arguments = {
@@ -19598,15 +18856,11 @@ return {
               }
             }
           },
-          related = {
-            "lovr.headset.animate"
-          },
           examples = {
             {
               code = "local models = {}\n\nfunction lovr.draw(pass)\n  for i, hand in ipairs(lovr.headset.getHands()) do\n    models[hand] = models[hand] or lovr.headset.newModel(hand)\n\n    if models[hand] then\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)\n      pass:draw(models[hand], x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend"
             }
-          },
-          notes = "Currently this is only implemented for hand models on the Oculus Quest."
+          }
         },
         {
           name = "setClipDistance",
@@ -19680,15 +18934,15 @@ return {
           description = "Submits the current headset texture to the VR display.  This should be called after calling `lovr.graphics.submit` with the headset render pass.  Normally this is taken care of by `lovr.run`.",
           key = "lovr.headset.submit",
           module = "lovr.headset",
-          related = {
-            "lovr.headset.getPass",
-            "lovr.headset.getTexture"
-          },
           variants = {
             {
               arguments = {},
               returns = {}
             }
+          },
+          related = {
+            "lovr.headset.getPass",
+            "lovr.headset.getTexture"
           }
         },
         {
@@ -19743,7 +18997,13 @@ return {
           description = "Returns whether a button on a device was pressed this frame.",
           key = "lovr.headset.wasPressed",
           module = "lovr.headset",
-          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status.",
+          related = {
+            "DeviceButton",
+            "lovr.headset.isDown",
+            "lovr.headset.wasReleased",
+            "lovr.headset.isTouched",
+            "lovr.headset.getAxis"
+          },
           variants = {
             {
               arguments = {
@@ -19767,13 +19027,7 @@ return {
               }
             }
           },
-          related = {
-            "DeviceButton",
-            "lovr.headset.isDown",
-            "lovr.headset.wasReleased",
-            "lovr.headset.isTouched",
-            "lovr.headset.getAxis"
-          }
+          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status."
         },
         {
           name = "wasReleased",
@@ -19782,7 +19036,13 @@ return {
           description = "Returns whether a button on a device was released this frame.",
           key = "lovr.headset.wasReleased",
           module = "lovr.headset",
-          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status.",
+          related = {
+            "DeviceButton",
+            "lovr.headset.isDown",
+            "lovr.headset.wasPressed",
+            "lovr.headset.isTouched",
+            "lovr.headset.getAxis"
+          },
           variants = {
             {
               arguments = {
@@ -19806,13 +19066,7 @@ return {
               }
             }
           },
-          related = {
-            "DeviceButton",
-            "lovr.headset.isDown",
-            "lovr.headset.wasPressed",
-            "lovr.headset.isTouched",
-            "lovr.headset.getAxis"
-          }
+          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status."
         }
       },
       objects = {}
@@ -19823,6 +19077,7 @@ return {
       summary = "Contains useful math helpers.",
       description = "The `lovr.math` module provides math helpers commonly used for 3D applications.",
       key = "lovr.math",
+      enums = {},
       sections = {
         {
           name = "Randomization",
@@ -19840,7 +19095,6 @@ return {
           description = "Other miscellaneous math objects/helpers."
         }
       },
-      enums = {},
       functions = {
         {
           name = "drain",
@@ -19863,9 +19117,6 @@ return {
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
-          related = {
-            "lovr.math.linearToGamma"
-          },
           variants = {
             {
               arguments = {
@@ -19947,6 +19198,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.linearToGamma"
           }
         },
         {
@@ -19976,9 +19230,6 @@ return {
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
           module = "lovr.math",
-          related = {
-            "lovr.math.gammaToLinear"
-          },
           variants = {
             {
               arguments = {
@@ -20060,6 +19311,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.gammaToLinear"
           }
         },
         {
@@ -20069,11 +19323,6 @@ return {
           description = "Creates a temporary 4D matrix.  This function takes the same arguments as `Mat4:set`.",
           key = "lovr.math.mat4",
           module = "lovr.math",
-          related = {
-            "lovr.math.newMat4",
-            "Mat4",
-            "Vectors"
-          },
           variants = {
             {
               description = "Sets the matrix to the identity matrix.",
@@ -20188,6 +19437,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.newMat4",
+            "Mat4",
+            "Vectors"
           }
         },
         {
@@ -20273,11 +19527,6 @@ return {
           description = "Creates a new 4D matrix.  This function takes the same arguments as `Mat4:set`.",
           key = "lovr.math.newMat4",
           module = "lovr.math",
-          related = {
-            "lovr.math.mat4",
-            "Mat4",
-            "Vectors"
-          },
           variants = {
             {
               description = "Sets the matrix to the identity matrix.",
@@ -20392,6 +19641,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.mat4",
+            "Mat4",
+            "Vectors"
           }
         },
         {
@@ -20401,11 +19655,6 @@ return {
           description = "Creates a new quaternion.  This function takes the same arguments as `Quat:set`.",
           key = "lovr.math.newQuat",
           module = "lovr.math",
-          related = {
-            "lovr.math.quat",
-            "Quat",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -20530,6 +19779,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.quat",
+            "Quat",
+            "Vectors"
           }
         },
         {
@@ -20598,11 +19852,6 @@ return {
           description = "Creates a new 2D vector.  This function takes the same arguments as `Vec2:set`.",
           key = "lovr.math.newVec2",
           module = "lovr.math",
-          related = {
-            "lovr.math.vec2",
-            "Vec2",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -20643,6 +19892,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.vec2",
+            "Vec2",
+            "Vectors"
           }
         },
         {
@@ -20652,11 +19906,6 @@ return {
           description = "Creates a new 3D vector.  This function takes the same arguments as `Vec3:set`.",
           key = "lovr.math.newVec3",
           module = "lovr.math",
-          related = {
-            "lovr.math.vec3",
-            "Vec3",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -20719,6 +19968,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.vec3",
+            "Vec3",
+            "Vectors"
           }
         },
         {
@@ -20728,11 +19982,6 @@ return {
           description = "Creates a new 4D vector.  This function takes the same arguments as `Vec4:set`.",
           key = "lovr.math.newVec4",
           module = "lovr.math",
-          related = {
-            "lovr.math.vec4",
-            "Vec4",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -20785,6 +20034,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.vec4",
+            "Vec4",
+            "Vectors"
           }
         },
         {
@@ -20794,9 +20048,6 @@ return {
           description = "Returns a 1D, 2D, 3D, or 4D simplex noise value.  The number will be between 0 and 1.",
           key = "lovr.math.noise",
           module = "lovr.math",
-          related = {
-            "lovr.math.random"
-          },
           variants = {
             {
               arguments = {
@@ -20892,6 +20143,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.random"
           }
         },
         {
@@ -20901,11 +20155,6 @@ return {
           description = "Creates a temporary quaternion.  This function takes the same arguments as `Quat:set`.",
           key = "lovr.math.quat",
           module = "lovr.math",
-          related = {
-            "lovr.math.newQuat",
-            "Quat",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -21030,6 +20279,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.newQuat",
+            "Quat",
+            "Vectors"
           }
         },
         {
@@ -21039,7 +20293,11 @@ return {
           description = "Returns a uniformly distributed pseudo-random number.  This function has improved randomness over Lua's `math.random` and also guarantees that the sequence of random numbers will be the same on all platforms (given the same seed).",
           key = "lovr.math.random",
           module = "lovr.math",
-          notes = "You can set the random seed using `lovr.math.setRandomSeed`.",
+          related = {
+            "lovr.math.randomNormal",
+            "RandomGenerator",
+            "lovr.math.noise"
+          },
           variants = {
             {
               description = "Generate a pseudo-random floating point number in the range `[0,1)`",
@@ -21092,11 +20350,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.math.randomNormal",
-            "RandomGenerator",
-            "lovr.math.noise"
-          }
+          notes = "You can set the random seed using `lovr.math.setRandomSeed`."
         },
         {
           name = "randomNormal",
@@ -21105,10 +20359,6 @@ return {
           description = "Returns a pseudo-random number from a normal distribution (a bell curve).  You can control the center of the bell curve (the mean value) and the overall width (sigma, or standard deviation).",
           key = "lovr.math.randomNormal",
           module = "lovr.math",
-          related = {
-            "lovr.math.random",
-            "RandomGenerator"
-          },
           variants = {
             {
               arguments = {
@@ -21133,6 +20383,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.random",
+            "RandomGenerator"
           }
         },
         {
@@ -21162,11 +20416,6 @@ return {
           description = "Creates a temporary 2D vector.  This function takes the same arguments as `Vec2:set`.",
           key = "lovr.math.vec2",
           module = "lovr.math",
-          related = {
-            "lovr.math.newVec2",
-            "Vec2",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -21207,6 +20456,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.newVec2",
+            "Vec2",
+            "Vectors"
           }
         },
         {
@@ -21216,11 +20470,6 @@ return {
           description = "Creates a temporary 3D vector.  This function takes the same arguments as `Vec3:set`.",
           key = "lovr.math.vec3",
           module = "lovr.math",
-          related = {
-            "lovr.math.newVec3",
-            "Vec3",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -21283,6 +20532,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.newVec3",
+            "Vec3",
+            "Vectors"
           }
         },
         {
@@ -21292,11 +20546,6 @@ return {
           description = "Creates a temporary 4D vector.  This function takes the same arguments as `Vec4:set`.",
           key = "lovr.math.vec4",
           module = "lovr.math",
-          related = {
-            "lovr.math.newVec4",
-            "Vec4",
-            "Vectors"
-          },
           variants = {
             {
               arguments = {
@@ -21349,6 +20598,11 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.math.newVec4",
+            "Vec4",
+            "Vectors"
           }
         }
       },
@@ -21359,6 +20613,10 @@ return {
           description = "A Curve is an object that represents a Bézier curve in three dimensions.  Curves are defined by an arbitrary number of control points (note that the curve only passes through the first and last control point).\n\nOnce a Curve is created with `lovr.math.newCurve`, you can use `Curve:evaluate` to get a point on the curve or `Curve:render` to get a list of all of the points on the curve.  These points can be passed directly to `lovr.graphics.points` or `lovr.graphics.line` to render the curve.\n\nNote that for longer or more complicated curves (like in a drawing application) it can be easier to store the path as several Curve objects.",
           key = "Curve",
           module = "lovr.math",
+          constructors = {
+            "lovr.math.newCurve",
+            "Curve:slice"
+          },
           methods = {
             {
               name = "addPoint",
@@ -21366,12 +20624,6 @@ return {
               description = "Inserts a new control point into the Curve at the specified index.",
               key = "Curve:addPoint",
               module = "lovr.math",
-              related = {
-                "Curve:getPointCount",
-                "Curve:getPoint",
-                "Curve:setPoint",
-                "Curve:removePoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -21400,7 +20652,13 @@ return {
                   returns = {}
                 }
               },
-              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+              notes = "An error will be thrown if the index is less than one or more than the number of control points.",
+              related = {
+                "Curve:getPointCount",
+                "Curve:getPoint",
+                "Curve:setPoint",
+                "Curve:removePoint"
+              }
             },
             {
               name = "evaluate",
@@ -21408,11 +20666,6 @@ return {
               description = "Returns a point on the Curve given a parameter `t` from 0 to 1.  0 will return the first control point, 1 will return the last point, .5 will return a point in the \"middle\" of the Curve, etc.",
               key = "Curve:evaluate",
               module = "lovr.math",
-              related = {
-                "Curve:getTangent",
-                "Curve:render",
-                "Curve:slice"
-              },
               variants = {
                 {
                   arguments = {
@@ -21441,7 +20694,12 @@ return {
                   }
                 }
               },
-              notes = "An error will be thrown if `t` is not between 0 and 1, or if the Curve has less than two points."
+              notes = "An error will be thrown if `t` is not between 0 and 1, or if the Curve has less than two points.",
+              related = {
+                "Curve:getTangent",
+                "Curve:render",
+                "Curve:slice"
+              }
             },
             {
               name = "getPoint",
@@ -21449,12 +20707,6 @@ return {
               description = "Returns a control point of the Curve.",
               key = "Curve:getPoint",
               module = "lovr.math",
-              related = {
-                "Curve:getPointCount",
-                "Curve:setPoint",
-                "Curve:addPoint",
-                "Curve:removePoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -21483,7 +20735,13 @@ return {
                   }
                 }
               },
-              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+              notes = "An error will be thrown if the index is less than one or more than the number of control points.",
+              related = {
+                "Curve:getPointCount",
+                "Curve:setPoint",
+                "Curve:addPoint",
+                "Curve:removePoint"
+              }
             },
             {
               name = "getPointCount",
@@ -21491,12 +20749,6 @@ return {
               description = "Returns the number of control points in the Curve.",
               key = "Curve:getPointCount",
               module = "lovr.math",
-              related = {
-                "Curve:getPoint",
-                "Curve:setPoint",
-                "Curve:addPoint",
-                "Curve:removePoint"
-              },
               variants = {
                 {
                   arguments = {},
@@ -21508,6 +20760,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Curve:getPoint",
+                "Curve:setPoint",
+                "Curve:addPoint",
+                "Curve:removePoint"
               }
             },
             {
@@ -21516,11 +20774,6 @@ return {
               description = "Returns a direction vector for the Curve given a parameter `t` from 0 to 1.  0 will return the direction at the first control point, 1 will return the direction at the last point, .5 will return the direction at the \"middle\" of the Curve, etc.",
               key = "Curve:getTangent",
               module = "lovr.math",
-              related = {
-                "Curve:evaluate",
-                "Curve:render",
-                "Curve:slice"
-              },
               variants = {
                 {
                   arguments = {
@@ -21549,7 +20802,12 @@ return {
                   }
                 }
               },
-              notes = "The direction vector returned by this function will have a length of one."
+              notes = "The direction vector returned by this function will have a length of one.",
+              related = {
+                "Curve:evaluate",
+                "Curve:render",
+                "Curve:slice"
+              }
             },
             {
               name = "removePoint",
@@ -21557,12 +20815,6 @@ return {
               description = "Removes a control point from the Curve.",
               key = "Curve:removePoint",
               module = "lovr.math",
-              related = {
-                "Curve:getPointCount",
-                "Curve:getPoint",
-                "Curve:setPoint",
-                "Curve:addPoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -21575,7 +20827,13 @@ return {
                   returns = {}
                 }
               },
-              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+              notes = "An error will be thrown if the index is less than one or more than the number of control points.",
+              related = {
+                "Curve:getPointCount",
+                "Curve:getPoint",
+                "Curve:setPoint",
+                "Curve:addPoint"
+              }
             },
             {
               name = "render",
@@ -21583,13 +20841,6 @@ return {
               description = "Returns a list of points on the Curve.  The number of points can be specified to get a more or less detailed representation, and it is also possible to render a subsection of the Curve.",
               key = "Curve:render",
               module = "lovr.math",
-              related = {
-                "Curve:evaluate",
-                "Curve:slice",
-                "Pass:points",
-                "Pass:line",
-                "Pass:mesh"
-              },
               variants = {
                 {
                   arguments = {
@@ -21621,7 +20872,14 @@ return {
                   }
                 }
               },
-              notes = "This function will always return 2 points if the Curve is a line with only 2 control points."
+              notes = "This function will always return 2 points if the Curve is a line with only 2 control points.",
+              related = {
+                "Curve:evaluate",
+                "Curve:slice",
+                "Pass:points",
+                "Pass:line",
+                "Pass:mesh"
+              }
             },
             {
               name = "setPoint",
@@ -21629,12 +20887,6 @@ return {
               description = "Changes the position of a control point on the Curve.",
               key = "Curve:setPoint",
               module = "lovr.math",
-              related = {
-                "Curve:getPointCount",
-                "Curve:getPoint",
-                "Curve:addPoint",
-                "Curve:removePoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -21662,7 +20914,13 @@ return {
                   returns = {}
                 }
               },
-              notes = "An error will be thrown if the index is less than one or more than the number of control points."
+              notes = "An error will be thrown if the index is less than one or more than the number of control points.",
+              related = {
+                "Curve:getPointCount",
+                "Curve:getPoint",
+                "Curve:addPoint",
+                "Curve:removePoint"
+              }
             },
             {
               name = "slice",
@@ -21670,10 +20928,6 @@ return {
               description = "Returns a new Curve created by slicing the Curve at the specified start and end points.",
               key = "Curve:slice",
               module = "lovr.math",
-              related = {
-                "Curve:evaluate",
-                "Curve:render"
-              },
               variants = {
                 {
                   arguments = {
@@ -21697,12 +20951,12 @@ return {
                   }
                 }
               },
-              notes = "The new Curve will have the same number of control points as the existing curve.\n\nAn error will be thrown if t1 or t2 are not between 0 and 1, or if the Curve has less than two points."
+              notes = "The new Curve will have the same number of control points as the existing curve.\n\nAn error will be thrown if t1 or t2 are not between 0 and 1, or if the Curve has less than two points.",
+              related = {
+                "Curve:evaluate",
+                "Curve:render"
+              }
             }
-          },
-          constructors = {
-            "lovr.math.newCurve",
-            "Curve:slice"
           }
         },
         {
@@ -21711,6 +20965,15 @@ return {
           description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.",
           key = "Mat4",
           module = "lovr.math",
+          related = {
+            "Vec3",
+            "Quat",
+            "Vectors"
+          },
+          constructors = {
+            "lovr.math.newMat4",
+            "lovr.math.mat4"
+          },
           methods = {
             {
               name = "equals",
@@ -21718,12 +20981,6 @@ return {
               description = "Returns whether a matrix is approximately equal to another matrix.",
               key = "Mat4:equals",
               module = "lovr.math",
-              related = {
-                "Vec2:equals",
-                "Vec3:equals",
-                "Vec4:equals",
-                "Quat:equals"
-              },
               variants = {
                 {
                   arguments = {
@@ -21741,6 +20998,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:equals",
+                "Vec3:equals",
+                "Vec4:equals",
+                "Quat:equals"
               }
             },
             {
@@ -21749,11 +21012,6 @@ return {
               description = "Sets a projection matrix using raw projection angles and clipping planes.\n\nThis can be used for asymmetric or oblique projections.",
               key = "Mat4:fov",
               module = "lovr.math",
-              related = {
-                "Mat4:orthographic",
-                "Mat4:perspective",
-                "Pass:setProjection"
-              },
               variants = {
                 {
                   arguments = {
@@ -21796,6 +21054,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:orthographic",
+                "Mat4:perspective",
+                "Pass:setProjection"
               }
             },
             {
@@ -21804,9 +21067,6 @@ return {
               description = "Resets the matrix to the identity, effectively setting its translation to zero, its scale to 1, and clearing any rotation.",
               key = "Mat4:identity",
               module = "lovr.math",
-              related = {
-                "Pass:origin"
-              },
               variants = {
                 {
                   arguments = {},
@@ -21818,6 +21078,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Pass:origin"
               }
             },
             {
@@ -21845,10 +21108,6 @@ return {
               description = "Sets a view transform matrix that moves and orients camera to look at a target point.\n\nThis is useful for changing camera position and orientation. The resulting Mat4 matrix can be passed to `lovr.graphics.transform()` directly (without inverting) before rendering the scene.\n\nThe lookAt() function produces same result as target() after matrix inversion.",
               key = "Mat4:lookAt",
               module = "lovr.math",
-              related = {
-                "Mat4:target",
-                "Quat:direction"
-              },
               variants = {
                 {
                   arguments = {
@@ -21877,6 +21136,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:target",
+                "Quat:direction"
               }
             },
             {
@@ -21885,11 +21148,6 @@ return {
               description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
               key = "Mat4:mul",
               module = "lovr.math",
-              related = {
-                "Mat4:translate",
-                "Mat4:rotate",
-                "Mat4:scale"
-              },
               variants = {
                 {
                   arguments = {
@@ -21940,7 +21198,12 @@ return {
                   }
                 }
               },
-              notes = "When multiplying by a vec4, the vector is treated as either a point if its w component is 1, or a direction vector if the w is 0 (the matrix translation won't be applied)."
+              notes = "When multiplying by a vec4, the vector is treated as either a point if its w component is 1, or a direction vector if the w is 0 (the matrix translation won't be applied).",
+              related = {
+                "Mat4:translate",
+                "Mat4:rotate",
+                "Mat4:scale"
+              }
             },
             {
               name = "orthographic",
@@ -21948,11 +21211,6 @@ return {
               description = "Sets this matrix to represent an orthographic projection, useful for 2D/isometric rendering.\n\nThis can be used with `Pass:setProjection`, or it can be sent to a `Shader` for use in GLSL.",
               key = "Mat4:orthographic",
               module = "lovr.math",
-              related = {
-                "Mat4:perspective",
-                "Mat4:fov",
-                "Pass:setProjection"
-              },
               variants = {
                 {
                   arguments = {
@@ -22026,6 +21284,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:perspective",
+                "Mat4:fov",
+                "Pass:setProjection"
               }
             },
             {
@@ -22034,11 +21297,6 @@ return {
               description = "Sets this matrix to represent a perspective projection.\n\nThis can be used with `Pass:setProjection`, or it can be sent to a `Shader` for use in GLSL.",
               key = "Mat4:perspective",
               module = "lovr.math",
-              related = {
-                "Mat4:orthographic",
-                "Mat4:fov",
-                "Pass:setProjection"
-              },
               variants = {
                 {
                   arguments = {
@@ -22071,6 +21329,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:orthographic",
+                "Mat4:fov",
+                "Pass:setProjection"
               }
             },
             {
@@ -22079,11 +21342,6 @@ return {
               description = "Rotates the matrix using a quaternion or an angle/axis rotation.",
               key = "Mat4:rotate",
               module = "lovr.math",
-              related = {
-                "Mat4:translate",
-                "Mat4:scale",
-                "Mat4:identity"
-              },
               variants = {
                 {
                   arguments = {
@@ -22135,6 +21393,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:translate",
+                "Mat4:scale",
+                "Mat4:identity"
               }
             },
             {
@@ -22143,11 +21406,6 @@ return {
               description = "Scales the matrix.",
               key = "Mat4:scale",
               module = "lovr.math",
-              related = {
-                "Mat4:translate",
-                "Mat4:rotate",
-                "Mat4:identity"
-              },
               variants = {
                 {
                   arguments = {
@@ -22193,6 +21451,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:translate",
+                "Mat4:rotate",
+                "Mat4:identity"
               }
             },
             {
@@ -22201,9 +21464,6 @@ return {
               description = "Sets the components of the matrix from separate position, rotation, and scale arguments or an existing matrix.",
               key = "Mat4:set",
               module = "lovr.math",
-              related = {
-                "Mat4:unpack"
-              },
               variants = {
                 {
                   description = "Resets the matrix to the identity matrix.",
@@ -22318,6 +21578,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:unpack"
               }
             },
             {
@@ -22326,10 +21589,6 @@ return {
               description = "Sets a model transform matrix that moves to `from` and orients model towards `to` point.\n\nThis is used when rendered model should always point towards a point of interest. The resulting Mat4 object can be used as model pose.\n\nThe target() function produces same result as lookAt() after matrix inversion.",
               key = "Mat4:target",
               module = "lovr.math",
-              related = {
-                "Mat4:lookAt",
-                "Quat:direction"
-              },
               variants = {
                 {
                   arguments = {
@@ -22358,6 +21617,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:lookAt",
+                "Quat:direction"
               }
             },
             {
@@ -22366,11 +21629,6 @@ return {
               description = "Translates the matrix.",
               key = "Mat4:translate",
               module = "lovr.math",
-              related = {
-                "Mat4:rotate",
-                "Mat4:scale",
-                "Mat4:identity"
-              },
               variants = {
                 {
                   arguments = {
@@ -22414,6 +21672,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:rotate",
+                "Mat4:scale",
+                "Mat4:identity"
               }
             },
             {
@@ -22441,9 +21704,6 @@ return {
               description = "Returns the components of matrix, either as 10 separated numbers representing the position, scale, and rotation, or as 16 raw numbers representing the individual components of the matrix in column-major order.",
               key = "Mat4:unpack",
               module = "lovr.math",
-              related = {
-                "Mat4:set"
-              },
               variants = {
                 {
                   arguments = {
@@ -22461,17 +21721,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:set"
               }
             }
-          },
-          constructors = {
-            "lovr.math.newMat4",
-            "lovr.math.mat4"
-          },
-          related = {
-            "Vec3",
-            "Quat",
-            "Vectors"
           }
         },
         {
@@ -22480,6 +21734,15 @@ return {
           description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.",
           key = "Quat",
           module = "lovr.math",
+          related = {
+            "Vec3",
+            "Mat4",
+            "Vectors"
+          },
+          constructors = {
+            "lovr.math.newQuat",
+            "lovr.math.quat"
+          },
           methods = {
             {
               name = "conjugate",
@@ -22506,9 +21769,6 @@ return {
               description = "Creates a new temporary vec3 facing the forward direction, rotates it by this quaternion, and returns the vector.",
               key = "Quat:direction",
               module = "lovr.math",
-              related = {
-                "Mat4:lookAt"
-              },
               variants = {
                 {
                   arguments = {},
@@ -22520,6 +21780,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Mat4:lookAt"
               }
             },
             {
@@ -22528,12 +21791,6 @@ return {
               description = "Returns whether a quaternion is approximately equal to another quaternion.",
               key = "Quat:equals",
               module = "lovr.math",
-              related = {
-                "Vec2:equals",
-                "Vec3:equals",
-                "Vec4:equals",
-                "Mat4:equals"
-              },
               variants = {
                 {
                   arguments = {
@@ -22551,6 +21808,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:equals",
+                "Vec3:equals",
+                "Vec4:equals",
+                "Mat4:equals"
               }
             },
             {
@@ -22559,9 +21822,6 @@ return {
               description = "Returns the length of the quaternion.",
               key = "Quat:length",
               module = "lovr.math",
-              related = {
-                "Quat:normalize"
-              },
               variants = {
                 {
                   arguments = {},
@@ -22573,6 +21833,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Quat:normalize"
               }
             },
             {
@@ -22622,9 +21885,6 @@ return {
               description = "Adjusts the values in the quaternion so that its length becomes 1.",
               key = "Quat:normalize",
               module = "lovr.math",
-              related = {
-                "Quat:length"
-              },
               variants = {
                 {
                   arguments = {},
@@ -22637,7 +21897,10 @@ return {
                   }
                 }
               },
-              notes = "A common source of bugs with quaternions is to forget to normalize them after performing a series of operations on them.  Try normalizing a quaternion if some of the calculations aren't working quite right!"
+              notes = "A common source of bugs with quaternions is to forget to normalize them after performing a series of operations on them.  Try normalizing a quaternion if some of the calculations aren't working quite right!",
+              related = {
+                "Quat:length"
+              }
             },
             {
               name = "set",
@@ -22645,9 +21908,6 @@ return {
               description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
               key = "Quat:set",
               module = "lovr.math",
-              related = {
-                "Quat:unpack"
-              },
               variants = {
                 {
                   arguments = {
@@ -22772,6 +22032,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Quat:unpack"
               }
             },
             {
@@ -22780,9 +22043,6 @@ return {
               description = "Performs a spherical linear interpolation between this quaternion and another one, which can be used for smoothly animating between two rotations.\n\nThe amount of interpolation is controlled by a parameter `t`.  A `t` value of zero leaves the original quaternion unchanged, whereas a `t` of one sets the original quaternion exactly equal to the target.  A value between `0` and `1` returns a rotation between the two based on the value.",
               key = "Quat:slerp",
               module = "lovr.math",
-              related = {
-                "Vec3:lerp"
-              },
               variants = {
                 {
                   arguments = {
@@ -22805,6 +22065,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:lerp"
               }
             },
             {
@@ -22813,9 +22076,6 @@ return {
               description = "Returns the components of the quaternion as numbers, either in an angle/axis representation or as raw quaternion values.",
               key = "Quat:unpack",
               module = "lovr.math",
-              related = {
-                "Quat:set"
-              },
               variants = {
                 {
                   arguments = {
@@ -22849,17 +22109,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Quat:set"
               }
             }
-          },
-          constructors = {
-            "lovr.math.newQuat",
-            "lovr.math.quat"
-          },
-          related = {
-            "Vec3",
-            "Mat4",
-            "Vectors"
           }
         },
         {
@@ -22875,9 +22129,6 @@ return {
               description = "Returns the seed used to initialize the RandomGenerator.",
               key = "RandomGenerator:getSeed",
               module = "lovr.math",
-              related = {
-                "lovr.math.newRandomGenerator"
-              },
               variants = {
                 {
                   arguments = {},
@@ -22895,7 +22146,10 @@ return {
                   }
                 }
               },
-              notes = "Since the seed is a 64 bit integer, each 32 bits of the seed are returned separately to avoid precision issues."
+              notes = "Since the seed is a 64 bit integer, each 32 bits of the seed are returned separately to avoid precision issues.",
+              related = {
+                "lovr.math.newRandomGenerator"
+              }
             },
             {
               name = "getState",
@@ -22903,7 +22157,6 @@ return {
               description = "Returns the current state of the RandomGenerator.  This can be used with `RandomGenerator:setState` to reliably restore a previous state of the generator.",
               key = "RandomGenerator:getState",
               module = "lovr.math",
-              notes = "The seed represents the starting state of the RandomGenerator, whereas the state represents the current state of the generator.",
               variants = {
                 {
                   arguments = {},
@@ -22915,7 +22168,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "The seed represents the starting state of the RandomGenerator, whereas the state represents the current state of the generator."
             },
             {
               name = "random",
@@ -22923,10 +22177,6 @@ return {
               description = "Returns the next uniformly distributed pseudo-random number from the RandomGenerator's sequence.",
               key = "RandomGenerator:random",
               module = "lovr.math",
-              related = {
-                "lovr.math.random",
-                "RandomGenerator:randomNormal"
-              },
               variants = {
                 {
                   description = "Generate a pseudo-random floating point number in the range `[0,1)`",
@@ -22978,6 +22228,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.math.random",
+                "RandomGenerator:randomNormal"
               }
             },
             {
@@ -22986,10 +22240,6 @@ return {
               description = "Returns a pseudo-random number from a normal distribution (a bell curve).  You can control the center of the bell curve (the mean value) and the overall width (sigma, or standard deviation).",
               key = "RandomGenerator:randomNormal",
               module = "lovr.math",
-              related = {
-                "lovr.math.randomNormal",
-                "RandomGenerator:random"
-              },
               variants = {
                 {
                   arguments = {
@@ -23014,6 +22264,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.math.randomNormal",
+                "RandomGenerator:random"
               }
             },
             {
@@ -23022,7 +22276,6 @@ return {
               description = "Seed the RandomGenerator with a new seed.  Each seed will cause the RandomGenerator to produce a unique sequence of random numbers.",
               key = "RandomGenerator:setSeed",
               module = "lovr.math",
-              notes = "For precise 64 bit seeds, you should specify the lower and upper 32 bits of the seed separately. Otherwise, seeds larger than 2^53 will start to lose precision.",
               variants = {
                 {
                   arguments = {
@@ -23049,7 +22302,8 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "For precise 64 bit seeds, you should specify the lower and upper 32 bits of the seed separately. Otherwise, seeds larger than 2^53 will start to lose precision."
             },
             {
               name = "setState",
@@ -23057,7 +22311,6 @@ return {
               description = "Sets the state of the RandomGenerator, as previously obtained using `RandomGenerator:getState`. This can be used to reliably restore a previous state of the generator.",
               key = "RandomGenerator:setState",
               module = "lovr.math",
-              notes = "The seed represents the starting state of the RandomGenerator, whereas the state represents the current state of the generator.",
               variants = {
                 {
                   arguments = {
@@ -23069,7 +22322,8 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "The seed represents the starting state of the RandomGenerator, whereas the state represents the current state of the generator."
             }
           },
           constructors = {
@@ -23082,6 +22336,15 @@ return {
           description = "A vector object that holds two numbers.",
           key = "Vec2",
           module = "lovr.math",
+          related = {
+            "Vec3",
+            "Vec4",
+            "Vectors"
+          },
+          constructors = {
+            "lovr.math.newVec2",
+            "lovr.math.vec2"
+          },
           methods = {
             {
               name = "add",
@@ -23089,11 +22352,6 @@ return {
               description = "Adds a vector or a number to the vector.",
               key = "Vec2:add",
               module = "lovr.math",
-              related = {
-                "Vec2:sub",
-                "Vec2:mul",
-                "Vec2:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -23133,6 +22391,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:sub",
+                "Vec2:mul",
+                "Vec2:div"
               }
             },
             {
@@ -23141,10 +22404,6 @@ return {
               description = "Returns the angle between vectors.",
               key = "Vec2:angle",
               module = "lovr.math",
-              related = {
-                "Vec2:distance",
-                "Vec2:length"
-              },
               variants = {
                 {
                   arguments = {
@@ -23184,7 +22443,11 @@ return {
                   }
                 }
               },
-              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`."
+              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`.",
+              related = {
+                "Vec2:distance",
+                "Vec2:length"
+              }
             },
             {
               name = "distance",
@@ -23192,10 +22455,6 @@ return {
               description = "Returns the distance to another vector.",
               key = "Vec2:distance",
               module = "lovr.math",
-              related = {
-                "Vec2:angle",
-                "Vec2:length"
-              },
               variants = {
                 {
                   arguments = {
@@ -23234,6 +22493,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:angle",
+                "Vec2:length"
               }
             },
             {
@@ -23242,11 +22505,6 @@ return {
               description = "Divides the vector by a vector or a number.",
               key = "Vec2:div",
               module = "lovr.math",
-              related = {
-                "Vec2:add",
-                "Vec2:sub",
-                "Vec2:mul"
-              },
               variants = {
                 {
                   arguments = {
@@ -23286,6 +22544,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:add",
+                "Vec2:sub",
+                "Vec2:mul"
               }
             },
             {
@@ -23294,7 +22557,6 @@ return {
               description = "Returns the dot product between this vector and another one.",
               key = "Vec2:dot",
               module = "lovr.math",
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y\n\nThe vectors are not normalized before computing the dot product.",
               variants = {
                 {
                   arguments = {
@@ -23333,7 +22595,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y\n\nThe vectors are not normalized before computing the dot product."
             },
             {
               name = "equals",
@@ -23341,12 +22604,6 @@ return {
               description = "Returns whether a vector is approximately equal to another vector.",
               key = "Vec2:equals",
               module = "lovr.math",
-              related = {
-                "Vec3:equals",
-                "Vec4:equals",
-                "Quat:equals",
-                "Mat4:equals"
-              },
               variants = {
                 {
                   arguments = {
@@ -23386,7 +22643,13 @@ return {
                   }
                 }
               },
-              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`."
+              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`.",
+              related = {
+                "Vec3:equals",
+                "Vec4:equals",
+                "Quat:equals",
+                "Mat4:equals"
+              }
             },
             {
               name = "length",
@@ -23394,10 +22657,6 @@ return {
               description = "Returns the length of the vector.",
               key = "Vec2:length",
               module = "lovr.math",
-              related = {
-                "Vec2:normalize",
-                "Vec2:distance"
-              },
               variants = {
                 {
                   arguments = {},
@@ -23410,7 +22669,11 @@ return {
                   }
                 }
               },
-              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y)"
+              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y)",
+              related = {
+                "Vec2:normalize",
+                "Vec2:distance"
+              }
             },
             {
               name = "lerp",
@@ -23418,9 +22681,6 @@ return {
               description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
               key = "Vec2:lerp",
               module = "lovr.math",
-              related = {
-                "Quat:slerp"
-              },
               variants = {
                 {
                   arguments = {
@@ -23469,6 +22729,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Quat:slerp"
               }
             },
             {
@@ -23477,11 +22740,6 @@ return {
               description = "Multiplies the vector by a vector or a number.",
               key = "Vec2:mul",
               module = "lovr.math",
-              related = {
-                "Vec2:add",
-                "Vec2:sub",
-                "Vec2:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -23521,6 +22779,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:add",
+                "Vec2:sub",
+                "Vec2:div"
               }
             },
             {
@@ -23529,9 +22792,6 @@ return {
               description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
               key = "Vec2:normalize",
               module = "lovr.math",
-              related = {
-                "Vec2:length"
-              },
               variants = {
                 {
                   arguments = {},
@@ -23543,6 +22803,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:length"
               }
             },
             {
@@ -23551,9 +22814,6 @@ return {
               description = "Sets the components of the vector, either from numbers or an existing vector.",
               key = "Vec2:set",
               module = "lovr.math",
-              related = {
-                "Vec2:unpack"
-              },
               variants = {
                 {
                   arguments = {
@@ -23594,6 +22854,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:unpack"
               }
             },
             {
@@ -23602,11 +22865,6 @@ return {
               description = "Subtracts a vector or a number from the vector.",
               key = "Vec2:sub",
               module = "lovr.math",
-              related = {
-                "Vec2:add",
-                "Vec2:mul",
-                "Vec2:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -23646,6 +22904,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:add",
+                "Vec2:mul",
+                "Vec2:div"
               }
             },
             {
@@ -23654,9 +22917,6 @@ return {
               description = "Returns the 2 components of the vector as numbers.",
               key = "Vec2:unpack",
               module = "lovr.math",
-              related = {
-                "Vec2:set"
-              },
               variants = {
                 {
                   arguments = {},
@@ -23673,17 +22933,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec2:set"
               }
             }
-          },
-          constructors = {
-            "lovr.math.newVec2",
-            "lovr.math.vec2"
-          },
-          related = {
-            "Vec3",
-            "Vec4",
-            "Vectors"
           }
         },
         {
@@ -23692,6 +22946,15 @@ return {
           description = "A vector object that holds three numbers.",
           key = "Vec3",
           module = "lovr.math",
+          related = {
+            "Vec2",
+            "Vec4",
+            "Vectors"
+          },
+          constructors = {
+            "lovr.math.newVec3",
+            "lovr.math.vec3"
+          },
           methods = {
             {
               name = "add",
@@ -23699,11 +22962,6 @@ return {
               description = "Adds a vector or a number to the vector.",
               key = "Vec3:add",
               module = "lovr.math",
-              related = {
-                "Vec3:sub",
-                "Vec3:mul",
-                "Vec3:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -23749,6 +23007,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:sub",
+                "Vec3:mul",
+                "Vec3:div"
               }
             },
             {
@@ -23757,10 +23020,6 @@ return {
               description = "Returns the angle between vectors.",
               key = "Vec3:angle",
               module = "lovr.math",
-              related = {
-                "Vec3:distance",
-                "Vec3:length"
-              },
               variants = {
                 {
                   arguments = {
@@ -23805,7 +23064,11 @@ return {
                   }
                 }
               },
-              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`."
+              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`.",
+              related = {
+                "Vec3:distance",
+                "Vec3:length"
+              }
             },
             {
               name = "cross",
@@ -23813,9 +23076,6 @@ return {
               description = "Sets this vector to be equal to the cross product between this vector and another one.  The new `v` will be perpendicular to both the old `v` and `u`.",
               key = "Vec3:cross",
               module = "lovr.math",
-              related = {
-                "Vec3:dot"
-              },
               variants = {
                 {
                   arguments = {
@@ -23860,7 +23120,10 @@ return {
                   }
                 }
               },
-              notes = "The vectors are not normalized before or after computing the cross product."
+              notes = "The vectors are not normalized before or after computing the cross product.",
+              related = {
+                "Vec3:dot"
+              }
             },
             {
               name = "distance",
@@ -23868,10 +23131,6 @@ return {
               description = "Returns the distance to another vector.",
               key = "Vec3:distance",
               module = "lovr.math",
-              related = {
-                "Vec3:angle",
-                "Vec3:length"
-              },
               variants = {
                 {
                   arguments = {
@@ -23915,6 +23174,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:angle",
+                "Vec3:length"
               }
             },
             {
@@ -23923,11 +23186,6 @@ return {
               description = "Divides the vector by a vector or a number.",
               key = "Vec3:div",
               module = "lovr.math",
-              related = {
-                "Vec3:add",
-                "Vec3:sub",
-                "Vec3:mul"
-              },
               variants = {
                 {
                   arguments = {
@@ -23973,6 +23231,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:add",
+                "Vec3:sub",
+                "Vec3:mul"
               }
             },
             {
@@ -23981,9 +23244,6 @@ return {
               description = "Returns the dot product between this vector and another one.",
               key = "Vec3:dot",
               module = "lovr.math",
-              related = {
-                "Vec3:cross"
-              },
               variants = {
                 {
                   arguments = {
@@ -24028,7 +23288,10 @@ return {
                   }
                 }
               },
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z\n\nThe vectors are not normalized before computing the dot product."
+              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z\n\nThe vectors are not normalized before computing the dot product.",
+              related = {
+                "Vec3:cross"
+              }
             },
             {
               name = "equals",
@@ -24036,12 +23299,6 @@ return {
               description = "Returns whether a vector is approximately equal to another vector.",
               key = "Vec3:equals",
               module = "lovr.math",
-              related = {
-                "Vec2:equals",
-                "Vec4:equals",
-                "Quat:equals",
-                "Mat4:equals"
-              },
               variants = {
                 {
                   arguments = {
@@ -24086,7 +23343,13 @@ return {
                   }
                 }
               },
-              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`."
+              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`.",
+              related = {
+                "Vec2:equals",
+                "Vec4:equals",
+                "Quat:equals",
+                "Mat4:equals"
+              }
             },
             {
               name = "length",
@@ -24094,10 +23357,6 @@ return {
               description = "Returns the length of the vector.",
               key = "Vec3:length",
               module = "lovr.math",
-              related = {
-                "Vec3:normalize",
-                "Vec3:distance"
-              },
               variants = {
                 {
                   arguments = {},
@@ -24110,7 +23369,11 @@ return {
                   }
                 }
               },
-              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)"
+              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)",
+              related = {
+                "Vec3:normalize",
+                "Vec3:distance"
+              }
             },
             {
               name = "lerp",
@@ -24118,9 +23381,6 @@ return {
               description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
               key = "Vec3:lerp",
               module = "lovr.math",
-              related = {
-                "Quat:slerp"
-              },
               variants = {
                 {
                   arguments = {
@@ -24174,6 +23434,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Quat:slerp"
               }
             },
             {
@@ -24182,11 +23445,6 @@ return {
               description = "Multiplies the vector by a vector or a number.",
               key = "Vec3:mul",
               module = "lovr.math",
-              related = {
-                "Vec3:add",
-                "Vec3:sub",
-                "Vec3:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -24232,6 +23490,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:add",
+                "Vec3:sub",
+                "Vec3:div"
               }
             },
             {
@@ -24240,9 +23503,6 @@ return {
               description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
               key = "Vec3:normalize",
               module = "lovr.math",
-              related = {
-                "Vec3:length"
-              },
               variants = {
                 {
                   arguments = {},
@@ -24254,6 +23514,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:length"
               }
             },
             {
@@ -24262,9 +23525,6 @@ return {
               description = "Sets the components of the vector, either from numbers or an existing vector.",
               key = "Vec3:set",
               module = "lovr.math",
-              related = {
-                "Vec3:unpack"
-              },
               variants = {
                 {
                   arguments = {
@@ -24327,6 +23587,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:unpack"
               }
             },
             {
@@ -24335,11 +23598,6 @@ return {
               description = "Subtracts a vector or a number from the vector.",
               key = "Vec3:sub",
               module = "lovr.math",
-              related = {
-                "Vec3:add",
-                "Vec3:mul",
-                "Vec3:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -24385,6 +23643,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:add",
+                "Vec3:mul",
+                "Vec3:div"
               }
             },
             {
@@ -24393,9 +23656,6 @@ return {
               description = "Returns the 3 components of the vector as numbers.",
               key = "Vec3:unpack",
               module = "lovr.math",
-              related = {
-                "Vec3:set"
-              },
               variants = {
                 {
                   arguments = {},
@@ -24417,17 +23677,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec3:set"
               }
             }
-          },
-          constructors = {
-            "lovr.math.newVec3",
-            "lovr.math.vec3"
-          },
-          related = {
-            "Vec2",
-            "Vec4",
-            "Vectors"
           }
         },
         {
@@ -24436,6 +23690,15 @@ return {
           description = "A vector object that holds four numbers.",
           key = "Vec4",
           module = "lovr.math",
+          related = {
+            "Vec2",
+            "Vec3",
+            "Vectors"
+          },
+          constructors = {
+            "lovr.math.newVec4",
+            "lovr.math.vec4"
+          },
           methods = {
             {
               name = "add",
@@ -24443,11 +23706,6 @@ return {
               description = "Adds a vector or a number to the vector.",
               key = "Vec4:add",
               module = "lovr.math",
-              related = {
-                "Vec4:sub",
-                "Vec4:mul",
-                "Vec4:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -24499,6 +23757,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:sub",
+                "Vec4:mul",
+                "Vec4:div"
               }
             },
             {
@@ -24507,10 +23770,6 @@ return {
               description = "Returns the angle between vectors.",
               key = "Vec4:angle",
               module = "lovr.math",
-              related = {
-                "Vec4:distance",
-                "Vec4:length"
-              },
               variants = {
                 {
                   arguments = {
@@ -24560,7 +23819,11 @@ return {
                   }
                 }
               },
-              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`."
+              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`.",
+              related = {
+                "Vec4:distance",
+                "Vec4:length"
+              }
             },
             {
               name = "distance",
@@ -24568,10 +23831,6 @@ return {
               description = "Returns the distance to another vector.",
               key = "Vec4:distance",
               module = "lovr.math",
-              related = {
-                "Vec4:angle",
-                "Vec4:length"
-              },
               variants = {
                 {
                   arguments = {
@@ -24620,6 +23879,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:angle",
+                "Vec4:length"
               }
             },
             {
@@ -24628,11 +23891,6 @@ return {
               description = "Divides the vector by a vector or a number.",
               key = "Vec4:div",
               module = "lovr.math",
-              related = {
-                "Vec4:add",
-                "Vec4:sub",
-                "Vec4:mul"
-              },
               variants = {
                 {
                   arguments = {
@@ -24684,6 +23942,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:add",
+                "Vec4:sub",
+                "Vec4:mul"
               }
             },
             {
@@ -24692,7 +23955,6 @@ return {
               description = "Returns the dot product between this vector and another one.",
               key = "Vec4:dot",
               module = "lovr.math",
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w\n\nThe vectors are not normalized before computing the dot product.",
               variants = {
                 {
                   arguments = {
@@ -24741,7 +24003,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w\n\nThe vectors are not normalized before computing the dot product."
             },
             {
               name = "equals",
@@ -24749,12 +24012,6 @@ return {
               description = "Returns whether a vector is approximately equal to another vector.",
               key = "Vec4:equals",
               module = "lovr.math",
-              related = {
-                "Vec2:equals",
-                "Vec3:equals",
-                "Quat:equals",
-                "Mat4:equals"
-              },
               variants = {
                 {
                   arguments = {
@@ -24804,7 +24061,13 @@ return {
                   }
                 }
               },
-              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`."
+              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`.",
+              related = {
+                "Vec2:equals",
+                "Vec3:equals",
+                "Quat:equals",
+                "Mat4:equals"
+              }
             },
             {
               name = "length",
@@ -24812,10 +24075,6 @@ return {
               description = "Returns the length of the vector.",
               key = "Vec4:length",
               module = "lovr.math",
-              related = {
-                "Vec4:normalize",
-                "Vec4:distance"
-              },
               variants = {
                 {
                   arguments = {},
@@ -24828,7 +24087,11 @@ return {
                   }
                 }
               },
-              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w)"
+              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w)",
+              related = {
+                "Vec4:normalize",
+                "Vec4:distance"
+              }
             },
             {
               name = "lerp",
@@ -24836,9 +24099,6 @@ return {
               description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
               key = "Vec4:lerp",
               module = "lovr.math",
-              related = {
-                "Quat:slerp"
-              },
               variants = {
                 {
                   arguments = {
@@ -24897,6 +24157,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Quat:slerp"
               }
             },
             {
@@ -24905,11 +24168,6 @@ return {
               description = "Multiplies the vector by a vector or a number.",
               key = "Vec4:mul",
               module = "lovr.math",
-              related = {
-                "Vec4:add",
-                "Vec4:sub",
-                "Vec4:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -24961,6 +24219,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:add",
+                "Vec4:sub",
+                "Vec4:div"
               }
             },
             {
@@ -24969,9 +24232,6 @@ return {
               description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
               key = "Vec4:normalize",
               module = "lovr.math",
-              related = {
-                "Vec4:length"
-              },
               variants = {
                 {
                   arguments = {},
@@ -24983,6 +24243,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:length"
               }
             },
             {
@@ -24991,9 +24254,6 @@ return {
               description = "Sets the components of the vector, either from numbers or an existing vector.",
               key = "Vec4:set",
               module = "lovr.math",
-              related = {
-                "Vec4:unpack"
-              },
               variants = {
                 {
                   arguments = {
@@ -25046,6 +24306,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:unpack"
               }
             },
             {
@@ -25054,11 +24317,6 @@ return {
               description = "Subtracts a vector or a number from the vector.",
               key = "Vec4:sub",
               module = "lovr.math",
-              related = {
-                "Vec4:add",
-                "Vec4:mul",
-                "Vec4:div"
-              },
               variants = {
                 {
                   arguments = {
@@ -25110,6 +24368,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:add",
+                "Vec4:mul",
+                "Vec4:div"
               }
             },
             {
@@ -25118,9 +24381,6 @@ return {
               description = "Returns the 4 components of the vector as numbers.",
               key = "Vec4:unpack",
               module = "lovr.math",
-              related = {
-                "Vec4:set"
-              },
               variants = {
                 {
                   arguments = {},
@@ -25147,17 +24407,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Vec4:set"
               }
             }
-          },
-          constructors = {
-            "lovr.math.newVec4",
-            "lovr.math.vec4"
-          },
-          related = {
-            "Vec2",
-            "Vec3",
-            "Vectors"
           }
         },
         {
@@ -25166,7 +24420,7 @@ return {
           description = "LÖVR has math objects for vectors, matrices, and quaternions, collectively called \"vector objects\".  Vectors are useful because they can represent a multidimensional quantity (like a 3D position) using just a single value.",
           key = "Vectors",
           module = "lovr.math",
-          notes = "Most LÖVR functions that accept positions, orientations, transforms, velocities, etc. also accept vector objects, so they can be used interchangeably with numbers:\n\n    function lovr.draw(pass)\n      -- position and size are vec3's, rotation is a quat\n      pass:box(position, size, rotation)\n    end\n\n### Temporary vs. Permanent\n\nVectors can be created in two different ways: **permanent** and **temporary**.\n\n**Permanent** vectors behave like normal Lua values.  They are individual objects that are garbage collected when no longer needed.  They're created using the usual `lovr.math.new<Type>` syntax:\n\n    self.position = lovr.math.newVec3(x, y, z)\n\n**Temporary** vectors are created from a shared pool of vector objects.  This makes them faster because they use temporary memory and do not need to be garbage collected.  To make a temporary vector, leave off the `new` prefix:\n\n    local position = lovr.math.vec3(x, y, z)\n\nAs a further shorthand, these vector constructors are placed on the global scope.  If you prefer to keep the global scope clean, this can be configured using the `t.math.globals` flag in `lovr.conf`.\n\n    local position = vec3(x1, y1, z1) + vec3(x2, y2, z2)\n\nTemporary vectors, with all their speed, come with an important restriction: they can only be used during the frame in which they were created.  Saving them into variables and using them later on will throw an error:\n\n    local position = vec3(1, 2, 3)\n\n    function lovr.update(dt)\n      -- Reusing a temporary vector across frames will error:\n      position:add(vec3(dt))\n    end\n\nIt's possible to overflow the temporary vector pool.  If that happens, `lovr.math.drain` can be used to periodically drain the pool, invalidating any existing temporary vectors.\n\n### Metamethods\n\nVectors have metamethods, allowing them to be used using the normal math operators like `+`, `-`, `*`, `/`, etc.\n\n    print(vec3(2, 4, 6) * .5 + vec3(10, 20, 30))\n\nThese metamethods will create new temporary vectors.\n\n### Components and Swizzles\n\nThe raw components of a vector can be accessed like normal fields:\n\n    print(vec3(1, 2, 3).z) --> 3\n    print(mat4()[16]) --> 1\n\nAlso, multiple fields can be accessed and combined into a new (temporary) vector, called swizzling:\n\n    local position = vec3(10, 5, 1)\n    print(position.xy) --> vec2(10, 5)\n    print(position.xyy) --> vec3(10, 5, 5)\n    print(position.zyxz) --> vec4(1, 5, 10, 1)\n\nThe following fields are supported for vectors:\n\n- `x`, `y`, `z`, `w`\n- `r`, `g`, `b`, `a`\n- `s`, `t`, `p`, `q`\n\nQuaternions support `x`, `y`, `z`, and `w`.\n\nMatrices use numbers for accessing individual components in \"column-major\" order.\n\nAll fields can also be assigned to.\n\n    -- Swap the components of a 2D vector\n    v.xy = v.yx\n\nThe `unpack` function can be used (on any vector type) to access all of the individual components of a vector object.  For quaternions you can choose whether you want to unpack the angle/axis representation or the raw quaternion components.  Similarly, matrices support raw unpacking as well as decomposition into translation/scale/rotation values.",
+          methods = {},
           constructors = {
             "lovr.math.vec2",
             "lovr.math.vec3",
@@ -25179,7 +24433,7 @@ return {
             "lovr.math.newQuat",
             "lovr.math.newMat4"
           },
-          methods = {}
+          notes = "Most LÖVR functions that accept positions, orientations, transforms, velocities, etc. also accept vector objects, so they can be used interchangeably with numbers:\n\n    function lovr.draw(pass)\n      -- position and size are vec3's, rotation is a quat\n      pass:box(position, size, rotation)\n    end\n\n### Temporary vs. Permanent\n\nVectors can be created in two different ways: **permanent** and **temporary**.\n\n**Permanent** vectors behave like normal Lua values.  They are individual objects that are garbage collected when no longer needed.  They're created using the usual `lovr.math.new<Type>` syntax:\n\n    self.position = lovr.math.newVec3(x, y, z)\n\n**Temporary** vectors are created from a shared pool of vector objects.  This makes them faster because they use temporary memory and do not need to be garbage collected.  To make a temporary vector, leave off the `new` prefix:\n\n    local position = lovr.math.vec3(x, y, z)\n\nAs a further shorthand, these vector constructors are placed on the global scope.  If you prefer to keep the global scope clean, this can be configured using the `t.math.globals` flag in `lovr.conf`.\n\n    local position = vec3(x1, y1, z1) + vec3(x2, y2, z2)\n\nTemporary vectors, with all their speed, come with an important restriction: they can only be used during the frame in which they were created.  Saving them into variables and using them later on will throw an error:\n\n    local position = vec3(1, 2, 3)\n\n    function lovr.update(dt)\n      -- Reusing a temporary vector across frames will error:\n      position:add(vec3(dt))\n    end\n\nIt's possible to overflow the temporary vector pool.  If that happens, `lovr.math.drain` can be used to periodically drain the pool, invalidating any existing temporary vectors.\n\n### Metamethods\n\nVectors have metamethods, allowing them to be used using the normal math operators like `+`, `-`, `*`, `/`, etc.\n\n    print(vec3(2, 4, 6) * .5 + vec3(10, 20, 30))\n\nThese metamethods will create new temporary vectors.\n\n### Components and Swizzles\n\nThe raw components of a vector can be accessed like normal fields:\n\n    print(vec3(1, 2, 3).z) --> 3\n    print(mat4()[16]) --> 1\n\nAlso, multiple fields can be accessed and combined into a new (temporary) vector, called swizzling:\n\n    local position = vec3(10, 5, 1)\n    print(position.xy) --> vec2(10, 5)\n    print(position.xyy) --> vec3(10, 5, 5)\n    print(position.zyxz) --> vec4(1, 5, 10, 1)\n\nThe following fields are supported for vectors:\n\n- `x`, `y`, `z`, `w`\n- `r`, `g`, `b`, `a`\n- `s`, `t`, `p`, `q`\n\nQuaternions support `x`, `y`, `z`, and `w`.\n\nMatrices use numbers for accessing individual components in \"column-major\" order.\n\nAll fields can also be assigned to.\n\n    -- Swap the components of a 2D vector\n    v.xy = v.yx\n\nThe `unpack` function can be used (on any vector type) to access all of the individual components of a vector object.  For quaternions you can choose whether you want to unpack the angle/axis representation or the raw quaternion components.  Similarly, matrices support raw unpacking as well as decomposition into translation/scale/rotation values."
         }
       }
     },
@@ -25189,6 +24443,72 @@ return {
       summary = "Simulates 3D physics.",
       description = "The `lovr.physics` module simulates 3D rigid body physics.",
       key = "lovr.physics",
+      enums = {
+        {
+          name = "JointType",
+          summary = "Types of physics joints.",
+          description = "Represents the different types of physics Joints available.",
+          key = "JointType",
+          module = "lovr.physics",
+          related = {
+            "Joint",
+            "BallJoint",
+            "DistanceJoint",
+            "HingeJoint",
+            "SliderJoint"
+          },
+          values = {
+            {
+              name = "ball",
+              description = "A BallJoint."
+            },
+            {
+              name = "distance",
+              description = "A DistanceJoint."
+            },
+            {
+              name = "hinge",
+              description = "A HingeJoint."
+            },
+            {
+              name = "slider",
+              description = "A SliderJoint."
+            }
+          }
+        },
+        {
+          name = "ShapeType",
+          summary = "Types of physics shapes.",
+          description = "Represents the different types of physics Shapes available.",
+          key = "ShapeType",
+          module = "lovr.physics",
+          related = {
+            "Shape",
+            "BoxShape",
+            "CapsuleShape",
+            "CylinderShape",
+            "SphereShape"
+          },
+          values = {
+            {
+              name = "box",
+              description = "A BoxShape."
+            },
+            {
+              name = "capsule",
+              description = "A CapsuleShape."
+            },
+            {
+              name = "cylinder",
+              description = "A CylinderShape."
+            },
+            {
+              name = "sphere",
+              description = "A SphereShape."
+            }
+          }
+        }
+      },
       sections = {
         {
           name = "Worlds",
@@ -25211,72 +24531,6 @@ return {
           description = "Joints are objects that constrain the movement of colliders in various ways.  Joints are attached to two colliders when they're created and usually have a concept of an \"anchor\", which is where the Joint is attached to relative to the colliders.  Joints can be used to create all sorts of neat things like doors, drawers, buttons, levers, or pendulums."
         }
       },
-      enums = {
-        {
-          name = "JointType",
-          summary = "Types of physics joints.",
-          description = "Represents the different types of physics Joints available.",
-          key = "JointType",
-          module = "lovr.physics",
-          values = {
-            {
-              name = "ball",
-              description = "A BallJoint."
-            },
-            {
-              name = "distance",
-              description = "A DistanceJoint."
-            },
-            {
-              name = "hinge",
-              description = "A HingeJoint."
-            },
-            {
-              name = "slider",
-              description = "A SliderJoint."
-            }
-          },
-          related = {
-            "Joint",
-            "BallJoint",
-            "DistanceJoint",
-            "HingeJoint",
-            "SliderJoint"
-          }
-        },
-        {
-          name = "ShapeType",
-          summary = "Types of physics shapes.",
-          description = "Represents the different types of physics Shapes available.",
-          key = "ShapeType",
-          module = "lovr.physics",
-          values = {
-            {
-              name = "box",
-              description = "A BoxShape."
-            },
-            {
-              name = "capsule",
-              description = "A CapsuleShape."
-            },
-            {
-              name = "cylinder",
-              description = "A CylinderShape."
-            },
-            {
-              name = "sphere",
-              description = "A SphereShape."
-            }
-          },
-          related = {
-            "Shape",
-            "BoxShape",
-            "CapsuleShape",
-            "CylinderShape",
-            "SphereShape"
-          }
-        }
-      },
       functions = {
         {
           name = "newBallJoint",
@@ -25285,7 +24539,11 @@ return {
           description = "Creates a new BallJoint.",
           key = "lovr.physics.newBallJoint",
           module = "lovr.physics",
-          notes = "A ball joint is like a ball and socket between the two colliders.  It tries to keep the distance between the colliders and the anchor position the same, but does not constrain the angle between them.",
+          related = {
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newSliderJoint"
+          },
           variants = {
             {
               arguments = {
@@ -25324,11 +24582,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.physics.newDistanceJoint",
-            "lovr.physics.newHingeJoint",
-            "lovr.physics.newSliderJoint"
-          }
+          notes = "A ball joint is like a ball and socket between the two colliders.  It tries to keep the distance between the colliders and the anchor position the same, but does not constrain the angle between them."
         },
         {
           name = "newBoxShape",
@@ -25337,7 +24591,12 @@ return {
           description = "Creates a new BoxShape.",
           key = "lovr.physics.newBoxShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
+          related = {
+            "BoxShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newCylinderShape",
+            "lovr.physics.newSphereShape"
+          },
           variants = {
             {
               arguments = {
@@ -25369,12 +24628,7 @@ return {
               }
             }
           },
-          related = {
-            "BoxShape",
-            "lovr.physics.newCapsuleShape",
-            "lovr.physics.newCylinderShape",
-            "lovr.physics.newSphereShape"
-          }
+          notes = "A Shape can be attached to a Collider using `Collider:addShape`."
         },
         {
           name = "newCapsuleShape",
@@ -25383,7 +24637,12 @@ return {
           description = "Creates a new CapsuleShape.  Capsules are cylinders with hemispheres on each end.",
           key = "lovr.physics.newCapsuleShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
+          related = {
+            "CapsuleShape",
+            "lovr.physics.newBoxShape",
+            "lovr.physics.newCylinderShape",
+            "lovr.physics.newSphereShape"
+          },
           variants = {
             {
               arguments = {
@@ -25409,12 +24668,7 @@ return {
               }
             }
           },
-          related = {
-            "CapsuleShape",
-            "lovr.physics.newBoxShape",
-            "lovr.physics.newCylinderShape",
-            "lovr.physics.newSphereShape"
-          }
+          notes = "A Shape can be attached to a Collider using `Collider:addShape`."
         },
         {
           name = "newCylinderShape",
@@ -25423,7 +24677,12 @@ return {
           description = "Creates a new CylinderShape.",
           key = "lovr.physics.newCylinderShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
+          related = {
+            "CylinderShape",
+            "lovr.physics.newBoxShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newSphereShape"
+          },
           variants = {
             {
               arguments = {
@@ -25449,12 +24708,7 @@ return {
               }
             }
           },
-          related = {
-            "CylinderShape",
-            "lovr.physics.newBoxShape",
-            "lovr.physics.newCapsuleShape",
-            "lovr.physics.newSphereShape"
-          }
+          notes = "A Shape can be attached to a Collider using `Collider:addShape`."
         },
         {
           name = "newDistanceJoint",
@@ -25463,7 +24717,11 @@ return {
           description = "Creates a new DistanceJoint.",
           key = "lovr.physics.newDistanceJoint",
           module = "lovr.physics",
-          notes = "A distance joint tries to keep the two colliders a fixed distance apart.  The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.",
+          related = {
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newSliderJoint"
+          },
           variants = {
             {
               arguments = {
@@ -25517,11 +24775,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.physics.newBallJoint",
-            "lovr.physics.newHingeJoint",
-            "lovr.physics.newSliderJoint"
-          }
+          notes = "A distance joint tries to keep the two colliders a fixed distance apart.  The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points."
         },
         {
           name = "newHingeJoint",
@@ -25530,7 +24784,11 @@ return {
           description = "Creates a new HingeJoint.",
           key = "lovr.physics.newHingeJoint",
           module = "lovr.physics",
-          notes = "A hinge joint constrains two colliders to allow rotation only around the hinge's axis.",
+          related = {
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newSliderJoint"
+          },
           variants = {
             {
               arguments = {
@@ -25584,11 +24842,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.physics.newBallJoint",
-            "lovr.physics.newDistanceJoint",
-            "lovr.physics.newSliderJoint"
-          }
+          notes = "A hinge joint constrains two colliders to allow rotation only around the hinge's axis."
         },
         {
           name = "newSliderJoint",
@@ -25597,7 +24851,11 @@ return {
           description = "Creates a new SliderJoint.",
           key = "lovr.physics.newSliderJoint",
           module = "lovr.physics",
-          notes = "A slider joint constrains two colliders to only allow movement along the slider's axis.",
+          related = {
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newHingeJoint"
+          },
           variants = {
             {
               arguments = {
@@ -25636,11 +24894,7 @@ return {
               }
             }
           },
-          related = {
-            "lovr.physics.newBallJoint",
-            "lovr.physics.newDistanceJoint",
-            "lovr.physics.newHingeJoint"
-          }
+          notes = "A slider joint constrains two colliders to only allow movement along the slider's axis."
         },
         {
           name = "newSphereShape",
@@ -25649,7 +24903,12 @@ return {
           description = "Creates a new SphereShape.",
           key = "lovr.physics.newSphereShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
+          related = {
+            "SphereShape",
+            "lovr.physics.newBoxShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newCylinderShape"
+          },
           variants = {
             {
               arguments = {
@@ -25669,12 +24928,7 @@ return {
               }
             }
           },
-          related = {
-            "SphereShape",
-            "lovr.physics.newBoxShape",
-            "lovr.physics.newCapsuleShape",
-            "lovr.physics.newCylinderShape"
-          }
+          notes = "A Shape can be attached to a Collider using `Collider:addShape`."
         },
         {
           name = "newWorld",
@@ -25742,12 +24996,6 @@ return {
           description = "A BallJoint is a type of `Joint` that acts like a ball and socket between two colliders.  It allows the colliders to rotate freely around an anchor point, but does not allow the colliders' distance from the anchor point to change.",
           key = "BallJoint",
           module = "lovr.physics",
-          related = {
-            "Collider"
-          },
-          constructors = {
-            "lovr.physics.newBallJoint"
-          },
           methods = {
             {
               name = "getAnchors",
@@ -25799,12 +25047,6 @@ return {
               description = "Returns the response time of the joint.  See `World:setResponseTime` for more info.",
               key = "BallJoint:getResponseTime",
               module = "lovr.physics",
-              related = {
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
               variants = {
                 {
                   arguments = {},
@@ -25816,6 +25058,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
               }
             },
             {
@@ -25824,12 +25072,6 @@ return {
               description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
               key = "BallJoint:getTightness",
               module = "lovr.physics",
-              related = {
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {},
@@ -25841,6 +25083,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
               }
             },
             {
@@ -25878,12 +25126,6 @@ return {
               description = "Sets the response time of the joint.  See `World:setResponseTime` for more info.",
               key = "BallJoint:setResponseTime",
               module = "lovr.physics",
-              related = {
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
               variants = {
                 {
                   arguments = {
@@ -25895,6 +25137,12 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
               }
             },
             {
@@ -25903,12 +25151,6 @@ return {
               description = "Sets the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
               key = "BallJoint:setTightness",
               module = "lovr.physics",
-              related = {
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {
@@ -25920,10 +25162,22 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
               }
             }
           },
-          extends = "Joint"
+          extends = "Joint",
+          related = {
+            "Collider"
+          },
+          constructors = {
+            "lovr.physics.newBallJoint"
+          }
         },
         {
           name = "BoxShape",
@@ -26093,6 +25347,14 @@ return {
           description = "Colliders are objects that represent a single rigid body in a physics simulation.  They can have forces applied to them and collide with other colliders.",
           key = "Collider",
           module = "lovr.physics",
+          constructors = {
+            "World:newCollider",
+            "World:newBoxCollider",
+            "World:newCapsuleCollider",
+            "World:newCylinderCollider",
+            "World:newSphereCollider",
+            "World:newMeshCollider"
+          },
           methods = {
             {
               name = "addShape",
@@ -26100,11 +25362,6 @@ return {
               description = "Attaches a Shape to the collider.  Attached shapes will collide with other shapes in the world.",
               key = "Collider:addShape",
               module = "lovr.physics",
-              related = {
-                "Collider:removeShape",
-                "Collider:getShapes",
-                "Shape"
-              },
               variants = {
                 {
                   arguments = {
@@ -26116,6 +25373,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:removeShape",
+                "Collider:getShapes",
+                "Shape"
               }
             },
             {
@@ -26124,9 +25386,6 @@ return {
               description = "Applies a force to the Collider.",
               key = "Collider:applyForce",
               module = "lovr.physics",
-              related = {
-                "Collider:applyTorque"
-              },
               variants = {
                 {
                   arguments = {
@@ -26184,7 +25443,10 @@ return {
                   returns = {}
                 }
               },
-              notes = "If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this function to have any affect."
+              notes = "If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this function to have any affect.",
+              related = {
+                "Collider:applyTorque"
+              }
             },
             {
               name = "applyTorque",
@@ -26192,9 +25454,6 @@ return {
               description = "Applies torque to the Collider.",
               key = "Collider:applyTorque",
               module = "lovr.physics",
-              related = {
-                "Collider:applyForce"
-              },
               variants = {
                 {
                   arguments = {
@@ -26217,7 +25476,10 @@ return {
                   returns = {}
                 }
               },
-              notes = "If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this function to have any effect."
+              notes = "If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this function to have any effect.",
+              related = {
+                "Collider:applyForce"
+              }
             },
             {
               name = "destroy",
@@ -26225,18 +25487,18 @@ return {
               description = "Destroy the Collider, removing it from the World.",
               key = "Collider:destroy",
               module = "lovr.physics",
-              related = {
-                "World:destroy",
-                "Shape:destroy",
-                "Joint:destroy"
-              },
               variants = {
                 {
                   arguments = {},
                   returns = {}
                 }
               },
-              notes = "Calling functions on the collider after destroying it is a bad idea."
+              notes = "Calling functions on the collider after destroying it is a bad idea.",
+              related = {
+                "World:destroy",
+                "Shape:destroy",
+                "Joint:destroy"
+              }
             },
             {
               name = "getAABB",
@@ -26244,9 +25506,6 @@ return {
               description = "Returns the bounding box for the Collider, computed from attached shapes.",
               key = "Collider:getAABB",
               module = "lovr.physics",
-              related = {
-                "Shape:getAABB"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26283,6 +25542,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Shape:getAABB"
               }
             },
             {
@@ -26291,10 +25553,6 @@ return {
               description = "Returns the angular damping parameters of the Collider.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "Collider:getAngularDamping",
               module = "lovr.physics",
-              related = {
-                "World:getAngularDamping",
-                "World:setAngularDamping"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26312,7 +25570,11 @@ return {
                   }
                 }
               },
-              notes = "Angular damping can also be set on the World."
+              notes = "Angular damping can also be set on the World.",
+              related = {
+                "World:getAngularDamping",
+                "World:setAngularDamping"
+              }
             },
             {
               name = "getAngularVelocity",
@@ -26320,13 +25582,6 @@ return {
               description = "Returns the angular velocity of the Collider.",
               key = "Collider:getAngularVelocity",
               module = "lovr.physics",
-              related = {
-                "Collider:getLinearVelocity",
-                "Collider:setLinearVelocity",
-                "Collider:applyTorque",
-                "Collider:getOrientation",
-                "Collider:setOrientation"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26348,6 +25603,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLinearVelocity",
+                "Collider:setLinearVelocity",
+                "Collider:applyTorque",
+                "Collider:getOrientation",
+                "Collider:setOrientation"
               }
             },
             {
@@ -26356,11 +25618,6 @@ return {
               description = "Returns the friction of the Collider.  By default, the friction of two Colliders is combined (multiplied) when they collide to generate a friction force.  The initial friction is 0.",
               key = "Collider:getFriction",
               module = "lovr.physics",
-              related = {
-                "Collider:getRestitution",
-                "Collider:setRestitution",
-                "World:collide"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26372,6 +25629,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getRestitution",
+                "Collider:setRestitution",
+                "World:collide"
               }
             },
             {
@@ -26380,9 +25642,6 @@ return {
               description = "Returns a list of Joints attached to the Collider.",
               key = "Collider:getJoints",
               module = "lovr.physics",
-              related = {
-                "Joint"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26394,6 +25653,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Joint"
               }
             },
             {
@@ -26402,10 +25664,6 @@ return {
               description = "Returns the Collider's linear damping parameters.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:getLinearDamping",
               module = "lovr.physics",
-              related = {
-                "World:getLinearDamping",
-                "World:setLinearDamping"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26423,7 +25681,11 @@ return {
                   }
                 }
               },
-              notes = "A linear damping of 0 means the Collider won't slow down over time.  This is the default.\n\nLinear damping can also be set on the World using `World:setLinearDamping`, which will affect all new colliders."
+              notes = "A linear damping of 0 means the Collider won't slow down over time.  This is the default.\n\nLinear damping can also be set on the World using `World:setLinearDamping`, which will affect all new colliders.",
+              related = {
+                "World:getLinearDamping",
+                "World:setLinearDamping"
+              }
             },
             {
               name = "getLinearVelocity",
@@ -26431,15 +25693,6 @@ return {
               description = "Returns the linear velocity of the Collider.  This is how fast the Collider is moving.  There is also angular velocity, which is how fast the Collider is spinning.",
               key = "Collider:getLinearVelocity",
               module = "lovr.physics",
-              related = {
-                "Collider:getLinearVelocityFromLocalPoint",
-                "Collider:getLinearVelocityFromWorldPoint",
-                "Collider:getAngularVelocity",
-                "Collider:setAngularVelocity",
-                "Collider:applyForce",
-                "Collider:getPosition",
-                "Collider:setPosition"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26461,6 +25714,15 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLinearVelocityFromLocalPoint",
+                "Collider:getLinearVelocityFromWorldPoint",
+                "Collider:getAngularVelocity",
+                "Collider:setAngularVelocity",
+                "Collider:applyForce",
+                "Collider:getPosition",
+                "Collider:setPosition"
               }
             },
             {
@@ -26469,10 +25731,6 @@ return {
               description = "Returns the linear velocity of a point relative to the Collider.",
               key = "Collider:getLinearVelocityFromLocalPoint",
               module = "lovr.physics",
-              related = {
-                "Collider:getLinearVelocity",
-                "Collider:getLinearVelocityFromWorldPoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -26510,6 +25768,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLinearVelocity",
+                "Collider:getLinearVelocityFromWorldPoint"
               }
             },
             {
@@ -26518,10 +25780,6 @@ return {
               description = "Returns the linear velocity of a point on the Collider specified in world space.",
               key = "Collider:getLinearVelocityFromWorldPoint",
               module = "lovr.physics",
-              related = {
-                "Collider:getLinearVelocity",
-                "Collider:getLinearVelocityFromLocalPoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -26559,6 +25817,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLinearVelocity",
+                "Collider:getLinearVelocityFromLocalPoint"
               }
             },
             {
@@ -26567,11 +25829,6 @@ return {
               description = "Returns the Collider's center of mass.",
               key = "Collider:getLocalCenter",
               module = "lovr.physics",
-              related = {
-                "Collider:getLocalPoint",
-                "Collider:getMassData",
-                "Collider:setMassData"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26593,6 +25850,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLocalPoint",
+                "Collider:getMassData",
+                "Collider:setMassData"
               }
             },
             {
@@ -26601,11 +25863,6 @@ return {
               description = "Converts a point from world coordinates into local coordinates relative to the Collider.",
               key = "Collider:getLocalPoint",
               module = "lovr.physics",
-              related = {
-                "Collider:getWorldPoint",
-                "Collider:getLocalVector",
-                "Collider:getWorldVector"
-              },
               variants = {
                 {
                   arguments = {
@@ -26643,6 +25900,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getWorldPoint",
+                "Collider:getLocalVector",
+                "Collider:getWorldVector"
               }
             },
             {
@@ -26651,11 +25913,6 @@ return {
               description = "Converts a direction vector from world space to local space.",
               key = "Collider:getLocalVector",
               module = "lovr.physics",
-              related = {
-                "Collider:getWorldVector",
-                "Collider:getLocalPoint",
-                "Collider:getWorldPoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -26693,6 +25950,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getWorldVector",
+                "Collider:getLocalPoint",
+                "Collider:getWorldPoint"
               }
             },
             {
@@ -26701,11 +25963,6 @@ return {
               description = "Returns the total mass of the Collider.  The mass of a Collider depends on its attached shapes.",
               key = "Collider:getMass",
               module = "lovr.physics",
-              related = {
-                "Collider:getMassData",
-                "Collider:setMassData",
-                "Shape:getMass"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26717,6 +25974,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getMassData",
+                "Collider:setMassData",
+                "Shape:getMass"
               }
             },
             {
@@ -26725,11 +25987,6 @@ return {
               description = "Computes mass properties for the Collider.",
               key = "Collider:getMassData",
               module = "lovr.physics",
-              related = {
-                "Collider:getMass",
-                "Collider:setMass",
-                "Shape:getMass"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26761,6 +26018,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getMass",
+                "Collider:setMass",
+                "Shape:getMass"
               }
             },
             {
@@ -26769,6 +26031,33 @@ return {
               description = "Returns the orientation of the Collider in angle/axis representation.",
               key = "Collider:getOrientation",
               module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              },
               related = {
                 "Collider:applyTorque",
                 "Collider:getAngularVelocity",
@@ -26777,33 +26066,6 @@ return {
                 "Collider:setPosition",
                 "Collider:getPose",
                 "Collider:setPose"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the Collider is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                }
               }
             },
             {
@@ -26812,10 +26074,6 @@ return {
               description = "Returns the position and orientation of the Collider.",
               key = "Collider:getPose",
               module = "lovr.physics",
-              related = {
-                "Collider:getPosition",
-                "Collider:getOrientation"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26857,6 +26115,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getPosition",
+                "Collider:getOrientation"
               }
             },
             {
@@ -26865,15 +26127,6 @@ return {
               description = "Returns the position of the Collider.",
               key = "Collider:getPosition",
               module = "lovr.physics",
-              related = {
-                "Collider:applyForce",
-                "Collider:getLinearVelocity",
-                "Collider:setLinearVelocity",
-                "Collider:getOrientation",
-                "Collider:setOrientation",
-                "Collider:getPose",
-                "Collider:setPose"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26895,6 +26148,15 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:applyForce",
+                "Collider:getLinearVelocity",
+                "Collider:setLinearVelocity",
+                "Collider:getOrientation",
+                "Collider:setOrientation",
+                "Collider:getPose",
+                "Collider:setPose"
               }
             },
             {
@@ -26903,11 +26165,6 @@ return {
               description = "Returns the restitution (bounciness) of the Collider.  By default, the restitution of two Colliders is combined (the max is used) when they collide to cause them to bounce away from each other.  The initial restitution is 0.",
               key = "Collider:getRestitution",
               module = "lovr.physics",
-              related = {
-                "Collider:getFriction",
-                "Collider:setFriction",
-                "World:collide"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26919,6 +26176,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getFriction",
+                "Collider:setFriction",
+                "World:collide"
               }
             },
             {
@@ -26927,11 +26189,6 @@ return {
               description = "Returns a list of Shapes attached to the Collider.",
               key = "Collider:getShapes",
               module = "lovr.physics",
-              related = {
-                "Collider:addShape",
-                "Collider:removeShape",
-                "Shape"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26943,6 +26200,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:addShape",
+                "Collider:removeShape",
+                "Shape"
               }
             },
             {
@@ -26951,12 +26213,6 @@ return {
               description = "Returns the Collider's tag.",
               key = "Collider:getTag",
               module = "lovr.physics",
-              related = {
-                "World:disableCollisionBetween",
-                "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween",
-                "lovr.physics.newWorld"
-              },
               variants = {
                 {
                   arguments = {},
@@ -26969,7 +26225,13 @@ return {
                   }
                 }
               },
-              notes = "Collision between tags can be enabled and disabled using `World:enableCollisionBetween` and `World:disableCollisionBetween`."
+              notes = "Collision between tags can be enabled and disabled using `World:enableCollisionBetween` and `World:disableCollisionBetween`.",
+              related = {
+                "World:disableCollisionBetween",
+                "World:enableCollisionBetween",
+                "World:isCollisionEnabledBetween",
+                "lovr.physics.newWorld"
+              }
             },
             {
               name = "getUserData",
@@ -26977,7 +26239,6 @@ return {
               description = "Returns the user data associated with the Collider.",
               key = "Collider:getUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Collider in callbacks.",
               variants = {
                 {
                   arguments = {},
@@ -26989,7 +26250,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "User data can be useful to identify the Collider in callbacks."
             },
             {
               name = "getWorld",
@@ -26997,9 +26259,6 @@ return {
               description = "Returns the World the Collider is in.",
               key = "Collider:getWorld",
               module = "lovr.physics",
-              related = {
-                "World"
-              },
               variants = {
                 {
                   arguments = {},
@@ -27012,7 +26271,10 @@ return {
                   }
                 }
               },
-              notes = "Colliders can only be in one World at a time."
+              notes = "Colliders can only be in one World at a time.",
+              related = {
+                "World"
+              }
             },
             {
               name = "getWorldPoint",
@@ -27020,11 +26282,6 @@ return {
               description = "Convert a point relative to the collider to a point in world coordinates.",
               key = "Collider:getWorldPoint",
               module = "lovr.physics",
-              related = {
-                "Collider:getLocalPoint",
-                "Collider:getLocalVector",
-                "Collider:getWorldVector"
-              },
               variants = {
                 {
                   arguments = {
@@ -27062,6 +26319,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLocalPoint",
+                "Collider:getLocalVector",
+                "Collider:getWorldVector"
               }
             },
             {
@@ -27070,11 +26332,6 @@ return {
               description = "Converts a direction vector from local space to world space.",
               key = "Collider:getWorldVector",
               module = "lovr.physics",
-              related = {
-                "Collider:getLocalVector",
-                "Collider:getLocalPoint",
-                "Collider:getWorldPoint"
-              },
               variants = {
                 {
                   arguments = {
@@ -27112,6 +26369,11 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getLocalVector",
+                "Collider:getLocalPoint",
+                "Collider:getWorldPoint"
               }
             },
             {
@@ -27120,12 +26382,6 @@ return {
               description = "Returns whether the Collider is currently awake.",
               key = "Collider:isAwake",
               module = "lovr.physics",
-              related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
-                "Collider:isSleepingAllowed",
-                "Collider:setSleepingAllowed"
-              },
               variants = {
                 {
                   arguments = {},
@@ -27137,6 +26393,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "World:isSleepingAllowed",
+                "World:setSleepingAllowed",
+                "Collider:isSleepingAllowed",
+                "Collider:setSleepingAllowed"
               }
             },
             {
@@ -27164,7 +26426,6 @@ return {
               description = "Returns whether the Collider is kinematic.",
               key = "Collider:isKinematic",
               module = "lovr.physics",
-              notes = "Kinematic colliders behave as though they have infinite mass, ignoring external forces like gravity, joints, or collisions (though non-kinematic colliders will collide with them). They can be useful for static objects like floors or walls.",
               variants = {
                 {
                   arguments = {},
@@ -27176,7 +26437,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "Kinematic colliders behave as though they have infinite mass, ignoring external forces like gravity, joints, or collisions (though non-kinematic colliders will collide with them). They can be useful for static objects like floors or walls."
             },
             {
               name = "isSleepingAllowed",
@@ -27184,12 +26446,6 @@ return {
               description = "Returns whether the Collider is allowed to sleep.",
               key = "Collider:isSleepingAllowed",
               module = "lovr.physics",
-              related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
-                "Collider:isAwake",
-                "Collider:setAwake"
-              },
               variants = {
                 {
                   arguments = {},
@@ -27202,7 +26458,13 @@ return {
                   }
                 }
               },
-              notes = "If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a while. Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nIt is possible to set the default value for new colliders using `World:setSleepingAllowed`.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`."
+              notes = "If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a while. Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nIt is possible to set the default value for new colliders using `World:setSleepingAllowed`.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
+              related = {
+                "World:isSleepingAllowed",
+                "World:setSleepingAllowed",
+                "Collider:isAwake",
+                "Collider:setAwake"
+              }
             },
             {
               name = "removeShape",
@@ -27210,11 +26472,6 @@ return {
               description = "Removes a Shape from the Collider.",
               key = "Collider:removeShape",
               module = "lovr.physics",
-              related = {
-                "Collider:addShape",
-                "Collider:getShapes",
-                "Shape"
-              },
               variants = {
                 {
                   arguments = {
@@ -27227,7 +26484,12 @@ return {
                   returns = {}
                 }
               },
-              notes = "Colliders without any shapes won't collide with anything."
+              notes = "Colliders without any shapes won't collide with anything.",
+              related = {
+                "Collider:addShape",
+                "Collider:getShapes",
+                "Shape"
+              }
             },
             {
               name = "setAngularDamping",
@@ -27235,10 +26497,6 @@ return {
               description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them to slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "Collider:setAngularDamping",
               module = "lovr.physics",
-              related = {
-                "World:getAngularDamping",
-                "World:setAngularDamping"
-              },
               variants = {
                 {
                   arguments = {
@@ -27257,7 +26515,11 @@ return {
                   returns = {}
                 }
               },
-              notes = "Angular damping can also be set on the World."
+              notes = "Angular damping can also be set on the World.",
+              related = {
+                "World:getAngularDamping",
+                "World:setAngularDamping"
+              }
             },
             {
               name = "setAngularVelocity",
@@ -27265,13 +26527,6 @@ return {
               description = "Sets the angular velocity of the Collider.",
               key = "Collider:setAngularVelocity",
               module = "lovr.physics",
-              related = {
-                "Collider:getLinearVelocity",
-                "Collider:setLinearVelocity",
-                "Collider:applyTorque",
-                "Collider:getOrientation",
-                "Collider:setOrientation"
-              },
               variants = {
                 {
                   arguments = {
@@ -27293,6 +26548,13 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:getLinearVelocity",
+                "Collider:setLinearVelocity",
+                "Collider:applyTorque",
+                "Collider:getOrientation",
+                "Collider:setOrientation"
               }
             },
             {
@@ -27301,12 +26563,6 @@ return {
               description = "Manually puts the Collider to sleep or wakes it up.  You can do this if you know a Collider won't be touched for a while or if you need to it be active.",
               key = "Collider:setAwake",
               module = "lovr.physics",
-              related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
-                "Collider:isSleepingAllowed",
-                "Collider:setSleepingAllowed"
-              },
               variants = {
                 {
                   arguments = {
@@ -27318,6 +26574,12 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "World:isSleepingAllowed",
+                "World:setSleepingAllowed",
+                "Collider:isSleepingAllowed",
+                "Collider:setSleepingAllowed"
               }
             },
             {
@@ -27326,11 +26588,6 @@ return {
               description = "Sets the friction of the Collider.  By default, the friction of two Colliders is combined (multiplied) when they collide to generate a friction force.  The initial friction is 0.",
               key = "Collider:setFriction",
               module = "lovr.physics",
-              related = {
-                "Collider:getRestitution",
-                "Collider:setRestitution",
-                "World:collide"
-              },
               variants = {
                 {
                   arguments = {
@@ -27342,6 +26599,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:getRestitution",
+                "Collider:setRestitution",
+                "World:collide"
               }
             },
             {
@@ -27369,7 +26631,6 @@ return {
               description = "Sets whether the Collider is kinematic.",
               key = "Collider:setKinematic",
               module = "lovr.physics",
-              notes = "Kinematic colliders behave as though they have infinite mass, ignoring external forces like gravity, joints, or collisions (though non-kinematic colliders will collide with them). They can be useful for static objects like floors or walls.",
               variants = {
                 {
                   arguments = {
@@ -27381,7 +26642,8 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "Kinematic colliders behave as though they have infinite mass, ignoring external forces like gravity, joints, or collisions (though non-kinematic colliders will collide with them). They can be useful for static objects like floors or walls."
             },
             {
               name = "setLinearDamping",
@@ -27389,10 +26651,6 @@ return {
               description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time. Damping is only applied when linear velocity is over the threshold value.",
               key = "Collider:setLinearDamping",
               module = "lovr.physics",
-              related = {
-                "World:getLinearDamping",
-                "World:setLinearDamping"
-              },
               variants = {
                 {
                   arguments = {
@@ -27411,7 +26669,11 @@ return {
                   returns = {}
                 }
               },
-              notes = "A linear damping of 0 means the Collider won't slow down over time.  This is the default.\n\nLinear damping can also be set on the World using `World:setLinearDamping`, which will affect all new colliders."
+              notes = "A linear damping of 0 means the Collider won't slow down over time.  This is the default.\n\nLinear damping can also be set on the World using `World:setLinearDamping`, which will affect all new colliders.",
+              related = {
+                "World:getLinearDamping",
+                "World:setLinearDamping"
+              }
             },
             {
               name = "setLinearVelocity",
@@ -27419,15 +26681,6 @@ return {
               description = "Sets the linear velocity of the Collider directly.  Usually it's preferred to use `Collider:applyForce` to change velocity since instantaneous velocity changes can lead to weird glitches.",
               key = "Collider:setLinearVelocity",
               module = "lovr.physics",
-              related = {
-                "Collider:getLinearVelocityFromLocalPoint",
-                "Collider:getLinearVelocityFromWorldPoint",
-                "Collider:getAngularVelocity",
-                "Collider:setAngularVelocity",
-                "Collider:applyForce",
-                "Collider:getPosition",
-                "Collider:setPosition"
-              },
               variants = {
                 {
                   arguments = {
@@ -27449,6 +26702,15 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:getLinearVelocityFromLocalPoint",
+                "Collider:getLinearVelocityFromWorldPoint",
+                "Collider:getAngularVelocity",
+                "Collider:setAngularVelocity",
+                "Collider:applyForce",
+                "Collider:getPosition",
+                "Collider:setPosition"
               }
             },
             {
@@ -27457,11 +26719,6 @@ return {
               description = "Sets the total mass of the Collider.",
               key = "Collider:setMass",
               module = "lovr.physics",
-              related = {
-                "Collider:getMassData",
-                "Collider:setMassData",
-                "Shape:getMass"
-              },
               variants = {
                 {
                   arguments = {
@@ -27473,6 +26730,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:getMassData",
+                "Collider:setMassData",
+                "Shape:getMass"
               }
             },
             {
@@ -27481,11 +26743,6 @@ return {
               description = "Sets mass properties for the Collider.",
               key = "Collider:setMassData",
               module = "lovr.physics",
-              related = {
-                "Collider:getMass",
-                "Collider:setMass",
-                "Shape:getMass"
-              },
               variants = {
                 {
                   arguments = {
@@ -27517,6 +26774,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:getMass",
+                "Collider:setMass",
+                "Shape:getMass"
               }
             },
             {
@@ -27525,6 +26787,33 @@ return {
               description = "Sets the orientation of the Collider in angle/axis representation.",
               key = "Collider:setOrientation",
               module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              },
               related = {
                 "Collider:applyTorque",
                 "Collider:getAngularVelocity",
@@ -27533,33 +26822,6 @@ return {
                 "Collider:setPosition",
                 "Collider:getPose",
                 "Collider:setPose"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the Collider is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  },
-                  returns = {}
-                }
               }
             },
             {
@@ -27568,10 +26830,6 @@ return {
               description = "Sets the position and orientation of the Collider.",
               key = "Collider:setPose",
               module = "lovr.physics",
-              related = {
-                "Collider:setPosition",
-                "Collider:setOrientation"
-              },
               variants = {
                 {
                   arguments = {
@@ -27613,6 +26871,10 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:setPosition",
+                "Collider:setOrientation"
               }
             },
             {
@@ -27621,15 +26883,6 @@ return {
               description = "Sets the position of the Collider.",
               key = "Collider:setPosition",
               module = "lovr.physics",
-              related = {
-                "Collider:applyForce",
-                "Collider:getLinearVelocity",
-                "Collider:setLinearVelocity",
-                "Collider:getOrientation",
-                "Collider:setOrientation",
-                "Collider:getPose",
-                "Collider:setPose"
-              },
               variants = {
                 {
                   arguments = {
@@ -27651,6 +26904,15 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:applyForce",
+                "Collider:getLinearVelocity",
+                "Collider:setLinearVelocity",
+                "Collider:getOrientation",
+                "Collider:setOrientation",
+                "Collider:getPose",
+                "Collider:setPose"
               }
             },
             {
@@ -27659,11 +26921,6 @@ return {
               description = "Sets the restitution (bounciness) of the Collider.  By default, the restitution of two Colliders is combined (the max is used) when they collide to cause them to bounce away from each other. The initial restitution is 0.",
               key = "Collider:setRestitution",
               module = "lovr.physics",
-              related = {
-                "Collider:getFriction",
-                "Collider:setFriction",
-                "World:collide"
-              },
               variants = {
                 {
                   arguments = {
@@ -27675,6 +26932,11 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Collider:getFriction",
+                "Collider:setFriction",
+                "World:collide"
               }
             },
             {
@@ -27683,12 +26945,6 @@ return {
               description = "Sets whether the Collider is allowed to sleep.",
               key = "Collider:setSleepingAllowed",
               module = "lovr.physics",
-              related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
-                "Collider:isAwake",
-                "Collider:setAwake"
-              },
               variants = {
                 {
                   arguments = {
@@ -27701,7 +26957,13 @@ return {
                   returns = {}
                 }
               },
-              notes = "If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a while. Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nIt is possible to set the default value for new colliders using `World:setSleepingAllowed`.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`."
+              notes = "If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a while. Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nIt is possible to set the default value for new colliders using `World:setSleepingAllowed`.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
+              related = {
+                "World:isSleepingAllowed",
+                "World:setSleepingAllowed",
+                "Collider:isAwake",
+                "Collider:setAwake"
+              }
             },
             {
               name = "setTag",
@@ -27709,12 +26971,6 @@ return {
               description = "Sets the Collider's tag.",
               key = "Collider:setTag",
               module = "lovr.physics",
-              related = {
-                "World:disableCollisionBetween",
-                "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween",
-                "lovr.physics.newWorld"
-              },
               variants = {
                 {
                   arguments = {
@@ -27727,7 +26983,13 @@ return {
                   returns = {}
                 }
               },
-              notes = "Collision between tags can be enabled and disabled using `World:enableCollisionBetween` and `World:disableCollisionBetween`."
+              notes = "Collision between tags can be enabled and disabled using `World:enableCollisionBetween` and `World:disableCollisionBetween`.",
+              related = {
+                "World:disableCollisionBetween",
+                "World:enableCollisionBetween",
+                "World:isCollisionEnabledBetween",
+                "lovr.physics.newWorld"
+              }
             },
             {
               name = "setUserData",
@@ -27735,7 +26997,6 @@ return {
               description = "Associates a custom value with the Collider.",
               key = "Collider:setUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Collider in callbacks.",
               variants = {
                 {
                   arguments = {
@@ -27747,16 +27008,9 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "User data can be useful to identify the Collider in callbacks."
             }
-          },
-          constructors = {
-            "World:newCollider",
-            "World:newBoxCollider",
-            "World:newCapsuleCollider",
-            "World:newCylinderCollider",
-            "World:newSphereCollider",
-            "World:newMeshCollider"
           }
         },
         {
@@ -27855,12 +27109,6 @@ return {
           description = "A DistanceJoint is a type of `Joint` that tries to keep two colliders a fixed distance apart. The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.",
           key = "DistanceJoint",
           module = "lovr.physics",
-          related = {
-            "Collider"
-          },
-          constructors = {
-            "lovr.physics.newDistanceJoint"
-          },
           methods = {
             {
               name = "getAnchors",
@@ -27931,12 +27179,6 @@ return {
               description = "Returns the response time of the joint.  See `World:setResponseTime` for more info.",
               key = "DistanceJoint:getResponseTime",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
               variants = {
                 {
                   arguments = {},
@@ -27948,6 +27190,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
               }
             },
             {
@@ -27956,12 +27204,6 @@ return {
               description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
               key = "DistanceJoint:getTightness",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getTightness",
-                "BallJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {},
@@ -27973,6 +27215,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "BallJoint:getTightness",
+                "BallJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
               }
             },
             {
@@ -28044,12 +27292,6 @@ return {
               description = "Sets the response time of the joint.  See `World:setResponseTime` for more info.",
               key = "DistanceJoint:setResponseTime",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
               variants = {
                 {
                   arguments = {
@@ -28061,6 +27303,12 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "World:getResponseTime",
+                "World:setResponseTime"
               }
             },
             {
@@ -28069,12 +27317,6 @@ return {
               description = "Sets the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
               key = "DistanceJoint:setTightness",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getTightness",
-                "BallJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {
@@ -28086,10 +27328,22 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "BallJoint:getTightness",
+                "BallJoint:setTightness",
+                "World:getTightness",
+                "World:setTightness"
               }
             }
           },
-          extends = "Joint"
+          extends = "Joint",
+          related = {
+            "Collider"
+          },
+          constructors = {
+            "lovr.physics.newDistanceJoint"
+          }
         },
         {
           name = "HingeJoint",
@@ -28097,12 +27351,6 @@ return {
           description = "A HingeJoint is a type of `Joint` that only allows colliders to rotate on a single axis.",
           key = "HingeJoint",
           module = "lovr.physics",
-          related = {
-            "Collider"
-          },
-          constructors = {
-            "lovr.physics.newHingeJoint"
-          },
           methods = {
             {
               name = "getAnchors",
@@ -28202,13 +27450,6 @@ return {
               description = "Returns the upper and lower limits of the hinge angle.  These will be between -π and π.",
               key = "HingeJoint:getLimits",
               module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28225,6 +27466,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "HingeJoint:getAngle",
+                "HingeJoint:getLowerLimit",
+                "HingeJoint:setLowerLimit",
+                "HingeJoint:getUpperLimit",
+                "HingeJoint:setUpperLimit"
               }
             },
             {
@@ -28233,13 +27481,6 @@ return {
               description = "Returns the lower limit of the hinge angle.  This will be greater than -π.",
               key = "HingeJoint:getLowerLimit",
               module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28251,6 +27492,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "HingeJoint:getAngle",
+                "HingeJoint:getUpperLimit",
+                "HingeJoint:setUpperLimit",
+                "HingeJoint:getLimits",
+                "HingeJoint:setLimits"
               }
             },
             {
@@ -28259,13 +27507,6 @@ return {
               description = "Returns the upper limit of the hinge angle.  This will be less than π.",
               key = "HingeJoint:getUpperLimit",
               module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28277,6 +27518,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "HingeJoint:getAngle",
+                "HingeJoint:getLowerLimit",
+                "HingeJoint:setLowerLimit",
+                "HingeJoint:getLimits",
+                "HingeJoint:setLimits"
               }
             },
             {
@@ -28343,13 +27591,6 @@ return {
               description = "Sets the upper and lower limits of the hinge angle.  These should be between -π and π.",
               key = "HingeJoint:setLimits",
               module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit"
-              },
               variants = {
                 {
                   arguments = {
@@ -28366,6 +27607,13 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "HingeJoint:getAngle",
+                "HingeJoint:getLowerLimit",
+                "HingeJoint:setLowerLimit",
+                "HingeJoint:getUpperLimit",
+                "HingeJoint:setUpperLimit"
               }
             },
             {
@@ -28374,13 +27622,6 @@ return {
               description = "Sets the lower limit of the hinge angle.  This should be greater than -π.",
               key = "HingeJoint:setLowerLimit",
               module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {
@@ -28392,6 +27633,13 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "HingeJoint:getAngle",
+                "HingeJoint:getUpperLimit",
+                "HingeJoint:setUpperLimit",
+                "HingeJoint:getLimits",
+                "HingeJoint:setLimits"
               }
             },
             {
@@ -28400,13 +27648,6 @@ return {
               description = "Sets the upper limit of the hinge angle.  This should be less than π.",
               key = "HingeJoint:setUpperLimit",
               module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {
@@ -28418,10 +27659,23 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "HingeJoint:getAngle",
+                "HingeJoint:getLowerLimit",
+                "HingeJoint:setLowerLimit",
+                "HingeJoint:getLimits",
+                "HingeJoint:setLimits"
               }
             }
           },
-          extends = "Joint"
+          extends = "Joint",
+          related = {
+            "Collider"
+          },
+          constructors = {
+            "lovr.physics.newHingeJoint"
+          }
         },
         {
           name = "Joint",
@@ -28429,6 +27683,15 @@ return {
           description = "A Joint is a physics object that constrains the movement of two Colliders.",
           key = "Joint",
           module = "lovr.physics",
+          related = {
+            "Collider"
+          },
+          constructors = {
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newSliderJoint"
+          },
           methods = {
             {
               name = "destroy",
@@ -28436,18 +27699,18 @@ return {
               description = "Destroy the Joint, removing it from Colliders it's attached to.",
               key = "Joint:destroy",
               module = "lovr.physics",
-              related = {
-                "Collider:destroy",
-                "Shape:destroy",
-                "World:destroy"
-              },
               variants = {
                 {
                   arguments = {},
                   returns = {}
                 }
               },
-              notes = "Calling functions on the Joint after destroying it is a bad idea."
+              notes = "Calling functions on the Joint after destroying it is a bad idea.",
+              related = {
+                "Collider:destroy",
+                "Shape:destroy",
+                "World:destroy"
+              }
             },
             {
               name = "getColliders",
@@ -28479,9 +27742,6 @@ return {
               description = "Returns the type of the Joint.",
               key = "Joint:getType",
               module = "lovr.physics",
-              related = {
-                "JointType"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28493,6 +27753,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "JointType"
               }
             },
             {
@@ -28571,15 +27834,6 @@ return {
                 }
               }
             }
-          },
-          constructors = {
-            "lovr.physics.newBallJoint",
-            "lovr.physics.newDistanceJoint",
-            "lovr.physics.newHingeJoint",
-            "lovr.physics.newSliderJoint"
-          },
-          related = {
-            "Collider"
           }
         },
         {
@@ -28588,6 +27842,16 @@ return {
           description = "A Shape is a physics object that can be attached to colliders to define their shape.",
           key = "Shape",
           module = "lovr.physics",
+          constructors = {
+            "lovr.physics.newBoxShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newCylinderShape",
+            "lovr.physics.newSphereShape",
+            "World:newBoxCollider",
+            "World:newCapsuleCollider",
+            "World:newCylinderCollider",
+            "World:newSphereCollider"
+          },
           methods = {
             {
               name = "destroy",
@@ -28595,18 +27859,18 @@ return {
               description = "Destroy the Shape, removing it from Colliders it's attached to.",
               key = "Shape:destroy",
               module = "lovr.physics",
-              related = {
-                "Collider:destroy",
-                "Joint:destroy",
-                "World:destroy"
-              },
               variants = {
                 {
                   arguments = {},
                   returns = {}
                 }
               },
-              notes = "Calling functions on the Shape after destroying it is a bad idea."
+              notes = "Calling functions on the Shape after destroying it is a bad idea.",
+              related = {
+                "Collider:destroy",
+                "Joint:destroy",
+                "World:destroy"
+              }
             },
             {
               name = "getAABB",
@@ -28614,9 +27878,6 @@ return {
               description = "Returns the bounding box for the Shape.",
               key = "Shape:getAABB",
               module = "lovr.physics",
-              related = {
-                "Collider:getAABB"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28653,6 +27914,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getAABB"
               }
             },
             {
@@ -28661,11 +27925,6 @@ return {
               description = "Returns the Collider the Shape is attached to.",
               key = "Shape:getCollider",
               module = "lovr.physics",
-              related = {
-                "Collider",
-                "Collider:addShape",
-                "Collider:removeShape"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28678,7 +27937,12 @@ return {
                   }
                 }
               },
-              notes = "A Shape can only be attached to one Collider at a time."
+              notes = "A Shape can only be attached to one Collider at a time.",
+              related = {
+                "Collider",
+                "Collider:addShape",
+                "Collider:removeShape"
+              }
             },
             {
               name = "getMass",
@@ -28686,12 +27950,6 @@ return {
               description = "Computes mass properties of the Shape.",
               key = "Shape:getMass",
               module = "lovr.physics",
-              related = {
-                "Collider:getMass",
-                "Collider:setMass",
-                "Collider:getMassData",
-                "Collider:setMassData"
-              },
               variants = {
                 {
                   arguments = {
@@ -28729,6 +27987,12 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getMassData",
+                "Collider:setMassData"
               }
             },
             {
@@ -28737,10 +28001,6 @@ return {
               description = "Get the orientation of the Shape relative to its Collider.",
               key = "Shape:getOrientation",
               module = "lovr.physics",
-              related = {
-                "Shape:getPosition",
-                "Shape:setPosition"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28767,6 +28027,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Shape:getPosition",
+                "Shape:setPosition"
               }
             },
             {
@@ -28775,10 +28039,6 @@ return {
               description = "Get the position of the Shape relative to its Collider.",
               key = "Shape:getPosition",
               module = "lovr.physics",
-              related = {
-                "Shape:getOrientation",
-                "Shape:setOrientation"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28800,6 +28060,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Shape:getOrientation",
+                "Shape:setOrientation"
               }
             },
             {
@@ -28808,9 +28072,6 @@ return {
               description = "Returns the type of the Shape.",
               key = "Shape:getType",
               module = "lovr.physics",
-              related = {
-                "ShapeType"
-              },
               variants = {
                 {
                   arguments = {},
@@ -28822,6 +28083,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "ShapeType"
               }
             },
             {
@@ -28830,7 +28094,6 @@ return {
               description = "Returns the user data associated with the Shape.",
               key = "Shape:getUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Shape in callbacks.",
               variants = {
                 {
                   arguments = {},
@@ -28842,7 +28105,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "User data can be useful to identify the Shape in callbacks."
             },
             {
               name = "isEnabled",
@@ -28850,7 +28114,6 @@ return {
               description = "Returns whether the Shape is enabled.",
               key = "Shape:isEnabled",
               module = "lovr.physics",
-              notes = "Disabled shapes won't collide with anything.",
               variants = {
                 {
                   arguments = {},
@@ -28862,7 +28125,8 @@ return {
                     }
                   }
                 }
-              }
+              },
+              notes = "Disabled shapes won't collide with anything."
             },
             {
               name = "isSensor",
@@ -28889,7 +28153,6 @@ return {
               description = "Enable or disable the Shape.",
               key = "Shape:setEnabled",
               module = "lovr.physics",
-              notes = "Disabled shapes won't collide with anything.",
               variants = {
                 {
                   arguments = {
@@ -28901,7 +28164,8 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "Disabled shapes won't collide with anything."
             },
             {
               name = "setOrientation",
@@ -28909,10 +28173,6 @@ return {
               description = "Set the orientation of the Shape relative to its Collider.",
               key = "Shape:setOrientation",
               module = "lovr.physics",
-              related = {
-                "Shape:getPosition",
-                "Shape:setPosition"
-              },
               variants = {
                 {
                   arguments = {
@@ -28940,7 +28200,11 @@ return {
                   returns = {}
                 }
               },
-              notes = "If the Shape isn't attached to a Collider, this will error."
+              notes = "If the Shape isn't attached to a Collider, this will error.",
+              related = {
+                "Shape:getPosition",
+                "Shape:setPosition"
+              }
             },
             {
               name = "setPosition",
@@ -28948,10 +28212,6 @@ return {
               description = "Set the position of the Shape relative to its Collider.",
               key = "Shape:setPosition",
               module = "lovr.physics",
-              related = {
-                "Shape:getOrientation",
-                "Shape:setOrientation"
-              },
               variants = {
                 {
                   arguments = {
@@ -28974,7 +28234,11 @@ return {
                   returns = {}
                 }
               },
-              notes = "If the Shape isn't attached to a Collider, this will error."
+              notes = "If the Shape isn't attached to a Collider, this will error.",
+              related = {
+                "Shape:getOrientation",
+                "Shape:setOrientation"
+              }
             },
             {
               name = "setSensor",
@@ -29001,7 +28265,6 @@ return {
               description = "Sets the user data associated with the Shape.",
               key = "Shape:setUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Shape in callbacks.",
               variants = {
                 {
                   arguments = {
@@ -29013,18 +28276,9 @@ return {
                   },
                   returns = {}
                 }
-              }
+              },
+              notes = "User data can be useful to identify the Shape in callbacks."
             }
-          },
-          constructors = {
-            "lovr.physics.newBoxShape",
-            "lovr.physics.newCapsuleShape",
-            "lovr.physics.newCylinderShape",
-            "lovr.physics.newSphereShape",
-            "World:newBoxCollider",
-            "World:newCapsuleCollider",
-            "World:newCylinderCollider",
-            "World:newSphereCollider"
           }
         },
         {
@@ -29033,12 +28287,6 @@ return {
           description = "A SliderJoint is a type of `Joint` that only allows colliders to move on a single axis.",
           key = "SliderJoint",
           module = "lovr.physics",
-          related = {
-            "Collider"
-          },
-          constructors = {
-            "lovr.physics.newSliderJoint"
-          },
           methods = {
             {
               name = "getAxis",
@@ -29075,13 +28323,6 @@ return {
               description = "Returns the upper and lower limits of the slider position.",
               key = "SliderJoint:getLimits",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29098,6 +28339,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "SliderJoint:getPosition",
+                "SliderJoint:getLowerLimit",
+                "SliderJoint:setLowerLimit",
+                "SliderJoint:getUpperLimit",
+                "SliderJoint:setUpperLimit"
               }
             },
             {
@@ -29106,13 +28354,6 @@ return {
               description = "Returns the lower limit of the slider position.",
               key = "SliderJoint:getLowerLimit",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29124,6 +28365,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "SliderJoint:getPosition",
+                "SliderJoint:getUpperLimit",
+                "SliderJoint:setUpperLimit",
+                "SliderJoint:getLimits",
+                "SliderJoint:setLimits"
               }
             },
             {
@@ -29132,13 +28380,6 @@ return {
               description = "Returns how far the slider joint is extended (zero is the position the slider was created at, positive values are further apart).",
               key = "SliderJoint:getPosition",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getAxis",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29150,6 +28391,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "SliderJoint:getAxis",
+                "SliderJoint:getLowerLimit",
+                "SliderJoint:setLowerLimit",
+                "SliderJoint:getUpperLimit",
+                "SliderJoint:setUpperLimit"
               }
             },
             {
@@ -29158,13 +28406,6 @@ return {
               description = "Returns the upper limit of the slider position.",
               key = "SliderJoint:getUpperLimit",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29176,6 +28417,13 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "SliderJoint:getPosition",
+                "SliderJoint:getLowerLimit",
+                "SliderJoint:setLowerLimit",
+                "SliderJoint:getLimits",
+                "SliderJoint:setLimits"
               }
             },
             {
@@ -29213,13 +28461,6 @@ return {
               description = "Sets the upper and lower limits of the slider position.",
               key = "SliderJoint:setLimits",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit"
-              },
               variants = {
                 {
                   arguments = {
@@ -29236,6 +28477,13 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "SliderJoint:getPosition",
+                "SliderJoint:getLowerLimit",
+                "SliderJoint:setLowerLimit",
+                "SliderJoint:getUpperLimit",
+                "SliderJoint:setUpperLimit"
               }
             },
             {
@@ -29244,13 +28492,6 @@ return {
               description = "Sets the lower limit of the slider position.",
               key = "SliderJoint:setLowerLimit",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {
@@ -29262,6 +28503,13 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "SliderJoint:getPosition",
+                "SliderJoint:getUpperLimit",
+                "SliderJoint:setUpperLimit",
+                "SliderJoint:getLimits",
+                "SliderJoint:setLimits"
               }
             },
             {
@@ -29270,13 +28518,6 @@ return {
               description = "Sets the upper limit of the slider position.",
               key = "SliderJoint:setUpperLimit",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
-              },
               variants = {
                 {
                   arguments = {
@@ -29288,10 +28529,23 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "SliderJoint:getPosition",
+                "SliderJoint:getLowerLimit",
+                "SliderJoint:setLowerLimit",
+                "SliderJoint:getLimits",
+                "SliderJoint:setLimits"
               }
             }
           },
-          extends = "Joint"
+          extends = "Joint",
+          related = {
+            "Collider"
+          },
+          constructors = {
+            "lovr.physics.newSliderJoint"
+          }
         },
         {
           name = "SphereShape",
@@ -29351,6 +28605,10 @@ return {
           description = "A World is an object that holds the colliders, joints, and shapes in a physics simulation.",
           key = "World",
           module = "lovr.physics",
+          constructors = {
+            "lovr.physics.newWorld"
+          },
+          notes = "Be sure to update the World in `lovr.update` using `World:update`, otherwise everything will stand still.",
           methods = {
             {
               name = "collide",
@@ -29359,7 +28617,13 @@ return {
               description = "Attempt to collide two shapes.  Internally this uses joints and forces to ensure the colliders attached to the shapes do not pass through each other.  Collisions can be customized using friction and restitution (bounciness) parameters, and default to using a mix of the colliders' friction and restitution parameters.  Usually this is called automatically by `World:update`.",
               key = "World:collide",
               module = "lovr.physics",
-              notes = "For friction, numbers in the range of 0-1 are common, but larger numbers can also be used.\n\nFor restitution, numbers in the range 0-1 should be used.\n\nThis function respects collision tags, so using `World:disableCollisionBetween` and `World:enableCollisionBetween` will change the behavior of this function.",
+              related = {
+                "World:computeOverlaps",
+                "World:overlaps",
+                "World:disableCollisionBetween",
+                "World:enableCollisionBetween",
+                "World:isCollisionEnabledBetween"
+              },
               variants = {
                 {
                   arguments = {
@@ -29395,13 +28659,7 @@ return {
                   }
                 }
               },
-              related = {
-                "World:computeOverlaps",
-                "World:overlaps",
-                "World:disableCollisionBetween",
-                "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween"
-              }
+              notes = "For friction, numbers in the range of 0-1 are common, but larger numbers can also be used.\n\nFor restitution, numbers in the range 0-1 should be used.\n\nThis function respects collision tags, so using `World:disableCollisionBetween` and `World:enableCollisionBetween` will change the behavior of this function."
             },
             {
               name = "computeOverlaps",
@@ -29410,10 +28668,10 @@ return {
               description = "Detects which pairs of shapes in the world are near each other and could be colliding.  After calling this function, the `World:overlaps` iterator can be used to iterate over the overlaps, and `World:collide` can be used to resolve a collision for the shapes (if any). Usually this is called automatically by `World:update`.",
               key = "World:computeOverlaps",
               module = "lovr.physics",
-              examples = {
-                {
-                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
-                }
+              related = {
+                "World:overlaps",
+                "World:collide",
+                "World:update"
               },
               variants = {
                 {
@@ -29421,10 +28679,10 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "World:overlaps",
-                "World:collide",
-                "World:update"
+              examples = {
+                {
+                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
+                }
               }
             },
             {
@@ -29449,7 +28707,11 @@ return {
               description = "Disables collision between two collision tags.",
               key = "World:disableCollisionBetween",
               module = "lovr.physics",
-              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags.",
+              related = {
+                "lovr.physics.newWorld",
+                "World:enableCollisionBetween",
+                "World:isCollisionEnabledBetween"
+              },
               variants = {
                 {
                   arguments = {
@@ -29467,11 +28729,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "lovr.physics.newWorld",
-                "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween"
-              }
+              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags."
             },
             {
               name = "enableCollisionBetween",
@@ -29480,7 +28738,11 @@ return {
               description = "Enables collision between two collision tags.",
               key = "World:enableCollisionBetween",
               module = "lovr.physics",
-              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags.",
+              related = {
+                "lovr.physics.newWorld",
+                "World:disableCollisionBetween",
+                "World:isCollisionEnabledBetween"
+              },
               variants = {
                 {
                   arguments = {
@@ -29498,11 +28760,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "lovr.physics.newWorld",
-                "World:disableCollisionBetween",
-                "World:isCollisionEnabledBetween"
-              }
+              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags."
             },
             {
               name = "getAngularDamping",
@@ -29511,7 +28769,10 @@ return {
               description = "Returns the angular damping parameters of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:getAngularDamping",
               module = "lovr.physics",
-              notes = "Angular damping can also be set on individual colliders.",
+              related = {
+                "Collider:getAngularDamping",
+                "Collider:setAngularDamping"
+              },
               variants = {
                 {
                   arguments = {},
@@ -29529,10 +28790,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Collider:getAngularDamping",
-                "Collider:setAngularDamping"
-              }
+              notes = "Angular damping can also be set on individual colliders."
             },
             {
               name = "getColliders",
@@ -29607,7 +28865,10 @@ return {
               description = "Returns the linear damping parameters of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:getLinearDamping",
               module = "lovr.physics",
-              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nLinear damping can also be set on individual colliders.",
+              related = {
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping"
+              },
               variants = {
                 {
                   arguments = {},
@@ -29625,10 +28886,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Collider:getLinearDamping",
-                "Collider:setLinearDamping"
-              }
+              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nLinear damping can also be set on individual colliders."
             },
             {
               name = "getResponseTime",
@@ -29637,14 +28895,6 @@ return {
               description = "Returns the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
               key = "World:getResponseTime",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29656,6 +28906,14 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getTightness",
+                "World:setTightness"
               }
             },
             {
@@ -29665,9 +28923,6 @@ return {
               description = "Returns the step count of the World.  The step count influences how many steps are taken during a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The default step count is 20.",
               key = "World:getStepCount",
               module = "lovr.physics",
-              related = {
-                "World:update"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29679,6 +28934,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "World:update"
               }
             },
             {
@@ -29688,10 +28946,6 @@ return {
               description = "Returns the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:getTightness",
               module = "lovr.physics",
-              related = {
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness"
-              },
               variants = {
                 {
                   arguments = {},
@@ -29703,6 +28957,10 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness"
               }
             },
             {
@@ -29712,7 +28970,11 @@ return {
               description = "Returns whether collisions are currently enabled between two tags.",
               key = "World:isCollisionEnabledBetween",
               module = "lovr.physics",
-              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags.",
+              related = {
+                "lovr.physics.newWorld",
+                "World:disableCollisionBetween",
+                "World:enableCollisionBetween"
+              },
               variants = {
                 {
                   arguments = {
@@ -29736,11 +28998,7 @@ return {
                   }
                 }
               },
-              related = {
-                "lovr.physics.newWorld",
-                "World:disableCollisionBetween",
-                "World:enableCollisionBetween"
-              }
+              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags."
             },
             {
               name = "isSleepingAllowed",
@@ -29749,7 +29007,12 @@ return {
               description = "Returns whether colliders can go to sleep in the World.",
               key = "World:isSleepingAllowed",
               module = "lovr.physics",
-              notes = "If sleeping is enabled, the World will try to detect colliders that haven't moved for a while and put them to sleep.  Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nThis can be set on individual colliders.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
+              related = {
+                "Collider:isSleepingAllowed",
+                "Collider:setSleepingAllowed",
+                "Collider:isAwake",
+                "Collider:setAwake"
+              },
               variants = {
                 {
                   arguments = {},
@@ -29762,12 +29025,7 @@ return {
                   }
                 }
               },
-              related = {
-                "Collider:isSleepingAllowed",
-                "Collider:setSleepingAllowed",
-                "Collider:isAwake",
-                "Collider:setAwake"
-              }
+              notes = "If sleeping is enabled, the World will try to detect colliders that haven't moved for a while and put them to sleep.  Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nThis can be set on individual colliders.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`."
             },
             {
               name = "newBoxCollider",
@@ -29776,15 +29034,6 @@ return {
               description = "Adds a new Collider to the World with a BoxShape already attached.",
               key = "World:newBoxCollider",
               module = "lovr.physics",
-              related = {
-                "BoxShape",
-                "Collider",
-                "World:newCollider",
-                "World:newCapsuleCollider",
-                "World:newCylinderCollider",
-                "World:newMeshCollider",
-                "World:newSphereCollider"
-              },
               variants = {
                 {
                   arguments = {
@@ -29833,6 +29082,16 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "BoxShape",
+                "Collider",
+                "World:newCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newMeshCollider",
+                "World:newSphereCollider",
+                "World:newTerrainCollider"
               }
             },
             {
@@ -29842,15 +29101,6 @@ return {
               description = "Adds a new Collider to the World with a CapsuleShape already attached.",
               key = "World:newCapsuleCollider",
               module = "lovr.physics",
-              related = {
-                "CapsuleShape",
-                "Collider",
-                "World:newCollider",
-                "World:newBoxCollider",
-                "World:newCylinderCollider",
-                "World:newMeshCollider",
-                "World:newSphereCollider"
-              },
               variants = {
                 {
                   arguments = {
@@ -29893,6 +29143,16 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "CapsuleShape",
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newCylinderCollider",
+                "World:newMeshCollider",
+                "World:newSphereCollider",
+                "World:newTerrainCollider"
               }
             },
             {
@@ -29902,6 +29162,17 @@ return {
               description = "Adds a new Collider to the World.",
               key = "World:newCollider",
               module = "lovr.physics",
+              related = {
+                "World:newBoxCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newMeshCollider",
+                "World:newSphereCollider",
+                "World:newTerrainCollider",
+                "Collider",
+                "Shape"
+              },
+              notes = "This function creates a collider without any shapes attached to it, which means it won't collide with anything.  To add a shape to the collider, use `Collider:addShape`, or use one of the following functions to create the collider:\n\n- `World:newBoxCollider`\n- `World:newCapsuleCollider`\n- `World:newCylinderCollider`\n- `World:newSphereCollider`",
               variants = {
                 {
                   arguments = {
@@ -29933,22 +29204,12 @@ return {
                   }
                 }
               },
-              related = {
-                "World:newBoxCollider",
-                "World:newCapsuleCollider",
-                "World:newCylinderCollider",
-                "World:newMeshCollider",
-                "World:newSphereCollider",
-                "Collider",
-                "Shape"
-              },
               examples = {
                 {
                   description = "Create a new world, add a collider to it, and update it, printing out the collider's position as it falls.",
                   code = "function lovr.load()\n  world = lovr.physics.newWorld()\n  box = world:newBoxCollider()\nend\n\nfunction lovr.update(dt)\n  world:update(dt)\n  print(box:getPosition())\nend"
                 }
-              },
-              notes = "This function creates a collider without any shapes attached to it, which means it won't collide with anything.  To add a shape to the collider, use `Collider:addShape`, or use one of the following functions to create the collider:\n\n- `World:newBoxCollider`\n- `World:newCapsuleCollider`\n- `World:newCylinderCollider`\n- `World:newSphereCollider`"
+              }
             },
             {
               name = "newCylinderCollider",
@@ -29957,15 +29218,6 @@ return {
               description = "Adds a new Collider to the World with a CylinderShape already attached.",
               key = "World:newCylinderCollider",
               module = "lovr.physics",
-              related = {
-                "CylinderShape",
-                "Collider",
-                "World:newCollider",
-                "World:newBoxCollider",
-                "World:newCapsuleCollider",
-                "World:newMeshCollider",
-                "World:newSphereCollider"
-              },
               variants = {
                 {
                   arguments = {
@@ -30008,6 +29260,16 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "CylinderShape",
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newCapsuleCollider",
+                "World:newMeshCollider",
+                "World:newSphereCollider",
+                "World:newTerrainCollider"
               }
             },
             {
@@ -30017,15 +29279,6 @@ return {
               description = "Adds a new Collider to the World with a MeshShape already attached.",
               key = "World:newMeshCollider",
               module = "lovr.physics",
-              related = {
-                "Collider",
-                "World:newCollider",
-                "World:newBoxCollider",
-                "World:newCapsuleCollider",
-                "World:newCylinderCollider",
-                "World:newSphereCollider",
-                "Model:getTriangles"
-              },
               variants = {
                 {
                   arguments = {
@@ -30064,6 +29317,16 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newSphereCollider",
+                "World:newTerrainCollider",
+                "Model:getTriangles"
               }
             },
             {
@@ -30073,15 +29336,6 @@ return {
               description = "Adds a new Collider to the World with a SphereShape already attached.",
               key = "World:newSphereCollider",
               module = "lovr.physics",
-              related = {
-                "SphereShape",
-                "Collider",
-                "World:newCollider",
-                "World:newBoxCollider",
-                "World:newCapsuleCollider",
-                "World:newCylinderCollider",
-                "World:newMeshCollider"
-              },
               variants = {
                 {
                   arguments = {
@@ -30118,7 +29372,125 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "SphereShape",
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newMeshCollider",
+                "World:newTerrainCollider"
               }
+            },
+            {
+              name = "newTerrainCollider",
+              tag = "colliders",
+              summary = "Add a Collider with a TerrainShape to the World.",
+              description = "Adds a new Collider to the World with a TerrainShape already attached.",
+              key = "World:newTerrainCollider",
+              module = "lovr.physics",
+              related = {
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newSphereCollider",
+                "World:newMeshCollider",
+                "lovr.data.newImage"
+              },
+              variants = {
+                {
+                  description = "Create a flat floor collider.",
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The width and depth of the terrain, in meters."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  description = "Create terrain from a heightmap image.",
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The width and depth of the terrain, in meters."
+                    },
+                    {
+                      name = "heightmap",
+                      type = "Image",
+                      description = "A heightmap image describing the terrain elevation at different points.  The red channel brightness of each pixel determines the elevation at corresponding coordinates."
+                    },
+                    {
+                      name = "stretch",
+                      type = "number",
+                      description = "A vertical multiplier for height values to obtain terrain height.  When the image format has pixel values only in the 0 to 1 range, this can be used to scale the height to meters.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  description = "Create terrain defined with a callback function.",
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The width and depth of the terrain, in meters."
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "A function that computes terrain height from x and z coordinates.  The x and z inputs will range from `-scale / 2` to `scale / 2`.",
+                      arguments = {
+                        {
+                          name = "x",
+                          type = "number"
+                        },
+                        {
+                          name = "z",
+                          type = "number"
+                        }
+                      },
+                      returns = {
+                        name = "height",
+                        type = "number"
+                      }
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "The number of samples taken across the x and z dimensions.  More samples will result in higher terrain fidelity, but use more CPU and memory.",
+                      default = "100"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                }
+              },
+              notes = "The collider will be positioned at 0, 0, 0.  Unlike other colliders, it will automatically be set as kinematic when created."
             },
             {
               name = "overlaps",
@@ -30127,10 +29499,10 @@ return {
               description = "Returns an iterator that can be used to iterate over \"overlaps\", or potential collisions between pairs of shapes in the World.  This should be called after using `World:computeOverlaps` to compute the list of overlaps. Usually this is called automatically by `World:update`.",
               key = "World:overlaps",
               module = "lovr.physics",
-              examples = {
-                {
-                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
-                }
+              related = {
+                "World:computeOverlaps",
+                "World:collide",
+                "World:update"
               },
               variants = {
                 {
@@ -30146,10 +29518,10 @@ return {
                   }
                 }
               },
-              related = {
-                "World:computeOverlaps",
-                "World:collide",
-                "World:update"
+              examples = {
+                {
+                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
+                }
               }
             },
             {
@@ -30260,7 +29632,10 @@ return {
               description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "World:setAngularDamping",
               module = "lovr.physics",
-              notes = "Angular damping can also be set on individual colliders.",
+              related = {
+                "Collider:getAngularDamping",
+                "Collider:setAngularDamping"
+              },
               variants = {
                 {
                   arguments = {
@@ -30279,10 +29654,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Collider:getAngularDamping",
-                "Collider:setAngularDamping"
-              }
+              notes = "Angular damping can also be set on individual colliders."
             },
             {
               name = "setGravity",
@@ -30321,7 +29693,10 @@ return {
               description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move. Damping is only applied when linear velocity is over the threshold value.",
               key = "World:setLinearDamping",
               module = "lovr.physics",
-              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nLinear damping can also be set on individual colliders.",
+              related = {
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping"
+              },
               variants = {
                 {
                   arguments = {
@@ -30340,10 +29715,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Collider:getLinearDamping",
-                "Collider:setLinearDamping"
-              }
+              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nLinear damping can also be set on individual colliders."
             },
             {
               name = "setResponseTime",
@@ -30352,14 +29724,6 @@ return {
               description = "Sets the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
               key = "World:setResponseTime",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {
@@ -30371,6 +29735,14 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "BallJoint:getResponseTime",
+                "BallJoint:setResponseTime",
+                "DistanceJoint:getResponseTime",
+                "DistanceJoint:setResponseTime",
+                "World:getTightness",
+                "World:setTightness"
               }
             },
             {
@@ -30380,7 +29752,12 @@ return {
               description = "Sets whether colliders can go to sleep in the World.",
               key = "World:setSleepingAllowed",
               module = "lovr.physics",
-              notes = "If sleeping is enabled, the World will try to detect colliders that haven't moved for a while and put them to sleep.  Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nThis can be set on individual colliders.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
+              related = {
+                "Collider:isSleepingAllowed",
+                "Collider:setSleepingAllowed",
+                "Collider:isAwake",
+                "Collider:setAwake"
+              },
               variants = {
                 {
                   arguments = {
@@ -30393,12 +29770,7 @@ return {
                   returns = {}
                 }
               },
-              related = {
-                "Collider:isSleepingAllowed",
-                "Collider:setSleepingAllowed",
-                "Collider:isAwake",
-                "Collider:setAwake"
-              }
+              notes = "If sleeping is enabled, the World will try to detect colliders that haven't moved for a while and put them to sleep.  Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nThis can be set on individual colliders.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`."
             },
             {
               name = "setStepCount",
@@ -30407,9 +29779,6 @@ return {
               description = "Sets the step count of the World.  The step count influences how many steps are taken during a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The default step count is 20.",
               key = "World:setStepCount",
               module = "lovr.physics",
-              related = {
-                "World:update"
-              },
               variants = {
                 {
                   arguments = {
@@ -30421,6 +29790,9 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "World:update"
               }
             },
             {
@@ -30430,14 +29802,6 @@ return {
               description = "Sets the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:setTightness",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getTightness",
-                "BallJoint:setTightness",
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
               variants = {
                 {
                   arguments = {
@@ -30449,6 +29813,14 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "BallJoint:getTightness",
+                "BallJoint:setTightness",
+                "DistanceJoint:getTightness",
+                "DistanceJoint:setTightness",
+                "World:getResponseTime",
+                "World:setResponseTime"
               }
             },
             {
@@ -30458,7 +29830,11 @@ return {
               description = "Updates the World, advancing the physics simulation forward in time and resolving collisions between colliders in the World.",
               key = "World:update",
               module = "lovr.physics",
-              notes = "It is common to pass the `dt` variable from `lovr.update` into this function.\n\nThe default collision resolver function is:\n\n    function defaultResolver(world)\n      world:computeOverlaps()\n      for shapeA, shapeB in world:overlaps() do\n        world:collide(shapeA, shapeB)\n      end\n    end\n\nAdditional logic could be introduced to the collision resolver function to add custom collision behavior or to change the collision parameters (like friction and restitution) on a per-collision basis.\n\n> If possible, use a fixed timestep value for updating the World. It will greatly improve the\n> accuracy of the simulation and reduce bugs. For more information on implementing a fixed\n> timestep loop, see [this article](http://gafferongames.com/game-physics/fix-your-timestep/).",
+              related = {
+                "World:computeOverlaps",
+                "World:overlaps",
+                "World:collide"
+              },
               variants = {
                 {
                   arguments = {
@@ -30478,6 +29854,7 @@ return {
                         }
                       },
                       returns = {},
+                      default = "nil",
                       variants = {
                         {
                           arguments = {
@@ -30486,18 +29863,13 @@ return {
                           },
                           returns = {}
                         }
-                      },
-                      default = "nil"
+                      }
                     }
                   },
                   returns = {}
                 }
               },
-              related = {
-                "World:computeOverlaps",
-                "World:overlaps",
-                "World:collide"
-              }
+              notes = "It is common to pass the `dt` variable from `lovr.update` into this function.\n\nThe default collision resolver function is:\n\n    function defaultResolver(world)\n      world:computeOverlaps()\n      for shapeA, shapeB in world:overlaps() do\n        world:collide(shapeA, shapeB)\n      end\n    end\n\nAdditional logic could be introduced to the collision resolver function to add custom collision behavior or to change the collision parameters (like friction and restitution) on a per-collision basis.\n\n> If possible, use a fixed timestep value for updating the World. It will greatly improve the\n> accuracy of the simulation and reduce bugs. For more information on implementing a fixed\n> timestep loop, see [this article](http://gafferongames.com/game-physics/fix-your-timestep/)."
             }
           },
           sections = {
@@ -30520,10 +29892,6 @@ return {
               tag = "worldCollision",
               description = "When the World is created using `lovr.physics.newWorld`, it is possible to specify a list of collision tags for the World.  Colliders can then be assigned a tag.  You can enable and disable collision between pairs of tags.  There are also some helper functions to quickly identify pairs of colliders that are near each other and test whether or not they are colliding.  These are used internally by default by `World:update`, but you can override this behavior and use the functions directly for custom collision behavior."
             }
-          },
-          notes = "Be sure to update the World in `lovr.update` using `World:update`, otherwise everything will stand still.",
-          constructors = {
-            "lovr.physics.newWorld"
           }
         }
       }
@@ -30534,6 +29902,7 @@ return {
       summary = "Provides information about the current operating system and platform.",
       description = "The `lovr.system` provides information about the current platform and hardware.",
       key = "lovr.system",
+      objects = {},
       functions = {
         {
           name = "getCoreCount",
@@ -30541,9 +29910,6 @@ return {
           description = "Returns the number of logical cores on the system.",
           key = "lovr.system.getCoreCount",
           module = "lovr.system",
-          related = {
-            "lovr.thread"
-          },
           variants = {
             {
               arguments = {},
@@ -30555,6 +29921,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.thread"
           }
         },
         {
@@ -30601,11 +29970,6 @@ return {
           description = "Returns the dimensions of the desktop window.",
           key = "lovr.system.getWindowDimensions",
           module = "lovr.system",
-          related = {
-            "lovr.system.getWindowWidth",
-            "lovr.system.getWindowHeight",
-            "lovr.system.isWindowOpen"
-          },
           variants = {
             {
               arguments = {},
@@ -30623,7 +29987,12 @@ return {
               }
             }
           },
-          notes = "If the window is not open, this will return zeros."
+          notes = "If the window is not open, this will return zeros.",
+          related = {
+            "lovr.system.getWindowWidth",
+            "lovr.system.getWindowHeight",
+            "lovr.system.isWindowOpen"
+          }
         },
         {
           name = "getWindowHeight",
@@ -30631,11 +30000,6 @@ return {
           description = "Returns the height of the desktop window.",
           key = "lovr.system.getWindowHeight",
           module = "lovr.system",
-          related = {
-            "lovr.system.getWindowWidth",
-            "lovr.system.getWindowDimensions",
-            "lovr.system.isWindowOpen"
-          },
           variants = {
             {
               arguments = {},
@@ -30648,7 +30012,12 @@ return {
               }
             }
           },
-          notes = "If the window is not open, this will return zero."
+          notes = "If the window is not open, this will return zero.",
+          related = {
+            "lovr.system.getWindowWidth",
+            "lovr.system.getWindowDimensions",
+            "lovr.system.isWindowOpen"
+          }
         },
         {
           name = "getWindowWidth",
@@ -30656,11 +30025,6 @@ return {
           description = "Returns the width of the desktop window.",
           key = "lovr.system.getWindowWidth",
           module = "lovr.system",
-          related = {
-            "lovr.system.getWindowHeight",
-            "lovr.system.getWindowDimensions",
-            "lovr.system.isWindowOpen"
-          },
           variants = {
             {
               arguments = {},
@@ -30673,7 +30037,12 @@ return {
               }
             }
           },
-          notes = "If the window is not open, this will return zero."
+          notes = "If the window is not open, this will return zero.",
+          related = {
+            "lovr.system.getWindowHeight",
+            "lovr.system.getWindowDimensions",
+            "lovr.system.isWindowOpen"
+          }
         },
         {
           name = "isKeyDown",
@@ -30706,9 +30075,6 @@ return {
           description = "Returns whether the desktop window is open.  `t.window` can be set to `nil` in `lovr.conf` to disable automatic opening of the window.  In this case, the window can be opened manually using `lovr.system.openWindow`.",
           key = "lovr.system.isWindowOpen",
           module = "lovr.system",
-          related = {
-            "lovr.system.openWindow"
-          },
           variants = {
             {
               arguments = {},
@@ -30720,6 +30086,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.system.openWindow"
           }
         },
         {
@@ -30728,10 +30097,6 @@ return {
           description = "Opens the desktop window.  If the window is already open, this function does nothing.",
           key = "lovr.system.openWindow",
           module = "lovr.system",
-          related = {
-            "lovr.system.isWindowOpen",
-            "lovr.conf"
-          },
           variants = {
             {
               arguments = {
@@ -30778,7 +30143,11 @@ return {
               returns = {}
             }
           },
-          notes = "By default, the window is opened automatically, but this can be disabled by setting `t.window` to `nil` in `conf.lua`."
+          notes = "By default, the window is opened automatically, but this can be disabled by setting `t.window` to `nil` in `conf.lua`.",
+          related = {
+            "lovr.system.isWindowOpen",
+            "lovr.conf"
+          }
         },
         {
           name = "requestPermission",
@@ -30786,9 +30155,6 @@ return {
           description = "Requests permission to use a feature.  Usually this will pop up a dialog box that the user needs to confirm.  Once the permission request has been acknowledged, the `lovr.permission` callback will be called with the result.  Currently, this is only used for requesting microphone access on Android devices.",
           key = "lovr.system.requestPermission",
           module = "lovr.system",
-          related = {
-            "lovr.permission"
-          },
           variants = {
             {
               arguments = {
@@ -30800,6 +30166,9 @@ return {
               },
               returns = {}
             }
+          },
+          related = {
+            "lovr.permission"
           }
         }
       },
@@ -30810,18 +30179,17 @@ return {
           description = "These are the different permissions that need to be requested using `lovr.system.requestPermission` on some platforms.",
           key = "Permission",
           module = "lovr.system",
+          related = {
+            "lovr.system.requestPermission"
+          },
           values = {
             {
               name = "audiocapture",
               description = "Requests microphone access."
             }
-          },
-          related = {
-            "lovr.system.requestPermission"
           }
         }
-      },
-      objects = {}
+      }
     },
     {
       name = "thread",
@@ -30829,10 +30197,10 @@ return {
       summary = "Allows the creation of background threads.",
       description = "The `lovr.thread` module provides functions for creating threads and communicating between them.\n\nThese are operating system level threads, which are different from Lua coroutines.\n\nThreads are useful for performing expensive background computation without affecting the framerate or performance of the main thread.  Some examples of this include asset loading, networking and network requests, and physics simulation.\n\nThreads come with some caveats:\n\n- Threads run in a bare Lua environment.  The `lovr` module (and any of lovr's modules) need to\n  be required before they can be used.\n  - To get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.\n- Threads are completely isolated from other threads.  They do not have access to the variables\n  or functions of other threads, and communication between threads must be coordinated through\n  `Channel` objects.\n- The graphics module (or any functions that perform rendering) cannot be used in a thread.\n  Note that this includes creating graphics objects like Models and Textures.  There are \"data\"\n  equivalent `ModelData` and `Image` objects that can be used in threads though.\n- `lovr.event.pump` cannot be called from a thread.\n- Crashes or problems can happen if two threads access the same object at the same time, so\n  special care must be taken to coordinate access to objects from multiple threads.",
       key = "lovr.thread",
+      enums = {},
       related = {
         "lovr.system.getCoreCount"
       },
-      enums = {},
       functions = {
         {
           name = "getChannel",
@@ -30840,9 +30208,6 @@ return {
           description = "Returns a named Channel for communicating between threads.",
           key = "lovr.thread.getChannel",
           module = "lovr.thread",
-          related = {
-            "Channel"
-          },
           variants = {
             {
               arguments = {
@@ -30860,6 +30225,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "Channel"
           }
         },
         {
@@ -30868,10 +30236,6 @@ return {
           description = "Creates a new Thread from Lua code.",
           key = "lovr.thread.newThread",
           module = "lovr.thread",
-          related = {
-            "Thread:start",
-            "lovr.threaderror"
-          },
           variants = {
             {
               arguments = {
@@ -30922,7 +30286,11 @@ return {
               }
             }
           },
-          notes = "The Thread won\\'t start running immediately.  Use `Thread:start` to start it.\n\nThe string argument is assumed to be a filename if there isn't a newline in the first 1024 characters.  For really short thread code, an extra newline can be added to trick LÖVR into loading it properly."
+          notes = "The Thread won\\'t start running immediately.  Use `Thread:start` to start it.\n\nThe string argument is assumed to be a filename if there isn't a newline in the first 1024 characters.  For really short thread code, an extra newline can be added to trick LÖVR into loading it properly.",
+          related = {
+            "Thread:start",
+            "lovr.threaderror"
+          }
         }
       },
       objects = {
@@ -30952,9 +30320,6 @@ return {
               description = "Returns whether or not the message with the given ID has been read.  Every call to `Channel:push` returns a message ID.",
               key = "Channel:hasRead",
               module = "lovr.thread",
-              related = {
-                "Channel:push"
-              },
               variants = {
                 {
                   arguments = {
@@ -30972,6 +30337,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Channel:push"
               }
             },
             {
@@ -30980,9 +30348,6 @@ return {
               description = "Returns a message from the Channel without popping it from the queue.  If the Channel is empty, `nil` is returned.  This can be useful to determine if the Channel is empty.",
               key = "Channel:peek",
               module = "lovr.thread",
-              related = {
-                "Channel:pop"
-              },
               variants = {
                 {
                   arguments = {},
@@ -31000,7 +30365,10 @@ return {
                   }
                 }
               },
-              notes = "The second return value can be used to detect if a `nil` message is in the queue."
+              notes = "The second return value can be used to detect if a `nil` message is in the queue.",
+              related = {
+                "Channel:pop"
+              }
             },
             {
               name = "pop",
@@ -31008,10 +30376,6 @@ return {
               description = "Pops a message from the Channel.  If the Channel is empty, an optional timeout argument can be used to wait for a message, otherwise `nil` is returned.",
               key = "Channel:pop",
               module = "lovr.thread",
-              related = {
-                "Channel:peek",
-                "Channel:push"
-              },
               variants = {
                 {
                   arguments = {
@@ -31031,7 +30395,11 @@ return {
                   }
                 }
               },
-              notes = "Threads can get stuck forever waiting on Channel messages, so be careful."
+              notes = "Threads can get stuck forever waiting on Channel messages, so be careful.",
+              related = {
+                "Channel:peek",
+                "Channel:push"
+              }
             },
             {
               name = "push",
@@ -31039,10 +30407,6 @@ return {
               description = "Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean, number, string, and userdata.  Tables should be serialized to strings.",
               key = "Channel:push",
               module = "lovr.thread",
-              related = {
-                "Channel:pop",
-                "Channel:hasRead"
-              },
               variants = {
                 {
                   arguments = {
@@ -31072,7 +30436,11 @@ return {
                   }
                 }
               },
-              notes = "Threads can get stuck forever waiting on Channel messages, so be careful."
+              notes = "Threads can get stuck forever waiting on Channel messages, so be careful.",
+              related = {
+                "Channel:pop",
+                "Channel:hasRead"
+              }
             }
           },
           constructors = {
@@ -31085,6 +30453,9 @@ return {
           description = "A Thread is an object that runs a chunk of Lua code in the background.  Threads are completely isolated from other threads, meaning they have their own Lua context and can't access the variables and functions of other threads.  Communication between threads is limited and is accomplished by using `Channel` objects.\n\nTo get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.",
           key = "Thread",
           module = "lovr.thread",
+          constructors = {
+            "lovr.thread.newThread"
+          },
           methods = {
             {
               name = "getError",
@@ -31092,9 +30463,6 @@ return {
               description = "Returns the message for the error that occurred on the Thread, or nil if no error has occurred.",
               key = "Thread:getError",
               module = "lovr.thread",
-              related = {
-                "lovr.threaderror"
-              },
               variants = {
                 {
                   arguments = {},
@@ -31106,6 +30474,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "lovr.threaderror"
               }
             },
             {
@@ -31114,9 +30485,6 @@ return {
               description = "Returns whether or not the Thread is currently running.",
               key = "Thread:isRunning",
               module = "lovr.thread",
-              related = {
-                "Thread:start"
-              },
               variants = {
                 {
                   arguments = {},
@@ -31128,6 +30496,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Thread:start"
               }
             },
             {
@@ -31137,6 +30508,11 @@ return {
               key = "Thread:start",
               module = "lovr.thread",
               notes = "The arguments can be nil, booleans, numbers, strings, or LÖVR objects.",
+              examples = {
+                {
+                  code = "function lovr.load()\n  lovr.thread.newThread([[\n    print(...)\n  ]]):start(lovr.getVersion())\nend"
+                }
+              },
               variants = {
                 {
                   arguments = {
@@ -31148,11 +30524,6 @@ return {
                   },
                   returns = {}
                 }
-              },
-              examples = {
-                {
-                  code = "function lovr.load()\n  lovr.thread.newThread([[\n    print(...)\n  ]]):start(lovr.getVersion())\nend"
-                }
               }
             },
             {
@@ -31161,19 +30532,16 @@ return {
               description = "Waits for the Thread to complete, then returns.",
               key = "Thread:wait",
               module = "lovr.thread",
-              related = {
-                "Thread:isRunning"
-              },
               variants = {
                 {
                   arguments = {},
                   returns = {}
                 }
+              },
+              related = {
+                "Thread:isRunning"
               }
             }
-          },
-          constructors = {
-            "lovr.thread.newThread"
           },
           related = {
             "lovr.threaderror",
@@ -31189,6 +30557,7 @@ return {
       summary = "Exposes a high resolution timer.",
       description = "The `lovr.timer` module provides a few functions that deal with time.  All times are measured in seconds.",
       key = "lovr.timer",
+      objects = {},
       functions = {
         {
           name = "getAverageDelta",
@@ -31196,10 +30565,6 @@ return {
           description = "Returns the average delta over the last second.",
           key = "lovr.timer.getAverageDelta",
           module = "lovr.timer",
-          related = {
-            "lovr.timer.getDelta",
-            "lovr.update"
-          },
           variants = {
             {
               arguments = {},
@@ -31211,6 +30576,10 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.timer.getDelta",
+            "lovr.update"
           }
         },
         {
@@ -31219,10 +30588,6 @@ return {
           description = "Returns the time between the last two frames.  This is the same value as the `dt` argument provided to `lovr.update`.",
           key = "lovr.timer.getDelta",
           module = "lovr.timer",
-          related = {
-            "lovr.timer.getTime",
-            "lovr.update"
-          },
           variants = {
             {
               arguments = {},
@@ -31235,7 +30600,11 @@ return {
               }
             }
           },
-          notes = "The return value of this function will remain the same until `lovr.timer.step` is called.  This function should not be used to measure times for game behavior or benchmarking, use `lovr.timer.getTime` for that."
+          notes = "The return value of this function will remain the same until `lovr.timer.step` is called.  This function should not be used to measure times for game behavior or benchmarking, use `lovr.timer.getTime` for that.",
+          related = {
+            "lovr.timer.getTime",
+            "lovr.update"
+          }
         },
         {
           name = "getFPS",
@@ -31262,9 +30631,6 @@ return {
           description = "Returns the time since some time in the past.  This can be used to measure the difference between two points in time.",
           key = "lovr.timer.getTime",
           module = "lovr.timer",
-          related = {
-            "lovr.headset.getTime"
-          },
           variants = {
             {
               arguments = {},
@@ -31276,6 +30642,9 @@ return {
                 }
               }
             }
+          },
+          related = {
+            "lovr.headset.getTime"
           }
         },
         {
@@ -31317,8 +30686,755 @@ return {
           }
         }
       },
-      enums = {},
-      objects = {}
+      enums = {}
+    }
+  },
+  callbacks = {
+    {
+      name = "conf",
+      tag = "callbacks",
+      summary = "Called to read configuration settings at startup.",
+      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.  Make sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes.",
+      key = "lovr.conf",
+      module = "lovr",
+      related = {
+        "lovr.load"
+      },
+      notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
+      examples = {
+        {
+          description = "A noop conf.lua that sets all configuration settings to their defaults:",
+          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.16.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.antialias = true\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+        }
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "t",
+              type = "table",
+              description = "The table to edit the configuration settings on.",
+              table = {
+                {
+                  name = "version",
+                  type = "string",
+                  description = "The version of LÖVR this project targets (not used yet)."
+                },
+                {
+                  name = "identity",
+                  type = "string",
+                  description = "A unique label for this project."
+                },
+                {
+                  name = "saveprecedence",
+                  type = "boolean",
+                  description = "Whether the files in the save directory should have precedence over files in the source archive."
+                },
+                {
+                  name = "modules",
+                  type = "table",
+                  description = "The set of enabled modules to use.",
+                  table = {
+                    {
+                      name = "audio",
+                      type = "boolean",
+                      description = "Whether the audio module should be enabled."
+                    },
+                    {
+                      name = "data",
+                      type = "boolean",
+                      description = "Whether the data module should be enabled."
+                    },
+                    {
+                      name = "event",
+                      type = "boolean",
+                      description = "Whether the event module should be enabled."
+                    },
+                    {
+                      name = "graphics",
+                      type = "boolean",
+                      description = "Whether the graphics module should be enabled."
+                    },
+                    {
+                      name = "headset",
+                      type = "boolean",
+                      description = "Whether the headset module should be enabled."
+                    },
+                    {
+                      name = "math",
+                      type = "boolean",
+                      description = "Whether the math module should be enabled."
+                    },
+                    {
+                      name = "physics",
+                      type = "boolean",
+                      description = "Whether the physics module should be enabled."
+                    },
+                    {
+                      name = "system",
+                      type = "boolean",
+                      description = "Whether the system module should be enabled."
+                    },
+                    {
+                      name = "thread",
+                      type = "boolean",
+                      description = "Whether the thread module should be enabled."
+                    },
+                    {
+                      name = "timer",
+                      type = "boolean",
+                      description = "Whether the timer module should be enabled."
+                    }
+                  }
+                },
+                {
+                  name = "audio",
+                  type = "table",
+                  description = "Configuration for the audio module.",
+                  table = {
+                    {
+                      name = "spatializer",
+                      type = "string",
+                      description = "An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of them are attempted."
+                    },
+                    {
+                      name = "samplerate",
+                      type = "number",
+                      description = "The sample rate to use for audio playback."
+                    },
+                    {
+                      name = "start",
+                      type = "boolean",
+                      description = "Whether the playback device should be automatically started."
+                    }
+                  }
+                },
+                {
+                  name = "graphics",
+                  type = "table",
+                  description = "Configuration for the graphics module.",
+                  table = {
+                    {
+                      name = "debug",
+                      type = "boolean",
+                      description = "Whether debug messages from the GPU should get sent to lovr.log."
+                    },
+                    {
+                      name = "vsync",
+                      type = "boolean",
+                      description = "Whether vsync is enabled (forced off when VR is active)."
+                    },
+                    {
+                      name = "stencil",
+                      type = "boolean",
+                      description = "Whether the desktop window should have a stencil buffer."
+                    },
+                    {
+                      name = "antialias",
+                      type = "boolean",
+                      description = "Whether the desktop window rendering should be antialiased."
+                    },
+                    {
+                      name = "shadercache",
+                      type = "boolean",
+                      description = "Whether the shader cache should be loaded and saved to disk."
+                    }
+                  }
+                },
+                {
+                  name = "headset",
+                  type = "table",
+                  description = "Configuration for the headset.",
+                  table = {
+                    {
+                      name = "drivers",
+                      type = "table",
+                      description = "An ordered list of preferred headset drivers."
+                    },
+                    {
+                      name = "supersample",
+                      type = "number",
+                      description = "A scaling factor to apply to the headset texture.  Improves visual quality but reduces performance.  Can also be a boolean."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The vertical offset for seated experiences."
+                    },
+                    {
+                      name = "antialias",
+                      type = "boolean",
+                      description = "Whether headset rendering should be antialiased."
+                    },
+                    {
+                      name = "stencil",
+                      type = "boolean",
+                      description = "Whether headset rendering should have a stencil buffer."
+                    },
+                    {
+                      name = "submitdepth",
+                      type = "boolean",
+                      description = "Whether the depth buffer should be sent to the VR runtime (improves reprojection)."
+                    },
+                    {
+                      name = "overlay",
+                      type = "boolean",
+                      description = "Whether the project should run as an overlay."
+                    }
+                  }
+                },
+                {
+                  name = "math",
+                  type = "table",
+                  description = "Configuration for the math module.",
+                  table = {
+                    {
+                      name = "globals",
+                      type = "boolean",
+                      description = "Whether vector object functions should be added to the global scope."
+                    }
+                  }
+                },
+                {
+                  name = "window",
+                  type = "table",
+                  description = "Configuration for the window.",
+                  table = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the window."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the window."
+                    },
+                    {
+                      name = "fullscreen",
+                      type = "boolean",
+                      description = "Whether the window is fullscreen."
+                    },
+                    {
+                      name = "resizable",
+                      type = "boolean",
+                      description = "Whether the window is resizable."
+                    },
+                    {
+                      name = "title",
+                      type = "string",
+                      description = "The window title."
+                    },
+                    {
+                      name = "icon",
+                      type = "string",
+                      description = "The path to the window icon file."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
+      name = "draw",
+      tag = "callbacks",
+      summary = "Called continuously to render frames to the display.",
+      description = "This callback is called every frame, and receives a `Pass` object as an argument which can be used to render graphics to the display.  If a VR headset is connected, this function renders to the headset display, otherwise it will render to the desktop window.",
+      key = "lovr.draw",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "pass",
+              type = "Pass",
+              description = "A render pass targeting the main display (headset or window)."
+            }
+          },
+          returns = {
+            {
+              name = "skip",
+              type = "boolean",
+              description = "If truthy, the input Pass will not be submitted to the GPU."
+            }
+          }
+        }
+      },
+      notes = "To render to the desktop window when a VR headset is connected, use the `lovr.mirror` callback.\n\nThe display is cleared to the global background color before this callback is called, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nSince the `lovr.graphics.submit` function always returns true, the following idiom can be used to submit graphics work manually and override the default submission:\n\n    function lovr.draw(pass)\n      local passes = {}\n\n      -- ... record multiple passes and add to passes table\n\n      return lovr.graphics.submit(passes)\n    end",
+      related = {
+        "lovr.mirror",
+        "lovr.headset.getPass",
+        "lovr.graphics.getWindowPass",
+        "lovr.graphics.setBackgroundColor"
+      }
+    },
+    {
+      name = "errhand",
+      tag = "callbacks",
+      summary = "Called when an error occurs.",
+      description = "The \"lovr.errhand\" callback is run whenever an error occurs.  It receives two parameters. The first is a string containing the error message. The second is either nil, or a string containing a traceback (as returned by \"debug.traceback()\"); if nil, this means \"lovr.errhand\" is being called in the stack where the error occurred, and it can call \"debug.traceback()\" itself.\n\n\"lovr.errhand\" should return a handler function to run in a loop to show the error screen. This handler function is of the same type as the one returned by \"lovr.run\" and has the same requirements (such as pumping events). If an error occurs while this handler is running, the program will terminate immediately-- \"lovr.errhand\" will not be given a second chance. Errors which occur inside \"lovr.errhand\" or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
+      key = "lovr.errhand",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "message",
+              type = "string",
+              description = "The error message."
+            },
+            {
+              name = "traceback",
+              type = "string",
+              description = "A traceback string, or nil."
+            }
+          },
+          returns = {
+            {
+              name = "handler",
+              type = "function",
+              description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
+              arguments = {},
+              returns = {
+                {
+                  name = "result",
+                  type = "*"
+                }
+              }
+            }
+          }
+        }
+      },
+      examples = {
+        {
+          code = "function lovr.errhand(message, traceback)\n  traceback = traceback or debug.traceback('', 3)\n  print('ohh NOOOO!', message)\n  print(traceback)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.quit"
+      }
+    },
+    {
+      name = "focus",
+      tag = "callbacks",
+      summary = "Called when the application gets or loses focus.",
+      description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
+      key = "lovr.focus",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "focused",
+              type = "boolean",
+              description = "Whether the program is now focused."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.headset.isFocused"
+      }
+    },
+    {
+      name = "keypressed",
+      tag = "callbacks",
+      summary = "Called when a key is pressed.",
+      description = "This callback is called when a key is pressed.",
+      key = "lovr.keypressed",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "key",
+              type = "KeyCode",
+              description = "The key that was pressed."
+            },
+            {
+              name = "scancode",
+              type = "number",
+              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
+            },
+            {
+              name = "repeating",
+              type = "boolean",
+              description = "Whether the event is the result of a key repeat instead of an actual press."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.keyreleased",
+        "lovr.textinput"
+      }
+    },
+    {
+      name = "keyreleased",
+      tag = "callbacks",
+      summary = "Called when a key is released.",
+      description = "This callback is called when a key is released.",
+      key = "lovr.keyreleased",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "key",
+              type = "KeyCode",
+              description = "The key that was released."
+            },
+            {
+              name = "scancode",
+              type = "number",
+              description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.keypressed",
+        "lovr.textinput"
+      }
+    },
+    {
+      name = "load",
+      tag = "callbacks",
+      summary = "Called once at startup.",
+      description = "This callback is called once when the app starts.  It should be used to perform initial setup work, like loading resources and initializing classes and variables.",
+      key = "lovr.load",
+      module = "lovr",
+      related = {
+        "lovr.quit"
+      },
+      notes = "If the project was loaded from a restart using `lovr.event.restart`, the return value from the previously-run `lovr.restart` callback will be made available to this callback as the `restart` key in the `arg` table.\n\nThe `arg` table follows the [Lua standard](https://en.wikibooks.org/wiki/Lua_Programming/command_line_parameter).  The arguments passed in from the shell are put into a global table named `arg` and passed to `lovr.load`, but with indices offset such that the \"script\" (the project path) is at index 0.  So all arguments (if any) intended for the project are at successive indices starting with 1, and the executable and its \"internal\" arguments are in normal order but stored in negative indices.",
+      examples = {
+        {
+          code = "function lovr.load(arg)\n  model = lovr.graphics.newModel('sponza.gltf')\n  texture = lovr.graphics.newTexture('cena.png')\n  effects = lovr.graphics.newShader('vert.glsl', 'frag.glsl')\n  loadLevel(1)\nend"
+        }
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "arg",
+              type = "table",
+              description = "The command line arguments provided to the program."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
+      name = "log",
+      tag = "callbacks",
+      summary = "Called when a message is logged.",
+      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GPU`).  It is also possible to emit customlog messages using `lovr.event.push`, or by calling the callback.",
+      key = "lovr.log",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "message",
+              type = "string",
+              description = "The log message.  It may end in a newline."
+            },
+            {
+              name = "level",
+              type = "string",
+              description = "The log level (`debug`, `info`, `warn`, or `error`)."
+            },
+            {
+              name = "tag",
+              type = "string",
+              description = "The log tag."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.graphics.print"
+      }
+    },
+    {
+      name = "mirror",
+      tag = "callbacks",
+      summary = "Called to render content to the desktop window.",
+      description = "This callback is called every frame after rendering to the headset and is usually used to render a mirror of the headset display onto the desktop window.  It can be overridden for custom mirroring behavior.  For example, a stereo view could be drawn instead of a single eye or a 2D HUD could be rendered.",
+      key = "lovr.mirror",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {}
+        }
+      },
+      examples = {
+        {
+          description = "The default `lovr.mirror` implementation draws the headset mirror texture to the window if the headset is active, or just calls `lovr.draw` if there isn't a headset.",
+          code = "function lovr.mirror(pass)\n  if lovr.headset then\n    local texture = lovr.headset.getTexture()\n    if texture then\n      pass:fill(texture)\n    else\n      return true\n    end\n  else\n    return lovr.draw and lovr.draw(pass)\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.system.openWindow",
+        "lovr.draw"
+      }
+    },
+    {
+      name = "permission",
+      tag = "callbacks",
+      summary = "Called when a permission request is answered.",
+      description = "This callback contains a permission response previously requested with `lovr.system.requestPermission`.  The callback contains information on whether permission was granted or denied.",
+      key = "lovr.permission",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "permission",
+              type = "Permission",
+              description = "The type of permission."
+            },
+            {
+              name = "granted",
+              type = "boolean",
+              description = "Whether permission was granted or denied."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.system.requestPermission"
+      }
+    },
+    {
+      name = "quit",
+      tag = "callbacks",
+      summary = "Called before quitting.",
+      description = "This callback is called right before the application is about to quit.  Use it to perform any necessary cleanup work.  A truthy value can be returned from this callback to abort quitting.",
+      key = "lovr.quit",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "abort",
+              type = "boolean",
+              description = "Whether quitting should be aborted."
+            }
+          }
+        }
+      },
+      examples = {
+        {
+          code = "function lovr.quit()\n  if shouldQuit() then\n    return false\n  else\n    return true\n  end\nend"
+        }
+      },
+      related = {
+        "lovr.event.quit",
+        "lovr.load"
+      }
+    },
+    {
+      name = "resize",
+      tag = "callbacks",
+      summary = "Called when the window is resized.",
+      description = "This callback is called when the desktop window is resized.",
+      key = "lovr.resize",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "width",
+              type = "number",
+              description = "The new width of the window."
+            },
+            {
+              name = "height",
+              type = "number",
+              description = "The new height of the window."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "lovr.graphics.getDimensions",
+        "lovr.graphics.getWidth",
+        "lovr.graphics.getHeight",
+        "lovr.headset.getDisplayDimensions",
+        "lovr.conf"
+      }
+    },
+    {
+      name = "restart",
+      tag = "callbacks",
+      summary = "Called when restarting.",
+      description = "This callback is called when a restart from `lovr.event.restart` is happening.  A value can be returned to send it to the next LÖVR instance, available as the `restart` key in the argument table passed to `lovr.load`.  Object instances can not be used as the restart value, since they are destroyed as part of the cleanup process.",
+      key = "lovr.restart",
+      module = "lovr",
+      related = {
+        "lovr.event.restart",
+        "lovr.load",
+        "lovr.quit"
+      },
+      notes = "Only nil, booleans, numbers, and strings are supported types for the return value.",
+      examples = {
+        {
+          code = "function lovr.restart()\n  return currentLevel:getName()\nend"
+        }
+      },
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "cookie",
+              type = "*",
+              description = "The value to send to the next `lovr.load`."
+            }
+          }
+        }
+      }
+    },
+    {
+      name = "run",
+      tag = "callbacks",
+      summary = "The main entry point.",
+      description = "This callback is the main entry point for a LÖVR program.  It calls `lovr.load` and returns a function that will be called every frame.",
+      key = "lovr.run",
+      module = "lovr",
+      related = {
+        "lovr.load",
+        "lovr.quit"
+      },
+      notes = "The main loop function can return one of the following values:\n\n- Returning `nil` will keep the main loop running.\n- Returning the string 'restart' plus an optional value will restart LÖVR.  The value can be\n  accessed in the `restart` key of the `arg` global.\n- Returning a number will exit LÖVR using the number as the exit code (0 means success).\n\nCare should be taken when overriding this callback.  For example, if the main loop does not call `lovr.event.pump` then the OS will think LÖVR is unresponsive, and if the quit event is not handled then closing the window won't work.",
+      examples = {
+        {
+          description = "The default `lovr.run`:",
+          code = "function lovr.run()\n  if lovr.timer then lovr.timer.step() end\n  if lovr.load then lovr.load(arg) end\n  return function()\n    if lovr.event then\n      lovr.event.pump()\n      for name, a, b, c, d in lovr.event.poll() do\n        if name == 'restart' then\n          local cookie = lovr.restart and lovr.restart()\n          return 'restart', cookie\n        elseif name == 'quit' and (not lovr.quit or not lovr.quit(a)) then\n          return a or 0\n        end\n        if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n      end\n    end\n    local dt = 0\n    if lovr.timer then dt = lovr.timer.step() end\n    if lovr.headset then dt = lovr.headset.update() end\n    if lovr.update then lovr.update(dt) end\n    if lovr.graphics then\n      if lovr.headset then\n        local pass = lovr.headset.getPass()\n        if pass then\n          local skip = lovr.draw and lovr.draw(pass)\n          if not skip then lovr.graphics.submit(pass) end\n        end\n      end\n      if lovr.system.isWindowOpen() then\n        if lovr.mirror then\n          local pass = lovr.graphics.getWindowPass()\n          local skip = lovr.mirror(pass)\n          if not skip then lovr.graphics.submit(pass) end\n        end\n        lovr.graphics.present()\n      end\n    end\n    if lovr.headset then lovr.headset.submit() end\n    if lovr.math then lovr.math.drain() end\n  end\nend"
+        }
+      },
+      variants = {
+        {
+          arguments = {},
+          returns = {
+            {
+              name = "loop",
+              type = "function",
+              description = "The main loop function.",
+              arguments = {},
+              returns = {
+                {
+                  name = "result",
+                  type = "*"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      name = "textinput",
+      tag = "callbacks",
+      summary = "Called when text has been entered.",
+      description = "This callback is called when text has been entered.\n\nFor example, when `shift + 1` is pressed on an American keyboard, `lovr.textinput` will be called with `!`.",
+      key = "lovr.textinput",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "text",
+              type = "string",
+              description = "The UTF-8 encoded character."
+            },
+            {
+              name = "code",
+              type = "number",
+              description = "The integer codepoint of the character."
+            }
+          },
+          returns = {}
+        }
+      },
+      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `lovr.graphics.print` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings.",
+      related = {
+        "lovr.keypressed",
+        "lovr.keyreleased"
+      }
+    },
+    {
+      name = "threaderror",
+      tag = "callbacks",
+      summary = "Called when an error occurs in a thread.",
+      description = "The `lovr.threaderror` callback is called whenever an error occurs in a Thread.  It receives the Thread object where the error occurred and an error message.\n\nThe default implementation of this callback will call `lovr.errhand` with the error.",
+      key = "lovr.threaderror",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "thread",
+              type = "Thread",
+              description = "The Thread that errored."
+            },
+            {
+              name = "message",
+              type = "string",
+              description = "The error message."
+            }
+          },
+          returns = {}
+        }
+      },
+      related = {
+        "Thread",
+        "Thread:getError",
+        "lovr.errhand"
+      }
+    },
+    {
+      name = "update",
+      tag = "callbacks",
+      summary = "Called every frame to update the application logic.",
+      description = "The `lovr.update` callback should be used to update your game's logic.  It receives a single parameter, `dt`, which represents the amount of elapsed time between frames.  You can use this value to scale timers, physics, and animations in your game so they play at a smooth, consistent speed.",
+      key = "lovr.update",
+      module = "lovr",
+      variants = {
+        {
+          arguments = {
+            {
+              name = "dt",
+              type = "number",
+              description = "The number of seconds elapsed since the last update."
+            }
+          },
+          returns = {}
+        }
+      },
+      examples = {
+        {
+          code = "function lovr.update(dt)\n  ball.vy = ball.vy + ball.gravity * dt\n  ball.y = ball.y + ball.vy * dt\nend"
+        }
+      },
+      related = {
+        "lovr.timer.getDelta"
+      }
     }
   }
 }
