@@ -50,10 +50,9 @@ function lovr.draw(pass)
   for _, collider in ipairs(box_colliders) do
     pass:box(mat4(collider:getPose()))
   end
+
   pass:setColor(0.565, 0.404, 0.463)
-  pass:setDepthOffset(-10000) -- Ensure wireframe stays on top
   pass:mesh(vertexBuffer)
-  pass:setDepthOffset()
 
   pass:setWireframe(true)
   pass:setColor(0.388, 0.302, 0.412, 0.1)
