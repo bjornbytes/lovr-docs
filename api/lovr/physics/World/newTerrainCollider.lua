@@ -5,20 +5,21 @@ return {
   arguments = {
     scale = {
       type = 'number',
-      description = 'Horizontal dimension of the terrain square'
+      description = 'The width and depth of the terrain, in meters.'
     },
     heightmap = {
       type = 'Image',
       description = [[
-        An heightmap image describing the terrain elevation at different points.
-        Red channel brightness of each pixel determines the elevation at corresponding coordinates.
+        A heightmap image describing the terrain elevation at different points.  The red channel
+        brightness of each pixel determines the elevation at corresponding coordinates.
       ]]
     },
     stretch = {
       type = 'number',
+      default = '1.0',
       description = [[
-        A vertical multiplier for heightmap values to obtain terrain height.
-        Used for heightmap image formats that have pixel values only in range from 0 to 1.
+        A vertical multiplier for height values to obtain terrain height.  When the image format has
+        pixel values only in the 0 to 1 range, this can be used to scale the height to meters.
       ]]
     },
     callback = {
@@ -38,17 +39,17 @@ return {
         type = 'number'
       },
       description = [[
-        A function that computes terrain height for set of coordinates. Range of x and z coordinates
-        is from `-scale / 2` to `scale / 2`.'
+        A function that computes terrain height from x and z coordinates.  The x and z inputs will
+        range from `-scale / 2` to `scale / 2`.
       ]]
     },
     samples = {
       type = 'number',
+      default = '100',
       description = [[
-        Number of samples taken per x and z dimensions. More samples result in higher terrain
-        fidelity using more CPU and memory resources.'
-      ]],
-      default = '100'
+        The number of samples taken across the x and z dimensions.  More samples will result in
+        higher terrain fidelity, but use more CPU and memory.
+      ]]
     }
   },
   returns = {
@@ -59,21 +60,25 @@ return {
   },
   variants = {
     {
-      description = 'Create a flat floor collider',
+      description = 'Create a flat floor collider.',
       arguments = { 'scale' },
       returns = { 'collider' }
     },
     {
-      description = 'Create terrain from heightmap image',
+      description = 'Create terrain from a heightmap image.',
       arguments = { 'scale', 'heightmap', 'stretch' },
       returns = { 'collider' }
     },
     {
-      description = 'Create terrain defined with a callback function',
+      description = 'Create terrain defined with a callback function.',
       arguments = { 'scale', 'callback', 'samples' },
       returns = { 'collider' }
     }
   },
+  notes = [[
+    The collider will be positioned at 0, 0, 0.  Unlike other colliders, it will automatically be
+    set as kinematic when created.
+  ]],
   related = {
     'Collider',
     'World:newCollider',
