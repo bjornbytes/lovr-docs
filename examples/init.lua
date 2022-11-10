@@ -33,7 +33,6 @@ return {
   'Physics/Hand_Physics',
   'Physics/Newtons_Cradle',
   'Physics/Saloon_Door',
-  'Physics/Terrain',
   'Physics/Wrecking_Ball',
   'Physics/Zip_Line',
   'Audio/Playback',

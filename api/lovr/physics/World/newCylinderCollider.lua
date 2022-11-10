@@ -48,7 +48,6 @@ return {
     'World:newBoxCollider',
     'World:newCapsuleCollider',
     'World:newMeshCollider',
-    'World:newSphereCollider',
-    'World:newTerrainCollider'
+    'World:newSphereCollider'
   }
 }

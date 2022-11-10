@@ -64,7 +64,6 @@ return {
     'World:newCylinderCollider',
     'World:newMeshCollider',
     'World:newSphereCollider',
-    'World:newTerrainCollider',
     'Collider',
     'Shape'
   }

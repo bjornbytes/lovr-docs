@@ -44,7 +44,6 @@ return {
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
     'World:newSphereCollider',
-    'World:newTerrainCollider',
     'Model:getTriangles'
   }
 }
