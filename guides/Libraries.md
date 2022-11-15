@@ -63,6 +63,10 @@ LÖVR-specific libraries:
       <td>Generation of mesh primitives and constructive solid geometry (CSG) operations.</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/immortalx74/lovr-ui">lovr-ui</a></td>
+      <td>An immediate mode VR GUI library for LÖVR</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/Papaew/lovr-window">lovr-window</a></td>
       <td>Advanced settings for the desktop window.</td>
     </tr>
