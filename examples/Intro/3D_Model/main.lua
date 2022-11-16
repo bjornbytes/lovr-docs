@@ -1,5 +1,3 @@
--- Note: Wireframe rendering doesn't work in browsers
-
 function lovr.load()
   model = lovr.graphics.newModel('suzanne.obj')
 end
