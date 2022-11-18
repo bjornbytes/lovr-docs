@@ -12,13 +12,17 @@ return {
     colortext = {
       type = 'table',
       description = [[
-        A table of strings with colors to render, in the form `{ color1, string1, color2, string2
-      }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers.
+        A table of strings with colors to render, in the form
+        `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table
+        of numbers.
       ]]
     },
     transform = {
       type = 'Mat4',
-      description = 'The transform of the text.'
+      description = [[
+        The transform of the text.  Can also be provided as position, 1-component scale, and
+        rotation using a mix of `Vectors` or numbers.
+      ]]
     },
     wrap = {
       type = 'number',
@@ -52,7 +56,7 @@ return {
     }
   },
   notes = [[
-    Strings should be encoded as UTF-8.
+    UTF-8 encoded strings are supported.
 
     Newlines will start a new line of text.  Tabs will be rendered as four spaces.  Carriage returns
     are ignored.
@@ -66,7 +70,8 @@ return {
 
     Blending should be enabled when rendering text (it's on by default).
 
-    This function can draw up to 16384 visible characters at a time.
+    This function can draw up to 16384 visible characters at a time, and will currently throw an
+    error if the string is too long.
   ]],
   related = {
     'Pass:setFont',
