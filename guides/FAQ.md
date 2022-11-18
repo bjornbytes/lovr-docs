@@ -23,21 +23,6 @@ input, see `lovr-mouse` on the <a data-key="Libraries">Libraries</a> page.
 
 See [this gist](https://gist.github.com/ussaohelcim/9eca6eaa903eefff07b4f3e2019de915).
 
-> How do I get LÖVR to work with OpenXR?
-
-Currently, OpenXR support is not included by default.  You can compile from source and add the
-`-DLOVR_USE_OPENXR=ON` CMake option.  There are upcoming plans to include OpenXR by default.
-
-> Are there macOS binaries available?
-
-Yes, you can download them from <https://lovr.org/download/mac>.
-
-> Does LÖVR work on Linux?
-
-Yes, Linux is an officially supported platform and there are precompiled binaries distributed as
-AppImages.  LÖVR is compatible with Steam's OpenXR runtime and monado, an open source OpenXR
-runtime.
-
 > Does LÖVR support AR?
 
 LÖVR does not currently support Magic Leap, HoloLens, or "magic window" style AR on phones.  There
