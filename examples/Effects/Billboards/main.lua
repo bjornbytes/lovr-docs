@@ -15,14 +15,14 @@ function lovr.load()
     end
   end
   puffTexture = lovr.graphics.newTexture(puffImage)
-  puffMaterial = lovr.graphics.newMaterial(puffTexture)
+  puffMaterial = lovr.graphics.newMaterial({ texture = puffTexture })
 
   -- puff positions
   redPuffs = {}
   for i = 1, 100 do
     table.insert(redPuffs, {
       position = lovr.math.newVec3(
-        lovr.math.random() - .5, 
+        lovr.math.random() - .5,
         lovr.math.random() - .5 + 1.7,
         lovr.math.random() - .5
       )
