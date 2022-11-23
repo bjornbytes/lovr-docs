@@ -15,10 +15,6 @@ return {
     - Binding a particular image or mipmap level to a shader.
   ]],
   arguments = {
-    parent = {
-      type = 'Texture',
-      description = 'The parent Texture to create the view of.'
-    },
     type = {
       type = 'TextureType',
       description = 'The texture type of the view.'
@@ -52,7 +48,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'parent', 'type', 'layer', 'layerCount', 'mipmap', 'mipmapCount' },
+      arguments = { 'type', 'layer', 'layerCount', 'mipmap', 'mipmapCount' },
       returns = { 'view' }
     }
   },
