@@ -95,7 +95,7 @@ local unitZ = lovr.math.newVec3(0,0,1)
 function cubemap.load()
 	-- Create cubemap textures
 	local cubemapWidth, cubemapHeight = 256, 256
-	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, { type = "cube", mipmaps = false })
+	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, 6, { type = "cube", mipmaps = false })
 	cubemap.faces = {}
 
 	-- Precalculate cubemap View-Projection matrices
