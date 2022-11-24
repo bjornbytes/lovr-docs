@@ -5,7 +5,7 @@ return {
   returns = {
     m = {
       type = 'Mat4',
-      description = 'The original matrix.'
+      description = 'The original matrix, with its values inverted.'
     }
   },
   variants = {
