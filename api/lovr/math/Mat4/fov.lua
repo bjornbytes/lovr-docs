@@ -1,5 +1,5 @@
 return {
-  summary = 'Set a projection using raw FoV angles.',
+  summary = 'Set a projection using raw field of view angles.',
   description = [[
     Sets a projection matrix using raw projection angles and clipping planes.
 
@@ -28,7 +28,11 @@ return {
     },
     far = {
       type = 'number',
-      description = 'The far plane of the projection.'
+      default = '0',
+      description = [[
+        The far plane.  Zero is a special value that will set an infinite far plane with a reversed
+        Z range, which improves depth buffer precision and is the default.
+      ]]
     }
   },
   returns = {
