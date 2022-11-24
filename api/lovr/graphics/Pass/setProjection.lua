@@ -37,7 +37,7 @@ return {
     },
     far = {
       type = 'number',
-      default = '100.0',
+      default = '0.0',
       description = 'The far clipping plane distance, in meters.'
     },
     matrix = {
