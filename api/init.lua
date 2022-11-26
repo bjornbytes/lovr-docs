@@ -321,7 +321,8 @@ return {
       },
       examples = {
         {
-          code = "function lovr.errhand(message, traceback)\n  traceback = traceback or debug.traceback('', 3)\n  print('ohh NOOOO!', message)\n  print(traceback)\n  return function()\n    lovr.graphics.print('There was an error', 0, 2, -5)\n  end\nend"
+          description = "The default error handler.",
+          code = "function lovr.errhand(message)\n  local function formatTraceback(s)\n    return s:gsub('\\n[^\\n]+$', ''):gsub('\\t', ''):gsub('stack traceback', '\\nStack')\n  end\n\n  message = tostring(message) .. formatTraceback(debug.traceback('', 4))\n  print('Error:\\n' .. message)\n\n  if not lovr.graphics or not lovr.graphics.isInitialized() then\n    return function() return 1 end\n  end\n\n  if lovr.audio then lovr.audio.stop() end\n\n  local scale = .35\n  local font = lovr.graphics.getDefaultFont()\n  local wrap = .7 * font:getPixelDensity()\n  local lines = font:getLines(message, wrap)\n  local width = math.min(font:getWidth(message), wrap) * scale\n  local height = .8 + #lines * font:getHeight() * scale\n  local x = -width / 2\n  local y = math.min(height / 2, 10)\n  local z = -10\n\n  lovr.graphics.setBackgroundColor(.11, .10, .14)\n  font:setPixelDensity()\n\n  local function render(pass)\n    pass:setColor(.95, .95, .95)\n    pass:text('Error', x, y, z, scale * 1.6, 0, 0, 0, 0, nil, 'left', 'top')\n    pass:text(message, x, y - .8, z, scale, 0, 0, 0, 0, wrap, 'left', 'top')\n  end\n\n  return function()\n    lovr.event.pump()\n\n    for name, a in lovr.event.poll() do\n      if name == 'quit' then return a or 1\n      elseif name == 'restart' then return 'restart', lovr.restart and lovr.restart()\n      elseif name == 'keypressed' and a == 'f5' then lovr.event.restart() end\n    end\n\n    if lovr.headset and lovr.headset.getDriver() ~= 'desktop' then\n      lovr.headset.update()\n      local pass = lovr.headset.getPass()\n      if pass then\n        render(pass)\n        lovr.graphics.submit(pass)\n        lovr.headset.submit()\n      end\n    end\n\n    if lovr.system.isWindowOpen() then\n      local pass = lovr.graphics.getWindowPass()\n      if pass then\n        render(pass)\n        lovr.graphics.submit(pass)\n        lovr.graphics.present()\n      end\n    end\n  end\nend"
         }
       },
       related = {
@@ -451,7 +452,7 @@ return {
       key = "lovr.log",
       module = "lovr",
       related = {
-        "lovr.graphics.print"
+        "Pass:text"
       },
       variants = {
         {
@@ -686,7 +687,7 @@ return {
         "lovr.keypressed",
         "lovr.keyreleased"
       },
-      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `lovr.graphics.print` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings."
+      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `Pass:text` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings."
     },
     {
       name = "threaderror",
