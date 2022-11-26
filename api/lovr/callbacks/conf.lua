@@ -300,6 +300,7 @@ return {
           t.headset.supersample = false
           t.headset.offset = 1.7
           t.headset.antialias = true
+          t.headset.stencil = false
           t.headset.submitdepth = true
           t.headset.overlay = false
 
@@ -310,6 +311,7 @@ return {
           t.window.width = 1080
           t.window.height = 600
           t.window.fullscreen = false
+          t.window.resizable = false
           t.window.title = 'LÖVR'
           t.window.icon = nil
         end
