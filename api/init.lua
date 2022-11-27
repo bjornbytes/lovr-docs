@@ -244,7 +244,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.16.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.antialias = true\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.16.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.antialias = true\n  t.headset.stencil = false\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.resizable = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations."
@@ -286,7 +286,7 @@ return {
       name = "errhand",
       tag = "callbacks",
       summary = "Called when an error occurs.",
-      description = "The \"lovr.errhand\" callback is run whenever an error occurs.  It receives two parameters. The first is a string containing the error message. The second is either nil, or a string containing a traceback (as returned by \"debug.traceback()\"); if nil, this means \"lovr.errhand\" is being called in the stack where the error occurred, and it can call \"debug.traceback()\" itself.\n\n\"lovr.errhand\" should return a handler function to run in a loop to show the error screen. This handler function is of the same type as the one returned by \"lovr.run\" and has the same requirements (such as pumping events). If an error occurs while this handler is running, the program will terminate immediately-- \"lovr.errhand\" will not be given a second chance. Errors which occur inside \"lovr.errhand\" or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
+      description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a parameter containing the error message.  It should return a handler function that will run in a loop to render the error screen.\n\nThis handler function is of the same type as the one returned by `lovr.run` and has the same requirements (such as pumping events).  If an error occurs while this handler is running, the program will terminate immediately -- `lovr.errhand` will not be given a second chance.  Errors which occur in the error handler or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
       key = "lovr.errhand",
       module = "lovr",
       variants = {
@@ -296,11 +296,6 @@ return {
               name = "message",
               type = "string",
               description = "The error message."
-            },
-            {
-              name = "traceback",
-              type = "string",
-              description = "A traceback string, or nil."
             }
           },
           returns = {
