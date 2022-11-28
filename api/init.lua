@@ -481,8 +481,20 @@ return {
       module = "lovr",
       variants = {
         {
-          arguments = {},
-          returns = {}
+          arguments = {
+            {
+              name = "pass",
+              type = "Pass",
+              description = "A render pass targeting the window."
+            }
+          },
+          returns = {
+            {
+              name = "skip",
+              type = "boolean",
+              description = "If truthy, the input Pass will not be submitted to the GPU."
+            }
+          }
         }
       },
       examples = {
