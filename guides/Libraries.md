@@ -113,5 +113,13 @@ General Lua libraries:
       <td><a href="https://github.com/kikito/tween.lua">tween.lua</a></td>
       <td>A tweening library for Lua.</td>
     </tr>
+    <tr>
+      <td><a href="https://github.com/leafo/moonscript">Moonscript</a></td>
+      <td>Alternative scripting language. Trans-compiles into Lua.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/pigpigyyy/Yuescript">Yuescript</a></td>
+      <td>Moonscript dialect. Trans-compiles into Lua.</td>
+    </tr>
   </tbody>
 </table>
