@@ -24,7 +24,7 @@ making them suited not only for scripting but also for storage of your game's co
 Featured are all kinds of additional syntactic sugar
 and a class system for object oriented coding.
 
-At the time of this writing (Dezember )
+At the time of this writing (December 2022)
 Yuescript is under active development and extends on Moonscript a lot already.
 Moonscript on the other hand is more mature, more stable, features more/better editor support and is
 better documented.
@@ -67,12 +67,6 @@ You need to ship a different one for each operating system you want to support.
 The Yuescript compiler takes care of the line-number translation,
 no extra work needed in this setup.
 
-There is a [pull request](https://github.com/pigpigyyy/Yuescript/pull/117)
-pending for support of LÖVR's virtual filesystem,
-meaning *require* will also work in the savedir directory and fuse mode is supported.
-
-Hopefully Yuescript versions **> v.15.14** will ship with the mentioned LÖVR support.
-
 Setup in conf.lua:
 
 ``` lua
@@ -96,6 +90,17 @@ end
 -- linux and windows: beside the fused binary or in the savedir toplevel.
 -- macOS: in the savedir toplevel
 require('yue')
+
+-- yue's uses of io.open need to be replaced with lovr.filesystem ones.
+-- This enables require to search the LÖVR savedir and is necessary for the fuse mode.
+yue.file_exist = lovr.filesystem.isFile
+yue.read_file  = function(fname)
+    contents, bytes = lovr.filesystem.read(fname)
+    if contents == nil then
+        return nil, 'File not found.'
+    end
+    return contents
+end
 
 -- we search in the current directory and in the client directory.
 -- It makes sense to keep Lua and Yuescript search paths in sync.
