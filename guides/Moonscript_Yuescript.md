@@ -5,7 +5,7 @@ Moonscript & Yuescript
 [Moonscript](https://moonscript.org) dialect.
 Like Moonscript it
 [trans-compiles](https://en.wikipedia.org/wiki/Source-to-source_compiler)
-into Lua, thus both languages are Lövr scripting alternatives.
+into Lua, thus both languages are LÖVR scripting alternatives.
 
 After the setup (in conf.lua) Lua and Yuescript/Moonscript modules can be required from each other
 in the usual way.
@@ -43,15 +43,15 @@ line-number in the source file:
     $ yue -l yourGame
 
 A special error handler can extract this information 
-and point to the correct line in the sourcefile when an error is thrown.
+and point to the correct line in the source file when an error is thrown.
 
-(TODO: Write more about this error handler function. I guess some yue function can be reused.)
+(TODO: Write more about this error handler function. I guess some Yuescript function can be reused.)
 
 ### Moonscript
 
     $ moonc yourGame
 
-(TODO: Write more about error line rewritting.)
+(TODO: Write more about error line rewriting.)
 
 Runtime Compilation
 ---
@@ -61,7 +61,7 @@ Source and Lua files can't be out of sync and the setup is more developer friend
 
 ### Yuescript
 
-Yuescript comes also (beside the standalone executable) in form of a Lua-clib binary.
+Yuescript comes also (beside the standalone executable) in form of a Lua c library.
 You need to ship a different one for each operating system you want to support.
 
 The Yuescript compiler takes care of the line-number translation,
@@ -70,7 +70,7 @@ no extra work needed in this setup.
 Setup in conf.lua:
 
 ``` lua
--- this allows us to have a dedicated directory for lua-clibs.
+-- This allows us to have a dedicated directory for Lua c libraries.
 local os = lovr.system.getOS()
 if os == 'Linux' then
     package.cpath = 'utils/lua_clib/?.so'
@@ -87,12 +87,12 @@ end
 -- windows:  utils\lua_clib\yue.dll
 -- macOS:    utils/lua_clib/yue.so
 -- fuse mode:
--- linux and windows: beside the fused binary or in the savedir toplevel.
--- macOS: in the savedir toplevel
+-- linux and windows: beside the fused binary or in the save directory top-level.
+-- macOS: in the save directory top-level
 require('yue')
 
 -- yue's uses of io.open need to be replaced with lovr.filesystem ones.
--- This enables require to search the LÖVR savedir and is necessary for the fuse mode.
+-- This enables require to search the LÖVR save directory and is necessary for the fuse mode.
 yue.file_exist = lovr.filesystem.isFile
 yue.read_file  = function(fname)
     contents, bytes = lovr.filesystem.read(fname)
@@ -128,13 +128,13 @@ require'myMain'
 ### Moonscript
 
 Moonscript is implemented in Moonscript/Lua itself and thus operating system independent.
-But it depends on [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/) which is a Lua-clib, although
-there are pure Lua implementations available.
+But it depends on [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/) which is a Lua c library,
+although there are pure Lua implementations available.
 
 Setup in conf.lua:
 
 ``` lua
--- this allows us to have a dedicated directory for lua-clibs.
+-- this allows us to have a dedicated directory for Lua c libraries.
 local os = lovr.system.getOS()
 if os == 'Linux' then
     package.cpath = 'utils/lua_clib/?.so'
@@ -156,8 +156,8 @@ lovr.filesystem.setRequirePath(lua_path)
 -- windows:  utils\lua_clib\lpeg.dll
 -- macOS:    utils/lua_clib/lpeg.so
 -- fuse mode:
--- linux and windows: beside the fused binary or in the savedir toplevel.
--- macOS: in the savedir toplevel
+-- linux and windows: beside the fused binary or in the save directory top-level.
+-- macOS: in the save directory top-level
 
 -- Moonscript rewrites and sets its require paths from package.path when first required.
 -- If you want to alter it afterwards redefine package.moon_path.
