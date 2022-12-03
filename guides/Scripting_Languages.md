@@ -1,7 +1,7 @@
 Scripting Languages
 ===================
 
-<img align="right" width="300" height="300" src="https://www.lua.org/images/luaa.gif" alt="Lua Logo">
+<img align="right" width="300" height="300" src="https://www.lua.org/images/lua-logo.gif" alt="Lua Logo">
 
 Currently Lua is the only supported language for coding LÖVR projects.  
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
