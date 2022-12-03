@@ -64,7 +64,7 @@ In general there are two ways of using one of them in a LÖVR project:
 CSharp.lua (C# dialect)
 ---
 
-<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="300" height="300"
+<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="250" height="250"
     src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
 
 * Home: [CSharp.lua Readme](https://github.com/yanghuan/CSharp.lua/blob/master/README.md) 
