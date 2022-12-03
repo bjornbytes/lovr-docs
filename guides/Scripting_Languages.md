@@ -86,7 +86,7 @@ Fennel (Lisp/Clojure dialect)
 
 #### just-in-time
 
-* [Setup#Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
+* [Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
 * [Minimal LÖVR Setup](https://github.com/MattRoelle/min-lovr-fennel)
 
 Haxe (ECMAScript dialect)
