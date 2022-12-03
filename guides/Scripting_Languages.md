@@ -1,9 +1,11 @@
 Scripting Languages
 ===================
 
+<a href="https://www.lua.org">
 <img align="right" width="300" height="300" src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo">
+</a>
 
-Currently Lua is the only supported language for coding LÖVR projects.  
+Currently [Lua](https://www.lua.org) is the only supported language for coding LÖVR projects.  
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
 [trans-compile](https://en.wikipedia.org/wiki/Source-to-source_compiler) into Lua.
 
@@ -61,9 +63,11 @@ A *dialect* means the language is inspired by the parent but not fully syntax co
 Fennel (Lisp/Clojure dialect)
 ---
 
+<a href="https://fennel-lang.org">
 <img align="right" width="300" height="300" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo">
+</a>
 
-* Home: [Fennel](https://fennel-lang.org/)
+* Home: [Fennel](https://fennel-lang.org)
 * Source: [github](https://github.com/bakpakin/Fennel)
 * Syntax: [Lisp](https://en.wikipedia.org/wiki/Lisp_\(programming_language\))/[Clojure](https://clojure.org/) inspired
 * Semantic: mostly Lua
@@ -88,7 +92,9 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
+<a href="https://haxe.org">
 <img align="right" width="200" height="200" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
+</a>
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [github](https://github.com/HaxeFoundation/haxe)
@@ -107,8 +113,8 @@ Haxe (ECMAScript dialect)
 
 #### ahead-of-time
 
-[Haxe Lua](https://haxe.org/manual/target-lua.html)
-[LÖVR bindings](https://github.com/excessive/lovr-haxe-wrappergen)
+* [Haxe Lua](https://haxe.org/manual/target-lua.html)
+* [LÖVR bindings](https://github.com/excessive/lovr-haxe-wrappergen)
 
 (TODO: Line Translation?)
 
@@ -119,7 +125,9 @@ Haxe does not offer runtime compilation.
 Moonscript (CoffeeScript dialect) 
 ---
 
+<a href="https://moonscript.org">
 <img align="right" width="300" height="150" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
+</a>
 
 * Home: [Moonscript](https://www.moonscript.org)
 * Source: [github](https://github.com/leafo/moonscript)
@@ -221,7 +229,9 @@ The main.lua file:
 Wu (Rust dialect)
 ---
 
+<a href="https://wu-lang.gitbook.io/guide">
 <img align="right" width="300" height="300" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo">
+</a>
 
 * Home: [Wu Guide](https://wu-lang.gitbook.io/guide) 
 * Source: [github](https://github.com/wu-lang/wu)
@@ -247,9 +257,11 @@ There is no jit-compiler available for Wu.
 Yuescript (Moonscript dialect)
 ---
 
+<a href="https://yuescript.org">
 <img align="right" width="300" height="300" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo">
+</a>
 
-* Home: [Yuescript](https://yuescript.org/)
+* Home: [Yuescript](https://yuescript.org)
 * Source: [github](https://github.com/pigpigyyy/Yuescript)
 * Syntax: [Moonscript](https://moonscript.org) inspired [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
