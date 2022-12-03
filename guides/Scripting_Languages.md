@@ -318,7 +318,7 @@ Setup in conf.lua:
     yue('config')
     ```
 
-    The main.lua file:
+The main.lua file:
 
     ``` lua
     -- Require file client/myMain.yue or client/myMain.lua for example
