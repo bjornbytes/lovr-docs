@@ -8,11 +8,12 @@ But there are several [languages](https://github.com/hengestone/lua-languages) a
 [trans-compile](https://en.wikipedia.org/wiki/Source-to-source_compiler) into Lua.
 
 This document covers only some of them:
-* [Fennel](*Fennel \(Lisp/Clojure dialect\))
-* [Haxe](*Haxe \(ECMAScript dialect\))
-* [Moonscript](*Moonscript \(CoffeeScript dialect\))
-* [Wu](*Wu \(Rust dialect\))
-* [Yuescript](*Yuescript \(Moonscript dialect\))
+
+* [Fennel](#fennel-lispclojure-dialect)
+* [Haxe](#haxe-ecmascript-dialect)
+* [Moonscript](#moonscript-coffeescript-dialect)
+* [Wu](#wu-rust-dialect)
+* [Yuescript](#yuescript-moonscript-dialect)
 
 In general there are two ways of using one of them in a LÖVR project:
 
