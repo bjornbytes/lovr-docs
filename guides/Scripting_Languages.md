@@ -1,21 +1,22 @@
 Scripting Languages
 ===================
 
-<a href="https://www.lua.org">
-<img align="right" width="300" height="300" src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo">
-</a>
+<a href="https://www.lua.org"><img align="right" width="300" height="300"
+    src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo"></a>
 
 Currently [Lua](https://www.lua.org) is the only supported language for coding LÖVR projects.  
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
 [trans-compile](https://en.wikipedia.org/wiki/Source-to-source_compiler) into Lua.
 
-This document covers only some of them:
+This document covers only some of them (in alphabetical order):
 
-* [Fennel](#fennel-lispclojure-dialect)
-* [Haxe](#haxe-ecmascript-dialect)
-* [Moonscript](#moonscript-coffeescript-dialect)
-* [Wu](#wu-rust-dialect)
-* [Yuescript](#yuescript-moonscript-dialect)
+* [Fennel (Lisp/Clojure dialect)](#fennel-lispclojure-dialect)
+* [Haxe (ECMAScript dialect)](#haxe-ecmascript-dialect)
+* [Moonscript (CoffeeScript dialect)](#moonscript-coffeescript-dialect)
+* [Wu (Rust dialect)](#wu-rust-dialect)
+* [Yuescript (Moonscript dialect)](#yuescript-moonscript-dialect)
+
+> A *dialect* means the language is inspired by the parent but not fully syntax compatible.
 
 In general there are two ways of using one of them in a LÖVR project:
 
@@ -52,24 +53,23 @@ In general there are two ways of using one of them in a LÖVR project:
             In fused mode the virtual file-system is the only working file access method.
             Meaning the project won't work at all if it relies on 'require'.
 
-> The more elegant solution is trans-compilation at runtime.
-> Source and Lua files can't be out of sync and the setup is more developer friendly.
-> Runtime error line translation is usually done by the compiler without extra care.
-
-The following chapters present language specific solutions for both use cases.
-Chapters are sorted in alphabetical order.
-A *dialect* means the language is inspired by the parent but not fully syntax compatible.
+> The more elegant and recommended solution is the just-in-time compilation:
+>
+> * Source and Lua files can't be out of sync.
+> * Developer friendly workflow.
+> * Runtime error line translation is usually done by the compiler without extra care.
+> * Allows reload during development.
 
 Fennel (Lisp/Clojure dialect)
 ---
 
-<a href="https://fennel-lang.org">
-<img align="right" width="300" height="300" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo">
-</a>
+<a href="https://fennel-lang.org"><img align="right" width="300" height="300"
+    src="https://fennel-lang.org/logo.svg" alt="Fennel Logo"></a>
 
 * Home: [Fennel](https://fennel-lang.org)
 * Source: [github](https://github.com/bakpakin/Fennel)
-* Syntax: [Lisp](https://en.wikipedia.org/wiki/Lisp_\(programming_language\))/[Clojure](https://clojure.org/) inspired
+* Syntax: [Lisp](https://en.wikipedia.org/wiki/Lisp_\(programming_language\)) /
+[Clojure](https://clojure.org/) inspired
 * Semantic: mostly Lua
 * jit compiler: Pure Lua
 * Dependencies: (TODO)
@@ -92,9 +92,8 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
-<a href="https://haxe.org">
-<img align="right" width="200" height="200" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
-</a>
+<a href="https://haxe.org"><img align="right" width="200" height="200"
+    src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [github](https://github.com/HaxeFoundation/haxe)
@@ -110,7 +109,6 @@ Haxe (ECMAScript dialect)
     * Properties
     * Type Parameters
 
-
 #### ahead-of-time
 
 * [Haxe Lua](https://haxe.org/manual/target-lua.html)
@@ -125,13 +123,13 @@ Haxe does not offer runtime compilation.
 Moonscript (CoffeeScript dialect) 
 ---
 
-<a href="https://moonscript.org">
-<img align="right" width="300" height="150" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
-</a>
+<a href="https://moonscript.org"><img align="right" width="300" height="150"
+    src="http://moonscript.org/images/logo.png" alt="Moonscript Logo"></a>
 
 * Home: [Moonscript](https://www.moonscript.org)
 * Source: [github](https://github.com/leafo/moonscript)
-* Syntax: [CoffeeScript](https://coffeescript.org) inspired [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
+* Syntax: [CoffeeScript](https://coffeescript.org) inspired
+[(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
 * jit compiler: Lua + Lua C Library (LPeg) 
 * Dependencies: [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
@@ -143,7 +141,7 @@ Moonscript (CoffeeScript dialect)
 
 #### ahead-of-time
 
-The standalone compiler can be used to 
+Compiles the whole project:
 
     $ moonc yourGame
 
@@ -229,11 +227,10 @@ The main.lua file:
 Wu (Rust dialect)
 ---
 
-<a href="https://wu-lang.gitbook.io/guide">
-<img align="right" width="300" height="300" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo">
-</a>
+<a href="https://wu-lang.gitbook.io/guide"><img align="right" width="300" height="300"
+    src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo"></a>
 
-* Home: [Wu Guide](https://wu-lang.gitbook.io/guide) 
+* Home: [Wu Guide](https://wu-lang.gitbook.io/guide)
 * Source: [github](https://github.com/wu-lang/wu)
 * Syntax: [Rust](https://rust-lang.org) inspired
 * Semantic: (TODO)
@@ -257,13 +254,13 @@ There is no jit-compiler available for Wu.
 Yuescript (Moonscript dialect)
 ---
 
-<a href="https://yuescript.org">
-<img align="right" width="300" height="300" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo">
-</a>
+<a href="https://yuescript.org"><img align="right" width="300" height="300"
+    src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo"></a>
 
 * Home: [Yuescript](https://yuescript.org)
 * Source: [github](https://github.com/pigpigyyy/Yuescript)
-* Syntax: [Moonscript](https://moonscript.org) inspired [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
+* Syntax: [Moonscript](https://moonscript.org) inspired 
+[(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
 * jit-compiler: Lua C library
 * Dependencies: None
