@@ -150,8 +150,8 @@ Haxe does not offer runtime compilation.
 
 Moonscript (CoffeeScript dialect) 
 ---
-
-<a href="https://moonscript.org"><img align="right" width="300" height="150"
+https://camo.githubusercontent.com/d1117c2c8b79b1cbc36249d12c0c91488d0b4b3688f19d56005ae717f0854ec0/68747470733a2f2f6c6561666f2e6e65742f64756d702f7361696c6f726d6f6f6e7363726970742e706e67
+<a href="https://moonscript.org"><img align="right" width="450" height="225"
     src="http://moonscript.org/images/logo.png" alt="Moonscript Logo"></a>
 
 * Home: [Moonscript](https://www.moonscript.org)
