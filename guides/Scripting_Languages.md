@@ -92,7 +92,7 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
-<a href="https://haxe.org"><img align="right" width="200" height="200"
+<a href="https://haxe.org"><img align="right" width="225" height="225"
     src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
 
 * Home: [Haxe](https://haxe.org/)
