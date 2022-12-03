@@ -162,10 +162,34 @@ lovr.filesystem.setRequirePath(lua_path)
 -- Moonscript rewrites and sets its require paths from package.path when first required.
 -- If you want to alter it afterwards redefine package.moon_path.
 package.path = lua_path
-require'moonscript'
+local moonscript = require'moonscript'
 -- Disable the conventional lua require path for easier testing if fuse mode works.
 -- Every require relies on lovr.filesystem instead.
 package.path = ''
+
+-- This loader uses lovr.filesystem instead of io.open.
+-- Enables require from LOVR's save directory.
+-- Fuse mode won't work at all without it.
+local moon_loader = function(name)
+    local name_path = name:gsub("%.", dirsep)
+    local file, file_path
+    for path in package.moonpath:gmatch("[^;]+") do
+        file_path = path:gsub("?", name_path)
+        file = lovr.filesystem.read(file_path)
+        if file then break end
+    end
+    if file then
+        local res, err = moonscript.loadstring(file, "@" .. file_path)
+        if not res then
+            error(file_path .. ": " .. err)
+        end
+        return res
+    end
+    return nil, "Could not find moon file"
+end
+moonscript.remove_loader()
+local loaders = package.loaders or package.searchers
+table.insert(loaders, moon_loader)
 
 -- This will require the first .lua or .moon file matching the require paths.
 -- If both are present the Lua file is required.
