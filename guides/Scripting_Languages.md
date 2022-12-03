@@ -69,6 +69,10 @@ Fennel (Lisp/Clojure dialect)
 * Semantic: mostly Lua
 * jit compiler: Pure Lua
 * Dependencies: (TODO)
+* Features
+    * Macro support
+    * Fully parenthesized prefix notation
+    * Functional language
 
 #### ahead-of-time
 
@@ -92,6 +96,14 @@ Haxe (ECMAScript dialect)
 * Semantic: (TODO)
 * jit compiler: Not available
 * Dependencies: (TODO)
+* Features:
+    * Strictly typed
+    * Object oriented
+    * Array comprehension
+    * Pattern matching
+    * Properties
+    * Type Parameters
+
 
 #### ahead-of-time
 
@@ -115,8 +127,10 @@ Moonscript (CoffeeScript dialect)
 * jit compiler: Lua + Lua C Library (LPeg) 
 * Dependencies: [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
 * Features:
-    * Mature
+    * Mature language with a good editor support
     * Class system for object oriented coding
+    * Clean syntax avoiding keyword noise
+    * List and Table Comprehensions
 
 #### ahead-of-time
 
@@ -241,13 +255,16 @@ Yuescript (Moonscript dialect)
 * jit-compiler: Lua C library
 * Dependencies: None
 * Features:
-    * Class system for object oriented coding
-    * streamlined table constructor syntax, suited for storage of your game's content data.
-    * under active development
+    * Everything Moonscript is featuring.
+    * Improved table literal syntax, suited for storage of your game's content data.
+    * Expressive and extremely concise
+    * Build-in macro support
+    * Table matching
+    * Under active development
 
 #### ahead-of-time
 
-Use the '-l' flag which enables commenting each line of the Lua file with the corresponding
+Use the `-l` flag which enables commenting each line of the Lua file with the corresponding
 line-number in the source file:
     
     $ yue -l yourGame
