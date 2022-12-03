@@ -56,7 +56,7 @@ In general there are two ways of using one of them in a LÖVR project:
 
 The following chapters present language specific solutions for both use cases.
 Chapters are sorted in alphabetical order.
-A dialect means the language is inspired by the parent but not fully syntax compatible.
+A *dialect* means the language is inspired by the parent but not fully syntax compatible.
 
 Fennel (Lisp/Clojure dialect)
 ---
