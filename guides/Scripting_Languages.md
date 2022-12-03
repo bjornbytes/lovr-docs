@@ -74,7 +74,7 @@ CSharp.lua (C# dialect)
 * jit compiler: (TODO)
 * Features:
     * Industrial-quality
-    * Readable lua code
+    * Readable Lua code
     * supporting all the syntax features of C# 7.0
     * supports most of C# 9.0
 
