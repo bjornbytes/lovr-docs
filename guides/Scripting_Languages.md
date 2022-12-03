@@ -7,6 +7,13 @@ Currently Lua is the only supported language for coding LÖVR projects.
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
 [trans-compile](https://en.wikipedia.org/wiki/Source-to-source_compiler) into Lua.
 
+This document covers only some of them:
+* [Fennel](*Fennel \(Lisp/Clojure dialect\))
+* [Haxe](*Haxe \(ECMAScript dialect\))
+* [Moonscript](*Moonscript \(CoffeeScript dialect\))
+* [Wu](*Wu \(Rust dialect\))
+* [Yuescript](*Yuescript \(Moonscript dialect\))
+
 In general there are two ways of using one of them in a LÖVR project:
 
 1. [Ahead-of-time compilation](https://en.wikipedia.org/wiki/Ahead-of-time_compilation)
@@ -42,9 +49,9 @@ In general there are two ways of using one of them in a LÖVR project:
             In fused mode the virtual file-system is the only working file access method.
             Meaning the project won't work at all if it relies on 'require'.
 
-The more elegant solution is trans-compilation at runtime.
-Source and Lua files can't be out of sync and the setup is more developer friendly.
-Runtime error line translation is usually done by the compiler without extra care.
+> The more elegant solution is trans-compilation at runtime.
+> Source and Lua files can't be out of sync and the setup is more developer friendly.
+> Runtime error line translation is usually done by the compiler without extra care.
 
 The following chapters present language specific solutions for both use cases.
 Chapters are sorted in alphabetical order.
@@ -82,7 +89,7 @@ Haxe (ECMAScript dialect)
 * Source: [github](https://github.com/HaxeFoundation/haxe)
 * Syntax: [ECMAScript](https://en.wikipedia.org/wiki/ECMAScript) inspired
 * Semantic: (TODO)
-* jit compiler: Not available (TODO: is that true
+* jit compiler: Not available
 * Dependencies: (TODO)
 
 #### ahead-of-time
@@ -93,7 +100,7 @@ Haxe (ECMAScript dialect)
 
 #### just-in-time
 
-Haxe does not offer runtime compilation. (TODO: is that true?)
+Haxe does not offer runtime compilation.
 
 Moonscript (CoffeeScript dialect) 
 ---
@@ -118,81 +125,80 @@ The standalone compiler can be used to
 
 (TODO: Write more about error line rewriting.)
 
-
 #### just-in-time
 
 Setup in conf.lua:
 
-``` lua
--- This allows us to have a dedicated directory for Lua c libraries.
-local os = lovr.system.getOS()
-if os == 'Linux' then
-    package.cpath = 'utils/lua_clib/?.so'
-end
-if os == 'Windows' then
-    package.cpath = 'utils/lua_clib/?.dll'
-end
-if os == 'macOS' then
-    package.cpath = 'utils/lua_clib/?.so'
-end
-
--- Adjust the require search paths to your needs.
-local lua_path = './?.lua;./?/init.lua;utils/moonscript/?/init.lua;'
-lovr.filesystem.setRequirePath(lua_path)
-
--- Moonscript must be located at utils. Check for utils/moonscript/moonscript/init.lua.
--- The LPeg library is to be located at:
--- Linux:    utils/lua_clib/lpeg.so
--- Windows:  utils\lua_clib\lpeg.dll
--- MacOS:    utils/lua_clib/lpeg.so
--- fuse mode:
--- Linux and Windows: Beside the fused binary or in the save directory top-level.
--- MacOS: In the save directory top-level
-
--- Moonscript rewrites and sets its require paths from package.path when first required.
--- If you want to alter it afterwards redefine package.moonpath.
-package.path = lua_path
-local moonscript = require'moonscript'
--- Disable the conventional lua require path for easier testing if fuse mode works.
--- Every require relies on lovr.filesystem instead.
-package.path = ''
-
--- This loader uses lovr.filesystem instead of io.open.
--- Enables require from LOVR's save directory.
--- Fuse mode won't work at all without it.
-local moon_loader = function(name)
-    local name_path = name:gsub("%.", "/")
-    local file, file_path
-    for path in package.moonpath:gmatch("[^;]+") do
-        file_path = path:gsub("?", name_path)
-        file = lovr.filesystem.read(file_path)
-        if file then break end
+    ``` lua
+    -- This allows us to have a dedicated directory for Lua c libraries.
+    local os = lovr.system.getOS()
+    if os == 'Linux' then
+        package.cpath = 'utils/lua_clib/?.so'
     end
-    if file then
-        local res, err = moonscript.loadstring(file, "@" .. file_path)
-        if not res then
-            error(file_path .. ": " .. err)
+    if os == 'Windows' then
+        package.cpath = 'utils/lua_clib/?.dll'
+    end
+    if os == 'macOS' then
+        package.cpath = 'utils/lua_clib/?.so'
+    end
+
+    -- Adjust the require search paths to your needs.
+    local lua_path = './?.lua;./?/init.lua;utils/moonscript/?/init.lua;'
+    lovr.filesystem.setRequirePath(lua_path)
+
+    -- Moonscript must be located at utils. Check for utils/moonscript/moonscript/init.lua.
+    -- The LPeg library is to be located at:
+    -- Linux:    utils/lua_clib/lpeg.so
+    -- Windows:  utils\lua_clib\lpeg.dll
+    -- MacOS:    utils/lua_clib/lpeg.so
+    -- fuse mode:
+    -- Linux and Windows: Beside the fused binary or in the save directory top-level.
+    -- MacOS: In the save directory top-level
+
+    -- Moonscript rewrites and sets its require paths from package.path when first required.
+    -- If you want to alter it afterwards redefine package.moonpath.
+    package.path = lua_path
+    local moonscript = require'moonscript'
+    -- Disable the conventional lua require path for easier testing if fuse mode works.
+    -- Every require relies on lovr.filesystem instead.
+    package.path = ''
+
+    -- This loader uses lovr.filesystem instead of io.open.
+    -- Enables require from LOVR's save directory.
+    -- Fuse mode won't work at all without it.
+    local moon_loader = function(name)
+        local name_path = name:gsub("%.", "/")
+        local file, file_path
+        for path in package.moonpath:gmatch("[^;]+") do
+            file_path = path:gsub("?", name_path)
+            file = lovr.filesystem.read(file_path)
+            if file then break end
         end
-        return res
+        if file then
+            local res, err = moonscript.loadstring(file, "@" .. file_path)
+            if not res then
+                error(file_path .. ": " .. err)
+            end
+            return res
+        end
+        return nil, "Could not find moon file"
     end
-    return nil, "Could not find moon file"
-end
-moonscript.remove_loader()
-local loaders = package.loaders or package.searchers
-table.insert(loaders, moon_loader)
+    moonscript.remove_loader()
+    local loaders = package.loaders or package.searchers
+    table.insert(loaders, moon_loader)
 
--- This will require the first .lua or .moon file matching the require paths.
--- If both are present the Lua file is required.
-require'myConf'
-```
+    -- This will require the first .lua or .moon file matching the require paths.
+    -- If both are present the Lua file is required.
+    require'myConf'
+    ```
 
 The main.lua file:
 
-``` lua
--- Requires either .moon or .lua module files.
--- If both are present the Lua one is required.
-require'myMain'
-```
+    ``` lua
+    -- Requires either .moon or .lua module files.
+    -- If both are present the Lua one is required.
+    require'myMain'
+    ```
 
 (TODO: Write about error line translation.)
 
@@ -263,58 +269,58 @@ in the usual way.
 
 Setup in conf.lua:
 
-``` lua
--- This allows us to have a dedicated directory for Lua c libraries.
-local os = lovr.system.getOS()
-if os == 'Linux' then
-    package.cpath = 'utils/lua_clib/?.so'
-end
-if os == 'Windows' then
-    package.cpath = 'utils/lua_clib/?.dll'
-end
-if os == 'macOS' then
-    package.cpath = 'utils/lua_clib/?.so'
-end
-
--- This requires the Yuescript compiler library to be located at:
--- linux:    utils/lua_clib/yue.so
--- windows:  utils\lua_clib\yue.dll
--- macOS:    utils/lua_clib/yue.so
--- fuse mode:
--- linux and windows: beside the fused binary or in the save directory top-level.
--- macOS: in the save directory top-level
-require('yue')
-
--- yue's uses of io.open need to be replaced with lovr.filesystem ones.
--- This enables require to search the LÖVR save directory and is necessary for the fuse mode.
-yue.file_exist = lovr.filesystem.isFile
-yue.read_file  = function(fname)
-    contents, bytes = lovr.filesystem.read(fname)
-    if contents == nil then
-        return nil, 'File not found.'
+    ``` lua
+    -- This allows us to have a dedicated directory for Lua c libraries.
+    local os = lovr.system.getOS()
+    if os == 'Linux' then
+        package.cpath = 'utils/lua_clib/?.so'
     end
-    return contents
-end
+    if os == 'Windows' then
+        package.cpath = 'utils/lua_clib/?.dll'
+    end
+    if os == 'macOS' then
+        package.cpath = 'utils/lua_clib/?.so'
+    end
 
--- Search in the current directory and in the client directory.
--- It makes sense to keep Lua and Yuescript search paths in sync.
--- 'client' is just an example, adjust and extend these paths to your needs.
-yue.options.path = './?.yue;./?/init.yue;client/?.yue;client/?/init.yue'
-lovr.filesystem.setRequirePath('./?.lua;./?/init.lua;client/?.lua;client/?/init.lua')
--- Disable the conventional Lua require path for easier testing if fuse mode works.
--- Every require relies on lovr.filesystem instead.
-package.path = ''
+    -- This requires the Yuescript compiler library to be located at:
+    -- linux:    utils/lua_clib/yue.so
+    -- windows:  utils\lua_clib\yue.dll
+    -- macOS:    utils/lua_clib/yue.so
+    -- fuse mode:
+    -- linux and windows: beside the fused binary or in the save directory top-level.
+    -- macOS: in the save directory top-level
+    require('yue')
 
--- Require a file at client/config.yue for example.
--- In config.yue 'require' works like expected.
--- The rest of the configuration can be coded in Yuescript already.
-yue('config')
-```
+    -- yue's uses of io.open need to be replaced with lovr.filesystem ones.
+    -- This enables require to search the LÖVR save directory and is necessary for the fuse mode.
+    yue.file_exist = lovr.filesystem.isFile
+    yue.read_file  = function(fname)
+        contents, bytes = lovr.filesystem.read(fname)
+        if contents == nil then
+            return nil, 'File not found.'
+        end
+        return contents
+    end
 
-The main.lua file:
+    -- Search in the current directory and in the client directory.
+    -- It makes sense to keep Lua and Yuescript search paths in sync.
+    -- 'client' is just an example, adjust and extend these paths to your needs.
+    yue.options.path = './?.yue;./?/init.yue;client/?.yue;client/?/init.yue'
+    lovr.filesystem.setRequirePath('./?.lua;./?/init.lua;client/?.lua;client/?/init.lua')
+    -- Disable the conventional Lua require path for easier testing if fuse mode works.
+    -- Every require relies on lovr.filesystem instead.
+    package.path = ''
 
-``` lua
--- Require file client/myMain.yue or client/myMain.lua for example
--- If both files are present the Lua one is required.
-require'myMain'
-```
+    -- Require a file at client/config.yue for example.
+    -- In config.yue 'require' works like expected.
+    -- The rest of the configuration can be coded in Yuescript already.
+    yue('config')
+    ```
+
+    The main.lua file:
+
+    ``` lua
+    -- Require file client/myMain.yue or client/myMain.lua for example
+    -- If both files are present the Lua one is required.
+    require'myMain'
+    ```    
