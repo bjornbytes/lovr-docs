@@ -78,6 +78,8 @@ CSharp.lua (C# dialect)
     * supporting all the syntax features of C# 7.0
     * supports most of C# 9.0
 
+(TODO: Is CSharp.lua really a dialect? It feels more like a full implementation.)
+
 #### ahead-of-time
 
 (TODO)
