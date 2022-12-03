@@ -31,14 +31,14 @@ In general there are two ways of using one of them in a LÖVR project:
     * virtual file-system
         The Lua loader for the language needs to make use of lovr.filesystem.read or it can't
         access files via the virtual file-system.
-        Without a solution there are two issues:  
-            1. save directory
-                Modules can't be required from within the LÖVR save directory.
-                This is a problem when downloading modules is supported since it is the only place
-                LÖVR allows writing to. 
-            2. fuse mode
-                In fused mode the virtual file-system is the only working file access method.
-                Meaning the project won't work at all if it relies on 'require'.
+        Without a solution there are two issues:      
+        1. save directory
+            Modules can't be required from within the LÖVR save directory.
+            This is a problem when downloading modules is supported since it is the only place
+            LÖVR allows writing to. 
+        2. fuse mode
+            In fused mode the virtual file-system is the only working file access method.
+            Meaning the project won't work at all if it relies on 'require'.
 
 The more elegant solution is trans-compilation at runtime.
 Source and Lua files can't be out of sync and the setup is more developer friendly.
