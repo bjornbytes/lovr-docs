@@ -10,5 +10,5 @@ return {
   'Contributing',
   'Compiling',
   'FAQ',
-  'Moonscript_Yuescript'
+  'Scripting_Languages'
 }
