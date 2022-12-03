@@ -108,8 +108,9 @@ Haxe (ECMAScript dialect)
 #### ahead-of-time
 
 [Haxe Lua](https://haxe.org/manual/target-lua.html)
+[LÖVR bindings](https://github.com/excessive/lovr-haxe-wrappergen)
 
-(TODO: Line Translation)
+(TODO: Line Translation?)
 
 #### just-in-time
 
@@ -237,7 +238,7 @@ Wu (Rust dialect)
 
 #### ahead-of-time
 
-(TODO)
+[LÖVR bindings](https://github.com/darltrash/lowr)
 
 #### just-in-time
 
