@@ -151,7 +151,7 @@ Compiles the whole project:
 
 Setup in conf.lua:
 
-    ``` lua
+``` lua
     -- This allows us to have a dedicated directory for Lua c libraries.
     local os = lovr.system.getOS()
     if os == 'Linux' then
@@ -212,15 +212,15 @@ Setup in conf.lua:
     -- This will require the first .lua or .moon file matching the require paths.
     -- If both are present the Lua file is required.
     require'myConf'
-    ```
+```
 
 The main.lua file:
 
-    ``` lua
+``` lua
     -- Requires either .moon or .lua module files.
     -- If both are present the Lua one is required.
     require'myMain'
-    ```
+```
 
 (TODO: Write about error line translation.)
 
@@ -297,7 +297,7 @@ in the usual way.
 
 Setup in conf.lua:
 
-    ``` lua
+``` lua
     -- This allows us to have a dedicated directory for Lua c libraries.
     local os = lovr.system.getOS()
     if os == 'Linux' then
@@ -343,12 +343,12 @@ Setup in conf.lua:
     -- In config.yue 'require' works like expected.
     -- The rest of the configuration can be coded in Yuescript already.
     yue('config')
-    ```
+```
 
 The main.lua file:
 
-    ``` lua
+``` lua
     -- Require file client/myMain.yue or client/myMain.lua for example
     -- If both files are present the Lua one is required.
     require'myMain'
-    ```    
+```    
