@@ -7,8 +7,8 @@ But there are several [languages](https://github.com/hengestone/lua-languages) a
 
 In general there are two ways of using one of them in a LÖVR project:
 
-1. ahead-of-time compilation
-    * simple setup
+1. [Ahead-of-time compilation](https://en.wikipedia.org/wiki/Ahead-of-time_compilation)
+    * simple setup  
         The simplest setup is compiling the codebase to Lua before shipping.
     * no additional dependencies  
         No additional compiler dependencies are required in this setup.
@@ -21,8 +21,8 @@ In general there are two ways of using one of them in a LÖVR project:
     * virtual file-system
         works out of the box.
 
-2. just-in-time compilation (embedded)
-    * more complex setup
+2. [Just-in-time compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation)
+    * more complex setup  
         This solution needs more additional coding inside the project. 
     * additional dependencies required  
         In this case the project must ship with the compiler library and its dependencies.
@@ -48,12 +48,14 @@ The following chapters present language specific solutions for both use cases.
 Chapters are sorted in alphabetical order.
 A dialect means the language is inspired by the parent but not fully syntax compatible.
 
-Fennel (Lisp (TODO: dialect?))
+Fennel (Lisp/Clojure dialect)
 ---
+
+<img align="right" width="30%" height="30%" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo">
 
 * Home: [Fennel](https://fennel-lang.org/)
 * Source: [github](https://github.com/bakpakin/Fennel)
-* Syntax: Lisp (TODO: inspired?)
+* Syntax: [Lisp](https://en.wikipedia.org/wiki/Lisp_\(programming_language\))/[Clojure](https://clojure.org/) inspired
 * Semantic: mostly Lua
 * jit compiler: Pure Lua
 * Dependencies: (TODO)
@@ -69,14 +71,16 @@ Fennel (Lisp (TODO: dialect?))
 * [Setup#Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
 * [Minimal LÖVR Setup](https://github.com/MattRoelle/min-lovr-fennel)
 
-Haxe (ECMAScript Dialect)
+Haxe (ECMAScript dialect)
 ---
+
+<img align="right" width="30%" height="30%" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [github](https://github.com/HaxeFoundation/haxe)
 * Syntax: [ECMAScript](https://en.wikipedia.org/wiki/ECMAScript) inspired
 * Semantic: (TODO)
-* jit compiler: Not available (TODO: is that true?)
+* jit compiler: Not available (TODO: is that true
 * Dependencies: (TODO)
 
 #### ahead-of-time
@@ -89,15 +93,20 @@ Haxe (ECMAScript Dialect)
 
 Haxe does not offer runtime compilation. (TODO: is that true?)
 
-Moonscript (Coffeescript Dialect) 
+Moonscript (CoffeeScript dialect) 
 ---
+
+<img align="right" width="30%" height="30%" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
 
 * Home: [Moonscript](https://www.moonscript.org)
 * Source: [github](https://github.com/leafo/moonscript)
-* Syntax: [CoffeeScript](https://coffeescript.org) inspired (white space sensitive)
+* Syntax: [CoffeeScript](https://coffeescript.org) inspired [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
 * jit compiler: Lua + Lua C Library (LPeg) 
 * Dependencies: [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
+* Features:
+    * Mature
+    * Class system for object oriented coding
 
 #### ahead-of-time
 
@@ -185,15 +194,23 @@ require'myMain'
 
 (TODO: Write about error line translation.)
 
-Wu (Rust Dialect)
+Wu (Rust dialect)
 ---
+
+<img align="right" width="30%" height="30%" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo">
 
 * Home: [Wu Guide](https://wu-lang.gitbook.io/guide) 
 * Source: [github](https://github.com/wu-lang/wu)
-* Syntax: Rust inspired
+* Syntax: [Rust](https://rust-lang.org) inspired
 * Semantic: (TODO)
-* jit-compiler: (TODO)
-* Dependencies: (TODO)
+* jit-compiler: Not available
+* Dependencies: Rust
+* Features
+    * Gradual typing
+    * Rust-like trait system
+    * Expression oriented design
+    * Pattern matching
+    * Cool logo
 
 #### ahead-of-time
 
@@ -201,33 +218,23 @@ Wu (Rust Dialect)
 
 #### just-in-time
 
-(TODO)
+There is no jit-compiler available for Wu.
 
-Yuescript (Moonscript Dialect)
+Yuescript (Moonscript dialect)
 ---
+
+<img align="right" width="30%" height="30%" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo">
 
 * Home: [Yuescript](https://yuescript.org/)
 * Source: [github](https://github.com/pigpigyyy/Yuescript)
-* Syntax: [Moonscript](https://moonscript.org) inspired (white space sensitive)
+* Syntax: [Moonscript](https://moonscript.org) inspired [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
 * jit-compiler: Lua C library
 * Dependencies: None
-
-#### Why and Which
-
-Be warned, both languages are [white space sensitive](https://en.wikipedia.org/wiki/Off-side_rule).
-If you can't stand this kind of syntax stop reading here.
-
-Moonscript dialects come with a streamlined table constructor syntax,
-making them suited not only for scripting but also for storage of your game's content data.
-
-Featured are all kinds of additional syntactic sugar
-and a class system for object oriented coding.
-
-At the time of this writing (December 2022)
-Yuescript is under active development and extends on Moonscript a lot already.
-Moonscript on the other hand is more mature, more stable, features more/better editor support and is
-better documented.
+* Features:
+    * Class system for object oriented coding
+    * streamlined table constructor syntax, suited for storage of your game's content data.
+    * under active development
 
 #### ahead-of-time
 
