@@ -1,6 +1,8 @@
 Scripting Languages
 ===================
 
+<img align="right" width="300" height="300" src="https://www.lua.org/images/luaa.gif" alt="Lua Logo">
+
 Currently Lua is the only supported language for coding LÖVR projects.  
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
 [trans-compile](https://en.wikipedia.org/wiki/Source-to-source_compiler) into Lua.
@@ -51,7 +53,7 @@ A dialect means the language is inspired by the parent but not fully syntax comp
 Fennel (Lisp/Clojure dialect)
 ---
 
-<img align="right" width="30%" height="30%" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo">
+<img align="right" width="300" height="300" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo">
 
 * Home: [Fennel](https://fennel-lang.org/)
 * Source: [github](https://github.com/bakpakin/Fennel)
@@ -74,7 +76,7 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
-<img align="right" width="30%" height="30%" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
+<img align="right" width="300" height="300" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [github](https://github.com/HaxeFoundation/haxe)
@@ -96,7 +98,7 @@ Haxe does not offer runtime compilation. (TODO: is that true?)
 Moonscript (CoffeeScript dialect) 
 ---
 
-<img align="right" width="30%" height="30%" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
+<img align="right" width="300" height="300" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
 
 * Home: [Moonscript](https://www.moonscript.org)
 * Source: [github](https://github.com/leafo/moonscript)
@@ -197,7 +199,7 @@ require'myMain'
 Wu (Rust dialect)
 ---
 
-<img align="right" width="30%" height="30%" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo">
+<img align="right" width="300" height="300" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo">
 
 * Home: [Wu Guide](https://wu-lang.gitbook.io/guide) 
 * Source: [github](https://github.com/wu-lang/wu)
