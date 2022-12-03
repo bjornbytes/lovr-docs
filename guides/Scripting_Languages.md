@@ -60,20 +60,14 @@ Fennel (Lisp (TODO: dialect?))
 
 #### ahead-of-time
 
-(TODO)
+    $ fennel --compile yourProject
 
-    $ fennel --compile 
+(TODO: error line translation)
 
 #### just-in-time
 
-[Setup#Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
-
-(TODO)
-
-conf.lua
-``` lua
-require("fennel").install().dofile("main.fnl")
-```
+* [Setup#Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
+* [Minimal LÖVR Setup](https://github.com/MattRoelle/min-lovr-fennel)
 
 Haxe (ECMAScript Dialect)
 ---
