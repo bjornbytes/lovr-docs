@@ -223,7 +223,7 @@ There is no jit-compiler available for Wu.
 Yuescript (Moonscript dialect)
 ---
 
-<img align="right" width="30%" height="30%" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo">
+<img align="right" width="100" height="100" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo">
 
 * Home: [Yuescript](https://yuescript.org/)
 * Source: [github](https://github.com/pigpigyyy/Yuescript)
