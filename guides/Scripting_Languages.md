@@ -10,6 +10,7 @@ But there are several [languages](https://github.com/hengestone/lua-languages) a
 
 This document covers only some of them (in alphabetical order):
 
+* [CSharp.lua (C# dialect)](#csharplua-c-dialect)
 * [Fennel (Lisp/Clojure dialect)](#fennel-lispclojure-dialect)
 * [Haxe (ECMAScript dialect)](#haxe-ecmascript-dialect)
 * [Moonscript (CoffeeScript dialect)](#moonscript-coffeescript-dialect)
@@ -59,6 +60,31 @@ In general there are two ways of using one of them in a LÖVR project:
 > * Developer friendly workflow.
 > * Runtime error line translation is usually done by the compiler without extra care.
 > * Allows reload during development.
+
+CSharp.lua (C# dialect)
+---
+
+<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="300" height="300"
+    src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
+
+* Home: [CSharp.lua Readme](https://github.com/yanghuan/CSharp.lua/blob/master/README.md) 
+* Source: [github](https://github.com/yanghuan/CSharp.lua)
+* Syntax: C# 7.0
+* Semantic: C#
+* jit compiler: (TODO)
+* Features:
+    * Industrial-quality
+    * Readable lua code
+    * supporting all the syntax features of C# 7.0
+    * supports most of C# 9.0
+
+#### ahead-of-time
+
+(TODO)
+
+#### just-in-time
+
+(TODO)
 
 Fennel (Lisp/Clojure dialect)
 ---
