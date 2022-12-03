@@ -68,15 +68,15 @@ CSharp.lua (C# dialect)
     src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
 
 * Home: [CSharp.lua Readme](https://github.com/yanghuan/CSharp.lua/blob/master/README.md) 
-* Source: [github](https://github.com/yanghuan/CSharp.lua)
+* Source: [GitHub](https://github.com/yanghuan/CSharp.lua)
 * Syntax: C# 7.0
 * Semantic: C#
 * jit compiler: (TODO)
 * Features:
     * Industrial-quality
-    * Readable Lua code
-    * supporting all the syntax features of C# 7.0
-    * supports most of C# 9.0
+    * Readable Lua code output
+    * Supports all the syntax features of C# 7.0
+    * Supports most of C# 9.0
 
 (TODO: Is CSharp.lua really a dialect? It feels more like a full implementation.)
 
@@ -95,7 +95,7 @@ Fennel (Lisp/Clojure dialect)
     src="https://fennel-lang.org/logo.svg" alt="Fennel Logo"></a>
 
 * Home: [Fennel](https://fennel-lang.org)
-* Source: [github](https://github.com/bakpakin/Fennel)
+* Source: [GitHub](https://github.com/bakpakin/Fennel)
 * Syntax: [Lisp](https://en.wikipedia.org/wiki/Lisp_\(programming_language\)) /
 [Clojure](https://clojure.org/) inspired
 * Semantic: mostly Lua
@@ -124,7 +124,7 @@ Haxe (ECMAScript dialect)
     src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
 
 * Home: [Haxe](https://haxe.org/)
-* Source: [github](https://github.com/HaxeFoundation/haxe)
+* Source: [GitHub](https://github.com/HaxeFoundation/haxe)
 * Syntax: [ECMAScript](https://en.wikipedia.org/wiki/ECMAScript) inspired
 * Semantic: (TODO)
 * jit compiler: Not available
@@ -155,7 +155,7 @@ Moonscript (CoffeeScript dialect)
     src="http://moonscript.org/images/logo.png" alt="Moonscript Logo"></a>
 
 * Home: [Moonscript](https://www.moonscript.org)
-* Source: [github](https://github.com/leafo/moonscript)
+* Source: [GitHub](https://github.com/leafo/moonscript)
 * Syntax: [CoffeeScript](https://coffeescript.org) inspired
 [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
@@ -259,7 +259,7 @@ Wu (Rust dialect)
     src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo"></a>
 
 * Home: [Wu Guide](https://wu-lang.gitbook.io/guide)
-* Source: [github](https://github.com/wu-lang/wu)
+* Source: [GitHub](https://github.com/wu-lang/wu)
 * Syntax: [Rust](https://rust-lang.org) inspired
 * Semantic: (TODO)
 * jit-compiler: Not available
@@ -286,7 +286,7 @@ Yuescript (Moonscript dialect)
     src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo"></a>
 
 * Home: [Yuescript](https://yuescript.org)
-* Source: [github](https://github.com/pigpigyyy/Yuescript)
+* Source: [GitHub](https://github.com/pigpigyyy/Yuescript)
 * Syntax: [Moonscript](https://moonscript.org) inspired 
 [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
