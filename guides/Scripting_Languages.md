@@ -76,7 +76,7 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
-<img align="right" width="300" height="300" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
+<img align="right" width="250" height="250" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo">
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [github](https://github.com/HaxeFoundation/haxe)
@@ -98,7 +98,7 @@ Haxe does not offer runtime compilation. (TODO: is that true?)
 Moonscript (CoffeeScript dialect) 
 ---
 
-<img align="right" width="300" height="300" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
+<img align="right" width="300" height="150" src="http://moonscript.org/images/logo.png" alt="Moonscript Logo">
 
 * Home: [Moonscript](https://www.moonscript.org)
 * Source: [github](https://github.com/leafo/moonscript)
