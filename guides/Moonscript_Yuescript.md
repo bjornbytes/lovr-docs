@@ -1,135 +1,120 @@
-Moonscript & Yuescript
-===
+Scripting Languages
+===================
 
-[Yuescript](https://yuescript.org/) is a 
-[Moonscript](https://moonscript.org) dialect.
-Like Moonscript it
-[trans-compiles](https://en.wikipedia.org/wiki/Source-to-source_compiler)
-into Lua, thus both languages are LÖVR scripting alternatives.
+Currently Lua is the only supported language for coding LÖVR projects.  
+But there are several [languages](https://github.com/hengestone/lua-languages) available that
+[trans-compile](https://en.wikipedia.org/wiki/Source-to-source_compiler) into Lua.
 
-After the setup (in conf.lua) Lua and Yuescript/Moonscript modules can be required from each other
-in the usual way.
+In general there are two ways of using one of them in a LÖVR project:
 
-It is also possible to enable support for both dialects.
+1. ahead-of-time compilation
+    * simple setup
+        The simplest setup is compiling the codebase to Lua before shipping.
+    * no additional dependencies  
+        No additional compiler dependencies are required in this setup.
+        Although the language might introduce runtime dependencies.
+    * runtime error line translation  
+        Most (or only some?) compilers allow to annotate each translated line with the
+        corresponding one's number in the source file.
+        A proper stack-trace with error lines rewritten requires the implementation of an
+        error handler function making use of the annotations. 
+    * virtual file-system
+        works out of the box.
 
-Why and Which
+2. just-in-time compilation (embedded)
+    * more complex setup
+        This solution needs more additional coding inside the project. 
+    * additional dependencies required  
+        In this case the project must ship with the compiler library and its dependencies.
+    * runtime error line translation  
+        is usually done by the compiler without extra care.
+    * virtual file-system
+        The Lua loader for the language needs to make use of lovr.filesystem.read or it can't
+        access files via the virtual file-system.
+        Without a solution there are two issues:  
+            1. save directory
+                Modules can't be required from within the LÖVR save directory.
+                This is a problem when downloading modules is supported since it is the only place
+                LÖVR allows writing to. 
+            2. fuse mode
+                In fused mode the virtual file-system is the only working file access method.
+                Meaning the project won't work at all if it relies on 'require'.
+
+The more elegant solution is trans-compilation at runtime.
+Source and Lua files can't be out of sync and the setup is more developer friendly.
+Runtime error line translation is usually done by the compiler without extra care.
+
+The following chapters present language specific solutions for both use cases.
+Chapters are sorted in alphabetical order.
+A dialect means the language is inspired by the parent but not fully syntax compatible.
+
+Fennel (Lisp (TODO: dialect?))
 ---
 
-Be warned, both languages are [white space sensitive](https://en.wikipedia.org/wiki/Off-side_rule).
-If you can't stand this kind of syntax stop reading here.
+* Home: [Fennel](https://fennel-lang.org/)
+* Source: [github](https://github.com/bakpakin/Fennel)
+* Syntax: Lisp (TODO: inspired?)
+* Semantic: mostly Lua
+* jit compiler: Pure Lua
+* Dependencies: (TODO)
 
-Moonscript dialects come with a streamlined table constructor syntax,
-making them suited not only for scripting but also for storage of your game's content data.
+#### ahead-of-time
 
-Featured are all kinds of additional syntactic sugar
-and a class system for object oriented coding.
+(TODO)
 
-At the time of this writing (December 2022)
-Yuescript is under active development and extends on Moonscript a lot already.
-Moonscript on the other hand is more mature, more stable, features more/better editor support and is
-better documented.
+    $ fennel --compile 
 
-Precompiled Code
+#### just-in-time
+
+[Setup#Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
+
+(TODO)
+
+conf.lua
+``` lua
+require("fennel").install().dofile("main.fnl")
+```
+
+Haxe (ECMAScript Dialect)
 ---
 
-The simplest setup is compiling the codebase to Lua before shipping.
-No extra dependencies are required in this setup.
+* Home: [Haxe](https://haxe.org/)
+* Source: [github](https://github.com/HaxeFoundation/haxe)
+* Syntax: [ECMAScript](https://en.wikipedia.org/wiki/ECMAScript) inspired
+* Semantic: (TODO)
+* jit compiler: Not available (TODO: is that true?)
+* Dependencies: (TODO)
 
-### Yuescript
+#### ahead-of-time
 
-Use the '-l' flag which enables commenting each line of the Lua file with the corresponding
-line-number in the source file:
-    
-    $ yue -l yourGame
+[Haxe Lua](https://haxe.org/manual/target-lua.html)
 
-A special error handler can extract this information 
-and point to the correct line in the source file when an error is thrown.
+(TODO: Line Translation)
 
-(TODO: Write more about this error handler function. I guess some Yuescript function can be reused.)
+#### just-in-time
 
-### Moonscript
+Haxe does not offer runtime compilation. (TODO: is that true?)
+
+Moonscript (Coffeescript Dialect) 
+---
+
+* Home: [Moonscript](https://www.moonscript.org)
+* Source: [github](https://github.com/leafo/moonscript)
+* Syntax: [CoffeeScript](https://coffeescript.org) inspired (white space sensitive)
+* Semantic: Lua
+* jit compiler: Lua + Lua C Library (LPeg) 
+* Dependencies: [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
+
+#### ahead-of-time
+
+The standalone compiler can be used to 
 
     $ moonc yourGame
 
 (TODO: Write more about error line rewriting.)
 
-Runtime Compilation
----
 
-The more elegant solution is the trans-compilation at runtime.
-Source and Lua files can't be out of sync and the setup is more developer friendly.
-
-### Yuescript
-
-Yuescript comes also (beside the standalone executable) in form of a Lua c library.
-You need to ship a different one for each operating system you want to support.
-
-The Yuescript compiler takes care of the line-number translation,
-no extra work needed in this setup.
-
-Setup in conf.lua:
-
-``` lua
--- This allows us to have a dedicated directory for Lua c libraries.
-local os = lovr.system.getOS()
-if os == 'Linux' then
-    package.cpath = 'utils/lua_clib/?.so'
-end
-if os == 'Windows' then
-    package.cpath = 'utils/lua_clib/?.dll'
-end
-if os == 'macOS' then
-    package.cpath = 'utils/lua_clib/?.so'
-end
-
--- This requires the Yuescript compiler library to be located at:
--- linux:    utils/lua_clib/yue.so
--- windows:  utils\lua_clib\yue.dll
--- macOS:    utils/lua_clib/yue.so
--- fuse mode:
--- linux and windows: beside the fused binary or in the save directory top-level.
--- macOS: in the save directory top-level
-require('yue')
-
--- yue's uses of io.open need to be replaced with lovr.filesystem ones.
--- This enables require to search the LÖVR save directory and is necessary for the fuse mode.
-yue.file_exist = lovr.filesystem.isFile
-yue.read_file  = function(fname)
-    contents, bytes = lovr.filesystem.read(fname)
-    if contents == nil then
-        return nil, 'File not found.'
-    end
-    return contents
-end
-
--- Search in the current directory and in the client directory.
--- It makes sense to keep Lua and Yuescript search paths in sync.
--- 'client' is just an example, adjust and extend these paths to your needs.
-yue.options.path = './?.yue;./?/init.yue;client/?.yue;client/?/init.yue'
-lovr.filesystem.setRequirePath('./?.lua;./?/init.lua;client/?.lua;client/?/init.lua')
--- Disable the conventional Lua require path for easier testing if fuse mode works.
--- Every require relies on lovr.filesystem instead.
-package.path = ''
-
--- Require a file at client/config.yue for example.
--- In config.yue 'require' works like expected.
--- The rest of the configuration can be coded in Yuescript already.
-yue('config')
-```
-
-The main.lua file:
-
-``` lua
--- Require file client/myMain.yue or client/myMain.lua for example
--- If both files are present the Lua one is required.
-require'myMain'
-```
-
-### Moonscript
-
-Moonscript is implemented in Moonscript/Lua itself and thus operating system independent.
-But it depends on [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/) which is a Lua c library,
-although there are pure Lua implementations available.
+#### just-in-time
 
 Setup in conf.lua:
 
@@ -205,3 +190,128 @@ require'myMain'
 ```
 
 (TODO: Write about error line translation.)
+
+Wu (Rust Dialect)
+---
+
+* Home: [Wu Guide](https://wu-lang.gitbook.io/guide) 
+* Source: [github](https://github.com/wu-lang/wu)
+* Syntax: Rust inspired
+* Semantic: (TODO)
+* jit-compiler: (TODO)
+* Dependencies: (TODO)
+
+#### ahead-of-time
+
+(TODO)
+
+#### just-in-time
+
+(TODO)
+
+Yuescript (Moonscript Dialect)
+---
+
+* Home: [Yuescript](https://yuescript.org/)
+* Source: [github](https://github.com/pigpigyyy/Yuescript)
+* Syntax: [Moonscript](https://moonscript.org) inspired (white space sensitive)
+* Semantic: Lua
+* jit-compiler: Lua C library
+* Dependencies: None
+
+#### Why and Which
+
+Be warned, both languages are [white space sensitive](https://en.wikipedia.org/wiki/Off-side_rule).
+If you can't stand this kind of syntax stop reading here.
+
+Moonscript dialects come with a streamlined table constructor syntax,
+making them suited not only for scripting but also for storage of your game's content data.
+
+Featured are all kinds of additional syntactic sugar
+and a class system for object oriented coding.
+
+At the time of this writing (December 2022)
+Yuescript is under active development and extends on Moonscript a lot already.
+Moonscript on the other hand is more mature, more stable, features more/better editor support and is
+better documented.
+
+#### ahead-of-time
+
+Use the '-l' flag which enables commenting each line of the Lua file with the corresponding
+line-number in the source file:
+    
+    $ yue -l yourGame
+
+A special error handler can extract this information 
+and point to the correct line in the source file when an error is thrown.
+
+(TODO: Write more about this error handler function. I guess some Yuescript function can be reused.)
+
+#### just-in-time
+
+Yuescript comes also (beside the standalone executable) in form of a Lua c library.
+You need to ship a different one for each operating system you want to support.
+
+The Yuescript compiler takes care of the line-number translation,
+no extra work needed in this setup.
+
+After the setup (in conf.lua) Lua and Yuescript modules can be required from each other
+in the usual way.
+
+Setup in conf.lua:
+
+``` lua
+-- This allows us to have a dedicated directory for Lua c libraries.
+local os = lovr.system.getOS()
+if os == 'Linux' then
+    package.cpath = 'utils/lua_clib/?.so'
+end
+if os == 'Windows' then
+    package.cpath = 'utils/lua_clib/?.dll'
+end
+if os == 'macOS' then
+    package.cpath = 'utils/lua_clib/?.so'
+end
+
+-- This requires the Yuescript compiler library to be located at:
+-- linux:    utils/lua_clib/yue.so
+-- windows:  utils\lua_clib\yue.dll
+-- macOS:    utils/lua_clib/yue.so
+-- fuse mode:
+-- linux and windows: beside the fused binary or in the save directory top-level.
+-- macOS: in the save directory top-level
+require('yue')
+
+-- yue's uses of io.open need to be replaced with lovr.filesystem ones.
+-- This enables require to search the LÖVR save directory and is necessary for the fuse mode.
+yue.file_exist = lovr.filesystem.isFile
+yue.read_file  = function(fname)
+    contents, bytes = lovr.filesystem.read(fname)
+    if contents == nil then
+        return nil, 'File not found.'
+    end
+    return contents
+end
+
+-- Search in the current directory and in the client directory.
+-- It makes sense to keep Lua and Yuescript search paths in sync.
+-- 'client' is just an example, adjust and extend these paths to your needs.
+yue.options.path = './?.yue;./?/init.yue;client/?.yue;client/?/init.yue'
+lovr.filesystem.setRequirePath('./?.lua;./?/init.lua;client/?.lua;client/?/init.lua')
+-- Disable the conventional Lua require path for easier testing if fuse mode works.
+-- Every require relies on lovr.filesystem instead.
+package.path = ''
+
+-- Require a file at client/config.yue for example.
+-- In config.yue 'require' works like expected.
+-- The rest of the configuration can be coded in Yuescript already.
+yue('config')
+```
+
+The main.lua file:
+
+``` lua
+-- Require file client/myMain.yue or client/myMain.lua for example
+-- If both files are present the Lua one is required.
+require'myMain'
+```
