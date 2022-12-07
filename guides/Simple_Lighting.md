@@ -191,7 +191,7 @@ There's lots of playing around you can do - experiment with multiple lights, new
 >Second, all model faces need to be facing the correct way to generate their normal properly for lighting. If you notice some parts of your model are shading in the opposite direction, you can flip the face direction in Blender by selecting it all in edit mode, then Opt+N > Recalculate Normals or Flip Normals.
 >These two tips should fix 90% of any issues!
 
-[Complete source code for this tutorial can be found here.](https://barelyconsciousgames.com/lovr-phong.zip)
+[Complete source code for this tutorial can be found here.](/f/lovr-phong.zip)
 
 This should work on your Quest as well if you follow the instructions on the LÖVR website for [deploying to Android](https://lovr.org/docs/Getting_Started_(Quest)). A moving, unlit sphere was added in the example to represent the light source to better visualize it.
 
