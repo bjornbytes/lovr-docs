@@ -178,7 +178,6 @@ Compiles the whole project:
 
 Setup in conf.lua:
 
-``` lua
     -- Check for moonscript/moonscript/init.lua.
     -- The operating specific LPeg library must be at the right location as well.
     local lua_path = '?.lua;?/init.lua;moonscript/?/init.lua;'
@@ -211,15 +210,12 @@ Setup in conf.lua:
     -- This will require the first .lua or .moon file matching the require paths.
     -- If both are present the Lua file is required.
     require'myConf'
-```
 
 The main.lua file:
 
-``` lua
     -- Requires either .moon or .lua module files.
     -- If both are present the Lua one is required.
     require'myMain'
-```
 
 (TODO: Write about error line translation.)
 
@@ -294,7 +290,6 @@ in the usual way.
 
 Setup in conf.lua:
 
-``` lua
     require('yue')
 
     -- Yuescript's uses of io.open need to be replaced with lovr.filesystem ones.
@@ -315,13 +310,10 @@ Setup in conf.lua:
     -- Use yue() instead of require() to enable error line translation.
     -- In yueConf require() works like expected.
     yue('yueConf')
-```
 
 The main.lua file:
 
-``` lua
     -- Requires file yueMain.yue or yueMain/init.yue.
     -- Use yue() instead of require() to enable error line translation.
     -- In yueMain require() works like expected.
     yue'yueMain'
-```    
