@@ -1,8 +1,7 @@
 Scripting Languages
 ===================
 
-<a href="https://www.lua.org"><img align="right" width="300" height="300"
-    src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo"></a>
+<a href="https://www.lua.org"><img align="right" width="300" height="300" src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo"></a>
 
 Currently [Lua](https://www.lua.org) is the only supported language for coding LÖVR projects.  
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
@@ -68,8 +67,7 @@ In general there are two ways of using one of them in a LÖVR project:
 CSharp.lua (C# dialect)
 ---
 
-<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="250" height="250"
-    src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
+<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="250" height="250" src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
 
 * Home: [CSharp.lua Readme](https://github.com/yanghuan/CSharp.lua/blob/master/README.md) 
 * Source: [GitHub](https://github.com/yanghuan/CSharp.lua)
@@ -95,8 +93,7 @@ CSharp.lua (C# dialect)
 Fennel (Lisp/Clojure dialect)
 ---
 
-<a href="https://fennel-lang.org"><img align="right" width="300" height="300"
-    src="https://fennel-lang.org/logo.svg" alt="Fennel Logo"></a>
+<a href="https://fennel-lang.org"><img align="right" width="300" height="300" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo"></a>
 
 * Home: [Fennel](https://fennel-lang.org)
 * Source: [GitHub](https://github.com/bakpakin/Fennel)
@@ -124,8 +121,7 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
-<a href="https://haxe.org"><img align="right" width="225" height="225"
-    src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
+<a href="https://haxe.org"><img align="right" width="225" height="225" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [GitHub](https://github.com/HaxeFoundation/haxe)
@@ -155,8 +151,7 @@ Haxe does not offer runtime compilation.
 MoonScript (CoffeeScript dialect)
 ---
 
-<a href="https://moonscript.org"><img align="right" width="450" height="225"
-    src="http://moonscript.org/images/logo.png" alt="MoonScript Logo"></a>
+<a href="https://moonscript.org"><img align="right" width="450" height="225" src="http://moonscript.org/images/logo.png" alt="MoonScript Logo"></a>
 
 * Home: [MoonScript](https://www.moonscript.org)
 * Source: [GitHub](https://github.com/leafo/moonscript)
@@ -231,8 +226,7 @@ The main.lua file:
 Wu (Rust dialect)
 ---
 
-<a href="https://wu-lang.gitbook.io/guide"><img align="right" width="300" height="300"
-    src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo"></a>
+<a href="https://wu-lang.gitbook.io/guide"><img align="right" width="300" height="300" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo"></a>
 
 * Home: [Wu Guide](https://wu-lang.gitbook.io/guide)
 * Source: [GitHub](https://github.com/wu-lang/wu)
@@ -255,21 +249,20 @@ Wu (Rust dialect)
 
 There is no jit-compiler available for Wu.
 
-Yuescript (Moonscript dialect)
+Yuescript (MoonScript dialect)
 ---
 
-<a href="https://yuescript.org"><img align="right" width="300" height="300"
-    src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo"></a>
+<a href="https://yuescript.org"><img align="right" width="300" height="300" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo"></a>
 
 * Home: [Yuescript](https://yuescript.org)
 * Source: [GitHub](https://github.com/pigpigyyy/Yuescript)
-* Syntax: [Moonscript](https://moonscript.org) inspired 
+* Syntax: [MoonScript](https://moonscript.org) inspired 
 [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
 * jit-compiler: Lua C library
 * Dependencies: None
 * Features:
-    * Everything Moonscript features
+    * Everything MoonScript features
     * Improved table literal syntax (storing game content data)
     * Expressive and extremely concise
     * Build-in macro support
