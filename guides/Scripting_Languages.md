@@ -39,7 +39,7 @@ In general there are two ways of using one of them in a LÖVR project:
         This solution needs more additional coding inside the project. 
     * additional dependencies required  
         In this case the project must ship with the compiler library and its dependencies.
-        Don't forget to to give copyright credit and take care about software license documentation.
+        Don't forget to give copyright credit and take care about software license documentation.
         * Lua C libraries
             * Usage: <a data-key="Plugins">Plugins Guide</a>
             * Shipping: <a data-key="Distribution">Distribution Guide</a>
