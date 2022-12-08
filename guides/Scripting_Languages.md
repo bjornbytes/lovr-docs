@@ -82,11 +82,11 @@ CSharp.lua (C# dialect)
 
 (TODO: Is CSharp.lua really a dialect? It feels more like a full implementation.)
 
-#### ahead-of-time
+### ahead-of-time
 
 (TODO)
 
-#### just-in-time
+### just-in-time
 
 (TODO)
 
@@ -107,13 +107,13 @@ Fennel (Lisp/Clojure dialect)
     * Fully parenthesized prefix notation
     * Functional language
 
-#### ahead-of-time
+### ahead-of-time
 
     $ fennel --compile yourProject
 
 (TODO: error line translation)
 
-#### just-in-time
+### just-in-time
 
 * [Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
 * [Minimal LÖVR Setup](https://github.com/MattRoelle/min-lovr-fennel)
@@ -137,14 +137,14 @@ Haxe (ECMAScript dialect)
     * Properties
     * Type Parameters
 
-#### ahead-of-time
+### ahead-of-time
 
 * [Haxe Lua](https://haxe.org/manual/target-lua.html)
 * [LÖVR bindings](https://github.com/excessive/lovr-haxe-wrappergen)
 
 (TODO: Line Translation?)
 
-#### just-in-time
+### just-in-time
 
 Haxe does not offer runtime compilation.
 
@@ -166,7 +166,7 @@ MoonScript (CoffeeScript dialect)
     * Clean syntax avoiding keyword noise
     * List and table comprehensions
 
-#### ahead-of-time
+### ahead-of-time
 
 Compiles the whole project:
 
@@ -174,7 +174,7 @@ Compiles the whole project:
 
 (TODO: Write more about error line rewriting.)
 
-#### just-in-time
+### just-in-time
 
 Setup in conf.lua:
 
@@ -241,11 +241,11 @@ Wu (Rust dialect)
     * Pattern matching
     * Cool logo
 
-#### ahead-of-time
+### ahead-of-time
 
 [LÖVR bindings](https://github.com/darltrash/lowr)
 
-#### just-in-time
+### just-in-time
 
 There is no jit-compiler available for Wu.
 
@@ -269,7 +269,7 @@ Yuescript (MoonScript dialect)
     * Table matching
     * Under active development
 
-#### ahead-of-time
+### ahead-of-time
 
 Use the `-l` flag which enables commenting each line of the Lua file with the corresponding
 line-number in the source file:
@@ -281,7 +281,7 @@ and point to the correct line in the source file when an error is thrown.
 
 (TODO: Write more about this error handler function. I guess some Yuescript function can be reused.)
 
-#### just-in-time
+### just-in-time
 
 Yuescript comes also (beside the standalone executable) in form of a Lua c library.
 You need to ship a different one for each operating system you want to support.
