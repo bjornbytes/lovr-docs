@@ -39,10 +39,10 @@ In general there are two ways of using one of them in a LÖVR project:
         This solution needs more additional coding inside the project. 
     * additional dependencies required  
         In this case the project must ship with the compiler library and its dependencies.
-        > * Lua C libraries
-        >   * Usage: <a data-key="Plugins">Plugins Guide</a>
-        >   * Shipping: <a data-key="Distribution">Distribution Guide</a>
-        > * Pure Lua
+        * Lua C libraries
+            * Usage: <a data-key="Plugins">Plugins Guide</a>
+            * Shipping: <a data-key="Distribution">Distribution Guide</a>
+        * Pure Lua
     * runtime error line translation  
         is usually done by the compiler without extra care.
     * virtual file-system
