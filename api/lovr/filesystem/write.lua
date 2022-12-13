@@ -16,19 +16,19 @@ return {
     }
   },
   returns = {
-    bytes = {
-      type = 'number',
-      description = 'The number of bytes written.'
+    success = {
+      type = 'boolean',
+      description = 'Whether the write was successful.'
     }
   },
   variants = {
     {
       arguments = { 'filename', 'content' },
-      returns = { 'bytes' }
+      returns = { 'success' }
     },
     {
       arguments = { 'filename', 'blob' },
-      returns = { 'bytes' }
+      returns = { 'success' }
     }
   },
   notes = [[
