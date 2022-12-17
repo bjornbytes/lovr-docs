@@ -9,6 +9,6 @@ return {
   'Distribution',
   'Contributing',
   'Compiling',
-  'FAQ',
-  'Scripting_Languages'
+  'Scripting_Languages',
+  'FAQ'
 }

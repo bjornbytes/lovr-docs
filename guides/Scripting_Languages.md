@@ -1,8 +1,7 @@
 Scripting Languages
 ===================
 
-<a href="https://www.lua.org"><img align="right" width="300" height="300"
-    src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo"></a>
+<a href="https://www.lua.org"><img align="right" width="300" height="300" src="http://lua-users.org/files/wiki_insecure/lua-full.ico" alt="Lua Logo"></a>
 
 Currently [Lua](https://www.lua.org) is the only supported language for coding LÖVR projects.  
 But there are several [languages](https://github.com/hengestone/lua-languages) available that
@@ -40,10 +39,12 @@ In general there are two ways of using one of them in a LÖVR project:
         This solution needs more additional coding inside the project. 
     * additional dependencies required  
         In this case the project must ship with the compiler library and its dependencies.
-        > * Lua C libraries
-        >   * Usage: <a data-key="Plugins">Plugins Guide</a>
-        >   * Shipping: <a data-key="Distribution">Distribution Guide</a>
-        > * Pure Lua
+        Don't forget to give copyright credit and take care about software license documentation.
+        * Lua C libraries
+            * Usage: <a data-key="Plugins">Plugins Guide</a>
+            * Shipping: <a data-key="Distribution">Distribution Guide</a>
+        * Pure Lua
+            * Usage: <a data-key="Libraries">Libraries Guide</a>
     * runtime error line translation  
         is usually done by the compiler without extra care.
     * virtual file-system
@@ -68,8 +69,7 @@ In general there are two ways of using one of them in a LÖVR project:
 CSharp.lua (C# dialect)
 ---
 
-<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="250" height="250"
-    src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
+<a href="https://github.com/yanghuan/CSharp.lua"><img align="right" width="250" height="250" src="https://about.codecov.io/wp-content/uploads/2020/08/c-sharp-logo.svg" alt="C# Logo"></a>
 
 * Home: [CSharp.lua Readme](https://github.com/yanghuan/CSharp.lua/blob/master/README.md) 
 * Source: [GitHub](https://github.com/yanghuan/CSharp.lua)
@@ -84,19 +84,18 @@ CSharp.lua (C# dialect)
 
 (TODO: Is CSharp.lua really a dialect? It feels more like a full implementation.)
 
-#### ahead-of-time
+### ahead-of-time
 
 (TODO)
 
-#### just-in-time
+### just-in-time
 
 (TODO)
 
 Fennel (Lisp/Clojure dialect)
 ---
 
-<a href="https://fennel-lang.org"><img align="right" width="300" height="300"
-    src="https://fennel-lang.org/logo.svg" alt="Fennel Logo"></a>
+<a href="https://fennel-lang.org"><img align="right" width="300" height="300" src="https://fennel-lang.org/logo.svg" alt="Fennel Logo"></a>
 
 * Home: [Fennel](https://fennel-lang.org)
 * Source: [GitHub](https://github.com/bakpakin/Fennel)
@@ -110,13 +109,13 @@ Fennel (Lisp/Clojure dialect)
     * Fully parenthesized prefix notation
     * Functional language
 
-#### ahead-of-time
+### ahead-of-time
 
     $ fennel --compile yourProject
 
 (TODO: error line translation)
 
-#### just-in-time
+### just-in-time
 
 * [Embedding Fennel](https://fennel-lang.org/setup#embedding-fennel)
 * [Minimal LÖVR Setup](https://github.com/MattRoelle/min-lovr-fennel)
@@ -124,8 +123,7 @@ Fennel (Lisp/Clojure dialect)
 Haxe (ECMAScript dialect)
 ---
 
-<a href="https://haxe.org"><img align="right" width="225" height="225"
-    src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
+<a href="https://haxe.org"><img align="right" width="225" height="225" src="https://haxe.org/img/haxe-logo.svg" alt="Haxe Logo"></a>
 
 * Home: [Haxe](https://haxe.org/)
 * Source: [GitHub](https://github.com/HaxeFoundation/haxe)
@@ -141,22 +139,21 @@ Haxe (ECMAScript dialect)
     * Properties
     * Type Parameters
 
-#### ahead-of-time
+### ahead-of-time
 
 * [Haxe Lua](https://haxe.org/manual/target-lua.html)
 * [LÖVR bindings](https://github.com/excessive/lovr-haxe-wrappergen)
 
 (TODO: Line Translation?)
 
-#### just-in-time
+### just-in-time
 
 Haxe does not offer runtime compilation.
 
 MoonScript (CoffeeScript dialect)
 ---
 
-<a href="https://moonscript.org"><img align="right" width="450" height="225"
-    src="http://moonscript.org/images/logo.png" alt="MoonScript Logo"></a>
+<a href="https://moonscript.org"><img align="right" width="450" height="225" src="http://moonscript.org/images/logo.png" alt="MoonScript Logo"></a>
 
 * Home: [MoonScript](https://www.moonscript.org)
 * Source: [GitHub](https://github.com/leafo/moonscript)
@@ -171,7 +168,7 @@ MoonScript (CoffeeScript dialect)
     * Clean syntax avoiding keyword noise
     * List and table comprehensions
 
-#### ahead-of-time
+### ahead-of-time
 
 Compiles the whole project:
 
@@ -179,11 +176,10 @@ Compiles the whole project:
 
 (TODO: Write more about error line rewriting.)
 
-#### just-in-time
+### just-in-time
 
 Setup in conf.lua:
 
-``` lua
     -- Check for moonscript/moonscript/init.lua.
     -- The operating specific LPeg library must be at the right location as well.
     local lua_path = '?.lua;?/init.lua;moonscript/?/init.lua;'
@@ -216,23 +212,19 @@ Setup in conf.lua:
     -- This will require the first .lua or .moon file matching the require paths.
     -- If both are present the Lua file is required.
     require'myConf'
-```
 
 The main.lua file:
 
-``` lua
     -- Requires either .moon or .lua module files.
     -- If both are present the Lua one is required.
     require'myMain'
-```
 
 (TODO: Write about error line translation.)
 
 Wu (Rust dialect)
 ---
 
-<a href="https://wu-lang.gitbook.io/guide"><img align="right" width="300" height="300"
-    src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo"></a>
+<a href="https://wu-lang.gitbook.io/guide"><img align="right" width="300" height="300" src="https://preview.ibb.co/ePa1eH/wu_dragon.png" alt="Wu Logo"></a>
 
 * Home: [Wu Guide](https://wu-lang.gitbook.io/guide)
 * Source: [GitHub](https://github.com/wu-lang/wu)
@@ -247,36 +239,35 @@ Wu (Rust dialect)
     * Pattern matching
     * Cool logo
 
-#### ahead-of-time
+### ahead-of-time
 
 [LÖVR bindings](https://github.com/darltrash/lowr)
 
-#### just-in-time
+### just-in-time
 
 There is no jit-compiler available for Wu.
 
-Yuescript (Moonscript dialect)
+Yuescript (MoonScript dialect)
 ---
 
-<a href="https://yuescript.org"><img align="right" width="300" height="300"
-    src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo"></a>
+<a href="https://yuescript.org"><img align="right" width="300" height="300" src="https://yuescript.org/image/yuescript.svg" alt="Yuescript logo"></a>
 
 * Home: [Yuescript](https://yuescript.org)
 * Source: [GitHub](https://github.com/pigpigyyy/Yuescript)
-* Syntax: [Moonscript](https://moonscript.org) inspired 
+* Syntax: [MoonScript](https://moonscript.org) inspired 
 [(white space sensitive)](https://en.wikipedia.org/wiki/Off-side_rule)
 * Semantic: Lua
 * jit-compiler: Lua C library
 * Dependencies: None
 * Features:
-    * Everything Moonscript features
+    * Everything MoonScript features
     * Improved table literal syntax (storing game content data)
     * Expressive and extremely concise
     * Build-in macro support
     * Table matching
     * Under active development
 
-#### ahead-of-time
+### ahead-of-time
 
 Use the `-l` flag which enables commenting each line of the Lua file with the corresponding
 line-number in the source file:
@@ -288,7 +279,7 @@ and point to the correct line in the source file when an error is thrown.
 
 (TODO: Write more about this error handler function. I guess some Yuescript function can be reused.)
 
-#### just-in-time
+### just-in-time
 
 Yuescript comes also (beside the standalone executable) in form of a Lua c library.
 You need to ship a different one for each operating system you want to support.
@@ -301,7 +292,6 @@ in the usual way.
 
 Setup in conf.lua:
 
-``` lua
     require('yue')
 
     -- Yuescript's uses of io.open need to be replaced with lovr.filesystem ones.
@@ -322,13 +312,10 @@ Setup in conf.lua:
     -- Use yue() instead of require() to enable error line translation.
     -- In yueConf require() works like expected.
     yue('yueConf')
-```
 
 The main.lua file:
 
-``` lua
     -- Requires file yueMain.yue or yueMain/init.yue.
     -- Use yue() instead of require() to enable error line translation.
     -- In yueMain require() works like expected.
     yue'yueMain'
-```    
