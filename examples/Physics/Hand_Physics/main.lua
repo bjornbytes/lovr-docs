@@ -8,21 +8,21 @@ from hand controller. This results in lousy and unconvincing collisions with oth
 physics engine doesn't know the speed of hand colliders at the moment of collision.
 
 An improvement is to set linear and angular speed of kinematic hand colliders so that they
-approach the target (actual location/orientation of hand controller). This works excellent for one
-controller. When you try to squeeze an object between two hands, physics break. This is because
-kinematic hand controllers are never affected by physics engine and unrealistic material
-penetration cannot be resolved.
+approach the target (actual location/orientation of hand controller). This works well for one
+hand physics, however physics start to glitch when you try to squeeze object between two hands.
+This is because kinematic hand controllers can never be affected by collision forces, so the
+squeezed collider cannot push back against them and the collision cannot be resolved.
 
 The approach taken here is to have hand controllers behave as normal dynamic colliders that can be
 affected by other collisions. To track hand controllers, we apply force and torque on collider
 objects that's proportional to distance from correct position.
 
 This means hand colliders won't have 1:1 mapping with actual hand controllers, they will actually
-'bend' under large force. Also the colliders can actually become stuck behind another object. This
-is sometimes frustrating to use, so in this example hand colliders can ghost through objects or
-become solid using trigger button.
+'bend' under large force. Also the colliders can become stuck and burried beneath other objects.
+This is frustrating to users, so in this example hand colliders can ghost through objects or
+become solid, using the trigger button.
 
-Grabbing objects is done by creating two joints between hand collider and object to hold them
+Grabbing objects is done by creating two joints between hand collider and object, to hold them
 together. This enables pulling, stacking and throwing.                                      --]]
 
 local hands = { -- palms that can push and grab objects
@@ -37,6 +37,8 @@ local collisionCallbacks = {}
 local boxes = {}
 
 local framerate = 1 / 72 -- fixed framerate is recommended for physics updates
+local hand_torque = 20
+local hand_force = 30000
 
 function lovr.load()
   world = lovr.physics.newWorld(0, -2, 0, false) -- low gravity and no collider sleeping
@@ -58,9 +60,9 @@ function lovr.load()
   -- make colliders for two hands
   for i = 1, 2 do
     hands.colliders[i] = world:newBoxCollider(vec3(0,2,0), vec3(0.04, 0.08, 0.08))
-    hands.colliders[i]:setLinearDamping(0.2)
-    hands.colliders[i]:setAngularDamping(0.3)
-    hands.colliders[i]:setMass(0.1)
+    hands.colliders[i]:setLinearDamping(0.7)
+    hands.colliders[i]:setAngularDamping(0.9)
+    hands.colliders[i]:setMass(0.5)
     registerCollisionCallback(hands.colliders[i],
       function(collider, world)
         -- store collider that was last touched by hand
@@ -91,15 +93,16 @@ function lovr.update(dt)
     local vr = mat4(hands.colliders[i]:getPose()) -- vr pose of palm colliders
     local angle, ax,ay,az = quat(rw):mul(quat(vr):conjugate()):unpack()
     angle = ((angle + math.pi) % (2 * math.pi) - math.pi) -- for minimal motion wrap to (-pi, +pi) range
-    hands.colliders[i]:applyTorque(vec3(ax, ay, az):mul(angle * dt * 1))
-    hands.colliders[i]:applyForce((vec3(rw:mul(0,0,0)) - vec3(vr:mul(0,0,0))):mul(dt * 2000))
+    hands.colliders[i]:applyTorque(vec3(ax, ay, az):mul(angle * dt * hand_torque))
+    hands.colliders[i]:applyForce((vec3(rw) - vec3(vr)):mul(dt * hand_force))
     -- solidify when trigger touched
     hands.solid[i] = lovr.headset.isDown(hand, 'trigger')
     hands.colliders[i]:getShapes()[1]:setSensor(not hands.solid[i])
     -- hold/release colliders
     if lovr.headset.isDown(hand, 'grip') and hands.touching[i] and not hands.holding[i] then
       hands.holding[i] = hands.touching[i]
-      lovr.physics.newBallJoint(hands.colliders[i], hands.holding[i], vr:mul(0,0,0))
+      -- grab object with ball joint to drag it, and slider joint to also match the orientation
+      lovr.physics.newBallJoint(hands.colliders[i], hands.holding[i], vr:mul(0, 0, 0))
       lovr.physics.newSliderJoint(hands.colliders[i], hands.holding[i], quat(vr):direction())
     end
     if lovr.headset.wasReleased(hand, 'grip') and hands.holding[i] then
@@ -115,9 +118,8 @@ end
 
 function lovr.draw(pass)
   for i, collider in ipairs(hands.colliders) do
-    local alpha = hands.solid[i] and 1 or 0.2
-    pass:setColor(0.75, 0.56, 0.44, alpha)
-    drawBoxCollider(pass, collider)
+    pass:setColor(0.75, 0.56, 0.44)
+    drawBoxCollider(pass, collider, not hands.solid[i])
   end
   lovr.math.setRandomSeed(0)
   for i, collider in ipairs(boxes) do
@@ -128,7 +130,7 @@ function lovr.draw(pass)
 end
 
 
-function drawBoxCollider(pass, collider)
+function drawBoxCollider(pass, collider, is_sensor)
   -- query current pose (location and orientation)
   local pose = mat4(collider:getPose())
   -- query dimensions of box
@@ -136,7 +138,7 @@ function drawBoxCollider(pass, collider)
   local size = vec3(shape:getDimensions())
   -- draw box
   pose:scale(size)
-  pass:box(pose)
+  pass:box(pose, is_sensor and 'line' or 'fill')
 end
 
 
