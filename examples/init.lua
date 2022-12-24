@@ -46,5 +46,6 @@ return {
   'UI/Spectator_Camera',
   'Optimization/Instancing',
   'Debugging/FPS_Controls',
-  'Debugging/Raw_Input'
+  'Debugging/Raw_Input',
+  'Debugging/Tally'
 }
