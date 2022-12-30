@@ -74,6 +74,16 @@ return {
     other 31 or 63.  So for the best performance, be sure to set a local workgroup size bigger than
     1!
 
+    Inside the compute shader, a few builtin variables can be used to figure out which workgroup is
+    running:
+
+    - `uint WorkgroupCount` is the total number of workgroups (the product of all the sizes).
+    - `uvec3 WorkgroupSize` is the number of workgroups in each axis (the `Pass:compute` arguments).
+    - `uvec3 WorkgroupID` is the index current workgroup.
+    - `uvec3 LocalThreadID` is the index of the local workgroup inside its workgroup.
+    - `uvec3 GlobalThreadID` is the unique identifier for the thread within all local workgroups.
+      It's equivalent to `WorkgroupID * LocalWorkgroupSize + LocalThreadID` (usually what you want!)
+
     Indirect compute dispatches are useful to "chain" compute shaders together, while keeping all of
     the data on the GPU.  The first dispatch can do some computation and write some results to
     buffers, then the second indirect dispatch can use the data in those buffers to know how many
