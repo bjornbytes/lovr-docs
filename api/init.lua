@@ -14501,36 +14501,36 @@ return {
               name = "compute",
               tag = "compute",
               summary = "Run a compute shader.",
-              description = "Runs a compute shader.  Compute shaders are run in 3D grids of workgroups.  Each local workgroup is itself a 3D grid of invocations, declared using `local_size_x`, `local_size_y`, and `local_size_z` in the shader code.",
+              description = "Runs a compute shader.  Before calling this, a compute shader needs to be active, using `Pass:setShader`.  This can only be called on a Pass with the `compute` type, which can be created using `lovr.graphics.getPass`.",
               key = "Pass:compute",
               module = "lovr.graphics",
-              notes = "All these 3D grids can get confusing, but the basic idea is to make the local workgroup size a small block of e.g. 8x8 pixels or 4x4x4 voxels, and then dispatch however many global workgroups are needed to cover an image or voxel field.  The reason to do it this way is that the GPU runs invocations in bundles called subgroups.  Subgroups are usually 32 or 64 invocations (the exact size is given by the `subgroupSize` property of `lovr.graphics.getDevice`).  If the local workgroup size was `1x1x1`, then the GPU would only run 1 invocation per subgroup and waste the other 31 or 63.",
+              notes = "Usually compute shaders are run many times in parallel: once for each pixel in an image, once per particle, once per object, etc.  The 3 arguments represent how many times to run, or \"dispatch\", the compute shader, in up to 3 dimensions.  Each element of this grid is called a **workgroup**.\n\nTo make things even more complicated, each workgroup itself is made up of a set of \"mini GPU threads\", which are called **local workgroups**.  Like workgroups, the local workgroup size can also be 3D.  It's declared in the shader code, like this:\n\n    layout(local_size_x = w, local_size_y = h, local_size_z = d) in;\n\nAll these 3D grids can get confusing, but the basic idea is to make the local workgroup size a small block of e.g. 32 particles or 8x8 pixels or 4x4x4 voxels, and then dispatch however many workgroups are needed to cover a list of particles, image, voxel field, etc.\n\nThe reason to do it this way is that the GPU runs its threads in little fixed-size bundles called subgroups.  Subgroups are usually 32 or 64 threads (the exact size is given by the `subgroupSize` property of `lovr.graphics.getDevice`) and all run together.  If the local workgroup size was `1x1x1`, then the GPU would only run 1 thread per subgroup and waste the other 31 or 63.  So for the best performance, be sure to set a local workgroup size bigger than 1!\n\nIndirect compute dispatches are useful to \"chain\" compute shaders together, while keeping all of the data on the GPU.  The first dispatch can do some computation and write some results to buffers, then the second indirect dispatch can use the data in those buffers to know how many times it should run.  An example would be a compute shader that does some sort of object culling, writing the number of visible objects to a buffer along with the IDs of each one. Subsequent compute shaders can be indirectly dispatched to perform extra processing on the visible objects.  Finally, an indirect draw can be used to render them.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "x",
                       type = "number",
-                      description = "How many workgroups to dispatch in the x dimension.",
+                      description = "The number of workgroups to dispatch in the x dimension.",
                       default = "1"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "How many workgroups to dispatch in the y dimension.",
+                      description = "The number of workgroups to dispatch in the y dimension.",
                       default = "1"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "How many workgroups to dispatch in the z dimension.",
+                      description = "The number of workgroups to dispatch in the z dimension.",
                       default = "1"
                     }
                   },
                   returns = {}
                 },
                 {
-                  description = "Perform an \"indirect\" dispatch, sourcing workgroup counts from a Buffer.",
+                  description = "Perform an \"indirect\" dispatch.  Instead of passing in the workgroup counts directly from Lua, the workgroup counts are read from a `Buffer` object at a particular byte offset. Each count should be a 4-byte integer, so in total 12 bytes will be read from the buffer.",
                   arguments = {
                     {
                       name = "buffer",
@@ -14546,6 +14546,12 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Pass:setShader",
+                "Pass:send",
+                "lovr.graphics.newShader",
+                "lovr.graphics.getPass"
               }
             },
             {
@@ -18179,11 +18185,6 @@ return {
               variants = {
                 {
                   arguments = {
-                    {
-                      name = "parent",
-                      type = "Texture",
-                      description = "The parent Texture to create the view of."
-                    },
                     {
                       name = "type",
                       type = "TextureType",
