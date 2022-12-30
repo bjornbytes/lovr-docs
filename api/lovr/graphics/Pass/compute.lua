@@ -77,12 +77,14 @@ return {
     Inside the compute shader, a few builtin variables can be used to figure out which workgroup is
     running:
 
-    - `uint WorkgroupCount` is the total number of workgroups (the product of all the sizes).
-    - `uvec3 WorkgroupSize` is the number of workgroups in each axis (the `Pass:compute` arguments).
-    - `uvec3 WorkgroupID` is the index current workgroup.
+    - `uvec3 WorkgroupCount` is the workgroup count per axis (the `Pass:compute` arguments).
+    - `uvec3 WorkgroupSize` is the local workgroup size (declared in the shader).
+    - `uvec3 WorkgroupID` is the index of the current (global) workgroup.
     - `uvec3 LocalThreadID` is the index of the local workgroup inside its workgroup.
-    - `uvec3 GlobalThreadID` is the unique identifier for the thread within all local workgroups.
-      It's equivalent to `WorkgroupID * LocalWorkgroupSize + LocalThreadID` (usually what you want!)
+    - `uint LocalThreadIndex` is a 1D version of `LocalThreadID`.
+    - `uvec3 GlobalThreadID` is the unique identifier for a thread within all workgroups in a
+      dispatch. It's equivalent to `WorkgroupID * WorkgroupSize + LocalThreadID` (usually what you
+      want!)
 
     Indirect compute dispatches are useful to "chain" compute shaders together, while keeping all of
     the data on the GPU.  The first dispatch can do some computation and write some results to
@@ -109,7 +111,7 @@ return {
             }
 
             vec4 color = imageLoad(image, pixel);
-            color.rgb = vec3(color.r * .4 + color.g * .5 + color.b * .1);
+            color.rgb = vec3(color.r * .2126 + color.g * .7512 + color.b * .0722);
             imageStore(image, pixel, color);
           }
         ]])
