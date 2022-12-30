@@ -147,6 +147,14 @@ return {
       name = 'mat4',
       description = 'A 4x4 matrix containing sixteen 32-bit floats.'
     },
+    {
+      name = 'index16',
+      description = 'Like u16, but 1-indexed.'
+    },
+    {
+      name = 'index32',
+      description = 'Like u32, but 1-indexed.'
+    }
   },
   notes = [[
     In addition to these values, the following aliases can be used:
