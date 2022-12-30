@@ -7,8 +7,7 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = ' type',
+    type = {
       type = 'PassType',
       description = 'The type of the Pass.'
     }
@@ -16,7 +15,7 @@ return {
   variants = {
     {
       arguments = {},
-      returns = {}
+      returns = { 'type' }
     }
   }
 }

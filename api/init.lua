@@ -15315,7 +15315,13 @@ return {
               variants = {
                 {
                   arguments = {},
-                  returns = {}
+                  returns = {
+                    {
+                      name = "type",
+                      type = "PassType",
+                      description = "The type of the Pass."
+                    }
+                  }
                 }
               }
             },
