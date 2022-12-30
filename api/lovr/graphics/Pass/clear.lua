@@ -1,7 +1,10 @@
 return {
   tag = 'transfer',
   summary = 'Clear a Buffer or Texture.',
-  description = 'Clears a Buffer or Texture.',
+  description = [[
+    Clears a Buffer or Texture.  This can only be called on a transfer pass, which can be created
+    with `lovr.graphics.getPass`.
+  ]],
   arguments = {
     buffer = {
       type = 'Buffer',

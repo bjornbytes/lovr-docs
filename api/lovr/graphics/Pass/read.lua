@@ -3,8 +3,9 @@ return {
   summary = 'Download data from a GPU resource.',
   description = [[
     Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or
-    `Tally`.  The readback can be polled for completion, or, after this transfer pass is completed,
-    `Readback:wait` can be used to block until the download is complete.
+    `Tally`.  The readback can be polled for completion, or, after this transfer pass is submitted,
+    `Readback:wait` can be used to block until the download is complete.  This can only be called on
+    a transfer pass, which can be created with `lovr.graphics.getPass`.
   ]],
   arguments = {
     buffer = {

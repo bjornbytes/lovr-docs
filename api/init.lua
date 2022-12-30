@@ -14179,7 +14179,7 @@ return {
               name = "blit",
               tag = "transfer",
               summary = "Copy data between textures with scaling.",
-              description = "Copies data between textures.  Similar to `Pass:copy`, except the source and destination sizes can be different.  The pixels from the source texture will be scaled to the destination size.",
+              description = "Copies data between textures.  Similar to `Pass:copy`, except the source and destination sizes can be different.  The pixels from the source texture will be scaled to the destination size. This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
               key = "Pass:blit",
               module = "lovr.graphics",
               notes = "When blitting between 3D textures, the layer counts do not need to match, and the layers will be treated as a continuous axis (i.e. pixels will be smoothed between layers).\n\nWhen blitting between array textures, the layer counts must match, and the blit occurs as a sequence of distinct 2D blits layer-by-layer.",
@@ -14424,7 +14424,7 @@ return {
               name = "clear",
               tag = "transfer",
               summary = "Clear a Buffer or Texture.",
-              description = "Clears a Buffer or Texture.",
+              description = "Clears a Buffer or Texture.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
               key = "Pass:clear",
               module = "lovr.graphics",
               related = {
@@ -14585,7 +14585,7 @@ return {
               name = "copy",
               tag = "transfer",
               summary = "Copy data to or between GPU resources.",
-              description = "Copies data to or between `Buffer` and `Texture` objects.  This function must be called on a `transfer` pass.",
+              description = "Copies data to or between `Buffer` and `Texture` objects.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
               key = "Pass:copy",
               module = "lovr.graphics",
               variants = {
@@ -15727,7 +15727,7 @@ return {
               name = "mipmap",
               tag = "transfer",
               summary = "Generate mipmaps for a texture.",
-              description = "Generates mipmaps for a texture.",
+              description = "Generates mipmaps for a texture.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.\n\nWhen rendering to textures with a render pass, it's also possible to automatically regenerate mipmaps after rendering by adding the `mipmaps` flag when creating the pass.",
               key = "Pass:mipmap",
               module = "lovr.graphics",
               variants = {
@@ -15932,7 +15932,7 @@ return {
               name = "read",
               tag = "transfer",
               summary = "Download data from a GPU resource.",
-              description = "Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or `Tally`.  The readback can be polled for completion, or, after this transfer pass is completed, `Readback:wait` can be used to block until the download is complete.",
+              description = "Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or `Tally`.  The readback can be polled for completion, or, after this transfer pass is submitted, `Readback:wait` can be used to block until the download is complete.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
               key = "Pass:read",
               module = "lovr.graphics",
               variants = {
