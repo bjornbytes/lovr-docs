@@ -4,6 +4,7 @@ return {
   description = [[
     Copies data between textures.  Similar to `Pass:copy`, except the source and destination sizes
     can be different.  The pixels from the source texture will be scaled to the destination size.
+    This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.
   ]],
   arguments = {
     src = {

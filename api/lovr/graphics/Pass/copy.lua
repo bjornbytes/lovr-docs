@@ -2,8 +2,8 @@ return {
   tag = 'transfer',
   summary = 'Copy data to or between GPU resources.',
   description = [[
-    Copies data to or between `Buffer` and `Texture` objects.  This function must be called on a
-    `transfer` pass.
+    Copies data to or between `Buffer` and `Texture` objects.  This can only be called on a transfer
+    pass, which can be created with `lovr.graphics.getPass`.
   ]],
   arguments = {
     table = {
