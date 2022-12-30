@@ -92,6 +92,54 @@ return {
     Subsequent compute shaders can be indirectly dispatched to perform extra processing on the
     visible objects.  Finally, an indirect draw can be used to render them.
   ]],
+  example = {
+    description = 'A compute shader that makes a texture grayscale.',
+    code = [=[
+      function lovr.load()
+        shader = lovr.graphics.newShader([[
+          layout(local_size_x = 8, local_size_y = 8) in;
+          layout(set = 0, binding = 0, rgba8) uniform image2D image;
+
+          void lovrmain() {
+            ivec2 size = imageSize(image);
+            ivec2 pixel = ivec2(GlobalThreadID.xy);
+
+            if (pixel.x >= size.x || pixel.y >= size.y) {
+              return;
+            }
+
+            vec4 color = imageLoad(image, pixel);
+            color.rgb = vec3(color.r * .4 + color.g * .5 + color.b * .1);
+            imageStore(image, pixel, color);
+          }
+        ]])
+
+        texture = lovr.graphics.newTexture('image.png', {
+          usage = { 'storage', 'sample', 'transfer' },
+          linear = true -- srgb textures don't always support storage usage
+        })
+
+        local tw, th = texture:getDimensions()
+        local sx, sy = shader:getWorkgroupSize()
+        local gx, gy = math.ceil(tw / sx), math.ceil(th / sy)
+
+        local computer = lovr.graphics.getPass('compute'),
+        local transfer = lovr.graphics.getPass('transfer')
+
+        computer:setShader(shader)
+        computer:send('image', texture)
+        computer:compute(gx, gy)
+        transfer:mipmap(texture)
+
+        lovr.graphics.submit(computer, transfer)
+      end
+
+      function lovr.draw(pass)
+        pass:setMaterial(texture)
+        pass:plane(0, 1.7, -1)
+      end
+    ]=]
+  },
   related = {
     'Pass:setShader',
     'Pass:send',
