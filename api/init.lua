@@ -1367,14 +1367,26 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds.",
+                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
+                    },
+                    {
+                      name = "pitchable",
+                      type = "boolean",
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as false will improve performance slightly.",
+                      default = "false"
+                    },
+                    {
+                      name = "spatial",
+                      type = "boolean",
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
+                      default = "true"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely and throwing an error when trying to enable effects.  `true` will enable all effects.",
-                      default = "true"
+                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
+                      default = "nil"
                     }
                   }
                 }
@@ -1402,14 +1414,26 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds.",
+                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
+                    },
+                    {
+                      name = "pitchable",
+                      type = "boolean",
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as false will improve performance slightly.",
+                      default = "false"
+                    },
+                    {
+                      name = "spatial",
+                      type = "boolean",
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
+                      default = "true"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely and throwing an error when trying to enable effects.  `true` will enable all effects.",
-                      default = "true"
+                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
+                      default = "nil"
                     }
                   }
                 }
@@ -1437,14 +1461,26 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds.",
+                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
+                    },
+                    {
+                      name = "pitchable",
+                      type = "boolean",
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as false will improve performance slightly.",
+                      default = "false"
+                    },
+                    {
+                      name = "spatial",
+                      type = "boolean",
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
+                      default = "true"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable.  Keys can be integers (list) or effect names (map), or a combination of both.  The special value `false` can be used to completely disable effects, bypassing the spatializer entirely and throwing an error when trying to enable effects.  `true` will enable all effects.",
-                      default = "true"
+                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
+                      default = "nil"
                     }
                   }
                 }
@@ -1970,6 +2006,27 @@ return {
               }
             },
             {
+              name = "getPitch",
+              tag = "sourcePlayback",
+              summary = "Get the pitch of the Source.",
+              description = "Returns the pitch of the Source.",
+              key = "Source:getPitch",
+              module = "lovr.audio",
+              notes = "The default pitch is 1.  Every doubling/halving of the pitch will raise/lower the pitch by one octave.  Changing the pitch also changes the playback speed.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pitch",
+                      type = "number",
+                      description = "The pitch."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getPose",
               tag = "sourceEffects",
               summary = "Get the pose of the Source.",
@@ -2137,7 +2194,7 @@ return {
               description = "Returns whether a given `Effect` is enabled for the Source.",
               key = "Source:isEffectEnabled",
               module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a Source that was created with `{ effects = false }` will always return false.",
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a non-spatial Source will always return false.",
               variants = {
                 {
                   arguments = {
@@ -2155,6 +2212,9 @@ return {
                     }
                   }
                 }
+              },
+              related = {
+                "Source:isSpatial"
               }
             },
             {
@@ -2197,6 +2257,30 @@ return {
                       name = "playing",
                       type = "boolean",
                       description = "Whether the Source is playing."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isSpatial",
+              tag = "sourceEffects",
+              summary = "Check if the Source is spatial.",
+              description = "Returns whether the Source was created with the `spatial` flag.  Non-spatial sources are routed directly to the speakers and can not use effects.",
+              key = "Source:isSpatial",
+              module = "lovr.audio",
+              related = {
+                "Source:isEffectEnabled",
+                "Source:setEffectEnabled"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "spatial",
+                      type = "boolean",
+                      description = "Whether the source is spatial."
                     }
                   }
                 }
@@ -2296,7 +2380,7 @@ return {
               description = "Enables or disables an effect on the Source.",
               key = "Source:setEffectEnabled",
               module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a Source that was created with `{ effects = false }` will throw an error.",
+              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a non-spatial Source will throw an error.",
               variants = {
                 {
                   arguments = {
@@ -2313,6 +2397,9 @@ return {
                   },
                   returns = {}
                 }
+              },
+              related = {
+                "Source:isSpatial"
               }
             },
             {
@@ -2370,6 +2457,27 @@ return {
                       name = "az",
                       type = "number",
                       description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPitch",
+              tag = "sourcePlayback",
+              summary = "Set the pitch of the Source.",
+              description = "Sets the pitch of the Source.",
+              key = "Source:setPitch",
+              module = "lovr.audio",
+              notes = "The default pitch is 1.  Every doubling/halving of the pitch will raise/lower the pitch by one octave.  Changing the pitch also changes the playback speed.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "pitch",
+                      type = "number",
+                      description = "The new pitch."
                     }
                   },
                   returns = {}
@@ -3620,7 +3728,7 @@ return {
                   }
                 }
               },
-              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
+              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`."
             },
             {
               name = "getWidth",
@@ -3756,7 +3864,7 @@ return {
                   returns = {}
                 }
               },
-              notes = "The following texture formats are supported: `rgba`, `rgb`, `r32f`, `rg32f`, and `rgba32f`."
+              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`."
             }
           },
           constructors = {
