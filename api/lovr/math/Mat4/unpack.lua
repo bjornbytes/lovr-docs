@@ -8,6 +8,7 @@ return {
   arguments = {
     raw = {
       type = 'boolean',
+      default = 'false',
       description = 'Whether to return the 16 raw components.'
     }
   },
