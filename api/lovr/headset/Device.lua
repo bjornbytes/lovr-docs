@@ -6,6 +6,14 @@ return {
       description = 'The headset.'
     },
     {
+      name = 'left',
+      description = 'A shorthand for hand/left.'
+    },
+    {
+      name = 'right',
+      description = 'A shorthand for hand/right.'
+    },
+    {
       name = 'hand/left',
       description = 'The left controller.'
     },
@@ -14,12 +22,12 @@ return {
       description = 'The right controller.'
     },
     {
-      name = 'left',
-      description = 'A shorthand for hand/left.'
+      name = 'hand/left/point',
+      description = 'The left controller pointer (pose only).'
     },
     {
-      name = 'right',
-      description = 'A shorthand for hand/right.'
+      name = 'hand/right/point',
+      description = 'The right controller pointer (pose only).'
     },
     {
       name = 'elbow/left',
@@ -78,6 +86,11 @@ return {
       description = 'The right eye.'
     }
   },
+  notes = [[
+    The difference between `hand/left` and `hand/left/point` is the first represents an object held
+    in the hand, whereas the second represents the laser pointer used to aim.  Drawing a controller
+    model would use `hand/left`, whereas drawing a pointer or aiming would use `hand/left/point`.
+  ]],
   related = {
     'DeviceAxis',
     'DeviceButton',
