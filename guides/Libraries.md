@@ -59,6 +59,10 @@ LÖVR-specific libraries:
       <td>Mouse input.</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/jmiskovic/lovr-phywire">lovr-phywire</a></td>
+      <td>Visualizer for LÖVR physics internals.</td>
+    </tr>
+    <tr>
       <td><a href="http://github.com/jmiskovic/lovr-procmesh">lovr-procmesh</a></td>
       <td>Generation of mesh primitives and constructive solid geometry (CSG) operations.</td>
     </tr>
