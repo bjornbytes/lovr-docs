@@ -1,4 +1,4 @@
---[[ A zipline made of
+--[[ A zipline demo combining several joint types
 
 Capsule is suspended from trolley using distance joint. Trolley is attached to hanger
 using slider joint. Beware that slider joint loses its accuracy/stability when attached
@@ -49,35 +49,4 @@ function lovr.draw(pass)
       pass:capsule(x,y,z, r, l, angle, ax,ay,az)
     end
   end
-end
-
-
-function makeRope(origin, destination, thickness, elements)
-  local length = (destination - origin):length()
-  thickness = thickness or length / 100
-  elements = elements or 30
-  elementSize = length / elements
-  local orientation = vec3(destination - origin):normalize()
-  local first, last, prev
-  for i = 1, elements do
-    local position = vec3(origin):lerp(destination, (i - 0.5) / elements)
-    local anchor   = vec3(origin):lerp(destination, (i - 1.0) / elements)
-    element = world:newBoxCollider(position, vec3(thickness, thickness, elementSize * 0.95))
-    element:setRestitution(0.1)
-    element:setGravityIgnored(true)
-    element:setOrientation(quat(orientation))
-    element:setLinearDamping(0.01)
-    element:setAngularDamping(0.01)
-    element:setMass(0.001)
-    if prev then
-      local joint = lovr.physics.newBallJoint(prev, element, anchor)
-      joint:setResponseTime(10)
-      joint:setTightness(1)
-    else
-      first = element
-    end
-    prev = element
-  end
-  last = prev
-  return first, last
 end
