@@ -9,7 +9,7 @@ physics engine doesn't know the speed of hand colliders at the moment of collisi
 
 An improvement is to set linear and angular speed of kinematic hand colliders so that they
 approach the target (actual location/orientation of hand controller). This works well for one
-hand physics, however physics start to glitch when you try to squeeze object between two hands.
+hand, however physics will start to glitch when you try to squeeze an object between two hands.
 This is because kinematic hand controllers can never be affected by collision forces, so the
 squeezed collider cannot push back against them and the collision cannot be resolved.
 
@@ -18,7 +18,7 @@ affected by other collisions. To track hand controllers, we apply force and torq
 objects that's proportional to distance from correct position.
 
 This means hand colliders won't have 1:1 mapping with actual hand controllers, they will actually
-'bend' under large force. Also the colliders can become stuck and burried beneath other objects.
+'bend' under large force. Also the colliders can become stuck and buried beneath other objects.
 This is frustrating to users, so in this example hand colliders can ghost through objects or
 become solid, using the trigger button.
 
