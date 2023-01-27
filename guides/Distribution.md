@@ -12,22 +12,26 @@ contents.  On Windows you can select all the files in a project (**not** the pro
 click them, and choose "Send to" -> "Compressed (zip) folder".  On Unix systems, the `zip` utility
 can be used:
 
-    $ zip -9qr .
+    $ cd /path/to/project
+    $ zip -9qr project.lovr .
 
-A zip archive can be run with LÖVR but isn't a standalone executable yet.
+By convention, zip files containing LÖVR projects use the `.lovr` extension.  A zip archive can be
+run with LÖVR but isn't a standalone executable yet.
 
 Creating an Executable
 ---
 
-Once you have a project archive, it can be appended to the LÖVR binary to create a standalone
+Once you have a project archive, it can be appended to the LÖVR program to create a standalone
 executable.  On Windows, this can be done using the command prompt:
 
     $ copy /b lovr.exe+MyProject.zip MyProject.exe
 
-On Unix systems, the `cat` utility can be used to concatenate the two files.
+On Unix systems, the `cat` utility can be used to concatenate the two files:
 
-> Once you have an executable, be sure to distribute it with all the `.dll` files that came with the
-original LÖVR download.
+    $ cat /path/to/lovr MyProject.zip > MyProject
+
+> Once you have an executable, be sure to distribute it with all the libraries (`.dll` or `.so`
+> files) that came with the original LÖVR download.
 
 macOS
 ---
