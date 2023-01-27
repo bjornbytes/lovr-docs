@@ -35,6 +35,10 @@ LÖVR-specific libraries:
       <td>A live-reloading wrapper for LÖVR.</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/jmiskovic/lovr-atmo">lovr-atmo</a></td>
+      <td>Atmosphere rendering for LÖVR framework</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/mcclure/lovr-ent">lovr-ent</a></td>
       <td>Entity tree library / sample project.</td>
     </tr>
