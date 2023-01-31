@@ -162,7 +162,7 @@ The usual CMake incantation with all of the above variables set up should produc
         -D ANDROID_SDK=/path/to/android \
         -D ANDROID_ABI=arm64-v8a \
         -D ANDROID_NATIVE_API_LEVEL=29 \
-        -D ANDROID_BUILD_TOOLS_VERSION=29.0.3 \
+        -D ANDROID_BUILD_TOOLS_VERSION=30.0.3 \
         -D ANDROID_KEYSTORE=/path/to/test.keystore \
         -D ANDROID_KEYSTORE_PASS=PASS:hunter2 \
         ..
