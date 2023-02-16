@@ -10829,7 +10829,7 @@ return {
               description = "Draws a circle.",
               key = "Pass:circle",
               module = "lovr.graphics",
-              notes = "The local origin of the circle is in its center, and the local z axis goes through the center.",
+              notes = "The local origin of the circle is in its center.  The local z axis is perpendicular to plane of the circle.",
               variants = {
                 {
                   arguments = {
