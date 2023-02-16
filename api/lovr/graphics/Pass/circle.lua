@@ -39,6 +39,7 @@ return {
     }
   },
   notes = [[
-    The local origin of the circle is in its center. The local z axis is perpendicular to plane of the circle.
+    The local origin of the circle is in its center.  The local z axis is perpendicular to plane of
+    the circle.
   ]]
 }
