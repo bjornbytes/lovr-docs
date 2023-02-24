@@ -7768,7 +7768,7 @@ return {
         {
           name = "setRequirePath",
           summary = "Set the require path.",
-          description = "Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the save directory and the project directory.",
+          description = "Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, except the patterns will be checked using `lovr.filesystem` APIs. This allows `require` to work even when the project is packaged into a zip archive, or when the project is launched from a different directory.",
           key = "lovr.filesystem.setRequirePath",
           module = "lovr.filesystem",
           notes = "The default reqiure path is '?.lua;?/init.lua'.",
