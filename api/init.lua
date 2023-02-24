@@ -7135,9 +7135,8 @@ return {
       name = "filesystem",
       tag = "modules",
       summary = "Provides access to the filesystem.",
-      description = "The `lovr.filesystem` module provides access to the filesystem.",
+      description = "The `lovr.filesystem` module provides access to the filesystem.\n\nAll files written will go in a special folder called the \"save directory\".  The location of the save directory is platform-specific:\n\n<table>\n  <tr>\n    <td>Windows</td>\n    <td><code>C:\\Users\\&lt;user&gt;\\AppData\\Roaming\\LOVR\\&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>macOS</td>\n    <td><code>/Users/&lt;user&gt;/Library/Application Support/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Linux</td>\n    <td><code>/home/&lt;user&gt;/.local/share/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Android</td>\n    <td><code>/sdcard/Android/data/&lt;identity&gt;/files</code></td>\n  </tr> </table>\n\n`<identity>` is a unique identifier for the project, and can be set in `lovr.conf`.  On Android, the identity can not be changed and will always be the package id (e.g. `org.lovr.app`).\n\nWhen files are read, they will be searched for in multiple places.  By default, the save directory is checked first, then the project source (folder or zip).  That way, when data is written to a file, any future reads will see the new data.  The `t.saveprecedence` conf setting can be used to change this precedence.\n\nConceptually, `lovr.filesystem` uses a \"virtual filesystem\", which is an ordered list of folders and zip files that are merged into a single filesystem hierarchy.  Folders and archives in the list can be added and removed with `lovr.filesystem.mount` and `lovr.filesystem.unmount`.\n\nLÖVR extends Lua's `require` function to look for modules in the virtual filesystem.  The search patterns can be changed with `lovr.filesystem.setRequirePath`, similar to `package.path`.",
       key = "lovr.filesystem",
-      enums = {},
       objects = {},
       functions = {
         {
@@ -7872,7 +7871,7 @@ return {
           }
         }
       },
-      notes = "LÖVR programs can only write to a single directory, called the save directory.  The location of the save directory is platform-specific:\n\n<table>\n  <tr>\n    <td>Windows</td>\n    <td><code>C:\\Users\\&lt;user&gt;\\AppData\\Roaming\\LOVR\\&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>macOS</td>\n    <td><code>/Users/&lt;user&gt;/Library/Application Support/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Linux</td>\n    <td><code>/home/&lt;user&gt;/.local/share/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Android</td>\n    <td><code>/sdcard/Android/data/&lt;identity&gt;/files</code></td>\n  </tr> </table>\n\n`<identity>` should be a unique identifier for your app.  It can be set either in `lovr.conf` or by using `lovr.filesystem.setIdentity`.  On Android, the identity can not be changed and will always be the package id, like `org.lovr.app`.\n\nAll filenames are relative to either the save directory or the directory containing the project source.  Files in the save directory take precedence over files in the project."
+      enums = {}
     },
     {
       name = "graphics",
