@@ -344,7 +344,7 @@ fragment shaders.  Textures can be sampled using the `getPixel` helper function.
     <tr>
       <td><code>Material.uvScale</code></td>
       <td>vec2</td>
-      <td>The material UV shift.</td>
+      <td>The material UV scale.</td>
     </tr>
     <tr>
       <td><code>Material.metalness</code></td>
