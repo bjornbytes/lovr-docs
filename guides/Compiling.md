@@ -166,7 +166,7 @@ The usual CMake incantation with all of the above variables set up should produc
         -D ANDROID_NATIVE_API_LEVEL=29 \
         -D ANDROID_BUILD_TOOLS_VERSION=30.0.3 \
         -D ANDROID_KEYSTORE=/path/to/test.keystore \
-        -D ANDROID_KEYSTORE_PASS=PASS:hunter2 \
+        -D ANDROID_KEYSTORE_PASS=pass:hunter2 \
         ..
     $ cmake --build .
 
