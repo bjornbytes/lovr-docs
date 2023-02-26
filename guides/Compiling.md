@@ -74,9 +74,11 @@ Install a C compiler and CMake, then run:
     $ cmake ..
     $ cmake --build .
 
-On Linux, LÖVR needs to run within the Steam Runtime.  To do this, first
-[install Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next,
-[install the Steam udev rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).
+LÖVR can use either SteamVR or monado as the VR runtime on Linux.
+
+To use LÖVR with SteamVR on Linux, LÖVR needs to run within the Steam Runtime. To do this, first
+[install Steam](https://wiki.archlinux.org/index.php/Steam#Installation).  Next, [install the Steam
+udev rules](https://github.com/ValveSoftware/SteamVR-for-Linux#usb-device-requirements).
 Then, run LÖVR within the Steam runtime:
 
     $ ~/.local/share/Steam/ubuntu12_32/steam-runtime/run.sh lovr
