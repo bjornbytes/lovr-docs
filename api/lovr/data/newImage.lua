@@ -15,7 +15,7 @@ return {
     },
     format = {
       type = 'TextureFormat',
-      default = 'rgba',
+      default = 'rgba8',
       description = 'The format of the texture\'s pixels.'
     },
     filename = {
