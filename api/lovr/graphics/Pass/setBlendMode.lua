@@ -20,6 +20,15 @@ return {
     {
       arguments = { 'blend', 'alphaBlend' },
       returns = {}
+    },
+    {
+      description = [[
+        Disables blending.  When something is drawn, its pixel colors will replace any existing
+        color in the target texture.  This can work okay for opaque objects, but won't render text
+        or transparency properly.
+      ]],
+      arguments = {},
+      returns = {}
     }
   },
   notes = 'The default blend mode is `alpha` with the `alphamultiply` alpha mode.'
