@@ -5979,7 +5979,7 @@ return {
                   name = "format",
                   type = "TextureFormat",
                   description = "The format of the texture's pixels.",
-                  default = "rgba"
+                  default = "rgba8"
                 },
                 {
                   name = "data",
@@ -12715,6 +12715,11 @@ return {
                       description = "The alpha blend mode, used to control premultiplied alpha."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Disables blending.  When something is drawn, its pixel colors will replace any existing color in the target texture.  This can work okay for opaque objects, but won't render text or transparency properly.",
+                  arguments = {},
                   returns = {}
                 }
               }
