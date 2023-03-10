@@ -665,6 +665,7 @@ return {
               },
               variants = {
                 {
+                  description = "Set the orientation using angle/axis numbers.",
                   arguments = {
                     {
                       name = "angle",
@@ -685,6 +686,17 @@ return {
                       name = "az",
                       type = "number",
                       description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the orientation using a quaternion.",
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation."
                     }
                   },
                   returns = {}
@@ -719,6 +731,7 @@ return {
               description = "Sets the position and orientation of the Source.",
               key = "Source:setPose",
               module = "lovr.audio",
+              notes = "The position doesn't have any defined units, but meters are used by convention.",
               related = {
                 "Source:setPosition",
                 "Source:setOrientation",
@@ -726,21 +739,22 @@ return {
               },
               variants = {
                 {
+                  description = "Set the pose using numbers.",
                   arguments = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x position of the Source, in meters."
+                      description = "The x position of the Source."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y position of the Source, in meters."
+                      description = "The y position of the Source."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z position of the Source, in meters."
+                      description = "The z position of the Source."
                     },
                     {
                       name = "angle",
@@ -764,6 +778,22 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  description = "Set the pose using vector types.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -771,26 +801,43 @@ return {
               name = "setPosition",
               tag = "sourceEffects",
               summary = "Set the position of the Source.",
-              description = "Sets the position of the Source, in meters.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.\n\nOnly mono sources can be positioned.  Setting the position of a stereo Source will cause an error.",
+              description = "Sets the position of the Source.  Setting the position will cause the Source to be distorted and attenuated based on its position relative to the listener.\n\nOnly mono sources can be positioned.  Setting the position of a stereo Source will cause an error.",
               key = "Source:setPosition",
               module = "lovr.audio",
+              notes = "The position doesn't have any defined units, but meters are used by convention.",
+              related = {
+                "Source:setOrientation",
+                "Source:setPose"
+              },
               variants = {
                 {
+                  description = "Set the position using numbers.",
                   arguments = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate."
+                      description = "The x coordinate of the position."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate."
+                      description = "The y coordinate of the position."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate."
+                      description = "The z coordinate of the position."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the position using a vector.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
                     }
                   },
                   returns = {}
@@ -1515,8 +1562,14 @@ return {
           description = "Sets the orientation of the virtual audio listener in angle/axis representation.",
           key = "lovr.audio.setOrientation",
           module = "lovr.audio",
+          related = {
+            "lovr.audio.setPosition",
+            "lovr.audio.setPose",
+            "Source:setOrientation"
+          },
           variants = {
             {
+              description = "Set the listener position using numbers.",
               arguments = {
                 {
                   name = "angle",
@@ -1540,6 +1593,17 @@ return {
                 }
               },
               returns = {}
+            },
+            {
+              description = "Set the listener position using a vector.",
+              arguments = {
+                {
+                  name = "orientation",
+                  type = "Quat",
+                  description = "The orientation of the listener."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -1550,6 +1614,7 @@ return {
           description = "Sets the position and orientation of the virtual audio listener.",
           key = "lovr.audio.setPose",
           module = "lovr.audio",
+          notes = "The position of the listener doesn't use any specific units, but usually they can be thought of as meters to match the headset module.",
           related = {
             "lovr.audio.setPosition",
             "lovr.audio.setOrientation",
@@ -1557,21 +1622,22 @@ return {
           },
           variants = {
             {
+              description = "Set the pose of the listener using numbers.",
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x position of the listener, in meters."
+                  description = "The x position of the listener."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y position of the listener, in meters."
+                  description = "The y position of the listener."
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z position of the listener, in meters."
+                  description = "The z position of the listener."
                 },
                 {
                   name = "angle",
@@ -1595,6 +1661,22 @@ return {
                 }
               },
               returns = {}
+            },
+            {
+              description = "Set the pose of the listener using vector types.",
+              arguments = {
+                {
+                  name = "position",
+                  type = "Vec3",
+                  description = "The position of the listener."
+                },
+                {
+                  name = "orientation",
+                  type = "Quat",
+                  description = "The orientation of the listener."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -1602,11 +1684,17 @@ return {
           name = "setPosition",
           tag = "listener",
           summary = "Set the position of the listener.",
-          description = "Sets the position of the virtual audio listener, in meters.",
+          description = "Sets the position of the virtual audio listener.  The position doesn't have any specific units, but usually they can be thought of as meters, to match the headset module.",
           key = "lovr.audio.setPosition",
           module = "lovr.audio",
+          related = {
+            "lovr.audio.setOrientation",
+            "lovr.audio.setPose",
+            "Source:setPosition"
+          },
           variants = {
             {
+              description = "Set the listener position using numbers.",
               arguments = {
                 {
                   name = "x",
@@ -1622,6 +1710,17 @@ return {
                   name = "z",
                   type = "number",
                   description = "The z position of the listener."
+                }
+              },
+              returns = {}
+            },
+            {
+              description = "Set the listener position using a vector.",
+              arguments = {
+                {
+                  name = "position",
+                  type = "Vec3",
+                  description = "The listener position."
                 }
               },
               returns = {}
@@ -9776,7 +9875,17 @@ return {
               description = "Returns the scale of a node.",
               key = "Model:getNodeScale",
               module = "lovr.graphics",
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
+              related = {
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:animate"
+              },
               variants = {
                 {
                   arguments = {
@@ -9842,17 +9951,6 @@ return {
                     }
                   }
                 }
-              },
-              related = {
-                "Model:getNodePosition",
-                "Model:setNodePosition",
-                "Model:getNodeOrientation",
-                "Model:setNodeOrientation",
-                "Model:getNodePose",
-                "Model:setNodePose",
-                "Model:getNodeTransform",
-                "Model:setNodeTransform",
-                "Model:animate"
               }
             },
             {
@@ -10248,7 +10346,7 @@ return {
             {
               name = "setNodeOrientation",
               summary = "Set or blend the orientation of a node.",
-              description = "Sets or blends the orientation of a node to a new orientation.",
+              description = "Sets or blends the orientation of a node to a new orientation.  This sets the local orientation of the node, relative to its parent.",
               key = "Model:setNodeOrientation",
               module = "lovr.graphics",
               related = {
@@ -10271,9 +10369,81 @@ return {
                       description = "The index of the node."
                     },
                     {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of 0 will not change the node's orientation at all, whereas 1 will fully blend to the target orientation.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of 0 will not change the node's orientation at all, whereas 1 will fully blend to the target orientation.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
                       name = "orientation",
-                      type = "rotation",
-                      description = "The target orientation."
+                      type = "Quat",
+                      description = "The orientation."
                     },
                     {
                       name = "blend",
@@ -10293,8 +10463,8 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "rotation",
-                      description = "The target orientation."
+                      type = "Quat",
+                      description = "The orientation."
                     },
                     {
                       name = "blend",
@@ -10310,7 +10480,7 @@ return {
             {
               name = "setNodePose",
               summary = "Set or blend the pose of a node.",
-              description = "Sets or blends the pose (position and orientation) of a node to a new pose.",
+              description = "Sets or blends the pose (position and orientation) of a node to a new pose.  This sets the local pose of the node, relative to its parent.  The scale will remain unchanged.",
               key = "Model:setNodePose",
               module = "lovr.graphics",
               related = {
@@ -10325,6 +10495,108 @@ return {
                 "Model:animate"
               },
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the position."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will not change the node's pose at all, whereas 1 will fully blend to the target pose.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the position."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will not change the node's pose at all, whereas 1 will fully blend to the target pose.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
                 {
                   arguments = {
                     {
@@ -10382,7 +10654,7 @@ return {
             {
               name = "setNodePosition",
               summary = "Set or blend the position of a node.",
-              description = "Sets or blends the position of a node to a new position.",
+              description = "Sets or blends the position of a node.  This sets the local position of the node, relative to its parent.",
               key = "Model:setNodePosition",
               module = "lovr.graphics",
               related = {
@@ -10405,14 +10677,76 @@ return {
                       description = "The index of the node."
                     },
                     {
-                      name = "position",
-                      type = "Vec3",
-                      description = "The target position.  Can also be provided as 3 numbers."
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the new position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the new position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the new position."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
+                      description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the new position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the new position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the new position."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The new position."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
                       default = "1.0"
                     }
                   },
@@ -10428,12 +10762,12 @@ return {
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The target position.  Can also be provided as 3 numbers."
+                      description = "The new position."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
+                      description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
                       default = "1.0"
                     }
                   },
@@ -10444,11 +10778,73 @@ return {
             {
               name = "setNodeScale",
               summary = "Set or blend the scale of a node.",
-              description = "Sets or blends the scale of a node to a new scale.",
+              description = "Sets or blends the scale of a node to a new scale.  This sets the local scale of the node, relative to its parent.",
               key = "Model:setNodeScale",
               module = "lovr.graphics",
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
+              notes = "For best results when animating, it's recommended to keep the 3 scale components the same.",
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
                 {
                   arguments = {
                     {
@@ -10459,12 +10855,12 @@ return {
                     {
                       name = "scale",
                       type = "Vec3",
-                      description = "The target scale.  Can also be provided as 3 numbers."
+                      description = "The new scale."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
                       default = "1.0"
                     }
                   },
@@ -10480,12 +10876,12 @@ return {
                     {
                       name = "scale",
                       type = "Vec3",
-                      description = "The target scale.  Can also be provided as 3 numbers."
+                      description = "The new scale."
                     },
                     {
                       name = "blend",
                       type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
+                      description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
                       default = "1.0"
                     }
                   },
@@ -10507,11 +10903,205 @@ return {
             {
               name = "setNodeTransform",
               summary = "Set or blend the transform of a node.",
-              description = "Sets or blends the transform of a node to a new transform.",
+              description = "Sets or blends the transform of a node to a new transform.  This sets the local transform of the node, relative to its parent.",
               key = "Model:setNodeTransform",
               module = "lovr.graphics",
-              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.",
+              notes = "For best results when animating, it's recommended to keep the 3 components of the scale the same.\n\nEven though the translation, scale, and rotation parameters are given in TSR order, they are applied in the normal TRS order.",
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the position."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x component of the scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the position."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x component of the scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the node should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the node."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The scale."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the node."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The scale."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation."
+                    },
+                    {
+                      name = "blend",
+                      type = "number",
+                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
                 {
                   arguments = {
                     {
@@ -10522,7 +11112,7 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
+                      description = "The transform."
                     },
                     {
                       name = "blend",
@@ -10543,7 +11133,7 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The target transform.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers, with 3 scale components."
+                      description = "The transform."
                     },
                     {
                       name = "blend",
@@ -12512,11 +13102,38 @@ return {
               },
               variants = {
                 {
+                  description = "Rotate the coordinate system using numbers.",
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount to rotate the coordinate system by, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Rotate the coordinate system using a quaternion.",
                   arguments = {
                     {
                       name = "rotation",
                       type = "Quat",
-                      description = "A quaternion containing the rotation to apply.  Can also be provided as 4 numbers in angle-axis representation."
+                      description = "A quaternion containing the rotation to apply."
                     }
                   },
                   returns = {}
@@ -12540,11 +13157,33 @@ return {
               },
               variants = {
                 {
+                  description = "Scale the coordinate system using numbers.",
+                  arguments = {
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x component of the scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Scale the coordinate system using a vector.",
                   arguments = {
                     {
                       name = "scale",
                       type = "Vec3",
-                      description = "The scale to apply to the coordinate system.  Can also be provided as 1 or 3 numbers."
+                      description = "The scale to apply."
                     }
                   },
                   returns = {}
@@ -13370,6 +14009,7 @@ return {
               },
               variants = {
                 {
+                  description = "Set the pose of the view using numbers.",
                   arguments = {
                     {
                       name = "view",
@@ -13415,6 +14055,28 @@ return {
                   returns = {}
                 },
                 {
+                  description = "Set the pose of the view using vectors.",
+                  arguments = {
+                    {
+                      name = "view",
+                      type = "number",
+                      description = "The index of the view to update."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the viewer, in meters."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the viewer."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the pose of the view using a matrix.",
                   arguments = {
                     {
                       name = "view",
@@ -13793,11 +14455,89 @@ return {
               },
               variants = {
                 {
+                  description = "Transform the coordinate system using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x component of the scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount to rotate the coordinate system by, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Transform the coordinate system using vector types.",
+                  arguments = {
+                    {
+                      name = "translation",
+                      type = "Vec3",
+                      description = "The translation."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The scale to apply."
+                    },
+                    {
+                      name = "rotation",
+                      type = "Quat",
+                      description = "A quaternion containing the rotation to apply."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Transform the coordinate system using a matrix.",
                   arguments = {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "A matrix containing the transformation to apply to the coordinate system.  Can also be provided as a position, 3-component scale, and rotation, using a mix of `Vectors` or numbers."
+                      description = "A matrix containing the transformation to apply."
                     }
                   },
                   returns = {}
@@ -13822,11 +14562,33 @@ return {
               },
               variants = {
                 {
+                  description = "Translate the coordinate system using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Translate the coordinate system using a vector.",
                   arguments = {
                     {
                       name = "translation",
                       type = "Vec3",
-                      description = "The translation to apply to the coordinate system.  Can also be provided as 3 numbers."
+                      description = "The translation."
                     }
                   },
                   returns = {}
@@ -20091,7 +20853,7 @@ return {
               },
               variants = {
                 {
-                  description = "Resets the matrix to the identity matrix.",
+                  description = "Resets the matrix to the identity matrix, without any translation, rotation, or scale.",
                   arguments = {},
                   returns = {
                     {
@@ -20119,24 +20881,130 @@ return {
                   }
                 },
                 {
+                  description = "Sets the position, scale, and rotation of the matrix using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x component of the scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The input matrix."
+                    }
+                  }
+                },
+                {
+                  description = "Sets the pose (position and orientation) of the matrix using numbers.  The scale is set to 1 on all axes.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The input matrix."
+                    }
+                  }
+                },
+                {
                   arguments = {
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The translation of the matrix.",
-                      default = "0, 0, 0"
+                      description = "The translation of the matrix."
                     },
                     {
                       name = "scale",
                       type = "Vec3",
-                      description = "The scale of the matrix.",
-                      default = "1, 1, 1"
+                      description = "The scale of the matrix."
                     },
                     {
                       name = "rotation",
                       type = "Quat",
-                      description = "The rotation of the matrix.",
-                      default = "0, 0, 0, 1"
+                      description = "The rotation of the matrix."
                     }
                   },
                   returns = {
@@ -20152,14 +21020,12 @@ return {
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The translation of the matrix.",
-                      default = "0, 0, 0"
+                      description = "The translation of the matrix."
                     },
                     {
                       name = "rotation",
                       type = "Quat",
-                      description = "The rotation of the matrix.",
-                      default = "0, 0, 0, 1"
+                      description = "The rotation of the matrix."
                     }
                   },
                   returns = {
@@ -20171,11 +21037,12 @@ return {
                   }
                 },
                 {
+                  description = "Sets the raw components of the matrix using 16 numbers in column-major order.",
                   arguments = {
                     {
                       name = "...",
                       type = "number",
-                      description = "16 numbers to use as the raw values of the matrix (column-major)."
+                      description = "The raw values of the matrix, in column-major order."
                     }
                   },
                   returns = {
@@ -23449,12 +24316,34 @@ return {
               }
             },
             {
-              description = "Create a Curve from a (flat) table of points.",
+              description = "Create a Curve from a set of initial control points, using vectors.",
+              arguments = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The first control point."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "Additional control points."
+                }
+              },
+              returns = {
+                {
+                  name = "curve",
+                  type = "Curve",
+                  description = "The new Curve."
+                }
+              }
+            },
+            {
+              description = "Create a Curve from control points in a table.  The table values can be numbers or `Vec3` objects.",
               arguments = {
                 {
                   name = "points",
                   type = "table",
-                  description = "A table of points, as above."
+                  description = "A table of control points, formatted as numbers or `Vec3` objects."
                 }
               },
               returns = {
@@ -24712,6 +25601,7 @@ return {
               module = "lovr.physics",
               variants = {
                 {
+                  description = "Sets the anchor point using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -24727,6 +25617,17 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z coordinate of the anchor point, in world coordinates."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Sets the anchor point using a vector.",
+                  arguments = {
+                    {
+                      name = "anchor",
+                      type = "Vec3",
+                      description = "The anchor point, in world coordinates."
                     }
                   },
                   returns = {}
@@ -25049,6 +25950,31 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "force",
+                      type = "Vec3",
+                      description = "The force vector to apply."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "force",
+                      type = "Vec3",
+                      description = "The force vector to apply."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to apply the force at, in world coordinates."
+                    }
+                  },
+                  returns = {}
                 }
               },
               related = {
@@ -25079,6 +26005,16 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z component of the torque."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "torque",
+                      type = "Vec3",
+                      description = "The torque to apply."
                     }
                   },
                   returns = {}
@@ -25378,6 +26314,32 @@ return {
                       description = "The z component of the velocity of the point."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "point",
+                      type = "number",
+                      description = "The point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "vx",
+                      type = "number",
+                      description = "The x component of the velocity of the point."
+                    },
+                    {
+                      name = "vy",
+                      type = "number",
+                      description = "The y component of the velocity of the point."
+                    },
+                    {
+                      name = "vz",
+                      type = "number",
+                      description = "The z component of the velocity of the point."
+                    }
+                  }
                 }
               }
             },
@@ -25408,6 +26370,32 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z coordinate in world space."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "vx",
+                      type = "number",
+                      description = "The x component of the velocity of the point."
+                    },
+                    {
+                      name = "vy",
+                      type = "number",
+                      description = "The y component of the velocity of the point."
+                    },
+                    {
+                      name = "vz",
+                      type = "number",
+                      description = "The z component of the velocity of the point."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "point",
+                      type = "Vec3",
+                      descriptio = "The point."
                     }
                   },
                   returns = {
@@ -25511,6 +26499,32 @@ return {
                       description = "The z position of the local-space point."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "point",
+                      type = "Vec3",
+                      description = "The world point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the local-space point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the local-space point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the local-space point."
+                    }
+                  }
                 }
               }
             },
@@ -25542,6 +26556,32 @@ return {
                       name = "wz",
                       type = "number",
                       description = "The z component of the world vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the local vector."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the local vector."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the local vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "vector",
+                      type = "Vec3",
+                      description = "The world vector."
                     }
                   },
                   returns = {
@@ -25930,6 +26970,32 @@ return {
                       description = "The z coordinate of the world point."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "point",
+                      type = "Vec3",
+                      description = "The local point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "wx",
+                      type = "number",
+                      description = "The x coordinate of the world point."
+                    },
+                    {
+                      name = "wy",
+                      type = "number",
+                      description = "The y coordinate of the world point."
+                    },
+                    {
+                      name = "wz",
+                      type = "number",
+                      description = "The z coordinate of the world point."
+                    }
+                  }
                 }
               }
             },
@@ -25961,6 +27027,32 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z coordinate of the local vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "wx",
+                      type = "number",
+                      description = "The x component of the world vector."
+                    },
+                    {
+                      name = "wy",
+                      type = "number",
+                      description = "The y component of the world vector."
+                    },
+                    {
+                      name = "wz",
+                      type = "number",
+                      description = "The z component of the world vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "vector",
+                      type = "Vec3",
+                      description = "The local vector."
                     }
                   },
                   returns = {
@@ -26143,6 +27235,7 @@ return {
               },
               variants = {
                 {
+                  description = "Sets the angular velocity of the Collider using numbers.",
                   arguments = {
                     {
                       name = "vx",
@@ -26158,6 +27251,17 @@ return {
                       name = "vz",
                       type = "number",
                       description = "The z component of the angular velocity."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Sets the angular velocity of the Collider using a vector.",
+                  arguments = {
+                    {
+                      name = "velocity",
+                      type = "Vec3",
+                      description = "The angular velocity of the Collider."
                     }
                   },
                   returns = {}
@@ -26299,6 +27403,7 @@ return {
               },
               variants = {
                 {
+                  description = "Set the linear velocity of the collider using numbers.",
                   arguments = {
                     {
                       name = "vx",
@@ -26314,6 +27419,17 @@ return {
                       name = "vz",
                       type = "number",
                       description = "The z velocity of the Collider, in meters per second."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the linear velocity of the collider using a vector.",
+                  arguments = {
+                    {
+                      name = "velocity",
+                      type = "Vec3",
+                      description = "The velocity of the Collider, in meters per second."
                     }
                   },
                   returns = {}
@@ -26405,6 +27521,7 @@ return {
               },
               variants = {
                 {
+                  description = "Set the orientation of the Collider using numbers.",
                   arguments = {
                     {
                       name = "angle",
@@ -26428,6 +27545,17 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  description = "Set the orientation of the Collider using a quaternion.",
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the Collider."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -26443,6 +27571,7 @@ return {
               },
               variants = {
                 {
+                  description = "Set the pose of the Collider using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -26478,6 +27607,22 @@ return {
                       name = "az",
                       type = "number",
                       description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the pose of the Collider using vector types.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the Collider, in meters."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the Collider."
                     }
                   },
                   returns = {}
@@ -26501,6 +27646,7 @@ return {
               },
               variants = {
                 {
+                  description = "Set the position of the Collider using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -26516,6 +27662,17 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z position of the Collider, in meters."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the position of the Collider using a vector.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the Collider, in meters."
                     }
                   },
                   returns = {}
@@ -26845,6 +28002,7 @@ return {
               module = "lovr.physics",
               variants = {
                 {
+                  description = "Sets the anchor points using numbers.",
                   arguments = {
                     {
                       name = "x1",
@@ -26875,6 +28033,22 @@ return {
                       name = "z2",
                       type = "number",
                       description = "The z coordinate of the second anchor point, in world coordinates."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Sets the anchor points using vectors.",
+                  arguments = {
+                    {
+                      name = "first",
+                      type = "Vec3",
+                      description = "The first anchor point, in world coordinates."
+                    },
+                    {
+                      name = "second",
+                      type = "Vec3",
+                      description = "The second anchor point, in world coordinates."
                     }
                   },
                   returns = {}
@@ -27149,6 +28323,7 @@ return {
               module = "lovr.physics",
               variants = {
                 {
+                  description = "Sets the anchor point using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -27167,6 +28342,17 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  description = "Sets the anchor point using a vector.",
+                  arguments = {
+                    {
+                      name = "anchor",
+                      type = "Vec3",
+                      description = "The anchor point, in world coordinates."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -27178,6 +28364,7 @@ return {
               module = "lovr.physics",
               variants = {
                 {
+                  description = "Set the axis using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -27193,6 +28380,17 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z component of the axis."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the axis using a vector.",
+                  arguments = {
+                    {
+                      name = "axis",
+                      type = "Vec3",
+                      description = "The axis."
                     }
                   },
                   returns = {}
@@ -27796,6 +28994,7 @@ return {
               notes = "If the Shape isn't attached to a Collider, this will error.",
               variants = {
                 {
+                  description = "Set the orientation of the Shape using numbers.",
                   arguments = {
                     {
                       name = "angle",
@@ -27819,6 +29018,17 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  description = "Set the orientation of the Shape using a quaternion.",
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the Shape."
+                    }
+                  },
+                  returns = {}
                 }
               },
               related = {
@@ -27835,6 +29045,7 @@ return {
               notes = "If the Shape isn't attached to a Collider, this will error.",
               variants = {
                 {
+                  description = "Set the position of the Shape using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -27850,6 +29061,17 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z offset."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the position of the Shape using a vector.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
                     }
                   },
                   returns = {}
@@ -28061,6 +29283,7 @@ return {
               module = "lovr.physics",
               variants = {
                 {
+                  description = "Set the axis using numbers.",
                   arguments = {
                     {
                       name = "x",
@@ -28076,6 +29299,17 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z component of the axis."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the axis using a vector.",
+                  arguments = {
+                    {
+                      name = "axis",
+                      type = "Vec3",
+                      description = "The axis."
                     }
                   },
                   returns = {}
@@ -28745,6 +29979,27 @@ return {
                       description = "The new Collider."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the box, in meters."
+                    },
+                    {
+                      name = "size",
+                      type = "Vec3",
+                      description = "The size of the box, in meters."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
                 }
               }
             },
@@ -28771,20 +30026,48 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the center of the capsule.",
+                      description = "The x coordinate of the center of the capsule, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the center of the capsule.",
+                      description = "The y coordinate of the center of the capsule, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the center of the capsule.",
+                      description = "The z coordinate of the center of the capsule, in meters.",
                       default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the capsule, in meters.",
+                      default = "1"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the capsule, not including the caps, in meters.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule, in meters."
                     },
                     {
                       name = "radius",
@@ -28862,6 +30145,22 @@ return {
                       description = "The new Collider."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the Collider."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
                 }
               }
             },
@@ -28888,20 +30187,48 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the center of the cylinder.",
+                      description = "The x coordinate of the center of the cylinder, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the center of the cylinder.",
+                      description = "The y coordinate of the center of the cylinder, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the center of the cylinder.",
+                      description = "The z coordinate of the center of the cylinder, in meters.",
                       default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cylinder, in meters.",
+                      default = "1"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the cylinder, in meters.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the cylinder, in meters."
                     },
                     {
                       name = "radius",
@@ -29006,20 +30333,42 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the center of the sphere.",
+                      description = "The x coordinate of the center of the sphere, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the center of the sphere.",
+                      description = "The y coordinate of the center of the sphere, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the center of the sphere.",
+                      description = "The z coordinate of the center of the sphere, in meters.",
                       default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere, in meters.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the sphere, in meters."
                     },
                     {
                       name = "radius",
@@ -29258,21 +30607,58 @@ return {
                           type = "number"
                         }
                       },
-                      returns = {},
-                      variants = {
+                      returns = {}
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "start",
+                      type = "Vec3",
+                      description = "The starting position of the ray."
+                    },
+                    {
+                      name = "end",
+                      type = "Vec3",
+                      description = "The end position of the ray."
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The function to call when an intersection is detected.",
+                      arguments = {
                         {
-                          arguments = {
-                            "x1",
-                            "y1",
-                            "z1",
-                            "x2",
-                            "y2",
-                            "z2",
-                            "callback"
-                          },
-                          returns = {}
+                          name = "shape",
+                          type = "Shape"
+                        },
+                        {
+                          name = "x",
+                          type = "number"
+                        },
+                        {
+                          name = "y",
+                          type = "number"
+                        },
+                        {
+                          name = "z",
+                          type = "number"
+                        },
+                        {
+                          name = "nx",
+                          type = "number"
+                        },
+                        {
+                          name = "ny",
+                          type = "number"
+                        },
+                        {
+                          name = "nz",
+                          type = "number"
                         }
-                      }
+                      },
+                      returns = {}
                     }
                   },
                   returns = {}
@@ -29334,6 +30720,16 @@ return {
                       name = "zg",
                       type = "number",
                       description = "The z component of the gravity force."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "gravity",
+                      type = "Vec3",
+                      description = "The gravity force."
                     }
                   },
                   returns = {}
@@ -29578,6 +30974,32 @@ return {
                   description = "The new BallJoint."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "anchor",
+                  type = "Vec3",
+                  description = "The joint anchor point, in world coordinates."
+                }
+              },
+              returns = {
+                {
+                  name = "ball",
+                  type = "BallJoint",
+                  description = "The new BallJoint."
+                }
+              }
             }
           }
         },
@@ -29777,6 +31199,37 @@ return {
                   description = "The new DistanceJoint."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "first",
+                  type = "Vec3",
+                  description = "The first anchor point, in world coordinates."
+                },
+                {
+                  name = "second",
+                  type = "Vec3",
+                  description = "The second anchor point, in world coordinates."
+                }
+              },
+              returns = {
+                {
+                  name = "joint",
+                  type = "DistanceJoint",
+                  description = "The new DistanceJoint."
+                }
+              }
             }
           }
         },
@@ -29824,17 +31277,48 @@ return {
                 {
                   name = "ax",
                   type = "number",
-                  description = "The x component of the hinge axis."
+                  description = "The x component of the hinge axis direction."
                 },
                 {
                   name = "ay",
                   type = "number",
-                  description = "The y component of the hinge axis."
+                  description = "The y component of the hinge axis direction."
                 },
                 {
                   name = "az",
                   type = "number",
-                  description = "The z component of the hinge axis."
+                  description = "The z component of the hinge axis direction."
+                }
+              },
+              returns = {
+                {
+                  name = "hinge",
+                  type = "HingeJoint",
+                  description = "The new HingeJoint."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "anchor",
+                  type = "Vec3",
+                  description = "The anchor point, in world coordinates."
+                },
+                {
+                  name = "axis",
+                  type = "Vec3",
+                  description = "The hinge axis direction."
                 }
               },
               returns = {
@@ -29944,6 +31428,32 @@ return {
                   name = "az",
                   type = "number",
                   description = "The z component of the slider axis."
+                }
+              },
+              returns = {
+                {
+                  name = "slider",
+                  type = "SliderJoint",
+                  description = "The new SliderJoint."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "axis",
+                  type = "Vec3",
+                  description = "The slider axis direction."
                 }
               },
               returns = {

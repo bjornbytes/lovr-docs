@@ -17,12 +17,22 @@ return {
     vz = {
       type = 'number',
       description = 'The z velocity of the Collider, in meters per second.'
+    },
+    velocity = {
+      type = 'Vec3',
+      description = 'The velocity of the Collider, in meters per second.'
     }
   },
   returns = {},
   variants = {
     {
+      description = 'Set the linear velocity of the collider using numbers.',
       arguments = { 'vx', 'vy', 'vz' },
+      returns = {}
+    },
+    {
+      description = 'Set the linear velocity of the collider using a vector.',
+      arguments = { 'velocity' },
       returns = {}
     }
   },
