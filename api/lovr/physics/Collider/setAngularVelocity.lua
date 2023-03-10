@@ -13,12 +13,22 @@ return {
     vz = {
       type = 'number',
       description = 'The z component of the angular velocity.'
+    },
+    velocity = {
+      type = 'Vec3',
+      description = 'The angular velocity of the Collider.'
     }
   },
   returns = {},
   variants = {
     {
+      description = 'Sets the angular velocity of the Collider using numbers.',
       arguments = { 'vx', 'vy', 'vz' },
+      returns = {}
+    },
+    {
+      description = 'Sets the angular velocity of the Collider using a vector.',
+      arguments = { 'velocity' },
       returns = {}
     }
   },

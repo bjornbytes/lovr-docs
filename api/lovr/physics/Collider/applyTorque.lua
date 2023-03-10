@@ -13,12 +13,20 @@ return {
     z = {
       type = 'number',
       description = 'The z component of the torque.'
+    },
+    torque = {
+      type = 'Vec3',
+      description = 'The torque to apply.'
     }
   },
   returns = {},
   variants = {
     {
       arguments = { 'x', 'y', 'z' },
+      returns = {}
+    },
+    {
+      arguments = { 'torque' },
       returns = {}
     }
   },

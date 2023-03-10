@@ -29,6 +29,14 @@ return {
       type = 'number',
       description = 'The z coordinate of the ending position of the ray.',
     },
+    start = {
+      type = 'Vec3',
+      description = 'The starting position of the ray.'
+    },
+    ['end'] = {
+      type = 'Vec3',
+      description = 'The end position of the ray.'
+    },
     callback = {
       type = 'function',
       arguments = {
@@ -62,12 +70,6 @@ return {
         }
       },
       returns = {},
-  variants = {
-    {
-      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'callback' },
-      returns = {}
-    }
-  },
       description = 'The function to call when an intersection is detected.'
     }
   },
@@ -75,6 +77,10 @@ return {
   variants = {
     {
       arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'callback' },
+      returns = {}
+    },
+    {
+      arguments = { 'start', 'end', 'callback' },
       returns = {}
     }
   },
