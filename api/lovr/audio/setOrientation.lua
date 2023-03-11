@@ -27,12 +27,12 @@ return {
   returns = {},
   variants = {
     {
-      description = 'Set the listener position using numbers.',
+      description = 'Set the listener orientation using numbers.',
       arguments = { 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
-      description = 'Set the listener position using a vector.',
+      description = 'Set the listener orientation using a vector.',
       arguments = { 'orientation' },
       returns = {}
     }

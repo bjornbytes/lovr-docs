@@ -1569,7 +1569,7 @@ return {
           },
           variants = {
             {
-              description = "Set the listener position using numbers.",
+              description = "Set the listener orientation using numbers.",
               arguments = {
                 {
                   name = "angle",
@@ -1595,7 +1595,7 @@ return {
               returns = {}
             },
             {
-              description = "Set the listener position using a vector.",
+              description = "Set the listener orientation using a vector.",
               arguments = {
                 {
                   name = "orientation",
@@ -11342,9 +11342,106 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the box.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the box.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the box.",
+                      default = "0"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the box.",
+                      default = "1"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the box.",
+                      default = "1"
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth of the box.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the box around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the box should be drawn filled or outlined.",
+                      default = "'fill'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the box."
+                    },
+                    {
+                      name = "size",
+                      type = "Vec3",
+                      description = "The size of the box."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the box."
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the box should be drawn filled or outlined.",
+                      default = "'fill'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the box.  Can also be provided as position, 3-component scale, and rotation using a mix of `Vectors` or numbers."
+                      description = "The transform of the box."
                     },
                     {
                       name = "style",
@@ -11369,9 +11466,100 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the capsule.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the capsule.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the capsule.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the capsule.",
+                      default = "1.0"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the capsule.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the capsule around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to render.",
+                      default = "32"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The size of the capsule (x and y scale the radius, z is the length)."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the capsule."
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to render.",
+                      default = "32"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the capsule.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the length.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the length."
+                      description = "The transform of the capsule."
                     },
                     {
                       name = "segments",
@@ -11419,14 +11607,136 @@ return {
               description = "Draws a circle.",
               key = "Pass:circle",
               module = "lovr.graphics",
-              notes = "The local origin of the circle is in its center.  The local z axis is perpendicular to plane of the circle.",
+              notes = "The local origin of the circle is in its center.  The local z axis is perpendicular to the circle.",
               variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the circle.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the circle.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the circle.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the circle.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the circle around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the circle should be filled or outlined.",
+                      default = "'fill'"
+                    },
+                    {
+                      name = "angle1",
+                      type = "number",
+                      description = "The angle of the beginning of the arc.",
+                      default = "0"
+                    },
+                    {
+                      name = "angle2",
+                      type = "number",
+                      description = "angle of the end of the arc.",
+                      default = "2 * math.pi"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of segments to render.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the circle."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the circle.",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the circle."
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the circle should be filled or outlined.",
+                      default = "'fill'"
+                    },
+                    {
+                      name = "angle1",
+                      type = "number",
+                      description = "The angle of the beginning of the arc.",
+                      default = "0"
+                    },
+                    {
+                      name = "angle2",
+                      type = "number",
+                      description = "angle of the end of the arc.",
+                      default = "2 * math.pi"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of segments to render.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
+                },
                 {
                   arguments = {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the circle.  Can also be provided as position, radius, and rotation, using a mix of `Vectors` or numbers."
+                      description = "The transform of the circle."
                     },
                     {
                       name = "style",
@@ -11609,9 +11919,100 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the base of the cone.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the base of the cone.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the base of the cone.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cone.",
+                      default = "1"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the cone.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the cone around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of segments in the cone.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the base of the cone."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The size of the cone (x and y scale the radius, z is the length)."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the cone."
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of segments in the cone.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the cone.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the length.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the length."
+                      description = "The transform of the cone."
                     },
                     {
                       name = "segments",
@@ -11946,9 +12347,95 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the cube.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the cube.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the cube.",
+                      default = "0"
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The size of the cube.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the cube around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the cube should be drawn filled or outlined.",
+                      default = "'fill'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the cube."
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The size of the cube.",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the cube."
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the cube should be drawn filled or outlined.",
+                      default = "'fill'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the cube.  Can also be provided as position, 1-component scale, and rotation using a mix of `Vectors` or numbers."
+                      description = "The transform of the cube."
                     },
                     {
                       name = "style",
@@ -11973,9 +12460,136 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the cylinder.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the cylinder.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the cylinder.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cylinder.",
+                      default = "1"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the cylinder.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the cylinder around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "capped",
+                      type = "boolean",
+                      description = "Whether the tops and bottoms of the cylinder should be rendered.",
+                      default = "true"
+                    },
+                    {
+                      name = "angle1",
+                      type = "number",
+                      description = "The angle of the beginning of the arc.",
+                      default = "0"
+                    },
+                    {
+                      name = "angle2",
+                      type = "number",
+                      description = "angle of the end of the arc.",
+                      default = "2 * math.pi"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to render.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the cylinder."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The size of the cylinder (x and y scale the radius, z is the length)."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the cylinder."
+                    },
+                    {
+                      name = "capped",
+                      type = "boolean",
+                      description = "Whether the tops and bottoms of the cylinder should be rendered.",
+                      default = "true"
+                    },
+                    {
+                      name = "angle1",
+                      type = "number",
+                      description = "The angle of the beginning of the arc.",
+                      default = "0"
+                    },
+                    {
+                      name = "angle2",
+                      type = "number",
+                      description = "angle of the end of the arc.",
+                      default = "2 * math.pi"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to render.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the cylinder.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the length.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the length."
+                      description = "The transform of the cylinder."
                     },
                     {
                       name = "capped",
@@ -12019,7 +12633,8 @@ return {
                     {
                       name = "radius",
                       type = "number",
-                      description = "The radius of the cylinder."
+                      description = "The radius of the cylinder.",
+                      default = "1"
                     },
                     {
                       name = "capped",
@@ -12066,9 +12681,96 @@ return {
                       description = "The model to draw."
                     },
                     {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The transform of the model.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to draw the model at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to draw the model at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to draw the model at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the model.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the model around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "nodeindex",
+                      type = "number",
+                      description = "The index of the node to draw.  If nil, the root node is drawn.",
+                      default = "nil"
+                    },
+                    {
+                      name = "children",
+                      type = "boolean",
+                      description = "Whether the children of the node should be drawn.",
+                      default = "true"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The model to draw."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to draw the model at."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the model.",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the model."
                     },
                     {
                       name = "nodeindex",
@@ -12101,7 +12803,160 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the model.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
+                      description = "The transform of the model."
+                    },
+                    {
+                      name = "nodeindex",
+                      type = "number",
+                      description = "The index of the node to draw.  If nil, the root node is drawn.",
+                      default = "nil"
+                    },
+                    {
+                      name = "children",
+                      type = "boolean",
+                      description = "Whether the children of the node should be drawn.",
+                      default = "true"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The model to draw."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to draw the model at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to draw the model at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to draw the model at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the model.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the model around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "nodename",
+                      type = "string",
+                      description = "The name of the node to draw.  If nil, the root node is drawn.",
+                      default = "nil"
+                    },
+                    {
+                      name = "children",
+                      type = "boolean",
+                      description = "Whether the children of the node should be drawn.",
+                      default = "true"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The model to draw."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to draw the model at."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the model.",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the model."
+                    },
+                    {
+                      name = "nodename",
+                      type = "string",
+                      description = "The name of the node to draw.  If nil, the root node is drawn.",
+                      default = "nil"
+                    },
+                    {
+                      name = "children",
+                      type = "boolean",
+                      description = "Whether the children of the node should be drawn.",
+                      default = "true"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The model to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform of the model."
                     },
                     {
                       name = "nodename",
@@ -12601,7 +13456,7 @@ return {
               description = "Draws a mesh.",
               key = "Pass:mesh",
               module = "lovr.graphics",
-              notes = "The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse, or omit vertices from the mesh.\n\nThe active `MeshMode` controls whether the vertices are drawn as points, lines, or triangles.\n\nThe active `Material` is applied to the mesh.",
+              notes = "The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse, or omit vertices from the mesh.\n\nWhen drawing without a vertex buffer, the `VertexIndex` variable can be used in shaders to compute the position of each vertex, possibly by reading data from other `Buffer` or `Texture` resources.\n\nThe active `MeshMode` controls whether the vertices are drawn as points, lines, or triangles.\n\nThe active `Material` is applied to the mesh.",
               examples = {
                 {
                   code = "function lovr.draw(pass)\n  local vertices = {\n    vec3(  0,  .4, 0), vec4(1, 0, 0, 1),\n    vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),\n    vec3( .5, -.4, 0), vec4(0, 0, 1, 1)\n  }\n\n  local format = {\n    { type = 'vec3', location = 'VertexPosition' },\n    { type = 'vec4', location = 'VertexColor' }\n  }\n\n  local triangle = lovr.graphics.getBuffer(vertices, format)\n\n  pass:mesh(triangle, 0, 1.7, -1)\nend"
@@ -12609,6 +13464,130 @@ return {
               },
               variants = {
                 {
+                  description = "Draw a range of vertices from a Buffer, using numbers for the transform.",
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertices to draw.",
+                      default = "nil"
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the position to draw the mesh at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the position to draw the mesh at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the position to draw the mesh at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the mesh.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the mesh is rotated around its rotational axis.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
+                      default = "nil"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of copies of the mesh to render.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a range of vertices from a Buffer, using vector types for the transform.",
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertices to draw.",
+                      default = "nil"
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to draw the mesh at."
+                    },
+                    {
+                      name = "scales",
+                      type = "Vec3",
+                      description = "The scale of the mesh."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the mesh."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
+                      default = "nil"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of copies of the mesh to render.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a range of vertices from a Buffer, using a matrix for the transform.",
                   arguments = {
                     {
                       name = "vertices",
@@ -12619,7 +13598,90 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
+                      description = "The transform to apply to the mesh."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
+                      default = "nil"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of copies of the mesh to render.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a mesh using a vertex buffer and an index buffer, using numbers for the transform.",
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertices to draw.",
+                      default = "nil"
+                    },
+                    {
+                      name = "indices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertex indices to draw."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the position to draw the mesh at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the position to draw the mesh at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the position to draw the mesh at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the mesh.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the mesh is rotated around its rotational axis.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
                     },
                     {
                       name = "start",
@@ -12649,6 +13711,63 @@ return {
                   returns = {}
                 },
                 {
+                  description = "Draw a mesh using a vertex buffer and an index buffer, using vector types for the transform.",
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertices to draw.",
+                      default = "nil"
+                    },
+                    {
+                      name = "indices",
+                      type = "Buffer",
+                      description = "The buffer containing the vertex indices to draw."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to draw the mesh at."
+                    },
+                    {
+                      name = "scales",
+                      type = "Vec3",
+                      description = "The scale of the mesh."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the mesh."
+                    },
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
+                      default = "nil"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of copies of the mesh to render.",
+                      default = "1"
+                    },
+                    {
+                      name = "base",
+                      type = "number",
+                      description = "A base offset to apply to vertex indices.",
+                      default = "0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a mesh using a vertex buffer and an index buffer, using a matrix for the transform.",
                   arguments = {
                     {
                       name = "vertices",
@@ -12664,7 +13783,7 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
+                      description = "The transform to apply to the mesh."
                     },
                     {
                       name = "start",
@@ -12694,6 +13813,7 @@ return {
                   returns = {}
                 },
                 {
+                  description = "Perform indirect draws.  `drawcount` meshes from the vertex and index buffer will be drawn, using parameters starting from `offset` bytes in the `draws` buffer.",
                   arguments = {
                     {
                       name = "vertices",
@@ -12725,41 +13845,6 @@ return {
                       name = "stride",
                       type = "number",
                       description = "The number of bytes between consecutive elements in the draw buffer."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "vertexcount",
-                      type = "number",
-                      description = "The number of vertices or indices to draw."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "vertexcount",
-                      type = "number",
-                      description = "The number of vertices or indices to draw."
-                    },
-                    {
-                      name = "indices",
-                      type = "Buffer",
-                      description = "The buffer containing the vertex indices to draw."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The transform to apply to the mesh.  Can also be provided as a position, 1-component scale, and rotation using a combination of `Vectors` and numbers."
                     }
                   },
                   returns = {}
@@ -12831,9 +13916,124 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the plane.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the plane.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the plane.",
+                      default = "0"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the plane.",
+                      default = "1"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the plane.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the plane around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the plane should be drawn filled or outlined.",
+                      default = "'fill'"
+                    },
+                    {
+                      name = "columns",
+                      type = "number",
+                      description = "The number of horizontal segments in the plane.",
+                      default = "1"
+                    },
+                    {
+                      name = "rows",
+                      type = "number",
+                      description = "The number of vertical segments in the plane.",
+                      default = "columns"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the plane."
+                    },
+                    {
+                      name = "size",
+                      type = "Vec2",
+                      description = "The size of the plane."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the plane."
+                    },
+                    {
+                      name = "style",
+                      type = "DrawStyle",
+                      description = "Whether the plane should be drawn filled or outlined.",
+                      default = "'fill'"
+                    },
+                    {
+                      name = "columns",
+                      type = "number",
+                      description = "The number of horizontal segments in the plane.",
+                      default = "1"
+                    },
+                    {
+                      name = "rows",
+                      type = "number",
+                      description = "The number of vertical segments in the plane.",
+                      default = "columns"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the plane.  Can also be provided as a position, 2-component scale, and rotation using a combination of `Vectors`, and numbers."
+                      description = "The transform of the plane."
                     },
                     {
                       name = "style",
@@ -14235,9 +15435,107 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the sphere.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the sphere.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the sphere.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the sphere around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "longitudes",
+                      type = "number",
+                      description = "The number of \"horizontal\" segments.",
+                      default = "48"
+                    },
+                    {
+                      name = "latitudes",
+                      type = "number",
+                      description = "The number of \"vertical\" segments.",
+                      default = "longitudes / 2"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the sphere."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere.",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the sphere."
+                    },
+                    {
+                      name = "longitudes",
+                      type = "number",
+                      description = "The number of \"horizontal\" segments.",
+                      default = "48"
+                    },
+                    {
+                      name = "latitudes",
+                      type = "number",
+                      description = "The number of \"vertical\" segments.",
+                      default = "longitudes / 2"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the sphere.  Can also be provided as a position, radius, and rotation using a mix of `Vectors and numbers.'"
+                      description = "The transform of the sphere."
                     },
                     {
                       name = "longitudes",
@@ -14283,9 +15581,52 @@ return {
                       description = "The text to render."
                     },
                     {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The transform of the text.  Can also be provided as position, 1-component scale, and rotation using a mix of `Vectors` or numbers."
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the text origin.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the text origin.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the text origin.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the text (with the default pixel density, units are meters).",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the text around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
                     },
                     {
                       name = "wrap",
@@ -14296,20 +15637,219 @@ return {
                     {
                       name = "halign",
                       type = "HorizontalAlign",
-                      description = "The horizontal alignment.",
+                      description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
                       type = "VerticalAlign",
-                      description = "The vertical alignment.",
+                      description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
                   },
                   returns = {}
                 },
                 {
-                  description = "Renders multicolor text with a single draw call.",
+                  arguments = {
+                    {
+                      name = "text",
+                      type = "string",
+                      description = "The text to render."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the text."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the text (with the default pixel density, units are meters).",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment relative to the text origin.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment relative to the text origin.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "text",
+                      type = "string",
+                      description = "The text to render."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment relative to the text origin.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment relative to the text origin.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Renders multicolor text.",
+                  arguments = {
+                    {
+                      name = "colortext",
+                      type = "table",
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the text origin.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the text origin.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the text origin.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the text (with the default pixel density, units are meters).",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the text around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment relative to the text origin.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment relative to the text origin.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Renders multicolor text.",
+                  arguments = {
+                    {
+                      name = "colortext",
+                      type = "table",
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the text."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the text (with the default pixel density, units are meters).",
+                      default = "1"
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the text."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal alignment relative to the text origin.",
+                      default = "'center'"
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical alignment relative to the text origin.",
+                      default = "'middle'"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Renders multicolor text.",
                   arguments = {
                     {
                       name = "colortext",
@@ -14319,7 +15859,7 @@ return {
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the text.  Can also be provided as position, 1-component scale, and rotation using a mix of `Vectors` or numbers."
+                      description = "The transform of the text."
                     },
                     {
                       name = "wrap",
@@ -14330,13 +15870,13 @@ return {
                     {
                       name = "halign",
                       type = "HorizontalAlign",
-                      description = "The horizontal alignment.",
+                      description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
                       type = "VerticalAlign",
-                      description = "The vertical alignment.",
+                      description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
                   },
@@ -14417,9 +15957,112 @@ return {
                 {
                   arguments = {
                     {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the torus.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the torus.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the torus.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the torus.",
+                      default = "1"
+                    },
+                    {
+                      name = "thickness",
+                      type = "number",
+                      description = "The thickness of the torus.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the torus around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "tsegments",
+                      type = "number",
+                      description = "The number of toroidal (circular) segments to render.",
+                      default = "64"
+                    },
+                    {
+                      name = "psegments",
+                      type = "number",
+                      description = "The number of poloidal (tubular) segments to render.",
+                      default = "32"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the torus."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The size of the torus (x and y scale the radius, z is the thickness)."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the torus."
+                    },
+                    {
+                      name = "tsegments",
+                      type = "number",
+                      description = "The number of toroidal (circular) segments to render.",
+                      default = "64"
+                    },
+                    {
+                      name = "psegments",
+                      type = "number",
+                      description = "The number of poloidal (tubular) segments to render.",
+                      default = "32"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the torus.  Can also be provided as position, scale, and rotation using a mix of `Vectors` or numbers.  When using numbers for the scale, 2 should be provided: one for the radius and one for the thickness.  When using a matrix or a vector for the scale, the X and Y components are the radius and the Z component is the thickness."
+                      description = "The transform of the torus."
                     },
                     {
                       name = "tsegments",
@@ -14516,7 +16159,7 @@ return {
                     {
                       name = "translation",
                       type = "Vec3",
-                      description = "The translation."
+                      description = "The translation to apply."
                     },
                     {
                       name = "scale",

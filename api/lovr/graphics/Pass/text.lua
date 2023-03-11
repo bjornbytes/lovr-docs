@@ -17,12 +17,57 @@ return {
         of numbers.
       ]]
     },
+    x = {
+      type = 'number',
+      default = '0',
+      description = 'The x coordinate of the text origin.'
+    },
+    y = {
+      type = 'number',
+      default = '0',
+      description = 'The y coordinate of the text origin.'
+    },
+    z = {
+      type = 'number',
+      default = '0',
+      description = 'The z coordinate of the text origin.'
+    },
+    scale = {
+      type = 'number',
+      default = '1',
+      description = 'The scale of the text (with the default pixel density, units are meters).'
+    },
+    angle = {
+      type = 'number',
+      default = '0',
+      description = 'The rotation of the text around its rotation axis, in radians.'
+    },
+    ax = {
+      type = 'number',
+      default = '0',
+      description = 'The x component of the axis of rotation.'
+    },
+    ay = {
+      type = 'number',
+      default = '1',
+      description = 'The y component of the axis of rotation.'
+    },
+    az = {
+      type = 'number',
+      default = '0',
+      description = 'The z component of the axis of rotation.'
+    },
+    position = {
+      type = 'Vec3',
+      description = 'The position of the text.'
+    },
+    orientation = {
+      type = 'Quat',
+      description = 'The orientation of the text.'
+    },
     transform = {
       type = 'Mat4',
-      description = [[
-        The transform of the text.  Can also be provided as position, 1-component scale, and
-        rotation using a mix of `Vectors` or numbers.
-      ]]
+      description = 'The transform of the text.'
     },
     wrap = {
       type = 'number',
@@ -35,22 +80,40 @@ return {
     halign = {
       type = 'HorizontalAlign',
       default = [['center']],
-      description = 'The horizontal alignment.'
+      description = 'The horizontal alignment relative to the text origin.'
     },
     valign = {
       type = 'VerticalAlign',
       default = [['middle']],
-      description = 'The vertical alignment.'
+      description = 'The vertical alignment relative to the text origin.'
     }
   },
   returns = {},
   variants = {
     {
+      arguments = { 'text', 'x', 'y', 'z', 'scale', 'angle', 'ax', 'ay', 'az', 'wrap', 'halign', 'valign' },
+      returns = {}
+    },
+    {
+      arguments = { 'text', 'position', 'scale', 'orientation', 'wrap', 'halign', 'valign' },
+      returns = {}
+    },
+    {
       arguments = { 'text', 'transform', 'wrap', 'halign', 'valign' },
       returns = {}
     },
     {
-      description = 'Renders multicolor text with a single draw call.',
+      description = 'Renders multicolor text.',
+      arguments = { 'colortext', 'x', 'y', 'z', 'scale', 'angle', 'ax', 'ay', 'az', 'wrap', 'halign', 'valign' },
+      returns = {}
+    },
+    {
+      description = 'Renders multicolor text.',
+      arguments = { 'colortext', 'position', 'scale', 'orientation', 'wrap', 'halign', 'valign' },
+      returns = {}
+    },
+    {
+      description = 'Renders multicolor text.',
       arguments = { 'colortext', 'transform', 'wrap', 'halign', 'valign' },
       returns = {}
     }
