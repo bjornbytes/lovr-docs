@@ -45,7 +45,7 @@ return {
     },
     translation = {
       type = 'Vec3',
-      description = 'The translation.'
+      description = 'The translation to apply.'
     },
     scale = {
       type = 'Vec3',
