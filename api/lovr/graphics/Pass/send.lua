@@ -18,6 +18,20 @@ return {
       type = 'Buffer',
       description = 'The Buffer to assign.'
     },
+    offset = {
+      type = 'number',
+      default = '0',
+      description = 'An offset from the start of the buffer where data will be read, in bytes.'
+    },
+    extent = {
+      type = 'number',
+      default = '0',
+      description = [[
+        The number of bytes that will be available for reading.  If zero, as much data as possible
+        will be bound, depending on the offset, buffer size, and the `uniformBufferRange` or
+        `storageBufferRange` limit.
+      ]]
+    },
     texture = {
       type = 'Texture',
       description = 'The Texture to assign.'
@@ -34,7 +48,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'name', 'buffer' },
+      arguments = { 'name', 'buffer', 'offset', 'extent' },
       returns = {}
     },
     {
@@ -50,7 +64,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'binding', 'buffer' },
+      arguments = { 'binding', 'buffer', 'offset', 'extent' },
       returns = {}
     },
     {

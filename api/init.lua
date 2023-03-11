@@ -14415,6 +14415,18 @@ return {
                       name = "buffer",
                       type = "Buffer",
                       description = "The Buffer to assign."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset from the start of the buffer where data will be read, in bytes.",
+                      default = "0"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "The number of bytes that will be available for reading.  If zero, as much data as possible will be bound, depending on the offset, buffer size, and the `uniformBufferRange` or `storageBufferRange` limit.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -14475,6 +14487,18 @@ return {
                       name = "buffer",
                       type = "Buffer",
                       description = "The Buffer to assign."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset from the start of the buffer where data will be read, in bytes.",
+                      default = "0"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "The number of bytes that will be available for reading.  If zero, as much data as possible will be bound, depending on the offset, buffer size, and the `uniformBufferRange` or `storageBufferRange` limit.",
+                      default = "0"
                     }
                   },
                   returns = {}
