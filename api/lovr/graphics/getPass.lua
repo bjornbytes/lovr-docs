@@ -113,11 +113,18 @@ return {
   notes = [[
     Fun facts about render passes:
 
-    - Textures must have the same dimensions, layer counts, and sample counts.
     - Textures must have been created with the `render` `TextureUsage`.
+    - Textures must have the same dimensions, layer counts, and sample counts.
+    - When rendering to textures with multiple layers, each draw will be broadcast to all layers.
+      Render passes have multiple "views" (cameras), and each layer uses a corresponding view,
+      allowing each layer to be rendered from a different viewpoint.  This enables fast stereo
+      rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable
+      can also be used in shaders to set up any desired per-view behavior.
     - If `mipmap` is true, then any textures with mipmaps must have the `transfer` `TextureUsage`.
     - It's okay to have zero color textures, but in this case there must be a depth texture.
     - Setting `clear` to `false` for textures is usually very slow on mobile GPUs.
+    - It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by
+      rendering to texture views, see `Texture:newView`.
 
     For `compute` and `transfer` passes, all of the commands in the pass act as though they run in
     parallel.  This means that writing to the same element of a buffer twice, or writing to it and
