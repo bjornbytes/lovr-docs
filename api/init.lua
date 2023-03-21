@@ -15120,7 +15120,7 @@ return {
               description = "Sets the stencil test.  Any pixels that fail the stencil test won't be drawn.  For example, setting the stencil test to `('equal', 1)` will only draw pixels that have a stencil value of 1. The stencil buffer can be modified by drawing while stencil writes are enabled with `lovr.graphics.setStencilWrite`.",
               key = "Pass:setStencilTest",
               module = "lovr.graphics",
-              notes = "The stencil test is disabled by default.",
+              notes = "The stencil test is disabled by default.\n\nSetting the stencil test requires the `Pass` to have a depth texture with the `d24s8` or `d32fs8` format (the `s` means \"stencil\").  The `t.graphics.stencil` and `t.headset.stencil` flags in `lovr.conf` can be used to request a stencil format for the default window and headset passes, respectively.",
               related = {
                 "Pass:setStencilWrite",
                 "Pass:setDepthTest"
@@ -15161,7 +15161,7 @@ return {
               description = "Sets or disables stencil writes.  When stencil writes are enabled, any pixels drawn will update the values in the stencil buffer using the `StencilAction` set.",
               key = "Pass:setStencilWrite",
               module = "lovr.graphics",
-              notes = "By default, stencil writes are disabled.",
+              notes = "By default, stencil writes are disabled.\n\nSetting the stencil test requires the `Pass` to have a depth texture with the `d24s8` or `d32fs8` format (the `s` means \"stencil\").  The `t.graphics.stencil` and `t.headset.stencil` flags in `lovr.conf` can be used to request a stencil format for the default window and headset passes, respectively.",
               related = {
                 "Pass:setStencilTest",
                 "Pass:setDepthTest"
