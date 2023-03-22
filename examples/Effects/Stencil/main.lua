@@ -134,8 +134,8 @@ function scene.draw(pass)
 	for _, cube in ipairs(scene.stencilCubes) do
 		local center, stencilValue = unpack(cube)
 
-		-- Draw to stencil
-		pass:setStencilWrite("replace", stencilValue)
+		-- Draw to stencil (but only when we pass the depth test)
+		pass:setStencilWrite({"keep", "keep", "replace"}, stencilValue)
 		pass:cube(center*scene.stencilCubeSize, scene.stencilCubeSize)
 
 	end
