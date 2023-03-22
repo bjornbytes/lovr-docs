@@ -45,6 +45,7 @@ return {
   'Effects/Stereo_Image',
   'Effects/Cubemap_Generate',
   'Effects/Cubemap_Texturing',
+  'Effects/Stencil',
   'UI/Spectator_Camera',
   'UI/Window_HUD',
   'Optimization/Instancing',
