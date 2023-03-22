@@ -107,9 +107,8 @@ end
 
 -- Draw HUD overlay
 function lovr.mirror(pass)
-	if mirror then mirror() end
 	pass:origin()
-  pass:setViewPose(1, mat4())
+	pass:setViewPose(1, mat4())
 	pass:setProjection(1, matrix) -- Switch to screen space coordinates
 	drawGrid(pass)
 
