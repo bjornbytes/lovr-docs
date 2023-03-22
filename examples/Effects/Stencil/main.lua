@@ -102,6 +102,9 @@ function scene.update(dt) -- On each frame, move each cube and spin it a little
 end
 
 function scene.draw(pass)
+	-- Drawing without culling can make stencils or transparency look weird. We'll be using both...
+	pass:setCullMode('back')
+
 	-- First, draw the skybox
 	pass:setSampler(scene.sampler)
 	pass:skybox(scene.skybox[3])
@@ -114,7 +117,7 @@ function scene.draw(pass)
 		else
 			pass:setColor(0.35,0.35,0.35)
 		end
-		pass:plane(x-floorRecenter,0,y-floorRecenter, 1,1, math.pi/2,1,0,0)
+		pass:plane(x-floorRecenter,0,y-floorRecenter, 1,1, -math.pi/2,1,0,0) -- Face up
 	end end
 	pass:setColor(1,1,1,1)
 
