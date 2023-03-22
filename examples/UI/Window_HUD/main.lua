@@ -66,7 +66,7 @@ function lovr.load()
 	end
 end
 
-function drawGrid(pass)
+local function drawGrid(pass)
 	-- Draw cell backgrounds (where present)
 	for _x=1,cells do for _y=1,cells do
 		local gray = grid[_x][_y]
@@ -97,19 +97,20 @@ function drawGrid(pass)
 	local c = math.cos(angle)
 	local t = 1-c;
 	local xzangle = math.atan2(ay*s - ax*az*t , 1 - (ay*ay + az*az) * t);
-  pass:setColor(1,0,0,1)
+ 	pass:setColor(1,0,0,1)
 	pass:translate(x / towerscalexz, z / towerscalexz, 0)
 	pass:scale(cellheight*0.5*0.75)
 	pass:rotate(-xzangle, 0, 0, 1)
-  pass:mesh(triangle)
+	pass:mesh(triangle)
 	pass:pop()
 end
 
 -- Draw HUD overlay
-function lovr.mirror(pass)
+local function mirror(pass) 
 	pass:origin()
 	pass:setViewPose(1, mat4())
 	pass:setProjection(1, matrix) -- Switch to screen space coordinates
+	pass:setDepthTest() -- Depth buffer will be full of garbage after drawing scene
 	drawGrid(pass)
 
 	-- Draw instructions
@@ -119,7 +120,7 @@ function lovr.mirror(pass)
 end
 
 -- Draw one block
-function floorbox(pass,_x,_y,gray)
+local function floorbox(pass,_x,_y,gray)
 	local x = -gridspan + _x * cellheight - cellspan
 	local z = -gridspan + _y * cellheight - cellspan
 	local height = gray * towerscaley
@@ -127,7 +128,7 @@ function floorbox(pass,_x,_y,gray)
 end
 
 -- Draw 3D scene
-function lovr.draw(pass)
+local function draw(pass)
 	pass:setShader(shader)
 	pass:setColor(0,1,1)
 	for x=1,cells do for y=1,cells do
@@ -138,5 +139,35 @@ function lovr.draw(pass)
 
 	if not lovr.mouse then -- If you can't click, you can't create any blocks
 		pass:text('This example only works on a desktop computer.', 0, 1.7, -3, .2)
+	end
+end
+
+-- Handle LOVR
+
+-- LOVR expects that if you have both a lovr.mirror and a lovr.draw, it's because you want to draw
+-- different things in the headset and the window. So in 0.16, it "clears" before calling lovr.mirror
+-- (more accurately, it draws the headset and the window to different back buffers entirely).
+-- However, we want OUR window to show the headset contents, and ON TOP of that, we want to draw.
+-- So we have to trick LOVR a little bit...
+
+-- Our strategy will be different on Desktop (the simulator) vs other drivers.
+local isDesktop = lovr.headset.getDriver() == "desktop"
+
+function lovr.draw(pass)
+	draw(pass)       -- Headset contents
+
+	-- On desktop, we define ONLY lovr.draw, no lovr.mirror, and draw the mirror contents inside lovr.draw().
+	-- This is because on desktop, a lovr.mirror being present will prevent lovr.draw() from being called at all.
+	if isDesktop then
+		mirror(pass) -- Mirror contents
+	end
+end
+
+-- When headsets are plugged in, we want both a lovr.draw and a lovr.mirror.
+if not isDesktop then
+	local originalMirror = lovr.mirror -- By default, LOVR will have given us a mirror that displays the headset
+	function lovr.mirror(pass)
+		originalMirror(pass) -- Headset texture (note: this will fill the depth buffer with z=0)
+		mirror(pass)         -- Mirror contents
 	end
 end
