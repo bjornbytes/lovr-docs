@@ -23,22 +23,23 @@ function scene.load()
 
 	-- A 3x3 cube made of two different stencil types
 	scene.stencilCubeCenter = lovr.math.newVec3(0, 1.5, -0.5)
-	scene.stencilCubeRad = 0.125
+	scene.stencilCubeSize = 0.25
+	scene.stencilCubeRotate = 0
 	scene.stencilCubeRotateSpeed = 1
-	local stencilCubes = {}
-	for z=1,3 do for y=1,3 do for x=1,3 do -- Iterate over every cube
-		if not (x==2 and y==2 and z==2) then -- Except the center
-			table.insert(stencilCubes, {lovr.math.newVec3(x,y,z), math.random(1,2)}) -- Cube center and stencil type
+	scene.stencilCubes = {}
+	for z=-1,1 do for y=-1,1 do for x=-1,1 do -- Iterate over every cube
+		if not (x==0 and y==0 and z==0) then -- Except the center
+			table.insert(scene.stencilCubes, {lovr.math.newVec3(x,y,z), math.random(1,2)}) -- Cube center and stencil type
 		end
 	end end end
 
 	-- Three cubemap skyboxes, of different colors
 	scene.skybox = {}
-	local skyboxTextureSize = 16
+	local skyboxTextureSize = 32
 	local bandSize=3
 	for cube_index,colors in ipairs{
 		{{1, 0.5, 1}, {1,1,1}},     -- Fuschia and white
-		{{0, 0, 0},   {1, 1, 0.5}}, -- Black and yellow
+		{{1, 1, 0.5},   {0,0,0}},   -- Yellow and black
 		{{1,1,1}, {0.9,0.9,0.9}},   -- White and silver
 	} do
 		local layers = {}
@@ -68,16 +69,17 @@ local function randomQuaternion() -- Generate one random rotation
 		        true ) -- Raw components
 end
 
-function scene.generateDriftCube(i, randomZ) -- Generate one cube with random position and color and a random rotational velocity
+function scene.generateDriftCube(i, randomX) -- Generate one cube with random position and color and a random rotational velocity
 	local cube = {}
 	cube.at = lovr.math.newVec3()
-	cube.at.x = scene.boundMin.x + math.random()*(scene.boundMax.x-scene.boundMin.x)
-	cube.at.y = scene.boundMin.y + math.random()*(scene.boundMax.y-scene.boundMin.y)
-	if randomZ then
-		cube.at.z = scene.boundMin.z + math.random()*(scene.boundMax.z-scene.boundMin.z)
+	if randomX then
+		cube.at.x = scene.boundMin.x + math.random()*(scene.boundMax.x-scene.boundMin.x)
 	else
-		cube.at.z = scene.boundMin.z
+		cube.at.x = scene.boundMin.x
 	end
+	cube.at.y = scene.boundMin.y + math.random()*(scene.boundMax.y-scene.boundMin.y)
+	cube.at.z = scene.boundMin.z + math.random()*(scene.boundMax.z-scene.boundMin.z)
+
 	cube.rotateBasis = randomQuaternion()
 	cube.rotateTarget = lovr.math.newQuat(cube.rotateBasis:conjugate())
 	cube.rotate = cube.rotateBasis
@@ -94,6 +96,9 @@ function scene.update(dt) -- On each frame, move each cube and spin it a little
 			cube.rotate = cube.rotateBasis:slerp( cube.rotateTarget, rotateAmount )
 		end
 	end
+
+	-- Also rotate the center cube
+	scene.stencilCubeRotate = scene.stencilCubeRotate + dt*scene.stencilCubeRotateSpeed
 end
 
 function scene.draw(pass)
@@ -107,16 +112,60 @@ function scene.draw(pass)
 		if (x+y)%2==0 then
 			pass:setColor(0.25,0.25,0.25)
 		else
-			pass:setColor(0.5,0.5,0.5)
+			pass:setColor(0.35,0.35,0.35)
 		end
 		pass:plane(x-floorRecenter,0,y-floorRecenter, 1,1, math.pi/2,1,0,0)
 	end end
+	pass:setColor(1,1,1,1)
 
-	-- Draw driftCubes
+	-- Stencils here
+	-- Using stencils involves drawing twice, once with a stencil write set and once with a stencil test set.
+
+	-- Example 1: Using stencils to "paint" scenes
+
+	-- Each sub-cube in our 3x3 cube will write a different value to the stencil buffer, 1 or 2.
+	pass:setColorWrite() -- In the color spectrum, these cubes are completely invisible! They write only stencil and depth.
+	pass:push() -- Position ourselves in the right place
+	pass:translate(scene.stencilCubeCenter)
+	pass:rotate(scene.stencilCubeRotate, 0,1,0)
+	for _, cube in ipairs(scene.stencilCubes) do
+		local center, stencilValue = unpack(cube)
+
+		-- Draw to stencil
+		pass:setStencilWrite("replace", stencilValue)
+		pass:cube(center*scene.stencilCubeSize, scene.stencilCubeSize)
+
+	end
+	pass:pop()
+
+	pass:setStencilWrite() -- Reset stencil write
+	pass:setColorWrite(true) -- Reset color write
+
+	-- Now that we've painted the stencil buffer, let's draw something with depth-- like a skybox
+	pass:setDepthTest() -- Turn off depth test because the skybox is "behind" the cubes
+	for stencilValue=1,2 do
+		pass:setStencilTest("equal", stencilValue) -- Commands after here will only draw on pixels where the stencil value is right
+
+		pass:skybox(scene.skybox[stencilValue])
+	end
+	pass:setDepthTest("gequal") -- Turn depth test back on
+
+	-- Example 2: Using stencils to prevent collision
+
+	-- Here we will write AND test the stencil at the same time! In this step we want to draw a bunch of 50%-transparent cubes,
+	-- But we don't want any cubes to overlap each other. We want each cube to look like a "world of shadow".
+	-- The cubes can darken the skybox and the 3x3 cube, but not any pixel where another cube has already drawn.
+
+	pass:setStencilTest("notequal", 3) -- We will write the value "3", but refuse to write any pixel where a 3 is already present.
+	pass:setStencilWrite("replace", 3) -- Note we haven't cleared the stencil buffer, so we can't reuse values 1 or 2.
 	for _,cube in ipairs(scene.driftCubes) do
-		pass:setColor(0.5,0.5,0.5,0.5)
+		pass:setColor(0.75,0.5,0.5,0.5)
 		pass:cube(cube.at.x, cube.at.y, cube.at.z, scene.driftCubeSize, cube.rotate:unpack())
 	end
+
+	-- The stencil state will reset at the end of this lovr.draw, but let's clear it anyway.
+	pass:setStencilWrite()
+	pass:setStencilTest()
 end
 
 -- Handle lovr
