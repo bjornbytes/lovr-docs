@@ -46,6 +46,7 @@ return {
   'Effects/Cubemap_Generate',
   'Effects/Cubemap_Texturing',
   'UI/Spectator_Camera',
+  'UI/Window_HUD',
   'Optimization/Instancing',
   'Debugging/FPS_Controls',
   'Debugging/Raw_Input',
