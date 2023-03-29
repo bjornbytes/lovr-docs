@@ -93,6 +93,8 @@ Android
 
 Here be dragons.
 
+You will need to compile on a macOS or Linux system. Compiling LÖVR APKs on Windows does not currently work (unless all steps are performed in [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install)).
+
 First, make sure the Java JDK is installed (version 8 is known to work).
 
 Then, the Android SDK and NDK need to be installed.  SDK version 29 should be installed.
@@ -111,6 +113,8 @@ package can be safely uninstalled:
 Android Studio isn't required, but can be used to install the SDK, NDK, and Java as well.
 
 Note where the SDK is installed.  Some paths in the SDK will need to be specified.
+
+Finally, compiling a LÖVR APK requires a copy of the `glslValidator` tool installed on the system. Most package managers will offer this as part of a "glslang" or "glslang-tools" package.
 
 CMake or tup can be used to build an APK that can be installed on an Android device.
 
