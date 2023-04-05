@@ -64,6 +64,14 @@ return {
       type = 'Mat4',
       description = 'The transform of the cone.'
     },
+    p1 = {
+      type = 'Vec3',
+      description = 'The position of the base of the cone.'
+    },
+    p2 = {
+      type = 'Vec3',
+      description = 'The position of the tip of the cone.'
+    },
     segments = {
       type = 'number',
       default = '64',
@@ -82,6 +90,10 @@ return {
     },
     {
       arguments = { 'transform', 'segments' },
+      returns = {}
+    },
+    {
+      arguments = { 'p1', 'p2', 'radius', 'segments' },
       returns = {}
     }
   },

@@ -2093,7 +2093,20 @@ return {
               module = "lovr.data",
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset into the Blob where the string will start.",
+                      default = "0"
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes the string will contain.  If nil, the rest of the data in the Blob will be used, based on the `offset` parameter.",
+                      default = "nil"
+                    }
+                  },
                   returns = {
                     {
                       name = "data",
@@ -12022,6 +12035,33 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "p1",
+                      type = "Vec3",
+                      description = "The position of the base of the cone."
+                    },
+                    {
+                      name = "p2",
+                      type = "Vec3",
+                      description = "The position of the tip of the cone."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cone.",
+                      default = "1"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of segments in the cone.",
+                      default = "64"
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -14334,6 +14374,147 @@ return {
                       name = "rotation",
                       type = "Quat",
                       description = "A quaternion containing the rotation to apply."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "roundrect",
+              tag = "drawing",
+              summary = "Draw a rounded rectangle.",
+              description = "Draws a rounded rectangle.",
+              key = "Pass:roundrect",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the rectangle.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the rectangle.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the rectangle.",
+                      default = "0"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the rectangle.",
+                      default = "1"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the rectangle.",
+                      default = "1"
+                    },
+                    {
+                      name = "thickness",
+                      type = "number",
+                      description = "The thickness of the rectangle.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the rectangle around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will have sharp corners.",
+                      default = "0"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to use for each corner.  This increases the smoothness, but increases the number of vertices in the mesh.",
+                      default = "8"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the rectangle."
+                    },
+                    {
+                      name = "size",
+                      type = "Vec3",
+                      description = "The size of the rectangle (width, height, thickness)."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the rectangle."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will have sharp corners.",
+                      default = "0"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to use for each corner.  This increases the smoothness, but increases the number of vertices in the mesh.",
+                      default = "8"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform of the rectangle."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will have sharp corners.",
+                      default = "0"
+                    },
+                    {
+                      name = "segments",
+                      type = "number",
+                      description = "The number of circular segments to use for each corner.  This increases the smoothness, but increases the number of vertices in the mesh.",
+                      default = "8"
                     }
                   },
                   returns = {}
@@ -21066,6 +21247,7 @@ return {
         },
         {
           name = "isFocused",
+          tag = "headset",
           summary = "Check if LÖVR has VR input focus.",
           description = "Returns whether LÖVR has VR input focus.  Focus is lost when the VR system menu is shown.  The `lovr.focus` callback can be used to detect when this changes.",
           key = "lovr.headset.isFocused",
@@ -21081,6 +21263,30 @@ return {
                   name = "focused",
                   type = "boolean",
                   description = "Whether the application is focused."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "isPassthroughEnabled",
+          tag = "headset",
+          summary = "Check if passthrough is active.",
+          description = "Returns whether passthrough is active.  When passthrough is active, the real world will be rendered behind any content rendered by LÖVR, using the alpha channel to blend between the two.",
+          key = "lovr.headset.isPassthroughEnabled",
+          module = "lovr.headset",
+          notes = "This feature is currently only supported on Oculus Quest devices.",
+          related = {
+            "lovr.headset.setPassthroughEnabled"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "active",
+                  type = "boolean",
+                  description = "Whether passthrough is active."
                 }
               }
             }
@@ -21248,6 +21454,36 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the display refresh rate was successfully set."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "setPassthroughEnabled",
+          tag = "headset",
+          summary = "Enable or disable passthrough.",
+          description = "Sets whether passthrough is active.  When passthrough is active, the real world will be rendered behind any content rendered by LÖVR, using the alpha channel to blend between the two.",
+          key = "lovr.headset.setPassthroughEnabled",
+          module = "lovr.headset",
+          notes = "This feature is currently only supported on Oculus Quest devices.",
+          related = {
+            "lovr.headset.isPassthroughEnabled"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enable",
+                  type = "boolean",
+                  description = "Whether passthrough should be enabled."
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the passthrough state was set successfully."
                 }
               }
             }
@@ -22382,6 +22618,36 @@ return {
                       name = "m",
                       type = "Mat4",
                       description = "The original matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "reflect",
+              summary = "Create a matrix that reflects across a plane.",
+              description = "Turns the matrix into a reflection matrix that transforms values as though they were reflected across a plane.",
+              key = "Mat4:reflect",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the plane."
+                    },
+                    {
+                      name = "normal",
+                      type = "Vec3",
+                      description = "The normal vector of the plane."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The original matrix, with modified values."
                     }
                   }
                 }
@@ -25589,7 +25855,7 @@ return {
             "lovr.math.newQuat",
             "lovr.math.newMat4"
           },
-          notes = "Most LÖVR functions that accept positions, orientations, transforms, velocities, etc. also accept vector objects, so they can be used interchangeably with numbers:\n\n    function lovr.draw(pass)\n      -- position and size are vec3's, rotation is a quat\n      pass:box(position, size, rotation)\n    end\n\n### Temporary vs. Permanent\n\nVectors can be created in two different ways: **permanent** and **temporary**.\n\n**Permanent** vectors behave like normal Lua values.  They are individual objects that are garbage collected when no longer needed.  They're created using the usual `lovr.math.new<Type>` syntax:\n\n    self.position = lovr.math.newVec3(x, y, z)\n\n**Temporary** vectors are created from a shared pool of vector objects.  This makes them faster because they use temporary memory and do not need to be garbage collected.  To make a temporary vector, leave off the `new` prefix:\n\n    local position = lovr.math.vec3(x, y, z)\n\nAs a further shorthand, these vector constructors are placed on the global scope.  If you prefer to keep the global scope clean, this can be configured using the `t.math.globals` flag in `lovr.conf`.\n\n    local position = vec3(x1, y1, z1) + vec3(x2, y2, z2)\n\nTemporary vectors, with all their speed, come with an important restriction: they can only be used during the frame in which they were created.  Saving them into variables and using them later on will throw an error:\n\n    local position = vec3(1, 2, 3)\n\n    function lovr.update(dt)\n      -- Reusing a temporary vector across frames will error:\n      position:add(vec3(dt))\n    end\n\nIt's possible to overflow the temporary vector pool.  If that happens, `lovr.math.drain` can be used to periodically drain the pool, invalidating any existing temporary vectors.\n\n### Metamethods\n\nVectors have metamethods, allowing them to be used using the normal math operators like `+`, `-`, `*`, `/`, etc.\n\n    print(vec3(2, 4, 6) * .5 + vec3(10, 20, 30))\n\nThese metamethods will create new temporary vectors.\n\n### Components and Swizzles\n\nThe raw components of a vector can be accessed like normal fields:\n\n    print(vec3(1, 2, 3).z) --> 3\n    print(mat4()[16]) --> 1\n\nAlso, multiple fields can be accessed and combined into a new (temporary) vector, called swizzling:\n\n    local position = vec3(10, 5, 1)\n    print(position.xy) --> vec2(10, 5)\n    print(position.xyy) --> vec3(10, 5, 5)\n    print(position.zyxz) --> vec4(1, 5, 10, 1)\n\nThe following fields are supported for vectors:\n\n- `x`, `y`, `z`, `w`\n- `r`, `g`, `b`, `a`\n- `s`, `t`, `p`, `q`\n\nQuaternions support `x`, `y`, `z`, and `w`.\n\nMatrices use numbers for accessing individual components in \"column-major\" order.\n\nAll fields can also be assigned to.\n\n    -- Swap the components of a 2D vector\n    v.xy = v.yx\n\nThe `unpack` function can be used (on any vector type) to access all of the individual components of a vector object.  For quaternions you can choose whether you want to unpack the angle/axis representation or the raw quaternion components.  Similarly, matrices support raw unpacking as well as decomposition into translation/scale/rotation values.",
+          notes = "Most LÖVR functions that accept positions, orientations, transforms, velocities, etc. also accept vector objects, so they can be used interchangeably with numbers:\n\n    function lovr.draw(pass)\n      -- position and size are vec3's, rotation is a quat\n      pass:box(position, size, rotation)\n    end\n\n### Temporary vs. Permanent\n\nVectors can be created in two different ways: **permanent** and **temporary**.\n\n**Permanent** vectors behave like normal Lua values.  They are individual objects that are garbage collected when no longer needed.  They're created using the usual `lovr.math.new<Type>` syntax:\n\n    self.position = lovr.math.newVec3(x, y, z)\n\n**Temporary** vectors are created from a shared pool of vector objects.  This makes them faster because they use temporary memory and do not need to be garbage collected.  To make a temporary vector, leave off the `new` prefix:\n\n    local position = lovr.math.vec3(x, y, z)\n\nAs a shortcut, vector constructors are placed on the global scope.  The uppercase name of the vector is a function that will create a permanent vector, and the lowercase name will create a temporary vector.  This can be disabled using the `t.math.globals` option in `lovr.conf`.\n\n    local position = vec3(x1, y1, z1) + vec3(x2, y2, z2)\n    local transform = Mat4()\n\nTemporary vectors, with all their speed, come with an important restriction: they can only be used during the frame in which they were created.  Saving them into variables and using them later on will throw an error:\n\n    local position = vec3(1, 2, 3)\n\n    function lovr.update(dt)\n      -- Reusing the temporary 'position' vector across frames will error:\n      position:add(vec3(dt))\n    end\n\nIt's possible to overflow the temporary vector pool.  If that happens, `lovr.math.drain` can be used to periodically drain the pool, invalidating any existing temporary vectors.\n\n### Metamethods\n\nVectors have metamethods, allowing them to be used using the normal math operators like `+`, `-`, `*`, `/`, etc.\n\n    print(vec3(2, 4, 6) * .5 + vec3(10, 20, 30))\n\nThese metamethods will create new temporary vectors.\n\n### Components and Swizzles\n\nThe raw components of a vector can be accessed like normal fields:\n\n    print(vec3(1, 2, 3).z) --> 3\n    print(mat4()[16]) --> 1\n\nAlso, multiple fields can be accessed and combined into a new (temporary) vector, called swizzling:\n\n    local position = vec3(10, 5, 1)\n    print(position.xy) --> vec2(10, 5)\n    print(position.xyy) --> vec3(10, 5, 5)\n    print(position.zyxz) --> vec4(1, 5, 10, 1)\n\nThe following fields are supported for vectors:\n\n- `x`, `y`, `z`, `w`\n- `r`, `g`, `b`, `a`\n- `s`, `t`, `p`, `q`\n\nQuaternions support `x`, `y`, `z`, and `w`.\n\nMatrices use numbers for accessing individual components in \"column-major\" order.\n\nAll fields can also be assigned to.\n\n    -- Swap the components of a 2D vector\n    v.xy = v.yx\n\nThe `unpack` function can be used (on any vector type) to access all of the individual components of a vector object.  For quaternions you can choose whether you want to unpack the angle/axis representation or the raw quaternion components.  Similarly, matrices support raw unpacking as well as decomposition into translation/scale/rotation values.\n\n### Vector Constants\n\nThe following vector constants are available.  They return new temporary vectors each time they are used:\n\n- `vec2.zero` (0, 0)\n- `vec2.one` (1, 1)\n- `vec3.zero` (0, 0, 0)\n- `vec3.one` (1, 1, 1)\n- `vec3.left` (-1, 0, 0)\n- `vec3.right` (1, 0, 0)\n- `vec3.up` (0, 1, 0)\n- `vec3.down` (0, -1, 0)\n- `vec3.back` (0, 0, 1)\n- `vec3.forward` (0, 0, -1)\n- `vec4.zero` (0, 0, 0, 0)\n- `vec4.one` (1, 1, 1, 1)\n- `quat.identity` (0, 0, 0, 1)",
           methods = {}
         }
       },
@@ -31495,6 +31761,32 @@ return {
               }
             },
             {
+              name = "getTags",
+              tag = "worldCollision",
+              summary = "Get the list of tags the World was created with.",
+              description = "Returns the list of collision tags used when creating the World.",
+              key = "World:getTags",
+              module = "lovr.physics",
+              related = {
+                "lovr.physics.newWorld",
+                "World:enableCollisionBetween",
+                "World:disableCollisionBetween",
+                "World:isCollisionEnabledBetween"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "tags",
+                      type = "table",
+                      description = "A table of collision tags (strings)."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getTightness",
               tag = "worldProperties",
               summary = "Get the tightness of joints in the World.",
@@ -33839,7 +34131,7 @@ return {
             {
               name = "push",
               summary = "Push a message onto the Channel.",
-              description = "Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean, number, string, and userdata.  Tables should be serialized to strings.",
+              description = "Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean, number, string, lightuserdata, vectors, and userdata (LÖVR objects).  Notably, tables are not currently supported and should be serialized to strings.",
               key = "Channel:push",
               module = "lovr.thread",
               notes = "Threads can get stuck forever waiting on Channel messages, so be careful.",
