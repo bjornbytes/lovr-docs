@@ -213,7 +213,7 @@ The following built-in variables are available only in vertex shaders:
     </tr>
     <tr>
       <td><code>NormalMatrix</code></td>
-      <td>mat4</td>
+      <td>mat3</td>
       <td>Transforms normal vectors from local space to world space.</td>
     </tr>
     <tr>
