@@ -53,7 +53,6 @@ return {
   notes = [[
     Currently, the following features are not supported by the model importer:
 
-    - glTF: Morph targets are not supported.
     - glTF: Only the default scene is loaded.
     - glTF: Currently, each skin in a Model can have up to 256 joints.
     - glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need
@@ -64,6 +63,10 @@ return {
 
     Diffuse and emissive textures will be loaded using sRGB encoding, all other textures will be
     loaded as linear.
+
+    Loading a model file will fail if the asset references textures or other files using absolute
+    paths.  Relative paths should be used instead, and will be relative to the model file within the
+    virtual filesystem.
   ]],
   related = {
     'lovr.data.newModelData',
