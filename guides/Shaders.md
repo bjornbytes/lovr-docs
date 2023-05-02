@@ -29,10 +29,10 @@ There are 2 types of shaders, given by `ShaderType`:
 Shaders have one or more "stages", which are basically functions, given by `ShaderStage`:
 
 - `graphics` shaders have 2 stages:
-  - The `vertex` stage computes vertex positions.  It loads vertex data from meshes and applies
-    transformations to get the final "on-screen" position for triangles.
-  - The `fragment` stage computes pixel colors.  It uses material data to compute lighting and other
-    effects, returning the final color of the pixel.
+    - The `vertex` stage computes vertex positions.  It loads vertex data from meshes and applies
+      transformations to get the final "on-screen" position for triangles.
+    - The `fragment` stage computes pixel colors.  It uses material data to compute lighting and other
+      effects, returning the final color of the pixel.
 - `compute` shaders have a single `compute` stage.  It doesn't have any semantic meaning, instead
   performing arbitrary computation by writing to `Buffer` and `Texture` objects.
 
