@@ -47,10 +47,11 @@ return {
   'Effects/Cubemap_Generate',
   'Effects/Cubemap_Texturing',
   'Effects/Stencil',
-  'UI/Spectator_Camera',
-  'UI/Window_HUD',
+  'Pancake/2D_Button',
+  'Pancake/FPS_Controls',
+  'Pancake/Spectator_Camera',
+  'Pancake/Window_HUD',
   'Optimization/Instancing',
-  'Debugging/FPS_Controls',
   'Debugging/Raw_Input',
   'Debugging/Tally'
 }
