@@ -1,11 +1,10 @@
 return {
   tag = 'worldCollision',
-  summary = 'Get a list of points where 2 shapes intersect.',
+  summary = 'Get a list of points where a pair of shapes touch.',
   description = [[
-    Computes collision information between 2 shapes and returns a list of contacts where the shapes
-    intersect.  Each contact point consists of a position, a normal vector, and a penetration depth:
-
-        { x, y, z, nx, ny, nz, depth }
+    Computes collision information between two shapes and returns a list of contacts where the
+    shapes intersect.  Each contact point consists of a position, a normal vector, and a penetration
+    depth.
   ]],
   arguments = {
     shapeA = {
@@ -21,9 +20,9 @@ return {
     contacts = {
       type = 'table',
       description = [[
-        A list of contacts.  Each contact consists of 7 numbers: 3 for the contact position, 3 for
-        the normal vector, and a depth value indicating how far the shapes intersect each other at
-        the contact point.
+        A list of contacts.  Each contact consists of 7 numbers: the contact position, the normal
+        vector, and a depth value indicating how far the shapes intersect each other at the contact
+        point (`{ x, y, z, nx, ny, nz, depth }`).
       ]]
     }
   },
