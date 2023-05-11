@@ -31652,8 +31652,8 @@ return {
             {
               name = "getContacts",
               tag = "worldCollision",
-              summary = "Get a list of points where 2 shapes intersect.",
-              description = "Computes collision information between 2 shapes and returns a list of contacts where the shapes intersect.  Each contact point consists of a position, a normal vector, and a penetration depth:\n\n    { x, y, z, nx, ny, nz, depth }",
+              summary = "Get a list of points where a pair of shapes touch.",
+              description = "Computes collision information between two shapes and returns a list of contacts where the shapes intersect.  Each contact point consists of a position, a normal vector, and a penetration depth.",
               key = "World:getContacts",
               module = "lovr.physics",
               notes = "This only detects collision information, it does not cause the shapes to collide with each other.  Use `World:collide` for that.\n\nThis function ignores collision tags.",
@@ -31678,7 +31678,7 @@ return {
                     {
                       name = "contacts",
                       type = "table",
-                      description = "A list of contacts.  Each contact consists of 7 numbers: 3 for the contact position, 3 for the normal vector, and a depth value indicating how far the shapes intersect each other at the contact point."
+                      description = "A list of contacts.  Each contact consists of 7 numbers: the contact position, the normal vector, and a depth value indicating how far the shapes intersect each other at the contact point (`{ x, y, z, nx, ny, nz, depth }`)."
                     }
                   }
                 }
