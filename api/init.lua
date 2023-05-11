@@ -31650,6 +31650,41 @@ return {
               }
             },
             {
+              name = "getContacts",
+              tag = "worldCollision",
+              summary = "Get a list of points where 2 shapes intersect.",
+              description = "Computes collision information between 2 shapes and returns a list of contacts where the shapes intersect.  Each contact point consists of a position, a normal vector, and a penetration depth:\n\n    { x, y, z, nx, ny, nz, depth }",
+              key = "World:getContacts",
+              module = "lovr.physics",
+              notes = "This only detects collision information, it does not cause the shapes to collide with each other.  Use `World:collide` for that.\n\nThis function ignores collision tags.",
+              related = {
+                "World:collide"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "shapeA",
+                      type = "Shape",
+                      description = "The first shape."
+                    },
+                    {
+                      name = "shapeB",
+                      type = "Shape",
+                      description = "The second shape."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "contacts",
+                      type = "table",
+                      description = "A list of contacts.  Each contact consists of 7 numbers: 3 for the contact position, 3 for the normal vector, and a depth value indicating how far the shapes intersect each other at the contact point."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getGravity",
               tag = "worldProperties",
               summary = "Get the gravity of the World.",
