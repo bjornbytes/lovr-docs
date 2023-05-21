@@ -57,38 +57,38 @@ return {
     }
   },
   returns = {
-    q = {
+    self = {
       type = 'quat',
-      description = 'The original quaternion.'
+      description = 'The modified quaternion.'
     }
   },
   variants = {
     {
       arguments = { 'angle', 'ax', 'ay', 'az', 'raw' },
-      returns = { 'q' }
+      returns = { 'self' }
     },
     {
       arguments = { 'r' },
-      returns = { 'q' }
+      returns = { 'self' }
     },
     {
       description = 'Sets the values from a direction vector.',
       arguments = { 'v' },
-      returns = { 'q' }
+      returns = { 'self' }
     },
     {
       description = 'Sets the values to represent the rotation between two vectors.',
       arguments = { 'v', 'u' },
-      returns = { 'q' }
+      returns = { 'self' }
     },
     {
       arguments = { 'm' },
-      returns = { 'q' }
+      returns = { 'self' }
     },
     {
       description = 'Reset the quaternion to the identity (0, 0, 0, 1).',
       arguments = {},
-      returns = { 'q' }
+      returns = { 'self' }
     }
   },
   related = {

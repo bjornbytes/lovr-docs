@@ -29,15 +29,15 @@ return {
     },
   },
   returns = {
-    m = {
+    self = {
       type = 'Mat4',
-      description = 'The original matrix.'
+      description = 'The modified matrix.'
     }
   },
   variants = {
     {
       arguments = { 'fov', 'aspect', 'near', 'far' },
-      returns = { 'm' }
+      returns = { 'self' }
     }
   },
   related = {

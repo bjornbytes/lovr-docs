@@ -15,15 +15,15 @@ return {
     }
   },
   returns = {
-    m = {
+    self = {
       type = 'Mat4',
-      description = 'The original matrix, with modified values.'
+      description = 'The reflected matrix.'
     }
   },
   variants = {
     {
       arguments = { 'position', 'normal' },
-      returns = { 'm' }
+      returns = { 'self' }
     }
   }
 }

@@ -22543,9 +22543,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22565,9 +22565,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22584,9 +22584,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix, with its values inverted."
+                      description = "The inverted matrix."
                     }
                   }
                 }
@@ -22624,9 +22624,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22650,9 +22650,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix, containing the result."
+                      description = "The modified matrix."
                     }
                   }
                 },
@@ -22742,9 +22742,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 },
@@ -22773,9 +22773,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22819,9 +22819,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22849,9 +22849,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix, with modified values."
+                      description = "The reflected matrix."
                     }
                   }
                 }
@@ -22879,9 +22879,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The rotated matrix."
                     }
                   }
                 },
@@ -22913,9 +22913,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The rotated matrix."
                     }
                   }
                 }
@@ -22943,9 +22943,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 },
@@ -22971,9 +22971,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -23241,9 +23241,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -23271,9 +23271,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The translated matrix."
                     }
                   }
                 },
@@ -23297,9 +23297,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The translated matrix."
                     }
                   }
                 }
@@ -23316,9 +23316,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The transposed matrix."
                     }
                   }
                 }
@@ -23382,9 +23382,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "Quat",
-                      description = "The original quaternion."
+                      description = "The inverted quaternion."
                     }
                   }
                 }
@@ -23482,9 +23482,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23500,7 +23500,7 @@ return {
                     {
                       name = "v3",
                       type = "vec3",
-                      description = "Vector rotated by quaternion."
+                      description = "The rotated vector."
                     }
                   }
                 }
@@ -23518,9 +23518,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "Quat",
-                      description = "The original quaternion."
+                      description = "The normalized quaternion."
                     }
                   }
                 }
@@ -23574,9 +23574,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23590,9 +23590,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23607,9 +23607,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23629,9 +23629,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23645,9 +23645,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23656,9 +23656,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 }
@@ -23689,9 +23689,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "Quat",
-                      description = "The original quaternion, containing the new lerped values."
+                      description = "The modified quaternion, containing the new lerped values."
                     }
                   }
                 }
@@ -23995,9 +23995,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24017,9 +24017,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24148,9 +24148,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24170,9 +24170,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24327,9 +24327,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 },
@@ -24353,9 +24353,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 }
@@ -24383,9 +24383,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24405,9 +24405,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24427,9 +24427,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The normalized vector."
                     }
                   }
                 }
@@ -24508,9 +24508,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24530,9 +24530,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24605,9 +24605,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24633,9 +24633,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24715,9 +24715,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, with the cross product as its values."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24741,9 +24741,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, with the cross product as its values."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24829,9 +24829,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24857,9 +24857,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25027,9 +25027,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 },
@@ -25058,9 +25058,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 }
@@ -25088,9 +25088,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25116,9 +25116,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25138,9 +25138,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The normalized vector."
                     }
                   }
                 }
@@ -25241,9 +25241,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25269,9 +25269,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25349,9 +25349,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25383,9 +25383,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25534,9 +25534,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25568,9 +25568,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25745,9 +25745,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 },
@@ -25781,9 +25781,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 }
@@ -25811,9 +25811,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25845,9 +25845,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25867,9 +25867,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The normalized vector."
                     }
                   }
                 }
@@ -25960,9 +25960,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25994,9 +25994,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
