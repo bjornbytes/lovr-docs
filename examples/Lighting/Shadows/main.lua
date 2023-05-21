@@ -21,8 +21,6 @@ local function render_scene(pass)
   pass:push()
   pass:setColor(0xCBC1AD)
   pass:circle(0, 0, z, 5, -math.pi / 2, 1, 0, 0, 'fill', 0, 2 * math.pi, 256)
-  pass:setColor(0xff00ff)
-  pass:sphere(0, 0, z, .1)
 
   local count = 2
   local min, max = -(count - 1) / 2, (count - 1) / 2
@@ -114,8 +112,7 @@ local function render_shadow_map(draw)
     shadow_map_pass = lovr.graphics.getPass('render', { shadow_map_texture, samples = 1 })
   else
     shadow_map_pass = lovr.graphics.getPass('render', {
-      depth = { texture = shadow_map_texture, clear = light_orthographic and 1 or 0 },
-      samples = 1
+      depth = { texture = shadow_map_texture, clear = light_orthographic and 1 or 0 }, samples = 1
     })
   end
 
@@ -175,8 +172,6 @@ local function render_lighting_pass(draw)
   lighting_pass:setColor(1, 1, 1, 1)
   lighting_pass:sphere(light_pos, 0.1)
 
-  lighting_pass:sphere(vec3(0, 0, z), 0.1)
-
   return lighting_pass
 end
 
@@ -210,16 +205,20 @@ function lovr.load(args)
 
   shadow_map_sampler = lovr.graphics.newSampler({ wrap = 'clamp' })
 
-  local width, height = lovr.system.getWindowDimensions()
-  render_texture = lovr.graphics.newTexture(width, height, { mipmaps = false })
+  if lovr.headset then
+    local width, height = lovr.headset.getDisplayDimensions()
+    local layers = lovr.headset.getViewCount()
+    render_texture = lovr.graphics.newTexture(width, height, layers, { mipmaps = false })
+  else
+    local width, height = lovr.system.getWindowDimensions()
+    render_texture = lovr.graphics.newTexture(width, height, 1, { mipmaps = false })
+  end
 end
 
 function lovr.update(dt)
   local t = lovr.timer.getTime()
-  if lovr.system.isKeyDown('space') then
-    light_pos.x = 3 * math.cos(t * 0.4)
-    light_pos.z = 3 * math.sin(t * 0.4) + z
-  end
+  light_pos.x = 3 * math.cos(t * 0.4)
+  light_pos.z = 3 * math.sin(t * 0.4) + z
 end
 
 function lovr.draw(pass)
