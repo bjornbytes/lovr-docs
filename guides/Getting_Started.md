@@ -61,9 +61,8 @@ If you followed the example above, you should see the following in VR:
 Tips
 ---
 
-- If you need to use `print` in Lua for debug messages, you can drag and drop the project onto
-  `lovrc.bat` instead of `lovr.exe`, or specify the `--console` flag when running on the command
-  line.
+- To see `print` messages on Windows, drag and drop the project onto `lovrc.bat` instead of
+  `lovr.exe`, or specify the `--console` flag when running on the command line.
 - If you have the headset module disabled, be sure to set the y value of the cube to 0 instead of
   1.7.
 - If you want an IDE with LÖVR completion, you can use [VSCode + Lua server](https://gist.github.com/ussaohelcim/9eca6eaa903eefff07b4f3e2019de915).
