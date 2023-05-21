@@ -116,6 +116,9 @@ You've already seen `Pass:text`, but here's another example:
       pass:cube(.5, 1, -3, .5, lovr.timer.getTime())
     end
 
+You can find the `monkey.obj` 3D model file
+[here](https://raw.githubusercontent.com/bjornbytes/lovr-docs/master/examples/Optimization/Instancing/monkey.obj).
+
 lovr.headset
 ---
 
