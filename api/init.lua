@@ -2796,7 +2796,7 @@ return {
                     {
                       name = "property",
                       type = "AnimationProperty",
-                      description = "The property (translation, rotation, scale, weights) affected by the keyframes."
+                      description = "The property (translation, rotation, scale) affected by the keyframes."
                     }
                   }
                 },
@@ -2817,7 +2817,7 @@ return {
                     {
                       name = "property",
                       type = "AnimationProperty",
-                      description = "The property (translation, rotation, scale, weights) affected by the keyframes."
+                      description = "The property (translation, rotation, scale) affected by the keyframes."
                     }
                   }
                 }
@@ -2876,59 +2876,6 @@ return {
                     }
                   }
                 }
-              }
-            },
-            {
-              name = "getBlendShapeCount",
-              summary = "Get the number of blend shapes in the model.",
-              description = "Returns the number of blend shapes in the model.",
-              key = "ModelData:getBlendShapeCount",
-              module = "lovr.data",
-              related = {
-                "ModelData:getBlendShapeName",
-                "Model:getBlendShapeCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of blend shapes in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlendShapeName",
-              summary = "Get the name of a blend shape in the model.",
-              description = "Returns the name of a blend shape in the model.",
-              key = "ModelData:getBlendShapeName",
-              module = "lovr.data",
-              notes = "This function will throw an error if the blend shape index is invalid.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the blend shape."
-                    }
-                  }
-                }
-              },
-              related = {
-                "ModelData:getBlendShapeCount",
-                "Model:getBlendShapeName"
               }
             },
             {
@@ -6402,7 +6349,7 @@ return {
         {
           name = "AnimationProperty",
           summary = "Different animated properties.",
-          description = "This indicates the different node properties that can be animated.",
+          description = "This indicates the different transform properties that can be animated.",
           key = "AnimationProperty",
           module = "lovr.data",
           values = {
@@ -6417,10 +6364,6 @@ return {
             {
               name = "scale",
               description = "Node scale."
-            },
-            {
-              name = "weights",
-              description = "Node blend shape weights."
             }
           }
         },
@@ -8951,105 +8894,6 @@ return {
               }
             },
             {
-              name = "getBlendShapeCount",
-              summary = "Get the number of blend shapes in the model.",
-              description = "Returns the number of blend shapes in the model.",
-              key = "Model:getBlendShapeCount",
-              module = "lovr.graphics",
-              related = {
-                "Model:getBlendShapeName",
-                "ModelData:getBlendShapeCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of blend shapes in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlendShapeName",
-              summary = "Get the name of a blend shape in the model.",
-              description = "Returns the name of a blend shape in the model.",
-              key = "Model:getBlendShapeName",
-              module = "lovr.graphics",
-              notes = "This function will throw an error if the blend shape index is invalid.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the blend shape."
-                    }
-                  }
-                }
-              },
-              related = {
-                "Model:getBlendShapeCount",
-                "ModelData:getBlendShapeName"
-              }
-            },
-            {
-              name = "getBlendShapeWeight",
-              summary = "Get the weight of a blend shape.",
-              description = "Returns the weight of a blend shape.  A blend shape contains offset values for the vertices of one of the meshes in a Model.  Whenever the Model is drawn, the offsets are multiplied by the weight of the blend shape, allowing for smooth blending between different meshes.  A weight of zero won't apply any displacement and will skip processing of the blend shape.",
-              key = "Model:getBlendShapeWeight",
-              module = "lovr.graphics",
-              notes = "The initial weights are declared in the model file.\n\nWeights can be any number, but usually they're kept between 0 and 1.\n\nThis function will throw an error if the blend shape name or index doesn't exist.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The weight of the blend shape."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The weight of the blend shape."
-                    }
-                  }
-                }
-              },
-              related = {
-                "Model:getBlendShapeCount",
-                "Model:getBlendShapeName"
-              }
-            },
-            {
               name = "getBoundingBox",
               summary = "Get the bounding box of the Model.",
               description = "Returns the 6 values of the Model's axis-aligned bounding box.",
@@ -10497,50 +10341,6 @@ return {
                   arguments = {},
                   returns = {}
                 }
-              }
-            },
-            {
-              name = "setBlendShapeWeight",
-              summary = "Set the weight of a blend shape.",
-              description = "Sets the weight of a blend shape.  A blend shape contains offset values for the vertices of one of the meshes in a Model.  Whenever the Model is drawn, the offsets are multiplied by the weight of the blend shape, allowing for smooth blending between different meshes.  A weight of zero won't apply any displacement and will skip processing of the blend shape.",
-              key = "Model:setBlendShapeWeight",
-              module = "lovr.graphics",
-              notes = "The initial weights are declared in the model file.\n\nWeights can be any number, but usually they're kept between 0 and 1.\n\nThis function will throw an error if the blend shape name or index doesn't exist.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    },
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The new weight for the blend shape."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a blend shape."
-                    },
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The new weight for the blend shape."
-                    }
-                  },
-                  returns = {}
-                }
-              },
-              related = {
-                "Model:getBlendShapeCount",
-                "Model:getBlendShapeName"
               }
             },
             {
@@ -17728,11 +17528,6 @@ return {
                       description = "When supported, `Pass:setDepthClamp` will work, otherwise it will do nothing."
                     },
                     {
-                      name = "depthResolve",
-                      type = "boolean",
-                      description = "When supported, multisampled render passes can use a non-multisampled depth texture. Otherwise, the depth texture sample count needs to match the render pass sample count."
-                    },
-                    {
                       name = "indirectDrawFirstInstance",
                       type = "boolean",
                       description = "Whether indirect draws can set the firstInstance property of buffer memory to something other than zero."
@@ -18552,7 +18347,7 @@ return {
           description = "Loads a 3D model from a file.  Currently, OBJ, glTF, and binary STL files are supported.",
           key = "lovr.graphics.newModel",
           module = "lovr.graphics",
-          notes = "Currently, the following features are not supported by the model importer:\n\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 256 joints.\n- glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need\n  to use 1 skin consistently.\n- glTF: `KHR_texture_transform` is supported, but all textures in a material will use the same\n  transform.\n- STL: ASCII STL files are not supported.\n\nDiffuse and emissive textures will be loaded using sRGB encoding, all other textures will be loaded as linear.\n\nLoading a model file will fail if the asset references textures or other files using absolute paths.  Relative paths should be used instead, and will be relative to the model file within the virtual filesystem.",
+          notes = "Currently, the following features are not supported by the model importer:\n\n- glTF: Morph targets are not supported.\n- glTF: Only the default scene is loaded.\n- glTF: Currently, each skin in a Model can have up to 256 joints.\n- glTF: Meshes can't appear multiple times in the node hierarchy with different skins, they need\n  to use 1 skin consistently.\n- glTF: `KHR_texture_transform` is supported, but all textures in a material will use the same\n  transform.\n- STL: ASCII STL files are not supported.\n\nDiffuse and emissive textures will be loaded using sRGB encoding, all other textures will be loaded as linear.",
           related = {
             "lovr.data.newModelData",
             "Pass:draw"
@@ -20299,7 +20094,6 @@ return {
           description = "Returns the current angular velocity of a device.",
           key = "lovr.headset.getAngularVelocity",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.",
           related = {
             "lovr.headset.getVelocity",
             "lovr.headset.getPosition",
@@ -21063,7 +20857,6 @@ return {
           description = "Returns the current linear velocity of a device, in meters per second.",
           key = "lovr.headset.getVelocity",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.",
           related = {
             "lovr.headset.getAngularVelocity",
             "lovr.headset.getPose",
@@ -22307,9 +22100,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22329,9 +22122,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22348,9 +22141,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix, with its values inverted."
+                      description = "The inverted matrix."
                     }
                   }
                 }
@@ -22388,9 +22181,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22414,9 +22207,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix, containing the result."
+                      description = "The modified matrix."
                     }
                   }
                 },
@@ -22506,9 +22299,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 },
@@ -22537,9 +22330,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22583,9 +22376,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22613,9 +22406,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The rotated matrix."
                     }
                   }
                 },
@@ -22647,9 +22440,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The rotated matrix."
                     }
                   }
                 }
@@ -22677,9 +22470,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 },
@@ -22705,9 +22498,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -22975,9 +22768,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The modified matrix."
                     }
                   }
                 }
@@ -23005,9 +22798,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The translated matrix."
                     }
                   }
                 },
@@ -23031,9 +22824,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The translated matrix."
                     }
                   }
                 }
@@ -23050,9 +22843,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "m",
+                      name = "self",
                       type = "Mat4",
-                      description = "The original matrix."
+                      description = "The transposed matrix."
                     }
                   }
                 }
@@ -23115,9 +22908,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "Quat",
-                      description = "The original quaternion."
+                      description = "The inverted quaternion."
                     }
                   }
                 }
@@ -23215,9 +23008,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23233,7 +23026,7 @@ return {
                     {
                       name = "v3",
                       type = "vec3",
-                      description = "Vector rotated by quaternion."
+                      description = "The rotated vector."
                     }
                   }
                 }
@@ -23251,9 +23044,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "Quat",
-                      description = "The original quaternion."
+                      description = "The normalized quaternion."
                     }
                   }
                 }
@@ -23307,9 +23100,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23323,9 +23116,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23340,9 +23133,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23362,9 +23155,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23378,9 +23171,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 },
@@ -23389,9 +23182,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "quat",
-                      description = "The original quaternion."
+                      description = "The modified quaternion."
                     }
                   }
                 }
@@ -23422,9 +23215,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "q",
+                      name = "self",
                       type = "Quat",
-                      description = "The original quaternion, containing the new lerped values."
+                      description = "The modified quaternion, containing the new lerped values."
                     }
                   }
                 }
@@ -23728,9 +23521,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -23750,9 +23543,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -23881,9 +23674,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -23903,9 +23696,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24060,9 +23853,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 },
@@ -24086,9 +23879,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 }
@@ -24116,9 +23909,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24138,9 +23931,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24160,9 +23953,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The normalized vector."
                     }
                   }
                 }
@@ -24241,9 +24034,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24263,9 +24056,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec2",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24338,9 +24131,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24366,9 +24159,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24448,9 +24241,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, with the cross product as its values."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24474,9 +24267,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, with the cross product as its values."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24562,9 +24355,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24590,9 +24383,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24760,9 +24553,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 },
@@ -24791,9 +24584,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 }
@@ -24821,9 +24614,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -24849,9 +24642,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -24871,9 +24664,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The normalized vector."
                     }
                   }
                 }
@@ -24974,9 +24767,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25002,9 +24795,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec3",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25082,9 +24875,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25116,9 +24909,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25267,9 +25060,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25301,9 +25094,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25478,9 +25271,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 },
@@ -25514,9 +25307,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector, containing the new lerped values."
+                      description = "The interpolated vector."
                     }
                   }
                 }
@@ -25544,9 +25337,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25578,9 +25371,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -25600,9 +25393,9 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The normalized vector."
                     }
                   }
                 }
@@ -25693,9 +25486,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 },
@@ -25727,9 +25520,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "v",
+                      name = "self",
                       type = "Vec4",
-                      description = "The original vector."
+                      description = "The modified vector."
                     }
                   }
                 }
@@ -33380,83 +33173,6 @@ return {
           }
         },
         {
-          name = "getMousePosition",
-          summary = "Get the position of the mouse.",
-          description = "Returns the position of the mouse.",
-          key = "lovr.system.getMousePosition",
-          module = "lovr.system",
-          related = {
-            "lovr.system.getMouseX",
-            "lovr.system.getMouseY",
-            "lovr.mousemoved"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the mouse, relative to the top-left of the window."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the mouse, relative to the top-left of the window."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getMouseX",
-          summary = "Get the x position of the mouse.",
-          description = "Returns the x position of the mouse.",
-          key = "lovr.system.getMouseX",
-          module = "lovr.system",
-          related = {
-            "lovr.system.getMouseY",
-            "lovr.system.getMousePosition",
-            "lovr.mousemoved"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the mouse, relative to the top-left of the window."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getMouseY",
-          summary = "Get the y position of the mouse.",
-          description = "Returns the y position of the mouse.",
-          key = "lovr.system.getMouseY",
-          module = "lovr.system",
-          related = {
-            "lovr.system.getMouseX",
-            "lovr.system.getMousePosition",
-            "lovr.mousemoved"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the mouse, relative to the top-left of the window."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getOS",
           summary = "Get the current operating system.",
           description = "Returns the current operating system.",
@@ -33594,38 +33310,6 @@ return {
                   name = "down",
                   type = "boolean",
                   description = "Whether the key is currently pressed."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "isMouseDown",
-          summary = "Check if a mouse button is pressed.",
-          description = "Returns whether a mouse button is currently pressed.",
-          key = "lovr.system.isMouseDown",
-          module = "lovr.system",
-          related = {
-            "lovr.mousepressed",
-            "lovr.mousereleased",
-            "lovr.system.getMouseX",
-            "lovr.system.getMouseY",
-            "lovr.system.getMousePosition"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "button",
-                  type = "number",
-                  description = "The index of a button to check.  Use 1 for the primary mouse button, 2 for the secondary button, and 3 for the middle button.  Other indices can be used, but are hardware-specific."
-                }
-              },
-              returns = {
-                {
-                  name = "down",
-                  type = "boolean",
-                  description = "Whether the mouse button is currently down."
                 }
               }
             }
@@ -34757,118 +34441,6 @@ return {
               description = "If truthy, the input Pass will not be submitted to the GPU."
             }
           }
-        }
-      }
-    },
-    {
-      name = "mousemoved",
-      tag = "callbacks",
-      summary = "Called when the mouse is moved.",
-      description = "This callback is called when the mouse is moved.",
-      key = "lovr.mousemoved",
-      module = "lovr",
-      related = {
-        "lovr.mousepressed",
-        "lovr.mousereleased",
-        "lovr.system.getMouseX",
-        "lovr.system.getMouseY",
-        "lovr.system.getMousePosition"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "x",
-              type = "number",
-              description = "The new x position of the mouse."
-            },
-            {
-              name = "y",
-              type = "number",
-              description = "The new y position of the mouse."
-            },
-            {
-              name = "dx",
-              type = "number",
-              description = "The movement on the x axis since the last mousemove event."
-            },
-            {
-              name = "dy",
-              type = "number",
-              description = "The movement on the y axis since the last mousemove event."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "mousepressed",
-      tag = "callbacks",
-      summary = "Called when a mouse button is pressed.",
-      description = "This callback is called when a mouse button is pressed.",
-      key = "lovr.mousepressed",
-      module = "lovr",
-      related = {
-        "lovr.mousereleased",
-        "lovr.mousemoved",
-        "lovr.system.isMouseDown"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "x",
-              type = "number",
-              description = "The x position of the mouse when the button was pressed."
-            },
-            {
-              name = "y",
-              type = "number",
-              description = "The y position of the mouse when the button was pressed."
-            },
-            {
-              name = "button",
-              type = "number",
-              description = "The button that was pressed.  Will be 1 for the primary button, 2 for the secondary button, or 3 for the middle mouse button."
-            }
-          },
-          returns = {}
-        }
-      }
-    },
-    {
-      name = "mousereleased",
-      tag = "callbacks",
-      summary = "Called when a mouse button is released.",
-      description = "This callback is called when a mouse button is released.",
-      key = "lovr.mousereleased",
-      module = "lovr",
-      related = {
-        "lovr.mousepressed",
-        "lovr.mousemoved",
-        "lovr.system.isMouseDown"
-      },
-      variants = {
-        {
-          arguments = {
-            {
-              name = "x",
-              type = "number",
-              description = "The x position of the mouse when the button was released."
-            },
-            {
-              name = "y",
-              type = "number",
-              description = "The y position of the mouse when the button was released."
-            },
-            {
-              name = "button",
-              type = "number",
-              description = "The button that was released.  Will be 1 for the primary button, 2 for the secondary button, or 3 for the middle mouse button."
-            }
-          },
-          returns = {}
         }
       }
     },

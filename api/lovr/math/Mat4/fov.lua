@@ -36,15 +36,15 @@ return {
     }
   },
   returns = {
-    m = {
+    self = {
       type = 'Mat4',
-      description = 'The original matrix.'
+      description = 'The modified matrix.'
     }
   },
   variants = {
     {
       arguments = { 'left', 'right', 'up', 'down', 'near', 'far' },
-      returns = { 'm' }
+      returns = { 'self' }
     }
   },
   related = {

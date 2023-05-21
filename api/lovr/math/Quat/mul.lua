@@ -16,19 +16,19 @@ return {
     }
   },
   returns = {
-    q = {
+    self = {
       type = 'quat',
-      description = 'The original quaternion.'
+      description = 'The modified quaternion.'
     },
     v3 = {
       type = 'vec3',
-      description = 'Vector rotated by quaternion.'
+      description = 'The rotated vector.'
     }
   },
   variants = {
     {
       arguments = { 'r' },
-      returns = { 'q' }
+      returns = { 'self' }
     },
     {
       arguments = { 'v3' },
