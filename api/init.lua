@@ -31639,7 +31639,7 @@ return {
               name = "collide",
               tag = "worldCollision",
               summary = "Attempt to collide two shapes.",
-              description = "Attempt to collide two shapes.  Internally this uses joints and forces to ensure the colliders attached to the shapes do not pass through each other.  Collisions can be customized using friction and restitution (bounciness) parameters, and default to using a mix of the colliders' friction and restitution parameters.  Usually this is called automatically by `World:update`.",
+              description = "Attempt to collide two shapes.  Internally this sets up constraint forces to move the shapes' colliders apart if they are touching.  The colliders won't actually move until `World:update` is called again to advance the physics simulation.\n\nCollision responses can be customized using friction and restitution (bounciness) parameters, and default to using a mix between the parameters of the two colliders.\n\nUsually this is called internally by `World:update`, or in a custom collision resolver passed to `World:update`.\n\nIf you want to detect if objects are touching without colliding them, use `World:getContacts` or make one or both of the shapes sensors using `Shape:setSensor`.",
               key = "World:collide",
               module = "lovr.physics",
               notes = "For friction, numbers in the range of 0-1 are common, but larger numbers can also be used.\n\nFor restitution, numbers in the range 0-1 should be used.\n\nThis function respects collision tags, so using `World:disableCollisionBetween` and `World:enableCollisionBetween` will change the behavior of this function.",
@@ -31648,7 +31648,9 @@ return {
                 "World:overlaps",
                 "World:disableCollisionBetween",
                 "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween"
+                "World:isCollisionEnabledBetween",
+                "Collider:setFriction",
+                "Collider:setRestitution"
               },
               variants = {
                 {
@@ -31693,16 +31695,17 @@ return {
               description = "Detects which pairs of shapes in the world are near each other and could be colliding.  After calling this function, the `World:overlaps` iterator can be used to iterate over the overlaps, and `World:collide` can be used to resolve a collision for the shapes (if any). Usually this is called automatically by `World:update`.",
               key = "World:computeOverlaps",
               module = "lovr.physics",
-              examples = {
-                {
-                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
-                }
-              },
               related = {
                 "World:overlaps",
                 "World:collide",
                 "World:update"
               },
+              examples = {
+                {
+                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
+                }
+              },
+              notes = "This performs the \"broad phase\" culling of objects in the World, usually using a spatial hash or other acceleration structure like a quad tree or octree.",
               variants = {
                 {
                   arguments = {},
