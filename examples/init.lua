@@ -27,6 +27,7 @@ return {
   'Lighting/Cel_Shading',
   'Lighting/Circular_Shadows',
   'Lighting/PBR_Materials',
+  'Lighting/Shadows',
   'Animation/Playback',
   'Animation/2_Bone_IK',
   'Physics/Boxes',
