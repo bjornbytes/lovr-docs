@@ -23214,7 +23214,7 @@ return {
               arguments = {
                 {
                   name = "n",
-                  type = "mat4",
+                  type = "Mat4",
                   description = "An existing matrix to copy the values from."
                 }
               },
@@ -23440,7 +23440,7 @@ return {
               arguments = {
                 {
                   name = "n",
-                  type = "mat4",
+                  type = "Mat4",
                   description = "An existing matrix to copy the values from."
                 }
               },
@@ -23588,7 +23588,7 @@ return {
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -23597,14 +23597,14 @@ return {
               arguments = {
                 {
                   name = "r",
-                  type = "quat",
+                  type = "Quat",
                   description = "An existing quaternion to copy the values from."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -23614,14 +23614,14 @@ return {
               arguments = {
                 {
                   name = "v",
-                  type = "vec3",
+                  type = "Vec3",
                   description = "A normalized direction vector."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -23631,19 +23631,19 @@ return {
               arguments = {
                 {
                   name = "v",
-                  type = "vec3",
+                  type = "Vec3",
                   description = "A normalized direction vector."
                 },
                 {
                   name = "u",
-                  type = "vec3",
+                  type = "Vec3",
                   description = "Another normalized direction vector."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -23652,14 +23652,14 @@ return {
               arguments = {
                 {
                   name = "m",
-                  type = "mat4",
+                  type = "Mat4",
                   description = "A matrix to use the rotation from."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -23670,7 +23670,7 @@ return {
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -24088,7 +24088,7 @@ return {
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -24097,14 +24097,14 @@ return {
               arguments = {
                 {
                   name = "r",
-                  type = "quat",
+                  type = "Quat",
                   description = "An existing quaternion to copy the values from."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -24114,14 +24114,14 @@ return {
               arguments = {
                 {
                   name = "v",
-                  type = "vec3",
+                  type = "Vec3",
                   description = "A normalized direction vector."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -24131,19 +24131,19 @@ return {
               arguments = {
                 {
                   name = "v",
-                  type = "vec3",
+                  type = "Vec3",
                   description = "A normalized direction vector."
                 },
                 {
                   name = "u",
-                  type = "vec3",
+                  type = "Vec3",
                   description = "Another normalized direction vector."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -24152,14 +24152,14 @@ return {
               arguments = {
                 {
                   name = "m",
-                  type = "mat4",
+                  type = "Mat4",
                   description = "A matrix to use the rotation from."
                 }
               },
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -24170,7 +24170,7 @@ return {
               returns = {
                 {
                   name = "q",
-                  type = "quat",
+                  type = "Quat",
                   description = "The new quaternion."
                 }
               }
@@ -25402,7 +25402,7 @@ return {
                   arguments = {
                     {
                       name = "n",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "An existing matrix to copy the values from."
                     }
                   },
@@ -25873,14 +25873,14 @@ return {
                   arguments = {
                     {
                       name = "r",
-                      type = "quat",
+                      type = "Quat",
                       description = "A quaternion to combine with the original."
                     }
                   },
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
@@ -25889,14 +25889,14 @@ return {
                   arguments = {
                     {
                       name = "v3",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "A vector to rotate."
                     }
                   },
                   returns = {
                     {
                       name = "v3",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "The rotated vector."
                     }
                   }
@@ -25972,7 +25972,7 @@ return {
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
@@ -25981,14 +25981,14 @@ return {
                   arguments = {
                     {
                       name = "r",
-                      type = "quat",
+                      type = "Quat",
                       description = "An existing quaternion to copy the values from."
                     }
                   },
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
@@ -25998,14 +25998,14 @@ return {
                   arguments = {
                     {
                       name = "v",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "A normalized direction vector."
                     }
                   },
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
@@ -26015,19 +26015,19 @@ return {
                   arguments = {
                     {
                       name = "v",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "A normalized direction vector."
                     },
                     {
                       name = "u",
-                      type = "vec3",
+                      type = "Vec3",
                       description = "Another normalized direction vector."
                     }
                   },
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
@@ -26036,14 +26036,14 @@ return {
                   arguments = {
                     {
                       name = "m",
-                      type = "mat4",
+                      type = "Mat4",
                       description = "A matrix to use the rotation from."
                     }
                   },
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
@@ -26054,7 +26054,7 @@ return {
                   returns = {
                     {
                       name = "self",
-                      type = "quat",
+                      type = "Quat",
                       description = "The modified quaternion."
                     }
                   }
