@@ -363,7 +363,17 @@ function lovr.load()
     returns = 9
   }
   local function sort(keys, t)
-    table.sort(keys, function(a, b) return (keyPriority[a] or 1000) < (keyPriority[b] or 1000) end)
+    table.sort(keys, function(lhs, rhs)
+      local leftPrio = keyPriority[lhs]
+      local rightPrio = keyPriority[rhs]
+      if leftPrio and rightPrio then
+        return leftPrio < rightPrio
+      elseif leftPrio or rightPrio then
+        return leftPrio ~= nil
+      else
+        return lhs < rhs
+      end
+    end)
   end
   local contents = 'return ' .. serpent.block(api, { comment = false, sortkeys = sort })
   file:write(contents)
