@@ -28,6 +28,7 @@ return {
   related = {
     'lovr.mousepressed',
     'lovr.mousereleased',
+    'lovr.wheelmoved',
     'lovr.system.getMouseX',
     'lovr.system.getMouseY',
     'lovr.system.getMousePosition'

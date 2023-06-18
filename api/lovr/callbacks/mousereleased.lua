@@ -26,6 +26,7 @@ return {
   related = {
     'lovr.mousepressed',
     'lovr.mousemoved',
+    'lovr.wheelmoved',
     'lovr.system.isMouseDown'
   }
 }
