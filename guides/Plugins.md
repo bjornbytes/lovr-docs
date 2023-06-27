@@ -25,7 +25,7 @@ To use a plugin, place its library file next to the lovr executable and `require
 
 Plugins are not officially supported in WebAssembly yet, but this is theoretically possible.
 
-List of Plugins
+List of Known Plugins
 ---
 
 <table>
