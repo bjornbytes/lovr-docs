@@ -18504,7 +18504,7 @@ return {
               name = "send",
               tag = "shader-inputs",
               summary = "Set the value of a shader variable.",
-              description = "Sends a value to a variable in the Pass's active `Shader`.  The active shader is changed using using `Pass:setShader`.",
+              description = "Sends a value to a variable in the Pass's active `Shader`.  The active shader is changed using `Pass:setShader`.",
               key = "Pass:send",
               module = "lovr.graphics",
               examples = {
@@ -22982,7 +22982,7 @@ return {
         {
           name = "gammaToLinear",
           tag = "mathOther",
-          summary = "\9Convert a color from gamma space to linear space.",
+          summary = "	Convert a color from gamma space to linear space.",
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
@@ -23095,7 +23095,7 @@ return {
         {
           name = "linearToGamma",
           tag = "mathOther",
-          summary = "\9Convert a color from linear space to gamma space.",
+          summary = "	Convert a color from linear space to gamma space.",
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
           module = "lovr.math",
@@ -27588,6 +27588,22 @@ return {
                       name = "u",
                       type = "Vec3",
                       description = "The vector to copy the values from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "v",
+                      type = "Vec3",
+                      description = "The input vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "q",
+                      type = "Quat",
+                      description = "A quat to use the direction of."
                     }
                   },
                   returns = {

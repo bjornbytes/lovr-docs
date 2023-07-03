@@ -3,7 +3,7 @@ return {
   summary = 'Set the value of a shader variable.',
   description = [[
     Sends a value to a variable in the Pass's active `Shader`.  The active shader is changed using
-    using `Pass:setShader`.
+    `Pass:setShader`.
   ]],
   arguments = {
     name = {
