@@ -14394,7 +14394,7 @@ return {
               name = "send",
               tag = "shader-inputs",
               summary = "Set the value of a shader variable.",
-              description = "Sends a value to a variable in the Pass's active `Shader`.  The active shader is changed using using `Pass:setShader`.",
+              description = "Sends a value to a variable in the Pass's active `Shader`.  The active shader is changed using `Pass:setShader`.",
               key = "Pass:send",
               module = "lovr.graphics",
               notes = "Shader variables can be in different \"sets\".  Variables changed by this function must be in set #2, because LÖVR uses set #0 and set #1 internally.\n\nThe new value will persist until a new shader is set that uses a different \"type\" for the binding number of the variable.  See `Pass:setShader` for more details.",
