@@ -9,10 +9,12 @@ return {
     },
     sy = {
       type = 'number',
+      default = 'sx',
       description = 'The y component of the scale.'
     },
     sz = {
       type = 'number',
+      default = 'sx',
       description = 'The z component of the scale.'
     },
     scale = {
