@@ -14,6 +14,7 @@ return {
   'Interaction/Dragging_with_Rotation',
   'Interaction/Controller_Models',
   'Interaction/Hand_Tracking',
+  'Interaction/Custom_Hand_Rig',
   'Locomotion/Basic_Thumbsticks',
   'Locomotion/Teleportation_Flat',
   'Locomotion/Teleportation_Colliders',
