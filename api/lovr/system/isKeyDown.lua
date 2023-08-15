@@ -18,5 +18,9 @@ return {
       arguments = { 'key' },
       returns = { 'down' }
     }
+  },
+  related = {
+    'lovr.keypressed',
+    'lovr.keyreleased'
   }
 }
