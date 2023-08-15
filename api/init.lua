@@ -356,7 +356,8 @@ return {
       module = "lovr",
       related = {
         "lovr.keyreleased",
-        "lovr.textinput"
+        "lovr.textinput",
+        "lovr.system.isKeyDown"
       },
       variants = {
         {
@@ -390,7 +391,8 @@ return {
       module = "lovr",
       related = {
         "lovr.keypressed",
-        "lovr.textinput"
+        "lovr.textinput",
+        "lovr.system.isKeyDown"
       },
       variants = {
         {
@@ -518,6 +520,7 @@ return {
       related = {
         "lovr.mousepressed",
         "lovr.mousereleased",
+        "lovr.wheelmoved",
         "lovr.system.getMouseX",
         "lovr.system.getMouseY",
         "lovr.system.getMousePosition"
@@ -560,6 +563,7 @@ return {
       related = {
         "lovr.mousereleased",
         "lovr.mousemoved",
+        "lovr.wheelmoved",
         "lovr.system.isMouseDown"
       },
       variants = {
@@ -595,6 +599,7 @@ return {
       related = {
         "lovr.mousepressed",
         "lovr.mousemoved",
+        "lovr.wheelmoved",
         "lovr.system.isMouseDown"
       },
       variants = {
@@ -860,6 +865,37 @@ return {
               name = "dt",
               type = "number",
               description = "The number of seconds elapsed since the last update."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
+      name = "wheelmoved",
+      tag = "callbacks",
+      summary = "Called when a mouse wheel is moved.",
+      description = "This callback is called on scroll action, from a mouse wheel or a touchpad",
+      key = "lovr.wheelmoved",
+      module = "lovr",
+      related = {
+        "lovr.mousepressed",
+        "lovr.mousereleased",
+        "lovr.mousemoved",
+        "lovr.system.isMouseDown"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "deltaX",
+              type = "number",
+              description = "The relative horizontal motion; rightward movement resuts in positive values."
+            },
+            {
+              name = "deltaY",
+              type = "number",
+              description = "The relative vertical motion; upward movement results in positive values."
             }
           },
           returns = {}
@@ -22984,7 +23020,7 @@ return {
         {
           name = "gammaToLinear",
           tag = "mathOther",
-          summary = "\9Convert a color from gamma space to linear space.",
+          summary = "	Convert a color from gamma space to linear space.",
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
@@ -23097,7 +23133,7 @@ return {
         {
           name = "linearToGamma",
           tag = "mathOther",
-          summary = "\9Convert a color from linear space to gamma space.",
+          summary = "	Convert a color from linear space to gamma space.",
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
           module = "lovr.math",
@@ -35096,6 +35132,10 @@ return {
           description = "Returns whether a key on the keyboard is pressed.",
           key = "lovr.system.isKeyDown",
           module = "lovr.system",
+          related = {
+            "lovr.keypressed",
+            "lovr.keyreleased"
+          },
           variants = {
             {
               arguments = {
