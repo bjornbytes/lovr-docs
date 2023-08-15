@@ -22,6 +22,7 @@ return {
   returns = {},
   related = {
     'lovr.keyreleased',
-    'lovr.textinput'
+    'lovr.textinput',
+    'lovr.system.isKeyDown'
   }
 }
