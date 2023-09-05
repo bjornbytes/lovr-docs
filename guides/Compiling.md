@@ -97,7 +97,7 @@ You will need to compile on a macOS or Linux system. Compiling LÖVR APKs on Win
 currently work (unless all steps are performed in [Windows Subsystem for
 Linux](https://learn.microsoft.com/en-us/windows/wsl/install)).
 
-First, make sure the Java JDK is installed (version 8 is known to work).
+First, make sure the Java JDK is installed (version 17 is known to work).
 
 Then, the Android SDK and NDK need to be installed.  SDK version 29 should be installed.
 
@@ -105,7 +105,7 @@ The Android command line tools can be found on the Android website or installed 
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
 various versions of Android, the Android build tools, and the NDK:
 
-    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;30.0.3" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-29"
+    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;34.0.0" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-29"
 
 The SDK will be installed to the chosen `sdk_root` path.  To reduce the SDK size, the `emulator`
 package can be safely uninstalled:
@@ -171,7 +171,7 @@ The usual CMake incantation with all of the above variables set up should produc
         -D ANDROID_SDK=/path/to/android \
         -D ANDROID_ABI=arm64-v8a \
         -D ANDROID_NATIVE_API_LEVEL=29 \
-        -D ANDROID_BUILD_TOOLS_VERSION=30.0.3 \
+        -D ANDROID_BUILD_TOOLS_VERSION=34.0.0 \
         -D ANDROID_KEYSTORE=/path/to/test.keystore \
         -D ANDROID_KEYSTORE_PASS=pass:hunter2 \
         ..
