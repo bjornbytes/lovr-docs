@@ -20,8 +20,8 @@ Dependencies
 ---
 
 LÖVR uses the following libraries.  They are included as submodules in the `deps` directory of the
-repository, so make sure you clone with the `--recursive` flag or run `git submodule update --init`
-in an existing repository.
+repository, so make sure you clone with the `--recursive` flag or run
+`git submodule update --init --recursive` in an existing repository.
 
 - Lua (5.1+) or LuaJIT (2.1+)
 - GLFW (3.3+)
