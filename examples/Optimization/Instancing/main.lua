@@ -13,8 +13,10 @@ function lovr.load()
     transforms[i] = mat4(position, scale, orientation)
   end
 
-  transformBuffer = lovr.graphics.newBuffer(transforms, 'mat4')
+  -- Put them in a buffer
+  transformBuffer = lovr.graphics.newBuffer('mat4', transforms)
 
+  -- Make a shader that uses transforms from a buffer
   shader = lovr.graphics.newShader([[
     layout(set = 2, binding = 0) uniform Transforms {
       mat4 transforms[500];
@@ -34,5 +36,5 @@ function lovr.draw(pass)
   pass:setCullMode('back')
   pass:setShader(shader)
   pass:send('Transforms', transformBuffer)
-  pass:draw(monkey, mat4(), nil, nil, MONKEYS)
+  pass:draw(monkey, mat4(), MONKEYS)
 end
