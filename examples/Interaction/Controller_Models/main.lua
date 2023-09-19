@@ -8,6 +8,7 @@ end
 function lovr.draw(pass)
   for hand, model in pairs(models) do
     if lovr.headset.isTracked(hand) then
+      lovr.headset.animate(model)
       pass:draw(model, mat4(lovr.headset.getPose(hand)))
     end
   end
