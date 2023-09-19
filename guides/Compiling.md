@@ -11,7 +11,7 @@ System Requirements
 LÖVR is currently known to work with (and optimized for)
 
 - CPU: 64 bit, little endian, x86 or ARM
-- OS: Windows (Vista+), macOS (11+), Linux (libc 2.29+), Android (10)
+- OS: Windows (10+), macOS (11+), Linux (libc 2.31+), Android (10+)
 - GPU: supports Vulkan 1.1
 
 Other systems and hardware may work, but are not frequently tested.
