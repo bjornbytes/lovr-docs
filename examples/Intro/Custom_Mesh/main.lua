@@ -1,16 +1,14 @@
+function lovr.load()
+  mesh = lovr.graphics.newMesh({
+    { name = 'VertexPosition', type = 'vec3' },
+    { name = 'VertexColor', type = 'vec4' }
+  }, {
+    {   0,  .4, 0 ; 1, 0, 0, 1 },
+    { -.5, -.4, 0 ; 0, 1, 0, 1 },
+    {  .5, -.4, 0 ; 0, 0, 1, 1 }
+  })
+end
+
 function lovr.draw(pass)
-  local vertices = {
-    vec3(  0,  .4, 0), vec4(1, 0, 0, 1),
-    vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),
-    vec3( .5, -.4, 0), vec4(0, 0, 1, 1)
-  }
-
-  local format = {
-    { type = 'vec3', location = 'VertexPosition' },
-    { type = 'vec4', location = 'VertexColor' }
-  }
-
-  local triangle = lovr.graphics.getBuffer(vertices, format)
-
-  pass:mesh(triangle, 0, 1.7, -1)
+  pass:draw(mesh, 0, 1.7, -1)
 end
