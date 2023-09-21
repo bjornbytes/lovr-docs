@@ -9,8 +9,10 @@ return {
     }
   },
   variants = {
-    arguments = {},
-    returns = { 'type' }
+    {
+      arguments = {},
+      returns = { 'type' }
+    }
   },
   example = [[
     function isTexture(obj)

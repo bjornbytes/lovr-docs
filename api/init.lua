@@ -976,9 +976,15 @@ return {
                 }
               },
               variants = {
-                arguments = {},
-                returns = {
-                  "type"
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "type",
+                      type = "string",
+                      description = "The type of the object."
+                    }
+                  }
                 }
               }
             }
