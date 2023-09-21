@@ -8645,25 +8645,19 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The file to load."
+                },
+                {
+                  name = "mode",
+                  type = "string",
+                  description = "The type of code that can be loaded.  `t` allows text, `b` allows binary, and `bt` allows both.",
+                  default = "'bt'"
                 }
               },
               returns = {
                 {
                   name = "chunk",
                   type = "function",
-                  description = "The runnable chunk.",
-                  arguments = {
-                    {
-                      name = "...",
-                      type = "*"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "*"
-                    }
-                  }
+                  description = "The runnable chunk."
                 }
               }
             }
@@ -30743,7 +30737,7 @@ return {
                     {
                       name = "tag",
                       type = "string",
-                      description = "The Collider's collision tag."
+                      description = "The Collider's collision tag, or `nil` if the Collider doesn't have a tag."
                     }
                   }
                 }
@@ -31620,6 +31614,11 @@ return {
                       description = "The Collider's collision tag."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Clear the Collider's tag.",
+                  arguments = {},
                   returns = {}
                 }
               }

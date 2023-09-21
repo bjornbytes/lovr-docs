@@ -14,7 +14,7 @@ return {
       returns = {}
     },
     {
-      description = 'Clear the Collider\'s tag.'
+      description = 'Clear the Collider\'s tag.',
       arguments = {},
       returns = {}
     }

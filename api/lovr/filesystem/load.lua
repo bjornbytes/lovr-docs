@@ -5,29 +5,25 @@ return {
     filename = {
       type = 'string',
       description = 'The file to load.'
+    },
+    mode = {
+      type = 'string',
+      default = [['bt']],
+      description = [[
+        The type of code that can be loaded.  `t` allows text, `b` allows binary, and `bt` allows
+        both.
+      ]]
     }
   },
   returns = {
     chunk = {
       type = 'function',
-      arguments = {
-        {
-          name = '...',
-          type = '*'
-        }
-      },
-      returns = {
-        {
-          name = '...',
-          type = '*'
-        }
-      },
       description = 'The runnable chunk.'
     }
   },
   variants = {
     {
-      arguments = { 'filename' },
+      arguments = { 'filename', 'mode' },
       returns = { 'chunk' }
     }
   },
