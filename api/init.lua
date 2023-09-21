@@ -963,6 +963,24 @@ return {
                   returns = {}
                 }
               }
+            },
+            {
+              name = "type",
+              summary = "Get the type name of the object.",
+              description = "Returns the name of the object's type as a string.",
+              key = "Object:type",
+              module = "lovr",
+              examples = {
+                {
+                  code = "function isTexture(obj)\n  return type(obj) == 'userdata' and obj:type() == 'Texture'\nend"
+                }
+              },
+              variants = {
+                arguments = {},
+                returns = {
+                  "type"
+                }
+              }
             }
           },
           notes = "Note that the functions here don't apply to any vector objects, see `Vectors`."
