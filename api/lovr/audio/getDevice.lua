@@ -32,6 +32,6 @@ return {
   ]],
   related = {
     'lovr.audio.getDevices',
-    'lovr.audio.setDevices'
+    'lovr.audio.setDevice'
   }
 }

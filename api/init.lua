@@ -1215,6 +1215,43 @@ return {
           }
         },
         {
+          name = "getDevice",
+          tag = "devices",
+          summary = "Switch audio devices.",
+          description = "Returns information about the active playback or capture device.",
+          key = "lovr.audio.getDevice",
+          module = "lovr.audio",
+          notes = "If no device has been set yet, this function returns `nil`.\n\nThe device doesn't need to be started.",
+          related = {
+            "lovr.audio.getDevices",
+            "lovr.audio.setDevice"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "AudioType",
+                  description = "The type of device to query.",
+                  default = "'playback'"
+                }
+              },
+              returns = {
+                {
+                  name = "name",
+                  type = "string",
+                  description = "The name of the device."
+                },
+                {
+                  name = "id",
+                  type = "userdata",
+                  description = "The opaque id of the device."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getDevices",
           tag = "devices",
           summary = "Get a list of audio devices.",
@@ -1223,6 +1260,7 @@ return {
           module = "lovr.audio",
           related = {
             "lovr.audio.setDevice",
+            "lovr.audio.getDevice",
             "lovr.audio.start",
             "lovr.audio.stop"
           },
@@ -1691,6 +1729,7 @@ return {
           key = "lovr.audio.setDevice",
           module = "lovr.audio",
           related = {
+            "lovr.audio.getDevice",
             "lovr.audio.getDevices",
             "lovr.audio.start",
             "lovr.audio.stop"
@@ -3743,6 +3782,211 @@ return {
           },
           methods = {
             {
+              name = "getF32",
+              summary = "Unpack 32-bit floating point numbers from the Blob.",
+              description = "Returns 32-bit floating point numbers from the data in the Blob.",
+              key = "Blob:getF32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of floats to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` 32-bit floats."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getF64",
+              summary = "Unpack 64-bit floating point numbers from the Blob.",
+              description = "Returns 64-bit floating point numbers from the data in the Blob.",
+              key = "Blob:getF64",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of doubles to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` 64-bit doubles."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getI16",
+              summary = "Unpack signed 16-bit integers from the Blob.",
+              description = "Returns signed 16-bit integers from the data in the Blob.",
+              key = "Blob:getI16",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 16-bit integers, from -32768 to 32767."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getI32",
+              summary = "Unpack signed 32-bit integers from the Blob.",
+              description = "Returns signed 32-bit integers from the data in the Blob.",
+              key = "Blob:getI32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 32-bit integers, from -2147483648 to 2147483647."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getI8",
+              summary = "Unpack signed 8-bit integers from the Blob.",
+              description = "Returns signed 8-bit integers from the data in the Blob.",
+              key = "Blob:getI8",
+              module = "lovr.data",
+              related = {
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 8-bit integers, from -128 to 127."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getName",
               summary = "Get the label of the Blob.",
               description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
@@ -3807,10 +4051,11 @@ return {
               module = "lovr.data",
               examples = {
                 {
-                  description = "Manually copy a file using Blobs:",
-                  code = "blob = lovr.filesystem.newBlob('image.png')\nlovr.filesystem.write('copy.png', blob:getString())"
+                  description = "Print each byte of the main.lua file:",
+                  code = "blob = lovr.filesystem.newBlob('main.lua')\nstr = blob:getString()\n\nfor i = 1, #str do\n  print(string.byte(str, i))\nend"
                 }
               },
+              notes = "This effectively allocates a new copy of the Blob as a Lua string, so this should be avoided for really big Blobs!",
               variants = {
                 {
                   arguments = {
@@ -3832,6 +4077,129 @@ return {
                       name = "data",
                       type = "string",
                       description = "The Blob's data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU16",
+              summary = "Unpack unsigned 16-bit integers from the Blob.",
+              description = "Returns unsigned 16-bit integers from the data in the Blob.",
+              key = "Blob:getU16",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 16-bit integers, from 0 to 65535."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU32",
+              summary = "Unpack unsigned 32-bit integers from the Blob.",
+              description = "Returns unsigned 32-bit integers from the data in the Blob.",
+              key = "Blob:getU32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 32-bit integers, from 0 to 4294967296."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU8",
+              summary = "Unpack unsigned 8-bit integers from the Blob.",
+              description = "Returns unsigned 8-bit integers from the data in the Blob.",
+              key = "Blob:getU8",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 8-bit integers, from 0 to 255."
                     }
                   }
                 }
@@ -3979,6 +4347,7 @@ return {
               notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
               related = {
                 "Image:setPixel",
+                "Image:mapPixel",
                 "TextureFormat",
                 "Pass:copy"
               },
@@ -4046,6 +4415,66 @@ return {
               }
             },
             {
+              name = "mapPixel",
+              summary = "Transform an Image by applying a function to every pixel.",
+              description = "Transforms pixels in the Image using a function.\n\nThe callback function passed to this function will be called once for each pixel.  For each pixel, the function will be called with its x and y coordinate and the red, green, blue, and alpha components of its color.  Whatever the function returns will be used as the new color for the pixel.\n\nThe callback function will potentially be called thousands of times, so it's best to keep the amount of code in there small and fast.",
+              key = "Image:mapPixel",
+              module = "lovr.data",
+              examples = {
+                {
+                  description = "Convert an Image to grayscale.",
+                  code = "image:mapPixel(function(x, y, r, g, b, a)\n  local brightness = .21 * r + .72 * g + .07 * b\n  return brightness, brightness, brightness, a\nend)"
+                },
+                {
+                  description = "Efficient Image updates using FFI.  Due to the low-level nature, this will be a lot faster, but it's specialized to the `rgba8` image format and risks crashing if used improperly.",
+                  code = "local ffi = require 'ffi'\n\nfunction lovr.load()\n  local w, h = 256, 256\n\n  image = lovr.data.newImage(w, h)\n\n  local pointer = ffi.cast('uint8_t*', image:getPointer())\n\n  for y = 0, h - 1 do\n    for x = 0, w - 1 do\n      pointer[(y * w + x) * 4 + 0] = (x / w) * 255\n      pointer[(y * w + x) * 4 + 1] = (y / h) * 255\n      pointer[(y * w + x) * 4 + 2] = 255\n      pointer[(y * w + x) * 4 + 3] = 255\n    end\n  end\n\n  texture = lovr.graphics.newTexture(image)\nend\n\nfunction lovr.draw(pass)\n  pass:fill(texture)\nend"
+                }
+              },
+              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              related = {
+                "Image:setPixel",
+                "Image:getPixel",
+                "TextureFormat",
+                "Texture:setPixels"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The function that will be called for each pixel."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the upper-left corner of the area of the Image to affect.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the upper-left corner of the area of the Image to affect.",
+                      default = "0"
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The width of the area to affect.",
+                      default = "image:getWidth()"
+                    },
+                    {
+                      name = "h",
+                      type = "number",
+                      description = "The height of the area to affect.",
+                      default = "image:getHeight()"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "paste",
               summary = "Copy pixels from another Image to this one.",
               description = "Copies a rectangle of pixels from one Image to this one.",
@@ -4109,11 +4538,12 @@ return {
             {
               name = "setPixel",
               summary = "Set the value of a pixel of the Image.",
-              description = "Sets the value of a pixel of the Image.",
+              description = "Sets the value of a single pixel of the Image.\n\nIf you need to change a bunch of pixels, consider using `Image:mapPixel`.",
               key = "Image:setPixel",
               module = "lovr.data",
               notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
               related = {
+                "Image:mapPixel",
                 "Image:getPixel",
                 "TextureFormat",
                 "Pass:copy"
@@ -12688,6 +13118,29 @@ return {
               }
             },
             {
+              name = "clone",
+              summary = "Return a lightweight copy of the Model with its own animation state.",
+              description = "Returns a lightweight copy of a Model.  Most of the data will be shared between the two copies of the model, like the materials, textures, and metadata.  However, the clone has its own set of node transforms, allowing it to be animated separately from its parent.  This allows a single model to be rendered in multiple different animation poses in a frame.",
+              key = "Model:clone",
+              module = "lovr.graphics",
+              notes = "The node transforms of the clone will be reset to their initial setup poses.",
+              related = {
+                "lovr.graphics.newModel"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "A genetically identical copy of the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getAnimationCount",
               summary = "Get the number of animations in the Model.",
               description = "Returns the number of animations in the Model.",
@@ -16691,46 +17144,47 @@ return {
             {
               name = "draw",
               tag = "drawing",
-              summary = "Draw a model.",
-              description = "Draws a model.",
+              summary = "Draw a `Model`, `Mesh`, or `Texture`.",
+              description = "Draws a `Model`, `Mesh`, or `Texture`.",
               key = "Pass:draw",
               module = "lovr.graphics",
+              notes = "`Model:getMesh` can be used to draw individual meshes of a model.\n\nTextures ignore the `instances` parameter.\n\nWhen drawing a Texture, the plane will be 1 meter wide at 1.0 scale and the height will be adjusted based on the Texture's aspect ratio.",
               variants = {
                 {
                   arguments = {
                     {
-                      name = "model",
-                      type = "Model",
-                      description = "The model to draw."
+                      name = "object",
+                      type = "*",
+                      description = "The Model, Mesh, or Texture to draw."
                     },
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate to draw the model at.",
+                      description = "The x coordinate to draw the object at.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate to draw the model at.",
+                      description = "The y coordinate to draw the object at.",
                       default = "0"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate to draw the model at.",
+                      description = "The z coordinate to draw the object at.",
                       default = "0"
                     },
                     {
                       name = "scale",
                       type = "number",
-                      description = "The scale of the model.",
+                      description = "The scale of the object.",
                       default = "1"
                     },
                     {
                       name = "angle",
                       type = "number",
-                      description = "The rotation of the model around its rotation axis, in radians.",
+                      description = "The rotation of the object around its rotation axis, in radians.",
                       default = "0"
                     },
                     {
@@ -16752,18 +17206,6 @@ return {
                       default = "0"
                     },
                     {
-                      name = "nodeindex",
-                      type = "number",
-                      description = "The index of the node to draw.  If nil, the root node is drawn.",
-                      default = "nil"
-                    },
-                    {
-                      name = "children",
-                      type = "boolean",
-                      description = "Whether the children of the node should be drawn.",
-                      default = "true"
-                    },
-                    {
                       name = "instances",
                       type = "number",
                       description = "The number of instances to draw.",
@@ -16775,37 +17217,25 @@ return {
                 {
                   arguments = {
                     {
-                      name = "model",
-                      type = "Model",
-                      description = "The model to draw."
+                      name = "object",
+                      type = "*",
+                      description = "The Model, Mesh, or Texture to draw."
                     },
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The position to draw the model at."
+                      description = "The position to draw the object at."
                     },
                     {
                       name = "scale",
                       type = "number",
-                      description = "The scale of the model.",
+                      description = "The scale of the object.",
                       default = "1"
                     },
                     {
                       name = "orientation",
                       type = "Quat",
-                      description = "The orientation of the model."
-                    },
-                    {
-                      name = "nodeindex",
-                      type = "number",
-                      description = "The index of the node to draw.  If nil, the root node is drawn.",
-                      default = "nil"
-                    },
-                    {
-                      name = "children",
-                      type = "boolean",
-                      description = "Whether the children of the node should be drawn.",
-                      default = "true"
+                      description = "The orientation of the object."
                     },
                     {
                       name = "instances",
@@ -16819,179 +17249,14 @@ return {
                 {
                   arguments = {
                     {
-                      name = "model",
-                      type = "Model",
-                      description = "The model to draw."
+                      name = "object",
+                      type = "*",
+                      description = "The Model, Mesh, or Texture to draw."
                     },
                     {
                       name = "transform",
                       type = "Mat4",
-                      description = "The transform of the model."
-                    },
-                    {
-                      name = "nodeindex",
-                      type = "number",
-                      description = "The index of the node to draw.  If nil, the root node is drawn.",
-                      default = "nil"
-                    },
-                    {
-                      name = "children",
-                      type = "boolean",
-                      description = "Whether the children of the node should be drawn.",
-                      default = "true"
-                    },
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of instances to draw.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "model",
-                      type = "Model",
-                      description = "The model to draw."
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate to draw the model at.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate to draw the model at.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate to draw the model at.",
-                      default = "0"
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale of the model.",
-                      default = "1"
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The rotation of the model around its rotation axis, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "nodename",
-                      type = "string",
-                      description = "The name of the node to draw.  If nil, the root node is drawn.",
-                      default = "nil"
-                    },
-                    {
-                      name = "children",
-                      type = "boolean",
-                      description = "Whether the children of the node should be drawn.",
-                      default = "true"
-                    },
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of instances to draw.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "model",
-                      type = "Model",
-                      description = "The model to draw."
-                    },
-                    {
-                      name = "position",
-                      type = "Vec3",
-                      description = "The position to draw the model at."
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale of the model.",
-                      default = "1"
-                    },
-                    {
-                      name = "orientation",
-                      type = "Quat",
-                      description = "The orientation of the model."
-                    },
-                    {
-                      name = "nodename",
-                      type = "string",
-                      description = "The name of the node to draw.  If nil, the root node is drawn.",
-                      default = "nil"
-                    },
-                    {
-                      name = "children",
-                      type = "boolean",
-                      description = "Whether the children of the node should be drawn.",
-                      default = "true"
-                    },
-                    {
-                      name = "instances",
-                      type = "number",
-                      description = "The number of instances to draw.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "model",
-                      type = "Model",
-                      description = "The model to draw."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The transform of the model."
-                    },
-                    {
-                      name = "nodename",
-                      type = "string",
-                      description = "The name of the node to draw.  If nil, the root node is drawn.",
-                      default = "nil"
-                    },
-                    {
-                      name = "children",
-                      type = "boolean",
-                      description = "Whether the children of the node should be drawn.",
-                      default = "true"
+                      description = "The transform of the object."
                     },
                     {
                       name = "instances",
@@ -23038,7 +23303,7 @@ return {
         {
           name = "gammaToLinear",
           tag = "mathOther",
-          summary = "	Convert a color from gamma space to linear space.",
+          summary = "\9Convert a color from gamma space to linear space.",
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
@@ -23151,7 +23416,7 @@ return {
         {
           name = "linearToGamma",
           tag = "mathOther",
-          summary = "	Convert a color from linear space to gamma space.",
+          summary = "\9Convert a color from linear space to gamma space.",
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
           module = "lovr.math",

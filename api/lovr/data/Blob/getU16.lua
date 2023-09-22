@@ -28,7 +28,7 @@ return {
   related = {
     'Blob:getI8',
     'Blob:getU8',
-    'Blob:getU16',
+    'Blob:getI16',
     'Blob:getI32',
     'Blob:getU32',
     'Blob:getF32',
