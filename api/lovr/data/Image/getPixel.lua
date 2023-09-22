@@ -41,6 +41,7 @@ return {
   ]],
   related = {
     'Image:setPixel',
+    'Image:mapPixel',
     'TextureFormat',
     'Pass:copy'
   }
