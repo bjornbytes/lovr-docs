@@ -30186,6 +30186,7 @@ return {
               module = "lovr.physics",
               notes = "Calling functions on the collider after destroying it is a bad idea.",
               related = {
+                "Collider:isDestroyed",
                 "World:destroy",
                 "Shape:destroy",
                 "Joint:destroy"
@@ -31249,6 +31250,32 @@ return {
                       name = "awake",
                       type = "boolean",
                       description = "Whether the Collider is awake."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isDestroyed",
+              summary = "Check if the Collider has been destroyed.",
+              description = "Returns whether the collider has been destroyed.",
+              key = "Collider:isDestroyed",
+              module = "lovr.physics",
+              notes = "Calling functions on a collider after destroying it is a bad idea.",
+              related = {
+                "Collider:destroy",
+                "World:destroy",
+                "Shape:destroy",
+                "Joint:destroy"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "destroyed",
+                      type = "boolean",
+                      description = "Whether the collider has been destroyed."
                     }
                   }
                 }
@@ -32984,7 +33011,9 @@ return {
               module = "lovr.physics",
               related = {
                 "Shape:getPosition",
-                "Shape:setPosition"
+                "Shape:setPosition",
+                "Shape:getPose",
+                "Shape:setPose"
               },
               variants = {
                 {
@@ -33015,6 +33044,61 @@ return {
               }
             },
             {
+              name = "getPose",
+              summary = "Get the pose of the Shape.",
+              description = "Returns the position and orientation of the Shape, relative to its Collider.",
+              key = "Shape:getPose",
+              module = "lovr.physics",
+              related = {
+                "Shape:getPosition",
+                "Shape:setPosition",
+                "Shape:getOrientation",
+                "Shape:setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Shape, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Shape, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Shape, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Shape is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getPosition",
               summary = "Get the Shape's position.",
               description = "Get the position of the Shape relative to its Collider.",
@@ -33022,7 +33106,9 @@ return {
               module = "lovr.physics",
               related = {
                 "Shape:getOrientation",
-                "Shape:setOrientation"
+                "Shape:setOrientation",
+                "Shape:getPose",
+                "Shape:setPose"
               },
               variants = {
                 {
@@ -33189,6 +33275,79 @@ return {
                 {
                   description = "Set the orientation of the Shape using a quaternion.",
                   arguments = {
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the Shape."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPose",
+              summary = "Set the pose of the Shape.",
+              description = "Sets the position and orientation of the Shape, relative to its Collider.",
+              key = "Shape:setPose",
+              module = "lovr.physics",
+              notes = "If the Shape isn't attached to a Collider, this will error.",
+              related = {
+                "Shape:getPosition",
+                "Shape:setPosition",
+                "Shape:getOrientation",
+                "Shape:setOrientation"
+              },
+              variants = {
+                {
+                  description = "Set the pose of the Shape using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Shape, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Shape, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Shape, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Shape is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the pose of the Shape using vector types.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the Shape, in meters."
+                    },
                     {
                       name = "orientation",
                       type = "Quat",

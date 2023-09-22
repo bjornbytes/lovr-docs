@@ -19,7 +19,6 @@ return {
       description = 'The position.'
     }
   },
-  notes = 'If the Shape isn\'t attached to a Collider, this will error.',
   returns = {},
   variants = {
     {
@@ -33,6 +32,7 @@ return {
       returns = {}
     }
   },
+  notes = 'If the Shape isn\'t attached to a Collider, this will error.',
   related = {
     'Shape:getOrientation',
     'Shape:setOrientation'
