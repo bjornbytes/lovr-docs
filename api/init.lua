@@ -355,6 +355,7 @@ return {
       key = "lovr.keypressed",
       module = "lovr",
       related = {
+        "lovr.system.wasKeyPressed",
         "lovr.keyreleased",
         "lovr.textinput",
         "lovr.system.isKeyDown"
@@ -390,6 +391,7 @@ return {
       key = "lovr.keyreleased",
       module = "lovr",
       related = {
+        "lovr.system.wasKeyReleased",
         "lovr.keypressed",
         "lovr.textinput",
         "lovr.system.isKeyDown"
@@ -35421,6 +35423,8 @@ return {
           key = "lovr.system.isKeyDown",
           module = "lovr.system",
           related = {
+            "lovr.system.wasKeyPressed",
+            "lovr.system.wasKeyReleased",
             "lovr.keypressed",
             "lovr.keyreleased"
           },
@@ -35428,16 +35432,16 @@ return {
             {
               arguments = {
                 {
-                  name = "key",
+                  name = "...",
                   type = "KeyCode",
-                  description = "The key."
+                  description = "The set of keys to check."
                 }
               },
               returns = {
                 {
                   name = "down",
                   type = "boolean",
-                  description = "Whether the key is currently pressed."
+                  description = "Whether any of the keys are currently pressed."
                 }
               }
             }
@@ -35574,6 +35578,70 @@ return {
                 }
               },
               returns = {}
+            }
+          }
+        },
+        {
+          name = "wasKeyPressed",
+          summary = "Check if a key was pressed this frame.",
+          description = "Returns whether a key on the keyboard was pressed this frame.",
+          key = "lovr.system.wasKeyPressed",
+          module = "lovr.system",
+          notes = "Technically this returns whether the key was pressed between the last 2 calls to `lovr.system.pollEvents`, but that function is called automatically at the beginning of each frame in `lovr.run`, so it all works out!",
+          related = {
+            "lovr.system.isKeyDown",
+            "lovr.system.wasKeyReleased",
+            "lovr.keypressed",
+            "lovr.keyreleased"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "...",
+                  type = "KeyCode",
+                  description = "The set of keys to check."
+                }
+              },
+              returns = {
+                {
+                  name = "pressed",
+                  type = "boolean",
+                  description = "Whether any of the specified keys were pressed this frame."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "wasKeyReleased",
+          summary = "Check if a key was released this frame.",
+          description = "Returns whether a key on the keyboard was released this frame.",
+          key = "lovr.system.wasKeyReleased",
+          module = "lovr.system",
+          notes = "Technically this returns whether the key was released between the last 2 calls to `lovr.system.pollEvents`, but that function is called automatically at the beginning of each frame in `lovr.run`, so it all works out!",
+          related = {
+            "lovr.system.isKeyDown",
+            "lovr.system.wasKeyPressed",
+            "lovr.keypressed",
+            "lovr.keyreleased"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "...",
+                  type = "KeyCode",
+                  description = "The set of keys to check."
+                }
+              },
+              returns = {
+                {
+                  name = "released",
+                  type = "boolean",
+                  description = "Whether any of the specified keys were released this frame."
+                }
+              }
             }
           }
         }
