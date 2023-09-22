@@ -28,11 +28,19 @@ return {
       returns = { 'data' }
     }
   },
+  notes = [[
+    This effectively allocates a new copy of the Blob as a Lua string, so this should be avoided for
+    really big Blobs!
+  ]],
   example = {
-    description = 'Manually copy a file using Blobs:',
+    description = 'Print each byte of the main.lua file:',
     code = [[
-      blob = lovr.filesystem.newBlob('image.png')
-      lovr.filesystem.write('copy.png', blob:getString())
+      blob = lovr.filesystem.newBlob('main.lua')
+      str = blob:getString()
+
+      for i = 1, #str do
+        print(string.byte(str, i))
+      end
     ]]
   }
 }
