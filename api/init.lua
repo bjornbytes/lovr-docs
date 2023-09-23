@@ -3784,6 +3784,348 @@ return {
           },
           methods = {
             {
+              name = "getSize",
+              summary = "Get the size of the Blob's data.",
+              description = "Returns the size of the Blob's contents, in bytes.",
+              key = "Blob:getSize",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "bytes",
+                      type = "number",
+                      description = "The size of the Blob, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getName",
+              summary = "Get the label of the Blob.",
+              description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
+              key = "Blob:getName",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Blob."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPointer",
+              summary = "Get a raw pointer to the Blob's data.",
+              description = "Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries using the LuaJIT FFI.  Use this only if you know what you're doing!",
+              key = "Blob:getPointer",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pointer",
+                      type = "userdata",
+                      description = "A pointer to the data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getString",
+              summary = "Get the Blob's contents as a string.",
+              description = "Returns a binary string containing the Blob's data.",
+              key = "Blob:getString",
+              module = "lovr.data",
+              examples = {
+                {
+                  description = "Print each byte of the main.lua file:",
+                  code = "blob = lovr.filesystem.newBlob('main.lua')\nstr = blob:getString()\n\nfor i = 1, #str do\n  print(string.byte(str, i))\nend"
+                }
+              },
+              notes = "This effectively allocates a new copy of the Blob as a Lua string, so this should be avoided for really big Blobs!",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset into the Blob where the string will start.",
+                      default = "0"
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes the string will contain.  If nil, the rest of the data in the Blob will be used, based on the `offset` parameter.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "data",
+                      type = "string",
+                      description = "The Blob's data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getI8",
+              summary = "Unpack signed 8-bit integers from the Blob.",
+              description = "Returns signed 8-bit integers from the data in the Blob.",
+              key = "Blob:getI8",
+              module = "lovr.data",
+              related = {
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 8-bit integers, from -128 to 127."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU8",
+              summary = "Unpack unsigned 8-bit integers from the Blob.",
+              description = "Returns unsigned 8-bit integers from the data in the Blob.",
+              key = "Blob:getU8",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 8-bit integers, from 0 to 255."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getI16",
+              summary = "Unpack signed 16-bit integers from the Blob.",
+              description = "Returns signed 16-bit integers from the data in the Blob.",
+              key = "Blob:getI16",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 16-bit integers, from -32768 to 32767."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU16",
+              summary = "Unpack unsigned 16-bit integers from the Blob.",
+              description = "Returns unsigned 16-bit integers from the data in the Blob.",
+              key = "Blob:getU16",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 16-bit integers, from 0 to 65535."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getI32",
+              summary = "Unpack signed 32-bit integers from the Blob.",
+              description = "Returns signed 32-bit integers from the data in the Blob.",
+              key = "Blob:getI32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 32-bit integers, from -2147483648 to 2147483647."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU32",
+              summary = "Unpack unsigned 32-bit integers from the Blob.",
+              description = "Returns unsigned 32-bit integers from the data in the Blob.",
+              key = "Blob:getU32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 32-bit integers, from 0 to 4294967296."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getF32",
               summary = "Unpack 32-bit floating point numbers from the Blob.",
               description = "Returns 32-bit floating point numbers from the data in the Blob.",
@@ -3860,348 +4202,6 @@ return {
                       name = "...",
                       type = "number",
                       description = "`count` 64-bit doubles."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getI16",
-              summary = "Unpack signed 16-bit integers from the Blob.",
-              description = "Returns signed 16-bit integers from the data in the Blob.",
-              key = "Blob:getI16",
-              module = "lovr.data",
-              related = {
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` signed 16-bit integers, from -32768 to 32767."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getI32",
-              summary = "Unpack signed 32-bit integers from the Blob.",
-              description = "Returns signed 32-bit integers from the data in the Blob.",
-              key = "Blob:getI32",
-              module = "lovr.data",
-              related = {
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` signed 32-bit integers, from -2147483648 to 2147483647."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getI8",
-              summary = "Unpack signed 8-bit integers from the Blob.",
-              description = "Returns signed 8-bit integers from the data in the Blob.",
-              key = "Blob:getI8",
-              module = "lovr.data",
-              related = {
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` signed 8-bit integers, from -128 to 127."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getName",
-              summary = "Get the label of the Blob.",
-              description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
-              key = "Blob:getName",
-              module = "lovr.data",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the Blob."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getPointer",
-              summary = "Get a raw pointer to the Blob's data.",
-              description = "Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries using the LuaJIT FFI.  Use this only if you know what you're doing!",
-              key = "Blob:getPointer",
-              module = "lovr.data",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "pointer",
-                      type = "userdata",
-                      description = "A pointer to the data."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getSize",
-              summary = "Get the size of the Blob's data.",
-              description = "Returns the size of the Blob's contents, in bytes.",
-              key = "Blob:getSize",
-              module = "lovr.data",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "bytes",
-                      type = "number",
-                      description = "The size of the Blob, in bytes."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getString",
-              summary = "Get the Blob's contents as a string.",
-              description = "Returns a binary string containing the Blob's data.",
-              key = "Blob:getString",
-              module = "lovr.data",
-              examples = {
-                {
-                  description = "Print each byte of the main.lua file:",
-                  code = "blob = lovr.filesystem.newBlob('main.lua')\nstr = blob:getString()\n\nfor i = 1, #str do\n  print(string.byte(str, i))\nend"
-                }
-              },
-              notes = "This effectively allocates a new copy of the Blob as a Lua string, so this should be avoided for really big Blobs!",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A byte offset into the Blob where the string will start.",
-                      default = "0"
-                    },
-                    {
-                      name = "size",
-                      type = "number",
-                      description = "The number of bytes the string will contain.  If nil, the rest of the data in the Blob will be used, based on the `offset` parameter.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "data",
-                      type = "string",
-                      description = "The Blob's data."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getU16",
-              summary = "Unpack unsigned 16-bit integers from the Blob.",
-              description = "Returns unsigned 16-bit integers from the data in the Blob.",
-              key = "Blob:getU16",
-              module = "lovr.data",
-              related = {
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` unsigned 16-bit integers, from 0 to 65535."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getU32",
-              summary = "Unpack unsigned 32-bit integers from the Blob.",
-              description = "Returns unsigned 32-bit integers from the data in the Blob.",
-              key = "Blob:getU32",
-              module = "lovr.data",
-              related = {
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` unsigned 32-bit integers, from 0 to 4294967296."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getU8",
-              summary = "Unpack unsigned 8-bit integers from the Blob.",
-              description = "Returns unsigned 8-bit integers from the data in the Blob.",
-              key = "Blob:getU8",
-              module = "lovr.data",
-              related = {
-                "Blob:getI8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` unsigned 8-bit integers, from 0 to 255."
                     }
                   }
                 }
