@@ -42,7 +42,7 @@ return {
     },
     constant = {
       type = '*',
-      description = 'Numbers or vectors to assign to the push constant.'
+      description = 'Numbers, vectors, or tables to assign to the constant or uniform buffer.'
     }
   },
   returns = {},
@@ -90,6 +90,10 @@ return {
         layout(set = 2, binding = 1) uniform Colors { vec4 colors[256]; };
         layout(set = 2, binding = 2) uniform texture2D rocks;
 
+        Constants {
+          uint constant;
+        };
+
         vec4 lovrmain() {
           return DefaultPosition;
         }
@@ -105,6 +109,7 @@ return {
       pass:send('mySampler', clampler)
       pass:send('Colors', colorBuffer)
       pass:send('rocks', rockTexture)
+      pass:send('constant', 42)
       -- Draw
     end
   ]=]

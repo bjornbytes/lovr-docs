@@ -13,7 +13,7 @@ return {
           code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.16.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'desktop' }\n  t.headset.supersample = false\n  t.headset.offset = 1.7\n  t.headset.antialias = true\n  t.headset.stencil = false\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.fullscreen = false\n  t.window.resizable = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
-      notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
+      notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.  It will also cause `lovr.graphics.newShader` to embed debugging information in shaders which allows inspecting variables and stepping through shaders line-by-line in tools like RenderDoc.\n\nThe `headset.offset` field is a vertical offset applied to the scene for headsets that do not center their tracking origin on the floor.  This can be thought of as a \"default user height\". Setting this offset makes it easier to design experiences that work in both seated and standing VR configurations.",
       related = {
         "lovr.load"
       },
@@ -11424,6 +11424,12 @@ return {
                       type = "boolean",
                       description = "Whether the textures created for the Model should have mipmaps generated.",
                       default = "true"
+                    },
+                    {
+                      name = "materials",
+                      type = "boolean",
+                      description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
+                      default = "true"
                     }
                   }
                 }
@@ -11453,6 +11459,12 @@ return {
                       type = "boolean",
                       description = "Whether the textures created for the Model should have mipmaps generated.",
                       default = "true"
+                    },
+                    {
+                      name = "materials",
+                      type = "boolean",
+                      description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
+                      default = "true"
                     }
                   }
                 }
@@ -11481,6 +11493,12 @@ return {
                       name = "mipmaps",
                       type = "boolean",
                       description = "Whether the textures created for the Model should have mipmaps generated.",
+                      default = "true"
+                    },
+                    {
+                      name = "materials",
+                      type = "boolean",
+                      description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
                       default = "true"
                     }
                   }
@@ -18832,7 +18850,7 @@ return {
               module = "lovr.graphics",
               examples = {
                 {
-                  code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    layout(set = 2, binding = 0) uniform sampler mySampler;\n    layout(set = 2, binding = 1) uniform Colors { vec4 colors[256]; };\n    layout(set = 2, binding = 2) uniform texture2D rocks;\n\n    vec4 lovrmain() {\n      return DefaultPosition;\n    }\n  ]], 'unlit')\n\n  clampler = lovr.graphics.newSampler({ wrap = 'clamp' })\n  colorBuffer = lovr.graphics.newBuffer(256, 'vec4')\n  rockTexture = lovr.graphics.newTexture('rocks.jpg')\nend\n\nfunction lovr.draw(pass)\n  pass:setShader(shader)\n  pass:send('mySampler', clampler)\n  pass:send('Colors', colorBuffer)\n  pass:send('rocks', rockTexture)\n  -- Draw\nend"
+                  code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    layout(set = 2, binding = 0) uniform sampler mySampler;\n    layout(set = 2, binding = 1) uniform Colors { vec4 colors[256]; };\n    layout(set = 2, binding = 2) uniform texture2D rocks;\n\n    Constants {\n      uint constant;\n    };\n\n    vec4 lovrmain() {\n      return DefaultPosition;\n    }\n  ]], 'unlit')\n\n  clampler = lovr.graphics.newSampler({ wrap = 'clamp' })\n  colorBuffer = lovr.graphics.newBuffer(256, 'vec4')\n  rockTexture = lovr.graphics.newTexture('rocks.jpg')\nend\n\nfunction lovr.draw(pass)\n  pass:setShader(shader)\n  pass:send('mySampler', clampler)\n  pass:send('Colors', colorBuffer)\n  pass:send('rocks', rockTexture)\n  pass:send('constant', 42)\n  -- Draw\nend"
                 }
               },
               notes = "Shader variables can be in different \"sets\".  Variables changed by this function must be in set #2, because LÖVR uses set #0 and set #1 internally.\n\nThe new value will persist until a new shader is set that uses a different \"type\" for the binding number of the variable.  See `Pass:setShader` for more details.",
@@ -18904,7 +18922,7 @@ return {
                     {
                       name = "constant",
                       type = "*",
-                      description = "Numbers or vectors to assign to the push constant."
+                      description = "Numbers, vectors, or tables to assign to the constant or uniform buffer."
                     }
                   },
                   returns = {}

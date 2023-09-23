@@ -26,6 +26,16 @@ return {
           type = 'boolean',
           default = 'true',
           description = 'Whether the textures created for the Model should have mipmaps generated.'
+        },
+        {
+          name = 'materials',
+          type = 'boolean',
+          default = 'true',
+          description = [[
+            Whether the textures and materials in the Model should be loaded.  When false, the
+            model will use the material set with `Pass:setMaterial`, although it will apply to all
+            nodes.
+          ]]
         }
       }
     }

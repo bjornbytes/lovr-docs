@@ -252,7 +252,9 @@ return {
 
     Enabling the `t.graphics.debug` flag will add additional error checks and will send messages
     from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help
-    provide information on performance problems or other bugs.
+    provide information on performance problems or other bugs.  It will also cause
+    `lovr.graphics.newShader` to embed debugging information in shaders which allows inspecting
+    variables and stepping through shaders line-by-line in tools like RenderDoc.
 
     The `headset.offset` field is a vertical offset applied to the scene for headsets that do not
     center their tracking origin on the floor.  This can be thought of as a "default user height".
