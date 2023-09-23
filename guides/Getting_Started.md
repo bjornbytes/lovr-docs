@@ -15,7 +15,7 @@ files.
 Double click on `lovr.exe` to open LÖVR.  You should see a window with the LÖVR logo in it.  This is
 what's shown if you run LÖVR without specifying a project.
 
-![The Default Project](https://lovr.org/static/img/nogame.png)
+<img src="/img/nogame.png" alt="The Default Project" width="50%"/>
 
 > Note: If you're using a VR headset, you'll only see the logo if your headset is pointing in the
 > forward direction.
@@ -56,7 +56,7 @@ project folder as an argument (on macOS, the executable is located at
 
 If you followed the example above, you should see the following in VR:
 
-![Hello World](https://lovr.org/static/img/helloWorld.png)
+<img src="/img/helloWorld.png" alt="Hello World" width="50%"/>
 
 Tips
 ---
