@@ -19142,6 +19142,7 @@ return {
               module = "lovr.graphics",
               notes = "The default cull mode is `none`.",
               related = {
+                "Pass:setViewCull",
                 "Pass:setWinding"
               },
               variants = {
@@ -19647,6 +19648,34 @@ return {
                 {
                   description = "Disables stencil writing.",
                   arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setViewCull",
+              tag = "pipeline",
+              summary = "Enable or disable view frustum culling.",
+              description = "Enables or disables view frustum culling.  When enabled, if an object is drawn outside of the camera view, the draw will be skipped.  This can improve performance.",
+              key = "Pass:setViewCull",
+              module = "lovr.graphics",
+              notes = "View frustum culling is disabled by default.\n\nObjects will be culled against all views in the Pass.  The pose and projection for these views is controlled using `Pass:setViewPose` and `Pass:setProjection`.\n\nView frustum culling will increase CPU usage, but will reduce GPU usage depending on how many objects get culled and how many vertices they have.\n\nFor most scenes that draw objects all around the camera, frustum culling will usually result in large speedups.  However, it's always good to measure to be sure.  For example, if every object drawn is in view, then frustum culling will only make things slower, because LÖVR will spend time checking if objects are in view without actually culling any of them.\n\n`Pass:getStats` will return `draws` and `drawsCulled` fields.  The `submitTime` and `gpuTime` fields (with `lovr.graphics.setTimingEnabled`) are a good way to measure the impact of culling.\n\nTo cull an object against a view frustum, LÖVR needs to know the object's bounding box.  The following types of draws have bounding boxes:\n\n- `Pass:plane`\n- `Pass:roundrect`\n- `Pass:cube`\n- `Pass:box`\n- `Pass:circle`\n- `Pass:sphere`\n- `Pass:cylinder`\n- `Pass:cone`\n- `Pass:capsule`\n- `Pass:torus`\n- `Pass:draw` (see notes below for `Model` and `Mesh` objects)\n\nThe following draws do **not** currently have bounding boxes, and will not be culled:\n\n- `Pass:points`\n- `Pass:line`\n- `Pass:text`\n- `Pass:skybox`\n- `Pass:fill`\n- `Pass:mesh`\n\n`Model` objects only compute their bounding box when they're loaded, using the initial node transforms. If a node's transform changes, either manually with `Model:setNodeTransform` or from an animation, then the bounding box will become out of sync and culling will not work properly. View culling should be disabled when rendering these models.\n\n`Mesh` objects will not have a bounding box by default.  Meshes with a storage type of `cpu` can compute their bounding boxes using `Mesh:computeBoundingBox`, which should be called after creating the Mesh or whenever its vertices change.  Any type of Mesh can have its bounding box set manually using `Mesh:setBoundingBox`.  This can be faster than `Mesh:computeBoundingBox` if the bounding box is already known, and is the only way to give a `gpu` Mesh a bounding box.",
+              related = {
+                "Pass:setCullMode",
+                "Mesh:computeBoundingBox",
+                "Mesh:setBoundingBox",
+                "Pass:setViewPose",
+                "Pass:setProjection"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether frustum culling should be enabled."
+                    }
+                  },
                   returns = {}
                 }
               }
