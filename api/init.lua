@@ -21744,6 +21744,10 @@ return {
               description = "The headset."
             },
             {
+              name = "floor",
+              description = "A device representing the floor, at the center of the play area.  The pose of this device in physical space will remain constant, even if after recentering."
+            },
+            {
               name = "left",
               description = "A shorthand for hand/left."
             },
