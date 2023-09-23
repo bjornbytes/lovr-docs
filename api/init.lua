@@ -23254,6 +23254,30 @@ return {
           }
         },
         {
+          name = "stopVibration",
+          tag = "input",
+          summary = "Stop vibration on a device.",
+          description = "Causes the device to stop any active haptics vibration.",
+          key = "lovr.headset.stopVibration",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.vibrate"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to stop the vibration on.",
+                  default = "'head'"
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "submit",
           tag = "headset",
           summary = "Submit a frame to the headset display.",
@@ -23278,6 +23302,9 @@ return {
           description = "Causes the device to vibrate with a custom strength, duration, and frequency, if possible.",
           key = "lovr.headset.vibrate",
           module = "lovr.headset",
+          related = {
+            "lovr.headset.stopVibration"
+          },
           variants = {
             {
               arguments = {
