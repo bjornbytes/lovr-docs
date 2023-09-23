@@ -49,8 +49,8 @@ return {
 
         shader = lovr.graphics.newShader([[
           struct HandParams {
-            vec3 position;
-            float trigger;
+            vec3 pos;
+            float grip;
           };
 
           layout(set = 0, binding = 0) buffer Hand {
@@ -61,7 +61,7 @@ return {
         ]])
 
         shader:getBufferFormat('Hand')
-        -- returns {{ name = 'position', type = 'vec3' }, { name = 'trigger', type = 'float' }}, 1
+        -- returns {{ name = 'pos', type = 'vec3' }, { name = 'grip', type = 'float' }}, 1
         -- not     {{ name = 'params', type = {...}}}, 1
   ]=],
   example = [=[
