@@ -339,6 +339,10 @@ function lovr.load()
   end
 
   -- Validate
+  for _, callback in ipairs(api.callbacks) do
+    validateFunction(callback)
+  end
+
   for _, module in ipairs(api.modules) do
     validateModule(module)
   end
