@@ -23392,7 +23392,7 @@ return {
         {
           name = "gammaToLinear",
           tag = "mathOther",
-          summary = "	Convert a color from gamma space to linear space.",
+          summary = "\9Convert a color from gamma space to linear space.",
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
@@ -23505,7 +23505,7 @@ return {
         {
           name = "linearToGamma",
           tag = "mathOther",
-          summary = "	Convert a color from linear space to gamma space.",
+          summary = "\9Convert a color from linear space to gamma space.",
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
           module = "lovr.math",
