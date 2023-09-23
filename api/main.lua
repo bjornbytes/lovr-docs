@@ -45,8 +45,12 @@ local function track(obj)
   lookup[obj.key] = obj
 end
 
-local function warnIf(cond, s, ...)
-  if cond then print(string.format(s, ...)) end
+local function warn(s, ...)
+  print(string.format(s, ...))
+end
+
+local function warnIf(cond, ...)
+  if cond then warn(...) end
 end
 
 -- Processors
@@ -171,7 +175,6 @@ local function processObject(path, parent)
   object.description = unwrap(object.description)
   object.summary = object.summary or object.description
   object.module = parent.key
-  object.methods = {}
   object.constructors = pluralify(object, 'constructor')
   object.notes = unwrap(object.notes)
   object.examples = pluralify(object, 'example')
@@ -182,17 +185,38 @@ local function processObject(path, parent)
     end
   end
 
-  for k, example in ipairs(object.examples or {}) do
-    object.examples[k] = processExample(example)
-  end
+  local methods = {}
 
   for _, file in ipairs(lovr.filesystem.getDirectoryItems(path)) do
     if file ~= 'init.lua' then
-      table.insert(object.methods, processFunction(path .. '/' .. file:gsub('%..+$', ''), object))
+      local method = file:gsub('%..+$', '')
+      local key = ('%s:%s'):format(object.name, method)
+      methods[key] = processFunction(path .. '/' .. method, object)
     end
   end
 
-  table.sort(object.methods, function(a, b) return a.key < b.key end)
+  if object.methods then
+    for i, key in ipairs(object.methods) do
+      object.methods[i] = methods[key]
+      methods[key] = nil
+    end
+
+    for method in pairs(methods) do
+      warn('%s is missing link to %q', object.key, method)
+    end
+  else
+    object.methods = {}
+
+    for key, method in pairs(methods) do
+      table.insert(object.methods, method)
+    end
+
+    table.sort(object.methods, function(a, b) return a.key < b.key end)
+  end
+
+  for k, example in ipairs(object.examples or {}) do
+    object.examples[k] = processExample(example)
+  end
 
   track(object)
   return object
