@@ -21095,6 +21095,46 @@ return {
               }
             },
             {
+              name = "getBufferFormat",
+              summary = "Get the format of a buffer in the Shader.",
+              description = "Returns the format of a uniform or storage buffer in the shader.  This matches the same syntax used by `lovr.graphics.newBuffer`, so it can be passed there to quickly create a Buffer that matches a variable in a Shader.",
+              key = "Shader:getBufferFormat",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  code = "shader = lovr.graphics.newShader([[\n  layout(set = 2, binding = 0) uniform Transforms {\n    mat4 transforms[32];\n  };\n\n  vec4 lovrmain() {\n    return Projection * View * transforms[InstanceIndex] * VertexPosition;\n  }\n]], 'unlit')\n\nlocal format, length = shader:getBufferFormat('Transforms')\nprint(length) --> 32\nprint(format[1].name) --> 'transforms'\nprint(format[1].type) --> 'mat4'\n\n-- Can pass the 2 results directly to newBuffer:\ntransforms = lovr.graphics.newBuffer(shader:getBufferFormat('Transforms'))\n\n-- Or override the length with some initial data:\ntransforms = lovr.graphics.newBuffer(shader:getBufferFormat('Transforms'), objects)"
+                }
+              },
+              notes = "If the buffer only has a single array field, the format will be \"unwrapped\" to an array instead of a single-field struct with an array in it.  Example:\n\n``` shader = lovr.graphics.newShader([[\n  layout(set = 0, binding = 0) buffer Numbers {\n    uint numbers[64];\n  };\n\n  void lovrmain(){} ]])\n\nshader:getBufferFormat('Numbers')\n-- returns {{ name = 'numbers', type = 'u32' }}, 64\n-- not     {{ name = 'numbers', type = 'u32', length = 64 }}, 1 ```\n\nSimilarly, if the buffer only has a single struct field, the format will be \"unwrapped\" to the inner struct.  This lets you use a struct for a Buffer's data without having to wrap everything in an extra namespace.  Example:\n\n``` shader = lovr.graphics.newShader([[\n  struct HandParams {\n    vec3 position;\n    float trigger;\n  };\n\n  layout(set = 0, binding = 0) buffer Hand {\n    HandParams params;\n  };\n\n  void lovrmain(){} ]])\n\nshader:getBufferFormat('Hand')\n-- returns {{ name = 'position', type = 'vec3' }, { name = 'trigger', type = 'float' }}, 1\n-- not     {{ name = 'params', type = {...}}}, 1 ```",
+              related = {
+                "lovr.graphics.newBuffer",
+                "Buffer:getFormat"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the buffer variable to return the format of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "format",
+                      type = "table",
+                      description = "The x size of a workgroup."
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the array (or 1 if the variable is not an array)."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getType",
               summary = "Get the type of the Shader.",
               description = "Returns whether the shader is a graphics or compute shader.",
