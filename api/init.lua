@@ -35645,6 +35645,29 @@ return {
           }
         },
         {
+          name = "hasKeyRepeat",
+          summary = "Check if key repeat is enabled.",
+          description = "Returns whether key repeat is enabled.",
+          key = "lovr.system.hasKeyRepeat",
+          module = "lovr.system",
+          notes = "Key repeat is disabled by default.",
+          related = {
+            "lovr.keypressed"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "enabled",
+                  type = "boolean",
+                  description = "Whether key repeat is enabled."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isKeyDown",
           summary = "Get the state of a key.",
           description = "Returns whether a key on the keyboard is pressed.",
@@ -35803,6 +35826,29 @@ return {
                   name = "permission",
                   type = "Permission",
                   description = "The permission to request."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setKeyRepeat",
+          summary = "Enable or disable key repeat.",
+          description = "Enables or disables key repeat.",
+          key = "lovr.system.setKeyRepeat",
+          module = "lovr.system",
+          notes = "Key repeat is disabled by default.",
+          related = {
+            "lovr.keypressed"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enable",
+                  type = "boolean",
+                  description = "Whether key repeat should be enabled."
                 }
               },
               returns = {}
