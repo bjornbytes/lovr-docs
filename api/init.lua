@@ -21097,7 +21097,7 @@ return {
             {
               name = "getBufferFormat",
               summary = "Get the format of a buffer in the Shader.",
-              description = "Returns the format of a uniform or storage buffer in the shader.  The return type matches the same syntax used by `lovr.graphics.newBuffer`, so it can be passed there to quickly create a Buffer that matches a variable in a Shader.",
+              description = "Returns the format of a buffer declared in shader code.  The return type matches the same syntax used by `lovr.graphics.newBuffer` and `Buffer:getFormat`, so it can be used to quickly create a Buffer that matches a variable from a Shader.",
               key = "Shader:getBufferFormat",
               module = "lovr.graphics",
               examples = {
@@ -21123,12 +21123,12 @@ return {
                     {
                       name = "format",
                       type = "table",
-                      description = "A list of fields declared in the shader code for the buffer."
+                      description = "A list of fields that match the type declaration of the buffer in the shader code.  Each field has `name`, `type`, and `offset` keys.  If the field is an array, it will have `length` and `stride` keys as well.  The top-level table also has a `stride` key.  Offsets and strides are in bytes."
                     },
                     {
                       name = "length",
                       type = "number",
-                      description = "The length of the array (or 1 if the variable is not an array)."
+                      description = "The number of items in the buffer (or 1 if the buffer is not an array)."
                     }
                   }
                 }
