@@ -19017,6 +19017,7 @@ return {
               notes = "The default blend mode is `alpha` with the `alphamultiply` alpha mode.",
               variants = {
                 {
+                  description = "Sets the blend mode for all canvas textures.",
                   arguments = {
                     {
                       name = "blend",
@@ -19034,6 +19035,38 @@ return {
                 {
                   description = "Disables blending.  When something is drawn, its pixel colors will replace any existing color in the target texture.  This can work okay for opaque objects, but won't render text or transparency properly.",
                   arguments = {},
+                  returns = {}
+                },
+                {
+                  description = "Sets the blend mode for a single canvas texture.",
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture that will use the new blend mode."
+                    },
+                    {
+                      name = "blend",
+                      type = "BlendMode",
+                      description = "The blend mode."
+                    },
+                    {
+                      name = "alphaBlend",
+                      type = "BlendAlphaMode",
+                      description = "The alpha blend mode, used to control premultiplied alpha."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disables blending for a single canvas texture.",
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture that will use the new blend mode."
+                    }
+                  },
                   returns = {}
                 }
               }
@@ -19126,6 +19159,51 @@ return {
                 },
                 {
                   arguments = {
+                    {
+                      name = "r",
+                      type = "boolean",
+                      description = "Whether the red component should be affected by draws."
+                    },
+                    {
+                      name = "g",
+                      type = "boolean",
+                      description = "Whether the green component should be affected by draws."
+                    },
+                    {
+                      name = "b",
+                      type = "boolean",
+                      description = "Whether the blue component should be affected by draws."
+                    },
+                    {
+                      name = "a",
+                      type = "boolean",
+                      description = "Whether the alpha component should be affected by draws."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture to update."
+                    },
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether all color components should be affected by draws."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture to update."
+                    },
                     {
                       name = "r",
                       type = "boolean",
@@ -22683,6 +22761,53 @@ return {
           }
         },
         {
+          name = "getRefreshRate",
+          tag = "headset",
+          summary = "Get the refresh rate of the headset display.",
+          description = "Returns the refresh rate of the headset display, in Hz.",
+          key = "lovr.headset.getRefreshRate",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getRefreshRates"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "rate",
+                  type = "number",
+                  description = "The refresh rate of the display, or `nil` if I have no idea what it is."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getRefreshRates",
+          tag = "headset",
+          summary = "Get the list of refresh rates supported by the headset display.",
+          description = "Returns a table with all the refresh rates supported by the headset display, in Hz.",
+          key = "lovr.headset.getRefreshRates",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getRefreshRate",
+            "lovr.headset.setRefreshRate"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "rates",
+                  type = "table",
+                  description = "A flat table of the refresh rates supported by the headset display, or nil if not supported."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getSkeleton",
           tag = "input",
           summary = "Get skeletal joint transforms tracked by a device.",
@@ -23239,6 +23364,36 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the passthrough state was set successfully."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "setRefreshRate",
+          tag = "headset",
+          summary = "Set the display refresh rate.",
+          description = "Sets the display refresh rate, in Hz.",
+          key = "lovr.headset.setRefreshRate",
+          module = "lovr.headset",
+          notes = "Changing the display refresh-rate usually also changes the frequency of lovr.update() and lovr.draw() as they depend on the refresh rate.  However, it's ultimately up to the VR runtime to decide how often the application gets to render, based on available resources.",
+          related = {
+            "lovr.headset.getRefreshRates"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "rate",
+                  type = "number",
+                  description = "The new refresh rate, in Hz."
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the display refresh rate was successfully set."
                 }
               }
             }

@@ -6,6 +6,10 @@ return {
     color and alpha of the pixel underneath it.
   ]],
   arguments = {
+    index = {
+      type = 'number',
+      description = 'The index of the canvas texture that will use the new blend mode.'
+    },
     blend = {
       type = 'BlendMode',
       description = 'The blend mode.'
@@ -18,6 +22,7 @@ return {
   returns = {},
   variants = {
     {
+      description = 'Sets the blend mode for all canvas textures.',
       arguments = { 'blend', 'alphaBlend' },
       returns = {}
     },
@@ -28,6 +33,16 @@ return {
         or transparency properly.
       ]],
       arguments = {},
+      returns = {}
+    },
+    {
+      description = 'Sets the blend mode for a single canvas texture.',
+      arguments = { 'index', 'blend', 'alphaBlend' },
+      returns = {}
+    },
+    {
+      description = 'Disables blending for a single canvas texture.',
+      arguments = { 'index' },
       returns = {}
     }
   },
