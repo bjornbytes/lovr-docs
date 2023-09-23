@@ -22212,6 +22212,52 @@ return {
           }
         },
         {
+          name = "getDirection",
+          tag = "input",
+          summary = "Get the direction a device is pointing.",
+          description = "Returns the direction a device is pointing.  It will always be normalized.",
+          key = "lovr.headset.getDirection",
+          module = "lovr.headset",
+          notes = "If the device isn't tracked, all zeroes will be returned.\n\nThis is the same as `quat(lovr.headset.getOrientation(device)):direction():unpack()`.",
+          related = {
+            "lovr.headset.getPose",
+            "lovr.headset.getOrientation",
+            "lovr.headset.getVelocity",
+            "lovr.headset.getAngularVelocity",
+            "lovr.headset.isTracked",
+            "lovr.headset.getDriver"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to get the direction of.",
+                  default = "'head'"
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the direction."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the direction."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the direction."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getDisplayDimensions",
           tag = "headset",
           summary = "Get the dimensions of the headset display.",
@@ -22429,6 +22475,7 @@ return {
           related = {
             "lovr.headset.getPose",
             "lovr.headset.getPosition",
+            "lovr.headset.getDirection",
             "lovr.headset.getVelocity",
             "lovr.headset.getAngularVelocity",
             "lovr.headset.isTracked",
@@ -23392,7 +23439,7 @@ return {
         {
           name = "gammaToLinear",
           tag = "mathOther",
-          summary = "\9Convert a color from gamma space to linear space.",
+          summary = "Convert a color from gamma space to linear space.",
           description = "Converts a color from gamma space to linear space.",
           key = "lovr.math.gammaToLinear",
           module = "lovr.math",
@@ -23505,7 +23552,7 @@ return {
         {
           name = "linearToGamma",
           tag = "mathOther",
-          summary = "\9Convert a color from linear space to gamma space.",
+          summary = "Convert a color from linear space to gamma space.",
           description = "Converts a color from linear space to gamma space.",
           key = "lovr.math.linearToGamma",
           module = "lovr.math",
