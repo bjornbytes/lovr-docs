@@ -3785,7 +3785,7 @@ return {
           methods = {
             {
               name = "getSize",
-              summary = "Get the size of the Blob's data.",
+              summary = "Get the size of the Blob, in bytes.",
               description = "Returns the size of the Blob's contents, in bytes.",
               key = "Blob:getSize",
               module = "lovr.data",
@@ -13055,6 +13055,287 @@ return {
                       description = "The Material properties."
                     }
                   }
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "Mesh",
+          summary = "A drawable triangle mesh.",
+          description = "Meshes store arbitrary geometry data, and can be drawn with `Pass:draw`.\n\nMeshes hold a list of **vertices**.  The number of vertices is declared upfront when the Mesh is created, and it can not be resized afterwards.\n\nThe Mesh has a **vertex format**, which declares the data comprising each vertex.  It is a list of **attributes**, like vertex position, vertex color, etc.",
+          key = "Mesh",
+          module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.getBuffer",
+            "lovr.graphics.newBuffer"
+          },
+          methods = {
+            {
+              name = "getIndexBuffer",
+              summary = "Get the Buffer backing the vertex indices of the Mesh.",
+              description = "Returns the `Buffer` object that holds the data for the vertex indices in the Mesh.\n\nThis can be `nil` if the Mesh doesn't have any indices.\n\nIf a Mesh uses the `cpu` storage mode, the index buffer is internal to the `Mesh` and this function will return `nil`.  This ensures that the CPU data for the Mesh does not get out of sync with the GPU data in the Buffer.",
+              key = "Mesh:getIndexBuffer",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:getIndices",
+                "Mesh:setIndices",
+                "Mesh:getVertexBuffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The index buffer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexBuffer",
+              summary = "Get the Buffer backing the vertices of the Mesh.",
+              description = "Returns the `Buffer` object that holds the data for the vertices in the Mesh.\n\nIf a Mesh uses the `cpu` storage mode, the vertex buffer is internal to the `Mesh` and this function will return `nil`.  This ensures that the CPU data for the Mesh does not get out of sync with the GPU data in the Buffer.",
+              key = "Mesh:getVertexBuffer",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:getVertices",
+                "Mesh:setVertices",
+                "Mesh:getIndexBuffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The vertex buffer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexCount",
+              summary = "Get the number of vertices in the Mesh.",
+              description = "Returns the number of vertices in the Mesh.  The vertex count is set when the Mesh is created and can't change afterwards.",
+              key = "Mesh:getVertexCount",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:getVertexStride",
+                "Mesh:getVertexFormat",
+                "lovr.graphics.newMesh"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices in the Mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexFormat",
+              summary = "Get the vertex format of the Mesh.",
+              description = "Returns the vertex format of the Mesh, which is a list of \"attributes\" that make up the data for each vertex (position, color, UV, etc.).",
+              key = "Mesh:getVertexFormat",
+              module = "lovr.graphics",
+              notes = "If no vertex format is given when the Mesh is created, it will use a default format:\n\n    {\n      { 'VertexPosition', 'vec3', 0 },\n      { 'VertexNormal', 'vec3', 12 },\n      { 'VertexUV', 'vec2', 24 }\n    }\n\nThe name of the vertex attribute corresponds to an `in` input variable in a vertex shader.\n\nThere are a few built-in attributes that all shaders will understand and use by default:\n\n<table>\n  <thead>\n    <tr>\n      <td>Name</td>\n      <td>Description</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>VertexPosition</code></td>\n      <td>The position of the vertex.</td>\n    </tr>\n    <tr>\n      <td><code>VertexNormal</code></td>\n      <td>The normal vector of the vertex.</td>\n    </tr>\n    <tr>\n      <td><code>VertexUV</code></td>\n      <td>The texture coordinate of the vertex.</td>\n    </tr>\n    <tr>\n      <td><code>VertexColor</code></td>\n      <td>The color of the vertex (linear color space).</td>\n    </tr>\n    <tr>\n      <td><code>VertexTangent</code></td>\n      <td>The tangent vector of the vertex.</td>\n    </tr>\n  </tbody> </table>\n\nSee the `Shaders` and `Meshes` guides for more info.",
+              related = {
+                "Mesh:getVertexCount",
+                "Mesh:getVertexStride",
+                "lovr.graphics.newMesh"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "table",
+                      description = "The vertex format.",
+                      table = {
+                        {
+                          name = "[][1]",
+                          type = "string",
+                          description = "The name of the attribute."
+                        },
+                        {
+                          name = "[][2]",
+                          type = "DataType",
+                          description = "The type of the attribute."
+                        },
+                        {
+                          name = "[][3]",
+                          type = "number",
+                          description = "The byte offset of the attribute."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertexStride",
+              summary = "Get the size of each vertex in the Mesh.",
+              description = "Returns the stride of the Mesh, which is the number of bytes used by each vertex.",
+              key = "Mesh:getVertexStride",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:getVertexCount",
+                "Mesh:getVertexFormat",
+                "lovr.graphics.newMesh"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Mesh, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVertices",
+              summary = "Get the vertices in the Mesh.",
+              description = "Returns the vertices in the Mesh.",
+              key = "Mesh:getVertices",
+              module = "lovr.graphics",
+              notes = "> **This function will be very very slow if the storage mode of the Mesh is `gpu`, because the\n> data will be downloaded from VRAM.  A better option is to call `Buffer:newReadback` on the\n> Mesh's underlying vertex buffer (`Mesh:getVertexBuffer`), which will download in the\n> background instead of waiting for it to complete.**",
+              related = {
+                "Mesh:getVertexBuffer",
+                "Mesh:getVertexFormat",
+                "Mesh:getIndices",
+                "Mesh:setIndices"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the first vertex to return.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to return.  If nil, returns the \"rest\" of the vertices, based on the `index` argument.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "A table of vertices.  Each vertex is a table of numbers for each vertex attribute, given by the vertex format of the Mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setIndexBuffer",
+              summary = "Set a Buffer for the Mesh to use for vertex indices.",
+              description = "Sets a `Buffer` object the Mesh will use for vertex indices.\n\nThis can only be used if the Mesh uses the `gpu` storage mode.\n\nThe Buffer must have a single field with the `u16`, `u32`, `index16`, or `index32` type.",
+              key = "Mesh:setIndexBuffer",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  description = "Use an index buffer to draw a plane.",
+                  code = "function lovr.load()\n  mesh = lovr.graphics.newMesh({\n    { -1,  1, 0 }, -- upper left\n    {  1,  1, 0 }, -- upper right\n    { -1, -1, 0 }, -- lower left\n    {  1, -1, 0 }, -- lower right\n  }, 'gpu')\n\n  -- 2 triangles\n  local indices = { 1,3,2, 2,3,4 }\n\n  local indexBuffer = lovr.graphics.newBuffer('index16', indices)\n  mesh:setIndexBuffer(indexBuffer)\nend\n\nfunction lovr.draw(pass)\n  pass:draw(mesh, 0, 1.7, -2)\nend"
+                }
+              },
+              notes = "The index buffer stores a list of numbers where each number is the index of a vertex in the Mesh.  When drawing the Mesh, the data from the vertex corresponding to the index is used.  This can be used to reorder or reuse vertices, which uses less data than repeating a vertex multiple times in the Mesh.",
+              related = {
+                "Mesh:getIndices",
+                "Mesh:setIndices",
+                "Mesh:getVertexBuffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The index buffer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setVertices",
+              summary = "Set vertices in the Mesh.",
+              description = "Sets the data for vertices in the Mesh.",
+              key = "Mesh:setVertices",
+              module = "lovr.graphics",
+              notes = "CPU meshes will write the data to CPU memory and upload any changes to the GPU before the Mesh is drawn.  GPU meshes don't store this CPU copy of the data, and will immediately upload the new vertex data to VRAM.  This means that multiple calls to this function might be slower on a `gpu` mesh.",
+              related = {
+                "Mesh:getVertexBuffer",
+                "Mesh:getVertexFormat",
+                "Mesh:getIndices",
+                "Mesh:setIndices"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "A table of vertices, where each vertex is a table of numbers matching the vertex format of the Mesh."
+                    },
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the first vertex to return.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to return.  If nil, returns the \"rest\" of the vertices, based on the `index` argument.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob containing binary vertex data."
+                    },
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the first vertex to return.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices to return.  If nil, returns the \"rest\" of the vertices, based on the `index` argument.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
                 }
               }
             }
