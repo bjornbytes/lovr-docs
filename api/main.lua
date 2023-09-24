@@ -198,6 +198,7 @@ local function processObject(path, parent)
   if object.methods then
     for i, key in ipairs(object.methods) do
       object.methods[i] = methods[key]
+      warnIf(not methods[key], '%s links to unknown method %q', object.key, key)
       methods[key] = nil
     end
 
