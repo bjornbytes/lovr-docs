@@ -1,6 +1,6 @@
 return {
   tag = 'plugins',
-  summary = 'Multiplayer utilities.',
+  summary = 'UDP networking library.',
   description = [[
     ENet is a UDP networking plugin bundled with LÖVR that can be used for networking and
     multiplayer experiences.  ENet allows messages to be marked for reliable and in-order delivery,
