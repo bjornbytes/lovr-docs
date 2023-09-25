@@ -8,6 +8,7 @@ return {
     See the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for
     documentation.
   ]],
+  external = true,
   example = [[
     local utf8 = require 'utf8'
 

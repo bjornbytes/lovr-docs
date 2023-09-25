@@ -37535,13 +37535,14 @@ return {
       tag = "libraries",
       summary = "UTF-8 string processing.",
       description = "The `utf8` module is from Lua 5.3.  LÖVR includes it on previous Lua versions to make it easier to work with multi-byte characters that are outside the ASCII range.\n\nSee the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for documentation.",
-      key = "lovr.utf8",
+      key = "utf8",
       enums = {},
       examples = {
         {
           code = "local utf8 = require 'utf8'\n\nlocal str = 'LÖVR'\nprint(string.len(str)) --> prints 5, because Ö takes up 2 bytes\nprint(utf8.len(str))   --> prints 4"
         }
       },
+      external = true,
       functions = {},
       objects = {}
     }
