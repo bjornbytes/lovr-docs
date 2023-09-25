@@ -907,6 +907,23 @@ return {
   },
   modules = {
     {
+      name = "enet",
+      tag = "plugins",
+      summary = "Multiplayer utilities.",
+      description = "ENet is a UDP networking plugin bundled with LÖVR that can be used for networking and multiplayer experiences.  ENet allows messages to be marked for reliable and in-order delivery, allowing the speed of UDP to be used without sacrificing reliability.\n\nThe full documentation and examples can be found on the [lua-enet](http://leafo.net/lua-enet/) page.  LÖVE also has lua-enet documentation [here](https://love2d.org/wiki/lua-enet).",
+      key = "enet",
+      enums = {},
+      examples = {
+        {
+          description = "Here's a simple echo server example. The client sends a message to the server and waits for a response. The server waits for a message and sends it back to the client.",
+          code = "-- client/main.lua\nlocal enet = require 'enet'\n\nfunction lovr.load()\n  local host = enet.host_create()\n  local server = host:connect('localhost:6789')\n\n  local done = false\n  while not done do\n    local event = host:service(100)\n    if event then\n      if event.type == 'connect' then\n        print('Connected to', event.peer)\n        event.peer:send('hello world')\n      elseif event.type == 'receive' then\n        print('Got message: ', event.data, event.peer)\n        done = true\n      end\n    end\n  end\n\n  server:disconnect()\n  host:flush()\nend\n\n-- server/main.lua\nlocal enet = require 'enet'\n\nfunction lovr.load()\n  local host = enet.host_create('localhost:6789')\n  while true do\n    local event = host:service(100)\n    if event and event.type == 'receive' then\n      print('Got message: ', event.data, event.peer)\n      event.peer:send(event.data)\n    end\n  end\nend"
+        }
+      },
+      external = true,
+      functions = {},
+      objects = {}
+    },
+    {
       name = "lovr",
       summary = "In the beginning, there was nothing.",
       description = "`lovr` is the single global table that is exposed to every LÖVR app. It contains a set of **modules** and a set of **callbacks**.",
@@ -1009,6 +1026,11 @@ return {
           name = "Version",
           tag = "version",
           description = "This function can be used to get the current version of LÖVR."
+        },
+        {
+          name = "Plugins",
+          tag = "plugins",
+          description = "LÖVR bundles a few plugins by default.  These are included as libraries next to the executable (e.g. `enet.dll`), and can be safely deleted without messing anything up.  More plugins can be added, see the <a data-key=\"Plugins\">Plugins</a> page for details."
         }
       }
     },
