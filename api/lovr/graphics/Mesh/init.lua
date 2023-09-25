@@ -6,8 +6,8 @@ return {
     Meshes hold a list of **vertices**.  The number of vertices is declared upfront when the Mesh is
     created, and it can not be resized afterwards.
 
-    The Mesh has a **vertex format**, which declares the data comprising each vertex.  It is a
-    list of **attributes**, like vertex position, vertex color, etc.
+    The Mesh has a **vertex format**, which is a set of **attributes** comprising each vertex, like
+    a `position`, `color`, etc.
   ]],
   constructors = {
     'lovr.graphics.getBuffer',
