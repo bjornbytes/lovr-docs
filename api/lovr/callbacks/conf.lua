@@ -256,6 +256,8 @@ return {
     `lovr.graphics.newShader` to embed debugging information in shaders which allows inspecting
     variables and stepping through shaders line-by-line in tools like RenderDoc.
 
+    `t.graphics.debug` can also be enabled using the `--graphics-debug` command line option.
+
     The `headset.offset` field is a vertical offset applied to the scene for headsets that do not
     center their tracking origin on the floor.  This can be thought of as a "default user height".
     Setting this offset makes it easier to design experiences that work in both seated and standing
