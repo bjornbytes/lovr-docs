@@ -35569,6 +35569,177 @@ return {
               }
             },
             {
+              name = "queryBox",
+              tag = "worldBasics",
+              summary = "Find all shapes that intersect a box.",
+              description = "Finds all the shapes that intersect a box and calls a function for each one.",
+              key = "World:queryBox",
+              module = "lovr.physics",
+              notes = "Currently there is no way to specify a rotated box.",
+              related = {
+                "World:querySphere",
+                "World:raycast",
+                "World:getContacts",
+                "Shape:setSensor"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the box."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the box."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the box."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The width of the box."
+                    },
+                    {
+                      name = "h",
+                      type = "number",
+                      description = "The height of the box."
+                    },
+                    {
+                      name = "d",
+                      type = "number",
+                      description = "The depth of the box."
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "any",
+                      type = "boolean",
+                      description = "Whether there were any intersections."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the box."
+                    },
+                    {
+                      name = "size",
+                      type = "Vec3",
+                      description = "The size of the box."
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "any",
+                      type = "boolean",
+                      description = "Whether there were any intersections."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "querySphere",
+              tag = "worldBasics",
+              summary = "Find all shapes that intersect a sphere.",
+              description = "Finds all the shapes that intersect a sphere and calls a function for each one.",
+              key = "World:querySphere",
+              module = "lovr.physics",
+              related = {
+                "World:queryBox",
+                "World:raycast",
+                "World:getContacts",
+                "Shape:setSensor"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the sphere."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the sphere."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the sphere."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere."
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "any",
+                      type = "boolean",
+                      description = "Whether there were any intersections."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the sphere."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere."
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "any",
+                      type = "boolean",
+                      description = "Whether there were any intersections."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "raycast",
               tag = "worldBasics",
               summary = "Cast a ray through the World.",
@@ -35581,6 +35752,10 @@ return {
                 }
               },
               notes = "The callback is passed the shape that was hit, the hit position (in world coordinates), and the normal vector of the hit.",
+              related = {
+                "World:queryBox",
+                "World:querySphere"
+              },
               variants = {
                 {
                   arguments = {

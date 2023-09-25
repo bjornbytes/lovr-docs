@@ -100,5 +100,9 @@ return {
         print('Collision detected!', shape, x, y, z, nx, ny, nz)
       end)
     end
-  ]]
+  ]],
+  related = {
+    'World:queryBox',
+    'World:querySphere'
+  }
 }
