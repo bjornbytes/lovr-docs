@@ -1030,7 +1030,7 @@ return {
         {
           name = "Plugins",
           tag = "plugins",
-          description = "LÖVR bundles a few plugins by default.  These are included as libraries next to the executable (e.g. `enet.dll`), and can be safely deleted without messing anything up.  More plugins can be added, see the <a data-key=\"Plugins\">Plugins</a> page for details."
+          description = "LÖVR bundles a few plugins by default.  These are distributed as libraries next to the executable, and if desired they can be safely deleted without messing anything up.  More plugins can be added, see the <a data-key=\"Plugins\">Plugins</a> page for details."
         }
       }
     },
