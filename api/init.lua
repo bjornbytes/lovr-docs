@@ -908,7 +908,7 @@ return {
   modules = {
     {
       name = "enet",
-      tag = "plugins",
+      tag = "libraries",
       summary = "UDP networking library.",
       description = "ENet is a UDP networking plugin bundled with LÖVR that can be used for networking and multiplayer experiences.  ENet allows messages to be marked for reliable and in-order delivery, allowing the speed of UDP to be used without sacrificing reliability.\n\nThe full documentation and examples can be found on the [lua-enet](http://leafo.net/lua-enet/) page.  LÖVE also has lua-enet documentation [here](https://love2d.org/wiki/lua-enet).",
       key = "enet",
@@ -925,7 +925,7 @@ return {
     },
     {
       name = "http",
-      tag = "plugins",
+      tag = "libraries",
       summary = "HTTP(S) requests.",
       description = "The [lovr-http](https://github.com/bjornbytes/lovr-http) plugin performs HTTP requests.\n\nFirst, `require` the plugin and save it into a variable: `local http = require 'http'`.\n\nThe module has one function:\n\n    status, data, headers = http.request(url, [options])\n\nThis will perform an HTTP request and block until the request is complete.\n\n### Arguments\n\n`url` is the URL to request.  If it doesn't have a protocol, then `http://` will be added.\n\n`options` is optional, and is used for advanced request settings.\n\n`options.method` is the HTTP method to use, also called the verb.  `GET` is used by default if there's no data in the request, otherwise it defauls to `POST`.  It will be converted to all-caps.\n\n`options.data` is the data to send to the server, also called the body.  It can be a few different types:\n\n- When `data` is nil, no request body will be sent (and `method` will default to `GET`).\n- When `data` is a string, the string will be used directly as the request body.\n- When `data` is a table, then pairs in the table will be URL encoded and concatenated together\n  to form an `application/x-www-form-urlencoded` body.  For example, if data is\n  `{ n = 10, k = 'v!' }`, then the request body will be something like `k=v%21&n=10`. Table\n  pairs will only be used if the key is a string and the value is a string or number.\n- When `data` is a lightuserdata, the data pointed to by the lightuserdata will be used as the\n  request body. Additionally, the `datasize` option should be an integer indicating how big the\n  request body is, in bytes.\n\nWhen `options.data` is set, the `Content-Type` request header will default to `application/x-www-urlencoded` unless it's set to something else.\n\n`options.headers` is a table of request headers to send to the server.  Pairs in the table will only be used if the key is a string and the value is a string or number.\n\n### Returns\n\nIf an error occurs, the function returns `nil, errormessage`.\n\nOtherwise, 3 values are returned:\n\n- `status` is an integer with the HTTP status code (200 is OK, 404 is Not Found, etc.).\n- `data` is a string with the data sent by the server (HTML, JSON, binary, etc.).\n- `headers` is a table of response headers.",
       key = "http",
@@ -1044,9 +1044,9 @@ return {
           description = "This function can be used to get the current version of LÖVR."
         },
         {
-          name = "Plugins",
-          tag = "plugins",
-          description = "LÖVR bundles a few plugins by default.  These are distributed as libraries next to the executable, and if desired they can be safely deleted without messing anything up.  More plugins can be added, see the <a data-key=\"Plugins\">Plugins</a> page for details."
+          name = "Libraries",
+          tag = "libraries",
+          description = "LÖVR bundles a few third-party modules by default."
         }
       }
     },
@@ -37528,6 +37528,21 @@ return {
           }
         }
       },
+      objects = {}
+    },
+    {
+      name = "utf8",
+      tag = "libraries",
+      summary = "UTF-8 string processing.",
+      description = "The `utf8` module is from Lua 5.3.  LÖVR includes it on previous Lua versions to make it easier to work with multi-byte characters that are outside the ASCII range.\n\nSee the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for documentation.",
+      key = "lovr.utf8",
+      enums = {},
+      examples = {
+        {
+          code = "local utf8 = require 'utf8'\n\nlocal str = 'LÖVR'\nprint(string.len(str)) --> prints 5, because Ö takes up 2 bytes\nprint(utf8.len(str))   --> prints 4"
+        }
+      },
+      functions = {},
       objects = {}
     }
   }

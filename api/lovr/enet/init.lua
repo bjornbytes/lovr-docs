@@ -1,5 +1,5 @@
 return {
-  tag = 'plugins',
+  tag = 'libraries',
   summary = 'UDP networking library.',
   description = [[
     ENet is a UDP networking plugin bundled with LÖVR that can be used for networking and

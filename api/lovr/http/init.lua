@@ -1,5 +1,5 @@
 return {
-  tag = 'plugins',
+  tag = 'libraries',
   summary = 'HTTP(S) requests.',
   description = [[
     The [lovr-http](https://github.com/bjornbytes/lovr-http) plugin performs HTTP requests.

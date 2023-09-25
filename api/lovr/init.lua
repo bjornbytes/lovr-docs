@@ -31,13 +31,9 @@ return {
       description = 'This function can be used to get the current version of LÖVR.'
     },
     {
-      name = 'Plugins',
-      tag = 'plugins',
-      description = [[
-        LÖVR bundles a few plugins by default.  These are distributed as libraries next to the
-        executable, and if desired they can be safely deleted without messing anything up.  More
-        plugins can be added, see the <a data-key="Plugins">Plugins</a> page for details.
-      ]]
+      name = 'Libraries',
+      tag = 'libraries',
+      description = 'LÖVR bundles a few third-party modules by default.'
     }
   }
 }
