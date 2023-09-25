@@ -28544,6 +28544,65 @@ return {
               }
             },
             {
+              name = "rotate",
+              summary = "Apply a rotation to the vector.",
+              description = "Applies a rotation to the vector, using a `Quat` or an angle/axis rotation.",
+              key = "Vec3:rotate",
+              module = "lovr.math",
+              related = {
+                "Quat:mul"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "q",
+                      type = "Quat",
+                      description = "The quaternion to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec3",
+                      description = "The modified vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians to rotate."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis to rotate around."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis to rotate around."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis to rotate around."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec3",
+                      description = "The modified vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "set",
               summary = "Set the components of the vector.",
               description = "Sets the components of the vector, either from numbers or an existing vector.",
@@ -28685,6 +28744,122 @@ return {
                       name = "self",
                       type = "Vec3",
                       description = "The modified vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "transform",
+              summary = "Apply a transform to the vector.",
+              description = "Applies a transform (translation, rotation, scale) to the vector using a `Mat4` or numbers. This is the same as multiplying the vector by a matrix.  This treats the vector as a point.",
+              key = "Vec3:transform",
+              module = "lovr.math",
+              related = {
+                "Mat4:mul",
+                "Vec4:transform",
+                "Vec3:rotate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The matrix to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec3",
+                      description = "The original vector, with transformed components."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale factor.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians to rotate around the rotation axis.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec3",
+                      description = "The original vector, with transformed components."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "translation",
+                      type = "Vec3",
+                      description = "The translation to apply."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale factor.",
+                      default = "1"
+                    },
+                    {
+                      name = "rotation",
+                      type = "Quat",
+                      description = "The rotation to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec3",
+                      description = "The original vector, with transformed components."
                     }
                   }
                 }
@@ -29410,6 +29585,121 @@ return {
                       name = "self",
                       type = "Vec4",
                       description = "The modified vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "transform",
+              summary = "Apply a transform to the vector.",
+              description = "Applies a transform (translation, rotation, scale) to the vector using a `Mat4` or numbers. This is the same as multiplying the vector by a matrix.",
+              key = "Vec4:transform",
+              module = "lovr.math",
+              related = {
+                "Mat4:mul",
+                "Vec3:transform"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "m",
+                      type = "Mat4",
+                      description = "The matrix to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec4",
+                      description = "The original vector, with transformed components."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale factor.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians to rotate around the rotation axis.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec4",
+                      description = "The original vector, with transformed components."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "translation",
+                      type = "Vec3",
+                      description = "The translation to apply."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale factor.",
+                      default = "1"
+                    },
+                    {
+                      name = "rotation",
+                      type = "Quat",
+                      description = "The rotation to apply."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Vec4",
+                      description = "The original vector, with transformed components."
                     }
                   }
                 }
