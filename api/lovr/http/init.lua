@@ -28,12 +28,12 @@ return {
     - When `data` is nil, no request body will be sent (and `method` will default to `GET`).
     - When `data` is a string, the string will be used directly as the request body.
     - When `data` is a table, then pairs in the table will be URL encoded and concatenated together
-      to form an `application/x-www-form-urlencoded` body.  For example, if data is `{ n = 10, k =
-      'v!' }`, then the request body will be something like `k=v%21&n=10`. Table pairs will only be
-      used if the key is a string and the value is a string or number. - When `data` is a
-      lightuserdata, the data pointed to by the lightuserdata will be used as the request body.
-      Additionally, the `datasize` option should be an integer indicating how big the request body
-      is, in bytes.
+      to form an `application/x-www-form-urlencoded` body.  For example, if data is
+      `{ n = 10, k = 'v!' }`, then the request body will be something like `k=v%21&n=10`. Table
+      pairs will only be used if the key is a string and the value is a string or number. - When
+      `data` is a lightuserdata, the data pointed to by the lightuserdata will be used as the
+      request body. Additionally, the `datasize` option should be an integer indicating how big the
+      request body is, in bytes.
 
     When `options.data` is set, the `Content-Type` request header will default to
     `application/x-www-urlencoded` unless it's set to something else.
