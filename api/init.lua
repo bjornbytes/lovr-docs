@@ -37534,12 +37534,12 @@ return {
       name = "utf8",
       tag = "libraries",
       summary = "UTF-8 string processing.",
-      description = "The `utf8` module is from Lua 5.3.  LÖVR includes it on previous Lua versions to make it easier to work with multi-byte characters that are outside the ASCII range.\n\nSee the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for documentation.",
+      description = "LÖVR includes Lua 5.3's `utf8` library, even on Lua versions that don't support it.  Lua's regular strings aren't utf8-aware, so this library makes it easier to work with multi-byte characters that are outside the ASCII range.\n\nSee the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for documentation.",
       key = "utf8",
       enums = {},
       examples = {
         {
-          code = "local utf8 = require 'utf8'\n\nlocal str = 'LÖVR'\nprint(string.len(str)) --> prints 5, because Ö takes up 2 bytes\nprint(utf8.len(str))   --> prints 4"
+          code = "local utf8 = require 'utf8'\n\nlocal str = 'LÖVR'\n\nprint(string.len(str)) --> prints 5, because Ö takes up 2 bytes\nprint(utf8.len(str))   --> prints 4"
         }
       },
       external = true,
