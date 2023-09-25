@@ -924,6 +924,22 @@ return {
       objects = {}
     },
     {
+      name = "http",
+      tag = "plugins",
+      summary = "HTTP(S) requests.",
+      description = "The [lovr-http](https://github.com/bjornbytes/lovr-http) plugin performs HTTP requests.\n\nFirst, `require` the plugin and save it into a variable: `local http = require 'http'`.\n\nThe module has one function:\n\n    status, data, headers = http.request(url, [options])\n\nThis will perform an HTTP request and block until the request is complete.\n\n### Arguments\n\n`url` is the URL to request.  If it doesn't have a protocol, then `http://` will be added.\n\n`options` is optional, and is used for advanced request settings.\n\n`options.method` is the HTTP method to use, also called the verb.  `GET` is used by default if there's no data in the request, otherwise it defauls to `POST`.  It will be converted to all-caps.\n\n`options.data` is the data to send to the server, also called the body.  It can be a few different types:\n\n- When `data` is nil, no request body will be sent (and `method` will default to `GET`).\n- When `data` is a string, the string will be used directly as the request body.\n- When `data` is a table, then pairs in the table will be URL encoded and concatenated together\n  to form an `application/x-www-form-urlencoded` body.  For example, if data is `{ n = 10, k =\n  'v!' }`, then the request body will be something like `k=v%21&n=10`. Table pairs will only be\n  used if the key is a string and the value is a string or number. - When `data` is a\n  lightuserdata, the data pointed to by the lightuserdata will be used as the request body.\n  Additionally, the `datasize` option should be an integer indicating how big the request body\n  is, in bytes.\n\nWhen `options.data` is set, the `Content-Type` request header will default to `application/x-www-urlencoded` unless it's set to something else.\n\n`options.headers` is a table of request headers to send to the server.  Pairs in the table will only be used if the key is a string and the value is a string or number.\n\n### Returns\n\nIf an error occurs, the function returns `nil, errormessage`.\n\nOtherwise, 3 values are returned:\n\n- `status` is an integer with the HTTP status code (200 is OK, 404 is Not Found, etc.).\n- `data` is a string with the data sent by the server (HTML, JSON, binary, etc.).\n- `headers` is a table of response headers.",
+      key = "http",
+      enums = {},
+      examples = {
+        {
+          code = "local http = require 'http'\n\nlocal status, data, headers = http.request('https://zombo.com')\n\nprint('welcome')\nprint(status)\nprint(data)\nprint('headers:')\nfor k, v in pairs(headers) do\n  print('\\t' .. k, v)\nend"
+        }
+      },
+      external = true,
+      functions = {},
+      objects = {}
+    },
+    {
       name = "lovr",
       summary = "In the beginning, there was nothing.",
       description = "`lovr` is the single global table that is exposed to every LÖVR app. It contains a set of **modules** and a set of **callbacks**.",
