@@ -13063,7 +13063,7 @@ return {
         {
           name = "Mesh",
           summary = "A drawable triangle mesh.",
-          description = "Meshes store arbitrary geometry data, and can be drawn with `Pass:draw`.\n\nMeshes hold a list of **vertices**.  The number of vertices is declared upfront when the Mesh is created, and it can not be resized afterwards.\n\nThe Mesh has a **vertex format**, which declares the data comprising each vertex.  It is a list of **attributes**, like vertex position, vertex color, etc.",
+          description = "Meshes store arbitrary geometry data, and can be drawn with `Pass:draw`.\n\nMeshes hold a list of **vertices**.  The number of vertices is declared upfront when the Mesh is created, and it can not be resized afterwards.\n\nThe Mesh has a **vertex format**, which is a set of **attributes** comprising each vertex, like a `position`, `color`, etc.",
           key = "Mesh",
           module = "lovr.graphics",
           constructors = {
@@ -22297,6 +22297,32 @@ return {
               description = "The origin is on the floor."
             }
           }
+        },
+        {
+          name = "PassthroughMode",
+          summary = "Passthrough modes.",
+          description = "Different passthrough modes, set using `lovr.headset.setPassthrough`.\n\nFor best results, the `blend` and `add` modes should use a transparent background color, which can be changed with `lovr.graphics.setBackgroundColor`.",
+          key = "PassthroughMode",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getPassthrough",
+            "lovr.headset.setPassthrough",
+            "lovr.headset.getPassthroughModes"
+          },
+          values = {
+            {
+              name = "opaque",
+              description = "The headset display will not blend with anything behind it.  Most VR headsets use this mode."
+            },
+            {
+              name = "blend",
+              description = "The real world will blend with the headset display using the alpha channel.  This is supported on VR headsets with camera passthrough, as well as some AR displays."
+            },
+            {
+              name = "add",
+              description = "Color values from virtual content will be added to the real world.  This is the most common mode used for AR.  Notably, black pixels will not show up at all."
+            }
+          }
         }
       },
       functions = {
@@ -22929,6 +22955,53 @@ return {
           }
         },
         {
+          name = "getPassthrough",
+          tag = "headset",
+          summary = "Get the current passthrough mode.",
+          description = "Returns the current passthrough mode.",
+          key = "lovr.headset.getPassthrough",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getPassthroughModes"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "mode",
+                  type = "PassthroughMode",
+                  description = "The current passthrough mode."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getPassthroughModes",
+          tag = "headset",
+          summary = "Get the supported passthrough modes.",
+          description = "Returns the set of supported passthrough modes.",
+          key = "lovr.headset.getPassthroughModes",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getPassthrough",
+            "lovr.headset.setPassthrough"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "modes",
+                  type = "table",
+                  description = "The set of supported passthrough modes.  Keys will be `PassthroughMode` strings, and values will be booleans indicating whether the mode is supported."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getPose",
           tag = "input",
           summary = "Get the pose of a device.",
@@ -23430,30 +23503,6 @@ return {
           }
         },
         {
-          name = "isPassthroughEnabled",
-          tag = "headset",
-          summary = "Check if passthrough is active.",
-          description = "Returns whether passthrough is active.  When passthrough is active, the real world will be rendered behind any content rendered by LÖVR, using the alpha channel to blend between the two.",
-          key = "lovr.headset.isPassthroughEnabled",
-          module = "lovr.headset",
-          notes = "This feature is currently only supported on Oculus Quest devices.",
-          related = {
-            "lovr.headset.setPassthroughEnabled"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "active",
-                  type = "boolean",
-                  description = "Whether passthrough is active."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "isTouched",
           tag = "input",
           summary = "Check if a button on a device is touched.",
@@ -23621,30 +23670,57 @@ return {
           }
         },
         {
-          name = "setPassthroughEnabled",
+          name = "setPassthrough",
           tag = "headset",
-          summary = "Enable or disable passthrough.",
-          description = "Sets whether passthrough is active.  When passthrough is active, the real world will be rendered behind any content rendered by LÖVR, using the alpha channel to blend between the two.",
-          key = "lovr.headset.setPassthroughEnabled",
+          summary = "Change current passthrough mode.",
+          description = "Sets a new passthrough mode.  Not all headsets support all passthrough modes.  Use `lovr.headset.getPassthroughModes` to see which modes are supported.",
+          key = "lovr.headset.setPassthrough",
           module = "lovr.headset",
-          notes = "This feature is currently only supported on Oculus Quest devices.",
+          notes = "When using one of the transparent passthrough modes, be sure to set the alpha of the background color to zero using `lovr.graphics.setBackgroundColor`, so the background shows through.",
           related = {
-            "lovr.headset.isPassthroughEnabled"
+            "lovr.headset.getPassthroughModes"
           },
           variants = {
             {
               arguments = {
                 {
-                  name = "enable",
-                  type = "boolean",
-                  description = "Whether passthrough should be enabled."
+                  name = "mode",
+                  type = "PassthroughMode",
+                  description = "The passthrough mode to request."
                 }
               },
               returns = {
                 {
                   name = "success",
                   type = "boolean",
-                  description = "Whether the passthrough state was set successfully."
+                  description = "Whether the passthrough mode was supported and successfully enabled."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "transparent",
+                  type = "boolean",
+                  description = "Whether the headset should use a transparent passthrough mode.  When false, this will request the `opaque` mode.  When true, either `blend` or `add` will be requested, based on what the VR runtime supports."
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the passthrough mode was supported and successfully enabled."
+                }
+              }
+            },
+            {
+              description = "Switch to the headset's default passthrough mode.",
+              arguments = {},
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the passthrough mode was supported and successfully enabled."
                 }
               }
             }
