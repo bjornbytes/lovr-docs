@@ -42,6 +42,9 @@ return {
     }
   },
   notes = [[
+    The viewport will apply to all draws in a Pass, even if this function is called after adding the
+    draws.
+
     The viewport rectangle can use floating point numbers.
 
     A negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used

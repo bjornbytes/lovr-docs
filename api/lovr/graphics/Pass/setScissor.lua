@@ -30,6 +30,9 @@ return {
     }
   },
   notes = [[
+    The scissor will apply to all draws in a Pass, even if this function is called after adding the
+    draws.
+
     `x` and `y` can not be negative.
 
     The default scissor rectangle covers the entire dimensions of the render pass textures.
