@@ -1656,8 +1656,8 @@ return {
                     {
                       name = "pitchable",
                       type = "boolean",
-                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as false will improve performance slightly.",
-                      default = "false"
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
+                      default = "true"
                     },
                     {
                       name = "spatial",
@@ -1703,8 +1703,8 @@ return {
                     {
                       name = "pitchable",
                       type = "boolean",
-                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as false will improve performance slightly.",
-                      default = "false"
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
+                      default = "true"
                     },
                     {
                       name = "spatial",
@@ -1750,8 +1750,8 @@ return {
                     {
                       name = "pitchable",
                       type = "boolean",
-                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as false will improve performance slightly.",
-                      default = "false"
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
+                      default = "true"
                     },
                     {
                       name = "spatial",

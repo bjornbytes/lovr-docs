@@ -32,9 +32,9 @@ return {
         {
           name = 'pitchable',
           type = 'boolean',
-          default = 'false',
+          default = 'true',
           description = [[
-            Whether the pitch of the Source can be changed with `Source:setPitch`.  Leaving this as
+            Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to
             false will improve performance slightly.
           ]]
         },
