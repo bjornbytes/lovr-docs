@@ -22867,35 +22867,25 @@ return {
           name = "getDriver",
           tag = "headset",
           summary = "Get the VR API currently in use for a device.",
-          description = "Returns the `HeadsetDriver` that is currently in use, optionally for a specific device.  The order of headset drivers can be changed using `lovr.conf` to prefer or exclude specific VR APIs.",
+          description = "Returns the `HeadsetDriver` that is currently in use, plus the name of the VR runtime.  The order of headset drivers can be changed using `lovr.conf`.",
           key = "lovr.headset.getDriver",
           module = "lovr.headset",
+          related = {
+            "lovr.headset.getName"
+          },
           variants = {
             {
-              description = "Get the current headset driver that LÖVR is submitting frames to.",
               arguments = {},
               returns = {
                 {
                   name = "driver",
                   type = "HeadsetDriver",
-                  description = "The driver of the headset in use, e.g. \"OpenVR\"."
-                }
-              }
-            },
-            {
-              description = "Get the current input driver for a device.",
-              arguments = {
+                  description = "The current headset backend, e.g. `openxr` or `simulator`."
+                },
                 {
-                  name = "device",
-                  type = "Device",
-                  description = "The device to get the active driver of.  This will be the first driver that is currently returning a pose for the device."
-                }
-              },
-              returns = {
-                {
-                  name = "driver",
-                  type = "HeadsetDriver",
-                  description = "The driver of the headset in use, e.g. \"OpenVR\"."
+                  name = "runtime",
+                  type = "string",
+                  description = "The name of the VR runtime, e.g. `SteamVR/OpenXR`."
                 }
               }
             }
