@@ -9,7 +9,7 @@ return {
       name = 'floor',
       description = [[
         A device representing the floor, at the center of the play area.  The pose of this device in
-        physical space will remain constant, even if after recentering.
+        physical space will remain constant, even after recentering.
       ]]
     },
     {
@@ -22,19 +22,53 @@ return {
     },
     {
       name = 'hand/left',
-      description = 'The left controller.'
+      description = 'The left hand.'
     },
     {
       name = 'hand/right',
-      description = 'The right controller.'
+      description = 'The right hand.'
+    },
+    {
+      name = 'hand/left/grip',
+      description = 'The left hand grip pose, used for held objects.'
+    },
+    {
+      name = 'hand/right/grip',
+      description = 'The right hand grip pose, used for held objects.'
     },
     {
       name = 'hand/left/point',
-      description = 'The left controller pointer (pose only).'
+      description = 'The left hand pointer pose, used for pointing or aiming.'
     },
     {
       name = 'hand/right/point',
-      description = 'The right controller pointer (pose only).'
+      description = 'The right hand pointer pose, used for pointing or aiming.'
+    },
+    {
+      name = 'hand/left/pinch',
+      description = [[
+        The left hand pinch pose between the thumb and index fingers, used for precise, close-range
+        interactions.
+      ]]
+    },
+    {
+      name = 'hand/right/pinch',
+      description = [[
+        The right hand pinch pose between the thumb and index fingers, used for precise, close-range
+        interactions.
+      ]]
+    },
+    {
+      name = 'hand/left/poke',
+      description = [[
+        The left hand poke pose, on the tip of the index finger or in front of a controller.
+      ]]
+    },
+    {
+      name = 'hand/right/poke',
+      description = [[
+        The right hand poke pose, on the tip of the index finger or in front of a controller.
+      ]]
     },
     {
       name = 'elbow/left',
@@ -91,12 +125,36 @@ return {
     {
       name = 'eye/right',
       description = 'The right eye.'
+    },
+    {
+      name = 'eye/gaze',
+      description = [[
+        The combined eye gaze pose.  The position is between the eyes.  The orientation aligns the
+        -Z axis in the direction the user is looking and the +Y axis to the head's "up" vector.
+        This provides more accurate eye tracking information compared to using the individual eye
+        devices.
+      ]]
     }
   },
   notes = [[
-    The difference between `hand/left` and `hand/left/point` is the first represents an object held
-    in the hand, whereas the second represents the laser pointer used to aim.  Drawing a controller
-    model would use `hand/left`, whereas drawing a pointer or aiming would use `hand/left/point`.
+    Here are the differences between the hand sub-devices:
+
+    - The `/grip` pose is used to render an object held in the user's hand.  It's positioned at the
+      surface of the palm.  The X axis of the grip orientation is perpendicular to the palm,
+      pointing away from the left palm or into the right palm.  If you imagine the hand holding a
+      stick, the Z axis will be parallel to the stick.
+    - The `/point` pose is used to aim or point at objects.  It's usually positioned slightly in
+      front of the hand or controller, and is oriented so the -Z axis points in a natural forward
+      direction.
+    - The `pinch` pose is a stable point between the thumb and index finger on a hand, or a point
+      slightly in front of a controller.  The -Z axis will point forward, away from the hand.  It's
+      good for precise, close-range interaction.
+    - The `poke` pose is a position located at the tip of the index finger, or a point slightly in
+      front of a controller.  The -Z axis will point forward out of the tip of the finger, the +Y
+      axis will be perpendicular to the fingernail.
+
+    These "hand pose devices" do not report any button input with e.g. `lovr.headset.isDown`.  The
+    main `hand/left` and `hand/right` devices should be used for buttons and haptics.
   ]],
   related = {
     'DeviceAxis',
