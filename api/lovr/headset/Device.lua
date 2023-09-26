@@ -139,10 +139,13 @@ return {
   notes = [[
     Here are the differences between the hand sub-devices:
 
-    - The `/grip` pose is used to render an object held in the user's hand.  It's positioned at the
-      surface of the palm.  The X axis of the grip orientation is perpendicular to the palm,
-      pointing away from the left palm or into the right palm.  If you imagine the hand holding a
-      stick, the Z axis will be parallel to the stick.
+    The `/grip` pose is used to render an object held in the user's hand.  It's positioned at the
+    surface of the palm.  The X axis of the grip orientation is perpendicular to the palm, pointing
+    away from the left palm or into the right palm.  If you imagine the hand holding a stick, the Z
+    axis will be parallel to the stick.
+
+    <img src="/img/grip.svg" width="100%"/>
+
     - The `/point` pose is used to aim or point at objects.  It's usually positioned slightly in
       front of the hand or controller, and is oriented so the -Z axis points in a natural forward
       direction.
