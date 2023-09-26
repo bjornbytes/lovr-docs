@@ -91,8 +91,8 @@ to have a Lua C function with a symbol named after the plugin:
 
     int luaopen_supermegaplugin(lua_State* L) {
       // This code gets run when the plugin is required,
-      // and anything it returns on the stack is used
-      // as the require's return value.
+      // and the value it leaves at the top of the stack
+      // is used as require's return value.
     }
 
 All of [Lua's rules](https://www.lua.org/manual/5.1/manual.html#pdf-package.loaders) for native
