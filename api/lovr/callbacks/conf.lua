@@ -163,9 +163,9 @@ return {
               ]]
             },
             {
-              name = 'offset',
-              type = 'number',
-              description = 'The vertical offset for seated experiences.'
+              name = 'seated',
+              type = 'boolean',
+              description = 'Whether seated mode should be used instead of standing.'
             },
             {
               name = 'antialias',
@@ -302,7 +302,7 @@ return {
           -- Headset settings
           t.headset.drivers = { 'openxr', 'desktop' }
           t.headset.supersample = false
-          t.headset.offset = 1.7
+          t.headset.seated = false
           t.headset.antialias = true
           t.headset.stencil = false
           t.headset.submitdepth = true
