@@ -100,3 +100,24 @@ plugin loading, including processing of dots and hyphens and all-in-one loading,
 plugins.  However, note that LÖVR plugins do **not** use `package.cpath` or Lua's default loader.
 The `lovr.filesystem` module has its own loader for loading plugins (it always looks for plugins
 next to the executable, and checks the `lib/arm64-v8a` folder of the APK).
+
+Android
+---
+
+Android currently offers no way for a native library to get access to the `JNIEnv*` pointer if that
+native library was loaded by another native library.  This means that LÖVR plugins have no way to
+use the JNI.  To work around this, before LÖVR calls `luaopen_supermegaplugin`, it will call the
+`JNI_OnLoad` function from the plugin (if present) and pass it the Java VM.  Example:
+
+    #include <jni.h>
+
+    static JNIEnv* jni;
+
+    jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+      (*vm)->GetEnv(vm, (void**) &jni, JNI_VERSION_1_6);
+      return 0;
+    }
+
+    int luaopen_supermegaplugin(lua_State* L) {
+      // can use jni!
+    }
