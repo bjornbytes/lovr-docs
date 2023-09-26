@@ -142,14 +142,14 @@ return {
     pointing away from the left palm or into the right palm.  If you imagine the hand holding a
     stick, the Z axis will be parallel to the stick.
 
-    <img src="/img/grip.svg" height="400"/>
+    <img src="/img/grip.svg" width="600" alt="Hand Grip Pose"/>
 
     ---
 
     The `/point` pose is used to aim or point at objects.  It's usually positioned slightly in front
     of the hand or controller, and is oriented so the -Z axis points in a natural forward direction.
 
-    <img src="/img/aim.svg" height="400"/>
+    <img src="/img/aim.svg" width="600" alt="Hand Point Pose"/>
 
     ---
 
@@ -157,7 +157,7 @@ return {
     slightly in front of a controller.  The -Z axis will point forward, away from the hand.  It's
     good for precise, close-range interaction.
 
-    <img src="/img/pinch.svg" height="400"/>
+    <img src="/img/pinch.svg" width="600" alt="Hand Pinch Pose"/>
 
     ---
 
@@ -165,7 +165,7 @@ return {
     front of a controller.  The -Z axis will point forward out of the tip of the finger, the +Y axis
     will be perpendicular to the fingernail.
 
-    <img src="/img/poke.svg" height="400"/>
+    <img src="/img/poke.svg" width="600" alt="Hand Poke Pose"/>
 
     These "hand pose devices" do not report any button input with e.g. `lovr.headset.isDown`.  The
     main `hand/left` and `hand/right` devices should be used for buttons and haptics.
