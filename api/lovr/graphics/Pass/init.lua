@@ -35,7 +35,10 @@ return {
     {
       name = 'Render States',
       tag = 'pipeline',
-      description = 'Set render states that change the way drawing happens.'
+      description = [[
+        Set render states that change the way drawing happens.  `Pass:push` and `Pass:pop` with a
+        `StackType` of `state` can be used to save and restore render states.
+      ]]
     },
     {
       name = 'Shader Variables',
