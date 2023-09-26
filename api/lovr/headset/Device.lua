@@ -142,7 +142,7 @@ return {
     pointing away from the left palm or into the right palm.  If you imagine the hand holding a
     stick, the Z axis will be parallel to the stick.
 
-    <img src="/img/grip.svg" width="600" alt="Hand Grip Pose"/>
+    <img src="/img/grip.svg" width="600" alt="Hand Grip Pose" class="flat"/>
 
     *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_grip_pose)*
 
@@ -151,7 +151,7 @@ return {
     The `/point` pose is used to aim or point at objects.  It's usually positioned slightly in front
     of the hand or controller, and is oriented so the -Z axis points in a natural forward direction.
 
-    <img src="/img/aim.svg" width="600" alt="Hand Point Pose"/>
+    <img src="/img/aim.svg" width="600" alt="Hand Point Pose" class="flat"/>
 
     *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_aim_pose)*
 
@@ -161,7 +161,7 @@ return {
     slightly in front of a controller.  The -Z axis will point forward, away from the hand.  It's
     good for precise, close-range interaction.
 
-    <img src="/img/pinch.svg" width="600" alt="Hand Pinch Pose"/>
+    <img src="/img/pinch.svg" width="600" alt="Hand Pinch Pose" class="flat"/>
 
     *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_pinch_pose)*
 
@@ -171,9 +171,11 @@ return {
     front of a controller.  The -Z axis will point forward out of the tip of the finger, the +Y axis
     will be perpendicular to the fingernail.
 
-    <img src="/img/poke.svg" width="600" alt="Hand Poke Pose"/>
+    <img src="/img/poke.svg" width="600" alt="Hand Poke Pose" class="flat"/>
 
     *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_poke_pose)*
+
+    ---
 
     These "hand pose devices" do not report any button input with e.g. `lovr.headset.isDown`.  The
     main `hand/left` and `hand/right` devices should be used for buttons and haptics.
