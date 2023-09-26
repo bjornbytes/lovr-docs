@@ -1,12 +1,13 @@
 return {
   tag = 'camera',
-  summary = 'Set the viewport.',
+  summary = 'Get the viewport.',
   description = [[
-    Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the
-    viewport.  More specifically, this defines the transformation from normalized device coordinates
-    to pixel coordinates.
+    Returns the viewport, or `nil` if no viewport is set.  Everything rendered will get mapped to
+    the rectangle defined by the viewport.  More specifically, this defines the transformation from
+    normalized device coordinates to pixel coordinates.
   ]],
-  arguments = {
+  arguments = {},
+  returns = {
     x = {
       type = 'number',
       description = 'The x coordinate of the upper-left corner of the viewport.',
@@ -34,21 +35,14 @@ return {
       description = 'The max component of the depth range.'
     }
   },
-  returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'w', 'h', 'dmin', 'dmax' },
-      returns = {}
-    },
-    {
-      description = 'Disable the viewport.',
       arguments = {},
-      returns = {}
+      returns = { 'x', 'y', 'w', 'h', 'dmin', 'dmax' }
     }
   },
   notes = [[
-    The viewport will apply to all draws in a Pass when the pass is submitted, even if this function
-    is called after adding the draws.
+    The viewport will apply to all draws in a Pass when the pass is submitted.
 
     The viewport rectangle can use floating point numbers.
 

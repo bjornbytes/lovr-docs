@@ -1,10 +1,12 @@
 return {
   tag = 'camera',
-  summary = 'Set the scissor rectangle.',
+  summary = 'Get the scissor rectangle.',
   description = [[
-    Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.
+    Returns the scissor rectangle, or `nil` if no scissor is set.  Any pixels outside the scissor
+    rectangle will not be drawn.
   ]],
-  arguments = {
+  arguments = {},
+  returns = {
     x = {
       type = 'number',
       description = 'The x coordinate of the upper-left corner of the scissor rectangle.',
@@ -22,25 +24,16 @@ return {
       description = 'The height of the scissor rectangle.',
     }
   },
-  returns = {},
   variants = {
     {
-      arguments = { 'x', 'y', 'w', 'h' },
-      returns = {}
-    },
-    {
-      description = 'Disable the scissor.',
       arguments = {},
-      returns = {}
+      returns = { 'x', 'y', 'w', 'h' }
     }
   },
   notes = [[
-    The scissor will apply to all draws in a Pass when the pass is submitted, even if this function
-    is called after adding the draws.
+    The scissor will apply to all draws in a Pass when the pass is submitted.
 
-    `x` and `y` can not be negative.  `w` and `h` must be positive.
-
-    By default, the scissor is disabled and will cover the entire render area.
+    The default scissor rectangle covers the entire dimensions of the render pass textures.
   ]],
   related = {
     'Pass:getViewport',

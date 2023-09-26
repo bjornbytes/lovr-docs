@@ -17839,6 +17839,46 @@ return {
               }
             },
             {
+              name = "getScissor",
+              tag = "camera",
+              summary = "Get the scissor rectangle.",
+              description = "Returns the scissor rectangle, or `nil` if no scissor is set.  Any pixels outside the scissor rectangle will not be drawn.",
+              key = "Pass:getScissor",
+              module = "lovr.graphics",
+              notes = "The scissor will apply to all draws in a Pass when the pass is submitted.\n\nThe default scissor rectangle covers the entire dimensions of the render pass textures.",
+              related = {
+                "Pass:getViewport",
+                "Pass:setViewport"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the upper-left corner of the scissor rectangle."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the upper-left corner of the scissor rectangle."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The width of the scissor rectangle."
+                    },
+                    {
+                      name = "h",
+                      type = "number",
+                      description = "The height of the scissor rectangle."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getTarget",
               tag = "pass-misc",
               summary = "Get the textures a render pass is rendering to.",
@@ -17992,6 +18032,59 @@ return {
                       name = "matrix",
                       type = "Mat4",
                       description = "The matrix containing the view pose."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getViewport",
+              tag = "camera",
+              summary = "Get the viewport.",
+              description = "Returns the viewport, or `nil` if no viewport is set.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
+              key = "Pass:getViewport",
+              module = "lovr.graphics",
+              notes = "The viewport will apply to all draws in a Pass when the pass is submitted.\n\nThe viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
+              related = {
+                "Pass:getScissor",
+                "Pass:setScissor",
+                "Pass:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the upper-left corner of the viewport."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the upper-left corner of the viewport."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The width of the viewport."
+                    },
+                    {
+                      name = "h",
+                      type = "number",
+                      description = "The height of the viewport.  May be negative."
+                    },
+                    {
+                      name = "dmin",
+                      type = "number",
+                      description = "The min component of the depth range.",
+                      default = "0.0"
+                    },
+                    {
+                      name = "dmax",
+                      type = "number",
+                      description = "The max component of the depth range.",
+                      default = "1.0"
                     }
                   }
                 }
@@ -19920,8 +20013,9 @@ return {
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "The scissor will apply to all draws in a Pass, even if this function is called after adding the draws.\n\n`x` and `y` can not be negative.\n\nThe default scissor rectangle covers the entire dimensions of the render pass textures.",
+              notes = "The scissor will apply to all draws in a Pass when the pass is submitted, even if this function is called after adding the draws.\n\n`x` and `y` can not be negative.  `w` and `h` must be positive.\n\nBy default, the scissor is disabled and will cover the entire render area.",
               related = {
+                "Pass:getViewport",
                 "Pass:setViewport"
               },
               variants = {
@@ -19948,6 +20042,11 @@ return {
                       description = "The height of the scissor rectangle."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Disable the scissor.",
+                  arguments = {},
                   returns = {}
                 }
               }
@@ -20237,8 +20336,9 @@ return {
               description = "Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
               key = "Pass:setViewport",
               module = "lovr.graphics",
-              notes = "The viewport will apply to all draws in a Pass, even if this function is called after adding the draws.\n\nThe viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
+              notes = "The viewport will apply to all draws in a Pass when the pass is submitted, even if this function is called after adding the draws.\n\nThe viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
               related = {
+                "Pass:getScissor",
                 "Pass:setScissor",
                 "Pass:getDimensions"
               },
@@ -20278,6 +20378,11 @@ return {
                       default = "1.0"
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Disable the viewport.",
+                  arguments = {},
                   returns = {}
                 }
               }
