@@ -1,5 +1,5 @@
 return {
-  tag = 'pipeline',
+  tag = 'camera',
   summary = 'Set the scissor rectangle.',
   description = [[
     Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.

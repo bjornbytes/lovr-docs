@@ -1,5 +1,5 @@
 return {
-  tag = 'pipeline',
+  tag = 'camera',
   summary = 'Set the viewport.',
   description = [[
     Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the
