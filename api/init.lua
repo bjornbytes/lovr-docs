@@ -36394,7 +36394,7 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "The function to call when an intersection is detected.",
+                      description = "The function to call when an intersection is detected.  It can return `false` to cancel checks against additional shapes.",
                       arguments = {
                         {
                           name = "shape",
@@ -36445,7 +36445,7 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "The function to call when an intersection is detected.",
+                      description = "The function to call when an intersection is detected.  It can return `false` to cancel checks against additional shapes.",
                       arguments = {
                         {
                           name = "shape",
