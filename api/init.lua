@@ -26112,6 +26112,175 @@ return {
               }
             },
             {
+              name = "getOrientation",
+              summary = "Get the angle/axis rotation of the matrix.",
+              description = "Returns the angle/axis rotation of the matrix.",
+              key = "Mat4:getOrientation",
+              module = "lovr.math",
+              related = {
+                "Mat4:getPosition",
+                "Mat4:getScale",
+                "Mat4:getPose",
+                "Mat4:unpack",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the matrix rotates around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPose",
+              summary = "Get the position and rotation of the matrix.",
+              description = "Returns the position and rotation of the matrix.",
+              key = "Mat4:getPose",
+              module = "lovr.math",
+              related = {
+                "Mat4:getPosition",
+                "Mat4:getOrientation",
+                "Mat4:getScale",
+                "Mat4:unpack",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z translation."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the matrix rotates around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPosition",
+              summary = "Get the translation of the matrix.",
+              description = "Returns the translation of the matrix.  This is the last column of the matrix.",
+              key = "Mat4:getPosition",
+              module = "lovr.math",
+              related = {
+                "Mat4:getOrientation",
+                "Mat4:getScale",
+                "Mat4:getPose",
+                "Mat4:unpack",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z translation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getScale",
+              summary = "Get the scale factor of the matrix.",
+              description = "Returns the scale factor of the matrix.",
+              key = "Mat4:getScale",
+              module = "lovr.math",
+              related = {
+                "Mat4:getPosition",
+                "Mat4:getOrientation",
+                "Mat4:getPose",
+                "Mat4:unpack",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "identity",
               summary = "Reset the matrix to the identity.",
               description = "Resets the matrix to the identity, effectively setting its translation to zero, its scale to 1, and clearing any rotation.",
@@ -26891,7 +27060,11 @@ return {
               key = "Mat4:unpack",
               module = "lovr.math",
               related = {
-                "Mat4:set"
+                "Mat4:set",
+                "Mat4:getPosition",
+                "Mat4:getOrientation",
+                "Mat4:getScale",
+                "Mat4:getPose"
               },
               variants = {
                 {

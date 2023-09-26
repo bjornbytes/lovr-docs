@@ -25,6 +25,10 @@ return {
     }
   },
   related = {
-    'Mat4:set'
+    'Mat4:set',
+    'Mat4:getPosition',
+    'Mat4:getOrientation',
+    'Mat4:getScale',
+    'Mat4:getPose'
   }
 }
