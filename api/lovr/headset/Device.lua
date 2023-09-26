@@ -144,12 +144,16 @@ return {
 
     <img src="/img/grip.svg" width="600" alt="Hand Grip Pose"/>
 
+    *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_grip_pose)*
+
     ---
 
     The `/point` pose is used to aim or point at objects.  It's usually positioned slightly in front
     of the hand or controller, and is oriented so the -Z axis points in a natural forward direction.
 
     <img src="/img/aim.svg" width="600" alt="Hand Point Pose"/>
+
+    *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_aim_pose)*
 
     ---
 
@@ -159,6 +163,8 @@ return {
 
     <img src="/img/pinch.svg" width="600" alt="Hand Pinch Pose"/>
 
+    *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_pinch_pose)*
+
     ---
 
     The `poke` pose is a position located at the tip of the index finger, or a point slightly in
@@ -166,6 +172,8 @@ return {
     will be perpendicular to the fingernail.
 
     <img src="/img/poke.svg" width="600" alt="Hand Poke Pose"/>
+
+    *Image from the [OpenXR Specification](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#_poke_pose)*
 
     These "hand pose devices" do not report any button input with e.g. `lovr.headset.isDown`.  The
     main `hand/left` and `hand/right` devices should be used for buttons and haptics.
