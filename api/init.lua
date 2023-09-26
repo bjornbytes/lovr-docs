@@ -35511,12 +35511,14 @@ return {
                     {
                       name = "tag1",
                       type = "string",
-                      description = "The first tag."
+                      description = "The first tag, or `nil` to use a wildcard.",
+                      default = "nil"
                     },
                     {
                       name = "tag2",
                       type = "string",
-                      description = "The second tag."
+                      description = "The second tag, or `nil` to use a wildcard.",
+                      default = "nil"
                     }
                   },
                   returns = {
