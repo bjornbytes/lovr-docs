@@ -189,7 +189,7 @@ return {
                     {
                       name = "overlay",
                       type = "boolean",
-                      description = "Whether the project should run as an overlay."
+                      description = "Whether the project should run as an overlay.  Can also be a number to control sort order against other overlays (default is zero, higher numbers go on top)."
                     }
                   }
                 },
