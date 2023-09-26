@@ -19915,7 +19915,7 @@ return {
             },
             {
               name = "setScissor",
-              tag = "pipeline",
+              tag = "camera",
               summary = "Set the scissor rectangle.",
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
@@ -20232,7 +20232,7 @@ return {
             },
             {
               name = "setViewport",
-              tag = "pipeline",
+              tag = "camera",
               summary = "Set the viewport.",
               description = "Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
               key = "Pass:setViewport",
