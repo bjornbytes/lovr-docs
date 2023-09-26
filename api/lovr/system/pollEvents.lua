@@ -1,5 +1,5 @@
 return {
-  summary = 'Pump new events into the queue for processing.',
+  summary = 'Poll the OS for new window events.',
   description = [[
     Fills the event queue with unprocessed events from the operating system.  This function should
     be called often, otherwise the operating system will consider the application unresponsive.

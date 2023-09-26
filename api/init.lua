@@ -292,7 +292,7 @@ return {
       examples = {
         {
           description = "The default error handler.",
-          code = "function lovr.errhand(message)\n  local function formatTraceback(s)\n    return s:gsub('\\n[^\\n]+$', ''):gsub('\\t', ''):gsub('stack traceback', '\\nStack')\n  end\n\n  message = tostring(message) .. formatTraceback(debug.traceback('', 4))\n  print('Error:\\n' .. message)\n\n  if not lovr.graphics or not lovr.graphics.isInitialized() then\n    return function() return 1 end\n  end\n\n  if lovr.audio then lovr.audio.stop() end\n\n  local scale = .35\n  local font = lovr.graphics.getDefaultFont()\n  local wrap = .7 * font:getPixelDensity()\n  local lines = font:getLines(message, wrap)\n  local width = math.min(font:getWidth(message), wrap) * scale\n  local height = .8 + #lines * font:getHeight() * scale\n  local x = -width / 2\n  local y = math.min(height / 2, 10)\n  local z = -10\n\n  lovr.graphics.setBackgroundColor(.11, .10, .14)\n  font:setPixelDensity()\n\n  local function render(pass)\n    pass:setColor(.95, .95, .95)\n    pass:text('Error', x, y, z, scale * 1.6, 0, 0, 0, 0, nil, 'left', 'top')\n    pass:text(message, x, y - .8, z, scale, 0, 0, 0, 0, wrap, 'left', 'top')\n  end\n\n  return function()\n    lovr.event.pump()\n\n    for name, a in lovr.event.poll() do\n      if name == 'quit' then return a or 1\n      elseif name == 'restart' then return 'restart', lovr.restart and lovr.restart()\n      elseif name == 'keypressed' and a == 'f5' then lovr.event.restart() end\n    end\n\n    if lovr.headset and lovr.headset.getDriver() ~= 'desktop' then\n      lovr.headset.update()\n      local pass = lovr.headset.getPass()\n      if pass then\n        render(pass)\n        lovr.graphics.submit(pass)\n        lovr.headset.submit()\n      end\n    end\n\n    if lovr.system.isWindowOpen() then\n      local pass = lovr.graphics.getWindowPass()\n      if pass then\n        render(pass)\n        lovr.graphics.submit(pass)\n        lovr.graphics.present()\n      end\n    end\n  end\nend"
+          code = "function lovr.errhand(message)\n  local function formatTraceback(s)\n    return s:gsub('\\n[^\\n]+$', ''):gsub('\\t', ''):gsub('stack traceback:', '\\nStack:\\n')\n  end\n\n  message = 'Error:\\n\\n' .. tostring(message) .. formatTraceback(debug.traceback('', 4))\n\n  print(message)\n\n  if not lovr.graphics or not lovr.graphics.isInitialized() then\n    return function() return 1 end\n  end\n\n  if lovr.audio then lovr.audio.stop() end\n\n  if not lovr.headset or lovr.headset.getPassthrough() == 'opaque' then\n    lovr.graphics.setBackgroundColor(.11, .10, .14)\n  else\n    lovr.graphics.setBackgroundColor(0, 0, 0, 0)\n  end\n\n  local font = lovr.graphics.getDefaultFont()\n\n  return function()\n    lovr.system.pollEvents()\n\n    for name, a in lovr.event.poll() do\n      if name == 'quit' then return a or 1\n      elseif name == 'restart' then return 'restart', lovr.restart and lovr.restart()\n      elseif name == 'keypressed' and a == 'f5' then lovr.event.restart()\n      elseif name == 'keypressed' and a == 'escape' then lovr.event.quit() end\n    end\n\n    if lovr.headset and lovr.headset.getDriver() ~= 'desktop' then\n      lovr.headset.update()\n      local pass = lovr.headset.getPass()\n      if pass then\n        font:setPixelDensity()\n\n        local scale = .35\n        local font = lovr.graphics.getDefaultFont()\n        local wrap = .7 * font:getPixelDensity()\n        local lines = font:getLines(message, wrap)\n        local width = math.min(font:getWidth(message), wrap) * scale\n        local height = .8 + #lines * font:getHeight() * scale\n        local x = -width / 2\n        local y = math.min(height / 2, 10)\n        local z = -10\n\n        pass:setColor(.95, .95, .95)\n        pass:text(message, x, y, z, scale, 0, 0, 0, 0, wrap, 'left', 'top')\n\n        lovr.graphics.submit(pass)\n        lovr.headset.submit()\n      end\n    end\n\n    if lovr.system.isWindowOpen() then\n      local pass = lovr.graphics.getWindowPass()\n      if pass then\n        local w, h = lovr.system.getWindowDimensions()\n        pass:setProjection(1, lovr.math.mat4():orthographic(0, w, 0, h, -1, 1))\n        font:setPixelDensity(1)\n\n        local scale = .6\n        local wrap = w * .8 / scale\n        local width = math.min(font:getWidth(message), wrap) * scale\n        local x = w / 2 - width / 2\n\n        pass:setColor(.95, .95, .95)\n        pass:text(message, x, h / 2, 0, scale, 0, 0, 0, 0, wrap, 'left', 'middle')\n\n        lovr.graphics.submit(pass)\n        lovr.graphics.present()\n      end\n    end\n\n    lovr.math.drain()\n  end\nend"
         }
       },
       related = {
@@ -780,10 +780,10 @@ return {
       examples = {
         {
           description = "The default `lovr.run`:",
-          code = "function lovr.run()\n  if lovr.timer then lovr.timer.step() end\n  if lovr.load then lovr.load(arg) end\n  return function()\n    if lovr.event then\n      lovr.event.pump()\n      for name, a, b, c, d in lovr.event.poll() do\n        if name == 'restart' then\n          local cookie = lovr.restart and lovr.restart()\n          return 'restart', cookie\n        elseif name == 'quit' and (not lovr.quit or not lovr.quit(a)) then\n          return a or 0\n        end\n        if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n      end\n    end\n    local dt = 0\n    if lovr.timer then dt = lovr.timer.step() end\n    if lovr.headset then dt = lovr.headset.update() end\n    if lovr.update then lovr.update(dt) end\n    if lovr.graphics then\n      if lovr.headset then\n        local pass = lovr.headset.getPass()\n        if pass then\n          local skip = lovr.draw and lovr.draw(pass)\n          if not skip then lovr.graphics.submit(pass) end\n        end\n      end\n      if lovr.system.isWindowOpen() then\n        if lovr.mirror then\n          local pass = lovr.graphics.getWindowPass()\n          local skip = lovr.mirror(pass)\n          if not skip then lovr.graphics.submit(pass) end\n        end\n        lovr.graphics.present()\n      end\n    end\n    if lovr.headset then lovr.headset.submit() end\n    if lovr.math then lovr.math.drain() end\n  end\nend"
+          code = "function lovr.run()\n  if lovr.timer then lovr.timer.step() end\n  if lovr.load then lovr.load(arg) end\n  return function()\n    if lovr.system then lovr.system.pollEvents() end\n    if lovr.event then\n      for name, a, b, c, d in lovr.event.poll() do\n        if name == 'restart' then\n          local cookie = lovr.restart and lovr.restart()\n          return 'restart', cookie\n        elseif name == 'quit' and (not lovr.quit or not lovr.quit(a)) then\n          return a or 0\n        end\n        if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end\n      end\n    end\n    local dt = 0\n    if lovr.timer then dt = lovr.timer.step() end\n    if lovr.headset then dt = lovr.headset.update() end\n    if lovr.update then lovr.update(dt) end\n    if lovr.graphics then\n      local headset = lovr.headset and lovr.headset.getPass()\n      if headset and (not lovr.draw or lovr.draw(headset)) then headset = nil end\n      local window = lovr.graphics.getWindowPass()\n      if window and (not lovr.mirror or lovr.mirror(window)) then window = nil end\n      lovr.graphics.submit(headset, window)\n      lovr.graphics.present()\n    end\n    if lovr.headset then lovr.headset.submit() end\n    if lovr.math then lovr.math.drain() end\n  end\nend"
         }
       },
-      notes = "The main loop function can return one of the following values:\n\n- Returning `nil` will keep the main loop running.\n- Returning the string 'restart' plus an optional value will restart LÖVR.  The value can be\n  accessed in the `restart` key of the `arg` global.\n- Returning a number will exit LÖVR using the number as the exit code (0 means success).\n\nCare should be taken when overriding this callback.  For example, if the main loop does not call `lovr.event.pump` then the OS will think LÖVR is unresponsive, and if the quit event is not handled then closing the window won't work.",
+      notes = "The main loop function can return one of the following values:\n\n- Returning `nil` will keep the main loop running.\n- Returning the string 'restart' plus an optional value will restart LÖVR.  The value can be\n  accessed in the `restart` key of the `arg` global.\n- Returning a number will exit LÖVR using the number as the exit code (0 means success).\n\nCare should be taken when overriding this callback.  For example, if the main loop does not call `lovr.system.pollEvents` then the OS will think LÖVR is unresponsive, or if the quit event is not handled then closing the window won't work.",
       related = {
         "lovr.load",
         "lovr.quit"
@@ -8648,22 +8648,6 @@ return {
                   returns = {}
                 }
               }
-            }
-          }
-        },
-        {
-          name = "pump",
-          summary = "Pump new events into the queue for processing.",
-          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider the application unresponsive. This function is called in the default implementation of `lovr.run`.",
-          key = "lovr.event.pump",
-          module = "lovr.event",
-          related = {
-            "lovr.event.poll"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {}
             }
           }
         },
@@ -37220,6 +37204,22 @@ return {
           }
         },
         {
+          name = "pollEvents",
+          summary = "Poll the OS for new window events.",
+          description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider the application unresponsive. This function is called in the default implementation of `lovr.run`.",
+          key = "lovr.system.pollEvents",
+          module = "lovr.system",
+          related = {
+            "lovr.event.poll"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
           name = "requestPermission",
           summary = "Request permission to use a feature.",
           description = "Requests permission to use a feature.  Usually this will pop up a dialog box that the user needs to confirm.  Once the permission request has been acknowledged, the `lovr.permission` callback will be called with the result.  Currently, this is only used for requesting microphone access on Android devices.",
@@ -37335,7 +37335,7 @@ return {
       name = "thread",
       tag = "modules",
       summary = "Allows the creation of background threads.",
-      description = "The `lovr.thread` module provides functions for creating threads and communicating between them.\n\nThese are operating system level threads, which are different from Lua coroutines.\n\nThreads are useful for performing expensive background computation without affecting the framerate or performance of the main thread.  Some examples of this include asset loading, networking and network requests, and physics simulation.\n\nThreads come with some caveats:\n\n- Threads run in a bare Lua environment.  The `lovr` module (and any of lovr's modules) need to\n  be required before they can be used.\n  - To get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.\n- Threads are completely isolated from other threads.  They do not have access to the variables\n  or functions of other threads, and communication between threads must be coordinated through\n  `Channel` objects.\n- The graphics module (or any functions that perform rendering) cannot be used in a thread.\n  Note that this includes creating graphics objects like Models and Textures.  There are \"data\"\n  equivalent `ModelData` and `Image` objects that can be used in threads though.\n- `lovr.event.pump` cannot be called from a thread.\n- Crashes or problems can happen if two threads access the same object at the same time, so\n  special care must be taken to coordinate access to objects from multiple threads.",
+      description = "The `lovr.thread` module provides functions for creating threads and communicating between them.\n\nThese are operating system level threads, which are different from Lua coroutines.\n\nThreads are useful for performing expensive background computation without affecting the framerate or performance of the main thread.  Some examples of this include asset loading, networking and network requests, and physics simulation.\n\nThreads come with some caveats:\n\n- Threads run in a bare Lua environment.  The `lovr` module (and any of lovr's modules) need to\n  be required before they can be used.\n  - To get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.\n- Threads are completely isolated from other threads.  They do not have access to the variables\n  or functions of other threads, and communication between threads must be coordinated through\n  `Channel` objects.\n- The graphics module (or any functions that perform rendering) cannot be used in a thread.\n  Note that this includes creating graphics objects like Models and Textures.  There are \"data\"\n  equivalent `ModelData` and `Image` objects that can be used in threads though.\n- `lovr.system.pollEvents` cannot be called from a thread.\n- Crashes or problems can happen if two threads access the same object at the same time, so\n  special care must be taken to coordinate access to objects from multiple threads.",
       key = "lovr.thread",
       enums = {},
       functions = {
