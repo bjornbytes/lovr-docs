@@ -327,12 +327,13 @@ return {
     {
       name = "focus",
       tag = "callbacks",
-      summary = "Called when the application gets or loses focus.",
+      summary = "Called when the application gains or loses input focus.",
       description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
       key = "lovr.focus",
       module = "lovr",
       related = {
-        "lovr.headset.isFocused"
+        "lovr.headset.isFocused",
+        "lovr.visible"
       },
       variants = {
         {
@@ -867,6 +868,30 @@ return {
               name = "dt",
               type = "number",
               description = "The number of seconds elapsed since the last update."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
+      name = "visible",
+      tag = "callbacks",
+      summary = "Called when the application gains or loses visibility.",
+      description = "The `lovr.visible` callback is called whenever the application becomes visible or invisible. `lovr.draw` may still be called even while invisible to give the VR runtime timing info.  If the VR runtime decides the application doesn't need to render anymore, LÖVR will detect this and stop calling `lovr.draw`.",
+      key = "lovr.visible",
+      module = "lovr",
+      related = {
+        "lovr.headset.isVisible",
+        "lovr.focus"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "visible",
+              type = "boolean",
+              description = "Whether the application is visible in the headset display."
             }
           },
           returns = {}
@@ -23627,6 +23652,32 @@ return {
                   name = "tracked",
                   type = "boolean",
                   description = "Whether the device is currently tracked."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "isVisible",
+          tag = "headset",
+          summary = "Check if content is being shown in the headset display.",
+          description = "Returns whether LÖVR's content is being presented to the headset display.  Normally this will be true, but some VR runtimes allow applications to be hidden or \"minimized\", similar to desktop windows.",
+          key = "lovr.headset.isVisible",
+          module = "lovr.headset",
+          notes = "`lovr.draw` may still be called even when the application is invisible, and apps should continue to render the scene normally because the VR system may use this for timing info.  If the VR system decides that the application no longer needs to render, LÖVR will stop calling `lovr.draw`.",
+          related = {
+            "lovr.visible",
+            "lovr.headset.isFocused",
+            "lovr.focus"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "visible",
+                  type = "boolean",
+                  description = "Whether the application is visible."
                 }
               }
             }
