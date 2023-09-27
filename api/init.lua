@@ -22627,6 +22627,11 @@ return {
           description = "Animates a model to match its input state.  The buttons and joysticks on a controller will move as they're pressed/moved and hand models will move to match hand tracking joints.\n\nThe model must have been created using `lovr.headset.newModel` with the `animated` flag set to `true`.",
           key = "lovr.headset.animate",
           module = "lovr.headset",
+          examples = {
+            {
+              code = "function lovr.load()\n  models = {\n    left = lovr.headset.newModel('hand/left'),\n    right = lovr.headset.newModel('hand/right')\n  }\nend\n\nfunction lovr.draw(pass)\n  for hand, model in pairs(models) do\n    if lovr.headset.isTracked(hand) then\n      lovr.headset.animate(model)\n      pass:draw(model, mat4(lovr.headset.getPose(hand)))\n    end\n  end\n\n  if not next(models) then\n    pass:text('No models loaded', 0, 1.7, -1, .1)\n  end\nend"
+            }
+          },
           notes = "It's possible to animate a custom hand model by retargeting joint poses, see the `Interaction/Custom_Hand_Rig` example.",
           related = {
             "lovr.headset.newModel",
