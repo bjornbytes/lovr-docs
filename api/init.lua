@@ -13187,6 +13187,30 @@ return {
               }
             },
             {
+              name = "getMaterial",
+              summary = "Get the Material applied to the Mesh.",
+              description = "Returns the `Material` applied to the Mesh.",
+              key = "Mesh:getMaterial",
+              module = "lovr.graphics",
+              related = {
+                "Pass:setMaterial",
+                "Model:getMaterial",
+                "lovr.graphics.newMaterial"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "The material."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getVertexBuffer",
               summary = "Get the Buffer backing the vertices of the Mesh.",
               description = "Returns the `Buffer` object that holds the data for the vertices in the Mesh.\n\nIf a Mesh uses the `cpu` storage mode, the vertex buffer is internal to the `Mesh` and this function will return `nil`.  This ensures that the CPU data for the Mesh does not get out of sync with the GPU data in the Buffer.",
@@ -13389,6 +13413,30 @@ return {
                       description = "The index buffer."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setMaterial",
+              summary = "Set a Material to use when drawing the Mesh.",
+              description = "Sets a `Material` to use when drawing the Mesh.",
+              key = "Mesh:setMaterial",
+              module = "lovr.graphics",
+              related = {
+                "Pass:setMaterial",
+                "Model:getMaterial",
+                "lovr.graphics.newMaterial"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "The material to use."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
