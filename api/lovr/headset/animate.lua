@@ -2,10 +2,10 @@ return {
   tag = 'input',
   summary = 'Animate a model to match its Device input state.',
   description = [[
-    Animates a device model to match its current input state.  The buttons and joysticks on a
-    controller will move as they're pressed/moved and hand models will move to match skeletal input.
+    Animates a model to match its input state.  The buttons and joysticks on a controller will move
+    as they're pressed/moved and hand models will move to match hand tracking joints.
 
-    The model should have been created using `lovr.headset.newModel` with the `animated` flag set to
+    The model must have been created using `lovr.headset.newModel` with the `animated` flag set to
     `true`.
   ]],
   arguments = {
@@ -30,17 +30,20 @@ return {
   },
   variants = {
     {
+      arguments = { 'model' },
+      returns = { 'success' }
+    },
+    {
       arguments = { 'device', 'model' },
       returns = { 'success' }
     }
   },
   notes = [[
-    Currently this function is only supported for hand models on the Oculus Quest.
-
-    It's possible to use models that weren't created with `lovr.headset.newModel` but they need to
-    be set up carefully to have the same structure as the models provided by the headset SDK.
+    It's possible to animate a custom hand model by retargeting joint poses, see the
+    `Interaction/Custom_Hand_Rig` example.
   ]],
   related = {
-    'lovr.headset.newModel'
+    'lovr.headset.newModel',
+    'Model:animate'
   }
 }

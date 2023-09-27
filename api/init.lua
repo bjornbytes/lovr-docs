@@ -22624,14 +22624,31 @@ return {
           name = "animate",
           tag = "input",
           summary = "Animate a model to match its Device input state.",
-          description = "Animates a device model to match its current input state.  The buttons and joysticks on a controller will move as they're pressed/moved and hand models will move to match skeletal input.\n\nThe model should have been created using `lovr.headset.newModel` with the `animated` flag set to `true`.",
+          description = "Animates a model to match its input state.  The buttons and joysticks on a controller will move as they're pressed/moved and hand models will move to match hand tracking joints.\n\nThe model must have been created using `lovr.headset.newModel` with the `animated` flag set to `true`.",
           key = "lovr.headset.animate",
           module = "lovr.headset",
-          notes = "Currently this function is only supported for hand models on the Oculus Quest.\n\nIt's possible to use models that weren't created with `lovr.headset.newModel` but they need to be set up carefully to have the same structure as the models provided by the headset SDK.",
+          notes = "It's possible to animate a custom hand model by retargeting joint poses, see the `Interaction/Custom_Hand_Rig` example.",
           related = {
-            "lovr.headset.newModel"
+            "lovr.headset.newModel",
+            "Model:animate"
           },
           variants = {
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The model to animate."
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the animation was applied successfully to the Model.  If the Model was not compatible or animation data for the device was not available, this will be `false`."
+                }
+              }
+            },
             {
               arguments = {
                 {
