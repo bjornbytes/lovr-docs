@@ -20450,7 +20450,7 @@ return {
                     {
                       name = "w",
                       type = "number",
-                      description = "The width of the viewport."
+                      description = "The width of the viewport.  Must be positive."
                     },
                     {
                       name = "h",
@@ -20460,13 +20460,13 @@ return {
                     {
                       name = "dmin",
                       type = "number",
-                      description = "The min component of the depth range.",
+                      description = "The min component of the depth range, between 0 and 1.",
                       default = "0.0"
                     },
                     {
                       name = "dmax",
                       type = "number",
-                      description = "The max component of the depth range.",
+                      description = "The max component of the depth range, between 0 and 1.",
                       default = "1.0"
                     }
                   },

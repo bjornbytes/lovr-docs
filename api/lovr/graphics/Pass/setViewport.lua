@@ -17,7 +17,7 @@ return {
     },
     w = {
       type = 'number',
-      description = 'The width of the viewport.',
+      description = 'The width of the viewport.  Must be positive.',
     },
     h = {
       type = 'number',
@@ -26,12 +26,12 @@ return {
     dmin = {
       type = 'number',
       default = '0.0',
-      description = 'The min component of the depth range.'
+      description = 'The min component of the depth range, between 0 and 1.'
     },
     dmax = {
       type = 'number',
       default = '1.0',
-      description = 'The max component of the depth range.'
+      description = 'The max component of the depth range, between 0 and 1.'
     }
   },
   returns = {},
