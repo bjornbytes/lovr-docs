@@ -815,7 +815,7 @@ return {
       description = "This callback is called when text has been entered.\n\nFor example, when `shift + 1` is pressed on an American keyboard, `lovr.textinput` will be called with `!`.",
       key = "lovr.textinput",
       module = "lovr",
-      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character. `Pass:text` is compatible with UTF-8 but doing other string processing on these strings may require a library.  Lua 5.3+ has support for working with UTF-8 strings.",
+      notes = "Some characters in UTF-8 unicode take multiple bytes to encode.  Due to the way Lua works, the length of these strings will be bigger than 1 even though they are just a single character.  The `utf8` library included with LÖVR can be used to manipulate UTF-8 strings.  `Pass:text` will also correctly handle UTF-8.",
       related = {
         "lovr.keypressed",
         "lovr.keyreleased"
