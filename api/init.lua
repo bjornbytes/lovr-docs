@@ -3196,10 +3196,10 @@ return {
           }
         },
         {
-          name = "DrawMode",
+          name = "ModelDrawMode",
           summary = "Different draw modes for meshes in ModelDatas.",
           description = "The DrawMode of a mesh determines how its vertices are connected together.",
-          key = "DrawMode",
+          key = "ModelDrawMode",
           module = "lovr.data",
           related = {
             "ModelData:getMeshDrawMode"
@@ -5831,7 +5831,7 @@ return {
                   returns = {
                     {
                       name = "mode",
-                      type = "DrawMode",
+                      type = "ModelDrawMode",
                       description = "The draw mode of the mesh."
                     }
                   }
@@ -9667,6 +9667,27 @@ return {
           }
         },
         {
+          name = "DrawMode",
+          summary = "Different ways to draw mesh vertices.",
+          description = "Different ways vertices in a mesh can be connected together and filled in with pixels.",
+          key = "DrawMode",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "points",
+              description = "Each vertex is rendered as a single point.  The size of the point can be controlled using the `pointSize` shader flag, or by writing to the `PointSize` variable in shaders.  The maximum point size is given by the `pointSize` limit from `lovr.graphics.getLimits`."
+            },
+            {
+              name = "lines",
+              description = "Pairs of vertices are connected with line segments.  To draw a single line through all of the vertices, an index buffer can be used to repeat vertices.  It is not currently possible to change the width of the lines, although cylinders or capsules can be used as an alternative."
+            },
+            {
+              name = "triangles",
+              description = "Every 3 vertices form a triangle, which is filled in with pixels (unless `Pass:setWireframe` is used).  This mode is the most commonly used."
+            }
+          }
+        },
+        {
           name = "DrawStyle",
           summary = "Different styles to draw shapes.",
           description = "Whether a shape should be drawn filled or outlined.",
@@ -9886,27 +9907,6 @@ return {
             {
               name = "right",
               description = "Right-aligned text."
-            }
-          }
-        },
-        {
-          name = "MeshMode",
-          summary = "Different ways to draw mesh vertices.",
-          description = "Different ways vertices in a mesh can be connected together and filled in with pixels.",
-          key = "MeshMode",
-          module = "lovr.graphics",
-          values = {
-            {
-              name = "points",
-              description = "Each vertex is rendered as a single point.  The size of the point can be controlled using the `pointSize` shader flag, or by writing to the `PointSize` variable in shaders.  The maximum point size is given by the `pointSize` limit from `lovr.graphics.getLimits`."
-            },
-            {
-              name = "lines",
-              description = "Pairs of vertices are connected with line segments.  To draw a single line through all of the vertices, an index buffer can be used to repeat vertices.  It is not currently possible to change the width of the lines, although cylinders or capsules can be used as an alternative."
-            },
-            {
-              name = "triangles",
-              description = "Every 3 vertices form a triangle, which is filled in with pixels (unless `Pass:setWireframe` is used).  This mode is the most commonly used."
             }
           }
         },
@@ -13141,6 +13141,28 @@ return {
           },
           methods = {
             {
+              name = "getDrawMode",
+              summary = "Get the draw mode of the Mesh.",
+              description = "Returns the `DrawMode` of the mesh, which controls how the vertices in the Mesh are connected together to create pixels.  The default is `triangles`.",
+              key = "Mesh:getDrawMode",
+              module = "lovr.graphics",
+              related = {
+                "Pass:setMeshMode"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "mode",
+                      type = "DrawMode",
+                      description = "The current draw mode."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getIndexBuffer",
               summary = "Get the Buffer backing the vertex indices of the Mesh.",
               description = "Returns the `Buffer` object that holds the data for the vertex indices in the Mesh.\n\nThis can be `nil` if the Mesh doesn't have any indices.\n\nIf a Mesh uses the `cpu` storage mode, the index buffer is internal to the `Mesh` and this function will return `nil`.  This ensures that the CPU data for the Mesh does not get out of sync with the GPU data in the Buffer.",
@@ -13314,6 +13336,28 @@ return {
                       description = "A table of vertices.  Each vertex is a table of numbers for each vertex attribute, given by the vertex format of the Mesh."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setDrawMode",
+              summary = "Set the draw mode of the Mesh.",
+              description = "Changes the `DrawMode` of the mesh, which controls how the vertices in the Mesh are connected together to create pixels.  The default is `triangles`.",
+              key = "Mesh:setDrawMode",
+              module = "lovr.graphics",
+              related = {
+                "Pass:setMeshMode"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mode",
+                      type = "DrawMode",
+                      description = "The current draw mode."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -14195,7 +14239,7 @@ return {
                   returns = {
                     {
                       name = "mode",
-                      type = "MeshMode",
+                      type = "DrawMode",
                       description = "Whether the vertices are points, lines, or triangles."
                     },
                     {
@@ -14236,7 +14280,7 @@ return {
                   returns = {
                     {
                       name = "mode",
-                      type = "MeshMode",
+                      type = "DrawMode",
                       description = "Whether the vertices are points, lines, or triangles."
                     },
                     {
@@ -18123,7 +18167,7 @@ return {
               name = "line",
               tag = "drawing",
               summary = "Draw a line.",
-              description = "Draws a line between points.  `Pass:mesh` can also be used to draw line segments using the `line` `MeshMode`.",
+              description = "Draws a line between points.  `Pass:mesh` can also be used to draw line segments using the `line` `DrawMode`.",
               key = "Pass:line",
               module = "lovr.graphics",
               notes = "There is currently no way to increase line thickness.",
@@ -18212,7 +18256,7 @@ return {
                   code = "function lovr.draw(pass)\n  local vertices = {\n    vec3(  0,  .4, 0), vec4(1, 0, 0, 1),\n    vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),\n    vec3( .5, -.4, 0), vec4(0, 0, 1, 1)\n  }\n\n  local format = {\n    { type = 'vec3', location = 'VertexPosition' },\n    { type = 'vec4', location = 'VertexColor' }\n  }\n\n  local triangle = lovr.graphics.getBuffer(vertices, format)\n\n  pass:mesh(triangle, 0, 1.7, -1)\nend"
                 }
               },
-              notes = "The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse, or omit vertices from the mesh.\n\nWhen drawing without a vertex buffer, the `VertexIndex` variable can be used in shaders to compute the position of each vertex, possibly by reading data from other `Buffer` or `Texture` resources.\n\nThe active `MeshMode` controls whether the vertices are drawn as points, lines, or triangles.\n\nThe active `Material` is applied to the mesh.",
+              notes = "The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse, or omit vertices from the mesh.\n\nWhen drawing without a vertex buffer, the `VertexIndex` variable can be used in shaders to compute the position of each vertex, possibly by reading data from other `Buffer` or `Texture` resources.\n\nThe active `DrawMode` controls whether the vertices are drawn as points, lines, or triangles.\n\nThe active `Material` is applied to the mesh.",
               variants = {
                 {
                   description = "Draw a range of vertices from a Buffer, using numbers for the transform.",
@@ -19887,7 +19931,7 @@ return {
                   arguments = {
                     {
                       name = "mode",
-                      type = "MeshMode",
+                      type = "DrawMode",
                       description = "The mesh mode to use."
                     }
                   },

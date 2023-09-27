@@ -175,7 +175,7 @@ return {
     compute the position of each vertex, possibly by reading data from other `Buffer` or `Texture`
     resources.
 
-    The active `MeshMode` controls whether the vertices are drawn as points, lines, or triangles.
+    The active `DrawMode` controls whether the vertices are drawn as points, lines, or triangles.
 
     The active `Material` is applied to the mesh.
   ]],

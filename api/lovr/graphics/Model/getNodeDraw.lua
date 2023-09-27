@@ -19,7 +19,7 @@ return {
   },
   returns = {
     mode = {
-      type = 'MeshMode',
+      type = 'DrawMode',
       description = 'Whether the vertices are points, lines, or triangles.'
     },
     material = {
