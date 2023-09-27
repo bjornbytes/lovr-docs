@@ -3,6 +3,7 @@ return {
   description = 'Allocates a new `quat` from the Pool and returns it.',
   arguments = {
     angle = {
+      type = 'number',
       default = '0',
       description = 'The angle to use for the rotation, in radians.'
     },
