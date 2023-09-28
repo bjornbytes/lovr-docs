@@ -13141,6 +13141,86 @@ return {
           },
           methods = {
             {
+              name = "computeBoundingBox",
+              summary = "Compute the bounding box of the Mesh.",
+              description = "Computes the axis-aligned bounding box of the Mesh from its vertices.\n\nIf the Mesh was created with the `gpu` storage mode, this function will do nothing and return `false`.\n\nIf the Mesh does not have an attribute named `VertexPosition` with the `f32x3` (aka `vec3`) type, this function will do nothing and return `false`.\n\nOtherwise, the bounding box will be set and the return value will be `true`.\n\nThe bounding box can also be assigned manually using `Mesh:setBoundingBox`, which can be used to set the bounding box on a `gpu` mesh or for cases where the bounding box is already known.\n\nPasses will use the bounding box of a Mesh to cull it against the cameras when `Pass:setViewCull` is enabled, which avoids rendering it when it's out of view.",
+              key = "Mesh:computeBoundingBox",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:getBoundingBox",
+                "Mesh:setBoundingBox",
+                "Pass:setViewCull",
+                "Collider:getAABB",
+                "Shape:getAABB",
+                "Model:getBoundingBox",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "updated",
+                      type = "boolean",
+                      description = "Whether the bounding box was updated."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBoundingBox",
+              summary = "Get the bounding box of the Mesh.",
+              description = "Returns the axis-aligned bounding box of the Mesh, or `nil` if the Mesh doesn't have a bounding box.\n\nMeshes with the `cpu` storage mode can compute their bounding box automatically using `Mesh:computeBoundingBox`.  The bounding box can also be set manually using `Mesh:setBoundingBox`.\n\nPasses will use the bounding box of a Mesh to cull it against the cameras when `Pass:setViewCull` is enabled, which avoids rendering it when it's out of view.",
+              key = "Mesh:getBoundingBox",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:computeBoundingBox",
+                "Pass:setViewCull",
+                "Collider:getAABB",
+                "Shape:getAABB",
+                "Model:getBoundingBox",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the bounding box."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the bounding box."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the bounding box."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the bounding box."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the bounding box."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the bounding box."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDrawMode",
               summary = "Get the draw mode of the Mesh.",
               description = "Returns the `DrawMode` of the mesh, which controls how the vertices in the Mesh are connected together to create pixels.  The default is `triangles`.",
@@ -13360,6 +13440,63 @@ return {
                       description = "A table of vertices.  Each vertex is a table of numbers for each vertex attribute, given by the vertex format of the Mesh."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setBoundingBox",
+              summary = "Set or remove the bounding box of the Mesh.",
+              description = "Sets or removes the axis-aligned bounding box of the Mesh.\n\nMeshes with the `cpu` storage mode can compute their bounding box automatically using `Mesh:computeBoundingBox`.\n\nPasses will use the bounding box of a Mesh to cull it against the cameras when `Pass:setViewCull` is enabled, which avoids rendering it when it's out of view.",
+              key = "Mesh:setBoundingBox",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:computeBoundingBox",
+                "Pass:setViewCull",
+                "Collider:getAABB",
+                "Shape:getAABB",
+                "Model:getBoundingBox",
+                "ModelData:getBoundingBox"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the bounding box."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the bounding box."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the bounding box."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the bounding box."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the bounding box."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the bounding box."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Remove the bounding box.",
+                  arguments = {},
+                  returns = {}
                 }
               }
             },
