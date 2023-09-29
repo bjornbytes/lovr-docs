@@ -2,9 +2,7 @@ return {
   tag = 'compute',
   summary = 'Run a compute shader.',
   description = [[
-    Runs a compute shader.  Before calling this, a compute shader needs to be active, using
-    `Pass:setShader`.  This can only be called on a Pass with the `compute` type, which can be
-    created using `lovr.graphics.getPass`.
+    Runs a compute shader.  There must be an active compute shader set using `Pass:setShader`.
   ]],
   arguments = {
      x = {

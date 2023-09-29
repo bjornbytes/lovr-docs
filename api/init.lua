@@ -16639,7 +16639,7 @@ return {
         {
           name = "Pass",
           summary = "A stream of graphics commands.",
-          description = "Pass objects are used to record commands for the GPU.  Commands can be recorded by calling functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to process using `lovr.graphics.submit`.\n\nPass objects are **temporary** and only exist for a single frame.  Once `lovr.graphics.submit` is called to end the frame, any passes that were created during that frame become **invalid**. Each frame, a new set of passes must be created and recorded.  LÖVR tries to detect if you use a pass after it's invalid, but this error checking is not 100% accurate at the moment.\n\nThere are 3 types of passes.  Each type can record a specific type of command:\n\n- `render` passes render graphics to textures.\n- `compute` passes run compute shaders.\n- `transfer` passes can transfer data to/from GPU objects, like `Buffer` and `Texture`.",
+          description = "Pass objects are used to record commands for the GPU.  Commands can be recorded by calling functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to process using `lovr.graphics.submit`.",
           key = "Pass",
           module = "lovr.graphics",
           constructors = {
@@ -16648,6 +16648,29 @@ return {
             "lovr.headset.getPass"
           },
           methods = {
+            {
+              name = "barrier",
+              tag = "compute",
+              summary = "Synchronize compute work.",
+              description = "Synchronizes compute work.\n\nBy default, within a single Pass, multiple calls to `Pass:compute` can run on the GPU in any order, or all at the same time.  This is great because it lets the GPU process the work as efficiently as possible, but sometimes multiple compute dispatches need to be sequenced.\n\nCalling this function will insert a barrier.  All compute operations on the Pass after the barrier will only start once all of the previous compute operations on the Pass are finished.",
+              key = "Pass:barrier",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  code = "pass = lovr.graphics.newPass()\npass:setShader(computeShader)\n\npass:compute(x, y, z)\npass:compute(x, y, z)\npass:barrier()\npass:compute(x, y, z) --> waits for the previous 2 :computes to complete"
+                }
+              },
+              notes = "It's only necessary to use a barrier if a compute shader is reading/writing the same bytes of memory that a previous compute operation in the same Pass read/wrote.\n\nBarriers will slow things down because they reduce parallelism by causing the GPU to wait. Strategic reordering of non-dependent :compute calls around the barrier can help.\n\nCalling this function before recording any :computes will do nothing, and calling it after the last :compute will do nothing.",
+              related = {
+                "Pass:compute"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
             {
               name = "blit",
               tag = "transfer",
@@ -17284,7 +17307,7 @@ return {
               name = "compute",
               tag = "compute",
               summary = "Run a compute shader.",
-              description = "Runs a compute shader.  Before calling this, a compute shader needs to be active, using `Pass:setShader`.  This can only be called on a Pass with the `compute` type, which can be created using `lovr.graphics.getPass`.",
+              description = "Runs a compute shader.  There must be an active compute shader set using `Pass:setShader`.",
               key = "Pass:compute",
               module = "lovr.graphics",
               examples = {
