@@ -10345,21 +10345,224 @@ return {
           name = "getBuffer",
           tag = "graphics-objects",
           summary = "Get a temporary Buffer.",
-          description = "Creates a temporary Buffer.",
+          description = "Returns a temporary Buffer.",
           key = "lovr.graphics.getBuffer",
           module = "lovr.graphics",
           deprecated = true,
-          notes = "The format table can contain a list of `DataType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `DataType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that an `offset` should be set for either all of the fields or none of\n  them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
-          related = {
-            "lovr.graphics.newBuffer"
+          examples = {
+            {
+              description = "Examples of different buffer formats.",
+              code = "-- 2 matrices\nlovr.graphics.getBuffer('mat4', 2)\n\n-- 3 integers, with initial data\nlovr.graphics.getBuffer('int', { 1, 2, 3 })\n\n-- a simple mesh:\nlovr.graphics.getBuffer({\n  { name = 'VertexPosition', type = 'vec3' },\n  { name = 'VertexColor', type = 'color' }\n}, 4)\n\n-- a uniform buffer with vec3's, using the std140 packing\nlovr.graphics.getBuffer({ 'vec3', layout = 'std140' }, data)\n\n-- a uniform buffer with key-value fields\nlovr.graphics.getBuffer({\n  { 'AmbientColor', 'vec3' },\n  { 'LightPosition', 'vec3' },\n  { 'LightType', 'u32' },\n  { 'LightColor', 'vec4' },\n  layout = 'std140'\n})\n\n-- a buffer with nested structure and array types\nlovr.graphics.getBuffer({\n  { 'globals', {\n    { 'ObjectCount', 'int' },\n    { 'WorldSize', 'vec2' },\n    { 'Scale', 'float' }\n  }},\n  { 'materials', {\n    { 'Color', 'vec4' },\n    { 'Glow', 'vec3' },\n    { 'Roughness', 'float' }\n  }, length = 32 },\n  layout = 'std430'\n})\n\n-- a buffer using a variable from a shader:\nlovr.graphics.getBuffer(shader:getBufferFormat('transforms'))"
+            }
           },
+          notes = "The format table can contain a list of `DataType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `DataType` of the field and is required.\n- `name` is the name of the field, used to match table keys and vertex attribute names.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `length` is the array size of the field.\n\nAs a shorthand, the name, type, and optionally the length of a field can be provided as a list instead of using keys.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
           variants = {
             {
               arguments = {
                 {
+                  name = "size",
+                  type = "number",
+                  description = "The size of the Buffer, in bytes."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                },
+                {
                   name = "length",
                   type = "number",
-                  description = "The length of the Buffer."
+                  description = "The length of the Buffer.",
+                  default = "1"
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                },
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                },
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                },
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer.",
+                  default = "1"
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                },
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                },
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer.",
+                  default = "1"
                 },
                 {
                   name = "type",
@@ -10373,7 +10576,8 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
             },
             {
               arguments = {
@@ -10394,24 +10598,25 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
             },
             {
               arguments = {
                 {
                   name = "length",
                   type = "number",
-                  description = "The length of the Buffer."
+                  description = "The length of the Buffer.",
+                  default = "1"
                 },
                 {
                   name = "format",
                   type = "table",
-                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
-                  default = "nil",
+                  description = "A list of fields in the Buffer.",
                   table = {
                     {
                       name = "layout",
-                      type = "BufferLayout",
+                      type = "DataLayout",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
@@ -10429,7 +10634,8 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
             },
             {
               arguments = {
@@ -10441,12 +10647,11 @@ return {
                 {
                   name = "format",
                   type = "table",
-                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
-                  default = "nil",
+                  description = "A list of fields in the Buffer.",
                   table = {
                     {
                       name = "layout",
-                      type = "BufferLayout",
+                      type = "DataLayout",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
@@ -10464,7 +10669,8 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
             },
             {
               arguments = {
@@ -10485,7 +10691,8 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
             },
             {
               arguments = {
@@ -10497,12 +10704,11 @@ return {
                 {
                   name = "format",
                   type = "table",
-                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
-                  default = "nil",
+                  description = "A list of fields in the Buffer.",
                   table = {
                     {
                       name = "layout",
-                      type = "BufferLayout",
+                      type = "DataLayout",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
@@ -10520,7 +10726,8 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
             }
           }
         },
