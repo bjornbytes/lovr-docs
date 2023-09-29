@@ -12823,28 +12823,33 @@ return {
           methods = {
             {
               name = "clear",
-              summary = "Clear the data in the Buffer.",
-              description = "Clears some or all of the data in the **temporary** Buffer to zero.  Permanent Buffers can be cleared in a transfer pass using `Pass:clear`.",
+              summary = "Clear data in the Buffer.",
+              description = "Clears a range of data in the Buffer to a value.",
               key = "Buffer:clear",
               module = "lovr.graphics",
-              notes = "Clearing a permanent buffer requires the byte offset and byte count of the cleared range to be a multiple of 4.  This will usually be true for most data types.",
               related = {
-                "Pass:clear"
+                "Texture:clear"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "offset",
                       type = "number",
-                      description = "The index of the first item to clear.",
-                      default = "1"
+                      description = "The offset of the range of the Buffer to clear, in bytes.  Must be a multiple of 4.",
+                      default = "0"
                     },
                     {
-                      name = "count",
+                      name = "extent",
                       type = "number",
-                      description = "The number of items to clear.  If `nil`, clears to the end of the Buffer.",
+                      description = "The number of bytes to clear.  If `nil`, clears to the end of the Buffer.  Must be a multiple of 4.",
                       default = "nil"
+                    },
+                    {
+                      name = "value",
+                      type = "number",
+                      description = "The value to clear to.  This will be interpreted as a 32 bit number, which will be repeated across the clear range.",
+                      default = "0x00000000"
                     }
                   },
                   returns = {}
@@ -12854,12 +12859,12 @@ return {
             {
               name = "getFormat",
               summary = "Get the format of the Buffer.",
-              description = "Returns the format of the Buffer.  This is the list of fields that comprise each item in the buffer.  Each field has a type, byte offset, and vertex attribute location.",
+              description = "Returns the format the Buffer was created with.",
               key = "Buffer:getFormat",
               module = "lovr.graphics",
               examples = {
                 {
-                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer(1, { 'vec3', 'vec3', 'vec2' })\n\n  for i, field in ipairs(buffer:getFormat()) do\n    local type, offset, location = field.type, field.offset, field.location\n    local template = 'Field: %d: Type = %s, Offset = %d, Location = %d'\n    print(template:format(i, type, offset, location))\n  end\n\n  -- prints the following:\n  -- Field 1: Type = f32x3, Offset = 0, Location = 0\n  -- Field 2: Type = f32x3, Offset = 12, Location = 1\n  -- Field 3: Type = f32x2, Offset = 24, Location = 2\nend"
+                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer({\n    { 'a', 'float' },\n    { 'b', 'un16x2' }\n  })\n\n  for i, field in ipairs(buffer:getFormat()) do\n    print(('%s: %s'):format(field.name, field.type))\n  end\n\n  -- prints the following:\n  -- a: f32\n  -- b: un16x2\nend"
                 }
               },
               related = {
@@ -12874,7 +12879,34 @@ return {
                     {
                       name = "format",
                       type = "table",
-                      description = "The format of the Buffer."
+                      description = "A list of fields comprising the format.",
+                      table = {
+                        {
+                          name = "[].name",
+                          type = "string",
+                          description = "The name of the field (if fields were created with names)."
+                        },
+                        {
+                          name = "[].type",
+                          type = "*",
+                          description = "The `DataType` of the field, or a recursive table with the sub-format."
+                        },
+                        {
+                          name = "[].offset",
+                          type = "number",
+                          description = "The offset of the field relative to its parent, in bytes."
+                        },
+                        {
+                          name = "[].length",
+                          type = "number",
+                          description = "The array length of the field, or `nil` if it's not an array."
+                        },
+                        {
+                          name = "[].stride",
+                          type = "number",
+                          description = "The stride of the field in bytes, or `nil` if it's not an array."
+                        }
+                      }
                     }
                   }
                 }
@@ -12883,7 +12915,7 @@ return {
             {
               name = "getLength",
               summary = "Get the length of the Buffer.",
-              description = "Returns the length of the Buffer.",
+              description = "Returns the length of the Buffer, or `nil` if the Buffer was not created with a format.",
               key = "Buffer:getLength",
               module = "lovr.graphics",
               related = {
@@ -12905,10 +12937,11 @@ return {
             },
             {
               name = "getPointer",
-              summary = "Get a raw pointer to the Buffer's memory.",
-              description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.  This is only available for temporary buffers, so the pointer is only valid until `lovr.graphics.submit` is called.",
+              summary = "Get a raw pointer to the Buffer memory.",
+              description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.",
               key = "Buffer:getPointer",
               module = "lovr.graphics",
+              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nCurrently the pointer addresses a range equal to the size of the Buffer, and so this overwrites the entire contents of the Buffer.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
               related = {
                 "Blob:getPointer"
               },
@@ -12950,11 +12983,11 @@ return {
             },
             {
               name = "getStride",
-              summary = "Get the distance between each item in the Buffer, in bytes.",
-              description = "Returns the distance between each item in the Buffer, in bytes.",
+              summary = "Get the stride of the Buffer, in bytes.",
+              description = "Returns the distance between each item in the Buffer, in bytes, or `nil` if the Buffer was not created with a format.",
               key = "Buffer:getStride",
               module = "lovr.graphics",
-              notes = "When a Buffer is created, the stride can be set explicitly, otherwise it will be automatically computed based on the fields in the Buffer.\n\nStrides can not be zero, and can not be smaller than the size of a single item.  To work around this, bind the Buffer as a storage buffer and fetch data from the buffer manually.",
+              notes = "When a Buffer is created, the stride can be set explicitly, otherwise it will be automatically computed based on the fields in the Buffer.\n\nStrides can not be zero, and can not be smaller than the size of a single item.",
               related = {
                 "Buffer:getSize",
                 "Buffer:getLength"

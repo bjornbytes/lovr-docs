@@ -1,6 +1,8 @@
 return {
   summary = 'Get the length of the Buffer.',
-  description = 'Returns the length of the Buffer.',
+  description = [[
+    Returns the length of the Buffer, or `nil` if the Buffer was not created with a format.
+  ]],
   arguments = {},
   returns = {
     length = {
