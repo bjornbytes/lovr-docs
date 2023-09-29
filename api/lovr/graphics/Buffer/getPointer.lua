@@ -29,7 +29,7 @@ return {
 
     Special care should be taken when writing data:
 
-    - Reading data from the pointer will be very very slow on some systems, and should be avoided.
+    - Reading data from the pointer will be very slow on some systems, and should be avoided.
     - It is better to write data to the pointer sequentially.  Random access may be slower.
   ]],
   related = {

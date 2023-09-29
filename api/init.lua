@@ -12941,7 +12941,7 @@ return {
               description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.",
               key = "Buffer:getPointer",
               module = "lovr.graphics",
-              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nCurrently the pointer addresses a range equal to the size of the Buffer, and so this overwrites the entire contents of the Buffer.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
+              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nCurrently the pointer addresses a range equal to the size of the Buffer, and so this overwrites the entire contents of the Buffer.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
               related = {
                 "Blob:getPointer"
               },
