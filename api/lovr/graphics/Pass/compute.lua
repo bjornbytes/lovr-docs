@@ -123,7 +123,7 @@ return {
         local sx, sy = shader:getWorkgroupSize()
         local gx, gy = math.ceil(tw / sx), math.ceil(th / sy)
 
-        local computer = lovr.graphics.getPass('compute')
+        local computer = lovr.graphics.newPass()
 
         computer:setShader(shader)
         computer:send('image', texture)
