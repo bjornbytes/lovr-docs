@@ -9537,33 +9537,6 @@ return {
           }
         },
         {
-          name = "BufferLayout",
-          description = "The different ways to pack Buffer fields into memory.\n\nThe default is `packed`, which is suitable for vertex buffers and index buffers.  It doesn't add any padding between elements, and so it doesn't waste any space.  However, this layout won't necessarily work for uniform buffers and storage buffers.\n\nThe `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds the most padding between fields, and requires the stride to be a multiple of 16.  Example:\n\n    layout(std140) uniform ObjectScales { float scales[64]; };\n\nThe `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds some padding between certain types, and may round up the stride.  Example:\n\n    layout(std430) buffer TileSizes { vec2 sizes[]; }",
-          key = "BufferLayout",
-          module = "lovr.graphics",
-          related = {
-            "lovr.graphics.newBuffer",
-            "lovr.graphics.getBuffer",
-            "Buffer:getFormat",
-            "Buffer:getStride",
-            "FieldType"
-          },
-          values = {
-            {
-              name = "packed",
-              description = "The packed layout, without any padding."
-            },
-            {
-              name = "std140",
-              description = "The std140 layout."
-            },
-            {
-              name = "std430",
-              description = "The std430 layout."
-            }
-          }
-        },
-        {
           name = "CompareMode",
           summary = "Different ways of performing comparisons.",
           description = "The method used to compare depth and stencil values when performing the depth and stencil tests. Also used for compare modes in `Sampler`s.",
@@ -9634,86 +9607,35 @@ return {
           }
         },
         {
-          name = "DefaultShader",
-          summary = "Built-in shaders.",
-          description = "The set of shaders built in to LÖVR.  These can be passed to `Pass:setShader` or `lovr.graphics.newShader` instead of writing GLSL code.  The shaders can be further customized by using the `flags` option to change their behavior.  If the active shader is set to `nil`, LÖVR picks one of these shaders to use.",
-          key = "DefaultShader",
-          module = "lovr.graphics",
-          values = {
-            {
-              name = "unlit",
-              description = "Basic shader without lighting that uses colors and a texture."
-            },
-            {
-              name = "normal",
-              description = "Shades triangles based on their normal, resulting in a cool rainbow effect."
-            },
-            {
-              name = "font",
-              description = "Renders font glyphs."
-            },
-            {
-              name = "cubemap",
-              description = "Renders cubemaps."
-            },
-            {
-              name = "equirect",
-              description = "Renders spherical textures."
-            },
-            {
-              name = "fill",
-              description = "Renders a fullscreen triangle."
-            }
-          }
-        },
-        {
-          name = "DrawMode",
-          summary = "Different ways to draw mesh vertices.",
-          description = "Different ways vertices in a mesh can be connected together and filled in with pixels.",
-          key = "DrawMode",
-          module = "lovr.graphics",
-          values = {
-            {
-              name = "points",
-              description = "Each vertex is rendered as a single point.  The size of the point can be controlled using the `pointSize` shader flag, or by writing to the `PointSize` variable in shaders.  The maximum point size is given by the `pointSize` limit from `lovr.graphics.getLimits`."
-            },
-            {
-              name = "lines",
-              description = "Pairs of vertices are connected with line segments.  To draw a single line through all of the vertices, an index buffer can be used to repeat vertices.  It is not currently possible to change the width of the lines, although cylinders or capsules can be used as an alternative."
-            },
-            {
-              name = "triangles",
-              description = "Every 3 vertices form a triangle, which is filled in with pixels (unless `Pass:setWireframe` is used).  This mode is the most commonly used."
-            }
-          }
-        },
-        {
-          name = "DrawStyle",
-          summary = "Different styles to draw shapes.",
-          description = "Whether a shape should be drawn filled or outlined.",
-          key = "DrawStyle",
+          name = "DataLayout",
+          description = "The different ways to pack Buffer fields into memory.\n\nThe default is `packed`, which is suitable for vertex buffers and index buffers.  It doesn't add any padding between elements, and so it doesn't waste any space.  However, this layout won't necessarily work for uniform buffers and storage buffers.\n\nThe `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds the most padding between fields, and requires the stride to be a multiple of 16.  Example:\n\n    layout(std140) uniform ObjectScales { float scales[64]; };\n\nThe `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds some padding between certain types, and may round up the stride.  Example:\n\n    layout(std430) buffer TileSizes { vec2 sizes[]; }",
+          key = "DataLayout",
           module = "lovr.graphics",
           related = {
-            "Pass:plane",
-            "Pass:cube",
-            "Pass:box",
-            "Pass:circle"
+            "lovr.graphics.newBuffer",
+            "Buffer:getFormat",
+            "Buffer:getStride",
+            "DataType"
           },
           values = {
             {
-              name = "fill",
-              description = "The shape will be filled in (the default)."
+              name = "packed",
+              description = "The packed layout, without any padding."
             },
             {
-              name = "line",
-              description = "The shape will be outlined."
+              name = "std140",
+              description = "The std140 layout."
+            },
+            {
+              name = "std430",
+              description = "The std430 layout."
             }
           }
         },
         {
-          name = "FieldType",
+          name = "DataType",
           description = "Different types for `Buffer` fields.  These are scalar, vector, or matrix types, usually packed into small amounts of space to reduce the amount of memory they occupy.\n\nThe names are encoded as follows:\n\n- The data type:\n  - `i` for signed integer\n  - `u` for unsigned integer\n  - `sn` for signed normalized (-1 to 1)\n  - `un` for unsigned normalized (0 to 1)\n  - `f` for floating point\n- The bit depth of each component\n- The letter `x` followed by the component count (for vectors)",
-          key = "FieldType",
+          key = "DataType",
           module = "lovr.graphics",
           notes = "In addition to these values, the following aliases can be used:\n\n<table>\n  <thead>\n    <tr>\n      <td>Alias</td>\n      <td>Maps to</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>vec2</code></td>\n      <td><code>f32x2</code></td>\n    </tr>\n    <tr>\n      <td><code>vec3</code></td>\n      <td><code>f32x3</code></td>\n    </tr>\n    <tr>\n      <td><code>vec4</code></td>\n      <td><code>f32x4</code></td>\n    </tr>\n    <tr>\n      <td><code>int</code></td>\n      <td><code>i32</code></td>\n    </tr>\n    <tr>\n      <td><code>uint</code></td>\n      <td><code>u32</code></td>\n    </tr>\n    <tr>\n      <td><code>float</code></td>\n      <td><code>f32</code></td>\n    </tr>\n    <tr>\n      <td><code>color</code></td>\n      <td><code>un8x4</code></td>\n    </tr>\n  </tbody> </table>\n\nAdditionally, the following convenience rules apply:\n\n- Field types can end in an `s`, which will be stripped off.\n- Field types can end in `x1`, which will be stripped off.\n\nSo you can write, e.g. `lovr.graphics.newBuffer(4, 'floats')`, which is cute!",
           related = {
@@ -9861,6 +9783,83 @@ return {
             {
               name = "index32",
               description = "Like u32, but 1-indexed."
+            }
+          }
+        },
+        {
+          name = "DefaultShader",
+          summary = "Built-in shaders.",
+          description = "The set of shaders built in to LÖVR.  These can be passed to `Pass:setShader` or `lovr.graphics.newShader` instead of writing GLSL code.  The shaders can be further customized by using the `flags` option to change their behavior.  If the active shader is set to `nil`, LÖVR picks one of these shaders to use.",
+          key = "DefaultShader",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "unlit",
+              description = "Basic shader without lighting that uses colors and a texture."
+            },
+            {
+              name = "normal",
+              description = "Shades triangles based on their normal, resulting in a cool rainbow effect."
+            },
+            {
+              name = "font",
+              description = "Renders font glyphs."
+            },
+            {
+              name = "cubemap",
+              description = "Renders cubemaps."
+            },
+            {
+              name = "equirect",
+              description = "Renders spherical textures."
+            },
+            {
+              name = "fill",
+              description = "Renders a fullscreen triangle."
+            }
+          }
+        },
+        {
+          name = "DrawMode",
+          summary = "Different ways to draw mesh vertices.",
+          description = "Different ways vertices in a mesh can be connected together and filled in with pixels.",
+          key = "DrawMode",
+          module = "lovr.graphics",
+          values = {
+            {
+              name = "points",
+              description = "Each vertex is rendered as a single point.  The size of the point can be controlled using the `pointSize` shader flag, or by writing to the `PointSize` variable in shaders.  The maximum point size is given by the `pointSize` limit from `lovr.graphics.getLimits`."
+            },
+            {
+              name = "lines",
+              description = "Pairs of vertices are connected with line segments.  To draw a single line through all of the vertices, an index buffer can be used to repeat vertices.  It is not currently possible to change the width of the lines, although cylinders or capsules can be used as an alternative."
+            },
+            {
+              name = "triangles",
+              description = "Every 3 vertices form a triangle, which is filled in with pixels (unless `Pass:setWireframe` is used).  This mode is the most commonly used."
+            }
+          }
+        },
+        {
+          name = "DrawStyle",
+          summary = "Different styles to draw shapes.",
+          description = "Whether a shape should be drawn filled or outlined.",
+          key = "DrawStyle",
+          module = "lovr.graphics",
+          related = {
+            "Pass:plane",
+            "Pass:cube",
+            "Pass:box",
+            "Pass:circle"
+          },
+          values = {
+            {
+              name = "fill",
+              description = "The shape will be filled in (the default)."
+            },
+            {
+              name = "line",
+              description = "The shape will be outlined."
             }
           }
         },
@@ -10349,7 +10348,8 @@ return {
           description = "Creates a temporary Buffer.",
           key = "lovr.graphics.getBuffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that an `offset` should be set for either all of the fields or none of\n  them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
+          deprecated = true,
+          notes = "The format table can contain a list of `DataType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `DataType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that an `offset` should be set for either all of the fields or none of\n  them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
           related = {
             "lovr.graphics.newBuffer"
           },
@@ -10363,7 +10363,7 @@ return {
                 },
                 {
                   name = "type",
-                  type = "FieldType",
+                  type = "DataType",
                   description = "The type of each item in the Buffer."
                 }
               },
@@ -10384,7 +10384,7 @@ return {
                 },
                 {
                   name = "type",
-                  type = "FieldType",
+                  type = "DataType",
                   description = "The type of each item in the Buffer."
                 }
               },
@@ -10475,7 +10475,7 @@ return {
                 },
                 {
                   name = "type",
-                  type = "FieldType",
+                  type = "DataType",
                   description = "The type of each item in the Buffer."
                 }
               },
@@ -11038,113 +11038,21 @@ return {
           description = "Creates a Buffer.",
           key = "lovr.graphics.newBuffer",
           module = "lovr.graphics",
-          notes = "The format table can contain a list of `FieldType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `FieldType` of the field and is required.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `location` is the vertex attribute location of each field.  This is used to match up each\n  field with an attribute declared in a shader, and doesn't have any purpose when binding the\n  buffer as a uniform or storage buffer.  Any fields with a `nil` location will use an\n  autoincrementing location starting at zero.  Named locations are not currently supported, but\n  may be added in the future.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.\n\nThere is currently a max of 16 fields.",
+          examples = {
+            description = "Examples of different buffer formats.",
+            code = "      -- 2 matrices\n      lovr.graphics.newBuffer('mat4', 2)\n\n      -- 3 integers, with initial data\n      lovr.graphics.newBuffer('int', { 1, 2, 3 })\n\n      -- a simple mesh:\n      lovr.graphics.newBuffer({\n        { name = 'VertexPosition', type = 'vec3' },\n        { name = 'VertexColor', type = 'color' }\n      }, 4)\n\n      -- a uniform buffer with vec3's, using the std140 packing\n      lovr.graphics.newBuffer({ 'vec3', layout = 'std140' }, data)\n\n      -- a uniform buffer with key-value fields\n      lovr.graphics.newBuffer({\n        { 'AmbientColor', 'vec3' },\n        { 'LightPosition', 'vec3' },\n        { 'LightType', 'u32' },\n        { 'LightColor', 'vec4' },\n        layout = 'std140'\n      })\n\n      -- a buffer with nested structure and array types\n      lovr.graphics.newBuffer({\n        { 'globals', {\n          { 'ObjectCount', 'int' },\n          { 'WorldSize', 'vec2' },\n          { 'Scale', 'float' }\n        }},\n        { 'materials', {\n          { 'Color', 'vec4' },\n          { 'Glow', 'vec3' },\n          { 'Roughness', 'float' }\n        }, length = 32 },\n        layout = 'std430'\n      })\n\n      -- a buffer using a variable from a shader:\n      lovr.graphics.newBuffer(shader:getBufferFormat('transforms'))\n    "
+          },
+          notes = "The format table can contain a list of `DataType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `DataType` of the field and is required.\n- `name` is the name of the field, used to match table keys and vertex attribute names.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `length` is the array size of the field.\n\nAs a shorthand, the name, type, and optionally the length of a field can be provided as a list instead of using keys.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
           related = {
-            "lovr.graphics.getBuffer"
+            "Shader:getBufferFormat"
           },
           variants = {
             {
               arguments = {
                 {
-                  name = "length",
+                  name = "size",
                   type = "number",
-                  description = "The length of the Buffer."
-                },
-                {
-                  name = "type",
-                  type = "FieldType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                },
-                {
-                  name = "type",
-                  type = "FieldType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer."
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
-                  default = "nil",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "BufferLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
-                  default = "nil",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "BufferLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
+                  description = "The size of the Buffer, in bytes."
                 }
               },
               returns = {
@@ -11161,11 +11069,6 @@ return {
                   name = "blob",
                   type = "Blob",
                   description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                },
-                {
-                  name = "type",
-                  type = "FieldType",
-                  description = "The type of each item in the Buffer."
                 }
               },
               returns = {
@@ -11179,19 +11082,231 @@ return {
             {
               arguments = {
                 {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                },
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer.",
+                  default = "1"
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                },
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                },
+                {
                   name = "blob",
                   type = "Blob",
                   description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                },
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer.",
+                  default = "1"
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                },
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                },
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer.",
+                  default = "1"
+                },
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              },
+              deprecated = true
+            },
+            {
+              arguments = {
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
+                },
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              },
+              deprecated = true
+            },
+            {
+              arguments = {
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the Buffer.",
+                  default = "1"
                 },
                 {
                   name = "format",
                   type = "table",
-                  description = "A list of fields in the Buffer (see notes).  `nil` is a valid format, but means only `Blob`s can be written to the Buffer from Lua.",
-                  default = "nil",
+                  description = "A list of fields in the Buffer.",
                   table = {
                     {
                       name = "layout",
-                      type = "BufferLayout",
+                      type = "DataLayout",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
@@ -11209,7 +11324,100 @@ return {
                   type = "Buffer",
                   description = "The new Buffer."
                 }
-              }
+              },
+              deprecated = true
+            },
+            {
+              arguments = {
+                {
+                  name = "data",
+                  type = "table",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              },
+              deprecated = true
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                },
+                {
+                  name = "type",
+                  type = "DataType",
+                  description = "The type of each item in the Buffer."
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              },
+              deprecated = true
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                },
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A list of fields in the Buffer.",
+                  table = {
+                    {
+                      name = "layout",
+                      type = "DataLayout",
+                      description = "How to lay out the Buffer fields in memory.",
+                      default = "packed"
+                    },
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "The new Buffer."
+                }
+              },
+              deprecated = true
             }
           }
         },
@@ -12396,11 +12604,10 @@ return {
         {
           name = "Buffer",
           summary = "A block of memory on the GPU.",
-          description = "A Buffer is a block of GPU memory.  Buffers are similar to Lua tables or arrays: they have a length and store a list of values.  The length of a Buffer and its format (the type of each value) are declared upfront and can't be changed.  Each value of a Buffer consists of one or more fields, and each field has a type.  For example, if a Buffer is used to store vertices, each value might store 3 fields for the position, normal vector, and UV coordinates of a vertex.\n\nBuffers are commonly used for:\n\n- Mesh data: Buffers hold the data that define the vertices in a mesh. Buffers also store the\n  vertex indices of a mesh, which define the order the vertices are connected together into\n  triangles. These are often called vertex buffers and index buffers.\n- Shader data: Buffers can be bound to a Shader, letting the Shader read arbitrary data. For\n  example, Lua code could create a Buffer with the positions and colors of all the lights in a\n  scene, which a Shader can use to do lighting calculations.\n- Compute: Compute shaders can write data to Buffers.  This GPU-generated data can be used in\n  later rendering work or sent back to Lua.\n- Indirect: Indirect rendering is an advanced technique where instructions for rendering work\n  are recorded to a Buffer (potentially by a compute shader) and later drawn.\n\nThere are two types of Buffers:\n\n- **Temporary** buffers are very inexpensive to create, and writing to them from Lua is fast.\n  However, they become invalid at the end of `lovr.draw` (i.e. when `lovr.graphics.submit` is\n  called).  The GPU is slightly slower at accessing data from temporary buffers, and compute\n  shaders can not write to them.  They are designed for storing data that changes every frame.\n- **Permanent** buffers are more expensive to create, and updating their contents requires a\n  transfer from CPU memory to VRAM.  They act like normal LÖVR objects and don't need to be\n  recreated every frame.  They often have faster performance when used by the GPU, and compute\n  shaders can write to them.  They are great for large pieces of data that are initialized once\n  at load time, or data that is updated infrequently.",
+          description = "A Buffer is a block of memory on the GPU.  It's like a GPU version of a `Blob`.  Lua code can write data to the buffer which uploads to VRAM, and shaders read buffer data during rendering. Compute shaders can also write to buffers.\n\nThe **size** of a Buffer is the number of bytes of VRAM it occupies.  It's set when the Buffer is created and can't be changed afterwards.\n\nBuffers can optionally have a **format**, which defines the type of data stored in the buffer. The format determines how Lua values are converted into binary.  Like the size, it can't change after the buffer is created.  `Shader:getBufferFormat` returns the format of a variable in a `Shader`.\n\nWhen a Buffer has a format, it also has a **length**, which is the number of items it holds, and a **stride**, which is the number of bytes between each item.\n\n`Buffer:setData` is used to upload data to the Buffer.  `Buffer:clear` can also be used to efficiently zero out a Buffer.\n\n`Buffer:getData` can be used to download data from the Buffer, but be aware that it stalls the GPU until the download is complete, which is very slow!  `Buffer:newReadback` will instead download the data in the background, which avoids costly stalls.\n\nBuffers are often used for mesh data.  Vertices stored in buffers can be drawn using `Pass:mesh`.  `Mesh` objects can also be used, which wrap Buffers along with some extra metadata.\n\nBuffers can be \"bound\" to a variable in a Shader using `Pass:send`.  That means that the next time the shader runs, the data from the Buffer will be used for the stuff in the variable.\n\nIt's important to understand that data from a Buffer will only be used at the point when graphics commands are actually submitted.  This example records 2 draws, changing the buffer data between each one:\n\n    buffer:setData(data1)\n    pass:mesh(buffer)\n    buffer:setData(data2)\n    pass:mesh(buffer)\n    lovr.graphics.submit(pass)\n\n**Both** draws will use `data2` here!  That's because `lovr.graphics.submit` is where the draws actually get processed, so they both see the \"final\" state of the buffer.  The data in a Buffer can't be 2 things at once!  If you need multiple versions of data, it's best to use a bigger buffer with offsets (or multiple buffers).",
           key = "Buffer",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.getBuffer",
             "lovr.graphics.newBuffer"
           },
           methods = {
@@ -12511,7 +12718,7 @@ return {
             {
               name = "getSize",
               summary = "Get the size of the Buffer, in bytes.",
-              description = "Returns the size of the Buffer, in bytes.  This is the same as `length * stride`.",
+              description = "Returns the size of the Buffer in VRAM, in bytes.  This is the same as `length * stride`.\n\nThe size of the Buffer can't change after it's created.",
               key = "Buffer:getSize",
               module = "lovr.graphics",
               related = {

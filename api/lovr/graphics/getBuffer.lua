@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'graphics-objects',
   summary = 'Get a temporary Buffer.',
   description = 'Creates a temporary Buffer.',
@@ -23,7 +24,7 @@ return {
       ]]
     },
     type = {
-      type = 'FieldType',
+      type = 'DataType',
       description = 'The type of each item in the Buffer.'
     },
     format = {
@@ -85,10 +86,10 @@ return {
     }
   },
   notes = [[
-    The format table can contain a list of `FieldType`s or a list of tables to provide extra
+    The format table can contain a list of `DataType`s or a list of tables to provide extra
     information about each field.  Each inner table has the following keys:
 
-    - `type` is the `FieldType` of the field and is required.
+    - `type` is the `DataType` of the field and is required.
     - `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next
       to each other sequentially in memory, subject to any padding required by the Buffer's layout.
       In practice this means that an `offset` should be set for either all of the fields or none of

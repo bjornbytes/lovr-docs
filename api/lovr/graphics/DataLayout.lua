@@ -32,9 +32,8 @@ return {
   },
   related = {
     'lovr.graphics.newBuffer',
-    'lovr.graphics.getBuffer',
     'Buffer:getFormat',
     'Buffer:getStride',
-    'FieldType'
+    'DataType'
   }
 }
