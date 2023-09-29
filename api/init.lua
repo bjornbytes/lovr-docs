@@ -10068,27 +10068,6 @@ return {
           }
         },
         {
-          name = "TallyType",
-          summary = "Different values a Tally can measure.",
-          description = "These are the different metrics a `Tally` can measure.",
-          key = "TallyType",
-          module = "lovr.graphics",
-          values = {
-            {
-              name = "time",
-              description = "Each slot measures elapsed time in nanoseconds."
-            },
-            {
-              name = "shader",
-              description = "Each slot measures 4 numbers: the total number of vertices processed, the number of times the vertex shader was run, the number of triangles that were visible in the view, and the number of times the fragment shader was run."
-            },
-            {
-              name = "pixel",
-              description = "Each slot measures the approximate number of pixels affected by rendering."
-            }
-          }
-        },
-        {
           name = "TextureFeature",
           summary = "Different ways Textures can be used.",
           description = "These are the different ways `Texture` objects can be used.  These are passed in to `lovr.graphics.isFormatSupported` to see which texture operations are supported by the GPU for a given format.",
@@ -12211,47 +12190,6 @@ return {
                   name = "shader",
                   type = "Shader",
                   description = "The new shader."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "newTally",
-          tag = "graphics-objects",
-          summary = "Create a new Tally.",
-          description = "Creates a new Tally.",
-          key = "lovr.graphics.newTally",
-          module = "lovr.graphics",
-          related = {
-            "Pass:tick",
-            "Pass:tock"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "TallyType",
-                  description = "The type of the Tally, which controls what \"thing\" it measures."
-                },
-                {
-                  name = "count",
-                  type = "number",
-                  description = "The number of slots in the Tally.  Each slot holds one measurement."
-                },
-                {
-                  name = "views",
-                  type = "number",
-                  description = "Tally objects with the `time` type can only be used in render passes with a certain number of views.  This is ignored for other types of tallies.",
-                  default = "2"
-                }
-              },
-              returns = {
-                {
-                  name = "tally",
-                  type = "Tally",
-                  description = "The new Tally."
                 }
               }
             }
@@ -17823,40 +17761,6 @@ return {
                     }
                   },
                   returns = {}
-                },
-                {
-                  description = "Copy a Tally to a Buffer.  The size of each item depends on what the tally is measuring:\n\n- `time` tally slots are a single 4-byte unsigned integer.\n- `shader` tally slots are four 4-byte unsigned integers (16 bytes).\n- `pixel` tally slots are a single 4-byte unsigned integer.",
-                  arguments = {
-                    {
-                      name = "tally",
-                      type = "Tally",
-                      description = "A tally to copy to the buffer."
-                    },
-                    {
-                      name = "bufferdst",
-                      type = "Buffer",
-                      description = "The buffer to copy to."
-                    },
-                    {
-                      name = "srcindex",
-                      type = "number",
-                      description = "The index of the first item to begin copying from.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstoffset",
-                      type = "number",
-                      description = "A byte offset in the buffer to begin copying to.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of items to copy.  If nil, copies as many items as possible.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
                 }
               }
             },
@@ -19605,7 +19509,7 @@ return {
               name = "read",
               tag = "transfer",
               summary = "Download data from a GPU resource.",
-              description = "Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or `Tally`.  The readback can be polled for completion, or, after this transfer pass is submitted, `Readback:wait` can be used to block until the download is complete.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
+              description = "Creates a `Readback` object which asynchronously downloads data from a `Buffer` or `Texture`.\n The readback can be polled for completion, or, after this transfer pass is submitted, `Readback:wait` can be used to block until the download is complete.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
               key = "Pass:read",
               module = "lovr.graphics",
               variants = {
@@ -19677,32 +19581,6 @@ return {
                       type = "number",
                       description = "The height of the region to download.  If nil, the region will be as tall as possible.",
                       default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "readback",
-                      type = "Readback",
-                      description = "The new readback."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "tally",
-                      type = "Tally",
-                      description = "The Tally to download data from."
-                    },
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the first item to download."
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of items to download."
                     }
                   },
                   returns = {
@@ -21601,67 +21479,6 @@ return {
               }
             },
             {
-              name = "tick",
-              tag = "tallies",
-              summary = "Start a GPU measurement.",
-              description = "Starts a GPU measurement.  One of the slots in a `Tally` object will be used to hold the result. Commands on the Pass will continue being measured until `Pass:tock` is called with the same tally and slot combination.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be copied to a `Buffer`.",
-              key = "Pass:tick",
-              module = "lovr.graphics",
-              notes = "`pixel` and `shader` measurements can not be nested, but `time` measurements can be nested.\n\nFor `time` measurements, the view count of the pass (`Pass:getViewCount`) must match the view count of the tally, which defaults to `2`.",
-              related = {
-                "Pass:tock",
-                "TallyType",
-                "Pass:read"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "tally",
-                      type = "Tally",
-                      description = "The tally that will store the measurement."
-                    },
-                    {
-                      name = "slot",
-                      type = "number",
-                      description = "The index of the slot in the tally to store the measurement in."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "tock",
-              tag = "tallies",
-              summary = "Stop a GPU measurement.",
-              description = "Stops a GPU measurement.  `Pass:tick` must be called to start the measurement before this can be called.  Afterwards, `Pass:read` can be used to read back the tally result, or the tally can be copied to a `Buffer`.",
-              key = "Pass:tock",
-              module = "lovr.graphics",
-              related = {
-                "Pass:tick",
-                "TallyType",
-                "Pass:read"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "tally",
-                      type = "Tally",
-                      description = "The tally storing the measurement."
-                    },
-                    {
-                      name = "slot",
-                      type = "number",
-                      description = "The index of the slot in the tally storing the measurement."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "torus",
               tag = "drawing",
               summary = "Draw a donut.",
@@ -22000,7 +21817,7 @@ return {
         {
           name = "Readback",
           summary = "An asynchronous read of a GPU resource.",
-          description = "Readbacks track the progress of an asynchronous read of a `Buffer`, `Texture`, or `Tally`.  Once a Readback is created in a transfer pass, and the transfer pass is submitted, the Readback can be polled for completion or the CPU can wait for it to finish using `Readback:wait`.",
+          description = "Readbacks track the progress of an asynchronous read of a `Buffer` or `Texture`.  Once a Readback is created in a transfer pass, and the transfer pass is submitted, the Readback can be polled for completion or the CPU can wait for it to finish using `Readback:wait`.",
           key = "Readback",
           module = "lovr.graphics",
           constructors = {
@@ -22037,7 +21854,7 @@ return {
               description = "Returns the data from the Readback, as a table.",
               key = "Readback:getData",
               module = "lovr.graphics",
-              notes = "This currently returns `nil` for readbacks of `Buffer` and `Texture` objects.  Only readbacks of `Tally` objects return valid data.\n\nFor `time` and `pixel` tallies, the table will have 1 number per slot that was read.  For `shader` tallies, there will be 4 numbers for each slot.",
+              notes = "This returns `nil` for readbacks of `Texture` objects.",
               related = {
                 "Readback:getBlob",
                 "Readback:getImage"
@@ -22486,78 +22303,6 @@ return {
                       name = "exists",
                       type = "boolean",
                       description = "Whether the Shader has the stage."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "Tally",
-          summary = "Measures GPU counters.",
-          description = "Tally objects are able to measure events on the GPU.  Tallies can measure three types of things:\n\n- `time` - measures elapsed GPU time.\n- `pixel` - measures how many pixels were rendered, which can be used for occlusion culling.\n- `shader` - measure how many times shaders were run.\n\nTally objects can be created with up to 4096 slots.  Each slot can hold a single measurement value.  `Pass:tick` is used to begin a measurement, storing the result in one of the slots.  All commands recorded on the Pass will be measured until `Pass:tock` is called with the same tally and slot.\n\nThe measurement value stored in the slots can be copied to a `Buffer` using `Pass:copy`, or they can be read back to Lua using `Pass:read`.",
-          key = "Tally",
-          module = "lovr.graphics",
-          constructors = {
-            "lovr.graphics.newTally"
-          },
-          methods = {
-            {
-              name = "getCount",
-              summary = "Get the number of slots in the Tally.",
-              description = "Returns the number of slots in the Tally.",
-              key = "Tally:getCount",
-              module = "lovr.graphics",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of slots in the Tally."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getType",
-              summary = "Get the type of the Tally.",
-              description = "Returns the type of the tally, which is the thing it measures between `Pass:tick` and `Pass:tock`.",
-              key = "Tally:getType",
-              module = "lovr.graphics",
-              related = {
-                "lovr.graphics.newTally"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "type",
-                      type = "TallyType",
-                      description = "The type of measurement."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getViewCount",
-              summary = "Get the number of render Pass views the Tally is configured for.",
-              description = "Tally objects with the `time` type can only be used in render passes with a certain number of views.  This returns that number.",
-              key = "Tally:getViewCount",
-              module = "lovr.graphics",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "views",
-                      type = "number",
-                      description = "The number of views the Tally is compatible with."
                     }
                   }
                 }

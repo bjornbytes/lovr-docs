@@ -26,10 +26,6 @@ return {
       type = 'Texture',
       description = 'A texture to copy to the texture.'
     },
-    tally = {
-      type = 'Tally',
-      description = 'A tally to copy to the buffer.'
-    },
     bufferdst = {
       type = 'Buffer',
       description = 'The buffer to copy to.'
@@ -153,17 +149,6 @@ return {
     {
       description = 'Copy a Texture to a Texture.',
       arguments = { 'texturesrc', 'texturedst', 'srcx', 'srcy', 'dstx', 'dsty', 'width', 'height', 'srclayer', 'dstlayer', 'layers', 'srclevel', 'dstlevel' },
-      returns = {}
-    },
-    {
-      description = [[
-        Copy a Tally to a Buffer.  The size of each item depends on what the tally is measuring:
-
-        - `time` tally slots are a single 4-byte unsigned integer.
-        - `shader` tally slots are four 4-byte unsigned integers (16 bytes).
-        - `pixel` tally slots are a single 4-byte unsigned integer.
-      ]],
-      arguments = { 'tally', 'bufferdst', 'srcindex', 'dstoffset', 'count' },
       returns = {}
     }
   }

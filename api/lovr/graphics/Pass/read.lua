@@ -2,8 +2,8 @@ return {
   tag = 'transfer',
   summary = 'Download data from a GPU resource.',
   description = [[
-    Creates a `Readback` object which asynchronously downloads data from a `Buffer`, `Texture`, or
-    `Tally`.  The readback can be polled for completion, or, after this transfer pass is submitted,
+    Creates a `Readback` object which asynchronously downloads data from a `Buffer` or `Texture`.
+     The readback can be polled for completion, or, after this transfer pass is submitted,
     `Readback:wait` can be used to block until the download is complete.  This can only be called on
     a transfer pass, which can be created with `lovr.graphics.getPass`.
   ]],
@@ -15,10 +15,6 @@ return {
     texture = {
       type = 'Texture',
       description = 'The Texture to download data from.'
-    },
-    tally = {
-      type = 'Tally',
-      description = 'The Tally to download data from.'
     },
     index = {
       type = 'number',
@@ -76,10 +72,6 @@ return {
     },
     {
       arguments = { 'texture', 'x', 'y', 'layer', 'level', 'width', 'height' },
-      returns = { 'readback' }
-    },
-    {
-      arguments = { 'tally', 'index', 'count' },
       returns = { 'readback' }
     }
   }

@@ -14,13 +14,7 @@ return {
       returns = { 'data' }
     }
   },
-  notes = [[
-    This currently returns `nil` for readbacks of `Buffer` and `Texture` objects.  Only readbacks of
-    `Tally` objects return valid data.
-
-    For `time` and `pixel` tallies, the table will have 1 number per slot that was read.  For
-    `shader` tallies, there will be 4 numbers for each slot.
-  ]],
+  notes = 'This returns `nil` for readbacks of `Texture` objects.',
   related = {
     'Readback:getBlob',
     'Readback:getImage'
