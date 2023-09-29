@@ -123,20 +123,18 @@ return {
         local sx, sy = shader:getWorkgroupSize()
         local gx, gy = math.ceil(tw / sx), math.ceil(th / sy)
 
-        local computer = lovr.graphics.getPass('compute'),
-        local transfer = lovr.graphics.getPass('transfer')
+        local computer = lovr.graphics.getPass('compute')
 
         computer:setShader(shader)
         computer:send('image', texture)
         computer:compute(gx, gy)
-        transfer:mipmap(texture)
+        lovr.graphics.submit(computer)
 
-        lovr.graphics.submit(computer, transfer)
+        texture:generateMipmaps()
       end
 
       function lovr.draw(pass)
-        pass:setMaterial(texture)
-        pass:plane(0, 1.7, -1)
+        pass:draw(texture, 0, 1.7, -1)
       end
     ]=]
   },
