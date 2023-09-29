@@ -21805,10 +21805,6 @@ return {
               tag = "transfer"
             },
             {
-              name = "Tallies",
-              tag = "tallies"
-            },
-            {
               name = "Miscellaneous",
               tag = "pass-misc"
             }
