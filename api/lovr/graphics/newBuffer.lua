@@ -140,7 +140,7 @@ return {
 
     If no table or Blob is used to define the initial Buffer contents, its data will be undefined.
   ]],
-  examples = {
+  example = {
     description = 'Examples of different buffer formats.',
     code = [[
       -- 2 matrices
