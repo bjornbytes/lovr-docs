@@ -12817,7 +12817,8 @@ return {
           key = "Buffer",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.newBuffer"
+            "lovr.graphics.newBuffer",
+            "lovr.graphics.getBuffer"
           },
           methods = {
             {
