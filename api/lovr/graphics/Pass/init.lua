@@ -5,7 +5,7 @@ return {
     list of compute shaders to run.
 
     Methods like `Pass:sphere` will "record" a draw on the Pass, which adds it to the list.  Other
-    methods like `Pass:setBlendMode` or `Pass:setShader` will change the way future draws are
+    methods like `Pass:setBlendMode` or `Pass:setShader` will change the way the next draws are
     processed.
 
     Once all of the work has been recorded to a Pass, it can be sent to the GPU using
