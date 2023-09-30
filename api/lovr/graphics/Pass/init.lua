@@ -1,14 +1,29 @@
 return {
   summary = 'A stream of graphics commands.',
   description = [[
-    Pass objects are used to record commands for the GPU.  Commands can be recorded by calling
-    functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to
-    process using `lovr.graphics.submit`.
+    Pass objects are used to record work for the GPU.  They contain a list of things to draw and a
+    list of compute shaders to run.
+
+    Methods like `Pass:sphere` will "record" a draw on the Pass, which adds it to the list.  Other
+    methods like `Pass:setBlendMode` or `Pass:setShader` will change the way future draws are
+    processed.
+
+    Once all of the work has been recorded to a Pass, it can be sent to the GPU using
+    `lovr.graphics.submit`, which will start processing all of the compute work and draws (in that
+    order).
+
+    A Pass can have a **canvas**, which is a set of textures that the draws will render to.
+
+    `Pass:reset` is used to clear all of the computes and draws, putting the Pass in a fresh state.
+
+    `lovr.draw` is called every frame with a `Pass` that is configured to render to either the
+    headset or the window.  The Pass will automatically get submitted afterwards.
   ]],
   constructors = {
-    'lovr.graphics.getPass',
+    'lovr.graphics.newPass',
     'lovr.graphics.getWindowPass',
-    'lovr.headset.getPass'
+    'lovr.headset.getPass',
+    'lovr.graphics.getPass'
   },
   sections = {
     {
@@ -30,20 +45,24 @@ return {
       ]]
     },
     {
-      name = 'Shader Variables',
-      tag = 'shader-inputs',
+      name = 'Camera',
+      tag = 'camera'
     },
     {
-      name = 'Camera',
-      tag = 'camera',
+      name = 'Shaders',
+      tag = 'shaders'
     },
     {
       name = 'Compute',
-      tag = 'compute',
+      tag = 'compute'
     },
     {
-      name = 'Transfers',
-      tag = 'transfer'
+      name = 'Tally',
+      tag = 'tally'
+    },
+    {
+      name = 'Canvas',
+      tag = 'canvas'
     },
     {
       name = 'Miscellaneous',

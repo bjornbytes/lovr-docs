@@ -1,29 +1,30 @@
 return {
-  deprecated = true,
   tag = 'graphics-objects',
-  summary = 'Get a temporary Pass.',
-  description = 'Creates and returns a temporary Pass object.',
+  summary = 'Create a new Pass.',
+  description = [[
+    Creates and returns a new Pass object.  The canvas (the set of textures the Pass renders to) can
+    be specified when creating the Pass, or later using `Pass:setCanvas`.
+  ]],
   arguments = {
-    type = {
-      type = 'PassType',
-      description = 'The type of pass to create.'
-    },
-    texture = {
+    ['...textures'] = {
       type = 'Texture',
-      description = 'The texture the render pass will render to.  Ignored for non-render passes.'
+      description = [[
+        One or more textures the pass will render to.  This can be changed later using
+        `Pass:setCanvas`.
+      ]]
     },
     canvas = {
       type = 'table',
       description = [[
-        Render pass configuration.  Up to 4 textures can be provided in table keys 1 through 4.
-        Ignored for non-render passes.
+        Render target configuration.  Up to 4 textures can be provided in table keys 1 through 4, as
+        well as the following keys:
       ]],
       table = {
         {
           name = 'depth',
           type = 'table',
           description = [[
-            Depth/stencil buffer configuration.  In addition to a table, it can be a `Texture`, a
+            Depth/stencil buffer settings.  In addition to a table, it can be a `Texture`, a
             `TextureFormat`, or `false` to disable the depth buffer.
           ]],
           table = {
@@ -64,18 +65,18 @@ return {
   },
   variants = {
     {
-      description = 'Create a compute pass.',
-      arguments = { 'type' },
+      description = 'Create a pass that renders to a set of textures.',
+      arguments = { '...textures' },
       returns = { 'pass' }
     },
     {
-      description = 'Create a render pass.',
-      arguments = { 'type', 'texture' },
+      description = 'Create a pass, with extra canvas settings.',
+      arguments = { 'canvas' },
       returns = { 'pass' }
     },
     {
-      description = 'Create a render pass, with options.',
-      arguments = { 'type', 'canvas' },
+      description = 'Create an empty Pass without a canvas.',
+      arguments = {},
       returns = { 'pass' }
     }
   },
@@ -93,12 +94,6 @@ return {
     - It's okay to have zero color textures, but in this case there must be a depth texture.
     - It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by
       rendering to texture views, see `Texture:newView`.
-
-    For `compute` passes, all of the commands in the pass act as though they run in parallel.  This
-    means that writing to the same element of a buffer twice, or writing to it and reading from it
-    again is not guaranteed to work properly on all GPUs.  If compute or transfers need to be
-    sequenced, multiple passes should be used.  It is, however, completely fine to read and write to
-    non-overlapping regions of the same buffer or texture.
   ]],
   related = {
     'lovr.graphics.submit',

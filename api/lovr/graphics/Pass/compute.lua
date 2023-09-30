@@ -3,6 +3,10 @@ return {
   summary = 'Run a compute shader.',
   description = [[
     Runs a compute shader.  There must be an active compute shader set using `Pass:setShader`.
+
+    All of the compute shader dispatches in a Pass will run **before** all of the draws in the Pass
+    (if any).  They will also run at the same time in parallel, unless `Pass:barrier` is used to
+    control the order.
   ]],
   arguments = {
      x = {
@@ -50,10 +54,9 @@ return {
     }
   },
   notes = [[
-    Usually compute shaders are run many times in parallel: once for each pixel in an image, once
-    per particle, once per object, etc.  The 3 arguments represent how many times to run, or
-    "dispatch", the compute shader, in up to 3 dimensions.  Each element of this grid is called a
-    **workgroup**.
+    Compute shaders are usually run once for each pixel in an image, once per particle, once per
+    object, etc.  The 3 arguments represent how many times to run, or "dispatch", the compute
+    shader, in up to 3 dimensions.  Each element of this grid is called a **workgroup**.
 
     To make things even more complicated, each workgroup itself is made up of a set of "mini GPU
     threads", which are called **local workgroups**.  Like workgroups, the local workgroup size can
@@ -139,9 +142,8 @@ return {
     ]=]
   },
   related = {
+    'Pass:barrier',
     'Pass:setShader',
-    'Pass:send',
-    'lovr.graphics.newShader',
-    'lovr.graphics.getPass'
+    'Pass:send'
   }
 }

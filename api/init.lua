@@ -11047,7 +11047,8 @@ return {
           description = "Creates and returns a temporary Pass object.",
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
-          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- If `mipmap` is true, then any textures with mipmaps must have the `transfer` `TextureUsage`.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- Setting `clear` to `false` for textures is usually very slow on mobile GPUs.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `Texture:newView`.\n\nFor `compute` and `transfer` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  LÖVR is not currently able to check for this.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
+          deprecated = true,
+          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `Texture:newView`.\n\nFor `compute` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
           related = {
             "lovr.graphics.submit",
             "lovr.graphics.getWindowPass",
@@ -11055,7 +11056,7 @@ return {
           },
           variants = {
             {
-              description = "Create a compute or transfer pass.",
+              description = "Create a compute pass.",
               arguments = {
                 {
                   name = "type",
@@ -11121,31 +11122,14 @@ return {
                           name = "texture",
                           type = "Texture",
                           description = "A Texture to use as the depth buffer.  Takes precedence over `format`."
-                        },
-                        {
-                          name = "clear",
-                          type = "number",
-                          description = "How to clear the depth buffer at the beginning of the pass.  Can be a floating point number to clear each pixel to, `true` to do a \"fast clear\" that clears to random data, or `false` to not clear at all and instead load the depth texture's pixels.",
-                          default = "0"
                         }
                       }
-                    },
-                    {
-                      name = "clear",
-                      type = "*",
-                      description = "How to clear the color textures at the beginning of the pass.  If this is a boolean or a color, that value will be used for all color textures.  It can also be a table of colors or booleans, one for each color texture.  Colors may be provided as `Vec3`, `Vec4`, hexcodes, or tables of numbers.  Note that tables of hexcode colors are ambiguous and therefore unsupported.  When using a boolean, `true` means to do a \"fast clear\" that clears the texture to random data, and `false` means to not clear at all and instead load the texture's existing pixels."
                     },
                     {
                       name = "samples",
                       type = "number",
                       description = "The number of multisamples to use.  Can be 4 for antialiasing, or 1 to disable antialiasing.",
                       default = "4"
-                    },
-                    {
-                      name = "mipmap",
-                      type = "boolean",
-                      description = "Whether mipmaps for the color and depth textures should be regenerated after the pass is finished.",
-                      default = "false"
                     }
                   }
                 }
@@ -11974,6 +11958,93 @@ return {
                   name = "model",
                   type = "Model",
                   description = "The new Model."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newPass",
+          tag = "graphics-objects",
+          summary = "Create a new Pass.",
+          description = "Creates and returns a new Pass object.  The canvas (the set of textures the Pass renders to) can be specified when creating the Pass, or later using `Pass:setCanvas`.",
+          key = "lovr.graphics.newPass",
+          module = "lovr.graphics",
+          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `Texture:newView`.",
+          related = {
+            "lovr.graphics.submit",
+            "lovr.graphics.getWindowPass",
+            "lovr.headset.getPass"
+          },
+          variants = {
+            {
+              description = "Create a pass that renders to a set of textures.",
+              arguments = {
+                {
+                  name = "...textures",
+                  type = "Texture",
+                  description = "One or more textures the pass will render to.  This can be changed later using `Pass:setCanvas`."
+                }
+              },
+              returns = {
+                {
+                  name = "pass",
+                  type = "Pass",
+                  description = "The new Pass."
+                }
+              }
+            },
+            {
+              description = "Create a pass, with extra canvas settings.",
+              arguments = {
+                {
+                  name = "canvas",
+                  type = "table",
+                  description = "Render target configuration.  Up to 4 textures can be provided in table keys 1 through 4, as well as the following keys:",
+                  table = {
+                    {
+                      name = "depth",
+                      type = "table",
+                      description = "Depth/stencil buffer settings.  In addition to a table, it can be a `Texture`, a `TextureFormat`, or `false` to disable the depth buffer.",
+                      table = {
+                        {
+                          name = "format",
+                          type = "TextureFormat",
+                          description = "The format of the depth buffer texture, which must be a depth format (the ones that start with `d`).  LÖVR will create or reuse an internal depth buffer with this format.",
+                          default = "'d32f'"
+                        },
+                        {
+                          name = "texture",
+                          type = "Texture",
+                          description = "A Texture to use as the depth buffer.  Takes precedence over `format`."
+                        }
+                      }
+                    },
+                    {
+                      name = "samples",
+                      type = "number",
+                      description = "The number of multisamples to use.  Can be 4 for antialiasing, or 1 to disable antialiasing.",
+                      default = "4"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "pass",
+                  type = "Pass",
+                  description = "The new Pass."
+                }
+              }
+            },
+            {
+              description = "Create an empty Pass without a canvas.",
+              arguments = {},
+              returns = {
+                {
+                  name = "pass",
+                  type = "Pass",
+                  description = "The new Pass."
                 }
               }
             }
@@ -16639,13 +16710,14 @@ return {
         {
           name = "Pass",
           summary = "A stream of graphics commands.",
-          description = "Pass objects are used to record commands for the GPU.  Commands can be recorded by calling functions on the Pass.  After recording a set of passes, they can be submitted for the GPU to process using `lovr.graphics.submit`.",
+          description = "Pass objects are used to record work for the GPU.  They contain a list of things to draw and a list of compute shaders to run.\n\nMethods like `Pass:sphere` will \"record\" a draw on the Pass, which adds it to the list.  Other methods like `Pass:setBlendMode` or `Pass:setShader` will change the way future draws are processed.\n\nOnce all of the work has been recorded to a Pass, it can be sent to the GPU using `lovr.graphics.submit`, which will start processing all of the compute work and draws (in that order).\n\nA Pass can have a **canvas**, which is a set of textures that the draws will render to.\n\n`Pass:reset` is used to clear all of the computes and draws, putting the Pass in a fresh state.\n\n`lovr.draw` is called every frame with a `Pass` that is configured to render to either the headset or the window.  The Pass will automatically get submitted afterwards.",
           key = "Pass",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.getPass",
+            "lovr.graphics.newPass",
             "lovr.graphics.getWindowPass",
-            "lovr.headset.getPass"
+            "lovr.headset.getPass",
+            "lovr.graphics.getPass"
           },
           methods = {
             {
@@ -17307,7 +17379,7 @@ return {
               name = "compute",
               tag = "compute",
               summary = "Run a compute shader.",
-              description = "Runs a compute shader.  There must be an active compute shader set using `Pass:setShader`.",
+              description = "Runs a compute shader.  There must be an active compute shader set using `Pass:setShader`.\n\nAll of the compute shader dispatches in a Pass will run **before** all of the draws in the Pass (if any).  They will also run at the same time in parallel, unless `Pass:barrier` is used to control the order.",
               key = "Pass:compute",
               module = "lovr.graphics",
               examples = {
@@ -17316,12 +17388,11 @@ return {
                   code = "function lovr.load()\n  shader = lovr.graphics.newShader([[\n    layout(local_size_x = 8, local_size_y = 8) in;\n    layout(set = 0, binding = 0, rgba8) uniform image2D image;\n\n    void lovrmain() {\n      ivec2 size = imageSize(image);\n      ivec2 pixel = ivec2(GlobalThreadID.xy);\n\n      if (pixel.x >= size.x || pixel.y >= size.y) {\n        return;\n      }\n\n      vec4 color = imageLoad(image, pixel);\n      color.rgb = vec3(color.r * .2126 + color.g * .7512 + color.b * .0722);\n      imageStore(image, pixel, color);\n    }\n  ]])\n\n  texture = lovr.graphics.newTexture('image.png', {\n    usage = { 'storage', 'sample', 'transfer' },\n    linear = true -- srgb textures don't always support storage usage\n  })\n\n  local tw, th = texture:getDimensions()\n  local sx, sy = shader:getWorkgroupSize()\n  local gx, gy = math.ceil(tw / sx), math.ceil(th / sy)\n\n  local computer = lovr.graphics.newPass()\n\n  computer:setShader(shader)\n  computer:send('image', texture)\n  computer:compute(gx, gy)\n  lovr.graphics.submit(computer)\n\n  texture:generateMipmaps()\nend\n\nfunction lovr.draw(pass)\n  pass:draw(texture, 0, 1.7, -1)\nend"
                 }
               },
-              notes = "Usually compute shaders are run many times in parallel: once for each pixel in an image, once per particle, once per object, etc.  The 3 arguments represent how many times to run, or \"dispatch\", the compute shader, in up to 3 dimensions.  Each element of this grid is called a **workgroup**.\n\nTo make things even more complicated, each workgroup itself is made up of a set of \"mini GPU threads\", which are called **local workgroups**.  Like workgroups, the local workgroup size can also be 3D.  It's declared in the shader code, like this:\n\n    layout(local_size_x = w, local_size_y = h, local_size_z = d) in;\n\nAll these 3D grids can get confusing, but the basic idea is to make the local workgroup size a small block of e.g. 32 particles or 8x8 pixels or 4x4x4 voxels, and then dispatch however many workgroups are needed to cover a list of particles, image, voxel field, etc.\n\nThe reason to do it this way is that the GPU runs its threads in little fixed-size bundles called subgroups.  Subgroups are usually 32 or 64 threads (the exact size is given by the `subgroupSize` property of `lovr.graphics.getDevice`) and all run together.  If the local workgroup size was `1x1x1`, then the GPU would only run 1 thread per subgroup and waste the other 31 or 63.  So for the best performance, be sure to set a local workgroup size bigger than 1!\n\nInside the compute shader, a few builtin variables can be used to figure out which workgroup is running:\n\n- `uvec3 WorkgroupCount` is the workgroup count per axis (the `Pass:compute` arguments).\n- `uvec3 WorkgroupSize` is the local workgroup size (declared in the shader).\n- `uvec3 WorkgroupID` is the index of the current (global) workgroup.\n- `uvec3 LocalThreadID` is the index of the local workgroup inside its workgroup.\n- `uint LocalThreadIndex` is a 1D version of `LocalThreadID`.\n- `uvec3 GlobalThreadID` is the unique identifier for a thread within all workgroups in a\n  dispatch. It's equivalent to `WorkgroupID * WorkgroupSize + LocalThreadID` (usually what you\n  want!)\n\nIndirect compute dispatches are useful to \"chain\" compute shaders together, while keeping all of the data on the GPU.  The first dispatch can do some computation and write some results to buffers, then the second indirect dispatch can use the data in those buffers to know how many times it should run.  An example would be a compute shader that does some sort of object culling, writing the number of visible objects to a buffer along with the IDs of each one. Subsequent compute shaders can be indirectly dispatched to perform extra processing on the visible objects.  Finally, an indirect draw can be used to render them.",
+              notes = "Compute shaders are usually run once for each pixel in an image, once per particle, once per object, etc.  The 3 arguments represent how many times to run, or \"dispatch\", the compute shader, in up to 3 dimensions.  Each element of this grid is called a **workgroup**.\n\nTo make things even more complicated, each workgroup itself is made up of a set of \"mini GPU threads\", which are called **local workgroups**.  Like workgroups, the local workgroup size can also be 3D.  It's declared in the shader code, like this:\n\n    layout(local_size_x = w, local_size_y = h, local_size_z = d) in;\n\nAll these 3D grids can get confusing, but the basic idea is to make the local workgroup size a small block of e.g. 32 particles or 8x8 pixels or 4x4x4 voxels, and then dispatch however many workgroups are needed to cover a list of particles, image, voxel field, etc.\n\nThe reason to do it this way is that the GPU runs its threads in little fixed-size bundles called subgroups.  Subgroups are usually 32 or 64 threads (the exact size is given by the `subgroupSize` property of `lovr.graphics.getDevice`) and all run together.  If the local workgroup size was `1x1x1`, then the GPU would only run 1 thread per subgroup and waste the other 31 or 63.  So for the best performance, be sure to set a local workgroup size bigger than 1!\n\nInside the compute shader, a few builtin variables can be used to figure out which workgroup is running:\n\n- `uvec3 WorkgroupCount` is the workgroup count per axis (the `Pass:compute` arguments).\n- `uvec3 WorkgroupSize` is the local workgroup size (declared in the shader).\n- `uvec3 WorkgroupID` is the index of the current (global) workgroup.\n- `uvec3 LocalThreadID` is the index of the local workgroup inside its workgroup.\n- `uint LocalThreadIndex` is a 1D version of `LocalThreadID`.\n- `uvec3 GlobalThreadID` is the unique identifier for a thread within all workgroups in a\n  dispatch. It's equivalent to `WorkgroupID * WorkgroupSize + LocalThreadID` (usually what you\n  want!)\n\nIndirect compute dispatches are useful to \"chain\" compute shaders together, while keeping all of the data on the GPU.  The first dispatch can do some computation and write some results to buffers, then the second indirect dispatch can use the data in those buffers to know how many times it should run.  An example would be a compute shader that does some sort of object culling, writing the number of visible objects to a buffer along with the IDs of each one. Subsequent compute shaders can be indirectly dispatched to perform extra processing on the visible objects.  Finally, an indirect draw can be used to render them.",
               related = {
+                "Pass:barrier",
                 "Pass:setShader",
-                "Pass:send",
-                "lovr.graphics.newShader",
-                "lovr.graphics.getPass"
+                "Pass:send"
               },
               variants = {
                 {
@@ -18295,17 +18366,18 @@ return {
             },
             {
               name = "getDimensions",
-              tag = "pass-misc",
-              summary = "Get the texture dimensions of a render pass.",
-              description = "Returns the dimensions of the textures attached to the render pass.",
+              tag = "canvas",
+              summary = "Get the dimensions of the Pass's canvas.",
+              description = "Returns the dimensions of the textures of the Pass's canvas, in pixels.",
               key = "Pass:getDimensions",
               module = "lovr.graphics",
-              notes = "If the pass is not a render pass, this function returns zeros.",
+              notes = "If the pass doesn't have a canvas, this function returns zeros.",
               related = {
                 "Pass:getWidth",
                 "Pass:getHeight",
                 "Pass:getViewCount",
-                "lovr.graphics.getPass",
+                "Pass:getCanvas",
+                "Pass:setCanvas",
                 "lovr.system.getWindowDimensions",
                 "lovr.headset.getDisplayDimensions"
               },
@@ -18329,17 +18401,18 @@ return {
             },
             {
               name = "getHeight",
-              tag = "pass-misc",
-              summary = "Get the texture height of a render pass.",
-              description = "Returns the height of the textures attached to the render pass.",
+              tag = "canvas",
+              summary = "Get the height of the Pass's canvas.",
+              description = "Returns the height of the textures of the Pass's canvas, in pixels.",
               key = "Pass:getHeight",
               module = "lovr.graphics",
-              notes = "If the pass is not a render pass, this function returns zero.",
+              notes = "If the pass doesn't have a canvas, this function returns zero.",
               related = {
                 "Pass:getWidth",
                 "Pass:getDimensions",
                 "Pass:getViewCount",
-                "lovr.graphics.getPass",
+                "Pass:getCanvas",
+                "Pass:setCanvas",
                 "lovr.system.getWindowHeight",
                 "lovr.headset.getDisplayHeight"
               },
@@ -18698,17 +18771,18 @@ return {
             },
             {
               name = "getWidth",
-              tag = "pass-misc",
-              summary = "Get the texture width of a render pass.",
-              description = "Returns the width of the textures attached to the render pass.",
+              tag = "canvas",
+              summary = "Get the width of the Pass's canvas.",
+              description = "Returns the width of the textures of the Pass's canvas, in pixels.",
               key = "Pass:getWidth",
               module = "lovr.graphics",
-              notes = "If the pass is not a render pass, this function returns zero.",
+              notes = "If the pass doesn't have a canvas, this function returns zero.",
               related = {
                 "Pass:getHeight",
                 "Pass:getDimensions",
                 "Pass:getViewCount",
-                "lovr.graphics.getPass",
+                "Pass:getCanvas",
+                "Pass:setCanvas",
                 "lovr.system.getWindowWidth",
                 "lovr.headset.getDisplayWidth"
               },
@@ -19866,7 +19940,7 @@ return {
             },
             {
               name = "send",
-              tag = "shader-inputs",
+              tag = "shaders",
               summary = "Set the value of a shader variable.",
               description = "Sends a value to a variable in the Pass's active `Shader`.  The active shader is changed using `Pass:setShader`.",
               key = "Pass:send",
@@ -20633,7 +20707,7 @@ return {
             },
             {
               name = "setShader",
-              tag = "pipeline",
+              tag = "shaders",
               summary = "Set the active Shader.",
               description = "Sets the active shader.  In a render pass, the Shader will affect all drawing operations until it is changed again.  In a compute pass, the Shader will be run when `Pass:compute` is called.",
               key = "Pass:setShader",
@@ -21812,20 +21886,24 @@ return {
               description = "Set render states that change the way drawing happens.  `Pass:push` and `Pass:pop` with a `StackType` of `state` can be used to save and restore render states."
             },
             {
-              name = "Shader Variables",
-              tag = "shader-inputs"
-            },
-            {
               name = "Camera",
               tag = "camera"
+            },
+            {
+              name = "Shaders",
+              tag = "shaders"
             },
             {
               name = "Compute",
               tag = "compute"
             },
             {
-              name = "Transfers",
-              tag = "transfer"
+              name = "Tally",
+              tag = "tally"
+            },
+            {
+              name = "Canvas",
+              tag = "canvas"
             },
             {
               name = "Miscellaneous",
