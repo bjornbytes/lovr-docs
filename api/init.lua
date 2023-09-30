@@ -19691,6 +19691,21 @@ return {
               }
             },
             {
+              name = "reset",
+              tag = "pass-misc",
+              summary = "Reset the Pass.",
+              description = "Resets the Pass, clearing all of its draws and computes and resetting all of its state to the default values.\n\nThe only thing that doesn't get reset is the Pass's canvas.",
+              key = "Pass:reset",
+              module = "lovr.graphics",
+              notes = "Changing the canvas using `Pass:setCanvas` will also reset the Pass.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "rotate",
               tag = "transform",
               summary = "Rotate the coordinate system.",
