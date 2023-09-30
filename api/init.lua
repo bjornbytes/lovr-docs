@@ -18343,7 +18343,7 @@ return {
             },
             {
               name = "getClear",
-              tag = "pass-misc",
+              tag = "canvas",
               summary = "Return the clear values of the Pass.",
               description = "Returns the clear values of the pass.",
               key = "Pass:getClear",
@@ -18499,7 +18499,7 @@ return {
             },
             {
               name = "getSampleCount",
-              tag = "pass-misc",
+              tag = "canvas",
               summary = "Get the antialiasing setting of a render pass.",
               description = "Returns the antialiasing setting of a render pass.",
               key = "Pass:getSampleCount",
@@ -18559,7 +18559,7 @@ return {
             },
             {
               name = "getTarget",
-              tag = "pass-misc",
+              tag = "canvas",
               summary = "Get the textures a render pass is rendering to.",
               description = "Returns the textures a render pass is rendering to.",
               key = "Pass:getTarget",

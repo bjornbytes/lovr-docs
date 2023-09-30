@@ -1,5 +1,5 @@
 return {
-  tag = 'pass-misc',
+  tag = 'canvas',
   summary = 'Get the textures a render pass is rendering to.',
   description = 'Returns the textures a render pass is rendering to.',
   arguments = {},
