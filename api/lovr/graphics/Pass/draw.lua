@@ -1,6 +1,6 @@
 return {
   tag = 'drawing',
-  summary = 'Draw a `Model`, `Mesh`, or `Texture`.',
+  summary = 'Draw a Model, Mesh, or Texture.',
   description = 'Draws a `Model`, `Mesh`, or `Texture`.',
   arguments = {
     object = {

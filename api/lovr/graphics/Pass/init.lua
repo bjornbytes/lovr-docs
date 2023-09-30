@@ -40,17 +40,16 @@ return {
       name = 'Render States',
       tag = 'pipeline',
       description = [[
-        Set render states that change the way drawing happens.  `Pass:push` and `Pass:pop` with a
-        `StackType` of `state` can be used to save and restore render states.
+        Set render states that change the way drawing happens.  Render states can be saved and
+        restored using `Pass:push` and `Pass:pop`.
       ]]
     },
     {
-      name = 'Camera',
-      tag = 'camera'
-    },
-    {
       name = 'Shaders',
-      tag = 'shaders'
+      tag = 'shaders',
+      description = [[
+        Change the shader used for draws or computes, and set variables in the active shader.
+      ]]
     },
     {
       name = 'Compute',
@@ -58,7 +57,15 @@ return {
     },
     {
       name = 'Tally',
-      tag = 'tally'
+      tag = 'tally',
+      description = [[
+        Tallies are used to count the number of pixels affected by one or more draws.  This can be
+        used as a way to detect if an object is visible.
+      ]]
+    },
+    {
+      name = 'Camera',
+      tag = 'camera'
     },
     {
       name = 'Canvas',
