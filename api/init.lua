@@ -20248,19 +20248,31 @@ return {
                 {
                   arguments = {
                     {
+                      name = "...textures",
+                      type = "Texture",
+                      description = "One or more color textures the pass will render to."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
                       name = "canvas",
                       type = "table",
-                      description = "The canvas.  Numeric keys will contain the color Textures, along with the following keys:",
+                      description = "The canvas.  Each numeric key is a color texture to render to (up to 4), along with the following keys to control depth buffer and antialiasing settings:",
                       table = {
                         {
                           name = "depth",
                           type = "*",
-                          description = "A `Texture` or `TextureFormat` with the depth buffer."
+                          description = "A `Texture` or `TextureFormat` with the depth buffer.",
+                          default = "d32f"
                         },
                         {
                           name = "samples",
                           type = "number",
-                          description = "The number of multisamples used for antialiasing (either 1 or 4)."
+                          description = "The number of multisamples used for antialiasing (either 1 or 4).",
+                          default = "4"
                         }
                       }
                     }
