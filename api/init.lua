@@ -16710,7 +16710,7 @@ return {
         {
           name = "Pass",
           summary = "A stream of graphics commands.",
-          description = "Pass objects are used to record work for the GPU.  They contain a list of things to draw and a list of compute shaders to run.\n\nMethods like `Pass:sphere` will \"record\" a draw on the Pass, which adds it to the list.  Other methods like `Pass:setBlendMode` or `Pass:setShader` will change the way the next draws are processed.\n\nOnce all of the work has been recorded to a Pass, it can be sent to the GPU using `lovr.graphics.submit`, which will start processing all of the compute work and draws (in that order).\n\nA Pass can have a **canvas**, which is a set of textures that the draws will render to.\n\n`Pass:reset` is used to clear all of the computes and draws, putting the Pass in a fresh state.\n\n`lovr.draw` is called every frame with a `Pass` that is configured to render to either the headset or the window.  The Pass will automatically get submitted afterwards.",
+          description = "Pass objects record work for the GPU.  They contain a list of things to draw and a list of compute shaders to run.\n\nMethods like `Pass:sphere` will \"record\" a draw on the Pass, which adds it to the list.  Other methods like `Pass:setBlendMode` or `Pass:setShader` will change the way the next draws are processed.\n\nOnce all of the work has been recorded to a Pass, it can be sent to the GPU using `lovr.graphics.submit`, which will start processing all of the compute work and draws (in that order).\n\nA Pass can have a **canvas**, which is a set of textures that the draws will render to.\n\n`Pass:reset` is used to clear all of the computes and draws, putting the Pass in a fresh state.\n\n`lovr.draw` is called every frame with a `Pass` that is configured to render to either the headset or the window.  The Pass will automatically get submitted afterwards.",
           key = "Pass",
           module = "lovr.graphics",
           constructors = {
@@ -18342,14 +18342,60 @@ return {
               }
             },
             {
+              name = "getCanvas",
+              tag = "canvas",
+              summary = "Get the Pass's canvas.",
+              description = "Returns the Pass's canvas, or `nil` if the Pass doesn't have a canvas.  The canvas is a set of textures that the Pass will draw to when it's submitted.",
+              key = "Pass:getCanvas",
+              module = "lovr.graphics",
+              notes = "If the Pass has multiple color textures, a fragment shader should be used to write a different color to each texture.  Here's an example that writes red to the first texture and blue to the second texture:\n\n    // Declare an output variable for the second texture\n    layout(location = 1) out vec4 secondColor;\n\n    vec4 lovrmain() {\n      secondColor = vec4(0, 0, 1, 1);\n      return vec4(1, 0, 0, 1);\n    }",
+              related = {
+                "Pass:getClear",
+                "Pass:setClear",
+                "Pass:getWidth",
+                "Pass:getHeight",
+                "Pass:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "canvas",
+                      type = "table",
+                      description = "The canvas.  Numeric keys will contain the color Textures, along with the following keys:",
+                      table = {
+                        {
+                          name = "depth",
+                          type = "*",
+                          description = "A `Texture` or `TextureFormat` with the depth buffer."
+                        },
+                        {
+                          name = "samples",
+                          type = "number",
+                          description = "The number of multisamples used for antialiasing (either 1 or 4)."
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  description = "This function returns nil when a canvas hasn't been set.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "getClear",
               tag = "canvas",
               summary = "Return the clear values of the Pass.",
               description = "Returns the clear values of the pass.",
               key = "Pass:getClear",
               module = "lovr.graphics",
+              notes = "The default clear color is transparent black.",
               related = {
-                "Pass:getTarget"
+                "Pass:getCanvas"
               },
               variants = {
                 {
@@ -18358,7 +18404,7 @@ return {
                     {
                       name = "clears",
                       type = "table",
-                      description = "The clear values for the pass.  Numeric keys will contain clear values for color textures, either as a table of r, g, b, a values or a boolean.  If the pass has a depth texture, there will also be `depth` and `stencil` keys containing the clear values or booleans."
+                      description = "The clear values for the pass.  Each color texture's clear value is stored at its index, as either a 4-number rgba table or a boolean.  If the pass has a depth texture, there will also be a `depth` key with its clear value as a number or boolean."
                     }
                   }
                 }
@@ -20184,6 +20230,126 @@ return {
               }
             },
             {
+              name = "setCanvas",
+              tag = "canvas",
+              summary = "Set the Pass's canvas.",
+              description = "Sets the Pass's canvas.  The canvas is a set of textures that the Pass will draw to when it's submitted, along with configuration for the depth buffer and antialiasing.",
+              key = "Pass:setCanvas",
+              module = "lovr.graphics",
+              notes = "Changing the canvas will reset the pass, as though `Pass:reset` was called.\n\nAll textures must have the same dimensions, layer counts, and multisample counts.  They also must have been created with the `render` usage flag.\n\nThe number of layers in the textures determines how many views (cameras) the pass has.  Each draw will be rendered to all texture layers, as seen from the corresponding camera.  For example, VR rendering will use a canvas texture with 2 layers, one for each eye.\n\nTo render to a specific mipmap level or layer of a texture, use texture views (`Texture:newView`).\n\nMipmaps will be regenerated for all of canvas textures at the end of a render pass.\n\nIf the Pass has multiple color textures, a fragment shader should be used to write a different color to each texture.  Here's an example that writes red to the first texture and blue to the second texture:\n\n    // Declare an output variable for the second texture\n    layout(location = 1) out vec4 secondColor;\n\n    vec4 lovrmain() {\n      secondColor = vec4(0, 0, 1, 1);\n      return vec4(1, 0, 0, 1);\n    }",
+              related = {
+                "Pass:getClear",
+                "Pass:setClear",
+                "Pass:getWidth",
+                "Pass:getHeight",
+                "Pass:getDimensions"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "canvas",
+                      type = "table",
+                      description = "The canvas.  Numeric keys will contain the color Textures, along with the following keys:",
+                      table = {
+                        {
+                          name = "depth",
+                          type = "*",
+                          description = "A `Texture` or `TextureFormat` with the depth buffer."
+                        },
+                        {
+                          name = "samples",
+                          type = "number",
+                          description = "The number of multisamples used for antialiasing (either 1 or 4)."
+                        }
+                      }
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disable the canvas.  Any draws in the Pass will be skipped when it is submitted (compute shaders will still run though).",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setClear",
+              tag = "canvas",
+              summary = "Set the clear values of the Pass.",
+              description = "Sets the clear values of the pass.  This controls the initial colors of the canvas texture pixels at the beginning of the render pass.  For each color texture, it can be one of the following:\n\n- A specific RGBA color value (or number for the depth texture).\n- `true`, to do a \"fast clear\" to undefined values.  This is useful if the pass is going to end\n  up drawing to all of the texture's pixels.\n- `false`, to avoid clearing and load the texture's existing pixels.  This can be slow on mobile\n  GPUs.",
+              key = "Pass:setClear",
+              module = "lovr.graphics",
+              notes = "If the depth clear is not given, it will be set to 0.\n\nAll clear colors will default to transparent black (all zeros) when the Pass is created.",
+              related = {
+                "Pass:setCanvas",
+                "Texture:clear"
+              },
+              variants = {
+                {
+                  description = "Set the clear color for all color textures, using a hexcode.",
+                  arguments = {
+                    {
+                      name = "hex",
+                      type = "number",
+                      description = "A hexcode color to clear all color textures to."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the clear color for all color textures, using numbers.",
+                  arguments = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the clear color."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the clear color."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the clear color."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the clear color.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the clear color for all color textures, using a boolean.",
+                  arguments = {
+                    {
+                      name = "clear",
+                      type = "boolean",
+                      description = "Whether color textures should be cleared."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the clear color for all color textures using a table, or set clear values for individual textures.",
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table of clear values.  This can be a table of 4 numbers to use for all color textures, or it can be a list of boolean and/or RGBA tables to use for each individual color texture.  It can also have a `depth` key with a boolean/number for the depth texture's clear."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setColor",
               tag = "pipeline",
               summary = "Set the color.",
@@ -21898,7 +22064,7 @@ return {
             {
               name = "Render States",
               tag = "pipeline",
-              description = "Set render states that change the way drawing happens.  Render states can be saved and restored using `Pass:push` and `Pass:pop`."
+              description = "Set render states that change the way draws appear.  Render states can be saved and restored using `Pass:push` and `Pass:pop`."
             },
             {
               name = "Shaders",
@@ -21912,7 +22078,7 @@ return {
             {
               name = "Tally",
               tag = "tally",
-              description = "Tallies are used to count the number of pixels affected by one or more draws.  This can be used as a way to detect if an object is visible."
+              description = "Tallies count the number of pixels affected by one or more draws.  This can be used as a way to detect if an object is visible."
             },
             {
               name = "Camera",

@@ -1,8 +1,8 @@
 return {
   summary = 'A stream of graphics commands.',
   description = [[
-    Pass objects are used to record work for the GPU.  They contain a list of things to draw and a
-    list of compute shaders to run.
+    Pass objects record work for the GPU.  They contain a list of things to draw and a list of
+    compute shaders to run.
 
     Methods like `Pass:sphere` will "record" a draw on the Pass, which adds it to the list.  Other
     methods like `Pass:setBlendMode` or `Pass:setShader` will change the way the next draws are
@@ -40,8 +40,8 @@ return {
       name = 'Render States',
       tag = 'pipeline',
       description = [[
-        Set render states that change the way drawing happens.  Render states can be saved and
-        restored using `Pass:push` and `Pass:pop`.
+        Set render states that change the way draws appear.  Render states can be saved and restored
+        using `Pass:push` and `Pass:pop`.
       ]]
     },
     {
@@ -59,8 +59,8 @@ return {
       name = 'Tally',
       tag = 'tally',
       description = [[
-        Tallies are used to count the number of pixels affected by one or more draws.  This can be
-        used as a way to detect if an object is visible.
+        Tallies count the number of pixels affected by one or more draws.  This can be used as a way
+        to detect if an object is visible.
       ]]
     },
     {
