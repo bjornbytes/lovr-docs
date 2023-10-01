@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'headset',
   summary = 'Get the type of tracking origin of the headset.',
   description = [[

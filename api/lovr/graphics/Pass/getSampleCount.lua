@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'canvas',
   summary = 'Get the antialiasing setting of a render pass.',
   description = 'Returns the antialiasing setting of a render pass.',

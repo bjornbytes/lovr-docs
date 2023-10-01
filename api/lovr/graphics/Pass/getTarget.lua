@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'canvas',
   summary = 'Get the textures a render pass is rendering to.',
   description = 'Returns the textures a render pass is rendering to.',

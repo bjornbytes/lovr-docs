@@ -16744,6 +16744,31 @@ return {
               }
             },
             {
+              name = "beginTally",
+              tag = "tally",
+              summary = "Begin a tally.",
+              description = "Begins a new tally.  The tally will count the number of pixels touched by any draws that occur while the tally is active.  The results for all the tallies in the pass can later be retrieved with `Pass:getTallyData`, or they can be saved to a `Buffer` with `Pass:setTallyBuffer`.",
+              key = "Pass:beginTally",
+              module = "lovr.graphics",
+              notes = "There is currently a maximum of 256 tallies per pass.\n\nIf a tally is already active, this function will error.",
+              related = {
+                "Pass:finishTally",
+                "Pass:getTallyCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the tally that was started."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "blit",
               tag = "transfer",
               summary = "Copy data between textures with scaling.",
@@ -18342,6 +18367,31 @@ return {
               }
             },
             {
+              name = "finishTally",
+              tag = "tally",
+              summary = "Finish a tally.",
+              description = "Finishes a tally that was previously started with `Pass:beginTally`.  This will stop counting the number of pixels affected by draws.  The results for all the tallies in the pass can later be retrieved with `Pass:getTallyData`, or they can be saved to a `Buffer` with `Pass:setTallyBuffer`.",
+              key = "Pass:finishTally",
+              module = "lovr.graphics",
+              notes = "There is currently a maximum of 256 tallies per pass.\n\nIf no tally is active, this function will error.",
+              related = {
+                "Pass:beginTally",
+                "Pass:getTallyCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the tally that was finished."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getCanvas",
               tag = "canvas",
               summary = "Get the Pass's canvas.",
@@ -18550,6 +18600,7 @@ return {
               description = "Returns the antialiasing setting of a render pass.",
               key = "Pass:getSampleCount",
               module = "lovr.graphics",
+              deprecated = true,
               variants = {
                 {
                   arguments = {},
@@ -18604,12 +18655,66 @@ return {
               }
             },
             {
+              name = "getTallyBuffer",
+              tag = "tally",
+              summary = "Get the Buffer that tally results will be written to.",
+              description = "Returns the Buffer that tally results will be written to.  Each time the render pass finishes, the results of all the tallies will be copied to the Buffer at the specified offset.  The buffer can be used in a later pass in a compute shader, or the data in the buffer can be read back using e.g. `Buffer:newReadback`.",
+              key = "Pass:getTallyBuffer",
+              module = "lovr.graphics",
+              related = {
+                "Pass:beginTally",
+                "Pass:finishTally"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The buffer."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset in the buffer where results will be written."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTallyCount",
+              tag = "tally",
+              summary = "Get the number of tallies added to the Pass.",
+              description = "Returns the number of tallies that have been started and finished in the pass.  This doesn't return the result of the tallies, use `Pass:getTallyData` or `Pass:setTallyBuffer` for that.",
+              key = "Pass:getTallyCount",
+              module = "lovr.graphics",
+              related = {
+                "Pass:beginTally",
+                "Pass:finishTally"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of tallies in the pass."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getTarget",
               tag = "canvas",
               summary = "Get the textures a render pass is rendering to.",
               description = "Returns the textures a render pass is rendering to.",
               key = "Pass:getTarget",
               module = "lovr.graphics",
+              deprecated = true,
               related = {
                 "Pass:getClear"
               },
@@ -18633,6 +18738,7 @@ return {
               description = "Returns the type of the pass (render, compute, or transfer).  The type restricts what kinds of functions can be called on the pass.",
               key = "Pass:getType",
               module = "lovr.graphics",
+              deprecated = true,
               variants = {
                 {
                   arguments = {},
@@ -21040,6 +21146,35 @@ return {
                 {
                   description = "Disables stencil writing.",
                   arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setTallyBuffer",
+              tag = "tally",
+              summary = "Set the Buffer that tally results will be written to.",
+              description = "Sets the Buffer where tally results will be written to.  Each time the render pass finishes, the results of all the tallies will be copied to the Buffer at the specified offset.  The buffer can be used in a later pass in a compute shader, or the data in the buffer can be read back using e.g. `Buffer:newReadback`.",
+              key = "Pass:setTallyBuffer",
+              module = "lovr.graphics",
+              related = {
+                "Pass:beginTally",
+                "Pass:finishTally"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The buffer."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset in the buffer where results will be written."
+                    }
+                  },
                   returns = {}
                 }
               }
@@ -23622,6 +23757,7 @@ return {
           description = "Returns a table with all the refresh rates supported by the headset display, in Hz.",
           key = "lovr.headset.getDisplayFrequencies",
           module = "lovr.headset",
+          deprecated = true,
           related = {
             "lovr.headset.setDisplayFrequency"
           },
@@ -23645,6 +23781,7 @@ return {
           description = "Returns the refresh rate of the headset display, in Hz.",
           key = "lovr.headset.getDisplayFrequency",
           module = "lovr.headset",
+          deprecated = true,
           variants = {
             {
               arguments = {},
@@ -23842,6 +23979,7 @@ return {
           description = "Returns the type of origin used for the tracking volume.  The different types of origins are explained on the `HeadsetOrigin` page.",
           key = "lovr.headset.getOriginType",
           module = "lovr.headset",
+          deprecated = true,
           related = {
             "HeadsetOrigin"
           },
@@ -24629,6 +24767,7 @@ return {
           description = "Sets the display refresh rate, in Hz.",
           key = "lovr.headset.setDisplayFrequency",
           module = "lovr.headset",
+          deprecated = true,
           notes = "Changing the display refresh-rate also changes the frequency of lovr.update() and lovr.draw() as they depend on the display frequency.",
           variants = {
             {

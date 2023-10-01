@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'pass-misc',
   summary = 'Get the type of the Pass.',
   description = [[

@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'headset',
   summary = 'Get the list of refresh rates supported by the headset display.',
   description = [[
