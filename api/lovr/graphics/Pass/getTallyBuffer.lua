@@ -24,11 +24,6 @@ return {
     {
       arguments = {},
       returns = { 'buffer', 'offset' }
-    },
-    {
-      description = 'Unset the tally buffer.',
-      arguments = {},
-      returns = {}
     }
   },
   related = {

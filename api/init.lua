@@ -18678,11 +18678,6 @@ return {
                       description = "An offset in the buffer where results will be written."
                     }
                   }
-                },
-                {
-                  description = "Unset the tally buffer.",
-                  arguments = {},
-                  returns = {}
                 }
               }
             },
@@ -21155,6 +21150,11 @@ return {
                       description = "A byte offset where results will be written.  Must be a multiple of 4."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Unset the tally buffer.",
+                  arguments = {},
                   returns = {}
                 }
               }

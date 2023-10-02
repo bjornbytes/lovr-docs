@@ -22,6 +22,11 @@ return {
     {
       arguments = { 'buffer', 'offset' },
       returns = {}
+    },
+    {
+      description = 'Unset the tally buffer.',
+      arguments = {},
+      returns = {}
     }
   },
   notes = [[
