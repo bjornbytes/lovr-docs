@@ -6,6 +6,8 @@ return {
     the results of all the tallies will be copied to the Buffer at the specified offset.  The buffer
     can be used in a later pass in a compute shader, or the data in the buffer can be read back
     using e.g. `Buffer:newReadback`.
+
+    If no buffer has been set, this function will return `nil`.
   ]],
   arguments = {},
   returns = {
