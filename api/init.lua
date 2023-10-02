@@ -18678,6 +18678,11 @@ return {
                       description = "An offset in the buffer where results will be written."
                     }
                   }
+                },
+                {
+                  description = "Unset the tally buffer.",
+                  arguments = {},
+                  returns = {}
                 }
               }
             },
