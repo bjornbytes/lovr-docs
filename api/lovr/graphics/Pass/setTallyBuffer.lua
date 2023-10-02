@@ -24,6 +24,13 @@ return {
       returns = {}
     }
   },
+  notes = [[
+    Each tally result is a 4-byte unsigned integer with the number of samples that passed the depth
+    and stencil tests.
+
+    If the buffer doesn't have enough room to store all the tallies, the number of tallies copied
+    will be clamped to the minimum number that will fit.
+  ]],
   related = {
     'Pass:beginTally',
     'Pass:finishTally'

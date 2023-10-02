@@ -16747,13 +16747,12 @@ return {
               name = "beginTally",
               tag = "tally",
               summary = "Begin a tally.",
-              description = "Begins a new tally.  The tally will count the number of pixels touched by any draws that occur while the tally is active.  The results for all the tallies in the pass can later be retrieved with `Pass:getTallyData`, or they can be saved to a `Buffer` with `Pass:setTallyBuffer`.",
+              description = "Begins a new tally.  The tally will count the number of pixels touched by any draws that occur while the tally is active.  If a pixel fails the depth test or stencil test then it won't be counted, so the tally is a way to detect if objects are visible.\n\nThe results for all the tallies in the pass can be copied to a `Buffer` when the Pass finishes by setting a buffer with `Pass:setTallyBuffer`.",
               key = "Pass:beginTally",
               module = "lovr.graphics",
               notes = "There is currently a maximum of 256 tallies per pass.\n\nIf a tally is already active, this function will error.",
               related = {
-                "Pass:finishTally",
-                "Pass:getTallyCount"
+                "Pass:finishTally"
               },
               variants = {
                 {
@@ -18370,13 +18369,12 @@ return {
               name = "finishTally",
               tag = "tally",
               summary = "Finish a tally.",
-              description = "Finishes a tally that was previously started with `Pass:beginTally`.  This will stop counting the number of pixels affected by draws.  The results for all the tallies in the pass can later be retrieved with `Pass:getTallyData`, or they can be saved to a `Buffer` with `Pass:setTallyBuffer`.",
+              description = "Finishes a tally that was previously started with `Pass:beginTally`.  This will stop counting the number of pixels affected by draws.\n\nThe results for all the tallies in the pass can be copied to a `Buffer` when the Pass finishes by setting a buffer with `Pass:setTallyBuffer`.",
               key = "Pass:finishTally",
               module = "lovr.graphics",
               notes = "There is currently a maximum of 256 tallies per pass.\n\nIf no tally is active, this function will error.",
               related = {
-                "Pass:beginTally",
-                "Pass:getTallyCount"
+                "Pass:beginTally"
               },
               variants = {
                 {
@@ -18678,30 +18676,6 @@ return {
                       name = "offset",
                       type = "number",
                       description = "An offset in the buffer where results will be written."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTallyCount",
-              tag = "tally",
-              summary = "Get the number of tallies added to the Pass.",
-              description = "Returns the number of tallies that have been started and finished in the pass.  This doesn't return the result of the tallies, use `Pass:getTallyData` or `Pass:setTallyBuffer` for that.",
-              key = "Pass:getTallyCount",
-              module = "lovr.graphics",
-              related = {
-                "Pass:beginTally",
-                "Pass:finishTally"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of tallies in the pass."
                     }
                   }
                 }
@@ -19846,10 +19820,10 @@ return {
               name = "reset",
               tag = "pass-misc",
               summary = "Reset the Pass.",
-              description = "Resets the Pass, clearing all of its draws and computes and resetting all of its state to the default values.\n\nThe only thing that doesn't get reset is the Pass's canvas.",
+              description = "Resets the Pass, clearing all of its draws and computes and resetting all of its state to the default values.",
               key = "Pass:reset",
               module = "lovr.graphics",
-              notes = "Changing the canvas using `Pass:setCanvas` will also reset the Pass.",
+              notes = "The following things won't be reset:\n\n- Pass canvas, set with `Pass:setCanvas`.\n- Pass clears, set with `Pass:setClear`.\n- The tally buffer, set with `Pass:setTallyBuffer`.",
               variants = {
                 {
                   arguments = {},
@@ -21157,6 +21131,7 @@ return {
               description = "Sets the Buffer where tally results will be written to.  Each time the render pass finishes, the results of all the tallies will be copied to the Buffer at the specified offset.  The buffer can be used in a later pass in a compute shader, or the data in the buffer can be read back using e.g. `Buffer:newReadback`.",
               key = "Pass:setTallyBuffer",
               module = "lovr.graphics",
+              notes = "Each tally result is a 4-byte unsigned integer with the number of samples that passed the depth and stencil tests.\n\nIf the buffer doesn't have enough room to store all the tallies, the number of tallies copied will be clamped to the minimum number that will fit.",
               related = {
                 "Pass:beginTally",
                 "Pass:finishTally"
@@ -22225,7 +22200,7 @@ return {
             {
               name = "Tally",
               tag = "tally",
-              description = "Tallies count the number of pixels affected by one or more draws.  This can be used as a way to detect if an object is visible."
+              description = "Tallies count the number of pixels that were visible for a draw."
             },
             {
               name = "Camera",

@@ -4,8 +4,6 @@ return {
   description = [[
     Resets the Pass, clearing all of its draws and computes and resetting all of its state to the
     default values.
-
-    The only thing that doesn't get reset is the Pass's canvas.
   ]],
   arguments = {},
   returns = {},
@@ -15,5 +13,11 @@ return {
       returns = {}
     }
   },
-  notes = 'Changing the canvas using `Pass:setCanvas` will also reset the Pass.'
+  notes = [[
+    The following things won't be reset:
+
+    - Pass canvas, set with `Pass:setCanvas`.
+    - Pass clears, set with `Pass:setClear`.
+    - The tally buffer, set with `Pass:setTallyBuffer`.
+  ]]
 }

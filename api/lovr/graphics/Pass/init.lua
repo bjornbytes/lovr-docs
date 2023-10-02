@@ -58,10 +58,7 @@ return {
     {
       name = 'Tally',
       tag = 'tally',
-      description = [[
-        Tallies count the number of pixels affected by one or more draws.  This can be used as a way
-        to detect if an object is visible.
-      ]]
+      description = 'Tallies count the number of pixels that were visible for a draw.'
     },
     {
       name = 'Camera',

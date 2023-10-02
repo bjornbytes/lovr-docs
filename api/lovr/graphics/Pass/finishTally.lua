@@ -3,9 +3,10 @@ return {
   summary = 'Finish a tally.',
   description = [[
     Finishes a tally that was previously started with `Pass:beginTally`.  This will stop counting
-    the number of pixels affected by draws.  The results for all the tallies in the pass can later
-    be retrieved with `Pass:getTallyData`, or they can be saved to a `Buffer` with
-    `Pass:setTallyBuffer`.
+    the number of pixels affected by draws.
+
+    The results for all the tallies in the pass can be copied to a `Buffer` when the Pass finishes
+    by setting a buffer with `Pass:setTallyBuffer`.
   ]],
   arguments = {},
   returns = {
@@ -26,7 +27,6 @@ return {
     If no tally is active, this function will error.
   ]],
   related = {
-    'Pass:beginTally',
-    'Pass:getTallyCount'
+    'Pass:beginTally'
   }
 }
