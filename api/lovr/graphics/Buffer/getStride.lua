@@ -1,4 +1,5 @@
 return {
+  tag = 'buffer-metadata',
   summary = 'Get the stride of the Buffer, in bytes.',
   description = [[
     Returns the distance between each item in the Buffer, in bytes, or `nil` if the Buffer was not

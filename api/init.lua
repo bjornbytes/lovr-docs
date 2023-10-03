@@ -3908,6 +3908,7 @@ return {
             },
             {
               name = "getPointer",
+              tag = "buffer-transfer",
               summary = "Get a raw pointer to the Blob's data.",
               description = "Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries using the LuaJIT FFI.  Use this only if you know what you're doing!",
               key = "Blob:getPointer",
@@ -12838,6 +12839,7 @@ return {
           methods = {
             {
               name = "clear",
+              tag = "buffer-transfer",
               summary = "Clear data in the Buffer.",
               description = "Clears a range of data in the Buffer to a value.",
               key = "Buffer:clear",
@@ -12873,6 +12875,7 @@ return {
             },
             {
               name = "getFormat",
+              tag = "buffer-metadata",
               summary = "Get the format of the Buffer.",
               description = "Returns the format the Buffer was created with.",
               key = "Buffer:getFormat",
@@ -12929,6 +12932,7 @@ return {
             },
             {
               name = "getLength",
+              tag = "buffer-metadata",
               summary = "Get the length of the Buffer.",
               description = "Returns the length of the Buffer, or `nil` if the Buffer was not created with a format.",
               key = "Buffer:getLength",
@@ -12975,6 +12979,7 @@ return {
             },
             {
               name = "getSize",
+              tag = "buffer-metadata",
               summary = "Get the size of the Buffer, in bytes.",
               description = "Returns the size of the Buffer in VRAM, in bytes.  This is the same as `length * stride`.\n\nThe size of the Buffer can't change after it's created.",
               key = "Buffer:getSize",
@@ -12998,6 +13003,7 @@ return {
             },
             {
               name = "getStride",
+              tag = "buffer-metadata",
               summary = "Get the stride of the Buffer, in bytes.",
               description = "Returns the distance between each item in the Buffer, in bytes, or `nil` if the Buffer was not created with a format.",
               key = "Buffer:getStride",
@@ -13044,6 +13050,7 @@ return {
             },
             {
               name = "setData",
+              tag = "buffer-transfer",
               summary = "Change the data in the Buffer.",
               description = "Changes data in a temporary Buffer using a table or a Blob.  Permanent buffers can be changed using `Pass:copy`.",
               key = "Buffer:setData",
@@ -13112,6 +13119,16 @@ return {
                   returns = {}
                 }
               }
+            }
+          },
+          sections = {
+            {
+              name = "Metadata",
+              tag = "buffer-metadata"
+            },
+            {
+              name = "Transfers",
+              tag = "buffer-transfer"
             }
           }
         },

@@ -1,4 +1,5 @@
 return {
+  tag = 'buffer-transfer',
   summary = 'Clear data in the Buffer.',
   description = 'Clears a range of data in the Buffer to a value.',
   arguments = {

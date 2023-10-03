@@ -48,5 +48,15 @@ return {
   constructors = {
     'lovr.graphics.newBuffer',
     'lovr.graphics.getBuffer'
+  },
+  sections = {
+    {
+      name = 'Metadata',
+      tag = 'buffer-metadata'
+    },
+    {
+      name = 'Transfers',
+      tag = 'buffer-transfer'
+    }
   }
 }

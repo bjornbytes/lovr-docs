@@ -1,4 +1,5 @@
 return {
+  tag = 'buffer-metadata',
   summary = 'Get the format of the Buffer.',
   description = 'Returns the format the Buffer was created with.',
   arguments = {},

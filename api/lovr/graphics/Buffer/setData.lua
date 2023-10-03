@@ -1,4 +1,5 @@
 return {
+  tag = 'buffer-transfer',
   summary = 'Change the data in the Buffer.',
   description = [[
     Changes data in a temporary Buffer using a table or a Blob.  Permanent buffers can be changed
