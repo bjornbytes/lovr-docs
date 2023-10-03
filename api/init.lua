@@ -22729,6 +22729,211 @@ return {
           },
           methods = {
             {
+              name = "clear",
+              summary = "Clear the Texture to a color.",
+              description = "Clears layers and mipmaps in a texture to a given color.\n\nWhen a Texture is being used as a canvas for a `Pass`, the clear color can be set with `Pass:setClear`, which a more efficient way to clear the texture before rendering.",
+              key = "Texture:clear",
+              module = "lovr.graphics",
+              notes = "The texture must have been created with the `transfer` usage to clear it.\n\nThe clear color will be interpreted as a linear color for sRGB formats.",
+              related = {
+                "Buffer:clear",
+                "Texture:setPixels",
+                "Pass:setClear"
+              },
+              variants = {
+                {
+                  description = "Clear the whole texture to zero (transparent black).",
+                  arguments = {},
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "hex",
+                      type = "number",
+                      description = "The hexcode color to clear to."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "layerCount",
+                      type = "number",
+                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
+                      default = "nil"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the first mipmap to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmapCount",
+                      type = "number",
+                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the clear color."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the clear color."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the clear color."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the clear color."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "layerCount",
+                      type = "number",
+                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
+                      default = "nil"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the first mipmap to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmapCount",
+                      type = "number",
+                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table with color components."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "layerCount",
+                      type = "number",
+                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
+                      default = "nil"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the first mipmap to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmapCount",
+                      type = "number",
+                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v3",
+                      type = "Vec3",
+                      description = "A vec3 with the clear color."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "layerCount",
+                      type = "number",
+                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
+                      default = "nil"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the first mipmap to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmapCount",
+                      type = "number",
+                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v4",
+                      type = "Vec4",
+                      description = "A vec4 with the clear color."
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the first layer to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "layerCount",
+                      type = "number",
+                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
+                      default = "nil"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the first mipmap to clear.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmapCount",
+                      type = "number",
+                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "getDimensions",
               summary = "Get the dimensions of the Texture.",
               description = "Returns the width, height, and depth of the Texture.",
