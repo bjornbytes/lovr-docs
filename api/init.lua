@@ -22877,6 +22877,66 @@ return {
               }
             },
             {
+              name = "getPixels",
+              summary = "Get the pixels of the Texture.",
+              description = "Creates and returns a new `Image` object with the current pixels of the Texture.  This function is very very slow because it stalls the CPU until the download is complete.  It should only be used for debugging, non-interactive scripts, etc.  For an asynchronous version that doesn't stall the CPU, see `Texture:newReadback`.",
+              key = "Texture:getPixels",
+              module = "lovr.graphics",
+              notes = "The texture must have been created with the `transfer` usage.\n\nMultisampled textures can not be read back.\n\nIt is not currently possible to read back a texture view.",
+              related = {
+                "Texture:newReadback"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x offset of the region to download.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y offset of the region to download.",
+                      default = "0"
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the layer to download.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the mipmap level to download.",
+                      default = "1"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the pixel rectangle to download.  If nil, the \"rest\" of the width will be used, based on the texture width and x offset.",
+                      default = "nil"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the pixel rectangle to download.  If nil, the \"rest\" of the height will be used, based on the texture height and y offset.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "image",
+                      type = "Image",
+                      description = "The new image with the pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getSampleCount",
               summary = "Get the number of MSAA samples in the Texture.",
               description = "Returns the number of samples in the texture.  Multiple samples are used for multisample antialiasing when rendering to the texture.  Currently, the sample count is either 1 (not antialiased) or 4 (antialiased).",
@@ -22994,6 +23054,73 @@ return {
               }
             },
             {
+              name = "newReadback",
+              summary = "Read back the contents of the Texture asynchronously.",
+              description = "Creates and returns a new `Readback` that will download the pixels in the Texture from VRAM. Once the readback is complete, `Readback:getImage` returns an `Image` with a CPU copy of the data.",
+              key = "Texture:newReadback",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  description = "Take a screenshot when pressing a key.  This uses an intermediate texture and render pass, to work around the fact that the window/headset textures don't support transfers.",
+                  code = "local screenshot = false\nlocal readback\nlocal texture\nlocal pass\n\nfunction lovr.keypressed(key)\n  if key == 'p' then screenshot = true end\nend\n\nfunction lovr.load()\n  local width, height = lovr.headset.getDisplayDimensions()\n\n  texture = lovr.graphics.newTexture(width, height, {\n    usage = { 'render', 'transfer', 'sample' }\n  })\n\n  pass = lovr.graphics.newPass(texture)\nend\n\nfunction lovr.update()\n  pass:reset()\n  for i = 1, lovr.headset.getViewCount() do\n    pass:setViewPose(i, lovr.headset.getViewPose(i))\n    pass:setProjection(i, lovr.headset.getViewAngles(i))\n  end\n  pass:text('hellooo', 0, 1.7, -1, .1)\n  lovr.graphics.submit(pass)\n\n  if screenshot and not readback then\n    readback = texture:newReadback()\n    screenshot = false\n  end\n\n  if readback and readback:isComplete() then\n    local filename = 'screenshot.png'\n    lovr.filesystem.write(filename, readback:getImage():encode())\n    print('saved screenshot to ' .. filename)\n    readback = nil\n  end\nend\n\nfunction lovr.draw(p)\n  p:fill(texture)\nend"
+                }
+              },
+              notes = "The texture must have been created with the `transfer` usage.\n\nMultisampled textures can not be read back.\n\nIt is not currently possible to read back a texture view.",
+              related = {
+                "Texture:getPixels",
+                "Buffer:newReadback"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x offset of the region to download.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y offset of the region to download.",
+                      default = "0"
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The index of the layer to download.",
+                      default = "1"
+                    },
+                    {
+                      name = "mipmap",
+                      type = "number",
+                      description = "The index of the mipmap level to download.",
+                      default = "1"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the pixel rectangle to download.  If nil, the \"rest\" of the width will be used, based on the texture width and x offset.",
+                      default = "nil"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the pixel rectangle to download.  If nil, the \"rest\" of the height will be used, based on the texture height and y offset.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "readback",
+                      type = "Readback",
+                      description = "A new Readback object."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "newView",
               summary = "Create a texture view referencing a parent Texture.",
               description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType` from the parent, and it may reference a subset of the parent texture's layers and mipmap levels.\n\nTexture views can be used as render targets in a render pass and they can be bound to Shaders. They can not currently be used for transfer operations.  They are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as\n  an array texture.\n- Rendering to a particular image or mipmap level of a texture.\n- Binding a particular image or mipmap level to a shader.",
@@ -23044,6 +23171,196 @@ return {
                       description = "The new texture view."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setPixels",
+              summary = "Replace pixels in the Texture.",
+              description = "Sets pixels in the texture.  The source data can be an `Image` with the pixels to upload, or another `Texture` object to copy from.",
+              key = "Texture:setPixels",
+              module = "lovr.graphics",
+              notes = "The destination and source textures must have been created with the `transfer` usage.\n\nMultisampled textures can not be copied.\n\nIt is not currently possible to copy to or from a texture view.\n\nCopying between textures requires them to have the same format.\n\nWhen using different region sizes in a texture-to-texture copy:\n\n- It is not possible to mix 3D with non-3D textures.\n- Not every texture format is supported, use `lovr.graphics.isFormatSupported` to check.",
+              related = {
+                "Texture:newReadback",
+                "Image:paste"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "image",
+                      type = "Image",
+                      description = "The image to copy to the texture."
+                    },
+                    {
+                      name = "dstx",
+                      type = "number",
+                      description = "The x offset to copy to.",
+                      default = "0"
+                    },
+                    {
+                      name = "dsty",
+                      type = "number",
+                      description = "The y offset to copy to.",
+                      default = "0"
+                    },
+                    {
+                      name = "dstlayer",
+                      type = "number",
+                      description = "The index of the layer to copy to.",
+                      default = "1"
+                    },
+                    {
+                      name = "dstmipmap",
+                      type = "number",
+                      description = "The index of the mipmap level to copy to.",
+                      default = "1"
+                    },
+                    {
+                      name = "srcx",
+                      type = "number",
+                      description = "The x offset to copy from.",
+                      default = "0"
+                    },
+                    {
+                      name = "srcy",
+                      type = "number",
+                      description = "The y offset to copy from.",
+                      default = "0"
+                    },
+                    {
+                      name = "srclayer",
+                      type = "number",
+                      description = "The index of the layer to copy from.",
+                      default = "1"
+                    },
+                    {
+                      name = "srcmipmap",
+                      type = "number",
+                      description = "The index of the mipmap level to copy from.",
+                      default = "1"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters.",
+                      default = "nil"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters.",
+                      default = "nil"
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The texture to copy from."
+                    },
+                    {
+                      name = "dstx",
+                      type = "number",
+                      description = "The x offset to copy to.",
+                      default = "0"
+                    },
+                    {
+                      name = "dsty",
+                      type = "number",
+                      description = "The y offset to copy to.",
+                      default = "0"
+                    },
+                    {
+                      name = "dstlayer",
+                      type = "number",
+                      description = "The index of the layer to copy to.",
+                      default = "1"
+                    },
+                    {
+                      name = "dstmipmap",
+                      type = "number",
+                      description = "The index of the mipmap level to copy to.",
+                      default = "1"
+                    },
+                    {
+                      name = "srcx",
+                      type = "number",
+                      description = "The x offset to copy from.",
+                      default = "0"
+                    },
+                    {
+                      name = "srcy",
+                      type = "number",
+                      description = "The y offset to copy from.",
+                      default = "0"
+                    },
+                    {
+                      name = "srclayer",
+                      type = "number",
+                      description = "The index of the layer to copy from.",
+                      default = "1"
+                    },
+                    {
+                      name = "srcmipmap",
+                      type = "number",
+                      description = "The index of the mipmap level to copy from.",
+                      default = "1"
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters.",
+                      default = "nil"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters.",
+                      default = "nil"
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
+                      default = "nil"
+                    },
+                    {
+                      name = "srcwidth",
+                      type = "number",
+                      description = "The width of the region in the source texture to copy.  If it doesn't match `width`, the copy will be scaled up or down to fit.",
+                      default = "width"
+                    },
+                    {
+                      name = "srcheight",
+                      type = "number",
+                      description = "The height of the region in the source texture to copy.  If it doesn't match `height`, the copy will be scaled up or down to fit.",
+                      default = "width"
+                    },
+                    {
+                      name = "srcdepth",
+                      type = "number",
+                      description = "The depth of the region in the source texture to copy (`3d` textures only).",
+                      default = "layers"
+                    },
+                    {
+                      name = "filter",
+                      type = "FilterMode",
+                      description = "The filtering mode used to scale the copy when the source and destination sizes don't match.",
+                      default = "'linear'"
+                    }
+                  },
+                  returns = {}
                 }
               }
             }
