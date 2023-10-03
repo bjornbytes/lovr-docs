@@ -11207,6 +11207,29 @@ return {
           }
         },
         {
+          name = "isTimingEnabled",
+          tag = "graphics-global",
+          summary = "Check if timing stats are enabled.",
+          description = "Returns whether timing stats are enabled.  When enabled, `Pass:getStats` will return `submitTime` and `gpuTime` durations.  Timing is enabled by default when `t.graphics.debug` is set in `lovr.conf`.  Timing has a small amount of overhead, so it should only be enabled when needed.",
+          key = "lovr.graphics.isTimingEnabled",
+          module = "lovr.graphics",
+          related = {
+            "Pass:getStats"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "enabled",
+                  type = "boolean",
+                  description = "Whether timing is enabled."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newBuffer",
           tag = "graphics-objects",
           summary = "Create a new Buffer.",
@@ -12754,6 +12777,29 @@ return {
                   name = "table",
                   type = "table",
                   description = "A table containing 3 or 4 color components."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setTimingEnabled",
+          tag = "graphics-global",
+          summary = "Enable or disable timing stats.",
+          description = "Enables or disables timing stats.  When enabled, `Pass:getStats` will return `submitTime` and `gpuTime` durations.  Timing is enabled by default when `t.graphics.debug` is set in `lovr.conf`.  Timing has a small amount of overhead, so it should only be enabled when needed.",
+          key = "lovr.graphics.setTimingEnabled",
+          module = "lovr.graphics",
+          related = {
+            "Pass:getStats"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "enable",
+                  type = "boolean",
+                  description = "Whether timing should be enabled."
                 }
               },
               returns = {}
