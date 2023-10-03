@@ -1,4 +1,5 @@
 return {
+  tag = 'texture-transfer',
   summary = 'Get the pixels of the Texture.',
   description = [[
     Creates and returns a new `Image` object with the current pixels of the Texture.  This function

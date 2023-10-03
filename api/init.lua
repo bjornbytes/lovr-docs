@@ -22730,6 +22730,7 @@ return {
           methods = {
             {
               name = "clear",
+              tag = "texture-transfer",
               summary = "Clear the Texture to a color.",
               description = "Clears layers and mipmaps in a texture to a given color.\n\nWhen a Texture is being used as a canvas for a `Pass`, the clear color can be set with `Pass:setClear`, which a more efficient way to clear the texture before rendering.",
               key = "Texture:clear",
@@ -22935,6 +22936,7 @@ return {
             },
             {
               name = "getDimensions",
+              tag = "texture-metadata",
               summary = "Get the dimensions of the Texture.",
               description = "Returns the width, height, and depth of the Texture.",
               key = "Texture:getDimensions",
@@ -22969,6 +22971,7 @@ return {
             },
             {
               name = "getFormat",
+              tag = "texture-metadata",
               summary = "Get the format of the Texture.",
               description = "Returns the format of the texture.",
               key = "Texture:getFormat",
@@ -22988,6 +22991,7 @@ return {
             },
             {
               name = "getHeight",
+              tag = "texture-metadata",
               summary = "Get the height of the Texture, in pixels.",
               description = "Returns the height of the Texture, in pixels.",
               key = "Texture:getHeight",
@@ -23012,6 +23016,7 @@ return {
             },
             {
               name = "getLayerCount",
+              tag = "texture-metadata",
               summary = "Get the layer count of the Texture.",
               description = "Returns the layer count of the Texture.  2D textures always have 1 layer and cubemaps always have 6 layers.  3D and array textures have a variable number of layers.",
               key = "Texture:getLayerCount",
@@ -23036,6 +23041,7 @@ return {
             },
             {
               name = "getMipmapCount",
+              tag = "texture-metadata",
               summary = "Get the number of mipmap levels in the Texture.",
               description = "Returns the number of mipmap levels in the Texture.",
               key = "Texture:getMipmapCount",
@@ -23060,6 +23066,7 @@ return {
             },
             {
               name = "getParent",
+              tag = "texture-view",
               summary = "Get the parent of a texture view.",
               description = "Returns the parent of a Texture view, which is the Texture that it references.  Returns `nil` if the Texture is not a view.",
               key = "Texture:getParent",
@@ -23083,6 +23090,7 @@ return {
             },
             {
               name = "getPixels",
+              tag = "texture-transfer",
               summary = "Get the pixels of the Texture.",
               description = "Creates and returns a new `Image` object with the current pixels of the Texture.  This function is very very slow because it stalls the CPU until the download is complete.  It should only be used for debugging, non-interactive scripts, etc.  For an asynchronous version that doesn't stall the CPU, see `Texture:newReadback`.",
               key = "Texture:getPixels",
@@ -23143,6 +23151,7 @@ return {
             },
             {
               name = "getSampleCount",
+              tag = "texture-metadata",
               summary = "Get the number of MSAA samples in the Texture.",
               description = "Returns the number of samples in the texture.  Multiple samples are used for multisample antialiasing when rendering to the texture.  Currently, the sample count is either 1 (not antialiased) or 4 (antialiased).",
               key = "Texture:getSampleCount",
@@ -23166,6 +23175,7 @@ return {
             },
             {
               name = "getType",
+              tag = "texture-metadata",
               summary = "Get the type of the Texture.",
               description = "Returns the type of the texture.",
               key = "Texture:getType",
@@ -23185,6 +23195,7 @@ return {
             },
             {
               name = "getWidth",
+              tag = "texture-metadata",
               summary = "Get the width of the Texture, in pixels.",
               description = "Returns the width of the Texture, in pixels.",
               key = "Texture:getWidth",
@@ -23209,6 +23220,7 @@ return {
             },
             {
               name = "hasUsage",
+              tag = "texture-metadata",
               summary = "Check if a Texture was created with a set of usage flags.",
               description = "Returns whether a Texture was created with a set of `TextureUsage` flags.  Usage flags are specified when the Texture is created, and restrict what you can do with a Texture object.  By default, only the `sample` usage is enabled.  Applying a smaller set of usage flags helps LÖVR optimize things better.",
               key = "Texture:hasUsage",
@@ -23237,6 +23249,7 @@ return {
             },
             {
               name = "isView",
+              tag = "texture-view",
               summary = "Check if a Texture is a texture view.",
               description = "Returns whether a Texture is a texture view, created with `Texture:newView`.",
               key = "Texture:isView",
@@ -23260,6 +23273,7 @@ return {
             },
             {
               name = "newReadback",
+              tag = "texture-transfer",
               summary = "Read back the contents of the Texture asynchronously.",
               description = "Creates and returns a new `Readback` that will download the pixels in the Texture from VRAM. Once the readback is complete, `Readback:getImage` returns an `Image` with a CPU copy of the data.",
               key = "Texture:newReadback",
@@ -23327,6 +23341,7 @@ return {
             },
             {
               name = "newView",
+              tag = "texture-view",
               summary = "Create a texture view referencing a parent Texture.",
               description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType` from the parent, and it may reference a subset of the parent texture's layers and mipmap levels.\n\nTexture views can be used as render targets in a render pass and they can be bound to Shaders. They can not currently be used for transfer operations.  They are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as\n  an array texture.\n- Rendering to a particular image or mipmap level of a texture.\n- Binding a particular image or mipmap level to a shader.",
               key = "Texture:newView",
@@ -23381,6 +23396,7 @@ return {
             },
             {
               name = "setPixels",
+              tag = "texture-transfer",
               summary = "Replace pixels in the Texture.",
               description = "Sets pixels in the texture.  The source data can be an `Image` with the pixels to upload, or another `Texture` object to copy from.",
               key = "Texture:setPixels",
@@ -23568,6 +23584,21 @@ return {
                   returns = {}
                 }
               }
+            }
+          },
+          sections = {
+            {
+              name = "Metadata",
+              tag = "texture-metadata"
+            },
+            {
+              name = "Transfers",
+              tag = "texture-transfer"
+            },
+            {
+              name = "Texture Views",
+              tag = "texture-view",
+              description = "Textures can be created as \"views\" of another parent texture.  Views don't store any pixels themselves, but instead refer to a subset of the parent's layers or mipmap levels.  They can also use a different texture type from the parent."
             }
           }
         }

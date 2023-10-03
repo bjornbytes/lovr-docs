@@ -1,4 +1,5 @@
 return {
+  tag = 'texture-transfer',
   summary = 'Clear the Texture to a color.',
   description = [[
     Clears layers and mipmaps in a texture to a given color.

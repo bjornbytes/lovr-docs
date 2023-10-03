@@ -1,4 +1,5 @@
 return {
+  tag = 'texture-transfer',
   summary = 'Replace pixels in the Texture.',
   description = [[
     Sets pixels in the texture.  The source data can be an `Image` with the pixels to upload, or

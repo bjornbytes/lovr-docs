@@ -1,4 +1,5 @@
 return {
+  tag = 'texture-view',
   summary = 'Create a texture view referencing a parent Texture.',
   description = [[
     Creates a new Texture view.  A texture view does not store any pixels on its own, but instead

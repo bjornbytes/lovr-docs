@@ -8,5 +8,24 @@ return {
   constructors = {
     'lovr.graphics.newTexture',
     'Texture:newView'
+  },
+  sections = {
+    {
+      name = 'Metadata',
+      tag = 'texture-metadata'
+    },
+    {
+      name = 'Transfers',
+      tag = 'texture-transfer'
+    },
+    {
+      name = 'Texture Views',
+      tag = 'texture-view',
+      description = [[
+        Textures can be created as "views" of another parent texture.  Views don't store any pixels
+        themselves, but instead refer to a subset of the parent's layers or mipmap levels.  They can
+        also use a different texture type from the parent.
+      ]]
+    }
   }
 }

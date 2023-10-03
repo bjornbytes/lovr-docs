@@ -1,4 +1,5 @@
 return {
+  tag = 'texture-transfer',
   summary = 'Read back the contents of the Texture asynchronously.',
   description = [[
     Creates and returns a new `Readback` that will download the pixels in the Texture from VRAM.
