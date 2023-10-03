@@ -22941,7 +22941,7 @@ return {
               description = "Regenerates mipmap levels of a texture.  This downscales pixels from the texture to progressively smaller sizes and saves them.  If the texture is drawn at a smaller scale later, the mipmaps are used, which smooths out the appearance and improves performance.",
               key = "Texture:generateMipmaps",
               module = "lovr.graphics",
-              notes = "The texture must have been created with the `transfer` usage to mipmap it.\n\nThe texture can not be multisampled.\n\nTexture views can not currently be mipmapped.",
+              notes = "Mipmaps will automatically be regenerated for textures after rendering to them in a `Pass`. This can be disabled by rendering to a single-level texture view instead.\n\nThe texture must have been created with the `transfer` usage to mipmap it.\n\nThe texture can not be multisampled.\n\nTexture views can not currently be mipmapped.",
               related = {
                 "Texture:setPixels",
                 "Texture:getMipmapCount"

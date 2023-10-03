@@ -28,6 +28,9 @@ return {
     }
   },
   notes = [[
+    Mipmaps will automatically be regenerated for textures after rendering to them in a `Pass`.
+    This can be disabled by rendering to a single-level texture view instead.
+
     The texture must have been created with the `transfer` usage to mipmap it.
 
     The texture can not be multisampled.
