@@ -18,6 +18,6 @@ return {
   related = {
     'lovr.graphics.newTexture',
     'Sampler:getMipmapRange',
-    'Pass:mipmap'
+    'Texture:generateMipmaps'
   }
 }

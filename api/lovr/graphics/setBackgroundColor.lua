@@ -63,7 +63,8 @@ return {
   ]],
   related = {
     'lovr.graphics.getPass',
-    'Pass:clear',
+    'Pass:setClear',
+    'Texture:clear',
     'Pass:fill'
   }
 }

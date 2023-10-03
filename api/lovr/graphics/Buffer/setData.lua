@@ -87,8 +87,5 @@ return {
         { x2, y2, z2, vec3(nx, ny, nz) }
       }, 1, 3, 2)
     end
-  ]],
-  related = {
-    'Pass:copy'
-  }
+  ]]
 }

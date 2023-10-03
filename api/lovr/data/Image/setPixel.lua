@@ -47,6 +47,6 @@ return {
     'Image:mapPixel',
     'Image:getPixel',
     'TextureFormat',
-    'Pass:copy'
+    'Texture:setPixels'
   }
 }

@@ -4436,7 +4436,9 @@ return {
                 "Image:setPixel",
                 "Image:mapPixel",
                 "TextureFormat",
-                "Pass:copy"
+                "Texture:getPixels",
+                "Texture:setPixels",
+                "Texture:newReadback"
               },
               variants = {
                 {
@@ -4571,7 +4573,7 @@ return {
               related = {
                 "Image:getPixel",
                 "Image:setPixel",
-                "Pass:copy"
+                "Texture:setPixels"
               },
               variants = {
                 {
@@ -4633,7 +4635,7 @@ return {
                 "Image:mapPixel",
                 "Image:getPixel",
                 "TextureFormat",
-                "Pass:copy"
+                "Texture:setPixels"
               },
               variants = {
                 {
@@ -9870,7 +9872,9 @@ return {
           key = "FilterMode",
           module = "lovr.graphics",
           related = {
-            "Pass:blit"
+            "lovr.graphics.newSampler",
+            "Sampler:getFilter",
+            "Texture:setPixels"
           },
           values = {
             {
@@ -10289,7 +10293,8 @@ return {
           notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
           related = {
             "lovr.graphics.getPass",
-            "Pass:clear",
+            "Pass:setClear",
+            "Texture:clear",
             "Pass:fill"
           },
           variants = {
@@ -12696,7 +12701,8 @@ return {
           notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
           related = {
             "lovr.graphics.getPass",
-            "Pass:clear",
+            "Pass:setClear",
+            "Texture:clear",
             "Pass:fill"
           },
           variants = {
@@ -13048,9 +13054,6 @@ return {
                 }
               },
               notes = "When using a table, the table can contain a nested table for each value in the Buffer, or it can be a flat list of field component values.  It is not possible to mix both nested tables and flat values.\n\nFor each item updated, components of each field in the item (according to the Buffer's format) are read from either the nested subtable or the table itself.  A single number can be used to update a field with a scalar type.  Multiple numbers or a `lovr.math` vector can be used to update a field with a vector or mat4 type.  Multiple numbers can be used to update mat2 and mat3 fields.  When updating normalized field types, components read from the table will be clamped to the normalized range ([0,1] or [-1,1]).  In the Buffer, each field is written at its byte offset according to the Buffer's format, and subsequent items are separated by the byte stride of the Buffer.  Any missing components for an updated field will be set to zero.",
-              related = {
-                "Pass:copy"
-              },
               variants = {
                 {
                   arguments = {
@@ -16768,122 +16771,6 @@ return {
               }
             },
             {
-              name = "blit",
-              tag = "transfer",
-              summary = "Copy data between textures with scaling.",
-              description = "Copies data between textures.  Similar to `Pass:copy`, except the source and destination sizes can be different.  The pixels from the source texture will be scaled to the destination size. This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
-              key = "Pass:blit",
-              module = "lovr.graphics",
-              notes = "When blitting between 3D textures, the layer counts do not need to match, and the layers will be treated as a continuous axis (i.e. pixels will be smoothed between layers).\n\nWhen blitting between array textures, the layer counts must match, and the blit occurs as a sequence of distinct 2D blits layer-by-layer.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "src",
-                      type = "Texture",
-                      description = "The texture to copy from."
-                    },
-                    {
-                      name = "dst",
-                      type = "Texture",
-                      description = "The texture to copy to."
-                    },
-                    {
-                      name = "srcx",
-                      type = "number",
-                      description = "The x offset from the left of the source texture to blit from, in pixels.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcy",
-                      type = "number",
-                      description = "The y offset from the top of the source texture to blit from, in pixels.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcz",
-                      type = "number",
-                      description = "The index of the first layer in the source texture to blit from.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstx",
-                      type = "number",
-                      description = "The x offset from the left of the destination texture to blit to, in pixels.",
-                      default = "0"
-                    },
-                    {
-                      name = "dsty",
-                      type = "number",
-                      description = "The y offset from the top of the destination texture to blit to, in pixels.",
-                      default = "0"
-                    },
-                    {
-                      name = "dstz",
-                      type = "number",
-                      description = "The index of the first layer in the destination texture to blit to.",
-                      default = "1"
-                    },
-                    {
-                      name = "srcw",
-                      type = "number",
-                      description = "The width of the region in the source texture to blit.  If nil, the region will extend to the right side of the texture.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srch",
-                      type = "number",
-                      description = "The height of the region in the source texture to blit.  If nil, the region will extend to the bottom of the texture.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srcd",
-                      type = "number",
-                      description = "The number of layers in the source texture to blit.",
-                      default = "nil"
-                    },
-                    {
-                      name = "dstw",
-                      type = "number",
-                      description = "The width of the region in the destination texture to blit to.  If nil, the region will extend to the right side of the texture.",
-                      default = "nil"
-                    },
-                    {
-                      name = "dsth",
-                      type = "number",
-                      description = "The height of the region in the destination texture to blit to.  If nil, the region will extend to the bottom of the texture.",
-                      default = "nil"
-                    },
-                    {
-                      name = "dstd",
-                      type = "number",
-                      description = "The number of the layers in the destination texture to blit to.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srclevel",
-                      type = "number",
-                      description = "The index of the mipmap level in the source texture to blit from.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstlevel",
-                      type = "number",
-                      description = "The index of the mipmap level in the destination texture to blit to.",
-                      default = "1"
-                    },
-                    {
-                      name = "filter",
-                      type = "FilterMode",
-                      description = "The filtering algorithm used when rescaling.",
-                      default = "linear"
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "box",
               tag = "drawing",
               summary = "Draw a box.",
@@ -17323,83 +17210,6 @@ return {
               }
             },
             {
-              name = "clear",
-              tag = "transfer",
-              summary = "Clear a Buffer or Texture.",
-              description = "Clears a Buffer or Texture.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
-              key = "Pass:clear",
-              module = "lovr.graphics",
-              related = {
-                "Buffer:clear",
-                "Pass:copy"
-              },
-              variants = {
-                {
-                  description = "Clears a range of a Buffer, setting the values to zero.",
-                  arguments = {
-                    {
-                      name = "buffer",
-                      type = "Buffer",
-                      description = "The Buffer to clear."
-                    },
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the first item to clear.",
-                      default = "1"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of items to clear.  If `nil`, clears to the end of the Buffer.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Clears layers and mipmap levels in a Texture to a color.",
-                  arguments = {
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The Texture to clear."
-                    },
-                    {
-                      name = "color",
-                      type = "Vec4",
-                      description = "The color to clear the texture to.  Can also be a `Vec3`, table of numbers, or a hexcode."
-                    },
-                    {
-                      name = "layer",
-                      type = "number",
-                      description = "The index of the first layer to clear.",
-                      default = "1"
-                    },
-                    {
-                      name = "layers",
-                      type = "number",
-                      description = "The number of layers to clear.  If `nil`, clears the remaining layers.",
-                      default = "nil"
-                    },
-                    {
-                      name = "level",
-                      type = "number",
-                      description = "The index of the first mipmap level to clear.",
-                      default = "1"
-                    },
-                    {
-                      name = "levels",
-                      type = "number",
-                      description = "The number of mipmap level to clear.  If `nil`, clears the remaining mipmaps.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "compute",
               tag = "compute",
               summary = "Run a compute shader.",
@@ -17600,282 +17410,6 @@ return {
                       type = "number",
                       description = "The number of segments in the cone.",
                       default = "64"
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "copy",
-              tag = "transfer",
-              summary = "Copy data to or between GPU resources.",
-              description = "Copies data to or between `Buffer` and `Texture` objects.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
-              key = "Pass:copy",
-              module = "lovr.graphics",
-              variants = {
-                {
-                  description = "Copy a table to a Buffer.",
-                  arguments = {
-                    {
-                      name = "table",
-                      type = "table",
-                      description = "A table to copy to the buffer."
-                    },
-                    {
-                      name = "bufferdst",
-                      type = "Buffer",
-                      description = "The buffer to copy to."
-                    },
-                    {
-                      name = "srcindex",
-                      type = "number",
-                      description = "The index of the first item to begin copying from.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstindex",
-                      type = "number",
-                      description = "The index of the first item in the buffer to begin copying to.",
-                      default = "1"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of items to copy.  If nil, copies as many items as possible.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Copy a Blob to a Buffer.",
-                  arguments = {
-                    {
-                      name = "blob",
-                      type = "Blob",
-                      description = "A blob to copy to the buffer."
-                    },
-                    {
-                      name = "bufferdst",
-                      type = "Buffer",
-                      description = "The buffer to copy to."
-                    },
-                    {
-                      name = "srcoffset",
-                      type = "number",
-                      description = "A byte offset to begin copying from.",
-                      default = "0"
-                    },
-                    {
-                      name = "dstoffset",
-                      type = "number",
-                      description = "A byte offset in the buffer to begin copying to.",
-                      default = "0"
-                    },
-                    {
-                      name = "size",
-                      type = "number",
-                      description = "The number of bytes to copy.  If nil, copies as many bytes as possible.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Copy a Buffer to a Buffer.",
-                  arguments = {
-                    {
-                      name = "buffersrc",
-                      type = "Buffer",
-                      description = "A buffer to copy to the buffer."
-                    },
-                    {
-                      name = "bufferdst",
-                      type = "Buffer",
-                      description = "The buffer to copy to."
-                    },
-                    {
-                      name = "srcoffset",
-                      type = "number",
-                      description = "A byte offset to begin copying from.",
-                      default = "0"
-                    },
-                    {
-                      name = "dstoffset",
-                      type = "number",
-                      description = "A byte offset in the buffer to begin copying to.",
-                      default = "0"
-                    },
-                    {
-                      name = "size",
-                      type = "number",
-                      description = "The number of bytes to copy.  If nil, copies as many bytes as possible.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Copy an Image to a Texture.",
-                  arguments = {
-                    {
-                      name = "image",
-                      type = "Image",
-                      description = "An image to copy to the texture."
-                    },
-                    {
-                      name = "texturedst",
-                      type = "Texture",
-                      description = "The texture to copy to."
-                    },
-                    {
-                      name = "srcx",
-                      type = "number",
-                      description = "The x offset of the region in the source texture to copy.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcy",
-                      type = "number",
-                      description = "The y offset of the region in the source texture to copy.",
-                      default = "0"
-                    },
-                    {
-                      name = "dstx",
-                      type = "number",
-                      description = "The x offset of the region in the destination texture to copy to.",
-                      default = "0"
-                    },
-                    {
-                      name = "dsty",
-                      type = "number",
-                      description = "The y offset of the region in the destination texture to copy to.",
-                      default = "0"
-                    },
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the region to copy.  If nil, makes the region as wide as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the region to copy.  If nil, makes the region as tall as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srclayer",
-                      type = "number",
-                      description = "The index of the first layer in the source texture to copy.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstlayer",
-                      type = "number",
-                      description = "The index of the layer in the destination texture to copy to.",
-                      default = "1"
-                    },
-                    {
-                      name = "layers",
-                      type = "number",
-                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srclevel",
-                      type = "number",
-                      description = "The index of the mipmap level in the source texture to copy.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstlevel",
-                      type = "number",
-                      description = "The index of the mipmap level in the destination texture to copy to.",
-                      default = "1"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Copy a Texture to a Texture.",
-                  arguments = {
-                    {
-                      name = "texturesrc",
-                      type = "Texture",
-                      description = "A texture to copy to the texture."
-                    },
-                    {
-                      name = "texturedst",
-                      type = "Texture",
-                      description = "The texture to copy to."
-                    },
-                    {
-                      name = "srcx",
-                      type = "number",
-                      description = "The x offset of the region in the source texture to copy.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcy",
-                      type = "number",
-                      description = "The y offset of the region in the source texture to copy.",
-                      default = "0"
-                    },
-                    {
-                      name = "dstx",
-                      type = "number",
-                      description = "The x offset of the region in the destination texture to copy to.",
-                      default = "0"
-                    },
-                    {
-                      name = "dsty",
-                      type = "number",
-                      description = "The y offset of the region in the destination texture to copy to.",
-                      default = "0"
-                    },
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the region to copy.  If nil, makes the region as wide as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the region to copy.  If nil, makes the region as tall as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srclayer",
-                      type = "number",
-                      description = "The index of the first layer in the source texture to copy.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstlayer",
-                      type = "number",
-                      description = "The index of the layer in the destination texture to copy to.",
-                      default = "1"
-                    },
-                    {
-                      name = "layers",
-                      type = "number",
-                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srclevel",
-                      type = "number",
-                      description = "The index of the mipmap level in the source texture to copy.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstlevel",
-                      type = "number",
-                      description = "The index of the mipmap level in the destination texture to copy to.",
-                      default = "1"
                     }
                   },
                   returns = {}
@@ -19409,38 +18943,6 @@ return {
               }
             },
             {
-              name = "mipmap",
-              tag = "transfer",
-              summary = "Generate mipmaps for a texture.",
-              description = "Generates mipmaps for a texture.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.\n\nWhen rendering to textures with a render pass, it's also possible to automatically regenerate mipmaps after rendering by adding the `mipmaps` flag when creating the pass.",
-              key = "Pass:mipmap",
-              module = "lovr.graphics",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The texture to mipmap."
-                    },
-                    {
-                      name = "base",
-                      type = "number",
-                      description = "The index of the mipmap used to generate the remaining mipmaps.",
-                      default = "1"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of mipmaps to generate.  If nil, generates the remaining mipmaps.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "origin",
               tag = "transform",
               summary = "Reset the transform to the origin.",
@@ -19725,94 +19227,6 @@ return {
                     }
                   },
                   returns = {}
-                }
-              }
-            },
-            {
-              name = "read",
-              tag = "transfer",
-              summary = "Download data from a GPU resource.",
-              description = "Creates a `Readback` object which asynchronously downloads data from a `Buffer` or `Texture`.\n The readback can be polled for completion, or, after this transfer pass is submitted, `Readback:wait` can be used to block until the download is complete.  This can only be called on a transfer pass, which can be created with `lovr.graphics.getPass`.",
-              key = "Pass:read",
-              module = "lovr.graphics",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "buffer",
-                      type = "Buffer",
-                      description = "The Buffer to download data from."
-                    },
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the first item to download."
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of items to download."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "readback",
-                      type = "Readback",
-                      description = "The new readback."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The Texture to download data from."
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x offset of the region to download.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y offset of the region to download.",
-                      default = "0"
-                    },
-                    {
-                      name = "layer",
-                      type = "number",
-                      description = "The index of the layer to download.",
-                      default = "1"
-                    },
-                    {
-                      name = "level",
-                      type = "number",
-                      description = "The index of the mipmap level to download.",
-                      default = "1"
-                    },
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the region to download.  If nil, the region will be as wide as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the region to download.  If nil, the region will be as tall as possible.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "readback",
-                      type = "Readback",
-                      description = "The new readback."
-                    }
-                  }
                 }
               }
             },
@@ -22228,7 +21642,8 @@ return {
           key = "Readback",
           module = "lovr.graphics",
           constructors = {
-            "Pass:read"
+            "Buffer:newReadback",
+            "Texture:newReadback"
           },
           methods = {
             {
@@ -23081,7 +22496,7 @@ return {
               related = {
                 "lovr.graphics.newTexture",
                 "Sampler:getMipmapRange",
-                "Pass:mipmap"
+                "Texture:generateMipmaps"
               },
               variants = {
                 {
