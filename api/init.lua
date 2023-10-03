@@ -22935,6 +22935,38 @@ return {
               }
             },
             {
+              name = "generateMipmaps",
+              tag = "texture-transfer",
+              summary = "Regenerate mipmaps for a Texture.",
+              description = "Regenerates mipmap levels of a texture.  This downscales pixels from the texture to progressively smaller sizes and saves them.  If the texture is drawn at a smaller scale later, the mipmaps are used, which smooths out the appearance and improves performance.",
+              key = "Texture:generateMipmaps",
+              module = "lovr.graphics",
+              notes = "The texture must have been created with the `transfer` usage to mipmap it.\n\nThe texture can not be multisampled.\n\nTexture views can not currently be mipmapped.",
+              related = {
+                "Texture:setPixels",
+                "Texture:getMipmapCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "base",
+                      type = "number",
+                      description = "The base mipmap level which will be used to generate subsequent mipmaps.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of mipmap levels to generate.  If nil, the rest of the mipmaps will be generated.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "getDimensions",
               tag = "texture-metadata",
               summary = "Get the dimensions of the Texture.",
