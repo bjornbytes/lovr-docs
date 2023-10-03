@@ -3908,7 +3908,6 @@ return {
             },
             {
               name = "getPointer",
-              tag = "buffer-transfer",
               summary = "Get a raw pointer to the Blob's data.",
               description = "Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries using the LuaJIT FFI.  Use this only if you know what you're doing!",
               key = "Blob:getPointer",
@@ -12956,6 +12955,7 @@ return {
             },
             {
               name = "getPointer",
+              tag = "buffer-transfer",
               summary = "Get a raw pointer to the Buffer memory.",
               description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.",
               key = "Buffer:getPointer",
@@ -13028,6 +13028,7 @@ return {
             },
             {
               name = "isTemporary",
+              tag = "buffer-metadata",
               summary = "Check if the Buffer is temporary.",
               description = "Returns whether the Buffer is temporary.",
               key = "Buffer:isTemporary",

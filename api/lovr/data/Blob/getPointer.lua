@@ -1,5 +1,4 @@
 return {
-  tag = 'buffer-transfer',
   summary = 'Get a raw pointer to the Blob\'s data.',
   description = [[
     Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries

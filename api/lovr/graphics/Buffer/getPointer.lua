@@ -1,4 +1,5 @@
 return {
+  tag = 'buffer-transfer',
   summary = 'Get a raw pointer to the Buffer memory.',
   description = [[
     Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the
