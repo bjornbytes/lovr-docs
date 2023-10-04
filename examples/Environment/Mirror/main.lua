@@ -22,7 +22,7 @@ local function draw_scene(pass)
   pass:sphere(pose) -- head
   pass:setColor(0xd08159)
   pose:set(lovr.headset.getPose('head'))
-  pose:translate(0, -0.02, -0.1)
+  pose:translate(0, -0.02, -0.15)
   pose:rotate(-0.2, 1,0,0)
   pose:scale(0.015, 0.02, 0.03)
   pass:cylinder(pose) -- nose
@@ -30,7 +30,8 @@ local function draw_scene(pass)
     local skeleton = lovr.headset.getSkeleton(handness)
     if skeleton then
       for _, bone in ipairs(skeleton) do
-        pass:box(pose:set(unpack(bone)):scale(0.017, 0.012, 0.019)) -- hand bone
+        local x, y, z, _, angle, ax, ay, az = unpack(bone)
+        pass:box(pose:set(x, y, z, angle, ax, ay, az):scale(0.017, 0.012, 0.019)) -- hand bone
       end
     else
       pose:set(lovr.headset.getPose(handness)):scale(0.03, 0.07, 0.09)
