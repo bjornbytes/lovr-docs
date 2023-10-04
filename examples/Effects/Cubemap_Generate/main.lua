@@ -95,14 +95,14 @@ local unitZ = lovr.math.newVec3(0,0,1)
 function cubemap.load()
 	-- Create cubemap textures
 	local cubemapWidth, cubemapHeight = 256, 256
-	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, 6, { type = "cube", mipmaps = false })
+	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, 6, { type = "cube" })
 	cubemap.faces = {}
 
 	-- Precalculate cubemap View-Projection matrices
 	local center = scene.sphereCenter
 	cubemap.facePerspective = lovr.math.newMat4():perspective(math.rad(90.0), 1, .1, 0)
 	for i,matrix in ipairs{
-    -- Not sure why the x flip is needed!
+		-- Not sure why the x flip is needed!
 		lovr.math.mat4():lookAt(center, center - unitX, vec3(0, 1, 0)),
 		lovr.math.mat4():lookAt(center, center + unitX, vec3(0, 1, 0)),
 		lovr.math.mat4():lookAt(center, center + unitY, vec3(0, 0, -1)),
@@ -121,27 +121,29 @@ function cubemap.load()
 		layout(set = 2, binding = 0) uniform textureCube cubemap;
 
 		vec4 lovrmain() {
-      vec3 V = normalize(CameraPositionWorld - PositionWorld);
-      vec3 N = normalize(Normal);
-      vec3 R = reflect(-V, N);
+			vec3 V = normalize(CameraPositionWorld - PositionWorld);
+			vec3 N = normalize(Normal);
+			vec3 R = reflect(-V, N);
 			vec4 sphereColor = Color * getPixel(cubemap, R * vec3(-1, 1, 1));
 			float ndi = dot(N, V) * 0.5 + 0.5; // Darken the sphere a little around the edges to give it apparent depth
 			return vec4(sphereColor.rgb * ndi, 1.);
 		}
 	]])
+
+	-- Set up a render pass that renders to the cubemap
+	cubemap.pass = lovr.graphics.newPass(cubemap.texture)
+	cubemap.pass:setClear(lovr.graphics.getBackgroundColor())
 end
 
-function cubemap.draw(pass)
-  local cubemapper = lovr.graphics.getPass('render', { cubemap.texture, samples = 1, depth = false })
+function cubemap.draw()
+	cubemap.pass:reset()
 
-  for i = 1, 6 do
-    cubemapper:setProjection(i, cubemap.facePerspective)
-    cubemapper:setViewPose(i,cubemap.faces[i].matrix,true)
-  end
+	for i = 1, 6 do
+		cubemap.pass:setProjection(i, cubemap.facePerspective)
+		cubemap.pass:setViewPose(i,cubemap.faces[i].matrix,true)
+	end
 
-  scene.draw(cubemapper)
-
-  return cubemapper
+	scene.draw(cubemap.pass)
 end
 
 -- Handle lovr
@@ -157,15 +159,14 @@ function lovr.update(dt)
 end
 
 function lovr.draw(pass)
-	local cubemapPass = cubemap.draw(pass)
-
+	cubemap.draw()
 	scene.draw(pass)
 
 	-- Draw sphere textured with cube map
 	pass:setColor(1,0.6,0.6)
-  pass:setShader(cubemap.shader)
+	pass:setShader(cubemap.shader)
 	pass:send("cubemap", cubemap.texture)
 	pass:sphere(scene.sphereCenter.x, scene.sphereCenter.y, scene.sphereCenter.z, scene.sphereRad)
 
-  return lovr.graphics.submit(cubemapPass, pass)
+	return lovr.graphics.submit(cubemap.pass, pass)
 end
