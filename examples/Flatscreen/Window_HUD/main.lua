@@ -18,7 +18,8 @@ font:setPixelDensity(1)
 
 -- Simple 2D triangle mesh
 local triangle = lovr.graphics.newBuffer(
-  {{0,-1,0}, {0.75,1,0}, {-0.75,1,0}}, {'vec3:VertexPosition'})
+  {{'VertexPosition', 'vec3'}},
+  {{0,-1,0}, {0.75,1,0}, {-0.75,1,0}})
 
 -- Constants
 local pixwidth = lovr.system.getWindowWidth()   -- Window pixel width and height
