@@ -1,34 +1,34 @@
 function lovr.load()
-  stats = { 0, 0, 0, 0 }
-  tally = lovr.graphics.newTally('shader', 1, 1)
   readbacks = {}
+  buffer = lovr.graphics.newBuffer('uint')
+  pixels = 0
 end
 
 function lovr.update(dt)
   while readbacks[1] and readbacks[1]:isComplete() do
-    stats = readbacks[1]:getData()
+    pixels = readbacks[1]:getData()[1]
     table.remove(readbacks, 1)
   end
 end
 
 function lovr.draw(pass)
   -- Track metrics in the Tally when drawing the cube
-  pass:tick(tally, 1)
+  pass:beginTally()
   pass:cube(0, 0.7, -1, .5, lovr.headset.getTime())
-  pass:tock(tally, 1)
+  pass:finishTally()
 
-  -- Read back the tally data
-  local tx = lovr.graphics.getPass('transfer')
-  local readback = tx:read(tally, 1)
-  table.insert(readbacks, readback)
+  -- Render most recent tally result
+  pass:text(('Cube is %d pixels'):format(pixels), 0, 1.7, -1, .1)
 
-  -- Render latest tally results
-  pass:text(('%s: %s\n%s: %s\n%s: %s\n%s: %s'):format(
-    'vertices', stats[1],
-    'vertexshader', stats[2],
-    'visibletriangles', stats[3],
-    'fragmentshader', stats[4]
-  ), 0, 1.7, -1, .1)
+  -- Tell the pass to copy the tally result to the buffer
+  pass:setTallyBuffer(buffer)
 
-  return lovr.graphics.submit(pass, tx)
+  -- Submit the pass
+  lovr.graphics.submit(pass)
+
+  -- Read back the tally result from the buffer (after submission)
+  table.insert(readbacks, buffer:newReadback())
+
+  -- We already submitted the pass, tell lovr not to submit it again!
+  return true
 end
