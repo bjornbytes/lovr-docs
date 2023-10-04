@@ -12919,6 +12919,26 @@ return {
               }
             },
             {
+              name = "getData",
+              tag = "buffer-transfer",
+              summary = "Get the data in the Buffer.",
+              description = "Downloads the Buffer's data from VRAM and returns it as a table.  This function is very very slow because it stalls the CPU until the data is finished downloading, so it should only be used for debugging or non-interactive scripts.  `Buffer:newReadback` is an alternative that returns a `Readback` object, which will not block the CPU.",
+              key = "Buffer:getData",
+              module = "lovr.graphics",
+              notes = "The length of the table will equal the number of items read.  Here are some examples of how the table is formatted:\n\n    buffer = lovr.graphics.newBuffer('int', { 7 })\n    buffer:getData() --> returns { 7 }\n\n    buffer = lovr.graphics.newBuffer('vec3', { 7, 8, 9 })\n    buffer:getData() --> returns {{ 7, 8, 9 }}\n\n    buffer = lovr.graphics.newBuffer('int', { 1, 2, 3 })\n    buffer:getData() --> returns { 1, 2, 3 }\n\n    buffer = lovr.graphics.newBuffer({ 'vec2', 'vec2' }, {\n      vec2(1,2), vec2(3,4),\n      vec2(5,6), vec2(7,8)\n    })\n    buffer:getData() --> returns { { 1, 2, 3, 4 }, { 5, 6, 7, 8 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'a', 'float' },\n      { 'b', 'float' }\n    }, { a = 1, b = 2 })\n    buffer:getData() --> returns { { 1, 2 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'x', 'int', 3 }\n    }, { x = { 1, 2, 3 } })\n    buffer:getData() --> returns { { x = { 1, 2, 3 } } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'lights', {\n        { 'pos', 'vec3' },\n        { 'size', 'float' },\n      }, 10}\n    }, data)\n    buffer:getData() --> returns { { lights = { { pos = ..., size = ... }, ... } } }\n\nIn summary, each individual item is wrapped in a table, except if the format is a single number. If the format has nested types or arrays then the tables will be key-value, otherwise they will use numeric keys.",
+              related = {
+                "Buffer:newReadback",
+                "Buffer:mapData",
+                "Readback:getData"
+              },
+              variants = {
+                arguments = {},
+                returns = {
+                  "t"
+                }
+              }
+            },
+            {
               name = "getFormat",
               tag = "buffer-metadata",
               summary = "Get the format of the Buffer.",
@@ -13002,13 +13022,15 @@ return {
             {
               name = "getPointer",
               tag = "buffer-transfer",
-              summary = "Get a raw pointer to the Buffer memory.",
-              description = "Returns a raw pointer to the Buffer's memory as a lightuserdata, intended for use with the LuaJIT FFI or for passing to C libraries.",
+              summary = "Get a writable pointer to the Buffer's memory.",
+              description = "Returns a pointer to GPU memory and schedules a copy from this pointer to the buffer's data. The data in the pointer will replace the data in the buffer.  This is intended for use with the LuaJIT FFI or for passing to C libraries.",
               key = "Buffer:getPointer",
               module = "lovr.graphics",
-              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nCurrently the pointer addresses a range equal to the size of the Buffer, and so this overwrites the entire contents of the Buffer.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
+              deprecated = true,
+              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
               related = {
-                "Blob:getPointer"
+                "Blob:getPointer",
+                "Buffer:mapData"
               },
               variants = {
                 {
@@ -13096,31 +13118,89 @@ return {
               }
             },
             {
-              name = "setData",
+              name = "mapData",
               tag = "buffer-transfer",
-              summary = "Change the data in the Buffer.",
-              description = "Changes data in a temporary Buffer using a table or a Blob.  Permanent buffers can be changed using `Pass:copy`.",
-              key = "Buffer:setData",
+              summary = "Get a writable pointer to the Buffer's memory.",
+              description = "Returns a pointer to GPU memory and schedules a copy from this pointer to the buffer's data. The data in the pointer will replace the data in the buffer.  This is intended for use with the LuaJIT FFI or for passing to C libraries.",
+              key = "Buffer:mapData",
               module = "lovr.graphics",
-              examples = {
-                {
-                  code = "function lovr.draw(pass)\n  buffer = lovr.graphics.getBuffer(3, 'floats')\n  buffer:setData({ { 1.0 }, { 2.0 }, { 3.0 } })\n  buffer:setData({ 1.0, 2.0, 3.0 })\n\n  buffer = lovr.graphics.getBuffer(5, { 'vec3', 'vec3', 'vec2' })\n  buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6), vec2(7, 8) })\n  buffer:setData({ { 1, 2, 3, 4, 5, 6, 7, 8 } })\n  buffer:setData({ 1, 2, 3, 4, 5, 6, 7, 8 })\n  buffer:setData({\n    { x1, y1, z1, nx1, ny1, nz1, u1, v1 },\n    { x2, y2, z2, vec3(nx, ny, nz) }\n  }, 1, 3, 2)\nend"
-                }
+              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
+              related = {
+                "Blob:getPointer",
+                "Buffer:getPointer"
               },
-              notes = "When using a table, the table can contain a nested table for each value in the Buffer, or it can be a flat list of field component values.  It is not possible to mix both nested tables and flat values.\n\nFor each item updated, components of each field in the item (according to the Buffer's format) are read from either the nested subtable or the table itself.  A single number can be used to update a field with a scalar type.  Multiple numbers or a `lovr.math` vector can be used to update a field with a vector or mat4 type.  Multiple numbers can be used to update mat2 and mat3 fields.  When updating normalized field types, components read from the table will be clamped to the normalized range ([0,1] or [-1,1]).  In the Buffer, each field is written at its byte offset according to the Buffer's format, and subsequent items are separated by the byte stride of the Buffer.  Any missing components for an updated field will be set to zero.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pointer",
+                      type = "lightuserdata",
+                      description = "A pointer to the Buffer's memory."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "newReadback",
+              tag = "buffer-transfer",
+              summary = "Read back the contents of the Buffer asynchronously.",
+              description = "Creates and returns a new `Readback` that will download the data in the Buffer from VRAM. Once the readback is complete, `Readback:getData` returns the data as a table, or `Readback:getBlob` returns the data as a `Blob`.",
+              key = "Buffer:newReadback",
+              module = "lovr.graphics",
+              notes = "The offset and extent arguments must be a multiple of the Buffer's stride (unless it was created without a format).",
+              related = {
+                "Buffer:getData",
+                "Texture:newReadback"
+              },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "data",
-                      type = "table",
-                      description = "A flat or nested table of items to copy to the Buffer (see notes for format)."
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset to read from.",
+                      default = "0"
                     },
                     {
-                      name = "sourceIndex",
+                      name = "extent",
                       type = "number",
-                      description = "The index in the table to copy from.",
-                      default = "1"
+                      description = "The number of bytes to read.  If nil, reads the rest of the buffer.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "readback",
+                      type = "Readback",
+                      description = "A new Readback object."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setData",
+              tag = "buffer-transfer",
+              summary = "Change the data in the Buffer.",
+              description = "Copies data to the Buffer from either a table, `Blob`, or `Buffer`.",
+              key = "Buffer:setData",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  description = "Various examples of copying different formats.",
+                  code = "function lovr.load()\n  buffer = lovr.graphics.newBuffer('int', 3)\n  buffer:setData({ 1, 2, 3 })\n\n  buffer = lovr.graphics.newBuffer('vec3', 2)\n  buffer:setData({ 1,2,3, 4,5,6 })\n  buffer:setData({ { 1, 2, 3 }, { 4, 5, 6 } })\n  buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6) })\n\n  -- When the Buffer's length is 1, wrapping in table is optional:\n  buffer = lovr.graphics.newBuffer('vec3')\n  buffer:setData(1, 2, 3)\n  buffer:setData(vec3(1, 2, 3))\n\n  -- Same for key-value structs\n  buffer = lovr.graphics.newBuffer({\n    { 'x', 'float' },\n    { 'y', 'float' }\n  })\n  buffer:setData({ x = 1, y = 2 })\n\n  -- Key/value formats\n  buffer = lovr.graphics.newBuffer({\n    { 'x', 'float' },\n    { 'y', 'float' }\n  }, 3)\n  buffer:setData({\n    { x = 1, y = 2 },\n    { x = 3, y = 4 },\n    { x = 5, y = 6 }\n  })\n  buffer:setData({ 1, 2, 3, 4, 5, 6 })\n  buffer:setData({ { 1, 2 }, { 3, 4 }, { 5, 6 } })\n\n  -- Nested formats\n  buffer = lovr.graphics.newBuffer({\n    { 'a', {\n      {'b', {\n        'c', 'float'\n      }}\n    }}\n  })\n  buffer:setData({ a = { b = { c = 42 } } })\n\n  -- Inner arrays\n  buffer = lovr.graphics.newBuffer({\n    { 'positions', 'vec3', 10 },\n    { 'sizes', 'float', 10 },\n    layout = 'std140'\n  })\n  local data = { positions = {}, sizes = {} }\n  for i = 1, buffer:getLength() do\n    data.positions[i] = vec3(i, i, i)\n    data.sizes[i] = i\n  end\n  buffer:setData(data)\nend"
+                }
+              },
+              notes = "One gotcha is that unspecified fields will be set to zero.  Here's an example:\n\n    buffer = lovr.graphics.newBuffer({{ 'x', 'int' }, { 'y', 'int' }})\n    buffer:setData({ x = 1, y = 1 }) -- set the data\n    buffer:setData({ x = 1 }) -- set the data, partially\n    -- buffer data is now {x=1, y=0}!\n\nThis doesn't apply to separate items in the buffer.  For example, if the Buffer's length is 2 and only the 1st item is set, the second item will remain undisturbed:\n\n    buffer = lovr.graphics.newBuffer({{ 'x', 'int' }, { 'y', 'int' }}, 2)\n    buffer:setData({{ x = 1, y = 1 }, { x = 2, y = 2 }}) -- set the data\n    buffer:setData({{ x = 1 }}) -- set one item, partially\n    -- buffer data is now {{x=1, y=0}, {x=2, y=2}}",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "table",
+                      type = "table",
+                      description = "A flat or nested table of items to copy to the Buffer (see notes for format)."
                     },
                     {
                       name = "destinationIndex",
@@ -13129,10 +13209,38 @@ return {
                       default = "1"
                     },
                     {
+                      name = "sourceIndex",
+                      type = "number",
+                      description = "The index in the table to copy from.",
+                      default = "1"
+                    },
+                    {
                       name = "count",
                       type = "number",
-                      description = "The number of values to update.  `nil` will copy as many items as possible, based on the lengths of the source and destination.",
+                      description = "The number of items to copy.  `nil` will copy as many items as possible, based on the lengths of the source and destination.",
                       default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Copies a single field to a buffer with numbers (buffer length must be 1).",
+                  arguments = {
+                    {
+                      name = "...numbers",
+                      type = "number",
+                      description = "Numerical components to copy to the buffer."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Copies a single vector to a buffer (buffer length must be 1).",
+                  arguments = {
+                    {
+                      name = "vector",
+                      type = "*",
+                      description = "Vector objects to copy to the buffer."
                     }
                   },
                   returns = {}
@@ -13145,15 +13253,43 @@ return {
                       description = "The Blob to copy data from."
                     },
                     {
+                      name = "destinationOffset",
+                      type = "number",
+                      description = "The byte offset to copy to.",
+                      default = "0"
+                    },
+                    {
                       name = "sourceOffset",
                       type = "number",
-                      description = "A byte offset into the Blob to copy from.",
+                      description = "The byte offset to copy from.",
                       default = "0"
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes to copy.  If nil, copies as many bytes as possible.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "buffer",
+                      type = "Buffer",
+                      description = "The Buffer to copy data from."
                     },
                     {
                       name = "destinationOffset",
                       type = "number",
-                      description = "A byte offset in the Buffer to copy to.",
+                      description = "The byte offset to copy to.",
+                      default = "0"
+                    },
+                    {
+                      name = "sourceOffset",
+                      type = "number",
+                      description = "The byte offset to copy from.",
                       default = "0"
                     },
                     {
@@ -21805,7 +21941,7 @@ return {
             {
               name = "getData",
               summary = "Get Readback's data as a table.",
-              description = "Returns the data from the Readback, as a table.",
+              description = "Returns the data from the Readback, as a table.  See `Buffer:getData` for the way the table is structured.",
               key = "Readback:getData",
               module = "lovr.graphics",
               notes = "This returns `nil` for readbacks of `Texture` objects.",
@@ -21820,7 +21956,7 @@ return {
                     {
                       name = "data",
                       type = "table",
-                      description = "A flat table of numbers containing the values that were read back."
+                      description = "A table containing the data that was read back."
                     }
                   }
                 }

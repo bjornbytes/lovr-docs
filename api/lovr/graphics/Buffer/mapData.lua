@@ -1,5 +1,4 @@
 return {
-  deprecated = true,
   tag = 'buffer-transfer',
   summary = 'Get a writable pointer to the Buffer\'s memory.',
   description = [[
@@ -44,6 +43,6 @@ return {
   ]],
   related = {
     'Blob:getPointer',
-    'Buffer:mapData'
+    'Buffer:getPointer'
   }
 }
