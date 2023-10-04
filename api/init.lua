@@ -9914,6 +9914,27 @@ return {
           }
         },
         {
+          name = "MeshStorage",
+          summary = "Whether a Mesh stores its data on the CPU or GPU.",
+          description = "Whether a Mesh stores its data on the CPU or GPU.",
+          key = "MeshStorage",
+          module = "lovr.graphics",
+          notes = "There are some significant differences and tradeoffs between the two modes:\n\n- CPU meshes store a second copy of the vertices in RAM, which can be expensive for large\n  meshes.\n- When vertices are modified, CPU meshes will update the CPU copy, and only upload to the GPU\n  the next time the Mesh is drawn.  GPU meshes, on the other hand, will immediately upload\n  modified vertices to the GPU.  This means that calling `Mesh:setVertices` multiple times per\n  frame will be faster with a CPU mesh.\n- CPU meshes have an internal vertex buffer that can't be accessed from Lua.\n- CPU meshes can compute their bounding box using `Mesh:computeBoundingBox`.  GPU meshes can't.",
+          related = {
+            "lovr.graphics.newMesh"
+          },
+          values = {
+            {
+              name = "cpu",
+              description = "The Mesh will store a copy of the vertices on the CPU."
+            },
+            {
+              name = "gpu",
+              description = "The Mesh will not keep a CPU copy, only storing vertices on the GPU."
+            }
+          }
+        },
+        {
           name = "OriginType",
           summary = "Different coordinate spaces for nodes in a Model.",
           description = "Different coordinate spaces for nodes in a `Model`.",
@@ -11866,6 +11887,189 @@ return {
                   name = "material",
                   type = "Material",
                   description = "The new material."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newMesh",
+          tag = "graphics-objects",
+          summary = "Create a new Mesh.",
+          description = "Creates a Mesh.  The capacity of the Mesh must be provided upfront, using either a vertex count or the vertex data itself.  A custom vertex format can be given to specify the set of attributes in each vertex, which get sent to the vertex shader.  If the format isn't given, the default vertex format will be used:\n\n    {\n      { 'VertexPosition', 'vec3' },\n      { 'VertexNormal', 'vec3' },\n      { 'VertexUV', 'vec2' }\n    }",
+          key = "lovr.graphics.newMesh",
+          module = "lovr.graphics",
+          examples = {
+            {
+              code = "function lovr.load()\n  mesh = lovr.graphics.newMesh({\n    { 'VertexPosition', 'vec3' },\n    { 'VertexColor', 'vec4' }\n  }, {\n    {   0,  .4, 0 , 1, 0, 0, 1 },\n    { -.5, -.4, 0 , 0, 1, 0, 1 },\n    {  .5, -.4, 0 , 0, 0, 1, 1 }\n  })\nend\n\nfunction lovr.draw(pass)\n  pass:draw(mesh, 0, 1.7, -1)\nend"
+            }
+          },
+          notes = "The Mesh will always use the `gpu` storage mode if it's created from a vertex buffer.",
+          related = {
+            "lovr.graphics.newBuffer",
+            "lovr.graphics.newModel"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "count",
+                  type = "number",
+                  description = "The number of vertices in the Mesh."
+                },
+                {
+                  name = "storage",
+                  type = "MeshStorage",
+                  description = "The storage mode of the Mesh.",
+                  default = "'cpu'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "vertices",
+                  type = "table",
+                  description = "A table of vertices, formatted according to the vertex format.  The length of the table will be used to set the vertex count of the Mesh."
+                },
+                {
+                  name = "storage",
+                  type = "MeshStorage",
+                  description = "The storage mode of the Mesh.",
+                  default = "'cpu'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob containing vertex data, formatted according to the vertex format.  The size of the Blob will be used to set the vertex count of the Mesh, and must be a multiple of the vertex size."
+                },
+                {
+                  name = "storage",
+                  type = "MeshStorage",
+                  description = "The storage mode of the Mesh.",
+                  default = "'cpu'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A table of attributes describing the format of each vertex.  Each attribute is a table that must have `name` and `type` keys, where the name is a string and the type is a `DataType`. Attributes can also have an `offset` key, which is a byte offset relative to the start of the vertex.  As a shorthand, the name and type can be given as a pair without keys. Additionally, the format can have a `stride` key to set the number of bytes between subsequent vertices."
+                },
+                {
+                  name = "count",
+                  type = "number",
+                  description = "The number of vertices in the Mesh."
+                },
+                {
+                  name = "storage",
+                  type = "MeshStorage",
+                  description = "The storage mode of the Mesh.",
+                  default = "'cpu'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A table of attributes describing the format of each vertex.  Each attribute is a table that must have `name` and `type` keys, where the name is a string and the type is a `DataType`. Attributes can also have an `offset` key, which is a byte offset relative to the start of the vertex.  As a shorthand, the name and type can be given as a pair without keys. Additionally, the format can have a `stride` key to set the number of bytes between subsequent vertices."
+                },
+                {
+                  name = "vertices",
+                  type = "table",
+                  description = "A table of vertices, formatted according to the vertex format.  The length of the table will be used to set the vertex count of the Mesh."
+                },
+                {
+                  name = "storage",
+                  type = "MeshStorage",
+                  description = "The storage mode of the Mesh.",
+                  default = "'cpu'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "format",
+                  type = "table",
+                  description = "A table of attributes describing the format of each vertex.  Each attribute is a table that must have `name` and `type` keys, where the name is a string and the type is a `DataType`. Attributes can also have an `offset` key, which is a byte offset relative to the start of the vertex.  As a shorthand, the name and type can be given as a pair without keys. Additionally, the format can have a `stride` key to set the number of bytes between subsequent vertices."
+                },
+                {
+                  name = "blob",
+                  type = "Blob",
+                  description = "A Blob containing vertex data, formatted according to the vertex format.  The size of the Blob will be used to set the vertex count of the Mesh, and must be a multiple of the vertex size."
+                },
+                {
+                  name = "storage",
+                  type = "MeshStorage",
+                  description = "The storage mode of the Mesh.",
+                  default = "'cpu'"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "buffer",
+                  type = "Buffer",
+                  description = "A Buffer containing vertex data.  Its length will be used as the vertex count, and its format will be used as the vertex format."
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The new Mesh."
                 }
               }
             }
@@ -13948,6 +14152,30 @@ return {
               }
             },
             {
+              name = "getIndices",
+              summary = "Get the vertex indices in the Mesh.",
+              description = "Returns a table with the Mesh's vertex indices.",
+              key = "Mesh:getIndices",
+              module = "lovr.graphics",
+              notes = "This function will be very very slow if the Mesh's storage is `gpu`, because the data needs to be downloaded from the GPU.",
+              related = {
+                "Mesh:getIndexBuffer",
+                "Mesh:setIndexBuffer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table of numbers with the 1-based vertex indices."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getMaterial",
               summary = "Get the Material applied to the Mesh.",
               description = "Returns the `Material` applied to the Mesh.",
@@ -14231,6 +14459,52 @@ return {
                       description = "The index buffer."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setIndices",
+              summary = "Set the vertex indices of the Mesh.",
+              description = "Sets or clears the vertex indices of the Mesh.  Vertex indices define the list of triangles in the mesh.  They allow vertices to be reused multiple times without duplicating all their data, which can save a lot of memory and processing time if a vertex is used for multiple triangles.\n\nIf a Mesh doesn't have vertex indices, then the vertices are rendered in order.",
+              key = "Mesh:setIndices",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:getIndexBuffer",
+                "Mesh:setIndexBuffer",
+                "Mesh:setVertices"
+              },
+              variants = {
+                {
+                  description = "Set vertex indices using a table.",
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A list of numbers (1-based)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set vertex indices using a Blob.",
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob with index data."
+                    },
+                    {
+                      name = "type",
+                      type = "DataType",
+                      description = "The type of index data in the Blob.  Must be `u16` or `u32`."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disable vertex indices.",
+                  arguments = {},
+                  returns = {}
                 }
               }
             },
