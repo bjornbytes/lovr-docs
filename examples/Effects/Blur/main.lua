@@ -75,6 +75,10 @@ function lovr.load()
       lovr.graphics.newTexture(width, height, layers, { mipmaps = false }),
       lovr.graphics.newTexture(width, height, layers, { mipmaps = false })
     }
+
+    -- Make a clamping sampler (clampler, get it?) to prevent blurred
+    -- pixels from wrapping around the edges
+    clampler = lovr.graphics.newSampler({ wrap = 'clamp' })
   end
 end
 
@@ -98,6 +102,7 @@ end
 -- draws one texture onto another with the blur shader
 local function fullScreenDraw(source, destination, blurSize)
   local pass = lovr.graphics.getPass('render', { destination, depth = false, samples = 1 })
+  pass:setSampler(clampler)
   pass:setShader(screenShader)
   pass:send('sourceTexture', source)
   pass:send('direction', blurSize)
