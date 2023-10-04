@@ -21,6 +21,8 @@ return {
 
     The **draw range** of the Mesh defines a subset of the vertices to render when the Mesh is
     drawn.
+
+    The **bounding box** of the Mesh allows LÖVR to skip rendering it when it's out of view.
   ]],
   constructor = 'lovr.graphics.newMesh'
 }
