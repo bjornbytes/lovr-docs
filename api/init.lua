@@ -14017,12 +14017,11 @@ return {
         {
           name = "Mesh",
           summary = "A drawable triangle mesh.",
-          description = "Meshes store arbitrary geometry data, and can be drawn with `Pass:draw`.\n\nMeshes hold a list of **vertices**.  The number of vertices is declared upfront when the Mesh is created, and it can not be resized afterwards.\n\nThe Mesh has a **vertex format**, which is a set of **attributes** comprising each vertex, like a `position`, `color`, etc.",
+          description = "Meshes store arbitrary geometry data, and can be drawn with `Pass:draw`.\n\nMeshes hold a list of **vertices**.  The number of vertices is declared upfront when the Mesh is created, and it can not be resized afterwards.\n\nThe Mesh has a **vertex format**, which is a set of **attributes** comprising each vertex, like a `position`, `color`, etc.\n\nThe **vertex indices** in the Mesh describe the order that the vertices are rendered in.  This is an optimization that allows vertices to be reused if they are used for multiple triangles, without duplicating all of their data.\n\nThe Mesh has a **draw mode**, which controls how the vertices are connected together to create pixels.  It can either be `points`, `lines`, or `triangles`.\n\nThe Mesh can have a `Material` applied, which defines colors, textures, and other properties of its surface.\n\nThe **draw range** of the Mesh defines a subset of the vertices to render when the Mesh is drawn.",
           key = "Mesh",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.getBuffer",
-            "lovr.graphics.newBuffer"
+            "lovr.graphics.newMesh"
           },
           methods = {
             {
