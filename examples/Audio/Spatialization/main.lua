@@ -13,6 +13,5 @@ function lovr.update()
 end
 
 function lovr.draw(pass)
-  if lovr.timer.getTime() > 1 then error('oh') end
   pass:sphere(mat4(source:getPose()):scale(.05))
 end
