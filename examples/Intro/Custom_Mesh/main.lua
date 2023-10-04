@@ -1,8 +1,10 @@
 function lovr.load()
-  mesh = lovr.graphics.newMesh({
-    { name = 'VertexPosition', type = 'vec3' },
-    { name = 'VertexColor', type = 'vec4' }
-  }, {
+  local format = {
+    { 'VertexPosition', 'vec3' },
+    { 'VertexColor', 'vec4' }
+  }
+
+  mesh = lovr.graphics.newMesh(format, {
     {   0,  .4, 0 ; 1, 0, 0, 1 },
     { -.5, -.4, 0 ; 0, 1, 0, 1 },
     {  .5, -.4, 0 ; 0, 0, 1, 1 }
