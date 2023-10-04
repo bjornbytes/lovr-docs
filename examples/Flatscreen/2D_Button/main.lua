@@ -30,5 +30,5 @@ function lovr.draw(pass)
   pass:plane(button.x, button.y, 0, button.w, button.h)
 
   pass:setColor(1, 1, 1)
-  pass:text('Click me!', button.x, button.y)
+  pass:text('Click me!', button.x, button.y, 0)
 end
