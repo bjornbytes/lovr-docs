@@ -12,7 +12,7 @@ return {
     `lovr.graphics.submit`, which will start processing all of the compute work and draws (in that
     order).
 
-    A Pass can have a **canvas**, which is a set of textures that the draws will render to.
+    A Pass can have a canvas, which is a set of textures that the draws will render to.
 
     `Pass:reset` is used to clear all of the computes and draws, putting the Pass in a fresh state.
 
