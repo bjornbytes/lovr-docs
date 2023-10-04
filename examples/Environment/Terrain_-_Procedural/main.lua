@@ -1,13 +1,13 @@
 local shaderCode = {[[
 /* VERTEX shader */
-layout(location = 0) out vec4 fragmentView;
+out vec4 fragmentView;
 
 vec4 lovrmain() {
   fragmentView = ClipFromLocal * VertexPosition;
   return fragmentView;
 } ]], [[
 /* FRAGMENT shader */
-layout(location = 0) in vec4 fragmentView;
+in vec4 fragmentView;
 
 Constants {
   vec3 fogColor;
@@ -53,8 +53,8 @@ function lovr.load()
     vertices[vi][1], vertices[vi][2], vertices[vi][3] = x, y, z
   end
 
-  vertexBuffer = lovr.graphics.newBuffer(vertices, 'vec3')
-  indexBuffer = lovr.graphics.newBuffer(indices, 'index16')
+  mesh = lovr.graphics.newMesh({{ 'VertexPosition', 'vec3' }}, vertices)
+  mesh:setIndices(indices)
 end
 
 function lovr.draw(pass)
@@ -65,10 +65,10 @@ function lovr.draw(pass)
 
   pass:setColor(0.565, 0.404, 0.463)
   pass:setDepthOffset(-10000) -- Ensure wireframe stays on top
-  pass:mesh(vertexBuffer, indexBuffer)
+  pass:draw(mesh)
   pass:setDepthOffset()
 
   pass:setWireframe(true)
   pass:setColor(0.388, 0.302, 0.412, 0.1)
-  pass:mesh(vertexBuffer, indexBuffer)
+  pass:draw(mesh)
 end
