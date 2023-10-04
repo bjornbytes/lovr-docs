@@ -44,8 +44,8 @@ function lovr.load()
   -- Keys
   buffer = lovr.graphics.newBuffer({{ 'x', 'int' }, { 'y', 'float' }})
   buffer:setData({ x = -1, y = 1e7 })
-  data = buffer:getData()
-  assert(data.x == -1 and data.y == 1e7)
+  data = buffer:getData()[1]
+  assert(data[1] == -1 and data[2] == 1e7)
 
   -- Arrays
   buffer = lovr.graphics.newBuffer({{ 'a', 'float', 3 }})
@@ -53,7 +53,7 @@ function lovr.load()
   assert(buffer:getLength() == 1)
   assert(buffer:getStride() == 12)
   buffer:setData({ a = { 10, 100, 1000 } })
-  data = buffer:getData()
+  data = buffer:getData()[1]
   assert(data.a[1] == 10 and data.a[2] == 100 and data.a[3] == 1000)
 
   -- Structs
@@ -68,7 +68,7 @@ function lovr.load()
   assert(buffer:getLength() == 1)
   assert(buffer:getStride() == 8)
   buffer:setData({ a = { b = { c = { 1.2, 3.4 } } } })
-  data = buffer:getData()
+  data = buffer:getData()[1]
   assert(vec2(unpack(data.a.b.c)):equals(vec2(1.2, 3.4)))
 
   -- Layouts
@@ -87,8 +87,8 @@ function lovr.load()
   local ok, ffi = pcall(require, 'ffi')
   if ok and ffi then
     buffer = lovr.graphics.newBuffer('float')
-    ffi.cast('float*', buffer:getPointer())[0] = 7
-    assert(buffer:getData() == 7)
+    ffi.cast('float*', buffer:mapData())[0] = 7
+    assert(buffer:getData()[1] == 7)
   end
 
   -- Push constants
