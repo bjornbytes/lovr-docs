@@ -12932,9 +12932,28 @@ return {
                 "Readback:getData"
               },
               variants = {
-                arguments = {},
-                returns = {
-                  "t"
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the first item to read.",
+                      default = "1"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of items to read.  If nil, reads the remainder of the buffer.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "The table with the Buffer's data."
+                    }
+                  }
                 }
               }
             },

@@ -26,8 +26,10 @@ return {
     }
   },
   variants = {
-    arguments = {},
-    returns = { 't' }
+    {
+      arguments = { 'index', 'count' },
+      returns = { 't' }
+    }
   },
   notes = [[
     The length of the table will equal the number of items read.  Here are some examples of how the
