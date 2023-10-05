@@ -9642,7 +9642,6 @@ return {
           notes = "In addition to these values, the following aliases can be used:\n\n<table>\n  <thead>\n    <tr>\n      <td>Alias</td>\n      <td>Maps to</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>vec2</code></td>\n      <td><code>f32x2</code></td>\n    </tr>\n    <tr>\n      <td><code>vec3</code></td>\n      <td><code>f32x3</code></td>\n    </tr>\n    <tr>\n      <td><code>vec4</code></td>\n      <td><code>f32x4</code></td>\n    </tr>\n    <tr>\n      <td><code>int</code></td>\n      <td><code>i32</code></td>\n    </tr>\n    <tr>\n      <td><code>uint</code></td>\n      <td><code>u32</code></td>\n    </tr>\n    <tr>\n      <td><code>float</code></td>\n      <td><code>f32</code></td>\n    </tr>\n    <tr>\n      <td><code>color</code></td>\n      <td><code>un8x4</code></td>\n    </tr>\n  </tbody> </table>\n\nAdditionally, the following convenience rules apply:\n\n- Field types can end in an `s`, which will be stripped off.\n- Field types can end in `x1`, which will be stripped off.\n\nSo you can write, e.g. `lovr.graphics.newBuffer(4, 'floats')`, which is cute!",
           related = {
             "lovr.graphics.newBuffer",
-            "lovr.graphics.getBuffer",
             "Buffer:getFormat"
           },
           values = {
@@ -19110,7 +19109,7 @@ return {
               module = "lovr.graphics",
               examples = {
                 {
-                  code = "function lovr.draw(pass)\n  local vertices = {\n    vec3(  0,  .4, 0), vec4(1, 0, 0, 1),\n    vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),\n    vec3( .5, -.4, 0), vec4(0, 0, 1, 1)\n  }\n\n  local format = {\n    { type = 'vec3', location = 'VertexPosition' },\n    { type = 'vec4', location = 'VertexColor' }\n  }\n\n  local triangle = lovr.graphics.getBuffer(vertices, format)\n\n  pass:mesh(triangle, 0, 1.7, -1)\nend"
+                  code = "function lovr.load()\n  local vertices = {\n    vec3(  0,  .4, 0), vec4(1, 0, 0, 1),\n    vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),\n    vec3( .5, -.4, 0), vec4(0, 0, 1, 1)\n  }\n\n  local format = {\n    { name = 'VertexPosition', type = 'vec3' },\n    { name = 'VertexColor', type = 'vec4' }\n  }\n\n  triangle = lovr.graphics.newBuffer(format, vertices)\nend\n\nfunction lovr.draw(pass)\n  pass:mesh(triangle, 0, 1.7, -1)\nend"
                 }
               },
               notes = "The index buffer defines the order the vertices are drawn in.  It can be used to reorder, reuse, or omit vertices from the mesh.\n\nWhen drawing without a vertex buffer, the `VertexIndex` variable can be used in shaders to compute the position of each vertex, possibly by reading data from other `Buffer` or `Texture` resources.\n\nThe active `DrawMode` controls whether the vertices are drawn as points, lines, or triangles.\n\nThe active `Material` is applied to the mesh.",

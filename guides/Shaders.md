@@ -554,11 +554,10 @@ buffer has multiple fields per element).
 A Buffer can be sent to one of the above variables like this:
 
     -- palette is a table with 100 colors in it
-    buffer = lovr.graphics.getBuffer(palette, 'vec4')
-    pass:send('Colors', buffer)
+    buffer = lovr.graphics.newBuffer('vec4', palette)
 
-    -- or, using the binding number
-    pass:send(0, buffer)
+    -- bind it to the shader later
+    pass:send('Colors', buffer)
 
 The shader can then use the `colors` array to access the data from the `palette` table.
 

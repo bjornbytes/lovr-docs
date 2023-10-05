@@ -180,7 +180,7 @@ return {
     The active `Material` is applied to the mesh.
   ]],
   example = [[
-    function lovr.draw(pass)
+    function lovr.load()
       local vertices = {
         vec3(  0,  .4, 0), vec4(1, 0, 0, 1),
         vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),
@@ -188,12 +188,14 @@ return {
       }
 
       local format = {
-        { type = 'vec3', location = 'VertexPosition' },
-        { type = 'vec4', location = 'VertexColor' }
+        { name = 'VertexPosition', type = 'vec3' },
+        { name = 'VertexColor', type = 'vec4' }
       }
 
-      local triangle = lovr.graphics.getBuffer(vertices, format)
+      triangle = lovr.graphics.newBuffer(format, vertices)
+    end
 
+    function lovr.draw(pass)
       pass:mesh(triangle, 0, 1.7, -1)
     end
   ]]
