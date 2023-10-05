@@ -61,18 +61,15 @@ end
 
 -- Draw many copies of the model using instancing, with transforms from a buffer
 function lovr.draw(pass)
-  local computer = lovr.graphics.getPass('compute')
-  computer:setShader(computeShader)
-  computer:send('monkeyCount', MONKEYS)
-  computer:send('TransformBuffer', transformBuffer)
-  computer:send('OffsetBuffer', offsetBuffer)
-  computer:compute(math.ceil(MONKEYS / 32))
+  pass:setShader(computeShader)
+  pass:send('monkeyCount', MONKEYS)
+  pass:send('TransformBuffer', transformBuffer)
+  pass:send('OffsetBuffer', offsetBuffer)
+  pass:compute(math.ceil(MONKEYS / 32))
 
   pass:setShader(shader)
   pass:send('TransformBuffer', transformBuffer)
   pass:setCullMode('back')
   pass:setBlendMode(nil)
-  pass:draw(model, mat4(), nil, nil, MONKEYS)
-
-  return lovr.graphics.submit(computer, pass)
+  pass:draw(model, mat4(), MONKEYS)
 end

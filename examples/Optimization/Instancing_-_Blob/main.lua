@@ -22,7 +22,7 @@ function lovr.load()
   end
 
   -- Create a Buffer to store positions for lots of models
-  buffer = lovr.graphics.newBuffer(transformBlob, 'mat4')
+  buffer = lovr.graphics.newBuffer('mat4', transformBlob)
 
   shader = lovr.graphics.newShader([[
     layout(set = 2, binding = 0) uniform TransformBuffer { mat4 transforms[500]; };
@@ -41,5 +41,5 @@ function lovr.draw(pass)
   pass:setCullMode('back')
   pass:setBlendMode(nil)
   pass:send('TransformBuffer', buffer)
-  pass:draw(model, mat4(), nil, nil, MONKEYS)
+  pass:draw(model, mat4(), MONKEYS)
 end
