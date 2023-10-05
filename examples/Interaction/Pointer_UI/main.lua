@@ -32,8 +32,8 @@ function lovr.update()
     tips[hand] = tips[hand] or lovr.math.newVec3()
 
     -- Ray info:
-    local rayPosition = vec3(lovr.headset.getPosition(hand))
-    local rayDirection = vec3(quat(lovr.headset.getOrientation(hand)):direction())
+    local rayPosition = vec3(lovr.headset.getPosition(hand .. '/point'))
+    local rayDirection = vec3(quat(lovr.headset.getOrientation(hand .. '/point')):direction())
 
     -- Call the raycast helper function to get the intersection point of the ray and the button plane
     local hit = raycast(rayPosition, rayDirection, button.position, vec3(0, 0, 1))
