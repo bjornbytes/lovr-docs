@@ -16,7 +16,9 @@ This document covers only some of them (in alphabetical order):
 * [Wu (Rust dialect)](#wu-rust-dialect)
 * [Yuescript (Moonscript dialect)](#yuescript-moonscript-dialect)
 
-> A *dialect* means the language is inspired by the parent but not fully syntax compatible.
+:::note
+A *dialect* means the language is inspired by the parent but not fully syntax compatible.
+:::
 
 In general there are two ways of using one of them in a LÖVR project:
 
@@ -59,12 +61,13 @@ In general there are two ways of using one of them in a LÖVR project:
             In fused mode the virtual file-system is the only working file access method.
             Meaning the project won't work at all if it relies on 'require'.
 
-> The more elegant and recommended solution is the just-in-time compilation:
->
-> * Source and Lua files can't be out of sync.
-> * Developer friendly workflow.
-> * Runtime error line translation is usually done by the compiler without extra care.
-> * Allows reload during development.
+:::note
+The more elegant and recommended solution is the just-in-time compilation:
+* Source and Lua files can't be out of sync.
+* Developer friendly workflow.
+* Runtime error line translation is usually done by the compiler without extra care.
+* Allows reload during development.
+:::
 
 CSharp.lua (C# dialect)
 ---

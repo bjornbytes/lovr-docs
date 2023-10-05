@@ -17,8 +17,10 @@ what's shown if you run LÖVR without specifying a project.
 
 <img src="/img/nogame.png" alt="The Default Project" width="50%"/>
 
-> Note: If you're using a VR headset, you'll only see the logo if your headset is pointing in the
-> forward direction.
+:::note
+If you're using a VR headset, you'll only see the logo if your headset is pointing in the forward
+direction.
+:::
 
 We're going to make a project so we see something more interesting than the logo.
 

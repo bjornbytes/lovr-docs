@@ -18,10 +18,14 @@ To use a plugin, place its library file next to the lovr executable and `require
       myplugin.dothething()
     end
 
-> On Unix systems, some plugin files might be prefixed with `lib` (e.g. `liblovr-plugin.so`).
-> In this case, be sure to require the plugin with the lib prefix: `require 'liblovr-plugin'`.
+:::note
+On Unix systems, some plugin files might be prefixed with `lib` (e.g. `liblovr-plugin.so`). In this
+case, be sure to require the plugin with the lib prefix: `require 'liblovr-plugin'`.
+:::
 
-> On Android, plugins are searched for in the `lib/arm64-v8a` folder of the APK.
+:::note
+On Android, plugins are searched for in the `lib/arm64-v8a` folder of the APK.
+:::
 
 Plugins are not officially supported in WebAssembly yet, but this is theoretically possible.
 
@@ -79,9 +83,11 @@ as git submodules.  A fork of lovr can be created that has this custom plugins f
 easy to quickly get a set of plugins on multiple machines.  Version control also means that the
 plugins are versioned and tied to a known version of lovr.
 
-> By default, the libraries from all CMake targets in the plugin's build script will be moved
-> to the executable folder.  Plugins can override this by setting the `LOVR_PLUGIN_TARGETS` variable
-> to a semicolon-separated list of targets.
+:::note
+By default, the libraries from all CMake targets in the plugin's build script will be moved to the
+executable folder.  Plugins can override this by setting the `LOVR_PLUGIN_TARGETS` variable to a
+semicolon-separated list of targets.
+:::
 
 Creating Plugins
 ---

@@ -30,8 +30,10 @@ On Unix systems, the `cat` utility can be used to concatenate the two files:
 
     $ cat /path/to/lovr MyProject.zip > MyProject
 
-> Once you have an executable, be sure to distribute it with all the libraries (`.dll` or `.so`
-> files) that came with the original LÖVR download.
+:::note
+Once you have an executable, be sure to distribute it with all the libraries (`.dll` or `.so` files)
+that came with the original LÖVR download.
+:::
 
 macOS
 ---

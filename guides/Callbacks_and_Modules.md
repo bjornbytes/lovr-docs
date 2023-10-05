@@ -83,8 +83,10 @@ There are lots of different rendering-related objects that can be created using 
 such as `Model`, `Texture`, `Font`, `Shader`, and more.  Every function to create a new
 object is prefixed with `new`, so to create a 3D model object you can use `lovr.graphics.newModel`.
 
-> Note: Creating graphics objects uses memory and can slow things down if done every frame.  For
-> this reason, it's recommended to create objects only once in `lovr.load` before using them!
+:::note
+Creating graphics objects uses memory and can slow things down if done every frame.  For this
+reason, it's recommended to create objects only once in `lovr.load` before using them!
+::::
 
 Another important component of `lovr.graphics` is **graphics state**.  `Pass` has a number of state
 variables that can be changed, like the color of rendered objects, the font in use, or the
@@ -167,8 +169,10 @@ lovr.physics
 Adding a physics simulation to a scene can make it feel more realistic and immersive.  The
 `lovr.physics` module can be used to set up a physics simulation.
 
-> Note: Physics engines can be tricky to set up.  There are lots of knobs to turn and it may take
-> some tweaking to get things working well.
+:::note
+Physics engines can be tricky to set up.  There are lots of knobs to turn and it may take some
+tweaking to get things working well.
+:::
 
 The first step to creating a simulation is to create a `World` using `lovr.physics.newWorld`.  After
 a world is created you can add `Collider`s to it, using functions like `World:newBoxCollider` or
