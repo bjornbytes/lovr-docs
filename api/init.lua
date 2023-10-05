@@ -9966,6 +9966,7 @@ return {
           description = "The three different types of `Pass` objects.  Each Pass has a single type, which determines the type of work it does and which functions can be called on it.",
           key = "PassType",
           module = "lovr.graphics",
+          deprecated = true,
           related = {
             "lovr.graphics.getPass",
             "lovr.graphics.submit",
@@ -10311,9 +10312,9 @@ return {
           description = "Returns the global background color.  The textures in a render pass will be cleared to this color at the beginning of the pass if no other clear option is specified.  Additionally, the headset and window will be cleared to this color before rendering.",
           key = "lovr.graphics.getBackgroundColor",
           module = "lovr.graphics",
-          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
+          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getWindowPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
           related = {
-            "lovr.graphics.getPass",
+            "lovr.graphics.newPass",
             "Pass:setClear",
             "Texture:clear",
             "Pass:fill"
@@ -12925,9 +12926,9 @@ return {
           description = "Changes the global background color.  The textures in a render pass will be cleared to this color at the beginning of the pass if no other clear option is specified.  Additionally, the headset and window will be cleared to this color before rendering.",
           key = "lovr.graphics.setBackgroundColor",
           module = "lovr.graphics",
-          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
+          notes = "Setting the background color in `lovr.draw` will apply on the following frame, since the default pass is cleared before `lovr.draw` is called.\n\nInternally, this color is applied to the default pass objects when retrieving one of them using `lovr.headset.getPass` or `lovr.graphics.getWindowPass`.  Both are called automatically by the default `lovr.run` implementation.\n\nUsing the background color to clear the display is expected to be more efficient than manually clearing after a render pass begins, especially on mobile GPUs.",
           related = {
-            "lovr.graphics.getPass",
+            "lovr.graphics.newPass",
             "Pass:setClear",
             "Texture:clear",
             "Pass:fill"
@@ -24544,7 +24545,7 @@ return {
           module = "lovr.headset",
           notes = "The same Pass will be returned until `lovr.headset.submit` is called.\n\nThe first time this function is called during a frame, the views of the Pass will be initialized with the headset view poses and view angles.\n\nThe pass will be cleared to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.\n\nThe pass will have a depth buffer.  If `t.headset.stencil` was set to a truthy value in `lovr.conf`, the depth buffer will use the `d32fs8` format, otherwise `d32f` will be used.\n\nIf `t.headset.antialias` was set to a truthy value in `lovr.conf`, the pass will be multisampled.",
           related = {
-            "lovr.graphics.getPass",
+            "lovr.graphics.newPass",
             "lovr.graphics.getWindowPass",
             "lovr.conf"
           },

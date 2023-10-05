@@ -14,6 +14,7 @@ local debug_show_shadow_map = false -- Enable to view shadow map in overlap
 local shader, render_texture
 local shadow_map_texture, shadow_map_sampler
 local light_space_matrix
+local shadow_map_pass, lighting_pass
 
 local function render_scene(pass)
   local t = lovr.timer.getTime()
@@ -107,15 +108,6 @@ local function lighting_shader()
 end
 
 local function render_shadow_map(draw)
-  local shadow_map_pass
-  if debug_render_from_light then
-    shadow_map_pass = lovr.graphics.getPass('render', { shadow_map_texture, samples = 1 })
-  else
-    shadow_map_pass = lovr.graphics.getPass('render', {
-      depth = { texture = shadow_map_texture, clear = light_orthographic and 1 or 0 }, samples = 1
-    })
-  end
-
   local near_plane = 2
   local projection
   if light_orthographic then
@@ -130,6 +122,7 @@ local function render_shadow_map(draw)
 
   light_space_matrix = mat4(projection):mul(view)
 
+  shadow_map_pass:reset()
   shadow_map_pass:setProjection(1, projection)
   shadow_map_pass:setViewPose(1, view, true)
   if light_orthographic then
@@ -143,20 +136,20 @@ local function render_shadow_map(draw)
   end
 
   draw(shadow_map_pass)
-
-  return shadow_map_pass
 end
 
 local function render_lighting_pass(draw)
-  local lighting_pass = lovr.graphics.getPass('render', { render_texture, samples = 1 })
+  lighting_pass:reset()
 
-  local t = lovr.timer.getTime()
+  local t
   if lovr.headset then
+    t = lovr.headset.getTime()
     for i = 1, lovr.headset.getViewCount() do
       lighting_pass:setViewPose(i, lovr.headset.getViewPose(i))
       lighting_pass:setProjection(i, lovr.headset.getViewAngles(i))
     end
   else
+    t = lovr.timer.getTime()
     lighting_pass:setViewPose(1, 0, 3 - math.sin(t * 0.1), 4, -math.pi / 8, 1, 0, 0)
   end
 
@@ -171,8 +164,6 @@ local function render_lighting_pass(draw)
 
   lighting_pass:setColor(1, 1, 1, 1)
   lighting_pass:sphere(light_pos, 0.1)
-
-  return lighting_pass
 end
 
 local function debug_passes(pass)
@@ -213,6 +204,15 @@ function lovr.load(args)
     local width, height = lovr.system.getWindowDimensions()
     render_texture = lovr.graphics.newTexture(width, height, 1, { mipmaps = false })
   end
+
+  if debug_render_from_light then
+    shadow_map_pass = lovr.graphics.newPass({ shadow_map_texture, samples = 1 })
+  else
+    shadow_map_pass = lovr.graphics.newPass({ depth = shadow_map_texture, samples = 1 })
+    shadow_map_pass:setClear({ depth = light_orthographic and 1 or 0 })
+  end
+
+  lighting_pass = lovr.graphics.newPass(render_texture)
 end
 
 function lovr.update(dt)
@@ -222,9 +222,8 @@ function lovr.update(dt)
 end
 
 function lovr.draw(pass)
-  local shadow_map_pass = render_shadow_map(render_scene)
-  local lighting_pass = render_lighting_pass(render_scene)
-
+  render_shadow_map(render_scene)
+  render_lighting_pass(render_scene)
   debug_passes(pass)
 
   return lovr.graphics.submit({ shadow_map_pass, lighting_pass, pass })

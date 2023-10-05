@@ -31,7 +31,7 @@ return {
     multisampled.
   ]],
   related = {
-    'lovr.graphics.getPass',
+    'lovr.graphics.newPass',
     'lovr.graphics.getWindowPass',
     'lovr.conf'
   }
