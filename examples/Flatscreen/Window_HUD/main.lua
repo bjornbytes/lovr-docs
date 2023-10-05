@@ -6,12 +6,6 @@
 
 local shader = require 'shader'
 
--- In order for lovr.mouse to work, and therefore for this example to work,
--- we must be using LuaJIT and we must be using GLFW (ie: we can't be on Android)
-if type(jit) == 'table' and lovr.system.getOS() ~= "android" then
-  lovr.mouse = require 'mouse'
-end
-
 local mirror = lovr.mirror              -- Backup lovr.mirror before it is overwritten
 local font = lovr.graphics.newFont(24)  -- Font appropriate for screen-space usage
 font:setPixelDensity(1)
@@ -47,22 +41,20 @@ local matrix = lovr.math.newMat4():orthographic(-aspect, aspect, -1, 1, -64, 64)
 local grid = {}
 for x=1,cells do grid[x] = {} end
 
-function lovr.load()
-  lovr.handlers['mousepressed'] = function(x,y)
-    local inx = x * width / pixwidth - width/2    -- Convert pixel x,y to our coordinate system
-    local iny = y * height / pixheight - height/2
-    local gridorigin = -gridspan - cellheight     -- Upper left of grid ()
-    local gx = (inx - gridorigin) / cellheight    -- Convert coordinate system to grid cells
-    local gy = (iny - gridorigin) / cellheight
-    local fx = math.floor(gx)
-    local fy = math.floor(gy)
-    if fx >= 1 and fy >= 1 and fx <= cells and fy <= cells   -- If the click was within the grid
-       and not (fx == bannedcell and fy == bannedcell) then  -- and was not the banned center cell
-      if grid[fx][fy] then
-        grid[fx][fy] = nil                -- toggle off
-      else
-        grid[fx][fy] = lovr.math.random() -- toggle on (random height)
-      end
+function lovr.mousepressed(x, y, b)
+  local inx = x * width / pixwidth - width/2    -- Convert pixel x,y to our coordinate system
+  local iny = y * height / pixheight - height/2
+  local gridorigin = -gridspan - cellheight     -- Upper left of grid ()
+  local gx = (inx - gridorigin) / cellheight    -- Convert coordinate system to grid cells
+  local gy = (iny - gridorigin) / cellheight
+  local fx = math.floor(gx)
+  local fy = math.floor(gy)
+  if fx >= 1 and fy >= 1 and fx <= cells and fy <= cells   -- If the click was within the grid
+     and not (fx == bannedcell and fy == bannedcell) then  -- and was not the banned center cell
+    if grid[fx][fy] then
+      grid[fx][fy] = nil                -- toggle off
+    else
+      grid[fx][fy] = lovr.math.random() -- toggle on (random height)
     end
   end
 end
@@ -137,38 +129,16 @@ local function draw(pass)
     if gray then floorbox(pass,x,y,gray) end
   end end
   pass:setShader()
-
-  if not lovr.mouse then -- If you can't click, you can't create any blocks
-    pass:text('This example only works on a desktop computer.', 0, 1.7, -3, .2)
-  end
 end
 
 -- Handle LOVR
 
--- LOVR expects that if you have both a lovr.mirror and a lovr.draw, it's because you want to draw
--- different things in the headset and the window. So in 0.16, it "clears" before calling lovr.mirror
--- (more accurately, it draws the headset and the window to different back buffers entirely).
--- However, we want OUR window to show the headset contents, and ON TOP of that, we want to draw.
--- So we have to trick LOVR a little bit...
-
--- Our strategy will be different on Desktop (the simulator) vs other drivers.
-local isDesktop = lovr.headset.getDriver() == "desktop"
-
 function lovr.draw(pass)
   draw(pass)       -- Headset contents
-
-  -- On desktop, we define ONLY lovr.draw, no lovr.mirror, and draw the mirror contents inside lovr.draw().
-  -- This is because on desktop, a lovr.mirror being present will prevent lovr.draw() from being called at all.
-  if isDesktop then
-    mirror(pass) -- Mirror contents
-  end
 end
 
--- When headsets are plugged in, we want both a lovr.draw and a lovr.mirror.
-if not isDesktop then
-  local originalMirror = lovr.mirror -- By default, LOVR will have given us a mirror that displays the headset
-  function lovr.mirror(pass)
-    originalMirror(pass) -- Headset texture (note: this will fill the depth buffer with z=0)
-    mirror(pass)         -- Mirror contents
-  end
+local originalMirror = lovr.mirror -- By default, LOVR will have given us a mirror that displays the headset
+function lovr.mirror(pass)
+  originalMirror(pass) -- Headset texture (note: this will fill the depth buffer with z=0)
+  mirror(pass)         -- Mirror contents
 end
