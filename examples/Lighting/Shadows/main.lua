@@ -141,15 +141,13 @@ end
 local function render_lighting_pass(draw)
   lighting_pass:reset()
 
-  local t
   if lovr.headset then
-    t = lovr.headset.getTime()
     for i = 1, lovr.headset.getViewCount() do
       lighting_pass:setViewPose(i, lovr.headset.getViewPose(i))
       lighting_pass:setProjection(i, lovr.headset.getViewAngles(i))
     end
   else
-    t = lovr.timer.getTime()
+    local t = lovr.timer.getTime()
     lighting_pass:setViewPose(1, 0, 3 - math.sin(t * 0.1), 4, -math.pi / 8, 1, 0, 0)
   end
 
