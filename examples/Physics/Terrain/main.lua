@@ -28,7 +28,7 @@ function lovr.load()
     local x,y,z = unpack(vertices[vi])
     vertices[vi][2] = terrain_fn(x, z) -- elevate grid to terrain height
   end
-  vertexBuffer = lovr.graphics.newBuffer(vertices, 'vec3')
+  mesh = lovr.graphics.newMesh(vertices)
   world:newTerrainCollider(size, terrain_fn) -- use callback to define elevations
   box_colliders = {}
 end
@@ -52,9 +52,9 @@ function lovr.draw(pass)
   end
 
   pass:setColor(0.565, 0.404, 0.463)
-  pass:mesh(vertexBuffer)
+  pass:draw(mesh)
 
   pass:setWireframe(true)
   pass:setColor(0.388, 0.302, 0.412, 0.1)
-  pass:mesh(vertexBuffer)
+  pass:draw(mesh)
 end
