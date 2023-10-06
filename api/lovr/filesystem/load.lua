@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-lua',
   summary = 'Load a file as Lua code.',
   description = 'Load a file containing Lua code, returning a Lua chunk that can be run.',
   arguments = {

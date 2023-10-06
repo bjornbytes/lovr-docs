@@ -8741,6 +8741,7 @@ return {
       functions = {
         {
           name = "append",
+          tag = "filesystem-files",
           summary = "Append content to the end of a file.",
           description = "Appends content to the end of a file.",
           key = "lovr.filesystem.append",
@@ -8793,6 +8794,7 @@ return {
         },
         {
           name = "createDirectory",
+          tag = "filesystem-files",
           summary = "Create a directory.",
           description = "Creates a directory in the save directory.  Any parent directories that don't exist will also be created.",
           key = "lovr.filesystem.createDirectory",
@@ -8818,6 +8820,7 @@ return {
         },
         {
           name = "getAppdataDirectory",
+          tag = "filesystem-paths",
           summary = "Get the application data directory.",
           description = "Returns the application data directory.  This will be something like:\n\n- `C:\\Users\\user\\AppData\\Roaming` on Windows.\n- `/home/user/.config` on Linux.\n- `/Users/user/Library/Application Support` on macOS.",
           key = "lovr.filesystem.getAppdataDirectory",
@@ -8837,6 +8840,7 @@ return {
         },
         {
           name = "getDirectoryItems",
+          tag = "filesystem-files",
           summary = "Get a list of files in a directory.",
           description = "Returns a sorted table containing all files and folders in a single directory.",
           key = "lovr.filesystem.getDirectoryItems",
@@ -8863,6 +8867,7 @@ return {
         },
         {
           name = "getExecutablePath",
+          tag = "filesystem-paths",
           summary = "Get the path of the LÖVR executable.",
           description = "Returns the absolute path of the LÖVR executable.",
           key = "lovr.filesystem.getExecutablePath",
@@ -8882,6 +8887,7 @@ return {
         },
         {
           name = "getIdentity",
+          tag = "filesystem-virtual",
           summary = "Get the name of the save directory.",
           description = "Returns the identity of the game, which is used as the name of the save directory.  The default is `default`.  It can be changed using `t.identity` in `lovr.conf`.",
           key = "lovr.filesystem.getIdentity",
@@ -8902,6 +8908,7 @@ return {
         },
         {
           name = "getLastModified",
+          tag = "filesystem-files",
           summary = "Get the modification time of a file.",
           description = "Returns when a file was last modified, since some arbitrary time in the past.",
           key = "lovr.filesystem.getLastModified",
@@ -8927,6 +8934,7 @@ return {
         },
         {
           name = "getRealDirectory",
+          tag = "filesystem-virtual",
           summary = "Get the absolute path to a file.",
           description = "Get the absolute path of the mounted archive containing a path in the virtual filesystem.  This can be used to determine if a file is in the game's source directory or the save directory.",
           key = "lovr.filesystem.getRealDirectory",
@@ -8952,6 +8960,7 @@ return {
         },
         {
           name = "getRequirePath",
+          tag = "filesystem-lua",
           summary = "Get the require path.",
           description = "Returns the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, but the main difference is that the patterns are relative to the virtual filesystem.",
           key = "lovr.filesystem.getRequirePath",
@@ -8972,6 +8981,7 @@ return {
         },
         {
           name = "getSaveDirectory",
+          tag = "filesystem-paths",
           summary = "Get the location of the save directory.",
           description = "Returns the absolute path to the save directory.",
           key = "lovr.filesystem.getSaveDirectory",
@@ -8996,6 +9006,7 @@ return {
         },
         {
           name = "getSize",
+          tag = "filesystem-files",
           summary = "Get the size of a file.",
           description = "Returns the size of a file, in bytes.",
           key = "lovr.filesystem.getSize",
@@ -9022,6 +9033,7 @@ return {
         },
         {
           name = "getSource",
+          tag = "filesystem-paths",
           summary = "Get the location of the project source.",
           description = "Get the absolute path of the project's source directory or archive.",
           key = "lovr.filesystem.getSource",
@@ -9041,6 +9053,7 @@ return {
         },
         {
           name = "getUserDirectory",
+          tag = "filesystem-paths",
           summary = "Get the location of the user's home directory.",
           description = "Returns the absolute path of the user's home directory.",
           key = "lovr.filesystem.getUserDirectory",
@@ -9060,6 +9073,7 @@ return {
         },
         {
           name = "getWorkingDirectory",
+          tag = "filesystem-paths",
           summary = "Get the current working directory.",
           description = "Returns the absolute path of the working directory.  Usually this is where the executable was started from.",
           key = "lovr.filesystem.getWorkingDirectory",
@@ -9079,6 +9093,7 @@ return {
         },
         {
           name = "isDirectory",
+          tag = "filesystem-files",
           summary = "Check whether a path is a directory.",
           description = "Check if a path exists and is a directory.",
           key = "lovr.filesystem.isDirectory",
@@ -9107,6 +9122,7 @@ return {
         },
         {
           name = "isFile",
+          tag = "filesystem-files",
           summary = "Check whether a path is a file.",
           description = "Check if a path exists and is a file.",
           key = "lovr.filesystem.isFile",
@@ -9135,6 +9151,7 @@ return {
         },
         {
           name = "isFused",
+          tag = "filesystem-virtual",
           summary = "Check if the project is fused.",
           description = "Returns whether the current project source is fused to the executable.",
           key = "lovr.filesystem.isFused",
@@ -9154,6 +9171,7 @@ return {
         },
         {
           name = "load",
+          tag = "filesystem-lua",
           summary = "Load a file as Lua code.",
           description = "Load a file containing Lua code, returning a Lua chunk that can be run.",
           key = "lovr.filesystem.load",
@@ -9192,6 +9210,7 @@ return {
         },
         {
           name = "mount",
+          tag = "filesystem-virtual",
           summary = "Mount a directory or archive.",
           description = "Mounts a directory or `.zip` archive, adding it to the virtual filesystem.  This allows you to read files from it.",
           key = "lovr.filesystem.mount",
@@ -9245,6 +9264,7 @@ return {
         },
         {
           name = "newBlob",
+          tag = "filesystem-files",
           summary = "Create a new Blob from a file.",
           description = "Creates a new Blob that contains the contents of a file.",
           key = "lovr.filesystem.newBlob",
@@ -9274,6 +9294,7 @@ return {
         },
         {
           name = "read",
+          tag = "filesystem-files",
           summary = "Read a file.",
           description = "Read the contents of a file.",
           key = "lovr.filesystem.read",
@@ -9311,6 +9332,7 @@ return {
         },
         {
           name = "remove",
+          tag = "filesystem-files",
           summary = "Remove a file or directory.",
           description = "Remove a file or directory in the save directory.",
           key = "lovr.filesystem.remove",
@@ -9337,6 +9359,7 @@ return {
         },
         {
           name = "setIdentity",
+          tag = "filesystem-virtual",
           summary = "Set the name of the save directory.",
           description = "Set the name of the save directory.  This function can only be called once and is called automatically at startup, so this function normally isn't called manually.  However, the identity can be changed by setting the `t.identity` option in `lovr.conf`.",
           key = "lovr.filesystem.setIdentity",
@@ -9360,6 +9383,7 @@ return {
         },
         {
           name = "setRequirePath",
+          tag = "filesystem-lua",
           summary = "Set the require path.",
           description = "Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR will use to search for files when they are `require`d.  Any question marks in the pattern will be replaced with the module that is being required.  It is similar to Lua\\'s `package.path` variable, except the patterns will be checked using `lovr.filesystem` APIs. This allows `require` to work even when the project is packaged into a zip archive, or when the project is launched from a different directory.",
           key = "lovr.filesystem.setRequirePath",
@@ -9381,6 +9405,7 @@ return {
         },
         {
           name = "unmount",
+          tag = "filesystem-virtual",
           summary = "Unmount a mounted archive.",
           description = "Unmounts a directory or archive previously mounted with `lovr.filesystem.mount`.",
           key = "lovr.filesystem.unmount",
@@ -9410,6 +9435,7 @@ return {
         },
         {
           name = "write",
+          tag = "filesystem-files",
           summary = "Write to a file.",
           description = "Write to a file in the save directory.",
           key = "lovr.filesystem.write",
@@ -9466,7 +9492,27 @@ return {
           }
         }
       },
-      objects = {}
+      objects = {},
+      sections = {
+        {
+          name = "Files",
+          tag = "filesystem-files",
+          description = "Operations for reading/writing files and querying their metadata."
+        },
+        {
+          name = "Virtual Filesystem",
+          tag = "filesystem-virtual"
+        },
+        {
+          name = "Paths",
+          tag = "filesystem-paths",
+          description = "Useful system paths."
+        },
+        {
+          name = "Lua",
+          tag = "filesystem-lua"
+        }
+      }
     },
     {
       name = "graphics",

@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-virtual',
   summary = 'Set the name of the save directory.',
   description = [[
     Set the name of the save directory.  This function can only be called once and is called

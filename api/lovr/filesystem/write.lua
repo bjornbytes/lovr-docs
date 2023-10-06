@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-files',
   summary = 'Write to a file.',
   description = 'Write to a file in the save directory.',
   arguments = {

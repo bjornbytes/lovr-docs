@@ -40,5 +40,25 @@ return {
 
     LÖVR extends Lua's `require` function to look for modules in the virtual filesystem.  The search
     patterns can be changed with `lovr.filesystem.setRequirePath`, similar to `package.path`.
-  ]]
+  ]],
+  sections = {
+    {
+      name = 'Files',
+      tag = 'filesystem-files',
+      description = 'Operations for reading/writing files and querying their metadata.'
+    },
+    {
+      name = 'Virtual Filesystem',
+      tag = 'filesystem-virtual'
+    },
+    {
+      name = 'Paths',
+      tag = 'filesystem-paths',
+      description = 'Useful system paths.'
+    },
+    {
+      name = 'Lua',
+      tag = 'filesystem-lua'
+    }
+  }
 }

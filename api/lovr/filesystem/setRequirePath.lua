@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-lua',
   summary = 'Set the require path.',
   description = [[
     Sets the require path.  The require path is a semicolon-separated list of patterns that LÖVR
