@@ -34,6 +34,7 @@ return {
       returns = { 'success' }
     },
     {
+      deprecated = true,
       arguments = { 'device', 'model' },
       returns = { 'success' }
     }

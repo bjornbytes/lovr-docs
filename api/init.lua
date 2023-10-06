@@ -13257,7 +13257,20 @@ return {
               },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset in the buffer to write to.",
+                      default = "0"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "The number of bytes to replace.  If nil, writes to the rest of the buffer.",
+                      default = "nil"
+                    }
+                  },
                   returns = {
                     {
                       name = "pointer",
@@ -13324,6 +13337,7 @@ return {
               description = "Returns whether the Buffer is temporary.",
               key = "Buffer:isTemporary",
               module = "lovr.graphics",
+              deprecated = true,
               related = {
                 "lovr.graphics.getBuffer"
               },
@@ -13354,7 +13368,20 @@ return {
               },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset in the buffer to write to.",
+                      default = "0"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "The number of bytes to replace.  If nil, writes to the rest of the buffer.",
+                      default = "nil"
+                    }
+                  },
                   returns = {
                     {
                       name = "pointer",
@@ -23972,7 +23999,8 @@ return {
                   type = "boolean",
                   description = "Whether the animation was applied successfully to the Model.  If the Model was not compatible or animation data for the device was not available, this will be `false`."
                 }
-              }
+              },
+              deprecated = true
             }
           }
         },

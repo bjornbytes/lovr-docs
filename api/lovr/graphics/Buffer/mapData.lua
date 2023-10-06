@@ -26,7 +26,7 @@ return {
   },
   variants = {
     {
-      arguments = {},
+      arguments = { 'offset', 'extent' },
       returns = { 'pointer' }
     }
   },
