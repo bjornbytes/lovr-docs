@@ -49,6 +49,12 @@ return {
   },
   variants = {
     {
+      description = 'Create a 2D texture view referencing a single layer and mipmap.',
+      arguments = { 'layer', 'mipmap' },
+      returns = { 'view' }
+    },
+    {
+      description = 'Create a texture view with an explicit type, layer range, and mipmap range.',
       arguments = { 'type', 'layer', 'layerCount', 'mipmap', 'mipmapCount' },
       returns = { 'view' }
     }
