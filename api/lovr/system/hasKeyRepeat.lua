@@ -1,4 +1,5 @@
 return {
+  tag = 'system-keyboard',
   summary = 'Check if key repeat is enabled.',
   description = 'Returns whether key repeat is enabled.',
   arguments = {},

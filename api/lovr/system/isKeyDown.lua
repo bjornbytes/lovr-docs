@@ -1,4 +1,5 @@
 return {
+  tag = 'system-keyboard',
   summary = 'Get the state of a key.',
   description = 'Returns whether a key on the keyboard is pressed.',
   arguments = {

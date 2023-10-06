@@ -1,4 +1,5 @@
 return {
+  tag = 'system-keyboard',
   summary = 'Check if a key was released this frame.',
   description = 'Returns whether a key on the keyboard was released this frame.',
   arguments = {

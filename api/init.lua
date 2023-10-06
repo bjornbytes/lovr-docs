@@ -38396,7 +38396,7 @@ return {
       name = "system",
       tag = "modules",
       summary = "Provides information about the current operating system and platform.",
-      description = "The `lovr.system` provides information about the current platform and hardware.",
+      description = "The `lovr.system` provides information about the current platform and hardware.\n\nIt also interfaces with the desktop window and window input.",
       key = "lovr.system",
       enums = {
         {
@@ -38419,6 +38419,7 @@ return {
       functions = {
         {
           name = "getCoreCount",
+          tag = "system-info",
           summary = "Get the number of logical cores.",
           description = "Returns the number of logical cores on the system.",
           key = "lovr.system.getCoreCount",
@@ -38441,6 +38442,7 @@ return {
         },
         {
           name = "getMousePosition",
+          tag = "system-mouse",
           summary = "Get the position of the mouse.",
           description = "Returns the position of the mouse.",
           key = "lovr.system.getMousePosition",
@@ -38470,6 +38472,7 @@ return {
         },
         {
           name = "getMouseX",
+          tag = "system-mouse",
           summary = "Get the x position of the mouse.",
           description = "Returns the x position of the mouse.",
           key = "lovr.system.getMouseX",
@@ -38494,6 +38497,7 @@ return {
         },
         {
           name = "getMouseY",
+          tag = "system-mouse",
           summary = "Get the y position of the mouse.",
           description = "Returns the y position of the mouse.",
           key = "lovr.system.getMouseY",
@@ -38518,6 +38522,7 @@ return {
         },
         {
           name = "getOS",
+          tag = "system-info",
           summary = "Get the current operating system.",
           description = "Returns the current operating system.",
           key = "lovr.system.getOS",
@@ -38537,6 +38542,7 @@ return {
         },
         {
           name = "getWindowDensity",
+          tag = "system-window",
           summary = "Get the window pixel density.",
           description = "Returns the window pixel density.  High DPI windows will usually return 2.0 to indicate that there are 2 pixels for every window coordinate in each axis.  On a normal display, 1.0 is returned, indicating that window coordinates match up with pixels 1:1.",
           key = "lovr.system.getWindowDensity",
@@ -38556,6 +38562,7 @@ return {
         },
         {
           name = "getWindowDimensions",
+          tag = "system-window",
           summary = "Get the dimensions of the window.",
           description = "Returns the dimensions of the desktop window.",
           key = "lovr.system.getWindowDimensions",
@@ -38586,6 +38593,7 @@ return {
         },
         {
           name = "getWindowHeight",
+          tag = "system-window",
           summary = "Get the height of the window.",
           description = "Returns the height of the desktop window.",
           key = "lovr.system.getWindowHeight",
@@ -38611,6 +38619,7 @@ return {
         },
         {
           name = "getWindowWidth",
+          tag = "system-window",
           summary = "Get the width of the window.",
           description = "Returns the width of the desktop window.",
           key = "lovr.system.getWindowWidth",
@@ -38636,6 +38645,7 @@ return {
         },
         {
           name = "hasKeyRepeat",
+          tag = "system-keyboard",
           summary = "Check if key repeat is enabled.",
           description = "Returns whether key repeat is enabled.",
           key = "lovr.system.hasKeyRepeat",
@@ -38659,6 +38669,7 @@ return {
         },
         {
           name = "isKeyDown",
+          tag = "system-keyboard",
           summary = "Get the state of a key.",
           description = "Returns whether a key on the keyboard is pressed.",
           key = "lovr.system.isKeyDown",
@@ -38690,6 +38701,7 @@ return {
         },
         {
           name = "isMouseDown",
+          tag = "system-mouse",
           summary = "Check if a mouse button is pressed.",
           description = "Returns whether a mouse button is currently pressed.",
           key = "lovr.system.isMouseDown",
@@ -38722,6 +38734,7 @@ return {
         },
         {
           name = "isWindowOpen",
+          tag = "system-window",
           summary = "Check if the desktop window is open.",
           description = "Returns whether the desktop window is open.  `t.window` can be set to `nil` in `lovr.conf` to disable automatic opening of the window.  In this case, the window can be opened manually using `lovr.system.openWindow`.",
           key = "lovr.system.isWindowOpen",
@@ -38744,6 +38757,7 @@ return {
         },
         {
           name = "openWindow",
+          tag = "system-window",
           summary = "Open the desktop window.",
           description = "Opens the desktop window.  If the window is already open, this function does nothing.",
           key = "lovr.system.openWindow",
@@ -38802,6 +38816,7 @@ return {
         },
         {
           name = "pollEvents",
+          tag = "system-window",
           summary = "Poll the OS for new window events.",
           description = "Fills the event queue with unprocessed events from the operating system.  This function should be called often, otherwise the operating system will consider the application unresponsive. This function is called in the default implementation of `lovr.run`.",
           key = "lovr.system.pollEvents",
@@ -38818,6 +38833,7 @@ return {
         },
         {
           name = "requestPermission",
+          tag = "system-info",
           summary = "Request permission to use a feature.",
           description = "Requests permission to use a feature.  Usually this will pop up a dialog box that the user needs to confirm.  Once the permission request has been acknowledged, the `lovr.permission` callback will be called with the result.  Currently, this is only used for requesting microphone access on Android devices.",
           key = "lovr.system.requestPermission",
@@ -38840,6 +38856,7 @@ return {
         },
         {
           name = "setKeyRepeat",
+          tag = "system-keyboard",
           summary = "Enable or disable key repeat.",
           description = "Enables or disables key repeat.",
           key = "lovr.system.setKeyRepeat",
@@ -38863,6 +38880,7 @@ return {
         },
         {
           name = "wasKeyPressed",
+          tag = "system-keyboard",
           summary = "Check if a key was pressed this frame.",
           description = "Returns whether a key on the keyboard was pressed this frame.",
           key = "lovr.system.wasKeyPressed",
@@ -38895,6 +38913,7 @@ return {
         },
         {
           name = "wasKeyReleased",
+          tag = "system-keyboard",
           summary = "Check if a key was released this frame.",
           description = "Returns whether a key on the keyboard was released this frame.",
           key = "lovr.system.wasKeyReleased",
@@ -38926,7 +38945,25 @@ return {
           }
         }
       },
-      objects = {}
+      objects = {},
+      sections = {
+        {
+          name = "System Information",
+          tag = "system-info"
+        },
+        {
+          name = "Keyboard",
+          tag = "system-keyboard"
+        },
+        {
+          name = "Mouse",
+          tag = "system-mouse"
+        },
+        {
+          name = "Window",
+          tag = "system-window"
+        }
+      }
     },
     {
       name = "thread",

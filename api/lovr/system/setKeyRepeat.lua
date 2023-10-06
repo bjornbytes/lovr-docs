@@ -1,4 +1,5 @@
 return {
+  tag = 'system-keyboard',
   summary = 'Enable or disable key repeat.',
   description = 'Enables or disables key repeat.',
   arguments = {

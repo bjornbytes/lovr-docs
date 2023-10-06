@@ -1,4 +1,5 @@
 return {
+  tag = 'system-window',
   summary = 'Poll the OS for new window events.',
   description = [[
     Fills the event queue with unprocessed events from the operating system.  This function should

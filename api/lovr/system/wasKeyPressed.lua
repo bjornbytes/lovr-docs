@@ -1,4 +1,5 @@
 return {
+  tag = 'system-keyboard',
   summary = 'Check if a key was pressed this frame.',
   description = 'Returns whether a key on the keyboard was pressed this frame.',
   arguments = {

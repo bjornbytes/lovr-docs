@@ -1,4 +1,5 @@
 return {
+  tag = 'system-mouse',
   summary = 'Check if a mouse button is pressed.',
   description = 'Returns whether a mouse button is currently pressed.',
   arguments = {

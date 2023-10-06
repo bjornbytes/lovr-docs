@@ -1,4 +1,5 @@
 return {
+  tag = 'system-mouse',
   summary = 'Get the position of the mouse.',
   description = 'Returns the position of the mouse.',
   arguments = {},
