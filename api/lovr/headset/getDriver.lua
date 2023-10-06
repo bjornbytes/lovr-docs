@@ -1,5 +1,5 @@
 return {
-  tag = 'headset',
+  tag = 'headset-misc',
   summary = 'Get the VR API currently in use for a device.',
   description = [[
     Returns the `HeadsetDriver` that is currently in use, plus the name of the VR runtime.  The

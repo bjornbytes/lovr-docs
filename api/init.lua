@@ -23947,7 +23947,7 @@ return {
       functions = {
         {
           name = "animate",
-          tag = "input",
+          tag = "controller-models",
           summary = "Animate a model to match its Device input state.",
           description = "Animates a model to match its input state.  The buttons and joysticks on a controller will move as they're pressed/moved and hand models will move to match hand tracking joints.\n\nThe model must have been created using `lovr.headset.newModel` with the `animated` flag set to `true`.",
           key = "lovr.headset.animate",
@@ -24219,7 +24219,7 @@ return {
         },
         {
           name = "getDeltaTime",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Get the predicted delta time.",
           description = "Returns the headset delta time, which is the difference between the current and previous predicted display times.  When the headset is active, this will be the `dt` value passed in to `lovr.update`.",
           key = "lovr.headset.getDeltaTime",
@@ -24412,7 +24412,7 @@ return {
         },
         {
           name = "getDriver",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Get the VR API currently in use for a device.",
           description = "Returns the `HeadsetDriver` that is currently in use, plus the name of the VR runtime.  The order of headset drivers can be changed using `lovr.conf`.",
           key = "lovr.headset.getDriver",
@@ -24468,7 +24468,7 @@ return {
         },
         {
           name = "getName",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Get the name of the connected headset display.",
           description = "Returns the name of the headset as a string.  The exact string that is returned depends on the hardware and VR SDK that is currently in use.",
           key = "lovr.headset.getName",
@@ -24541,7 +24541,7 @@ return {
         },
         {
           name = "getOriginType",
-          tag = "headset",
+          tag = "playArea",
           summary = "Get the type of tracking origin of the headset.",
           description = "Returns the type of origin used for the tracking volume.  The different types of origins are explained on the `HeadsetOrigin` page.",
           key = "lovr.headset.getOriginType",
@@ -24565,7 +24565,7 @@ return {
         },
         {
           name = "getPass",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Get a Pass that renders to the headset.",
           description = "Returns a `Pass` that renders to the headset display.",
           key = "lovr.headset.getPass",
@@ -24855,7 +24855,7 @@ return {
         },
         {
           name = "getTexture",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Get the Texture for the headset display.",
           description = "Returns a Texture that will be submitted to the headset display.  This will be the render target used in the headset's render pass.  The texture is not guaranteed to be the same every frame, and must be called every frame to get the current texture.",
           key = "lovr.headset.getTexture",
@@ -25116,7 +25116,7 @@ return {
         },
         {
           name = "isFocused",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Check if LÖVR has VR input focus.",
           description = "Returns whether LÖVR has VR input focus.  Focus is lost when the VR system menu is shown.  The `lovr.focus` callback can be used to detect when this changes.",
           key = "lovr.headset.isFocused",
@@ -25139,7 +25139,7 @@ return {
         },
         {
           name = "isSeated",
-          tag = "headset",
+          tag = "playArea",
           summary = "Check if the headset coordinate space is configured for standing or sitting.",
           description = "Returns whether the headset coordinate space is in seated mode.\n\nSeated mode is enabled by setting `t.headset.seated` to true in `lovr.conf`.  In seated mode, `y=0` will be at eye level, instead of on the floor like in standing-scale experiences.\n\nThe seated coordinate space can be more convenient for applications that are rendering a simple interface in front of the user (like a video player) instead of a roomscale 3D scene.  y=0 will also be at the correct height at startup, whether the user is sitting or standing.",
           key = "lovr.headset.isSeated",
@@ -25227,7 +25227,7 @@ return {
         },
         {
           name = "isVisible",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Check if content is being shown in the headset display.",
           description = "Returns whether LÖVR's content is being presented to the headset display.  Normally this will be true, but some VR runtimes allow applications to be hidden or \"minimized\", similar to desktop windows.",
           key = "lovr.headset.isVisible",
@@ -25253,7 +25253,7 @@ return {
         },
         {
           name = "newModel",
-          tag = "input",
+          tag = "controller-models",
           summary = "Get a Model for a device.",
           description = "Returns a new Model for the specified device.",
           key = "lovr.headset.newModel",
@@ -25481,7 +25481,7 @@ return {
         },
         {
           name = "submit",
-          tag = "headset",
+          tag = "headset-misc",
           summary = "Submit a frame to the headset display.",
           description = "Submits the current headset texture to the VR display.  This should be called after calling `lovr.graphics.submit` with the headset render pass.  Normally this is taken care of by `lovr.run`.",
           key = "lovr.headset.submit",
@@ -25627,19 +25627,28 @@ return {
       objects = {},
       sections = {
         {
-          name = "Headset",
-          tag = "headset",
-          description = "Functions that return information about the active head mounted display (HMD)."
-        },
-        {
           name = "Input",
           tag = "input",
           description = "Functions for accessing input devices, like controllers, hands, trackers, or gamepads."
         },
         {
+          name = "Controller Models",
+          tag = "controller-models"
+        },
+        {
+          name = "Display",
+          tag = "headset",
+          description = "Functions that return information about the active head mounted display (HMD)."
+        },
+        {
           name = "Play area",
           tag = "playArea",
           description = "Retrieve information about the size and shape of the room the player is in, and provides information about the \"chaperone\", a visual indicator that appears whenever a player is about to run into a wall."
+        },
+        {
+          name = "Miscellaneous",
+          tag = "headset-misc",
+          description = "Functions that are internal or return information about the VR session."
         }
       }
     },

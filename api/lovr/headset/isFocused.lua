@@ -1,5 +1,5 @@
 return {
-  tag = 'headset',
+  tag = 'headset-misc',
   summary = 'Check if LÖVR has VR input focus.',
   description = [[
     Returns whether LÖVR has VR input focus.  Focus is lost when the VR system menu is shown.  The

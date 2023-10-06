@@ -1,5 +1,5 @@
 return {
-  tag = 'input',
+  tag = 'controller-models',
   summary = 'Get a Model for a device.',
   description = 'Returns a new Model for the specified device.',
   arguments = {

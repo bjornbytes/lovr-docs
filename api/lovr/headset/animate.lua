@@ -1,5 +1,5 @@
 return {
-  tag = 'input',
+  tag = 'controller-models',
   summary = 'Animate a model to match its Device input state.',
   description = [[
     Animates a model to match its input state.  The buttons and joysticks on a controller will move

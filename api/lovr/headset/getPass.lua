@@ -1,5 +1,5 @@
 return {
-  tag = 'headset',
+  tag = 'headset-misc',
   summary = 'Get a Pass that renders to the headset.',
   description = 'Returns a `Pass` that renders to the headset display.',
   arguments = {},

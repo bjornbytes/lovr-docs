@@ -1,5 +1,5 @@
 return {
-  tag = 'headset',
+  tag = 'headset-misc',
   summary = 'Check if content is being shown in the headset display.',
   description = [[
     Returns whether LÖVR's content is being presented to the headset display.  Normally this will
