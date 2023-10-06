@@ -24880,6 +24880,7 @@ return {
         },
         {
           name = "getTime",
+          tag = "headset-misc",
           summary = "Get the predicted display time.",
           description = "Returns the estimated time in the future at which the light from the pixels of the current frame will hit the eyes of the user.\n\nThis can be used as a replacement for `lovr.timer.getTime` for timestamps that are used for rendering to get a smoother result that is synchronized with the display of the headset.",
           key = "lovr.headset.getTime",
