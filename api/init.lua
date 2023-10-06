@@ -24320,7 +24320,7 @@ return {
         {
           name = "getDisplayFrequencies",
           tag = "headset",
-          summary = "Get the list of refresh rates supported by the headset display.",
+          summary = "Get the list of refresh rates supported by the display.",
           description = "Returns a table with all the refresh rates supported by the headset display, in Hz.",
           key = "lovr.headset.getDisplayFrequencies",
           module = "lovr.headset",
@@ -25140,7 +25140,7 @@ return {
         {
           name = "isSeated",
           tag = "playArea",
-          summary = "Check if the headset coordinate space is standing or seated.",
+          summary = "Check if the coordinate space is standing or seated.",
           description = "Returns whether the headset coordinate space is in seated mode.\n\nSeated mode is enabled by setting `t.headset.seated` to true in `lovr.conf`.  In seated mode, `y=0` will be at eye level, instead of on the floor like in standing-scale experiences.\n\nThe seated coordinate space can be more convenient for applications that are rendering a simple interface in front of the user (like a video player) instead of a roomscale 3D scene.  y=0 will also be at the correct height at startup, whether the user is sitting or standing.",
           key = "lovr.headset.isSeated",
           module = "lovr.headset",

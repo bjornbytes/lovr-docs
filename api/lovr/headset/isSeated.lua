@@ -1,6 +1,6 @@
 return {
   tag = 'playArea',
-  summary = 'Check if the headset coordinate space is standing or seated.',
+  summary = 'Check if the coordinate space is standing or seated.',
   description = [[
     Returns whether the headset coordinate space is in seated mode.
 
