@@ -11265,9 +11265,14 @@ return {
               },
               returns = {
                 {
-                  name = "supported",
+                  name = "linear",
                   type = "boolean",
-                  description = "Whether the GPU supports these operations for textures with this format."
+                  description = "Whether the GPU supports these operations for textures with this format, when created with the `linear` flag set to `true`."
+                },
+                {
+                  name = "srgb",
+                  type = "boolean",
+                  description = "Whether the GPU supports these operations for textures with this format, when created with the `linear` flag set to `false`."
                 }
               }
             }
