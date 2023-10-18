@@ -14933,7 +14933,8 @@ return {
               notes = "The initial weights are declared in the model file.\n\nWeights can be any number, but usually they're kept between 0 and 1.\n\nThis function will throw an error if the blend shape name or index doesn't exist.",
               related = {
                 "Model:getBlendShapeCount",
-                "Model:getBlendShapeName"
+                "Model:getBlendShapeName",
+                "Model:resetBlendShapes"
               },
               variants = {
                 {
@@ -16408,11 +16409,32 @@ return {
               }
             },
             {
+              name = "resetBlendShapes",
+              summary = "Reset blend shape weights.",
+              description = "Resets blend shape weights to the original ones defined in the model file.",
+              key = "Model:resetBlendShapes",
+              module = "lovr.graphics",
+              related = {
+                "Model:resetNodeTransforms",
+                "Model:getBlendShapeWeight",
+                "Model:setBlendShapeWeight"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "resetNodeTransforms",
               summary = "Reset node transforms.",
               description = "Resets node transforms to the original ones defined in the model file.",
               key = "Model:resetNodeTransforms",
               module = "lovr.graphics",
+              related = {
+                "Model:resetBlendShapes"
+              },
               variants = {
                 {
                   arguments = {},
@@ -16429,7 +16451,8 @@ return {
               notes = "The initial weights are declared in the model file.\n\nWeights can be any number, but usually they're kept between 0 and 1.\n\nThis function will throw an error if the blend shape name or index doesn't exist.",
               related = {
                 "Model:getBlendShapeCount",
-                "Model:getBlendShapeName"
+                "Model:getBlendShapeName",
+                "Model:resetBlendShapes"
               },
               variants = {
                 {

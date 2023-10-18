@@ -40,6 +40,7 @@ return {
   ]],
   related = {
     'Model:getBlendShapeCount',
-    'Model:getBlendShapeName'
+    'Model:getBlendShapeName',
+    'Model:resetBlendShapes'
   }
 }
