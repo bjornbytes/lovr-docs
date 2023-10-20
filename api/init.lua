@@ -13939,6 +13939,54 @@ return {
                 {
                   arguments = {
                     {
+                      name = "string",
+                      type = "string",
+                      description = "The text to render."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum line length.  The units depend on the pixel density of the font, but are in meters by default.",
+                      default = "0"
+                    },
+                    {
+                      name = "halign",
+                      type = "HorizontalAlign",
+                      description = "The horizontal align."
+                    },
+                    {
+                      name = "valign",
+                      type = "VerticalAlign",
+                      description = "The vertical align."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "vertices",
+                      type = "table",
+                      description = "The table of vertices.  See below for the format of each vertex."
+                    },
+                    {
+                      name = "material",
+                      type = "Material",
+                      description = "A Material to use when rendering the vertices."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "strings",
+                      type = "table",
+                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a `Vec3`, `Vec4`, table, or hexcode."
+                    },
+                    {
+                      name = "wrap",
+                      type = "number",
+                      description = "The maximum line length.  The units depend on the pixel density of the font, but are in meters by default.",
+                      default = "0"
+                    },
+                    {
                       name = "halign",
                       type = "HorizontalAlign",
                       description = "The horizontal align."
