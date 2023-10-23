@@ -1,6 +1,6 @@
 return {
   tag = 'worldBasics',
-  summary = 'Cast a ray through the World.',
+  summary = 'Cast a ray through the World, calling a function for each hit.',
   description = [[
     Casts a ray through the World, calling a function every time the ray intersects with a Shape.
   ]],
@@ -105,6 +105,8 @@ return {
     end
   ]],
   related = {
+    'World:raycastAny',
+    'World:raycastClosest',
     'World:queryBox',
     'World:querySphere'
   }
