@@ -26,17 +26,14 @@ function lovr.update(dt)
 
   world:update(dt)
 
-  local ox, oy, oz = lovr.headset.getPosition('hand/right/point')
-  local dx, dy, dz = quat(lovr.headset.getOrientation('hand/right/point')):direction():mul(50):unpack()
-  local closest = math.huge
-  world:raycast(ox, oy, oz, ox + dx, oy + dy, oz + dz, function(shape, x, y, z)
-    local distance = vec3(x, y, z):distance(vec3(ox, oy, oz))
-    if distance < closest then
-      selectedBox = shape:getCollider()
-      hitpoint:set(x, y, z)
-      closest = distance
-    end
-  end)
+  local ox, oy, oz = lovr.headset.getPosition('hand/left/point')
+  local dx, dy, dz = quat(lovr.headset.getOrientation('hand/left/point')):direction():mul(50):unpack()
+  local shape, x, y, z = world:raycastClosest(ox, oy, oz, ox + dx, oy + dy, dz + dz)
+
+  if shape then
+    selectedBox = shape:getCollider()
+    hitpoint:set(x, y, z)
+  end
 end
 
 function lovr.draw(pass)
@@ -53,8 +50,8 @@ function lovr.draw(pass)
   end
 
   -- Laser pointer
-  local hand = vec3(lovr.headset.getPosition('hand/right/point'))
-  local direction = quat(lovr.headset.getOrientation('hand/right/point')):direction()
+  local hand = vec3(lovr.headset.getPosition('hand/left/point'))
+  local direction = quat(lovr.headset.getOrientation('hand/left/point')):direction()
   pass:setColor(1, 1, 1)
   pass:line(hand, selectedBox and hitpoint or (hand + direction * 50))
 end
