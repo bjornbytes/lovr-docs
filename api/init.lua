@@ -14654,6 +14654,16 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The texture to use as the material."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
