@@ -8566,6 +8566,74 @@ return {
               description = "The slash key."
             },
             {
+              name = "kp0",
+              description = "The 0 numpad key."
+            },
+            {
+              name = "kp1",
+              description = "The 1 numpad key."
+            },
+            {
+              name = "kp2",
+              description = "The 2 numpad key."
+            },
+            {
+              name = "kp3",
+              description = "The 3 numpad key."
+            },
+            {
+              name = "kp4",
+              description = "The 4 numpad key."
+            },
+            {
+              name = "kp5",
+              description = "The 5 numpad key."
+            },
+            {
+              name = "kp6",
+              description = "The 6 numpad key."
+            },
+            {
+              name = "kp7",
+              description = "The 7 numpad key."
+            },
+            {
+              name = "kp8",
+              description = "The 8 numpad key."
+            },
+            {
+              name = "kp9",
+              description = "The 9 numpad key."
+            },
+            {
+              name = "kp.",
+              description = "The . numpad key."
+            },
+            {
+              name = "kp/",
+              description = "The / numpad key."
+            },
+            {
+              name = "kp*",
+              description = "The * numpad key."
+            },
+            {
+              name = "kp-",
+              description = "The - numpad key."
+            },
+            {
+              name = "kp+",
+              description = "The + numpad key."
+            },
+            {
+              name = "kpenter",
+              description = "The enter numpad key."
+            },
+            {
+              name = "kp=",
+              description = "The equals numpad key."
+            },
+            {
               name = "lctrl",
               description = "The left control key."
             },
