@@ -34,6 +34,11 @@ return {
       ]]
     },
     {
+      name = 'Layers',
+      tag = 'layers',
+      description = 'TODO'
+    },
+    {
       name = 'Miscellaneous',
       tag = 'headset-misc',
       description = 'Functions that are internal or return information about the VR session.'

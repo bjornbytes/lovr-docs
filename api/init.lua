@@ -24167,6 +24167,30 @@ return {
               description = "Color values from virtual content will be added to the real world.  This is the most common mode used for AR.  Notably, black pixels will not show up at all."
             }
           }
+        },
+        {
+          name = "ViewMask",
+          description = "The different eyes a Layer can show up in",
+          key = "ViewMask",
+          module = "lovr.headset",
+          related = {
+            "Layer:getViewMask",
+            "Layer:setViewMask"
+          },
+          values = {
+            {
+              name = "both",
+              description = "The layer will show up in both eyes."
+            },
+            {
+              name = "left",
+              description = "The layer will only show up in the left eye."
+            },
+            {
+              name = "right",
+              description = "The layer will only show up in the right eye."
+            }
+          }
         }
       },
       functions = {
@@ -24686,6 +24710,31 @@ return {
                   description = "The currently tracked hand devices.",
                   arguments = {},
                   returns = {}
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getLayers",
+          tag = "layers",
+          summary = "Get the list of active layers.",
+          description = "Returns the list of active `Layer` objects.  These are the layers that will be rendered in the headset's display.  They are rendered in order.",
+          key = "lovr.headset.getLayers",
+          module = "lovr.headset",
+          notes = "Currently some VR systems are able to sort the layers by their Z depth, but on others layers later in the list will render on top of previous layers, regardless of depth.\n\nThere is currently a maximum of 10 layers.",
+          related = {
+            "lovr.headset.newLayer",
+            "Layer"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "layers",
+                  type = "table",
+                  description = "The list of layers."
                 }
               }
             }
@@ -25478,6 +25527,41 @@ return {
           }
         },
         {
+          name = "newLayer",
+          tag = "layers",
+          summary = "Create a new Layer.",
+          description = "Creates a new Layer.\n\nTODO",
+          key = "lovr.headset.newLayer",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.getLayers",
+            "lovr.headset.setLayers"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "width",
+                  type = "number",
+                  description = "The width of the Layer texture, in pixels."
+                },
+                {
+                  name = "height",
+                  type = "number",
+                  description = "The height of the Layer texture, in pixels."
+                }
+              },
+              returns = {
+                {
+                  name = "layer",
+                  type = "Layer",
+                  description = "The new Layer."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newModel",
           tag = "controller-models",
           summary = "Get a Model for a device.",
@@ -25578,6 +25662,41 @@ return {
                   description = "Whether the display refresh rate was successfully set."
                 }
               }
+            }
+          }
+        },
+        {
+          name = "setLayers",
+          tag = "layers",
+          summary = "Set the list of active layers.",
+          description = "Sets the list of active `Layer` objects.  These are the layers that will be rendered in the headset's display.  They are rendered in order.",
+          key = "lovr.headset.setLayers",
+          module = "lovr.headset",
+          notes = "Currently some VR systems are able to sort the layers by their Z depth, but on others layers later in the list will render on top of previous layers, regardless of depth.\n\nThere is currently a maximum of 10 layers.",
+          related = {
+            "lovr.headset.newLayer",
+            "Layer"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "...layers",
+                  type = "Layer",
+                  description = "Zero or more layers to render in the headset."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "t",
+                  type = "table",
+                  description = "A table with zero or more layers starting at index 1."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -25850,7 +25969,579 @@ return {
           }
         }
       },
-      objects = {},
+      objects = {
+        {
+          name = "Layer",
+          summary = "A quad in 3D space.",
+          description = "TODO",
+          key = "Layer",
+          module = "lovr.headset",
+          constructors = {
+            "lovr.headset.newLayer"
+          },
+          methods = {
+            {
+              name = "getOrientation",
+              summary = "Get the orientation of the layer.",
+              description = "Returns the orientation of the layer.",
+              key = "Layer:getOrientation",
+              module = "lovr.headset",
+              related = {
+                "Layer:getPosition",
+                "Layer:setPosition",
+                "Layer:getPose",
+                "Layer:setPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount of rotation around the axis of rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPass",
+              summary = "Get the render pass for the layer.",
+              description = "Returns the render pass for the layer.  This can be used to render to the layer.",
+              key = "Layer:getPass",
+              module = "lovr.headset",
+              notes = "This function will reset the Layer's render pass when it is called.\n\nThe Pass will have its background color cleared to the background color, set using `lovr.graphics.setBackgroundColor`.\n\nThe Pass will have its view matrix set to the identity matrix, and its projection will be set to an orthographic matrix where the top left of the texture is at the origin and the bottom right of the texture will be at `(width, height)`.",
+              related = {
+                "Layer:getTexture"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pass",
+                      type = "Pass",
+                      description = "The layer's render pass."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPose",
+              summary = "Get the pose of the layer.",
+              description = "Returns the position and orientation of the layer.",
+              key = "Layer:getPose",
+              module = "lovr.headset",
+              notes = "Units are in meters.",
+              related = {
+                "Layer:getPosition",
+                "Layer:setPosition",
+                "Layer:getOrientation",
+                "Layer:setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount of rotation around the axis of rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPosition",
+              summary = "Get the position of the layer.",
+              description = "Returns the position of the layer, in meters.",
+              key = "Layer:getPosition",
+              module = "lovr.headset",
+              related = {
+                "Layer:getOrientation",
+                "Layer:setOrientation",
+                "Layer:getPose",
+                "Layer:setPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the layer."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the layer."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the layer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSharpen",
+              summary = "Get the sharpening mode of the layer.",
+              description = "Returns whether the layer is sharpened.  This will improve quality when the layer is rendered at a larger size than its texture resolution, at the cost of performance.  Sharpening is currently only supported on Quest devices.",
+              key = "Layer:getSharpen",
+              module = "lovr.headset",
+              related = {
+                "Layer:getSupersample",
+                "Layer:setSupersample"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sharpen",
+                      type = "boolean",
+                      description = "Whether the layer is sharpened."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSize",
+              summary = "Get the size of the layer.",
+              description = "Returns the width and height of the layer.  This is the size of the plane the layer is rendered onto, not the resolution of the layer's texture in pixels.",
+              key = "Layer:getSize",
+              module = "lovr.headset",
+              notes = "When a layer is created, its width and height are 1 meter.",
+              variants = {
+                arguments = {},
+                returns = {
+                  "width",
+                  "height"
+                }
+              }
+            },
+            {
+              name = "getSupersample",
+              summary = "Get the supersample mode of the layer.",
+              description = "Returns whether the layer is supersampled.  This will improve quality when the layer is rendered at a smaller size than its texture resolution, at the cost of performance.  Supersampling is currently only supported on Quest devices.",
+              key = "Layer:getSupersample",
+              module = "lovr.headset",
+              related = {
+                "Layer:getSharpen",
+                "Layer:setSharpen"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "supersampled",
+                      type = "boolean",
+                      description = "Whether the layer is supersampled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTexture",
+              summary = "Get the texture for the layer.",
+              description = "Returns the texture for the layer.  This is the texture that will be pasted onto the layer.",
+              key = "Layer:getTexture",
+              module = "lovr.headset",
+              notes = "This function may return a different `Texture` object each frame.  The return value should not be cached.",
+              related = {
+                "Layer:getPass"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "texture",
+                      type = "Texture",
+                      description = "The layer's texture."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getViewMask",
+              summary = "Get the view mask of the layer.",
+              description = "Returns the view mask of the layer.  This is which eyes the layer will show up in, and is meant to be used for stereo images, where 1 layer is rendered in the left eye and another layer is rendred in the right eye at the same position.",
+              key = "Layer:getViewMask",
+              module = "lovr.headset",
+              variants = {
+                arguments = {},
+                returns = {
+                  "views"
+                }
+              }
+            },
+            {
+              name = "getViewport",
+              summary = "Get the viewport of the layer.",
+              description = "Returns the viewport of the layer.  The viewport is a 2D region of pixels that the layer will display within its plane.",
+              key = "Layer:getViewport",
+              module = "lovr.headset",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the upper-left corner of the viewport."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the upper-left corner of the viewport."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The width of the viewport, in pixels."
+                    },
+                    {
+                      name = "h",
+                      type = "number",
+                      description = "The height of the viewport, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setOrientation",
+              summary = "Set the orientation of the layer.",
+              description = "Sets the orientation of the layer.",
+              key = "Layer:setOrientation",
+              module = "lovr.headset",
+              related = {
+                "Layer:getPosition",
+                "Layer:setPosition",
+                "Layer:getPose",
+                "Layer:setPose"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount of rotation around the axis of rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the layer."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPose",
+              summary = "Set the pose of the layer.",
+              description = "Sets the position and orientation of the layer.",
+              key = "Layer:setPose",
+              module = "lovr.headset",
+              notes = "Units are in meters.",
+              related = {
+                "Layer:getPosition",
+                "Layer:setPosition",
+                "Layer:getOrientation",
+                "Layer:setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount of rotation around the axis of rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the layer."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the layer."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setPosition",
+              summary = "Set the position of the layer.",
+              description = "Sets the position of the layer, in meters.",
+              key = "Layer:setPosition",
+              module = "lovr.headset",
+              related = {
+                "Layer:getOrientation",
+                "Layer:setOrientation",
+                "Layer:getPose",
+                "Layer:setPose"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the layer."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the layer."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the layer."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSharpen",
+              summary = "Set the sharpening mode of the layer.",
+              description = "Sets the sharpen mode for the layer.  This will improve quality when the layer is rendered at a larger size than its texture resolution, at the cost of performance.  Sharpening is currently only supported on Quest devices.",
+              key = "Layer:setSharpen",
+              module = "lovr.headset",
+              related = {
+                "Layer:getSupersample",
+                "Layer:setSupersample"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "sharpen",
+                      type = "boolean",
+                      description = "Whether sharpening should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSize",
+              summary = "Set the size of the layer.",
+              description = "Sets the width and height of the layer.  This is the size of the plane the layer is rendered onto, not the resolution of the layer's texture in pixels.",
+              key = "Layer:setSize",
+              module = "lovr.headset",
+              notes = "When a layer is created, its width and height are 1 meter.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the layer, in meters."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the layer, in meters."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSupersample",
+              summary = "Set the supersample mode of the layer.",
+              description = "Sets the supersample mode for the layer.  This will improve quality when the layer is rendered at a smaller size than its texture resolution, at the cost of performance.  Supersampling is currently only supported on Quest devices.",
+              key = "Layer:setSupersample",
+              module = "lovr.headset",
+              related = {
+                "Layer:getSharpen",
+                "Layer:setSharpen"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "supersampled",
+                      type = "boolean",
+                      description = "Whether supersampling should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setViewMask",
+              summary = "Set the view mask of the layer.",
+              description = "Sets the view mask of the layer.  This is which eyes the layer will show up in, and is meant to be used for stereo images, where 1 layer is rendered in the left eye and another layer is rendred in the right eye at the same position.",
+              key = "Layer:setViewMask",
+              module = "lovr.headset",
+              variants = {
+                arguments = {
+                  "views"
+                },
+                returns = {}
+              }
+            },
+            {
+              name = "setViewport",
+              summary = "Set the viewport of the layer.",
+              description = "Sets the viewport of the layer.  The viewport is a 2D region of pixels that the layer will display within its plane.",
+              key = "Layer:setViewport",
+              module = "lovr.headset",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the upper-left corner of the viewport."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the upper-left corner of the viewport."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The width of the viewport, in pixels."
+                    },
+                    {
+                      name = "h",
+                      type = "number",
+                      description = "The height of the viewport, in pixels."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          }
+        }
+      },
       sections = {
         {
           name = "Input",
@@ -25870,6 +26561,11 @@ return {
           name = "Play area",
           tag = "playArea",
           description = "Retrieve information about the size and shape of the room the player is in, and provides information about the \"chaperone\", a visual indicator that appears whenever a player is about to run into a wall."
+        },
+        {
+          name = "Layers",
+          tag = "layers",
+          description = "TODO"
         },
         {
           name = "Miscellaneous",
