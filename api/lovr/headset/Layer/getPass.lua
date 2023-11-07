@@ -22,7 +22,7 @@ return {
 
     The Pass will have its view matrix set to the identity matrix, and its projection will be set to
     an orthographic matrix where the top left of the texture is at the origin and the bottom right
-    of the texture will be at `(width, height)`.
+    of the texture will be at `(width, height)` in pixels.
   ]],
   related = {
     'Layer:getTexture'
