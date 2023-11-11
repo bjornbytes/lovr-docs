@@ -10291,7 +10291,7 @@ return {
             },
             {
               name = "transfer",
-              description = "Whether the texture can be used in a transfer pass."
+              description = "Whether the texture can be used for transfer operations like `Texture:setPixels`, `Texture:blit`, etc."
             }
           }
         },
@@ -22425,7 +22425,7 @@ return {
         {
           name = "Readback",
           summary = "An asynchronous read of a GPU resource.",
-          description = "Readbacks track the progress of an asynchronous read of a `Buffer` or `Texture`.  Once a Readback is created in a transfer pass, and the transfer pass is submitted, the Readback can be polled for completion or the CPU can wait for it to finish using `Readback:wait`.",
+          description = "Readbacks track the progress of an asynchronous read of a `Buffer` or `Texture`.  The Readback can be polled for completion or the CPU with `Readback:isComplete`, or you can wait for it to finish using `Readback:wait`.",
           key = "Readback",
           module = "lovr.graphics",
           constructors = {
@@ -22530,7 +22530,7 @@ return {
               description = "Blocks the CPU until the Readback is finished on the GPU.",
               key = "Readback:wait",
               module = "lovr.graphics",
-              notes = "If the transfer pass that created the readback has not been submitted yet, no wait will occur and this function will return `false`.",
+              notes = "If `lovr.graphics.submit` or `lovr.graphics.wait` has not been called since the readback was created, the readback has not been submitted yet, so no wait will occur and this function will return `false`.",
               variants = {
                 {
                   arguments = {},
