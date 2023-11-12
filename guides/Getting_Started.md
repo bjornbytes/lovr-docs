@@ -67,7 +67,6 @@ Tips
   `lovr.exe`, or specify the `--console` flag when running on the command line.
 - If you have the headset module disabled, be sure to set the y value of the cube to 0 instead of
   1.7.
-- If you want an IDE with LÖVR completion, you can use [VSCode + Lua server](https://gist.github.com/ussaohelcim/9eca6eaa903eefff07b4f3e2019de915).
 
 Next Steps
 ---

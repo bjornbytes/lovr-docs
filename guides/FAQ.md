@@ -19,10 +19,6 @@ support, touchscreens, etc.
 Yes, there are `lovr.keypressed`, `lovr.keyreleased`, and `lovr.textinput` callbacks.  For mouse
 input, see `lovr-mouse` on the <a data-key="Libraries">Libraries</a> page.
 
-> Is there autocomplete for VS Code?
-
-See [this gist](https://gist.github.com/ussaohelcim/9eca6eaa903eefff07b4f3e2019de915).
-
 > How is this project related to LÖVE?
 
 LÖVR is heavily inspired by LÖVE and has a similar Lua API, but the 2 projects don't share any code.
