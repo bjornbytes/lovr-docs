@@ -56,7 +56,7 @@ return {
     On Linux, this module requires the `curl` library to be installed.  Example on Debian-based
     distributions:
 
-        sudo apt install libcurl4-openssl-dev
+        sudo apt install libcurl4
   ]],
   example = [[
     local http = require 'http'

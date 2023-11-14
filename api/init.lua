@@ -984,7 +984,7 @@ return {
       },
       external = true,
       functions = {},
-      notes = "On Linux, this module requires the `curl` library to be installed.  Example on Debian-based distributions:\n\n    sudo apt install libcurl4-openssl-dev",
+      notes = "On Linux, this module requires the `curl` library to be installed.  Example on Debian-based distributions:\n\n    sudo apt install libcurl4",
       objects = {}
     },
     {
