@@ -21009,7 +21009,7 @@ return {
                   code = "function lovr.draw(pass)\n  pass:setSampler('nearest') -- activate minecraft mode\n  pass:setMaterial(rock)\n  pass:cube(x, y, z)\nend"
                 }
               },
-              notes = "The `getPixel` shader helper function will use this sampler.",
+              notes = "The `getPixel` shader helper function will use this sampler.\n\nWhen a Pass is reset, its sampler will be reset to `linear`.\n\nThe sampler applies to all draws in the pass on submit, regardless of when the sampler is set.",
               variants = {
                 {
                   arguments = {
