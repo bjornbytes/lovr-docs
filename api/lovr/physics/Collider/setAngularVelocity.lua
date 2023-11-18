@@ -32,6 +32,7 @@ return {
       returns = {}
     }
   },
+  notes = 'If the Collider is asleep, calling this function will wake it up.',
   related = {
     'Collider:getLinearVelocity',
     'Collider:setLinearVelocity',

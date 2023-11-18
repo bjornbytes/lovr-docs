@@ -33806,7 +33806,7 @@ return {
               description = "Applies a force to the Collider.",
               key = "Collider:applyForce",
               module = "lovr.physics",
-              notes = "If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this function to have any affect.",
+              notes = "If the Collider is asleep, calling this function will wake it up.",
               related = {
                 "Collider:applyTorque"
               },
@@ -33899,7 +33899,7 @@ return {
               description = "Applies torque to the Collider.",
               key = "Collider:applyTorque",
               module = "lovr.physics",
-              notes = "If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this function to have any effect.",
+              notes = "If the Collider is asleep, calling this function will wake it up.",
               related = {
                 "Collider:applyForce"
               },
@@ -35165,6 +35165,7 @@ return {
               description = "Sets the angular velocity of the Collider.",
               key = "Collider:setAngularVelocity",
               module = "lovr.physics",
+              notes = "If the Collider is asleep, calling this function will wake it up.",
               related = {
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
@@ -35331,6 +35332,7 @@ return {
               description = "Sets the linear velocity of the Collider directly.  Usually it's preferred to use `Collider:applyForce` to change velocity since instantaneous velocity changes can lead to weird glitches.",
               key = "Collider:setLinearVelocity",
               module = "lovr.physics",
+              notes = "If the Collider is asleep, calling this function will wake it up.",
               related = {
                 "Collider:getLinearVelocityFromLocalPoint",
                 "Collider:getLinearVelocityFromWorldPoint",

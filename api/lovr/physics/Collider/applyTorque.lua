@@ -30,10 +30,7 @@ return {
       returns = {}
     }
   },
-  notes = [[
-    If the Collider is asleep, it will need to be woken up with `Collider:setAwake` for this
-    function to have any effect.
-  ]],
+  notes = 'If the Collider is asleep, calling this function will wake it up.',
   related = {
     'Collider:applyForce'
   }
