@@ -26684,6 +26684,22 @@ return {
                   description = "The new vector."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "Quat",
+                  description = "A quat to use the direction of."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
             }
           }
         },
@@ -27239,6 +27255,22 @@ return {
                   name = "m",
                   type = "Mat4",
                   description = "A matrix to use the position of."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "Vec3",
+                  description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "Quat",
+                  description = "A quat to use the direction of."
                 }
               },
               returns = {
