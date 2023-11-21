@@ -165,7 +165,10 @@ return {
             {
               name = 'seated',
               type = 'boolean',
-              description = 'Whether seated mode should be used instead of standing.'
+              description = [[
+                Whether <a data-key="lovr.headset.isSeated">seated mode</a> should be used instead
+                of standing, changing the headset coordinate space to place y=0 at eye level.
+              ]]
             },
             {
               name = 'antialias',
@@ -260,11 +263,6 @@ return {
     variables and stepping through shaders line-by-line in tools like RenderDoc.
 
     `t.graphics.debug` can also be enabled using the `--graphics-debug` command line option.
-
-    The `headset.offset` field is a vertical offset applied to the scene for headsets that do not
-    center their tracking origin on the floor.  This can be thought of as a "default user height".
-    Setting this offset makes it easier to design experiences that work in both seated and standing
-    VR configurations.
   ]],
   example = {
     description = 'A noop conf.lua that sets all configuration settings to their defaults:',
