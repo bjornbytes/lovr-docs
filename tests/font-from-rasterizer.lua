@@ -5,3 +5,5 @@ function lovr.load()
   end
   collectgarbage()
 end
+
+lovr.event.quit()

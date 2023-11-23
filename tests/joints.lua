@@ -9,3 +9,5 @@ function lovr.load()
   assert(vec3(select(1, joint:getAnchors())):equals(anchor1))
   assert(vec3(select(4, joint:getAnchors())):equals(anchor2))
 end
+
+lovr.event.quit()

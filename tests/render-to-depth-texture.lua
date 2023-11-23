@@ -3,3 +3,5 @@ function lovr.load()
   p = lovr.graphics.newPass({ depth = t })
   lovr.graphics.submit(p)
 end
+
+lovr.event.quit()

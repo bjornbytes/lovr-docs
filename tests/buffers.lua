@@ -120,3 +120,5 @@ function lovr.load()
   pass:send('s', { a = 1, b = 2, c = 3 })
   pass:send('t', { { a = 1, b = 2, c = 3 }, { a = 4, b = 5, c = 6 } })
 end
+
+lovr.event.quit()

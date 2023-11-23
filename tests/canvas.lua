@@ -6,3 +6,5 @@ function lovr.load()
   pass:setCanvas()
   assert(pass:getWidth() == 0 and pass:getHeight() == 0)
 end
+
+lovr.event.quit()
