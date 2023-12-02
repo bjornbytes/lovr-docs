@@ -53,8 +53,11 @@ command line and pass the path to the project folder as the first argument.
 ![Drag and Drop](https://lovr.org/static/img/dragonDrop.png)
 
 On macOS and Linux, the project can be run by running the `lovr` executable with the path to the
-project folder as an argument (on macOS, the executable is located at
-`LÖVR.app/Contents/MacOS/lovr`).
+project folder as an argument.
+
+On macOS, the executable is located at `lovr.app/Contents/MacOS/lovr`. If you put `lovr.app` in the 
+'/Applications' directory, you can add `alias lovr="/Applications/lovr.app/Contents/MacOS/lovr"` to 
+your .zprofile to make it so you can run with `lovr main.lua` from the terminal.
 
 If you followed the example above, you should see the following in VR:
 
