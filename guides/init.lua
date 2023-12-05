@@ -9,7 +9,6 @@ return {
   'Distribution',
   'Contributing',
   'Compiling',
-  'Scripting_Languages',
   'FAQ',
   'v0.17.0'
 }
