@@ -23,6 +23,10 @@ LÖVR-specific libraries:
 <table>
   <tbody>
     <tr>
+      <td><a href="https://github.com/immortalx74/game_controller">game_controller</a></td>
+      <td>Game controller library for LÖVR.</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/jmiskovic/indeck">inDECK</a></td>
       <td>A standalone 3D development environment focused on developing VR from within VR.</td>
     </tr>
