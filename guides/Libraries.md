@@ -43,6 +43,10 @@ LÖVR-specific libraries:
       <td>Atmosphere rendering for LÖVR framework</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/jmiskovic/lovr-cam">lovr-cam</a></td>
+      <td>Orbiting camera library</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/mcclure/lovr-ent">lovr-ent</a></td>
       <td>Entity tree library / sample project.</td>
     </tr>
