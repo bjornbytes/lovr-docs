@@ -14426,7 +14426,8 @@ return {
               related = {
                 "Mesh:getVertexStride",
                 "Mesh:getVertexFormat",
-                "lovr.graphics.newMesh"
+                "lovr.graphics.newMesh",
+                "Model:getMesh"
               },
               variants = {
                 {
@@ -15352,7 +15353,8 @@ return {
               key = "Model:getIndexBuffer",
               module = "lovr.graphics",
               related = {
-                "Model:getVertexBuffer"
+                "Model:getVertexBuffer",
+                "Model:getMesh"
               },
               variants = {
                 {
@@ -15459,6 +15461,57 @@ return {
                       name = "name",
                       type = "string",
                       description = "The name of the material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMesh",
+              summary = "Get a Mesh from the Model.",
+              description = "Returns a `Mesh` from the Model.",
+              key = "Model:getMesh",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMeshCount",
+                "lovr.graphics.newMesh"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the Mesh to return."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The mesh object."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshCount",
+              summary = "Get the number of meshes in the Model.",
+              description = "Returns the number of meshes in the Model.",
+              key = "Model:getMeshCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMesh"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of meshes in the Model."
                     }
                   }
                 }
@@ -16247,7 +16300,8 @@ return {
               related = {
                 "Model:getTriangles",
                 "Model:getVertexCount",
-                "ModelData:getTriangleCount"
+                "ModelData:getTriangleCount",
+                "Model:getMesh"
               },
               variants = {
                 {
@@ -16272,6 +16326,7 @@ return {
               related = {
                 "Model:getTriangleCount",
                 "Model:getVertexCount",
+                "Model:getMesh",
                 "ModelData:getTriangles"
               },
               variants = {
@@ -16299,7 +16354,8 @@ return {
               key = "Model:getVertexBuffer",
               module = "lovr.graphics",
               related = {
-                "Model:getIndexBuffer"
+                "Model:getIndexBuffer",
+                "Model:getMesh"
               },
               variants = {
                 {

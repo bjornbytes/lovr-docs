@@ -20,6 +20,7 @@ return {
   related = {
     'Mesh:getVertexStride',
     'Mesh:getVertexFormat',
-    'lovr.graphics.newMesh'
+    'lovr.graphics.newMesh',
+    'Model:getMesh'
   }
 }
