@@ -43,6 +43,11 @@ return {
     triangle starts to face away from the camera, the slope of the depth will increase and the
     sloped depth offset will begin to apply.  This can also be thought of corresponding to the
     normal vector of the triangle relative to the camera.
+
+    Note that the offsets can be negative.  With LÖVR's default projection matrix, depth values of
+    zero are far away and one are close up, so positive depth offsets will push depth values
+    "closer" to the viewer.  With flipped projection matrices (a depth test of `lequal`), negative
+    depth offsets would be used instead.
   ]],
   related = {
     'Pass:setDepthTest',
