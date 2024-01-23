@@ -25262,7 +25262,7 @@ return {
                     {
                       name = "animated",
                       type = "boolean",
-                      description = "Whether an animatable model should be loaded, for use with `lovr.headset.animate`.'",
+                      description = "Whether an animatable model should be loaded, for use with `lovr.headset.animate`.",
                       default = "false"
                     }
                   }
