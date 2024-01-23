@@ -18,7 +18,7 @@ return {
           type = 'boolean',
           default = 'false',
           description = [[
-            Whether an animatable model should be loaded, for use with `lovr.headset.animate`.'
+            Whether an animatable model should be loaded, for use with `lovr.headset.animate`.
           ]]
         }
       }
