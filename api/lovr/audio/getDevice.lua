@@ -1,6 +1,6 @@
 return {
   tag = 'devices',
-  summary = 'Switch audio devices.',
+  summary = 'Get the current audio device.',
   description = 'Returns information about the active playback or capture device.',
   arguments = {
     type = {

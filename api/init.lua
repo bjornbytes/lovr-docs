@@ -1305,7 +1305,7 @@ return {
         {
           name = "getDevice",
           tag = "devices",
-          summary = "Switch audio devices.",
+          summary = "Get the current audio device.",
           description = "Returns information about the active playback or capture device.",
           key = "lovr.audio.getDevice",
           module = "lovr.audio",
