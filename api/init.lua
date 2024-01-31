@@ -164,7 +164,7 @@ return {
                     {
                       name = "supersample",
                       type = "number",
-                      description = "A scaling factor to apply to the headset texture.  Improves visual quality but reduces performance.  Can also be a boolean."
+                      description = "A scaling factor to apply to the headset texture.  Can be any positive floating point number, which gets multiplied by the default texture resolution.  A value greater than 1 improves visual quality but reduces performance.  Can also be a boolean, where \"true\" means \"2.0\"."
                     },
                     {
                       name = "seated",
