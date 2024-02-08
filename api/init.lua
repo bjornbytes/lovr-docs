@@ -3557,12 +3557,6 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The filename of the image to load."
-                },
-                {
-                  name = "flip",
-                  type = "boolean",
-                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
-                  default = "true"
                 }
               },
               returns = {
@@ -3631,12 +3625,6 @@ return {
                   name = "blob",
                   type = "Blob",
                   description = "The Blob containing image data to decode."
-                },
-                {
-                  name = "flip",
-                  type = "boolean",
-                  description = "Whether to vertically flip the image on load.  This should be true for normal textures, and false for textures that are going to be used in a cubemap.",
-                  default = "true"
                 }
               },
               returns = {

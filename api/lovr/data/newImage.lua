@@ -34,14 +34,6 @@ return {
     source = {
       type = 'Image',
       description = 'The Image to clone.'
-    },
-    flip = {
-      type = 'boolean',
-      default = 'true',
-      description = [[
-        Whether to vertically flip the image on load.  This should be true for normal textures, and
-        false for textures that are going to be used in a cubemap.
-      ]]
     }
   },
   returns = {
@@ -53,7 +45,7 @@ return {
   variants = {
     {
       description = 'Load image data from a file.',
-      arguments = { 'filename', 'flip' },
+      arguments = { 'filename' },
       returns = { 'image' }
     },
     {
@@ -68,7 +60,7 @@ return {
     },
     {
       description = 'Decode image data from a Blob.',
-      arguments = { 'blob', 'flip' },
+      arguments = { 'blob' },
       returns = { 'image' }
     }
   },
