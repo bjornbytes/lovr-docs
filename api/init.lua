@@ -3548,7 +3548,7 @@ return {
           description = "Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
           key = "lovr.data.newImage",
           module = "lovr.data",
-          notes = "The supported image file formats are png, jpg, hdr, dds (DXT1, DXT3, DXT5), ktx, and astc.\n\nOnly 2D textures are supported for DXT/ASTC.\n\nCurrently textures loaded as KTX need to be in DXT/ASTC formats.",
+          notes = "The supported image file formats are png, jpg, hdr, dds, ktx1, ktx2, and astc.\n\nDDS and KTX files can contain cubemaps and array textures, in any of the texture formats LÖVR supports.",
           variants = {
             {
               description = "Load image data from a file.",
