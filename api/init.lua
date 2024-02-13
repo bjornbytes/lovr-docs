@@ -33936,7 +33936,7 @@ return {
               description = "Returns the angular damping parameters of the Collider.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "Collider:getAngularDamping",
               module = "lovr.physics",
-              notes = "Angular damping can also be set on the World.",
+              notes = "When the Collider is created, it will use the world's angular damping value, which is set using `World:setAngularDamping`.",
               related = {
                 "World:getAngularDamping",
                 "World:setAngularDamping"
@@ -34047,7 +34047,7 @@ return {
               description = "Returns the Collider's linear damping parameters.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:getLinearDamping",
               module = "lovr.physics",
-              notes = "A linear damping of 0 means the Collider won't slow down over time.  This is the default.\n\nLinear damping can also be set on the World using `World:setLinearDamping`, which will affect all new colliders.",
+              notes = "When the Collider is created, it will use the world's linear damping value, which is set using `World:setLinearDamping`.\n\nA linear damping of 0 means the Collider won't slow down over time.",
               related = {
                 "World:getLinearDamping",
                 "World:setLinearDamping"
@@ -35062,7 +35062,7 @@ return {
               description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them to slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "Collider:setAngularDamping",
               module = "lovr.physics",
-              notes = "Angular damping can also be set on the World.",
+              notes = "When the Collider is created, it will use the world's angular damping value, which is set using `World:setAngularDamping`.",
               related = {
                 "World:getAngularDamping",
                 "World:setAngularDamping"
@@ -35229,7 +35229,7 @@ return {
               description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time. Damping is only applied when linear velocity is over the threshold value.",
               key = "Collider:setLinearDamping",
               module = "lovr.physics",
-              notes = "A linear damping of 0 means the Collider won't slow down over time.  This is the default.\n\nLinear damping can also be set on the World using `World:setLinearDamping`, which will affect all new colliders.",
+              notes = "When the Collider is created, it will use the world's linear damping value, which is set using `World:setLinearDamping`.\n\nA linear damping of 0 means the Collider won't slow down over time.",
               related = {
                 "World:getLinearDamping",
                 "World:setLinearDamping"
@@ -37647,7 +37647,7 @@ return {
               description = "Returns the angular damping parameters of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:getAngularDamping",
               module = "lovr.physics",
-              notes = "Angular damping can also be set on individual colliders.",
+              notes = "This sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setAngularDamping`.",
               related = {
                 "Collider:getAngularDamping",
                 "Collider:setAngularDamping"
@@ -37778,7 +37778,7 @@ return {
               description = "Returns the linear damping parameters of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:getLinearDamping",
               module = "lovr.physics",
-              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nLinear damping can also be set on individual colliders.",
+              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nThis sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setLinearDamping`.",
               related = {
                 "Collider:getLinearDamping",
                 "Collider:setLinearDamping"
@@ -39204,7 +39204,7 @@ return {
               description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "World:setAngularDamping",
               module = "lovr.physics",
-              notes = "Angular damping can also be set on individual colliders.",
+              notes = "This sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setAngularDamping`.",
               related = {
                 "Collider:getAngularDamping",
                 "Collider:setAngularDamping"
@@ -39275,7 +39275,7 @@ return {
               description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move. Damping is only applied when linear velocity is over the threshold value.",
               key = "World:setLinearDamping",
               module = "lovr.physics",
-              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nLinear damping can also be set on individual colliders.",
+              notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nThis sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setLinearDamping`.",
               related = {
                 "Collider:getLinearDamping",
                 "Collider:setLinearDamping"
