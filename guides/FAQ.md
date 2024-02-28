@@ -34,5 +34,5 @@ LÖVR should work on any AR headset that supports OpenXR and Vulkan.  More detai
 - Oculus Quest devices can use camera passthrough.
 - SteamVR devices can use Room View 3D.
 
-See `lovr.headset.getPassthroughMode` and `lovr.headset.setPassthroughMode` for managing how virtual
-content blends with the real world.
+See `lovr.headset.getPassthrough` and `lovr.headset.setPassthrough` for managing how virtual content
+blends with the real world.
