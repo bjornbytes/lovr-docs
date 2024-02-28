@@ -11,8 +11,8 @@ function lovr.load()
       return DefaultPosition;
     }
   ]], [[
-    var(0) uniform textureCube cubemap;
-    var(1) uniform sphericalHarmonics { vec3 sh[9]; };
+    layout(set = 2, binding = 0) uniform textureCube cubemap;
+    layout(set = 2, binding = 1) uniform sphericalHarmonics { vec3 sh[9]; };
 
     vec4 lovrmain() {
       Surface surface;
@@ -47,7 +47,7 @@ function lovr.load()
 
   environmentMap = lovr.graphics.newTexture('ibl.ktx')
 
-  sphericalHarmonics = lovr.graphics.newBuffer({
+  sphericalHarmonics = lovr.graphics.newBuffer({ 'vec3', layout = 'std140' }, {
     {  0.611764907836914,  0.599504590034485,  0.479980736970901 },
     {  0.659514904022217,  0.665349841117859,  0.567680120468140 },
     {  0.451633930206299,  0.450751245021820,  0.355226665735245 },
@@ -57,7 +57,7 @@ function lovr.load()
     { -0.023690477013588, -0.024272611364722, -0.021886156871915 },
     { -0.179465517401695, -0.181243389844894, -0.141314014792442 },
     { -0.144527092576027, -0.143508568406105, -0.122757166624069 }
-  }, { 'vec3', layout = 'std140' })
+  })
 end
 
 function lovr.draw(pass)
