@@ -55,6 +55,5 @@ Tips
 adb shell am start org.lovr.app/org.lovr.app.Activity
 </code></pre>
 
-- For even faster restarts, use [`lodr`](https://github.com/mcclure/lodr) for live reloading.
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
   `adb logcat -s LOVR`.
