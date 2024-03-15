@@ -116,10 +116,10 @@ return {
     }
   },
   notes = [[
-    Note that if calling `Texture:setPixels(Image)` will only update the first mipmap of the
-    texture, leaving the other mipmaps as-is.  You may want to regenerate the texture's mipmaps
-    afterwards by calling `Texture:generateMipmaps`, or disable mipmaps entirely by setting
-    `mipmaps` to false in `lovr.graphics.newTexture`.
+    Note that calling `Texture:setPixels(Image)` will only update the first mipmap of the texture,
+    leaving the other mipmaps as-is.  You may want to regenerate the texture's mipmaps afterwards by
+    calling `Texture:generateMipmaps`, or disable mipmaps entirely by setting `mipmaps` to false in
+    `lovr.graphics.newTexture`.
 
     The destination and source textures must have been created with the `transfer` usage.
 
