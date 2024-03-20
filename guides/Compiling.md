@@ -105,6 +105,8 @@ Android
 
 Here be dragons.
 
+### Setup
+
 You will need to compile on a macOS or Linux system. Compiling LÖVR APKs on Windows does not
 currently work (unless all steps are performed in [Windows Subsystem for
 Linux](https://learn.microsoft.com/en-us/windows/wsl/install)).
@@ -130,6 +132,8 @@ Note where the SDK is installed.  Some paths in the SDK will need to be specifie
 
 Finally, compiling a LÖVR APK requires a copy of the `glslangValidator` tool installed on the
 system. Most package managers will offer this as part of a "glslang" or "glslang-tools" package.
+
+### Building
 
 The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
 the command line:
