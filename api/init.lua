@@ -12381,7 +12381,7 @@ return {
                         },
                         {
                           name = "[3]",
-                          type = "FilterMode",
+                          type = "WrapMod",
                           description = "The \"z\" wrap mode for 3D textures."
                         }
                       }
