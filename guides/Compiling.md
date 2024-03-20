@@ -131,32 +131,6 @@ Note where the SDK is installed.  Some paths in the SDK will need to be specifie
 Finally, compiling a LÖVR APK requires a copy of the `glslangValidator` tool installed on the
 system. Most package managers will offer this as part of a "glslang" or "glslang-tools" package.
 
-CMake or tup can be used to build an APK that can be installed on an Android device.
-
-### tup
-
-Add a `tup.config` file in the repository root.  The config values to fill in are:
-
-- Set `CONFIG_TARGET` to `android`.
-- Set `CONFIG_ANDROID_SDK` to the path to the Android SDK.
-- Set `CONFIG_ANDROID_NDK` to the path to the NDK.
-- Set `CONFIG_ANDROID_VERSION` to the version of Android to use (e.g. 29).  Check the
-  `sdk/platforms` folder to see which Android versions are installed.
-- Set `CONFIG_ANDROID_BUILDTOOLS` to the build tools version.  Check the `sdk/build-tools` folder to
-  see which versions are installed.
-- Set `CONFIG_ANDROID_KEYSTORE` to the path to the keystore file.  See "Creating a Keystore" below
-  for instructions on how to create a keystore.
-- Set `CONFIG_ANDROID_KEYSTOREPASS` to the password to the keystore file.  It can be provided as a
-  string, file, or environment variable (see keystore section below).
-- Optional: To use a custom Android manifest XML, set `CONFIG_ANDROID_MANIFEST`.
-- Optional: To use a different package name instead of `org.lovr.app`, set `CONFIG_ANDROID_PACKAGE`.
-- Optional: To bundle a LÖVR project in the APK, set `CONFIG_ANDROID_PROJECT` to the project folder.
-
-Once all of this is set up, run `tup init` if tup hasn't been initialized yet.  Then run `tup` to
-build the APK, output in the `bin` folder.
-
-### CMake
-
 The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
 the command line:
 
@@ -204,16 +178,16 @@ To install the apk.  The `-r` flag can be used to overwrite an existing apk.
 ### Adding Project Code
 
 To build an apk that runs a LÖVR project, pass the folder path as the `ANDROID_ASSETS` option to
-either CMake or tup.  This will run the LÖVR project when the apk starts, similar to how things work
-when fusing a zip to an exe on desktop systems.
+CMake.  This will run the LÖVR project when the apk starts, similar to how things work when fusing a
+zip to an exe on desktop systems.
 
 Note: By default the Android packager ignores directories that begin with underscores.
 
 ### Using a Custom Android Manifest
 
 Although LÖVR provides a default `AndroidManifest.xml`, you can also use your own by passing its
-path as the `ANDROID_MANIFEST` option to either CMake or tup.  This can be used to request extra
-permissions, change the package ID or app name, etc.
+path as the `ANDROID_MANIFEST` option to CMake.  This can be used to request extra permissions,
+change the package ID or app name, etc.
 
 Any file named `AndroidManifest*.xml` will be ignored in LÖVR's git repository.
 
