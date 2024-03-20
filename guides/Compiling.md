@@ -64,6 +64,13 @@ you can run a project like this:
 
     $ lovr /path/to/myGame
 
+LÖVR requires MoltenVK 1.3.268 or higher.  The easiest way to get MoltenVK is to install the Vulkan
+SDK from LunarG.  Be sure to leave the "global install" checkbox enabled while installing so LÖVR is
+able to find the Vulkan library.
+
+Prebuilt binaries include MoltenVK in the .app bundle, so installing the Vulkan SDK is optional when
+using one of those builds.
+
 Linux
 ---
 
