@@ -64,6 +64,11 @@ you can run a project like this:
 
     $ lovr /path/to/myGame
 
+:::note
+You can set the `LOVR_BUILD_BUNDLE` CMake variable to `ON` to build a .app instead of a plain
+executable.
+:::
+
 LÖVR requires MoltenVK 1.3.268 or higher.  The easiest way to get MoltenVK is to install the Vulkan
 SDK from LunarG.  Be sure to leave the "global install" checkbox enabled while installing so LÖVR is
 able to find the Vulkan library.
