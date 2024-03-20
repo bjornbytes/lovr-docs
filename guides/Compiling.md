@@ -146,7 +146,7 @@ the command line:
 - Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
 - Set `ANDROID_KEYSTORE` to the path to they keystore file.  See "Creating a Keystore" below.
 - Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
-  described in "Creating a Keystore" below.
+  described in [Creating a Keystore](#creating-a-keystore) below.
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
 - Optional: Set `ANDROID_PACKAGE` to change the package name from `org.lovr.app`.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
