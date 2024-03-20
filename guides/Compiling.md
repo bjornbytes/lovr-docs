@@ -181,11 +181,13 @@ To install the apk.  The `-r` flag can be used to overwrite an existing apk.
 
 ### Adding Project Code
 
-To build an apk that runs a LÖVR project, pass the folder path as the `ANDROID_ASSETS` option to
-CMake.  This will run the LÖVR project when the apk starts, similar to how things work when fusing a
-zip to an exe on desktop systems.
+To build an APK that runs a LÖVR project instead of the splash screen, add an `ANDROID_ASSETS` CMake
+variable with the path to the project folder.  The project will be included in the `assets` folder
+of the APK, and LÖVR will run that project when the APK starts.
 
-Note: By default the Android packager ignores directories that begin with underscores.
+:::warning
+By default the Android packager ignores directories that begin with underscores.
+:::
 
 ### Using a Custom Android Manifest
 
@@ -193,17 +195,15 @@ Although LÖVR provides a default `AndroidManifest.xml`, you can also use your o
 path as the `ANDROID_MANIFEST` option to CMake.  This can be used to request extra permissions,
 change the package ID or app name, etc.
 
-Any file named `AndroidManifest*.xml` will be ignored in LÖVR's git repository.
-
 ### Creating a Keystore
 
-A keystore file needs to be generated, which is used to sign the APK after it's built.
-
-To generate a keystore, use Java's `keytool` tool:
+APKs must be signed to work properly.  First, generate a keystore file using Java's `keytool` tool:
 
     $ keytool -genkey -keystore <name>.keystore -alias <name> -keyalg RSA -keysize 2048 -validity 10000
 
-When specifying the password for the keystore, it can be done in multiple ways:
+The `ANDROID_KEYSTORE` CMake variable should be set to the path to the keystore file, and the
+`ANDROID_KEYSTORE_PASS` variable contains the password used when creating the keystore. The password
+can take the following forms:
 
 - `pass:<string>` will use `<string>` as the password.
 - `env:<var>` will use the value of the `<var>` environment variable.
