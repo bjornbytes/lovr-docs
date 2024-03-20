@@ -113,7 +113,7 @@ Linux](https://learn.microsoft.com/en-us/windows/wsl/install)).
 
 First, make sure the Java JDK is installed (version 17 is known to work).
 
-Then, the Android SDK and NDK need to be installed.  SDK version 29 should be installed.
+Then, install the Android SDK (29) and NDK (21.4.7075529).
 
 The Android command line tools can be found on the Android website or installed using a package
 manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
