@@ -11,7 +11,7 @@ Shaders are written in GLSL.  GLSL is a lower-level language than Lua, so shader
 to learn at first.  Explaining GLSL is outside the scope of these docs, but some good ways to learn
 it are:
 
-- The [OpenGL wiki](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Languagehttps://www.khronos.org/opengl/wiki/OpenGL_Shading_Language)
+- The [OpenGL wiki](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language)
   is a good reference.
 - Copying random shaders from the internet and changing them until they do interesting things is
   another recommended approach.
