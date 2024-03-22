@@ -79,7 +79,13 @@ using one of those builds.
 Linux
 ---
 
-Install a C compiler and CMake, then run:
+First, install a C compiler, CMake, and other dependencies:
+
+### Fedora
+
+    $ sudo dnf install cmake clang libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel libcurl-devel
+
+Then, compile using CMake:
 
     $ mkdir build
     $ cd build
