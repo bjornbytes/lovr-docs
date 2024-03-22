@@ -81,6 +81,10 @@ Linux
 
 First, install a C compiler, CMake, and other dependencies:
 
+### Debian/Ubuntu
+
+    $ sudo apt install cmake clang xorg-dev libcurl-dev
+
 ### Fedora
 
     $ sudo dnf install cmake clang libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel libcurl-devel
