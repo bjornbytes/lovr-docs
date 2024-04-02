@@ -3,8 +3,7 @@ return {
   description = [[
     Sets a view transform matrix that moves and orients camera to look at a target point.
 
-    This is useful for changing camera position and orientation. The resulting Mat4 matrix can be
-    passed to `lovr.graphics.transform()` directly (without inverting) before rendering the scene.
+    This is useful for changing camera position and orientation.
 
     The lookAt() function produces same result as target() after matrix inversion.
   ]],
@@ -35,6 +34,13 @@ return {
       returns = { 'self' }
     }
   },
+  example = [[
+    function lovr.draw(pass)
+      pass:setViewPose(1, mat4():lookAt(cameraPos, playerPos), true)
+
+      -- draw scene
+    end
+  ]],
   related = {
     'Mat4:target',
     'Quat:direction'
