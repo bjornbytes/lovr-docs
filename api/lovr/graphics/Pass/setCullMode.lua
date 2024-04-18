@@ -5,7 +5,6 @@ return {
   arguments = {
     mode = {
       type = 'CullMode',
-      default = [['none']],
       description = 'Whether `front` faces, `back` faces, or `none` of the faces should be culled.'
     }
   },
@@ -14,9 +13,14 @@ return {
     {
       arguments = { 'mode' },
       returns = {}
+    },
+    {
+      description = 'Disable face culling.',
+      arguments = {},
+      returns = {}
     }
   },
-  notes = 'The default cull mode is `none`.',
+  notes = 'By default, face culling is disabled.',
   related = {
     'Pass:setViewCull',
     'Pass:setWinding'

@@ -20546,7 +20546,7 @@ return {
               description = "Sets whether the front or back faces of triangles are culled.",
               key = "Pass:setCullMode",
               module = "lovr.graphics",
-              notes = "The default cull mode is `none`.",
+              notes = "By default, face culling is disabled.",
               related = {
                 "Pass:setViewCull",
                 "Pass:setWinding"
@@ -20557,10 +20557,14 @@ return {
                     {
                       name = "mode",
                       type = "CullMode",
-                      description = "Whether `front` faces, `back` faces, or `none` of the faces should be culled.",
-                      default = "'none'"
+                      description = "Whether `front` faces, `back` faces, or `none` of the faces should be culled."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Disable face culling.",
+                  arguments = {},
                   returns = {}
                 }
               }
