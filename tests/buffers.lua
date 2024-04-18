@@ -1,62 +1,168 @@
+function table.eq(a, b)
+  if type(a) ~= type(b) then return false end
+  if type(a) ~= 'table' then return a == b end
+  if #a ~= #b then return false end
+  for k, _ in pairs(a) do
+    if not table.eq(a[k], b[k]) then return false end
+  end
+  return true
+end
+
 function lovr.load()
   local buffer, data
 
-  -- Size
+  -- Empty Format
   buffer = lovr.graphics.newBuffer(16)
   assert(buffer:getSize() == 16)
   assert(buffer:getLength() == nil)
   assert(buffer:getStride() == nil)
   assert(buffer:getFormat() == nil)
 
-  -- Format
+  -- Single Scalar
   buffer = lovr.graphics.newBuffer('int')
+  assert(buffer:getSize() == 4)
+  assert(buffer:getLength() == 0)
+  assert(buffer:getStride() == 4)
+  buffer:setData(-3)
+  assert(buffer:getData() == -3)
+
+  -- Single Vector
+  buffer = lovr.graphics.newBuffer('vec3', vec3(1, 2, 3))
+  assert(buffer:getSize() == 12)
+  assert(buffer:getLength() == 0)
+  assert(buffer:getStride() == 12)
+  x, y, z = buffer:getData()
+  assert(x == 1 and y == 2 and z == 3)
+
+  buffer:setData(vec3(4, 5, 6))
+  x, y, z = buffer:getData()
+  assert(x == 4 and y == 5 and z == 6)
+
+  buffer:setData({ 7, 8, 9 })
+  x, y, z = buffer:getData()
+  assert(x == 7 and y == 8 and z == 9)
+
+  -- Single Item Array
+  buffer = lovr.graphics.newBuffer('int', 1)
   assert(buffer:getSize() == 4)
   assert(buffer:getLength() == 1)
   assert(buffer:getStride() == 4)
+  buffer:setData({ -5 })
+  assert(buffer:getData()[1] == -5)
 
-  -- Length
-  buffer = lovr.graphics.newBuffer('float', 16)
-  assert(buffer:getSize() == 64)
-  assert(buffer:getLength() == 16)
+  -- Array
+  buffer = lovr.graphics.newBuffer('float', 3)
+  assert(buffer:getSize() == 12)
+  assert(buffer:getLength() == 3)
   assert(buffer:getStride() == 4)
+  buffer:setData({ .5, .25, .125 })
+  data = buffer:getData()
+  assert(table.eq(buffer:getData(), { .5, .25, .125 }))
 
-  -- Table data
+  -- Anonymous Struct
+  buffer = lovr.graphics.newBuffer({ 'vec2', 'vec3', 'vec4' }, 0)
+  assert(buffer:getSize() == 36)
+  assert(buffer:getLength() == 0)
+  assert(buffer:getStride() == 36)
+
+  buffer:setData({ 1, 2; 3, 4, 5; 6, 7, 8, 9 })
+  assert(table.eq(buffer:getData(), { { 1, 2 }, { 3, 4, 5 }, { 6, 7, 8, 9 } }))
+
+  buffer:setData({ { 9, 8 }, { 7, 6, 5 }, { 4, 3, 2, 1 } })
+  assert(table.eq(buffer:getData(), { { 9, 8 }, { 7, 6, 5 }, { 4, 3, 2, 1 } }))
+
+  buffer:setData({ vec2(1, 2), vec3(3, 4, 5), vec4(6, 7, 8, 9) })
+  assert(table.eq(buffer:getData(), { { 1, 2 }, { 3, 4, 5 }, { 6, 7, 8, 9 } }))
+
+  -- Anonymous Struct Array
+  buffer = lovr.graphics.newBuffer({ 'vec2', 'vec3' }, 2)
+  assert(buffer:getSize() == 40)
+  assert(buffer:getLength() == 2)
+  assert(buffer:getStride() == 20)
+
+  buffer:setData({ { 1, 2, 3, 4, 5 }, { 5, 4, 3, 2, 1 } })
+  assert(table.eq(buffer:getData(), { { { 1, 2 }, { 3, 4, 5 } }, { { 5, 4 }, { 3, 2, 1 } } }))
+
+  buffer:setData({ { { 4, 4 }, { 3, 3, 3 } }, { { 2, 2 }, { 1, 1, 1 } }, -0 })
+  assert(table.eq(buffer:getData(), { { { 4, 4 }, { 3, 3, 3 } }, { { 2, 2 }, { 1, 1, 1 } } }))
+
+  buffer:setData({ { vec2(7), vec3(6) }, { vec2(4), vec3(5) } })
+  assert(table.eq(buffer:getData(), { { { 7, 7 }, { 6, 6, 6 } }, { { 4, 4 }, { 5, 5, 5 } } }))
+
+  -- Single Struct
+  buffer = lovr.graphics.newBuffer({ { 'a', 'float' }, { 'b', 'vec2' } })
+  buffer:setData({ a = 7, b = { 1, 2 } })
+  assert(table.eq(buffer:getData(), { a = 7, b = { 1, 2 } }))
+  buffer:setData({ a = 8, b = vec2(3, 4) })
+  assert(table.eq(buffer:getData(), { a = 8, b = { 3, 4 } }))
+  buffer:setData({ 1, 2, 3 })
+  assert(table.eq(buffer:getData(), { a = 1, b = { 2, 3 } }))
+  buffer:setData({ 4, { 5, 6 } })
+  assert(table.eq(buffer:getData(), { a = 4, b = { 5, 6 } }))
+  buffer:setData({ 7, vec2(8, 9) })
+  assert(table.eq(buffer:getData(), { a = 7, b = { 8, 9 } }))
+  buffer:setData({ 10, b = vec2(11, 12) })
+  assert(table.eq(buffer:getData(), { a = 10, b = { 11, 12 } }))
+
+  -- Struct Array
+  buffer = lovr.graphics.newBuffer({ { 'a', 'float' }, { 'b', 'vec2' } }, {
+    { a = 1, b = { 2, 3 } },
+    { a = 4, b = { 5, 6 } }
+  })
+
+  assert(table.eq(buffer:getData(), { { a = 1, b = { 2, 3 } }, { a = 4, b = { 5, 6 } } }))
+
+  buffer:setData({
+    { 9, 8, 7 },
+    { a = 6, b = vec2(5, 4) }
+  })
+
+  assert(table.eq(buffer:getData(), { { a = 9, b = { 8, 7 } }, { a = 6, b = { 5, 4 } } }))
+  assert(pcall(buffer.setData, buffer, { 1, 2, 3, 4, 5, 6 }) == false)
+
+  -- Struct With Array of Structs
+  buffer = lovr.graphics.newBuffer({
+    { 'list', { { 'pos', 'vec3' }, { 'size', 'float' } }, 3 },
+    { 'count', 'int' }
+  })
+
+  buffer:setData({
+    list = {
+      { vec3(1, 1, 1), 2 },
+      { 3, 3, 3, 4 },
+      { pos = { 5, 5, 5 }, size = 6 }
+    },
+    count = 101
+  })
+
+  assert(table.eq(buffer:getData(), {
+    list = {
+      { pos = { 1, 1, 1 }, size = 2 },
+      { pos = { 3, 3, 3 }, size = 4 },
+      { pos = { 5, 5, 5 }, size = 6 }
+    },
+    count = 101
+  }))
+
+  -- Array data offset
   buffer = lovr.graphics.newBuffer('int', { 1, 2, 3 })
   assert(buffer:getSize() == 12)
   assert(buffer:getLength() == 3)
   assert(buffer:getStride() == 4)
-
-  data = buffer:getData()
-  assert(data[1] == 1 and data[2] == 2 and data[3] == 3)
-
-  buffer:setData({ 4, 5, 6 })
-  data = buffer:getData()
-  assert(data[1] == 4 and data[2] == 5 and data[3] == 6)
+  assert(table.eq(buffer:getData(), { 1, 2, 3 }))
 
   buffer:setData({ 8, 9 }, 2)
-  data = buffer:getData()
-  assert(data[1] == 4 and data[2] == 8 and data[3] == 9)
+  assert(table.eq(buffer:getData(), { 1, 8, 9 }))
 
+  buffer:setData({ -1, -2 }, 3, 2, 1)
+  assert(table.eq(buffer:getData(), { 1, 8, -2 }))
+
+  -- Clear
+  buffer = lovr.graphics.newBuffer('int', { 1, 2, 3 })
   buffer:clear()
-  data = buffer:getData()
-  assert(data[1] == 0 and data[2] == 0 and data[3] == 0)
+  assert(table.eq(buffer:getData(), { 0, 0, 0 }))
 
-  -- Keys
-  buffer = lovr.graphics.newBuffer({{ 'x', 'int' }, { 'y', 'float' }})
-  buffer:setData({ x = -1, y = 1e7 })
-  data = buffer:getData()[1]
-  assert(data[1] == -1 and data[2] == 1e7)
-
-  -- Arrays
-  buffer = lovr.graphics.newBuffer({{ 'a', 'float', 3 }})
-  assert(buffer:getSize() == 12)
-  assert(buffer:getLength() == 1)
-  assert(buffer:getStride() == 12)
-  buffer:setData({ a = { 10, 100, 1000 } })
-  data = buffer:getData()[1]
-  assert(data.a[1] == 10 and data.a[2] == 100 and data.a[3] == 1000)
-
-  -- Structs
+  -- Nested Structs
   buffer = lovr.graphics.newBuffer({
     { 'a', {
       { 'b', {
@@ -65,11 +171,10 @@ function lovr.load()
     }}
   })
   assert(buffer:getSize() == 8)
-  assert(buffer:getLength() == 1)
+  assert(buffer:getLength() == 0)
   assert(buffer:getStride() == 8)
-  buffer:setData({ a = { b = { c = { 1.2, 3.4 } } } })
-  data = buffer:getData()[1]
-  assert(vec2(unpack(data.a.b.c)):equals(vec2(1.2, 3.4)))
+  buffer:setData({ a = { b = { c = { 1.5, 2.5 } } } })
+  assert(table.eq(buffer:getData(), { a = { b = { c = { 1.5, 2.5 } } } }))
 
   -- Layouts
   buffer = lovr.graphics.newBuffer({ 'float', layout = 'std140' })
@@ -110,7 +215,6 @@ function lovr.load()
   pass = lovr.graphics.newPass()
   pass:setShader(shader)
   pass:send('x', 7)
-  pass:send('y', 3, 4)
   pass:send('y', { 3, 4 })
   pass:send('y', vec2(3, 4))
   pass:send('z', { 1, 2, 3 })
