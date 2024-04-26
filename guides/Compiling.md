@@ -158,7 +158,6 @@ the command line:
 - Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
   described in "Creating a Keystore" below.
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
-- Optional: Set `ANDROID_PACKAGE` to change the package name from `org.lovr.app`.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
 - Windows: Make sure you add `-G "Unix Makefiles"` so it doesn't try to use Visual Studio.
 
@@ -204,6 +203,12 @@ path as the `ANDROID_MANIFEST` option to either CMake or tup.  This can be used 
 permissions, change the package ID or app name, etc.
 
 Any file named `AndroidManifest*.xml` will be ignored in LÖVR's git repository.
+
+### Changing the Package ID
+
+LÖVR extracts the package name from the `AndroidManifest.xml` file (`org.lovr.app` by default). To
+use a different package id, edit `etc/AndroidManifest.xml`, or set the `ANDROID_MANIFEST` CMake
+variable to set a custom manifest with a different package id.
 
 ### Creating a Keystore
 
