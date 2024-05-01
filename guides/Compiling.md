@@ -115,7 +115,7 @@ Android
 
 To compile an Android APK with CMake, follow the steps below.
 
-There is also a [lovr-android-builder](https://github.com/Udinanon/lovr-android-builder) project
+There is also a [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project
 that builds the APK in a Docker container, automating most of the process.
 
 ### Setup
