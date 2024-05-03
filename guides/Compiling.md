@@ -79,20 +79,11 @@ using one of those builds.
 Linux
 ---
 
-### Using Docker
-
-If you prefer you can build the application using a Docker image that contains the required packages and components. You can write your code on your host machine, and the container will be used only to build the application.
-
-To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
-
-Afterwards, the relevant files and scripts can be found at the [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project.
-
-
 First, install a C compiler, CMake, and other dependencies:
 
 ### Debian/Ubuntu
 
-    $ sudo apt install cmake clang xorg-dev build-essential libcurl4-openssl-dev libxcb-glx0-dev libx11-xcb-dev glslang-tools python3-minimal
+    $ sudo apt install make cmake xorg-dev libcurl4-openssl-dev libxcb-glx0-dev libx11-xcb-dev python3-minimal
 
 ### Fedora
 
@@ -121,14 +112,6 @@ the command:
 
 Android
 ---
-
-### Using Docker
-
-If you prefer you can build the application using a Docker image that contains the required packages and components. You can write your code on your host machine, and the container will be used only to build the application.
-
-To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
-
-Afterwards, the relevant files and scripts can be found at the [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project.
 
 To compile an Android APK with CMake, follow the steps below.
 
@@ -240,6 +223,16 @@ can take the following forms:
 - `pass:<string>` will use `<string>` as the password.
 - `env:<var>` will use the value of the `<var>` environment variable.
 - `file:<file>` will use the contents of `<file>` as the password.
+
+Using Docker
+---
+
+The [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project provides an approach based on Docker to build Linux and Android applications, wihout instaling packages locally
+
+To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
+
+Then follow the instruction in the [repo](https://github.com/Udinanon/lovr-docker-builder). 
+Refer to them for any issues with it, as it's an indipendent project
 
 Troubleshooting
 ---
