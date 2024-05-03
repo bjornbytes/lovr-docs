@@ -79,11 +79,20 @@ using one of those builds.
 Linux
 ---
 
+### Using Docker
+
+If you prefer you can build the application using a Docker image that contains the required packages and components. You can write your code on your host machine, and the container will be used only to build the application.
+
+To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
+
+Afterwards, the relevant files and scripts can be found at the [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project.
+
+
 First, install a C compiler, CMake, and other dependencies:
 
 ### Debian/Ubuntu
 
-    $ sudo apt install cmake clang xorg-dev libcurl-dev
+    $ sudo apt install cmake clang xorg-dev build-essential libcurl4-openssl-dev libxcb-glx0-dev libx11-xcb-dev glslang-tools python3-minimal
 
 ### Fedora
 
@@ -113,10 +122,15 @@ the command:
 Android
 ---
 
-To compile an Android APK with CMake, follow the steps below.
+### Using Docker
 
-There is also a [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project
-that builds the APK in a Docker container, automating most of the process.
+If you prefer you can build the application using a Docker image that contains the required packages and components. You can write your code on your host machine, and the container will be used only to build the application.
+
+To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
+
+Afterwards, the relevant files and scripts can be found at the [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project.
+
+To compile an Android APK with CMake, follow the steps below.
 
 ### Setup
 
