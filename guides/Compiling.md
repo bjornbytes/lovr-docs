@@ -227,12 +227,13 @@ can take the following forms:
 Using Docker
 ---
 
-The [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project provides an approach based on Docker to build Linux and Android applications, wihout instaling packages locally
+The [lovr-docker-builder](https://github.com/Udinanon/lovr-docker-builder) project provides an
+approach based on Docker to build Linux and Android applications, wihout instaling packages locally.
 
 To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
 
-Then follow the instruction in the [repo](https://github.com/Udinanon/lovr-docker-builder). 
-Refer to them for any issues with it, as it's an indipendent project
+Then follow the instruction in the [repo](https://github.com/Udinanon/lovr-docker-builder).  Refer to
+them for any issues with it, as it's an independent project.
 
 Troubleshooting
 ---
