@@ -113,21 +113,16 @@ the command:
 Android
 ---
 
-To compile an Android APK with CMake, follow the steps below.
-
 ### Setup
 
-You will need to compile on a macOS or Linux system. Compiling LÖVR APKs on Windows does not
-currently work (unless all steps are performed in [Windows Subsystem for
-Linux](https://learn.microsoft.com/en-us/windows/wsl/install)).
+Currently, it's only possible to compile for Android on a macOS or Linux system.  On Windows,
+[Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) works.
 
 First, make sure the Java JDK is installed (version 17 is known to work).
 
-Then, install the Android SDK (29) and NDK (21.4.7075529).
-
-The Android command line tools can be found on the Android website or installed using a package
-manager.  The command line tools contain a tool named `sdkmanager` that can be used to install
-various versions of Android, the Android build tools, and the NDK:
+Next, install the Android SDK (29) and NDK (21.4.7075529).  The [Android command line
+tools](https://developer.android.com/studio#command-line-tools-only) contain an `sdkmanager` tool
+that can be used to install the Android SDK, NDK, and other build tools:
 
     $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;34.0.0" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-29"
 
@@ -136,12 +131,10 @@ package can be safely uninstalled:
 
     $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk --uninstall emulator
 
-Android Studio isn't required, but can be used to install the SDK, NDK, and Java as well.
-
 Note where the SDK is installed.  Some paths in the SDK will need to be specified.
 
 Finally, compiling a LÖVR APK requires a copy of the `glslangValidator` tool installed on the
-system. Most package managers will offer this as part of a "glslang" or "glslang-tools" package.
+system. Most package managers will offer this as part of a `glslang` or `glslang-tools` package.
 
 ### Building
 
@@ -161,7 +154,7 @@ the command line:
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
 - Windows: Make sure you add `-G "Unix Makefiles"` so it doesn't try to use Visual Studio.
 
-The usual CMake incantation with all of the above variables set up should produce `lovr.apk`:
+Here's an example of a full CMake incantation that produces `lovr.apk` in the build folder:
 
     $ mkdir build
     $ cd build
@@ -232,8 +225,8 @@ approach based on Docker to build Linux and Android applications, wihout instali
 
 To use it, you'll need to [install Docker](https://docs.docker.com/engine/install/).
 
-Then follow the instruction in the [repo](https://github.com/Udinanon/lovr-docker-builder).  Refer to
-them for any issues with it, as it's an independent project.
+Then follow the instruction in the [repo](https://github.com/Udinanon/lovr-docker-builder).  Refer
+to them for any issues with it, as it's an independent project.
 
 Troubleshooting
 ---
