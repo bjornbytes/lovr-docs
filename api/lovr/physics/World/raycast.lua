@@ -105,8 +105,6 @@ return {
     end
   ]],
   related = {
-    'World:raycastAny',
-    'World:raycastClosest',
     'World:queryBox',
     'World:querySphere'
   }
