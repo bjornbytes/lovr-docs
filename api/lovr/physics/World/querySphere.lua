@@ -1,7 +1,16 @@
 return {
-  tag = 'worldBasics',
-  summary = 'Find all shapes that intersect a sphere.',
-  description = 'Finds all the shapes that intersect a sphere and calls a function for each one.',
+  tag = 'worldQueries',
+  summary = 'Find colliders that intersect a sphere.',
+  description = [[
+    Find colliders within a sphere.  This is a fast but imprecise query that only checks a rough box
+    around colliders.  Use `World:overlapShape` for an exact collision test.
+
+    Rough queries like this are useful for doing a quick check before doing lots of more expensive
+    collision testing.
+
+    Pass a callback function to call for each collider detected, or leave the callback off and this
+    function will return the first collider found.
+  ]],
   arguments = {
     x = {
       type = 'number',
@@ -17,41 +26,56 @@ return {
     },
     radius = {
       type = 'number',
-      description = 'The radius of the sphere.',
+      description = 'The radius of the sphere, in meters',
     },
     position = {
       type = 'Vec3',
       description = 'The position of the center of the sphere.'
     },
-    callback = {
-      type = 'function',
+    filter = {
+      type = 'string',
       default = 'nil',
       description = [[
-        An optional function to call when an intersection is detected.  The function will be called
-        with a single `Shape` argument, and it may return `false` to cancel the query.
+        An optional tag filter.  Pass one or more tags separated by spaces to only return colliders
+        with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.
+      ]]
+    },
+    callback = {
+      type = 'function',
+      description = [[
+        A function to call when an intersection is detected.  The function will be called with a
+        single `Collider` argument.
       ]]
     }
   },
   returns = {
-    any = {
-      type = 'boolean',
-      description = 'Whether there were any intersections.'
+    collider = {
+      type = 'Collider',
+      description = 'A Collider that intersected the sphere.'
     }
   },
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'radius', 'callback' },
-      returns = { 'any' }
+      arguments = { 'x', 'y', 'z', 'radius', 'filter', 'callback' },
+      returns = {}
     },
     {
-      arguments = { 'position', 'radius', 'callback' },
-      returns = { 'any' }
+      arguments = { 'position', 'radius', 'filter', 'callback' },
+      returns = {}
+    },
+    {
+      arguments = { 'x', 'y', 'z', 'radius', 'filter' },
+      returns = { 'collider' }
+    },
+    {
+      arguments = { 'position', 'radius', 'filter' },
+      returns = { 'collider' }
     }
   },
   related = {
     'World:queryBox',
-    'World:raycast',
-    'World:getContacts',
-    'Shape:setSensor'
+    'World:overlapShape',
+    'World:shapecast',
+    'World:raycast'
   }
 }

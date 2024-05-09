@@ -5,7 +5,7 @@ return {
   returns = {
     joints = {
       type = 'table',
-      description = 'A list of Joints attached to the Collider.'
+      description = 'A list of `Joint` objects attached to the Collider.'
     }
   },
   variants = {
@@ -15,6 +15,8 @@ return {
     }
   },
   related = {
-    'Joint'
+    'World:getJoints',
+    'Joint:getColliders',
+    'Joint:destroy'
   }
 }

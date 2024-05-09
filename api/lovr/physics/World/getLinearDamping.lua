@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'worldProperties',
   summary = 'Get the linear damping of the World.',
   description = [[

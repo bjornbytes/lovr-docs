@@ -1,7 +1,10 @@
 return {
   tag = 'worldBasics',
   summary = 'Destroy the World!!  Muahaha!',
-  description = 'Destroy the World!',
+  description = [[
+    Destroys the World.  This will destroy all colliders, shapes, and joints in the world.  After
+    calling this function, the world can no longer be used.
+  ]],
   arguments = {},
   returns = {},
   variants = {
@@ -10,8 +13,9 @@ return {
       returns = {}
     }
   },
-  notes = [[
-    Bad things will happen if you destroy the world and then try to access it or anything that was
-    in it.
-  ]]
+  related = {
+    'Collider:destroy',
+    'Shape:destroy',
+    'Joint:destroy'
+  }
 }

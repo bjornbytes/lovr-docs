@@ -1,67 +1,43 @@
 return {
   tag = 'worldBasics',
-  summary = 'Update the World.',
+  summary = 'Advance the physics simulation.',
   description = [[
-    Updates the World, advancing the physics simulation forward in time and resolving collisions
-    between colliders in the World.
+    Updates the World, advancing the physics simulation forward in time and moving all the
+    colliders.
   ]],
   arguments = {
     dt = {
       type = 'number',
       description = 'The amount of time to advance the simulation forward.'
     },
-    resolver = {
-      type = 'function',
-      arguments = {
-        {
-          name = 'world',
-          type = 'World'
-        }
-      },
-      returns = {},
-  variants = {
-    {
-      arguments = { 'dt', 'resolver' },
-      returns = {}
-    }
-  },
-      default = 'nil',
-      description = [[
-        The collision resolver function to use.  This will be called before updating to allow for
-        custom collision processing.  If absent, a default will be used.
-      ]]
-    }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'dt', 'resolver' },
+      arguments = { 'dt' },
       returns = {}
     }
   },
   notes = [[
-    It is common to pass the `dt` variable from `lovr.update` into this function.
+    By default, the World updates at a fixed timestep.  This means that the physics simulation will
+    always update with a constant rate, for example 60 "ticks" per second.  This improves stability
+    of the simulation and decouples physics from rendering.  Collider poses are automatically
+    interpolated between the two most recent ticks, ensuring smooth movement even if the tick rate
+    is lower than the rendering rate.
 
-    The default collision resolver function is:
+    Fixed timestep can be disabled by setting the `tickRate` option to 0 in `lovr.physics.newWorld`.
+    This will use a variable timestep where the `dt` value passed to this function will be applied
+    directly to the physics simulation.
 
-        function defaultResolver(world)
-          world:computeOverlaps()
-          for shapeA, shapeB in world:overlaps() do
-            world:collide(shapeA, shapeB)
-          end
-        end
-
-    Additional logic could be introduced to the collision resolver function to add custom collision
-    behavior or to change the collision parameters (like friction and restitution) on a
-    per-collision basis.
-
-    > If possible, use a fixed timestep value for updating the World. It will greatly improve the
-    > accuracy of the simulation and reduce bugs. For more information on implementing a fixed
-    > timestep loop, see [this article](http://gafferongames.com/game-physics/fix-your-timestep/).
+    This function must be called from the last thread that called `World:setCallbacks`.  If no
+    callbacks are set, then this can be called from any thread.
+  ]],
+  example = [[
+    function lovr.update(dt)
+      world:update(dt)
+    end
   ]],
   related = {
-    'World:computeOverlaps',
-    'World:overlaps',
-    'World:collide'
+    'lovr.physics.newWorld'
   }
 }

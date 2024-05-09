@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'worldProperties',
   summary = 'Set the tightness of joints in the World.',
   description = [[

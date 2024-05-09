@@ -1,7 +1,16 @@
 return {
   tag = 'colliders',
   summary = 'Add a Collider with a TerrainShape to the World.',
-  description = 'Adds a new Collider to the World with a TerrainShape already attached.',
+  description = [[
+    Adds a Collider to the world and attaches a `TerrainShape`.
+
+    Colliders with terrain shapes are immobile and can only be used for static environment objects.
+    The collider will be kinematic and forces/velocities will not move it.  Also, these colliders
+    will not detect collisions with other kinematic objects.
+
+    TerrainShapes are not treated as solid objects, but instead a collection of triangles.  They do
+    not have mass or volume, and there is no concept of being "inside" the terrain.
+  ]],
   arguments = {
     scale = {
       type = 'number',
@@ -11,7 +20,8 @@ return {
       type = 'Image',
       description = [[
         A heightmap image describing the terrain elevation at different points.  The red channel
-        brightness of each pixel determines the elevation at corresponding coordinates.
+        brightness of each pixel determines the elevation at corresponding coordinates.  The image
+        must be square and must have one of the formats supported by `Image:getPixel`.
       ]]
     },
     stretch = {
@@ -39,7 +49,7 @@ return {
         type = 'number'
       },
       description = [[
-        A function that computes terrain height from x and z coordinates.  The x and z inputs will
+        A function that returns terrain height from x and z coordinates.  The x and z inputs will
         range from `-scale / 2` to `scale / 2`.
       ]]
     },
@@ -75,12 +85,9 @@ return {
       returns = { 'collider' }
     }
   },
-  notes = [[
-    The collider will be positioned at 0, 0, 0.  Unlike other colliders, it will automatically be
-    set as kinematic when created.
-  ]],
   related = {
     'Collider',
+    'TerrainShape',
     'World:newCollider',
     'World:newBoxCollider',
     'World:newCapsuleCollider',

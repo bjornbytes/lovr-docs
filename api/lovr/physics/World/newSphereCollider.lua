@@ -1,7 +1,7 @@
 return {
   tag = 'colliders',
   summary = 'Add a Collider with a SphereShape to the World.',
-  description = 'Adds a new Collider to the World with a SphereShape already attached.',
+  description = 'Adds a Collider to the world and attaches a `SphereShape`.',
   arguments = {
     x = {
       type = 'number',
@@ -44,6 +44,10 @@ return {
       returns = { 'collider' }
     }
   },
+  notes = [[
+    This will throw an error if there are too many colliders in the world.  The limit defaults to
+    16384 and can be changed in `lovr.physics.newWorld`.
+  ]],
   related = {
     'SphereShape',
     'Collider',
@@ -51,6 +55,7 @@ return {
     'World:newBoxCollider',
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
+    'World:newConvexCollider',
     'World:newMeshCollider',
     'World:newTerrainCollider'
   }

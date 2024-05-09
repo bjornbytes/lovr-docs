@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'worldProperties',
   summary = 'Set the response time of the World.',
   description = [[

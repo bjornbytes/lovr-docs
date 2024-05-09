@@ -1,70 +1,94 @@
 return {
-  tag = 'worldBasics',
-  summary = 'Find all shapes that intersect a box.',
-  description = 'Finds all the shapes that intersect a box and calls a function for each one.',
+  tag = 'worldQueries',
+  summary = 'Find colliders that intersect an axis-aligned box.',
+  description = [[
+    Find colliders within an axis-aligned bounding box.  This is a fast but imprecise query that
+    only checks a rough box around colliders.  Use `World:overlapShape` for an exact collision test.
+
+    Rough queries like this are useful for doing a quick check before doing lots of more expensive
+    collision testing.
+
+    Pass a callback function to call for each collider detected, or leave the callback off and this
+    function will return the first collider found.
+  ]],
   arguments = {
     x = {
       type = 'number',
-      description = 'The x coordinate of the center of the box.',
+      description = 'The x coordinate of the center of the box, in meters.',
     },
     y = {
       type = 'number',
-      description = 'The y coordinate of the center of the box.',
+      description = 'The y coordinate of the center of the box, in meters.',
     },
     z = {
       type = 'number',
-      description = 'The z coordinate of the center of the box.',
+      description = 'The z coordinate of the center of the box, in meters.',
     },
-    w = {
+    width = {
       type = 'number',
-      description = 'The width of the box.',
+      description = 'The width of the box, in meters',
     },
-    h = {
+    height = {
       type = 'number',
-      description = 'The height of the box.',
+      description = 'The height of the box, in meters',
     },
-    d = {
+    depth = {
       type = 'number',
-      description = 'The depth of the box.',
+      description = 'The depth of the box, in meters.',
     },
     position = {
       type = 'Vec3',
-      description = 'The position of the center of the box.'
+      description = 'The position of the center of the box, in meters.'
     },
     size = {
       type = 'Vec3',
-      description = 'The size of the box.'
+      description = 'The size of the box, in meters.'
+    },
+    filter = {
+      type = 'string',
+      default = 'nil',
+      description = [[
+        An optional tag filter.  Pass one or more tags separated by spaces to only return colliders
+        with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.
+      ]]
     },
     callback = {
       type = 'function',
-      default = 'nil',
       description = [[
-        An optional function to call when an intersection is detected.  The function will be called
-        with a single `Shape` argument, and it may return `false` to cancel the query.
+        A function to call when a collider is detected.  The function will be called with a single
+        `Collider` argument.
       ]]
     }
   },
   returns = {
-    any = {
-      type = 'boolean',
-      description = 'Whether there were any intersections.'
+    collider = {
+      type = 'Collider',
+      description = 'A Collider that intersected the box.'
     }
   },
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'w', 'h', 'd', 'callback' },
-      returns = { 'any' }
+      arguments = { 'x', 'y', 'z', 'width', 'height', 'depth', 'filter', 'callback' },
+      returns = {}
     },
     {
-      arguments = { 'position', 'size', 'callback' },
-      returns = { 'any' }
+      arguments = { 'position', 'size', 'filter', 'callback' },
+      returns = {}
+    },
+    {
+      arguments = { 'x', 'y', 'z', 'width', 'height', 'depth', 'filter' },
+      returns = { 'collider' }
+    },
+    {
+      arguments = { 'position', 'size', 'filter' },
+      returns = { 'collider' }
     }
   },
-  notes = 'Currently there is no way to specify a rotated box.',
+  notes = 'This will return sleeping colliders and sensors, but it will ignore disabled colliders.',
   related = {
     'World:querySphere',
-    'World:raycast',
-    'World:getContacts',
-    'Shape:setSensor'
+    'World:overlapShape',
+    'World:shapecast',
+    'World:raycast'
   }
 }

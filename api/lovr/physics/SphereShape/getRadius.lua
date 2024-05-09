@@ -13,5 +13,8 @@ return {
       arguments = {},
       returns = { 'radius' }
     }
+  },
+  related = {
+    'Shape:getVolume'
   }
 }

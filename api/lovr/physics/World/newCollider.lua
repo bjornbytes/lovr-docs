@@ -1,21 +1,22 @@
 return {
   tag = 'colliders',
   summary = 'Add a Collider to the World.',
-  description = 'Adds a new Collider to the World.',
+  description = [[
+    Adds a new Collider to the World.
+
+    The Collider won't have any shapes attached to it.
+  ]],
   arguments = {
     x = {
       type = 'number',
-      default = '0',
       description = 'The x position of the Collider.'
     },
     y = {
       type = 'number',
-      default = '0',
       description = 'The y position of the Collider.'
     },
     z = {
       type = 'number',
-      default = '0',
       description = 'The z position of the Collider.'
     },
     position = {
@@ -40,39 +41,26 @@ return {
     }
   },
   notes = [[
-    This function creates a collider without any shapes attached to it, which means it won't collide
-    with anything.  To add a shape to the collider, use `Collider:addShape`, or use one of the
-    following functions to create the collider:
-
-    - `World:newBoxCollider`
-    - `World:newCapsuleCollider`
-    - `World:newCylinderCollider`
-    - `World:newSphereCollider`
+    This will throw an error if there are too many colliders in the world.  The limit defaults to
+    16384 and can be changed in `lovr.physics.newWorld`.
   ]],
-  example = {
-    description = [[
-      Create a new world, add a collider to it, and update it, printing out the collider's position
-      as it falls.
-    ]],
-    code = [[
-      function lovr.load()
-        world = lovr.physics.newWorld()
-        box = world:newBoxCollider()
-      end
-
-      function lovr.update(dt)
-        world:update(dt)
-        print(box:getPosition())
-      end
-    ]]
-  },
+  example = [[
+    function lovr.load()
+      world = lovr.physics.newWorld()
+      collider = world:newCollider(0, 0, 0)
+      shape = lovr.physics.newSphereShape(.5)
+      collider:addShape(shape)
+    end
+  ]],
   related = {
     'World:newBoxCollider',
+    'World:newSphereCollider',
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
+    'World:newConvexCollider',
     'World:newMeshCollider',
-    'World:newSphereCollider',
     'World:newTerrainCollider',
+    'Collider:addShape',
     'Collider',
     'Shape'
   }

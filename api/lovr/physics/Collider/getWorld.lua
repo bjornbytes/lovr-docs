@@ -14,10 +14,5 @@ return {
       returns = { 'world' }
     }
   },
-  notes = [[
-    Colliders can only be in one World at a time.
-  ]],
-  related = {
-    'World'
-  }
+  notes = 'Colliders can only ever be in the World that created them.'
 }

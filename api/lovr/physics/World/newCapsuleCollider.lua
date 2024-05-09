@@ -1,7 +1,7 @@
 return {
   tag = 'colliders',
   summary = 'Add a Collider with a CapsuleShape to the World.',
-  description = 'Adds a new Collider to the World with a CapsuleShape already attached.',
+  description = 'Adds a Collider to the world and attaches a `CapsuleShape`.',
   arguments = {
     x = {
       type = 'number',
@@ -49,14 +49,21 @@ return {
       returns = { 'collider' }
     }
   },
+  notes = [[
+    This will throw an error if there are too many colliders in the world.  The limit defaults to
+    16384 and can be changed in `lovr.physics.newWorld`.
+
+    The length of the capsule goes along its local Z axis.
+  ]],
   related = {
     'CapsuleShape',
     'Collider',
     'World:newCollider',
     'World:newBoxCollider',
-    'World:newCylinderCollider',
-    'World:newMeshCollider',
     'World:newSphereCollider',
+    'World:newCylinderCollider',
+    'World:newConvexCollider',
+    'World:newMeshCollider',
     'World:newTerrainCollider'
   }
 }

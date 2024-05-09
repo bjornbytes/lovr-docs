@@ -15,7 +15,8 @@ return {
     }
   },
   notes = [[
-    Calling functions on a collider after destroying it is a bad idea.
+    After a Collider is destroyed, calling methods on it or passing it to a function will throw an
+    error.
   ]],
   related = {
     'Collider:destroy',

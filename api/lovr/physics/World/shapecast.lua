@@ -1,43 +1,68 @@
 return {
   tag = 'worldQueries',
-  summary = 'Find colliders that intersect a line.',
+  summary = 'Move a shape through the world and return any colliders it touches.',
   description = [[
-    Traces a ray through the world and calls a function for each collider that was hit.
+    Moves a shape from a starting point to an endpoint and returns any colliders it touches along
+    its path.
 
-    The callback can be left off, in which case the closest hit will be returned.
+    This is similar to a raycast, but with a `Shape` instead of a point.
   ]],
   arguments = {
+    shape = {
+      type = 'Shape',
+      description = 'The Shape to cast.'
+    },
     x1 = {
       type = 'number',
-      description = 'The x coordinate of the origin of the ray.',
+      description = 'The x position to start at.',
     },
     y1 = {
       type = 'number',
-      description = 'The y coordinate of the origin of the ray.',
+      description = 'The y position to start at.',
     },
     z1 = {
       type = 'number',
-      description = 'The z coordinate of the origin of the ray.',
+      description = 'The z position to start at.',
     },
     x2 = {
       type = 'number',
-      description = 'The x coordinate of the endpoint of the ray.',
+      description = 'The x position to move the shape to.',
     },
     y2 = {
       type = 'number',
-      description = 'The y coordinate of the endpoint of the ray.',
+      description = 'The y position to move the shape to.',
     },
     z2 = {
       type = 'number',
-      description = 'The z coordinate of the endpoint of the ray.',
+      description = 'The z position to move the shape to.',
     },
-    origin = {
+    angle = {
+      type = 'number',
+      description = 'The rotation of the shape around its rotation axis, in radians.'
+    },
+    ax = {
+      type = 'number',
+      description = 'The x component of the rotation axis.'
+    },
+    ay = {
+      type = 'number',
+      description = 'The y component of the rotation axis.'
+    },
+    az = {
+      type = 'number',
+      description = 'The z component of the rotation axis.'
+    },
+    position = {
       type = 'Vec3',
-      description = 'The origin of the ray.'
+      description = 'The position to start at.'
     },
     endpoint = {
       type = 'Vec3',
-      description = 'The endpoint of the ray.'
+      description = 'The position to move the shape to.'
+    },
+    orientation = {
+      type = 'Quat',
+      description = 'The orientation of the shape.'
     },
     filter = {
       type = 'string',
@@ -108,15 +133,15 @@ return {
     },
     x = {
       type = 'number',
-      description = 'The x coordinate of the impact point, in world space.'
+      description = 'The x coordinate of the impact point.'
     },
     y = {
       type = 'number',
-      description = 'The y coordinate of the impact point, in world space.'
+      description = 'The y coordinate of the impact point.'
     },
     z = {
       type = 'number',
-      description = 'The z coordinate of the impact point, in world space.'
+      description = 'The z coordinate of the impact point.'
     },
     nx = {
       type = 'number',
@@ -133,19 +158,19 @@ return {
   },
   variants = {
     {
-      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'filter', 'callback' },
+      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'angle', 'ax', 'ay', 'az', 'filter', 'callback' },
       returns = {}
     },
     {
-      arguments = { 'start', 'end', 'filter', 'callback' },
+      arguments = { 'position', 'destination', 'orientation', 'filter', 'callback' },
       returns = {}
     },
     {
-      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'filter' },
+      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'angle', 'ax', 'ay', 'az', 'filter' },
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     },
     {
-      arguments = { 'start', 'end', 'filter' },
+      arguments = { 'position', 'destination', 'orientation', 'filter' },
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     }
   },
@@ -159,15 +184,15 @@ return {
 
     The callback can return a fraction value used to limit the range of further hits.  For example:
 
-    - Returning 0.0 will abort the raycast and ignore all other hits.
+    - Returning 0.0 will abort the shapecast and ignore all other hits.
     - Returning 1.0 will call the callback for all hits.
     - Returning `fraction` will return successively closer hits.
 
-    Raycasts will hit sensors and sleeping colliders, but will not hit disabled colliders.
+    Shapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.
   ]],
   related = {
-    'World:shapecast',
-    'World:overlapShape',
+    'World:raycast',
+    'World:collideShape',
     'World:queryBox',
     'World:querySphere'
   }

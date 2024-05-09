@@ -13,8 +13,5 @@ return {
       arguments = {},
       returns = { 'type' }
     }
-  },
-  related = {
-    'JointType'
   }
 }

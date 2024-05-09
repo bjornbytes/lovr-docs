@@ -1,6 +1,14 @@
 return {
   summary = 'Set the dimensions of the BoxShape.',
-  description = 'Sets the width, height, and depth of the BoxShape.',
+  description = [[
+    Sets the width, height, and depth of the BoxShape.
+
+    This changes the mass of the shape.  If the shape is attached to a collider and that collider is
+    set to use automatic mass, the mass properties of the collider will update as well.
+
+    Changing shapes can make the physics engine explode since it can cause objects to overlap in
+    unnatural ways.
+  ]],
   arguments = {
     width = {
       type = 'number',

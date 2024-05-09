@@ -5,7 +5,7 @@ return {
   returns = {
     shapes = {
       type = 'table',
-      description = 'A list of Shapes attached to the Collider.'
+      description = 'A list of `Shape` objects attached to the Collider.'
     }
   },
   variants = {
@@ -15,6 +15,7 @@ return {
     }
   },
   related = {
+    'Collider:getShape',
     'Collider:addShape',
     'Collider:removeShape',
     'Shape'

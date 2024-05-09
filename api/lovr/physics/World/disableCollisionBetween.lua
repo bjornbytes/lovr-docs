@@ -1,7 +1,9 @@
 return {
   tag = 'worldCollision',
   summary = 'Disable collision between two tags.',
-  description = 'Disables collision between two collision tags.',
+  description = [[
+    Disables collision between two tags.  Use `Collider:setTag` to set a Collider's tag.
+  ]],
   arguments = {
     tag1 = {
       type = 'string',
@@ -20,13 +22,22 @@ return {
     }
   },
   notes = [[
-    Tags must be set up when creating the World, see `lovr.physics.newWorld`.
-
     By default, collision is enabled between all tags.
+
+    Another way of disabling collisions is by using the `filter` callback in `World:setCallbacks`.
+    However, using tags is much faster than using the callback, because the physics engine calls the
+    callback later in the collision detection process.  With tags, the colliders are ignored much
+    earlier and precise collision detection is never performed.
+
+    Tags can be marked as "static" when the world is created, as an optimization hint.  Static tags
+    will never collide with other static tags, regardless of whether collision is enabled between
+    them.
   ]],
   related = {
-    'lovr.physics.newWorld',
     'World:enableCollisionBetween',
-    'World:isCollisionEnabledBetween'
+    'World:isCollisionEnabledBetween',
+    'lovr.physics.newWorld',
+    'World:getTags',
+    'Collider:setTag'
   }
 }

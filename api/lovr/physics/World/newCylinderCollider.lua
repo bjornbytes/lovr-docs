@@ -1,7 +1,7 @@
 return {
   tag = 'colliders',
   summary = 'Add a Collider with a CylinderShape to the World.',
-  description = 'Adds a new Collider to the World with a CylinderShape already attached.',
+  description = 'Adds a Collider to the world and attaches a `CylinderShape`.',
   arguments = {
     x = {
       type = 'number',
@@ -49,14 +49,21 @@ return {
       returns = { 'collider' }
     }
   },
+  notes = [[
+    This will throw an error if there are too many colliders in the world.  The limit defaults to
+    16384 and can be changed in `lovr.physics.newWorld`.
+
+    The length of the cylinder goes along its local Z axis.
+  ]],
   related = {
     'CylinderShape',
     'Collider',
     'World:newCollider',
     'World:newBoxCollider',
-    'World:newCapsuleCollider',
-    'World:newMeshCollider',
     'World:newSphereCollider',
+    'World:newCapsuleCollider',
+    'World:newConvexCollider',
+    'World:newMeshCollider',
     'World:newTerrainCollider'
   }
 }

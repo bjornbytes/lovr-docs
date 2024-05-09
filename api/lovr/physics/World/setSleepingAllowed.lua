@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   tag = 'worldProperties',
   summary = 'Set whether colliders can go to sleep.',
   description = 'Sets whether colliders can go to sleep in the World.',

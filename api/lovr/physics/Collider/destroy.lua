@@ -1,6 +1,9 @@
 return {
   summary = 'Destroy the Collider.',
-  description = 'Destroy the Collider, removing it from the World.',
+  description = [[
+    Destroys the Collider, removing it from the World and destroying all Shapes and Joints attached
+    to it.
+  ]],
   arguments = {},
   returns = {},
   variants = {
@@ -10,10 +13,12 @@ return {
     }
   },
   notes = [[
-    Calling functions on the collider after destroying it is a bad idea.
+    After a Collider is destroyed, calling methods on it or passing it to a function will throw an
+    error.
   ]],
   related = {
     'Collider:isDestroyed',
+    'Collider:setEnabled',
     'World:destroy',
     'Shape:destroy',
     'Joint:destroy'

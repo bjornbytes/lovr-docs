@@ -21,5 +21,8 @@ return {
       arguments = {},
       returns = { 'width', 'height', 'depth' }
     }
+  },
+  related = {
+    'Shape:getVolume'
   }
 }
