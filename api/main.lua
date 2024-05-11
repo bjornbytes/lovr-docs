@@ -1,5 +1,9 @@
 local serpent = require 'serpent'
 
+local f = io.popen('git branch --show-current')
+local dev = f and f:read('*a'):match('%w+') == 'dev'
+f:close()
+
 -- Helpers
 
 local function copy(t)
@@ -323,16 +327,42 @@ local function validateObject(object)
     validateFunction(method)
   end
 
+  local metatable = debug.getregistry()[object.name]
+
+  if dev and metatable then
+    local hasMethod = {}
+
+    for _, method in ipairs(object.methods or {}) do
+      warnIf(not metatable[method.name], '%s has docs for unknown method %s', object.name, method.name)
+      hasMethod[method.name] = true
+    end
+
+    local ignore = {
+      type = true,
+      release = true,
+      monkey = true
+    }
+
+    for name in pairs(metatable) do
+      if not name:match('^__') and not ignore[name] then
+        warnIf(not hasMethod[name], '%s is missing docs for %s', object.name, name)
+      end
+    end
+  end
+
   validateRelated(object)
 end
 
 local function validateModule(module)
+  local t = lovr[module.name]
+
   for _, object in ipairs(module.objects) do
     validateObject(object)
   end
 
   for _, fn in ipairs(module.functions) do
     validateFunction(fn)
+    warnIf(dev and t and not t[fn.name], '%s has docs for unknown function %s', module.key, fn.name)
   end
 
   for _, fn in ipairs(module.enums) do
