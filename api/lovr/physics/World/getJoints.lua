@@ -1,12 +1,12 @@
 return {
-  tag = 'joints'
+  tag = 'joints',
   summary = 'Get a list of joints in the World.',
   description = [[
     Returns a table with all the joints in the World.  This includes disabled joints.
   ]],
   arguments = {},
   returns = {
-    colliders = {
+    joints = {
       type = 'table',
       description = 'The list of `Joint` objects in the World.'
     }

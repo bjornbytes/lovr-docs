@@ -17,7 +17,7 @@ return {
   variants = {
     {
       arguments = {},
-      returns = { 'shapes' }
+      returns = { 'shape' }
     }
   },
   notes = 'This may return `nil` if the Collider doesn\'t have any shapes attached to it.',

@@ -1,9 +1,6 @@
 return {
   summary = 'Put the Collider to sleep or wake it up.',
-  description = [[
-    Manually puts the Collider to sleep or wakes it up.  You can do this if you know a Collider
-    won't be touched for a while or if you need to it be active.
-  ]],
+  description = 'Puts the Collider to sleep or wakes it up manually.',
   arguments = {
     awake = {
       type = 'boolean',
@@ -17,9 +14,11 @@ return {
       returns = {}
     }
   },
+  notes = [[
+    This function can still be used to put a Collider to sleep even if automatic sleeping has been
+    disabled with `Collider:setSleepingAllowed`.
+  ]],
   related = {
-    'World:isSleepingAllowed',
-    'World:setSleepingAllowed',
     'Collider:isSleepingAllowed',
     'Collider:setSleepingAllowed'
   }

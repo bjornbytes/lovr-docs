@@ -1,5 +1,5 @@
 return {
-  tag = 'joints'
+  tag = 'joints',
   summary = 'Get the number of joints in the world.',
   description = [[
     Returns the number of joints in the world.  This includes disabled joints.

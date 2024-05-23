@@ -1,8 +1,14 @@
 return {
   summary = 'Set whether the Collider is allowed to sleep.',
-  description = 'Sets whether the Collider is allowed to sleep.',
+  description = [[
+    Sets whether the Collider is allowed to automatically go to sleep.
+
+    When enabled, the Collider will go to sleep if it hasn't moved in a while.  The physics engine
+    does not simulate movement for colliders that are asleep, which saves a lot of CPU for a typical
+    physics world where most objects are at rest at any given time.  
+  ]],
   arguments = {
-    allowed = {
+    sleepy = {
       type = 'boolean',
       description = 'Whether the Collider can go to sleep.'
     }
@@ -10,24 +16,35 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'allowed' },
+      arguments = { 'sleepy' },
       returns = {}
     }
   },
   notes = [[
-    If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a
-    while. Sleeping colliders don't impact the physics simulation, which makes updates more
-    efficient and improves physics performance.  However, the physics engine isn't perfect at waking
-    up sleeping colliders and this can lead to bugs where colliders don't react to forces or
-    collisions properly.
+    Sleeping is enabled by default.  Sleeping can be disabled globally using the `allowSleep` option
+    in `lovr.physics.newWorld`.
 
-    It is possible to set the default value for new colliders using `World:setSleepingAllowed`.
+    Colliders can still be put to sleep manually with `Collider:setAwake`, even if automatic
+    sleeping is disabled.
 
-    Colliders can be manually put to sleep or woken up using `Collider:setAwake`.
+    Sleeping colliders will wake up when:
+
+    - Colliding with a moving collider
+    - Awakened explicitly with `Collider:setAwake`
+    - Changing position `Collider:setPosition` or `Collider:setOrientation`
+    - Changing velocity (to something non-zero)
+    - Applying force, torque, or an impulse
+    - Enabling a joint connected to the sleeping collider
+
+    Notably, the following will not wake up the collider:
+
+    - Changing its kinematic state with `Collider:setKinematic`
+    - Changing its shape with `Collider:addShape` or `Collider:removeShape`
+    - Disabling or destroying a sleeping collider it is resting on
+
+    Sensors will never go to sleep.
   ]],
   related = {
-    'World:isSleepingAllowed',
-    'World:setSleepingAllowed',
     'Collider:isAwake',
     'Collider:setAwake'
   }

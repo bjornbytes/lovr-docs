@@ -1,5 +1,5 @@
 return {
-  tag = 'colliders'
+  tag = 'colliders',
   summary = 'Get a list of colliders in the World.',
   description = [[
     Returns a list of colliders in the world.  This includes sleeping and disabled colliders.

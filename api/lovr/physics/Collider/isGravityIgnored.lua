@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   summary = 'Check if the Collider ignores gravity.',
   description = 'Returns whether the Collider is currently ignoring gravity.',
   arguments = {},

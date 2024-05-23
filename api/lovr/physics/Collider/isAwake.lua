@@ -1,11 +1,11 @@
 return {
   summary = 'Check if the Collider is awake.',
-  description = 'Returns whether the Collider is currently awake.',
+  description = 'Returns whether the Collider is awake.',
   arguments = {},
   returns = {
     awake = {
       type = 'boolean',
-      description = 'Whether the Collider is awake.'
+      description = 'Whether the Collider is finally awake.'
     }
   },
   variants = {
@@ -14,9 +14,8 @@ return {
       returns = { 'awake' }
     }
   },
+  notes = 'See `Collider:setSleepingAllowed` for notes about sleeping.',
   related = {
-    'World:isSleepingAllowed',
-    'World:setSleepingAllowed',
     'Collider:isSleepingAllowed',
     'Collider:setSleepingAllowed'
   }

@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   summary = 'Set whether the Collider ignores gravity.',
   description = 'Sets whether the Collider should ignore gravity.',
   arguments = {
