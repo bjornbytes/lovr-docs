@@ -102,36 +102,30 @@ local function processFunction(path, parent)
     fn.examples[k] = processExample(example)
   end
 
-  if not fn.variants then
-    local missingVariants = (not fn.arguments[1] and next(fn.arguments)) or (not fn.returns[1] and next(fn.returns))
-    warnIf(missingVariants, 'Function %q is missing variants', fn.key)
-    fn.variants = {
-      {
-        arguments = fn.arguments,
-        returns = fn.returns
-      }
-    }
-  else
-    assert(fn.arguments, string.format('Function %q with variants does not have arguments list', fn.key))
-    for name, arg in pairs(fn.arguments) do
-      arg.name = name
+  assert(fn.variants, string.format('Function %q is missing variants', fn.key))
+  assert(fn.arguments, string.format('Function %q does not have arguments list', fn.key))
+  assert(fn.returns, string.format('Function %q does not have returns list', fn.key))
+
+  for name, arg in pairs(fn.arguments) do
+    arg.name = name
+  end
+
+  for name, ret in pairs(fn.returns) do
+    ret.name = name
+  end
+
+  for i, variant in ipairs(fn.variants) do
+    assert(variant.arguments, string.format('%q variant #%d is missing arguments', fn.key, i))
+    assert(variant.returns, string.format('%q variant #%d is missing returns', fn.key, i))
+
+    for j, name in ipairs(variant.arguments) do
+      warnIf(not fn.arguments[name], string.format('Function %q variant argument %q does not exist', fn.key, name))
+      variant.arguments[j] = copy(fn.arguments[name])
     end
 
-    assert(fn.returns, string.format('Function %q with variants does not have returns list', fn.key))
-    for name, ret in pairs(fn.returns) do
-      ret.name = name
-    end
-
-    for _, variant in ipairs(fn.variants) do
-      for i, name in ipairs(variant.arguments) do
-        warnIf(not fn.arguments[name], string.format('Function %q variant argument %q does not exist', fn.key, name))
-        variant.arguments[i] = copy(fn.arguments[name])
-      end
-
-      for i, name in ipairs(variant.returns) do
-        warnIf(not fn.returns[name], string.format('Function %q variant return %q does not exist', fn.key, name))
-        variant.returns[i] = copy(fn.returns[name])
-      end
+    for j, name in ipairs(variant.returns) do
+      warnIf(not fn.returns[name], string.format('Function %q variant return %q does not exist', fn.key, name))
+      variant.returns[j] = copy(fn.returns[name])
     end
   end
 
@@ -149,14 +143,10 @@ local function processFunction(path, parent)
 
     variant.description = unwrap(variant.description)
 
-    assert(variant.arguments, string.format('Variant for %q is missing arguments', fn.key))
-
     for _, arg in ipairs(variant.arguments) do
       arg.description = unwrap(arg.description)
       processTable(arg.table)
     end
-
-    assert(variant.returns, string.format('Variant for %q is missing returns', fn.key))
 
     for _, ret in ipairs(variant.returns) do
       ret.description = unwrap(ret.description)
