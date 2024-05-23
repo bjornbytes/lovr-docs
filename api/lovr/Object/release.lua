@@ -9,6 +9,12 @@ return {
   ]],
   arguments = {},
   returns = {},
+  variants = {
+    {
+      arguments = {},
+      returns = {}
+    }
+  },
   notes = [[
     The object may not be destroyed immediately if something else is referring to it (e.g. it is
     pushed to a Channel or exists in the payload of a pending event).
