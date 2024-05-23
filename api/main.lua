@@ -366,6 +366,9 @@ function lovr.load()
     callbacks = {}
   }
 
+  -- So errhand exits
+  lovr.graphics = nil
+
   -- Modules
   table.insert(api.modules, processModule('lovr'))
 
