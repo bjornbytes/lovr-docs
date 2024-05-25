@@ -1,6 +1,9 @@
 return {
   summary = 'Get the Collider\'s axis aligned bounding box.',
-  description = 'Returns the bounding box for the Collider, computed from attached shapes.',
+  description = [[
+    Returns the world-space axis-aligned bounding box of the Collider, computed from attached
+    shapes.
+  ]],
   arguments = {},
   returns = {
     minx = {
@@ -35,6 +38,7 @@ return {
     }
   },
   related = {
-    'Shape:getAABB'
+    'Shape:getAABB',
+    'World:queryBox'
   }
 }

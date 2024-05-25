@@ -1,6 +1,6 @@
 return {
-  summary = 'Convert a vector from world space to local space.',
-  description = ' Converts a direction vector from world space to local space.',
+  summary = 'Transform a vector from world space to local space.',
+  description = 'Transforms a direction vector from world space to local space.',
   arguments = {
     wx = {
       type = 'number',
@@ -22,15 +22,15 @@ return {
   returns = {
     x = {
       type = 'number',
-      description = 'The x coordinate of the local vector.'
+      description = 'The x component of the local vector.'
     },
     y = {
       type = 'number',
-      description = 'The y coordinate of the local vector.'
+      description = 'The y component of the local vector.'
     },
     z = {
       type = 'number',
-      description = 'The z coordinate of the local vector.'
+      description = 'The z component of the local vector.'
     }
   },
   variants = {

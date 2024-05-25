@@ -4,19 +4,19 @@ return {
   arguments = {
     x = {
       type = 'number',
-      description = 'The x component of the torque.'
+      description = 'The x component of the world-space torque vector, in newton meters.'
     },
     y = {
       type = 'number',
-      description = 'The y component of the torque.'
+      description = 'The y component of the world-space torque vector, in newton meters.'
     },
     z = {
       type = 'number',
-      description = 'The z component of the torque.'
+      description = 'The z component of the world-space torque vector, in newton meters.'
     },
     torque = {
       type = 'Vec3',
-      description = 'The torque to apply.'
+      description = 'The world-space torque vector, in newton meters.'
     }
   },
   returns = {},
@@ -30,8 +30,16 @@ return {
       returns = {}
     }
   },
-  notes = 'If the Collider is asleep, calling this function will wake it up.',
+  notes = [[
+    Kinematic colliders ignore forces.
+
+    If the Collider is asleep, this will wake it up.
+
+    Forces are accumulated and processed during `World:update`.
+  ]],
   related = {
-    'Collider:applyForce'
+    'Collider:applyAngularImpulse',
+    'Collider:applyForce',
+    'Collider:applyLinearImpulse'
   }
 }

@@ -1,20 +1,20 @@
 return {
-  summary = 'Convert a point from world space to collider space.',
+  summary = 'Transform a point from world space to collider space.',
   description = [[
-    Converts a point from world coordinates into local coordinates relative to the Collider.
+    Transforms a point from world coordinates into local coordinates relative to the Collider.
   ]],
   arguments = {
     wx = {
       type = 'number',
-      description = 'The x coordinate of the world point.'
+      description = 'The x component of the world point.'
     },
     wy = {
       type = 'number',
-      description = 'The y coordinate of the world point.'
+      description = 'The y component of the world point.'
     },
     wz = {
       type = 'number',
-      description = 'The z coordinate of the world point.'
+      description = 'The z component of the world point.'
     },
     point = {
       type = 'Vec3',
@@ -24,15 +24,15 @@ return {
   returns = {
     x = {
       type = 'number',
-      description = 'The x position of the local-space point.'
+      description = 'The x component of the local point.'
     },
     y = {
       type = 'number',
-      description = 'The y position of the local-space point.'
+      description = 'The y component of the local point.'
     },
     z = {
       type = 'number',
-      description = 'The z position of the local-space point.'
+      description = 'The z component of the local point.'
     }
   },
   variants = {

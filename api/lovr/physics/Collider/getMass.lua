@@ -29,15 +29,13 @@ return {
   },
   notes = [[
     By default, the mass of the Collider will be kept up to date automatically as shapes are added
-    and removed from the Collider (or when the shapes change size or density).  This can be disabled
-    using `Collider:setAutomaticMass`.
+    and removed from the Collider (or if the shapes change size or density).  Use
+    `Collider:setAutomaticMass` to customize this.
 
     Mass can be overridden with `Collider:setMass`, or recomputed from the attached shapes with
     `Collider:resetMassData`.
 
-    If the Collider is kinematic, this returns 0.
-
-    If all translation axes have been disabled with `Collider:setEnabledAxes`, this returns 0.
+    If the Collider is kinematic or all translation axes are disabled, this returns 0.
   ]],
   related = {
     'Collider:getInertia',

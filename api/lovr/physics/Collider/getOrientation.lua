@@ -26,8 +26,15 @@ return {
       returns = { 'angle', 'ax', 'ay', 'az' }
     }
   },
+  notes = [[
+    When the World is using a fixed timestep, this returns an interpolated orientation between the
+    last two physics updates.  Use `Collider:getRawOrientation` to get the raw orientation without
+    any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to
+    disable fixed timestep and all collider interpolation.
+  ]],
   related = {
     'Collider:applyTorque',
+    'Collider:getRawOrientation',
     'Collider:getAngularVelocity',
     'Collider:setAngularVelocity',
     'Collider:getPosition',

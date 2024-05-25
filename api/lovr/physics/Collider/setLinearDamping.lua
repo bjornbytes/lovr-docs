@@ -1,36 +1,32 @@
 return {
   summary = 'Set the linear damping of the Collider.',
   description = [[
-    Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air
-    resistance, slowing the Collider down over time. Damping is only applied when linear
-    velocity is over the threshold value.
+    Sets the linear damping of the Collider.  Linear damping is similar to drag or air resistance,
+    slowing the Collider down over time.
   ]],
   arguments = {
     damping = {
       type = 'number',
       description = 'The linear damping.'
-    },
-    threshold = {
-      type = 'number',
-      default = '0',
-      description = 'Velocity limit below which the damping is not applied.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'damping', 'threshold' },
+      arguments = { 'damping' },
       returns = {}
     }
   },
   notes = [[
-    When the Collider is created, it will use the world's linear damping value, which is set using
-    `World:setLinearDamping`.
+    The default damping is .05, meaning the collider will lose approximately 5% of its velocity each
+    second.  A damping value of zero means the Collider will not lose velocity over time.
 
-    A linear damping of 0 means the Collider won't slow down over time.
+    Negative damping is not meaningful and will be clamped to zero.
   ]],
   related = {
-    'World:getLinearDamping',
-    'World:setLinearDamping'
+    'Collider:getAngularDamping',
+    'Collider:setAngularDamping',
+    'Collider:getGravityScale',
+    'Collider:setGravityScale'
   }
 }

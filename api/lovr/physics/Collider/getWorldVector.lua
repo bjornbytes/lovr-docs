@@ -1,20 +1,18 @@
 return {
-  summary = 'Convert a vector from local space to world space.',
-  description = [[
-    Converts a direction vector from local space to world space.
-  ]],
+  summary = 'Transform a vector from local space to world space.',
+  description = 'Transforms a direction vector from local space to world space.',
   arguments = {
     x = {
       type = 'number',
-      description = 'The x coordinate of the local vector.'
+      description = 'The x component of the local vector.'
     },
     y = {
       type = 'number',
-      description = 'The y coordinate of the local vector.'
+      description = 'The y component of the local vector.'
     },
     z = {
       type = 'number',
-      description = 'The z coordinate of the local vector.'
+      description = 'The z component of the local vector.'
     },
     vector = {
       type = 'Vec3',

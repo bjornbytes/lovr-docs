@@ -1,26 +1,22 @@
 return {
   summary = 'Set the linear velocity of the Collider.',
-  description = [[
-    Sets the linear velocity of the Collider directly.  Usually it's preferred to use
-    `Collider:applyForce` to change velocity since instantaneous velocity changes can lead to weird
-    glitches.
-  ]],
+  description = 'Sets the world-space linear velocity of the center of mass of the Collider.',
   arguments = {
     vx = {
       type = 'number',
-      description = 'The x velocity of the Collider, in meters per second.'
+      description = 'The x component of the new velocity, in meters per second.'
     },
     vy = {
       type = 'number',
-      description = 'The y velocity of the Collider, in meters per second.'
+      description = 'The y component of the new velocity, in meters per second.'
     },
     vz = {
       type = 'number',
-      description = 'The z velocity of the Collider, in meters per second.'
+      description = 'The z component of the new velocity, in meters per second.'
     },
     velocity = {
       type = 'Vec3',
-      description = 'The velocity of the Collider, in meters per second.'
+      description = 'The new velocity, in meters per second.'
     }
   },
   returns = {},
@@ -36,13 +32,29 @@ return {
       returns = {}
     }
   },
-  notes = 'If the Collider is asleep, calling this function will wake it up.',
+  notes = [[
+    Although setting the velocity directly is useful sometimes, it can cause problems:
+
+    - Velocity ignores mass, so it can lead to unnaturally sharp changes in motion.
+    - If the velocity of a Collider is changed multiple times during a frame, only the last one is
+      going to have an effect, nullifying the other velocities that were set.
+    - Setting the velocity of a Collider every frame can mess up collisions, since the forces used
+      to resolve a collision will get ignored by changing the velocity.
+
+    Using forces and impulses to move Colliders will avoid all of these issues.
+
+    If the Collider is asleep, setting the velocity to a non-zero value will wake it up.
+
+    If the Collider has a tag that was marked as static when the World was created, then the
+    Collider can not move and this function will do nothing.
+  ]],
   related = {
+    'Collider:applyForce',
+    'Collider:applyLinearImpulse',
     'Collider:getLinearVelocityFromLocalPoint',
     'Collider:getLinearVelocityFromWorldPoint',
     'Collider:getAngularVelocity',
     'Collider:setAngularVelocity',
-    'Collider:applyForce',
     'Collider:getPosition',
     'Collider:setPosition'
   }

@@ -1,36 +1,39 @@
 return {
-  summary = 'Get the linear velocity of the Collider at a point.',
-  description = 'Returns the linear velocity of a point relative to the Collider.',
+  summary = 'Get the linear velocity of a point on the Collider.',
+  description = [[
+    Returns the linear velocity of a point on the Collider.  This includes the velocity of the
+    center of mass plus the angular velocity at that point.
+  ]],
   arguments = {
     x = {
       type = 'number',
-      description = 'The x coordinate.'
+      description = 'The x position in local space.'
     },
     y = {
       type = 'number',
-      description = 'The y coordinate.'
+      description = 'The y position in local space.'
     },
     z = {
       type = 'number',
-      description = 'The z coordinate.'
+      description = 'The z position in local space.'
     },
     point = {
       type = 'number',
-      description = 'The point.'
+      description = 'The local-space point.'
     }
   },
   returns = {
     vx = {
       type = 'number',
-      description = 'The x component of the velocity of the point.'
+      description = 'The x velocity of the point.'
     },
     vy = {
       type = 'number',
-      description = 'The y component of the velocity of the point.'
+      description = 'The y velocity of the point.'
     },
     vz = {
       type = 'number',
-      description = 'The z component of the velocity of the point.'
+      description = 'The z velocity of the point.'
     }
   },
   variants = {

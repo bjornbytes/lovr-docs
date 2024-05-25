@@ -1,34 +1,32 @@
 return {
   summary = 'Set the angular damping of the Collider.',
   description = [[
-    Sets the angular damping of the Collider.  Angular damping makes things less "spinny", causing
-    them to slow down their angular velocity over time. Damping is only applied when angular
-    velocity is over the threshold value.
+    Sets the angular damping of the Collider.  Angular damping is similar to drag or air resistance,
+    reducing the Collider's angular velocity over time.
   ]],
   arguments = {
     damping = {
       type = 'number',
       description = 'The angular damping.'
-    },
-    threshold = {
-      type = 'number',
-      default = '0',
-      description = 'Velocity limit below which the damping is not applied.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'damping', 'threshold' },
+      arguments = { 'damping' },
       returns = {}
     }
   },
   notes = [[
-    When the Collider is created, it will use the world's angular damping value, which is set using
-    `World:setAngularDamping`.
+    The default damping is .05, meaning the collider will lose approximately 5% of its velocity each
+    second.  A damping value of zero means the Collider will not lose velocity over time.
+
+    Negative damping is not meaningful and will be clamped to zero.
   ]],
   related = {
-    'World:getAngularDamping',
-    'World:setAngularDamping'
+    'Collider:getLinearDamping',
+    'Collider:setLinearDamping',
+    'Collider:getInertia',
+    'Collider:setInertia'
   }
 }
