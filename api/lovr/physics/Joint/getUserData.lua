@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the Joint\'s user data.',
-  description = 'Returns the user data associated with the Joint.',
+  summary = 'Get the Lua value associated with the Joint.',
+  description = 'Returns the Lua value associated with the Joint.',
   arguments = {},
   returns = {
     data = {
@@ -13,5 +13,14 @@ return {
       arguments = {},
       returns = { 'data' }
     }
+  },
+  notes = [[
+    The user data is not shared between threads.  Each thread has its own user data for the Joint.
+  ]],
+  related = {
+    'Collider:getUserData',
+    'Collider:setUserData',
+    'Shape:getUserData',
+    'Shape:setUserData'
   }
 }

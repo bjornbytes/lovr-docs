@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the Shape\'s user data.',
-  description = 'Returns the user data associated with the Shape.',
+  summary = 'Get the Lua value associated with the Shape.',
+  description = 'Returns the Lua value associated with the Shape.',
   arguments = {},
   returns = {
     data = {
@@ -14,5 +14,13 @@ return {
       returns = { 'data' }
     }
   },
-  notes = 'User data can be useful to identify the Shape in callbacks.'
+  notes = [[
+    The user data is not shared between threads.  Each thread has its own user data for the Shape.
+  ]],
+  related = {
+    'Collider:getUserData',
+    'Collider:setUserData',
+    'Joint:getUserData',
+    'Joint:setUserData'
+  }
 }

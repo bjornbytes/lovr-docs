@@ -1,10 +1,10 @@
 return {
-  summary = 'Set the Shape\'s user data.',
-  description = 'Sets the user data associated with the Shape.',
+  summary = 'Associate a Lua value with the Shape.',
+  description = 'Associates a Lua value with the Shape.',
   arguments = {
     data = {
       type = '*',
-      description = 'The custom value associated with the Shape.'
+      description = 'The custom value to associate with the Shape.'
     }
   },
   returns = {},
@@ -14,5 +14,15 @@ return {
       returns = {}
     }
   },
-  notes = 'User data can be useful to identify the Shape in callbacks.'
+  notes = [[
+    Set the user data to `nil` to clear any existing reference.
+
+    The user data is not shared between threads.  Each thread has its own user data for the Shape.
+  ]],
+  related = {
+    'Collider:getUserData',
+    'Collider:setUserData',
+    'Joint:getUserData',
+    'Joint:setUserData'
+  }
 }

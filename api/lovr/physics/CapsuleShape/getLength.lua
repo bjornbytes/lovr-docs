@@ -13,5 +13,9 @@ return {
       arguments = {},
       returns = { 'length' }
     }
+  },
+  related = {
+    'CapsuleShape:getRadius',
+    'CapsuleShape:setRadius'
   }
 }

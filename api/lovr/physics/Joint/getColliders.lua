@@ -1,8 +1,6 @@
 return {
   summary = 'Get the Colliders the Joint is attached to.',
-  description = [[
-    Returns the Colliders the Joint is attached to.  All Joints are attached to two colliders.
-  ]],
+  description = 'Returns the Colliders the Joint is attached to.',
   arguments = {},
   returns = {
     colliderA = {
@@ -19,5 +17,8 @@ return {
       arguments = {},
       returns = { 'colliderA', 'colliderB' }
     }
+  },
+  related = {
+    'Collider:getJoints'
   }
 }

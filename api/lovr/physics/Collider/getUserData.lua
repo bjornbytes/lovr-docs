@@ -1,5 +1,5 @@
 return {
-  summary = 'Return the Lua value associated with the Collider.',
+  summary = 'Get the Lua value associated with the Collider.',
   description = 'Returns the Lua value associated with the Collider.',
   arguments = {},
   returns = {
@@ -27,5 +27,11 @@ return {
 
     The user data is not shared between threads.  Each thread has its own user data for the
     Collider.
-  ]]
+  ]],
+  related = {
+    'Shape:getUserData',
+    'Shape:setUserData',
+    'Joint:getUserData',
+    'Joint:setUserData'
+  }
 }

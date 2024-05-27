@@ -29,5 +29,11 @@ return {
 
     The user data is not shared between threads.  Each thread has its own user data for the
     Collider.
-  ]]
+  ]],
+  related = {
+    'Shape:getUserData',
+    'Shape:setUserData',
+    'Joint:getUserData',
+    'Joint:setUserData'
+  }
 }

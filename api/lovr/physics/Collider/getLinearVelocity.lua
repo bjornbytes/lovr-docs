@@ -25,6 +25,9 @@ return {
       returns = { 'vx', 'vy', 'vz' }
     }
   },
+  notes = [[
+    Currently, velocity is clamped to 500 meters per second to improve stability of the simulation.
+  ]],
   related = {
     'Collider:applyForce',
     'Collider:getLinearVelocityFromLocalPoint',

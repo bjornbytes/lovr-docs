@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the Shape\'s position.',
-  description = 'Get the position of the Shape relative to its Collider.',
+  summary = 'Get the position of the Shape in the world.',
+  description = 'Get the position of the Shape in the world.',
   arguments = {},
   returns = {
     x = {

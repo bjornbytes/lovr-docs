@@ -1,6 +1,6 @@
 return {
   summary = 'Get the Shape\'s axis aligned bounding box.',
-  description = 'Returns the bounding box for the Shape.',
+  description = 'Returns the axis aligned bounding box of the Shape.',
   arguments = {},
   returns = {
     minx = {

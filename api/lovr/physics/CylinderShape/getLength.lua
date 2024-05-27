@@ -13,5 +13,9 @@ return {
       arguments = {},
       returns = { 'length' }
     }
+  },
+  related = {
+    'CylinderShape:getRadius',
+    'CylinderShape:setRadius'
   }
 }

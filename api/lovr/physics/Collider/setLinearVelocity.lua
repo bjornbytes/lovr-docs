@@ -47,6 +47,8 @@ return {
 
     If the Collider has a tag that was marked as static when the World was created, then the
     Collider can not move and this function will do nothing.
+
+    Currently, velocity is clamped to 500 meters per second to improve stability of the simulation.
   ]],
   related = {
     'Collider:applyForce',
