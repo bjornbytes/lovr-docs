@@ -1,18 +1,21 @@
 return {
-  summary = 'Set the pose of the Shape.',
-  description = 'Sets the position and orientation of the Shape, relative to its Collider.',
+  summary = 'Set the local offset of the Shape.',
+  description = [[
+    Sets the local offset of the Shape.  When the Shape is attached to a Collider, it will have this
+    offset relative to the Collider.
+  ]],
   arguments = {
     x = {
       type = 'number',
-      description = 'The x position of the Shape, in meters.'
+      description = 'The local x offset of the Shape, in meters.'
     },
     y = {
       type = 'number',
-      description = 'The y position of the Shape, in meters.'
+      description = 'The local y offset of the Shape, in meters.'
     },
     z = {
       type = 'number',
-      description = 'The z position of the Shape, in meters.'
+      description = 'The local z offset of the Shape, in meters.'
     },
     angle = {
       type = 'number',
@@ -32,31 +35,27 @@ return {
     },
     position = {
       type = 'Vec3',
-      description = 'The position of the Shape, in meters.'
+      description = 'The local offset of the Shape, in meters.'
     },
-    orientation = {
+    rotation = {
       type = 'Quat',
-      description = 'The orientation of the Shape.'
+      description = 'The local rotation of the Shape, in meters.'
     }
   },
   returns = {},
   variants = {
     {
-      description = 'Set the pose of the Shape using numbers.',
       arguments = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' },
       returns = {}
     },
     {
-      description = 'Set the pose of the Shape using vector types.',
-      arguments = { 'position', 'orientation' },
+      arguments = { 'position', 'rotation' },
       returns = {}
     }
   },
-  notes = 'If the Shape isn\'t attached to a Collider, this will error.',
   related = {
     'Shape:getPosition',
-    'Shape:setPosition',
     'Shape:getOrientation',
-    'Shape:setOrientation'
+    'Shape:getPose'
   }
 }

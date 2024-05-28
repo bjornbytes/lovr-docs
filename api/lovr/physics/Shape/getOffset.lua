@@ -1,23 +1,22 @@
 return {
-  summary = 'Get the pose of the Shape.',
+  summary = 'Get the local offset of the Shape.',
   description = [[
-    Returns the position and orientation of the Shape in world space, taking into the account the
-    position and orientation of the Collider it's attached to, if any.  Shapes that aren't attached
-    to a Collider will return their local offset.
+    Returns the local offset of the Shape.  When the Shape is attached to a Collider, it will have
+    this offset relative to the Collider.
   ]],
   arguments = {},
   returns = {
     x = {
       type = 'number',
-      description = 'The x position of the Shape, in meters.'
+      description = 'The local x offset of the Shape, in meters.'
     },
     y = {
       type = 'number',
-      description = 'The y position of the Shape, in meters.'
+      description = 'The local y offset of the Shape, in meters.'
     },
     z = {
       type = 'number',
-      description = 'The z position of the Shape, in meters.'
+      description = 'The local z offset of the Shape, in meters.'
     },
     angle = {
       type = 'number',
@@ -45,7 +44,6 @@ return {
   related = {
     'Shape:getPosition',
     'Shape:getOrientation',
-    'Shape:getOffset',
-    'Shape:setOffset'
+    'Shape:getPose'
   }
 }

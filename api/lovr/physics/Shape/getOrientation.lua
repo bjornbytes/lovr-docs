@@ -1,6 +1,10 @@
 return {
-  summary = 'Get the Shape\'s orientation.',
-  description = 'Get the orientation of the Shape relative to its Collider.',
+  summary = 'Get the orientation of the Shape.',
+  description = [[
+    Get the orientation of the Shape in world space, taking into account the position and
+    orientation of the Collider it's attached to, if any.  Shapes that aren't attached to a Collider
+    will return their local offset.
+  ]],
   arguments = {},
   returns = {
     angle = {
@@ -28,8 +32,8 @@ return {
   },
   related = {
     'Shape:getPosition',
-    'Shape:setPosition',
     'Shape:getPose',
-    'Shape:setPose'
+    'Shape:getOffset',
+    'Shape:setOffset'
   }
 }
