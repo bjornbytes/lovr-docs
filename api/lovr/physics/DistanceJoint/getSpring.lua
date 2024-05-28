@@ -18,6 +18,12 @@ return {
       description = 'The damping ratio of the spring.'
     }
   },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'frequency', 'damping' }
+    }
+  },
   notes = [[
     Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled
     and the limits will be as stiff as possible.

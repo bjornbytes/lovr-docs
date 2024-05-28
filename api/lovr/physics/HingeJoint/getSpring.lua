@@ -1,10 +1,12 @@
 return {
-  summary = 'Set the spring parameters of the joint.',
+  summary = 'Get the spring parameters of the HingeJoint.',
   description = [[
-    Sets the DistanceJoint's spring parameters.  Use this to control how fast the joint pulls the
-    colliders back together at the distance limits.
+    Returns the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge
+    "soft".  When the motor is active, a separate set of spring parameters can be set on the motor,
+    see `HingeJoint:setMotorSpring`.
   ]],
-  arguments = {
+  arguments = {},
+  returns = {
     frequency = {
       type = 'number',
       description = [[
@@ -17,11 +19,10 @@ return {
       description = 'The damping ratio of the spring.'
     }
   },
-  returns = {},
   variants = {
     {
-      arguments = { 'frequency', 'damping' },
-      returns = {}
+      arguments = {},
+      returns = { 'frequency', 'damping' }
     }
   },
   notes = [[
@@ -41,5 +42,9 @@ return {
       takes the minimum amount of time to reach the target (based on the frequency).
 
     The default damping ratio is zero.
-  ]]
+  ]],
+  related = {
+    'HingeJoint:getMotorSpring',
+    'HingeJoint:setMotorSpring'
+  }
 }

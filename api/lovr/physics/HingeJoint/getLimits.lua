@@ -1,30 +1,28 @@
 return {
-  summary = 'Get the HingeJoint\'s angle limits.',
+  summary = 'Get the angle limits of the HingeJoint.',
   description = [[
-    Returns the upper and lower limits of the hinge angle.  These will be between -π and π.
+    Returns the angle limits of the HingeJoint.  The "zero" angle is determined by the relative
+    position of the colliders at the time the joint was created.
   ]],
   arguments = {},
   returns = {
-    lower = {
+    min = {
       type = 'number',
-      description = 'The lower limit, in radians.'
+      description = 'The minimum angle, in radians.  Always between -π and 0.'
     },
-    upper = {
+    max = {
       type = 'number',
-      description = 'The upper limit, in radians.'
+      description = 'The maximum angle, in radians.  Always between 0 and π.'
     }
   },
   variants = {
     {
       arguments = {},
-      returns = { 'lower', 'upper' }
+      returns = { 'min', 'max' }
     }
   },
+  notes = 'The default limits are -π and π.',
   related = {
-    'HingeJoint:getAngle',
-    'HingeJoint:getLowerLimit',
-    'HingeJoint:setLowerLimit',
-    'HingeJoint:getUpperLimit',
-    'HingeJoint:setUpperLimit'
+    'HingeJoint:getAngle'
   }
 }

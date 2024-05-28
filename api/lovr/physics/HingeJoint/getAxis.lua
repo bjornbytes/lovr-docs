@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the HingeJoint\'s axis.',
-  description = 'Returns the axis of the hinge.',
+  summary = 'Get the rotation axis of the HingeJoint.',
+  description = 'Returns the axis of the hinge, in world space.',
   arguments = {},
   returns = {
     x = {
@@ -21,5 +21,9 @@ return {
       arguments = {},
       returns = { 'x', 'y', 'z' }
     }
+  },
+  related = {
+    'HingeJoint:getAngle',
+    'Joint:getAnchors'
   }
 }
