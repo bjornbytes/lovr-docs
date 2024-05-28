@@ -18,8 +18,8 @@ return {
   },
   variants = {
     {
-      arguments = {}
-      returns = { 'tag' },
+      arguments = {},
+      returns = { 'tag' }
     }
   },
   related = {

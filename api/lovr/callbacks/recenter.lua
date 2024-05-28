@@ -10,6 +10,12 @@ return {
   ]],
   arguments = {},
   returns = {},
+  variants = {
+    {
+      arguments = {},
+      returns = {}
+    }
+  },
   notes = [[
     Note that the pose of the `floor` device will not always be at the origin of the coordinate
     space.  It uses a fixed position on the floor in the real world, usually the center of the

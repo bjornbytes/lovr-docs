@@ -7,17 +7,21 @@ return {
     the headset display, otherwise it will render to the desktop window.
   ]],
   arguments = {
-    {
-      name = 'pass',
+    pass = {
       type = 'Pass',
       description = 'A render pass targeting the main display (headset or window).'
     }
   },
   returns = {
-    {
-      name = 'skip',
+    skip = {
       type = 'boolean',
       description = 'If truthy, the input Pass will not be submitted to the GPU.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'pass' },
+      returns = { 'skip' }
     }
   },
   notes = [[

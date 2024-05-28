@@ -375,7 +375,7 @@ return {
               description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
             },
             {
-              name = "repeating",
+              name = "repeat",
               type = "boolean",
               description = "Whether the event is the result of a key repeat instead of an actual press."
             }
@@ -937,12 +937,12 @@ return {
         {
           arguments = {
             {
-              name = "deltaX",
+              name = "dx",
               type = "number",
               description = "The relative horizontal motion; rightward movement resuts in positive values."
             },
             {
-              name = "deltaY",
+              name = "dy",
               type = "number",
               description = "The relative vertical motion; upward movement results in positive values."
             }
@@ -32565,26 +32565,41 @@ return {
           related = {
             "Shape",
             "BoxShape",
+            "SphereShape",
             "CapsuleShape",
             "CylinderShape",
-            "SphereShape"
+            "ConvexShape",
+            "MeshShape",
+            "TerrainShape"
           },
           values = {
             {
               name = "box",
-              description = "A BoxShape."
-            },
-            {
-              name = "capsule",
-              description = "A CapsuleShape."
-            },
-            {
-              name = "cylinder",
-              description = "A CylinderShape."
+              description = "A box."
             },
             {
               name = "sphere",
-              description = "A SphereShape."
+              description = "A sphere."
+            },
+            {
+              name = "capsule",
+              description = "A capsule (cylinder with rounded ends)."
+            },
+            {
+              name = "cylinder",
+              description = "A cylinder."
+            },
+            {
+              name = "convex",
+              description = "A convex hull."
+            },
+            {
+              name = "mesh",
+              description = "A triangle mesh.  Colliders with this shape can not move."
+            },
+            {
+              name = "terrain",
+              description = "A heightfield.  Colliders with this shape can not move."
             }
           }
         }
@@ -33278,48 +33293,96 @@ return {
           name = "newWorld",
           tag = "world",
           summary = "Create a new World.",
-          description = "Creates a new physics World, which tracks the overall physics simulation, holds collider objects, and resolves collisions between them.",
+          description = "- Creates a new physics world\n- After creating the world, add colliders to it\n- Call :update each frame",
           key = "lovr.physics.newWorld",
           module = "lovr.physics",
-          examples = {
-            {
-              description = "Create a new world, add a collider to it, and update it, printing out its position as it falls.",
-              code = "function lovr.load()\n  world = lovr.physics.newWorld()\n  box = world:newBoxCollider()\nend\n\nfunction lovr.update(dt)\n  world:update(dt)\n  print(box:getPosition())\nend"
-            }
-          },
-          notes = "A World must be updated with `World:update` in `lovr.update` for the physics simulation to advance.",
           variants = {
             {
               arguments = {
                 {
-                  name = "xg",
-                  type = "number",
-                  description = "The x component of the gravity force.",
-                  default = "0"
-                },
-                {
-                  name = "yg",
-                  type = "number",
-                  description = "The y component of the gravity force.",
-                  default = "-9.81"
-                },
-                {
-                  name = "zg",
-                  type = "number",
-                  description = "The z component of the gravity force.",
-                  default = "0"
-                },
-                {
-                  name = "allowSleep",
-                  type = "boolean",
-                  description = "Whether or not colliders will automatically be put to sleep.",
-                  default = "true"
-                },
-                {
-                  name = "tags",
+                  name = "settings",
                   type = "table",
-                  description = "A list of collision tags colliders can be assigned to.",
-                  default = "{}"
+                  description = "An optional table with settings for the physics simulation.",
+                  table = {
+                    {
+                      name = "tags",
+                      type = "table",
+                      description = "- A list of collision tags (array).\n- Up to 31.\n- Each collider can be given a collision tag.\n- You can ignore collision between certain tags.",
+                      default = "{}"
+                    },
+                    {
+                      name = "staticTags",
+                      type = "table",
+                      description = "- An optional list of collision tags that should be considered 'static'.\n- Any colliders with a static tag will be set to kinematic.\n- Static colliders will also never move.\n- Static tags are managed in a separate broad phase layer, which is good for perf.",
+                      default = "{}"
+                    },
+                    {
+                      name = "tickRate",
+                      type = "number",
+                      description = "- How often to update the simulation, in Hz.\n- Higher values increase accuracy but use more CPU.\n- 0 disables fixed timestep",
+                      default = "60"
+                    },
+                    {
+                      name = "tickLimit",
+                      type = "number",
+                      description = "- A limit on the number of physics updates per call to World:update.\n- Can be used to prevent \"spiral of death\".\n- 0 means no limit",
+                      default = "0"
+                    },
+                    {
+                      name = "maxColliders",
+                      type = "number",
+                      description = "- Max number of colliders\n- Creating more than this will error\n- Reducing this will use less memory\n- Max max is 2^23 (around 8 million)",
+                      default = "16384"
+                    },
+                    {
+                      name = "deterministic",
+                      type = "boolean",
+                      description = "- Whether the simulation should be deterministic.\n- What deterministic means.\n- Maybe mention that this sorts everything.\n- Disabling will improve performance slightly.",
+                      default = "true"
+                    },
+                    {
+                      name = "threadSafe",
+                      type = "boolean",
+                      description = "- Whether this World and its Colliders can be used from multiple threads simultaneously.\n- This is achieved by locking the objects whenever reading or writing stuff.\n- Disabling may result in a slight performance gain if you aren't using threads.",
+                      default = "true"
+                    },
+                    {
+                      name = "allowSleep",
+                      type = "boolean",
+                      description = "- Whether colliders should be allowed to go to sleep when they come to rest.\n- Sleeping colliders aren't processed until something hits them or a force is applied.\n- Sleeping improves performance a lot, recommended to leave it enabled.",
+                      default = "true"
+                    },
+                    {
+                      name = "stabilization",
+                      type = "number",
+                      description = "- The amount of stabilization force to apply, 0-1.\n- If the value is too high, physics will behave erratically.\n- If it's too low, objects will be kinda spongy.\n- .2 - .8 is recommended.",
+                      default = "0.2"
+                    },
+                    {
+                      name = "maxPenetration",
+                      type = "number",
+                      description = "The max amount that colliders are allowed to overlap.",
+                      default = ".01"
+                    },
+                    {
+                      name = "minBounceVelocity",
+                      type = "number",
+                      description = "- The minimum velocity, in meters per second, required for collider resitution (bounciness) to have an effect.\n- Make it smaller if you want slow-moving colliders to still bounce.\n- But keep in mind that you don't want it too low, otherwise colliders will not come to\n  rest as easily.",
+                      default = "1.0"
+                    },
+                    {
+                      name = "velocitySteps",
+                      type = "number",
+                      description = "- The number of solver velocity iterations to run per tick.\n- Should be at least 2.\n- Bigger values improve accuracy but require more CPU.",
+                      default = "10"
+                    },
+                    {
+                      name = "positionSteps",
+                      type = "number",
+                      description = "- The number of solver position iterations to run per tick.\n- Bigger values improve accuracy but require more CPU.",
+                      default = "2"
+                    }
+                  }
                 }
               },
               returns = {
@@ -33344,193 +33407,7 @@ return {
             "lovr.physics.newBallJoint"
           },
           extends = "Joint",
-          methods = {
-            {
-              name = "getAnchors",
-              summary = "Get the anchor points of the BallJoint.",
-              description = "Returns the anchor points of the BallJoint, in world coordinates.  The first point is the anchor on the first collider, and the second point is on the second collider.  The joint tries to keep these points the same, but they may be different if the joint is forced apart by some other means.",
-              key = "BallJoint:getAnchors",
-              module = "lovr.physics",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x1",
-                      type = "number",
-                      description = "The x coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y1",
-                      type = "number",
-                      description = "The y coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z1",
-                      type = "number",
-                      description = "The z coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "x2",
-                      type = "number",
-                      description = "The x coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y2",
-                      type = "number",
-                      description = "The y coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z2",
-                      type = "number",
-                      description = "The z coordinate of the second anchor point, in world coordinates."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getResponseTime",
-              summary = "Get the response time of the joint.",
-              description = "Returns the response time of the joint.  See `World:setResponseTime` for more info.",
-              key = "BallJoint:getResponseTime",
-              module = "lovr.physics",
-              related = {
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "responseTime",
-                      type = "number",
-                      description = "The response time setting for the joint."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTightness",
-              summary = "Get the joint tightness.",
-              description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
-              key = "BallJoint:getTightness",
-              module = "lovr.physics",
-              related = {
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "tightness",
-                      type = "number",
-                      description = "The tightness of the joint."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "setAnchor",
-              summary = "Set the anchor point of the BallJoint.",
-              description = "Sets a new anchor point for the BallJoint.",
-              key = "BallJoint:setAnchor",
-              module = "lovr.physics",
-              variants = {
-                {
-                  description = "Sets the anchor point using numbers.",
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate of the anchor point, in world coordinates."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Sets the anchor point using a vector.",
-                  arguments = {
-                    {
-                      name = "anchor",
-                      type = "Vec3",
-                      description = "The anchor point, in world coordinates."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setResponseTime",
-              summary = "Set the response time of the joint.",
-              description = "Sets the response time of the joint.  See `World:setResponseTime` for more info.",
-              key = "BallJoint:setResponseTime",
-              module = "lovr.physics",
-              related = {
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "responseTime",
-                      type = "number",
-                      description = "The new response time setting for the joint."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setTightness",
-              summary = "Set the joint tightness.",
-              description = "Sets the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
-              key = "BallJoint:setTightness",
-              module = "lovr.physics",
-              related = {
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "tightness",
-                      type = "number",
-                      description = "The tightness of the joint."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            }
-          },
+          methods = {},
           related = {
             "Collider"
           }
@@ -33582,6 +33459,7 @@ return {
               description = "Sets the width, height, and depth of the BoxShape.",
               key = "BoxShape:setDimensions",
               module = "lovr.physics",
+              notes = "This changes the mass of the shape.  If the shape is attached to a collider with automatic mass enabled, the mass properties of the collider will update as well.\n\nChanging shapes can make the physics engine explode since it can cause objects to overlap in unnatural ways.",
               variants = {
                 {
                   arguments = {
@@ -33625,6 +33503,10 @@ return {
               description = "Returns the length of the CapsuleShape, not including the caps.",
               key = "CapsuleShape:getLength",
               module = "lovr.physics",
+              related = {
+                "CapsuleShape:getRadius",
+                "CapsuleShape:setRadius"
+              },
               variants = {
                 {
                   arguments = {},
@@ -33644,6 +33526,10 @@ return {
               description = "Returns the radius of the CapsuleShape.",
               key = "CapsuleShape:getRadius",
               module = "lovr.physics",
+              related = {
+                "CapsuleShape:getLength",
+                "CapsuleShape:setLength"
+              },
               variants = {
                 {
                   arguments = {},
@@ -33663,6 +33549,11 @@ return {
               description = "Sets the length of the CapsuleShape.",
               key = "CapsuleShape:setLength",
               module = "lovr.physics",
+              notes = "This changes the mass of the shape.  If the shape is attached to a collider with automatic mass enabled, the mass properties of the collider will update as well.\n\nChanging shapes can make the physics engine explode since it can cause objects to overlap in unnatural ways.",
+              related = {
+                "CapsuleShape:getRadius",
+                "CapsuleShape:setRadius"
+              },
               variants = {
                 {
                   arguments = {
@@ -33682,6 +33573,11 @@ return {
               description = "Sets the radius of the CapsuleShape.",
               key = "CapsuleShape:setRadius",
               module = "lovr.physics",
+              notes = "This changes the mass of the shape.  If the shape is attached to a collider with automatic mass enabled, the mass properties of the collider will update as well.\n\nChanging shapes can make the physics engine explode since it can cause objects to overlap in unnatural ways.",
+              related = {
+                "CapsuleShape:getLength",
+                "CapsuleShape:setLength"
+              },
               variants = {
                 {
                   arguments = {
@@ -33699,8 +33595,8 @@ return {
         },
         {
           name = "Collider",
-          summary = "A single entity in a physics simulation.",
-          description = "Colliders are objects that represent a single rigid body in a physics simulation.  They can have forces applied to them and collide with other colliders.",
+          summary = "A single object in a physics simulation.",
+          description = "- Colliders represent a single rigid body\n- Colliders exist in a World\n- Applying a force to a collider will move it\n- Gravity is a force the world applies to all its colliders each update\n- Colliders collide with other colliders",
           key = "Collider",
           module = "lovr.physics",
           constructors = {
@@ -33716,12 +33612,14 @@ return {
             {
               name = "addShape",
               summary = "Add a Shape to the Collider.",
-              description = "Attaches a Shape to the collider.  Attached shapes will collide with other shapes in the world.",
+              description = "Attaches a Shape to the collider.",
               key = "Collider:addShape",
               module = "lovr.physics",
+              notes = "By default, LÖVR will recompute mass properties for the Collider as shapes are added and removed.  Use `Collider:setAutomaticMass` to enable or disable this behavior.\n\nShapes can only be attached to a single Collider.  Attempting to attach a shape to multiple colliders (or to a single collider multiple times) will error.  Use `Collider:removeShape` to remove shapes from their original collider before reattaching them.\n\nAdding a `MeshShape` or a `TerrainShape` will force the Collider to be immobile.  It will immediately become kinematic, and will not move via velocity or forces.  However, it can still be repositioned with methods like `Collider:setPosition`.",
               related = {
                 "Collider:removeShape",
                 "Collider:getShapes",
+                "Collider:getShape",
                 "Shape"
               },
               variants = {
@@ -33738,14 +33636,16 @@ return {
               }
             },
             {
-              name = "applyForce",
-              summary = "Apply a force to the Collider.",
-              description = "Applies a force to the Collider.",
-              key = "Collider:applyForce",
+              name = "applyAngularImpulse",
+              summary = "Apply an angular impulse to the Collider.",
+              description = "Applies an angular impulse to the Collider.\n\nAn impulse is a single instantaneous push.  Impulses are independent of time, and are meant to only be applied once.  Use `Collider:applyTorque` for a time-dependent push that happens over multiple frames.",
+              key = "Collider:applyAngularImpulse",
               module = "lovr.physics",
-              notes = "If the Collider is asleep, calling this function will wake it up.",
+              notes = "Kinematic colliders ignore forces.\n\nIf the Collider is asleep, this will wake it up.\n\nImpulses are accumulated and processed during `World:update`.",
               related = {
-                "Collider:applyTorque"
+                "Collider:applyTorque",
+                "Collider:applyForce",
+                "Collider:applyLinearImpulse"
               },
               variants = {
                 {
@@ -33753,77 +33653,225 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x component of the force to apply."
+                      description = "The x component of the world-space impulse vector, in newton meter seconds."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y component of the force to apply."
+                      description = "The y component of the world-space impulse vector, in newton meter seconds."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z component of the force to apply."
+                      description = "The z component of the world-space impulse vector, in newton meter seconds."
                     }
                   },
                   returns = {}
                 },
                 {
+                  arguments = {
+                    {
+                      name = "impulse",
+                      type = "Vec3",
+                      description = "The world-space impulse vector, in newton meter seconds."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "applyForce",
+              summary = "Apply a force to the Collider.",
+              description = "Applies a force to the Collider.",
+              key = "Collider:applyForce",
+              module = "lovr.physics",
+              notes = "Kinematic colliders ignore forces.\n\nIf the Collider is asleep, this will wake it up.\n\nForces are accumulated and processed during `World:update`.",
+              related = {
+                "Collider:applyLinearImpulse",
+                "Collider:applyTorque",
+                "Collider:applyAngularImpulse"
+              },
+              variants = {
+                {
+                  description = "Apply a force at the center of mass.",
                   arguments = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x component of the force to apply."
+                      description = "The x component of the world-space force vector, in newtons."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y component of the force to apply."
+                      description = "The y component of the world-space force vector, in newtons."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z component of the force to apply."
+                      description = "The z component of the world-space force vector, in newtons."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Apply a force at a custom position.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the world-space force vector, in newtons."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the world-space force vector, in newtons."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the world-space force vector, in newtons."
                     },
                     {
                       name = "px",
                       type = "number",
-                      description = "The x position to apply the force at, in world coordinates."
+                      description = "The x position to apply the force at, in world space."
                     },
                     {
                       name = "py",
                       type = "number",
-                      description = "The y position to apply the force at, in world coordinates."
+                      description = "The y position to apply the force at, in world space."
                     },
                     {
                       name = "pz",
                       type = "number",
-                      description = "The z position to apply the force at, in world coordinates."
+                      description = "The z position to apply the force at, in world space."
                     }
                   },
                   returns = {}
                 },
                 {
+                  description = "Apply a force at the center of mass, using vector types.",
                   arguments = {
                     {
                       name = "force",
                       type = "Vec3",
-                      description = "The force vector to apply."
+                      description = "The world-space force vector, in newtons."
                     }
                   },
                   returns = {}
                 },
                 {
+                  description = "Apply a force at a custom position, using vector types.",
                   arguments = {
                     {
                       name = "force",
                       type = "Vec3",
-                      description = "The force vector to apply."
+                      description = "The world-space force vector, in newtons."
                     },
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The position to apply the force at, in world coordinates."
+                      description = "The position to apply the force at, in world space."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "applyLinearImpulse",
+              summary = "Apply a linear impulse to the Collider.",
+              description = "Applies a linear impulse to the Collider.\n\nAn impulse is a single instantaneous push.  Impulses are independent of time, and are meant to only be applied once.  Use `Collider:applyForce` for a time-dependent push that happens over multiple frames.",
+              key = "Collider:applyLinearImpulse",
+              module = "lovr.physics",
+              notes = "Kinematic colliders ignore forces.\n\nIf the Collider is asleep, this will wake it up.\n\nImpulses are accumulated and processed during `World:update`.",
+              related = {
+                "Collider:applyForce",
+                "Collider:applyTorque",
+                "Collider:applyAngularImpulse"
+              },
+              variants = {
+                {
+                  description = "Apply an impulse at the center of mass.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the world-space impulse vector, in newton seconds."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the world-space impulse vector, in newton seconds."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the world-space impulse vector, in newton seconds."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Apply an impulse at a custom position.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the world-space impulse vector, in newton seconds."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the world-space impulse vector, in newton seconds."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the world-space impulse vector, in newton seconds."
+                    },
+                    {
+                      name = "px",
+                      type = "number",
+                      description = "The x position to apply the impulse at, in world space."
+                    },
+                    {
+                      name = "py",
+                      type = "number",
+                      description = "The y position to apply the impulse at, in world space."
+                    },
+                    {
+                      name = "pz",
+                      type = "number",
+                      description = "The z position to apply the impulse at, in world space."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Apply an impulse at the center of mass, using vector types.",
+                  arguments = {
+                    {
+                      name = "impulse",
+                      type = "Vec3",
+                      description = "The world-space impulse vector, in newton seconds."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Apply an impulse at a custom position, using vector types.",
+                  arguments = {
+                    {
+                      name = "impulse",
+                      type = "Vec3",
+                      description = "The world-space impulse vector, in newton seconds."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to apply the impulse at, in world space."
                     }
                   },
                   returns = {}
@@ -33836,9 +33884,11 @@ return {
               description = "Applies torque to the Collider.",
               key = "Collider:applyTorque",
               module = "lovr.physics",
-              notes = "If the Collider is asleep, calling this function will wake it up.",
+              notes = "Kinematic colliders ignore forces.\n\nIf the Collider is asleep, this will wake it up.\n\nForces are accumulated and processed during `World:update`.",
               related = {
-                "Collider:applyForce"
+                "Collider:applyAngularImpulse",
+                "Collider:applyForce",
+                "Collider:applyLinearImpulse"
               },
               variants = {
                 {
@@ -33846,17 +33896,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x component of the torque."
+                      description = "The x component of the world-space torque vector, in newton meters."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y component of the torque."
+                      description = "The y component of the world-space torque vector, in newton meters."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z component of the torque."
+                      description = "The z component of the world-space torque vector, in newton meters."
                     }
                   },
                   returns = {}
@@ -33866,7 +33916,7 @@ return {
                     {
                       name = "torque",
                       type = "Vec3",
-                      description = "The torque to apply."
+                      description = "The world-space torque vector, in newton meters."
                     }
                   },
                   returns = {}
@@ -33876,12 +33926,13 @@ return {
             {
               name = "destroy",
               summary = "Destroy the Collider.",
-              description = "Destroy the Collider, removing it from the World.",
+              description = "Destroys the Collider, removing it from the World and destroying all Shapes and Joints attached to it.",
               key = "Collider:destroy",
               module = "lovr.physics",
-              notes = "Calling functions on the collider after destroying it is a bad idea.",
+              notes = "After a Collider is destroyed, calling methods on it or passing it to a function will throw an error.",
               related = {
                 "Collider:isDestroyed",
+                "Collider:setEnabled",
                 "World:destroy",
                 "Shape:destroy",
                 "Joint:destroy"
@@ -33896,11 +33947,12 @@ return {
             {
               name = "getAABB",
               summary = "Get the Collider's axis aligned bounding box.",
-              description = "Returns the bounding box for the Collider, computed from attached shapes.",
+              description = "Returns the world-space axis-aligned bounding box of the Collider, computed from attached shapes.",
               key = "Collider:getAABB",
               module = "lovr.physics",
               related = {
-                "Shape:getAABB"
+                "Shape:getAABB",
+                "World:queryBox"
               },
               variants = {
                 {
@@ -33943,13 +33995,15 @@ return {
             {
               name = "getAngularDamping",
               summary = "Get the angular damping of the Collider.",
-              description = "Returns the angular damping parameters of the Collider.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
+              description = "Returns the angular damping of the Collider.  Angular damping is similar to drag or air resistance, reducing the Collider's angular velocity over time.",
               key = "Collider:getAngularDamping",
               module = "lovr.physics",
-              notes = "When the Collider is created, it will use the world's angular damping value, which is set using `World:setAngularDamping`.",
+              notes = "The default damping is .05, meaning the collider will lose approximately 5% of its angular velocity each second.  A damping value of zero means the Collider will not lose velocity over time.",
               related = {
-                "World:getAngularDamping",
-                "World:setAngularDamping"
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping",
+                "Collider:getInertia",
+                "Collider:setInertia"
               },
               variants = {
                 {
@@ -33959,11 +34013,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -34006,15 +34055,112 @@ return {
               }
             },
             {
-              name = "getFriction",
-              summary = "Get the friction of the Collider.",
-              description = "Returns the friction of the Collider.  By default, the friction of two Colliders is combined (multiplied) when they collide to generate a friction force.  The initial friction is 0.",
-              key = "Collider:getFriction",
+              name = "getAutomaticMass",
+              summary = "Get whether automatic mass is enabled.",
+              description = "Returns whether automatic mass is enabled for the Collider.\n\nWhen enabled, the Collider's mass, inertia, and center of mass will be recomputed when:\n\n- A shape is added to or removed from the Collider.\n- A shape attached to the Collider changes shape (e.g. `SphereShape:setRadius`).\n- A shape attached to the Collider is moved using `Shape:setOffset`.\n- A shape attached to the Collider changes its density using `Shape:setDensity`.\n\nAdditionally, changing the center of mass of a Collider will automatically update its inertia when automatic mass is enabled.\n\nDisable this to manage the mass properties manually.  When automatic mass is disabled, `Collider:resetMassData` can still be used to reset the mass from attached shapes if needed.",
+              key = "Collider:getAutomaticMass",
               module = "lovr.physics",
               related = {
+                "Collider:resetMassData",
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether automatic mass is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getCenterOfMass",
+              summary = "Get the Collider's local center of mass.",
+              description = "Returns the Collider's center of mass, in the Collider's local coordinate space.",
+              key = "Collider:getCenterOfMass",
+              module = "lovr.physics",
+              notes = "By default, the center of mass of the Collider is kept up to date automatically as the Collider's shapes change.  To disable this, use `Collider:setAutomaticMass`.\n\nUse `Collider:resetMassData` to reset the center of mass and other mass properties based on the Collider's shapes.",
+              related = {
+                "Shape:getCenterOfMass",
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData",
+                "Shape:getOffset",
+                "Shape:setOffset"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the center of mass."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the center of mass."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the center of mass."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getEnabledAxes",
+              summary = "Get the enabled translation/rotation axes.",
+              description = "Get the axes that are enabled for translation and rotation.",
+              key = "Collider:getEnabledAxes",
+              module = "lovr.physics",
+              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all axes.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "translation",
+                      type = "string",
+                      description = "A string containing the world-space axes the Collider is allowed to move on.  The string will have 'x', 'y', and 'z' letters representing which axes are enabled.  If no axes are enabled then it will be an empty string."
+                    },
+                    {
+                      name = "rotation",
+                      type = "string",
+                      description = "A string containing the world-space axes the Collider is allowed to rotate around.  The string will have 'x', 'y', and 'z' letters representing which axes are enabled.  If no axes are enabled then it will be an empty string."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFriction",
+              summary = "Get the friction of the Collider.",
+              description = "Returns the friction of the Collider.  Friction determines how easy it is for two colliders to slide against each other.  Low friction makes it easier for a collider to slide, simulating a smooth surface.",
+              key = "Collider:getFriction",
+              module = "lovr.physics",
+              notes = "The default friction is .2.\n\nWhen two colliders collide, their friction is combined using the geometric mean:\n\n    friction = (frictionA * frictionB) ^ .5",
+              related = {
+                "Contact:getFriction",
+                "Contact:setFriction",
                 "Collider:getRestitution",
-                "Collider:setRestitution",
-                "World:collide"
+                "Collider:setRestitution"
               },
               variants = {
                 {
@@ -34030,13 +34176,100 @@ return {
               }
             },
             {
+              name = "getGravityScale",
+              summary = "Get the gravity scale of the Collider.",
+              description = "Returns the gravity scale of the Collider.  This is multiplied with the global gravity from the World, so 1.0 is regular gravity, 0.0 will ignore gravity, etc.",
+              key = "Collider:getGravityScale",
+              module = "lovr.physics",
+              related = {
+                "World:getGravity",
+                "World:setGravity",
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The gravity scale."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getInertia",
+              summary = "Get the inertia of the Collider.",
+              description = "Returns the inertia of the Collider.\n\nInertia is kind of like \"angular mass\".  Regular mass determines how resistant the Collider is to linear forces (movement), whereas inertia determines how resistant the Collider is to torque (rotation).  Colliders with less inertia are more spinny.\n\nIn 3D, inertia is represented by a 3x3 matrix, called a tensor.  To make calculations easier, the physics engine stores the inertia using eigenvalue decomposition, splitting the matrix into a diagonal matrix and a rotation.  It's complicated!\n\nIn a realistic simulation, mass and inertia follow a linear relationship.  If the mass of an object increases, the diagonal part of its inertia should increase proportionally.",
+              key = "Collider:getInertia",
+              module = "lovr.physics",
+              notes = "By default, the inertia of the Collider is kept up to date automatically as the Collider's shapes change.  To disable this, use `Collider:setAutomaticMass`.\n\nUse `Collider:resetMassData` to reset the inertia and other mass properties based on the Collider's shapes.\n\nIf the Collider is kinematic or all rotation axes are disabled, this returns zeroes.",
+              related = {
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData",
+                "Shape:getInertia"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "dx",
+                      type = "number",
+                      description = "The x component of the diagonal matrix."
+                    },
+                    {
+                      name = "dy",
+                      type = "number",
+                      description = "The y component of the diagonal matrix."
+                    },
+                    {
+                      name = "dz",
+                      type = "number",
+                      description = "The z component of the diagonal matrix."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the inertia rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the inertia rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the inertia rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the inertia rotation axis."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getJoints",
               summary = "Get a list of Joints attached to the Collider.",
               description = "Returns a list of Joints attached to the Collider.",
               key = "Collider:getJoints",
               module = "lovr.physics",
               related = {
-                "Joint"
+                "World:getJoints",
+                "Joint:getColliders",
+                "Joint:destroy"
               },
               variants = {
                 {
@@ -34045,7 +34278,7 @@ return {
                     {
                       name = "joints",
                       type = "table",
-                      description = "A list of Joints attached to the Collider."
+                      description = "A list of `Joint` objects attached to the Collider."
                     }
                   }
                 }
@@ -34054,13 +34287,15 @@ return {
             {
               name = "getLinearDamping",
               summary = "Get the linear damping of the Collider.",
-              description = "Returns the Collider's linear damping parameters.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
+              description = "Returns the linear damping of the Collider.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:getLinearDamping",
               module = "lovr.physics",
-              notes = "When the Collider is created, it will use the world's linear damping value, which is set using `World:setLinearDamping`.\n\nA linear damping of 0 means the Collider won't slow down over time.",
+              notes = "The default damping is .05, meaning the collider will lose approximately 5% of its velocity each second.  A damping value of zero means the Collider will not lose velocity over time.",
               related = {
-                "World:getLinearDamping",
-                "World:setLinearDamping"
+                "Collider:getAngularDamping",
+                "Collider:setAngularDamping",
+                "Collider:getGravityScale",
+                "Collider:setGravityScale"
               },
               variants = {
                 {
@@ -34070,11 +34305,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied."
                     }
                   }
                 }
@@ -34083,15 +34313,16 @@ return {
             {
               name = "getLinearVelocity",
               summary = "Get the linear velocity of the Collider.",
-              description = "Returns the linear velocity of the Collider.  This is how fast the Collider is moving.  There is also angular velocity, which is how fast the Collider is spinning.",
+              description = "Returns the world-space linear velocity of the center of mass of the Collider, in meters per second.",
               key = "Collider:getLinearVelocity",
               module = "lovr.physics",
+              notes = "Currently, velocity is clamped to 500 meters per second to improve stability of the simulation.",
               related = {
+                "Collider:applyForce",
                 "Collider:getLinearVelocityFromLocalPoint",
                 "Collider:getLinearVelocityFromWorldPoint",
                 "Collider:getAngularVelocity",
                 "Collider:setAngularVelocity",
-                "Collider:applyForce",
                 "Collider:getPosition",
                 "Collider:setPosition"
               },
@@ -34102,17 +34333,17 @@ return {
                     {
                       name = "vx",
                       type = "number",
-                      description = "The x velocity of the Collider, in meters per second."
+                      description = "The x component of the velocity."
                     },
                     {
                       name = "vy",
                       type = "number",
-                      description = "The y velocity of the Collider, in meters per second."
+                      description = "The y component of the velocity."
                     },
                     {
                       name = "vz",
                       type = "number",
-                      description = "The z velocity of the Collider, in meters per second."
+                      description = "The z component of the velocity."
                     }
                   }
                 }
@@ -34120,8 +34351,8 @@ return {
             },
             {
               name = "getLinearVelocityFromLocalPoint",
-              summary = "Get the linear velocity of the Collider at a point.",
-              description = "Returns the linear velocity of a point relative to the Collider.",
+              summary = "Get the linear velocity of a point on the Collider.",
+              description = "Returns the linear velocity of a point on the Collider.  This includes the velocity of the center of mass plus the angular velocity at that point.",
               key = "Collider:getLinearVelocityFromLocalPoint",
               module = "lovr.physics",
               related = {
@@ -34134,34 +34365,34 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate."
+                      description = "The x position in local space."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate."
+                      description = "The y position in local space."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate."
+                      description = "The z position in local space."
                     }
                   },
                   returns = {
                     {
                       name = "vx",
                       type = "number",
-                      description = "The x component of the velocity of the point."
+                      description = "The x velocity of the point."
                     },
                     {
                       name = "vy",
                       type = "number",
-                      description = "The y component of the velocity of the point."
+                      description = "The y velocity of the point."
                     },
                     {
                       name = "vz",
                       type = "number",
-                      description = "The z component of the velocity of the point."
+                      description = "The z velocity of the point."
                     }
                   }
                 },
@@ -34170,24 +34401,24 @@ return {
                     {
                       name = "point",
                       type = "number",
-                      description = "The point."
+                      description = "The local-space point."
                     }
                   },
                   returns = {
                     {
                       name = "vx",
                       type = "number",
-                      description = "The x component of the velocity of the point."
+                      description = "The x velocity of the point."
                     },
                     {
                       name = "vy",
                       type = "number",
-                      description = "The y component of the velocity of the point."
+                      description = "The y velocity of the point."
                     },
                     {
                       name = "vz",
                       type = "number",
-                      description = "The z component of the velocity of the point."
+                      description = "The z velocity of the point."
                     }
                   }
                 }
@@ -34196,7 +34427,7 @@ return {
             {
               name = "getLinearVelocityFromWorldPoint",
               summary = "Get the linear velocity of the Collider at a world space point.",
-              description = "Returns the linear velocity of a point on the Collider specified in world space.",
+              description = "Returns the linear velocity of a point on the Collider.  This includes the velocity of the center of mass plus the angular velocity at that point.",
               key = "Collider:getLinearVelocityFromWorldPoint",
               module = "lovr.physics",
               related = {
@@ -34209,34 +34440,34 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate in world space."
+                      description = "The x position in world space."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate in world space."
+                      description = "The y position in world space."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate in world space."
+                      description = "The z position in world space."
                     }
                   },
                   returns = {
                     {
                       name = "vx",
                       type = "number",
-                      description = "The x component of the velocity of the point."
+                      description = "The x velocity of the point."
                     },
                     {
                       name = "vy",
                       type = "number",
-                      description = "The y component of the velocity of the point."
+                      description = "The y velocity of the point."
                     },
                     {
                       name = "vz",
                       type = "number",
-                      description = "The z component of the velocity of the point."
+                      description = "The z velocity of the point."
                     }
                   }
                 },
@@ -34245,24 +34476,24 @@ return {
                     {
                       name = "point",
                       type = "Vec3",
-                      descriptio = "The point."
+                      descriptio = "The world-space point."
                     }
                   },
                   returns = {
                     {
                       name = "vx",
                       type = "number",
-                      description = "The x component of the velocity of the point."
+                      description = "The x velocity of the point."
                     },
                     {
                       name = "vy",
                       type = "number",
-                      description = "The y component of the velocity of the point."
+                      description = "The y velocity of the point."
                     },
                     {
                       name = "vz",
                       type = "number",
-                      description = "The z component of the velocity of the point."
+                      description = "The z velocity of the point."
                     }
                   }
                 }
@@ -34304,8 +34535,8 @@ return {
             },
             {
               name = "getLocalPoint",
-              summary = "Convert a point from world space to collider space.",
-              description = "Converts a point from world coordinates into local coordinates relative to the Collider.",
+              summary = "Transform a point from world space to collider space.",
+              description = "Transforms a point from world coordinates into local coordinates relative to the Collider.",
               key = "Collider:getLocalPoint",
               module = "lovr.physics",
               related = {
@@ -34319,34 +34550,34 @@ return {
                     {
                       name = "wx",
                       type = "number",
-                      description = "The x coordinate of the world point."
+                      description = "The x component of the world point."
                     },
                     {
                       name = "wy",
                       type = "number",
-                      description = "The y coordinate of the world point."
+                      description = "The y component of the world point."
                     },
                     {
                       name = "wz",
                       type = "number",
-                      description = "The z coordinate of the world point."
+                      description = "The z component of the world point."
                     }
                   },
                   returns = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x position of the local-space point."
+                      description = "The x component of the local point."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y position of the local-space point."
+                      description = "The y component of the local point."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z position of the local-space point."
+                      description = "The z component of the local point."
                     }
                   }
                 },
@@ -34362,17 +34593,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x position of the local-space point."
+                      description = "The x component of the local point."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y position of the local-space point."
+                      description = "The y component of the local point."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z position of the local-space point."
+                      description = "The z component of the local point."
                     }
                   }
                 }
@@ -34380,8 +34611,8 @@ return {
             },
             {
               name = "getLocalVector",
-              summary = "Convert a vector from world space to local space.",
-              description = "Converts a direction vector from world space to local space.",
+              summary = "Transform a vector from world space to local space.",
+              description = "Transforms a direction vector from world space to local space.",
               key = "Collider:getLocalVector",
               module = "lovr.physics",
               related = {
@@ -34412,17 +34643,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the local vector."
+                      description = "The x component of the local vector."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the local vector."
+                      description = "The y component of the local vector."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the local vector."
+                      description = "The z component of the local vector."
                     }
                   }
                 },
@@ -34438,17 +34669,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the local vector."
+                      description = "The x component of the local vector."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the local vector."
+                      description = "The y component of the local vector."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the local vector."
+                      description = "The z component of the local vector."
                     }
                   }
                 }
@@ -34456,13 +34687,22 @@ return {
             },
             {
               name = "getMass",
-              summary = "Get the total mass of the Collider.",
-              description = "Returns the total mass of the Collider.  The mass of a Collider depends on its attached shapes.",
+              summary = "Get the mass of the Collider.",
+              description = "Returns the mass of the Collider.\n\nThe relative mass of colliders determines how they react when they collide.  A heavier collider has more momentum than a lighter collider moving the same speed, and will impart more force on the lighter collider.\n\nMore generally, heavier colliders react less to forces they receive, including forces applied with functions like `Collider:applyForce`.\n\nColliders with higher mass do not fall faster.  Use `Collider:setLinearDamping` to give a collider drag to make it fall slower or `Collider:setGravityScale` to change the way it reacts to gravity.",
               key = "Collider:getMass",
               module = "lovr.physics",
+              notes = "By default, the mass of the Collider will be kept up to date automatically as shapes are added and removed from the Collider (or if the shapes change size or density).  Use `Collider:setAutomaticMass` to customize this.\n\nMass can be overridden with `Collider:setMass`, or recomputed from the attached shapes with `Collider:resetMassData`.\n\nIf the Collider is kinematic or all translation axes are disabled, this returns 0.",
               related = {
-                "Collider:getMassData",
-                "Collider:setMassData",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData",
+                "Shape:getDensity",
+                "Shape:setDensity",
+                "Shape:getVolume",
                 "Shape:getMass"
               },
               variants = {
@@ -34528,8 +34768,10 @@ return {
               description = "Returns the orientation of the Collider in angle/axis representation.",
               key = "Collider:getOrientation",
               module = "lovr.physics",
+              notes = "When the World is using a fixed timestep, this returns an interpolated orientation between the last two physics updates.  Use `Collider:getRawOrientation` to get the raw orientation without any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to disable fixed timestep and all collider interpolation.",
               related = {
                 "Collider:applyTorque",
+                "Collider:getRawOrientation",
                 "Collider:getAngularVelocity",
                 "Collider:setAngularVelocity",
                 "Collider:getPosition",
@@ -34571,9 +34813,11 @@ return {
               description = "Returns the position and orientation of the Collider.",
               key = "Collider:getPose",
               module = "lovr.physics",
+              notes = "When the World is using a fixed timestep, this returns an interpolated pose between the last two physics updates.  Use `Collider:getRawPose` to get the raw pose without any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to disable fixed timestep and all collider interpolation.",
               related = {
                 "Collider:getPosition",
-                "Collider:getOrientation"
+                "Collider:getOrientation",
+                "Collider:getRawPose"
               },
               variants = {
                 {
@@ -34624,8 +34868,10 @@ return {
               description = "Returns the position of the Collider.",
               key = "Collider:getPosition",
               module = "lovr.physics",
+              notes = "When the World is using a fixed timestep, this returns an interpolated position between the last two physics updates.  Use `Collider:getRawPosition` to get the raw position without any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to disable fixed timestep and all collider interpolation.",
               related = {
                 "Collider:applyForce",
+                "Collider:getRawPosition",
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
                 "Collider:getOrientation",
@@ -34657,15 +34903,94 @@ return {
               }
             },
             {
+              name = "getRawOrientation",
+              summary = "Get the raw orientation of the Collider, without any interpolation.",
+              description = "Returns the raw orientation of the Collider, without any interpolation applied.",
+              key = "Collider:getRawOrientation",
+              module = "lovr.physics",
+              notes = "To disable all interpolation, disable fixed timestep by setting the `tickRate` to 0 when creating the world.",
+              related = {
+                "Collider:getOrientation",
+                "Collider:setOrientation",
+                "Collider:getRawPosition",
+                "Collider:getPosition"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRawPosition",
+              summary = "Get the raw position of the Collider, without any interpolation.",
+              description = "Returns the raw position of the Collider, without any interpolation applied.",
+              key = "Collider:getRawPosition",
+              module = "lovr.physics",
+              notes = "To disable all interpolation, disable fixed timestep by setting the `tickRate` to 0 when creating the world.",
+              related = {
+                "Collider:getPosition",
+                "Collider:setPosition",
+                "Collider:getRawOrientation",
+                "Collider:getOrientation"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Collider, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Collider, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Collider, in meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getRestitution",
               summary = "Get the bounciness of the Collider.",
-              description = "Returns the restitution (bounciness) of the Collider.  By default, the restitution of two Colliders is combined (the max is used) when they collide to cause them to bounce away from each other.  The initial restitution is 0.",
+              description = "Returns the restitution of the Collider.  Restitution makes a Collider bounce when it collides with other objects.  A restitution value of zero would result in an inelastic collision response, whereas 1.0 would result in an elastic collision that preserves all of the velocity.",
               key = "Collider:getRestitution",
               module = "lovr.physics",
+              notes = "To improve stability of the simulation and allow colliders to come to rest, restitution is only applied if the collider is moving above a certain speed.  This can be configured using the `restitutionThreshold` option in `lovr.physics.newWorld`.",
               related = {
+                "Contact:getRestitution",
+                "Contact:setRestitution",
                 "Collider:getFriction",
-                "Collider:setFriction",
-                "World:collide"
+                "Collider:setFriction"
               },
               variants = {
                 {
@@ -34681,12 +35006,44 @@ return {
               }
             },
             {
+              name = "getShape",
+              summary = "Get the first Shape attached to the Collider.",
+              description = "Returns a Shape attached to the Collider.\n\nFor the common case where a Collider only has a single shape, this is more convenient and efficient than extracting it from the table returned by `Collider:getShapes`.  It is always equivalent to `Collider:getShapes()[1]`.",
+              key = "Collider:getShape",
+              module = "lovr.physics",
+              examples = {
+                {
+                  code = "function drawBoxCollider(pass, collider)\n  local position = vec3(collider:getPosition())\n  local size = vec3(collider:getShape():getDimensions())\n  local orientation = quat(collider:getOrientation())\n  pass:box(position, size, orientation)\nend"
+                }
+              },
+              notes = "This may return `nil` if the Collider doesn't have any shapes attached to it.",
+              related = {
+                "Collider:getShapes",
+                "Collider:addShape",
+                "Collider:removeShape",
+                "Shape"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "One of the `Shape` objects attached to the Collider."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getShapes",
               summary = "Get a list of Shapes attached to the Collider.",
               description = "Returns a list of Shapes attached to the Collider.",
               key = "Collider:getShapes",
               module = "lovr.physics",
               related = {
+                "Collider:getShape",
                 "Collider:addShape",
                 "Collider:removeShape",
                 "Shape"
@@ -34698,7 +35055,7 @@ return {
                     {
                       name = "shapes",
                       type = "table",
-                      description = "A list of Shapes attached to the Collider."
+                      description = "A list of `Shape` objects attached to the Collider."
                     }
                   }
                 }
@@ -34707,11 +35064,11 @@ return {
             {
               name = "getTag",
               summary = "Get the Collider's tag.",
-              description = "Returns the Collider's tag.",
+              description = "Returns the Collider's tag.\n\nTags are strings that represent the category of a collider.  Use `World:enableCollisionBetween` and `World:disableCollisionBetween` to control which pairs of tags should collide with each other.  Physics queries like `World:raycast` also use tags to filter their results.\n\nThe list of available tags is set in `lovr.physics.newWorld`.",
               key = "Collider:getTag",
               module = "lovr.physics",
-              notes = "Collision between tags can be enabled and disabled using `World:enableCollisionBetween` and `World:disableCollisionBetween`.",
               related = {
+                "World:getTags",
                 "World:disableCollisionBetween",
                 "World:enableCollisionBetween",
                 "World:isCollisionEnabledBetween",
@@ -34724,7 +35081,7 @@ return {
                     {
                       name = "tag",
                       type = "string",
-                      description = "The Collider's collision tag, or `nil` if the Collider doesn't have a tag."
+                      description = "The Collider's tag."
                     }
                   }
                 }
@@ -34732,11 +35089,17 @@ return {
             },
             {
               name = "getUserData",
-              summary = "Get the Collider's user data.",
-              description = "Returns the user data associated with the Collider.",
+              summary = "Get the Lua value associated with the Collider.",
+              description = "Returns the Lua value associated with the Collider.",
               key = "Collider:getUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Collider in callbacks.",
+              notes = "The userdata is useful for linking a Collider with custom data:\n\n    local collider = world:raycast(origin, direction, 'enemy')\n\n    if collider then\n      -- Get the enemy object from its Collider\n      local enemy = collider:getUserData()\n      enemy.health = 0\n    end\n\nThe user data is not shared between threads.  Each thread has its own user data for the Collider.",
+              related = {
+                "Shape:getUserData",
+                "Shape:setUserData",
+                "Joint:getUserData",
+                "Joint:setUserData"
+              },
               variants = {
                 {
                   arguments = {},
@@ -34756,10 +35119,7 @@ return {
               description = "Returns the World the Collider is in.",
               key = "Collider:getWorld",
               module = "lovr.physics",
-              notes = "Colliders can only be in one World at a time.",
-              related = {
-                "World"
-              },
+              notes = "Colliders can only ever be in the World that created them.",
               variants = {
                 {
                   arguments = {},
@@ -34775,8 +35135,8 @@ return {
             },
             {
               name = "getWorldPoint",
-              summary = "Convert a point from local space to world space.",
-              description = "Convert a point relative to the collider to a point in world coordinates.",
+              summary = "Transform a point from local space to world space.",
+              description = "Transforms a local point relative to the collider to a point in world coordinates.",
               key = "Collider:getWorldPoint",
               module = "lovr.physics",
               related = {
@@ -34790,34 +35150,34 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x position of the point."
+                      description = "The x component of the local point."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y position of the point."
+                      description = "The y component of the local point."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z position of the point."
+                      description = "The z component of the local point."
                     }
                   },
                   returns = {
                     {
                       name = "wx",
                       type = "number",
-                      description = "The x coordinate of the world point."
+                      description = "The x component of the world point."
                     },
                     {
                       name = "wy",
                       type = "number",
-                      description = "The y coordinate of the world point."
+                      description = "The y component of the world point."
                     },
                     {
                       name = "wz",
                       type = "number",
-                      description = "The z coordinate of the world point."
+                      description = "The z component of the world point."
                     }
                   }
                 },
@@ -34833,17 +35193,17 @@ return {
                     {
                       name = "wx",
                       type = "number",
-                      description = "The x coordinate of the world point."
+                      description = "The x component of the world point."
                     },
                     {
                       name = "wy",
                       type = "number",
-                      description = "The y coordinate of the world point."
+                      description = "The y component of the world point."
                     },
                     {
                       name = "wz",
                       type = "number",
-                      description = "The z coordinate of the world point."
+                      description = "The z component of the world point."
                     }
                   }
                 }
@@ -34851,8 +35211,8 @@ return {
             },
             {
               name = "getWorldVector",
-              summary = "Convert a vector from local space to world space.",
-              description = "Converts a direction vector from local space to world space.",
+              summary = "Transform a vector from local space to world space.",
+              description = "Transforms a direction vector from local space to world space.",
               key = "Collider:getWorldVector",
               module = "lovr.physics",
               related = {
@@ -34866,17 +35226,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the local vector."
+                      description = "The x component of the local vector."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the local vector."
+                      description = "The y component of the local vector."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the local vector."
+                      description = "The z component of the local vector."
                     }
                   },
                   returns = {
@@ -34928,12 +35288,11 @@ return {
             {
               name = "isAwake",
               summary = "Check if the Collider is awake.",
-              description = "Returns whether the Collider is currently awake.",
+              description = "Returns whether the Collider is awake.",
               key = "Collider:isAwake",
               module = "lovr.physics",
+              notes = "See `Collider:setSleepingAllowed` for notes about sleeping.",
               related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
                 "Collider:isSleepingAllowed",
                 "Collider:setSleepingAllowed"
               },
@@ -34944,7 +35303,27 @@ return {
                     {
                       name = "awake",
                       type = "boolean",
-                      description = "Whether the Collider is awake."
+                      description = "Whether the Collider is finally awake."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isContinuous",
+              summary = "Check if the Collider is using continuous collision detection.",
+              description = "Returns whether the Collider uses continuous collision detection.\n\nNormally on each timestep a Collider will \"teleport\" to its new position based on its velocity. Usually this works fine, but if a Collider is going really fast relative to its size, then it might miss collisions with objects or pass through walls.  Enabling continuous collision detection means the Collider will check for obstacles along its path before moving to the new location.  This prevents the Collider from going through walls, but reduces performance.  It's usually used for projectiles, which tend to be small and really fast.",
+              key = "Collider:isContinuous",
+              module = "lovr.physics",
+              notes = "The physics engine performs an optimization where continuous collision detection is only used if the Collider is moving faster than 75% of its size.  So it is not necessary to enable and disable continuous collision detection based on how fast the Collider is moving.\n\nColliders that are sensors are not able to use continuous collision detection.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "continuous",
+                      type = "boolean",
+                      description = "Whether the Collider uses continuous collision detection."
                     }
                   }
                 }
@@ -34956,7 +35335,7 @@ return {
               description = "Returns whether the collider has been destroyed.",
               key = "Collider:isDestroyed",
               module = "lovr.physics",
-              notes = "Calling functions on a collider after destroying it is a bad idea.",
+              notes = "After a Collider is destroyed, calling methods on it or passing it to a function will throw an error.",
               related = {
                 "Collider:destroy",
                 "World:destroy",
@@ -34977,11 +35356,35 @@ return {
               }
             },
             {
+              name = "isEnabled",
+              summary = "Check if the Collider is enabled.",
+              description = "Returns whether the Collider is enabled.  When a Collider is disabled, it is removed from the World and does not impact the physics simulation in any way.  The Collider keeps all of its state and can be re-enabled to add it back to the World.",
+              key = "Collider:isEnabled",
+              module = "lovr.physics",
+              notes = "Colliders are enabled when they are created.",
+              related = {
+                "Collider:destroy"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the Collider is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isGravityIgnored",
               summary = "Check if the Collider ignores gravity.",
               description = "Returns whether the Collider is currently ignoring gravity.",
               key = "Collider:isGravityIgnored",
               module = "lovr.physics",
+              deprecated = true,
               variants = {
                 {
                   arguments = {},
@@ -34998,10 +35401,10 @@ return {
             {
               name = "isKinematic",
               summary = "Check if the Collider is kinematic.",
-              description = "Returns whether the Collider is kinematic.",
+              description = "Returns whether the Collider is kinematic.\n\nKinematic colliders behave like they have infinite mass.  They ignore forces applied to them from gravity, joints, and collisions, but they can still move if given a velocity.  Kinematic colliders don't collide with other kinematic colliders.  They're useful for static environment objects in a level, or for objects that have their position managed outside of the physics system like tracked hands.",
               key = "Collider:isKinematic",
               module = "lovr.physics",
-              notes = "Kinematic colliders behave as though they have infinite mass, ignoring external forces like gravity, joints, or collisions (though non-kinematic colliders will collide with them). They can be useful for static objects like floors or walls.",
+              notes = "If a Collider has a `MeshShape` or a `TerrainShape`, it will always be kinematic.",
               variants = {
                 {
                   arguments = {},
@@ -35016,15 +35419,44 @@ return {
               }
             },
             {
+              name = "isSensor",
+              summary = "Check if the Collider is a sensor.",
+              description = "Returns whether the Collider is a sensor.  Sensors do not collide with other objects, but they can still sense collisions with the collision callbacks set by `World:setCallbacks`.  Use them to trigger gameplay behavior when an object is inside a region of space.",
+              key = "Collider:isSensor",
+              module = "lovr.physics",
+              examples = {
+                {
+                  code = "danger = world:newBoxCollider(x, y, z, width, height, depth)\ndanger:setKinematic(true)\ndanger:setSensor(true)\n\nworld:setCallbacks({\n  enter = function(a, b)\n    if (a == danger and b == player) or (a == player and b == danger) then\n      damagePlayer()\n    end\n  end\n})"
+                }
+              },
+              notes = "Sensors are still reported as hits when doing raycasts and other queries.  Use tags to ignore sensors if needed.\n\nWhen a World is created, a set of collision tags can be marked as \"static\", for performance. Sensors do not detect collision with colliders that have a static tag.  Also, if a sensor itself has a static tag, it will not be able to detect collisions with sleeping colliders.  If a Collider enters a static sensor and goes to sleep, the `exit` callback is called and the sensor is no longer able to detect that collider.\n\nSensors can not use continuous collision detection.\n\nSensors will never go to sleep.",
+              related = {
+                "Collider:setKinematic",
+                "Collider:setEnabled",
+                "World:overlapShape",
+                "World:setCallbacks"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sensor",
+                      type = "boolean",
+                      description = "Whether the Collider is a sensor."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isSleepingAllowed",
               summary = "Check if the Collider is allowed to sleep.",
-              description = "Returns whether the Collider is allowed to sleep.",
+              description = "Returns whether the Collider is allowed to automatically go to sleep.\n\nWhen enabled, the Collider will go to sleep if it hasn't moved in a while.  The physics engine does not simulate movement for colliders that are asleep, which saves a lot of CPU for a typical physics world where most objects are at rest at any given time.",
               key = "Collider:isSleepingAllowed",
               module = "lovr.physics",
-              notes = "If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a while. Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nIt is possible to set the default value for new colliders using `World:setSleepingAllowed`.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
+              notes = "Sleeping is enabled by default.  Sleeping can be disabled globally using the `allowSleep` option in `lovr.physics.newWorld`.\n\nColliders can still be put to sleep manually with `Collider:setAwake`, even if automatic sleeping is disabled.\n\nSleeping colliders will wake up when:\n\n- Colliding with a moving collider\n- Awakened explicitly with `Collider:setAwake`\n- Changing position `Collider:setPosition` or `Collider:setOrientation`\n- Changing velocity (to something non-zero)\n- Applying force, torque, or an impulse\n- Enabling a joint connected to the sleeping collider\n\nNotably, the following will not wake up the collider:\n\n- Changing its kinematic state with `Collider:setKinematic`\n- Changing its shape with `Collider:addShape` or `Collider:removeShape`\n- Disabling or destroying a sleeping collider it is resting on\n\nSensors will never go to sleep.",
               related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
                 "Collider:isAwake",
                 "Collider:setAwake"
               },
@@ -35033,7 +35465,7 @@ return {
                   arguments = {},
                   returns = {
                     {
-                      name = "allowed",
+                      name = "sleepy",
                       type = "boolean",
                       description = "Whether the Collider can go to sleep."
                     }
@@ -35047,7 +35479,7 @@ return {
               description = "Removes a Shape from the Collider.",
               key = "Collider:removeShape",
               module = "lovr.physics",
-              notes = "Colliders without any shapes won't collide with anything.",
+              notes = "By default, LÖVR will recompute mass properties for the Collider as shapes are added and removed.  Use `Collider:setAutomaticMass` to enable or disable this behavior.\n\nIt is valid for a Collider to have zero shapes, but due to a limitation of the physics engine LÖVR substitutes in a 1mm sphere so that the Collider still has mass.  It isn't advisable to keep these tiny spheres around.  Instead, prefer to quickly attach other shapes, or disable the Collider with `Collider:setEnabled`.",
               related = {
                 "Collider:addShape",
                 "Collider:getShapes",
@@ -35067,15 +35499,40 @@ return {
               }
             },
             {
+              name = "resetMassData",
+              summary = "Reset mass properties.",
+              description = "Resets the mass, inertia, and center of mass of the Collider based on its attached shapes.\n\nIf automatic mass is enabled, these properties will be kept up to date automatically.  Use this function when automatic mass is disabled or if mass needs to be reset after being overridden.",
+              key = "Collider:resetMassData",
+              module = "lovr.physics",
+              related = {
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setAngularDamping",
               summary = "Set the angular damping of the Collider.",
-              description = "Sets the angular damping of the Collider.  Angular damping makes things less \"spinny\", causing them to slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
+              description = "Sets the angular damping of the Collider.  Angular damping is similar to drag or air resistance, reducing the Collider's angular velocity over time.",
               key = "Collider:setAngularDamping",
               module = "lovr.physics",
-              notes = "When the Collider is created, it will use the world's angular damping value, which is set using `World:setAngularDamping`.",
+              notes = "The default damping is .05, meaning the collider will lose approximately 5% of its velocity each second.  A damping value of zero means the Collider will not lose velocity over time.\n\nNegative damping is not meaningful and will be clamped to zero.",
               related = {
-                "World:getAngularDamping",
-                "World:setAngularDamping"
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping",
+                "Collider:getInertia",
+                "Collider:setInertia"
               },
               variants = {
                 {
@@ -35084,12 +35541,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The angular damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied.",
-                      default = "0"
                     }
                   },
                   returns = {}
@@ -35102,11 +35553,12 @@ return {
               description = "Sets the angular velocity of the Collider.",
               key = "Collider:setAngularVelocity",
               module = "lovr.physics",
-              notes = "If the Collider is asleep, calling this function will wake it up.",
+              notes = "Although setting the velocity directly is useful sometimes, it can cause problems:\n\n- Velocity ignores mass, so it can lead to unnaturally sharp changes in motion.\n- If the velocity of a Collider is changed multiple times during a frame, only the last one is\n  going to have an effect, nullifying the other velocities that were set.\n- Setting the velocity of a Collider every frame can mess up collisions, since the forces used\n  to resolve a collision will get ignored by changing the velocity.\n\nUsing forces and impulses to move Colliders will avoid all of these issues.\n\nIf the Collider is asleep, setting the angular velocity to a non-zero value will wake it up.\n\nIf the Collider has a tag that was marked as static when the World was created, then the Collider can not move and this function will do nothing.",
               related = {
+                "Collider:applyTorque",
+                "Collider:applyAngularImpulse",
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
-                "Collider:applyTorque",
                 "Collider:getOrientation",
                 "Collider:setOrientation"
               },
@@ -35146,14 +35598,41 @@ return {
               }
             },
             {
-              name = "setAwake",
-              summary = "Put the Collider to sleep or wake it up.",
-              description = "Manually puts the Collider to sleep or wakes it up.  You can do this if you know a Collider won't be touched for a while or if you need to it be active.",
-              key = "Collider:setAwake",
+              name = "setAutomaticMass",
+              summary = "Enable or disable automatic mass.",
+              description = "Enables or disables automatic mass for the Collider.\n\nWhen enabled, the Collider's mass, inertia, and center of mass will be recomputed when:\n\n- A shape is added to or removed from the Collider.\n- A shape attached to the Collider changes shape (e.g. `SphereShape:setRadius`).\n- A shape attached to the Collider is moved using `Shape:setOffset`.\n- A shape attached to the Collider changes its density using `Shape:setDensity`.\n\nAdditionally, changing the center of mass of a Collider will automatically update its inertia when automatic mass is enabled.\n\nDisable this to manage the mass properties manually.  When automatic mass is disabled, `Collider:resetMassData` can still be used to reset the mass from attached shapes if needed.",
+              key = "Collider:setAutomaticMass",
               module = "lovr.physics",
               related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
+                "Collider:resetMassData",
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether automatic mass should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setAwake",
+              summary = "Put the Collider to sleep or wake it up.",
+              description = "Puts the Collider to sleep or wakes it up manually.",
+              key = "Collider:setAwake",
+              module = "lovr.physics",
+              notes = "This function can still be used to put a Collider to sleep even if automatic sleeping has been disabled with `Collider:setSleepingAllowed`.",
+              related = {
                 "Collider:isSleepingAllowed",
                 "Collider:setSleepingAllowed"
               },
@@ -35171,15 +35650,136 @@ return {
               }
             },
             {
-              name = "setFriction",
-              summary = "Set the friction of the Collider.",
-              description = "Sets the friction of the Collider.  By default, the friction of two Colliders is combined (multiplied) when they collide to generate a friction force.  The initial friction is 0.",
-              key = "Collider:setFriction",
+              name = "setCenterOfMass",
+              summary = "Set the Collider's center of mass.",
+              description = "Sets the Collider's center of mass, in the Collider's local coordinate space.\n\nThis does not change the Collider's position.",
+              key = "Collider:setCenterOfMass",
+              module = "lovr.physics",
+              notes = "By default, the center of mass of the Collider is kept up to date automatically as the Collider's shapes change.  To disable this, use `Collider:setAutomaticMass`.\n\nUse `Collider:resetMassData` to reset the center and other mass properties based on the Collider's shapes.",
+              related = {
+                "Shape:getCenterOfMass",
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData",
+                "Shape:getOffset",
+                "Shape:setOffset"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the center of mass."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the center of mass."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the center of mass."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "center",
+                      type = "Vec3",
+                      description = "The center of mass."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setContinuous",
+              summary = "Set whether the Collider uses continuous collision detection.",
+              description = "Sets whether the Collider uses continuous collision detection.\n\nNormally on each timestep a Collider will \"teleport\" to its new position based on its velocity. Usually this works fine, but if a Collider is going really fast relative to its size, then it might miss collisions with objects or pass through walls.  Enabling continuous collision detection means the Collider will check for obstacles along its path before moving to the new location.  This prevents the Collider from going through walls, but reduces performance.  It's usually used for projectiles, which tend to be small and really fast.",
+              key = "Collider:setContinuous",
+              module = "lovr.physics",
+              notes = "The physics engine performs an optimization where continuous collision detection is only used if the Collider is moving faster than 75% of its size.  So it is not necessary to enable and disable continuous collision detection based on how fast the Collider is moving.\n\nColliders that are sensors are not able to use continuous collision detection.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "continuous",
+                      type = "boolean",
+                      description = "Whether the Collider uses continuous collision detection."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setEnabled",
+              summary = "Enable or disable the Collider.",
+              description = "Enables or disables the Collider.  When a Collider is disabled, it is removed from the World and does not impact the physics simulation in any way.  The Collider keeps all of its state and can be re-enabled to add it back to the World.",
+              key = "Collider:setEnabled",
               module = "lovr.physics",
               related = {
+                "Collider:destroy"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether the Collider should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setEnabledAxes",
+              summary = "Set the enabled translation/rotation axes.",
+              description = "Set the axes that are enabled for translation and rotation.",
+              key = "Collider:setEnabledAxes",
+              module = "lovr.physics",
+              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all axes.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.\n\nWhen all translation axes are disabled, `Collider:getMass` will return 0.\n\nWhen all rotation axes are disabled, `Collider:getInertia` will return zero/identity.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "translation",
+                      type = "string",
+                      description = "A string containing the world-space axes the Collider is allowed to move on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all translation."
+                    },
+                    {
+                      name = "rotation",
+                      type = "string",
+                      description = "A string containing the world-space axes the Collider is allowed to rotate on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setFriction",
+              summary = "Set the friction of the Collider.",
+              description = "Sets the friction of the Collider.  Friction determines how easy it is for two colliders to slide against each other.  Low friction makes it easier for a collider to slide, simulating a smooth surface.",
+              key = "Collider:setFriction",
+              module = "lovr.physics",
+              notes = "The default friction is .2.\n\nWhen two colliders collide, their friction is combined using the geometric mean:\n\n    friction = (frictionA * frictionB) ^ .5",
+              related = {
+                "Contact:getFriction",
+                "Contact:setFriction",
                 "Collider:getRestitution",
-                "Collider:setRestitution",
-                "World:collide"
+                "Collider:setRestitution"
               },
               variants = {
                 {
@@ -35187,7 +35787,7 @@ return {
                     {
                       name = "friction",
                       type = "number",
-                      description = "The new friction."
+                      description = "The friction of the Collider."
                     }
                   },
                   returns = {}
@@ -35200,6 +35800,7 @@ return {
               description = "Sets whether the Collider should ignore gravity.",
               key = "Collider:setGravityIgnored",
               module = "lovr.physics",
+              deprecated = true,
               variants = {
                 {
                   arguments = {
@@ -35214,19 +35815,119 @@ return {
               }
             },
             {
+              name = "setGravityScale",
+              summary = "Set the gravity scale of the Collider.",
+              description = "Sets the gravity scale of the Collider.  This is multiplied with the global gravity from the World, so 1.0 is regular gravity, 0.0 will ignore gravity, etc.",
+              key = "Collider:setGravityScale",
+              module = "lovr.physics",
+              related = {
+                "World:getGravity",
+                "World:setGravity",
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The gravity scale."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setInertia",
+              summary = "Set the inertia of the Collider.",
+              description = "Sets the inertia of the Collider.\n\nInertia is kind of like \"angular mass\".  Regular mass determines how resistant the Collider is to linear forces (movement), whereas inertia determines how resistant the Collider is to torque (rotation).  Colliders with less inertia are more spinny.\n\nIn 3D, inertia is represented by a 3x3 matrix, called a tensor.  To make calculations easier, the physics engine stores the inertia using eigenvalue decomposition, splitting the matrix into a diagonal matrix and a rotation.  It's complicated!\n\nIn a realistic simulation, mass and inertia follow a linear relationship.  If the mass of an object increases, the diagonal part of its inertia should increase proportionally.",
+              key = "Collider:setInertia",
+              module = "lovr.physics",
+              notes = "By default, the inertia of the Collider is kept up to date automatically as the Collider's shapes change.  To disable this, use `Collider:setAutomaticMass`.\n\nUse `Collider:resetMassData` to reset the inertia and other mass properties based on the Collider's shapes.\n\nIf the Collider is kinematic or all rotation axes are disabled, this returns 0 for the diagonal and an identity quaternion for the rotation.",
+              related = {
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData",
+                "Shape:getInertia"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "dx",
+                      type = "number",
+                      description = "The x component of the diagonal matrix."
+                    },
+                    {
+                      name = "dy",
+                      type = "number",
+                      description = "The y component of the diagonal matrix."
+                    },
+                    {
+                      name = "dz",
+                      type = "number",
+                      description = "The z component of the diagonal matrix."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the inertia rotation, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the rotation axis."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "diagonal",
+                      type = "Vec3",
+                      description = "A vector containing the 3 elements of a diagonal matrix."
+                    },
+                    {
+                      name = "rotation",
+                      type = "Quat",
+                      description = "The inertia rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setKinematic",
               summary = "Set whether the Collider is kinematic.",
-              description = "Sets whether the Collider is kinematic.",
+              description = "Sets whether the Collider is kinematic.',\n\nKinematic colliders behave like they have infinite mass.  They ignore forces applied to them from gravity, joints, and collisions, but they can still move if given a velocity.  Kinematic colliders don't collide with other kinematic colliders.  They're useful for static environment objects in a level, or for objects that have their position managed outside of the physics system like tracked hands.",
               key = "Collider:setKinematic",
               module = "lovr.physics",
-              notes = "Kinematic colliders behave as though they have infinite mass, ignoring external forces like gravity, joints, or collisions (though non-kinematic colliders will collide with them). They can be useful for static objects like floors or walls.",
+              notes = "If a Collider has a `MeshShape` or a `TerrainShape`, the collider will always be kinematic and this function will do nothing.",
               variants = {
                 {
                   arguments = {
                     {
                       name = "kinematic",
                       type = "boolean",
-                      description = "Whether the Collider is kinematic."
+                      description = "Whether the Collider should be kinematic."
                     }
                   },
                   returns = {}
@@ -35236,13 +35937,15 @@ return {
             {
               name = "setLinearDamping",
               summary = "Set the linear damping of the Collider.",
-              description = "Sets the Collider's linear damping parameter.  Linear damping is similar to drag or air resistance, slowing the Collider down over time. Damping is only applied when linear velocity is over the threshold value.",
+              description = "Sets the linear damping of the Collider.  Linear damping is similar to drag or air resistance, slowing the Collider down over time.",
               key = "Collider:setLinearDamping",
               module = "lovr.physics",
-              notes = "When the Collider is created, it will use the world's linear damping value, which is set using `World:setLinearDamping`.\n\nA linear damping of 0 means the Collider won't slow down over time.",
+              notes = "The default damping is .05, meaning the collider will lose approximately 5% of its velocity each second.  A damping value of zero means the Collider will not lose velocity over time.\n\nNegative damping is not meaningful and will be clamped to zero.",
               related = {
-                "World:getLinearDamping",
-                "World:setLinearDamping"
+                "Collider:getAngularDamping",
+                "Collider:setAngularDamping",
+                "Collider:getGravityScale",
+                "Collider:setGravityScale"
               },
               variants = {
                 {
@@ -35251,12 +35954,6 @@ return {
                       name = "damping",
                       type = "number",
                       description = "The linear damping."
-                    },
-                    {
-                      name = "threshold",
-                      type = "number",
-                      description = "Velocity limit below which the damping is not applied.",
-                      default = "0"
                     }
                   },
                   returns = {}
@@ -35266,16 +35963,17 @@ return {
             {
               name = "setLinearVelocity",
               summary = "Set the linear velocity of the Collider.",
-              description = "Sets the linear velocity of the Collider directly.  Usually it's preferred to use `Collider:applyForce` to change velocity since instantaneous velocity changes can lead to weird glitches.",
+              description = "Sets the world-space linear velocity of the center of mass of the Collider.",
               key = "Collider:setLinearVelocity",
               module = "lovr.physics",
-              notes = "If the Collider is asleep, calling this function will wake it up.",
+              notes = "Although setting the velocity directly is useful sometimes, it can cause problems:\n\n- Velocity ignores mass, so it can lead to unnaturally sharp changes in motion.\n- If the velocity of a Collider is changed multiple times during a frame, only the last one is\n  going to have an effect, nullifying the other velocities that were set.\n- Setting the velocity of a Collider every frame can mess up collisions, since the forces used\n  to resolve a collision will get ignored by changing the velocity.\n\nUsing forces and impulses to move Colliders will avoid all of these issues.\n\nIf the Collider is asleep, setting the velocity to a non-zero value will wake it up.\n\nIf the Collider has a tag that was marked as static when the World was created, then the Collider can not move and this function will do nothing.\n\nCurrently, velocity is clamped to 500 meters per second to improve stability of the simulation.",
               related = {
+                "Collider:applyForce",
+                "Collider:applyLinearImpulse",
                 "Collider:getLinearVelocityFromLocalPoint",
                 "Collider:getLinearVelocityFromWorldPoint",
                 "Collider:getAngularVelocity",
                 "Collider:setAngularVelocity",
-                "Collider:applyForce",
                 "Collider:getPosition",
                 "Collider:setPosition"
               },
@@ -35286,17 +35984,17 @@ return {
                     {
                       name = "vx",
                       type = "number",
-                      description = "The x velocity of the Collider, in meters per second."
+                      description = "The x component of the new velocity, in meters per second."
                     },
                     {
                       name = "vy",
                       type = "number",
-                      description = "The y velocity of the Collider, in meters per second."
+                      description = "The y component of the new velocity, in meters per second."
                     },
                     {
                       name = "vz",
                       type = "number",
-                      description = "The z velocity of the Collider, in meters per second."
+                      description = "The z component of the new velocity, in meters per second."
                     }
                   },
                   returns = {}
@@ -35307,7 +36005,7 @@ return {
                     {
                       name = "velocity",
                       type = "Vec3",
-                      description = "The velocity of the Collider, in meters per second."
+                      description = "The new velocity, in meters per second."
                     }
                   },
                   returns = {}
@@ -35316,13 +36014,22 @@ return {
             },
             {
               name = "setMass",
-              summary = "Set the total mass of the Collider.",
-              description = "Sets the total mass of the Collider.",
+              summary = "Set the mass of the Collider.",
+              description = "Sets the mass of the Collider.\n\nThe relative mass of colliders determines how they react when they collide.  A heavier collider has more momentum than a lighter collider moving the same speed, and will impart more force on the lighter collider.\n\nMore generally, heavier colliders react less to forces they receive, including forces applied with functions like `Collider:applyForce`.\n\nColliders with higher mass do not fall faster.  Use `Collider:setLinearDamping` to give a collider drag to make it fall slower or `Collider:setGravityScale` to change the way it reacts to gravity.",
               key = "Collider:setMass",
               module = "lovr.physics",
+              notes = "The mass must be positive.  Attempting to set a zero or negative mass will error.\n\nBy default, the mass of the Collider is kept up to date automatically as the Collider's shapes change.  Use `Collider:setAutomaticMass` to disable this.\n\nUse `Collider:resetMassData` to reset the mass based on the Collider's shapes.\n\nIf the Collider is kinematic or all translation axes are disabled, this function will do nothing.",
               related = {
-                "Collider:getMassData",
-                "Collider:setMassData",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData",
+                "Shape:getDensity",
+                "Shape:setDensity",
+                "Shape:getVolume",
                 "Shape:getMass"
               },
               variants = {
@@ -35560,13 +36267,15 @@ return {
             {
               name = "setRestitution",
               summary = "Set the bounciness of the Collider.",
-              description = "Sets the restitution (bounciness) of the Collider.  By default, the restitution of two Colliders is combined (the max is used) when they collide to cause them to bounce away from each other. The initial restitution is 0.",
+              description = "Sets the restitution of the Collider.  Restitution makes a Collider bounce when it collides with other objects.  A restitution value of zero would result in an inelastic collision response, whereas 1.0 would result in an elastic collision that preserves all of the velocity.",
               key = "Collider:setRestitution",
               module = "lovr.physics",
+              notes = "To improve stability of the simulation and allow colliders to come to rest, restitution is only applied if the collider is moving above a certain speed.  This can be configured using the `restitutionThreshold` option in `lovr.physics.newWorld`.\n\nNegative restitution is not meaningful and is clamped to zero.",
               related = {
+                "Contact:getRestitution",
+                "Contact:setRestitution",
                 "Collider:getFriction",
-                "Collider:setFriction",
-                "World:collide"
+                "Collider:setFriction"
               },
               variants = {
                 {
@@ -35574,7 +36283,33 @@ return {
                     {
                       name = "restitution",
                       type = "number",
-                      description = "The new restitution."
+                      description = "The restitution of the Collider."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSensor",
+              summary = "Set whether the Collider should be a sensor.",
+              description = "Sets whether the Collider should be a sensor.  Sensors do not collide with other objects, but they can still sense collisions with the collision callbacks set by `World:setCallbacks`.  Use them to trigger gameplay behavior when an object is inside a region of space.",
+              key = "Collider:setSensor",
+              module = "lovr.physics",
+              notes = "Sensors are still reported as hits when doing raycasts and other queries.  Use tags to ignore sensors if needed.\n\nWhen a World is created, a set of collision tags can be marked as \"static\", for performance. Sensors do not detect collision with colliders that have a static tag.  Also, if a sensor itself has a static tag, it will not be able to detect collisions with sleeping colliders.  If a Collider enters a static sensor and goes to sleep, the `exit` callback is called and the sensor is no longer able to detect that collider.\n\nSensors can not use continuous collision detection.\n\nSensors will never go to sleep.",
+              related = {
+                "Collider:setKinematic",
+                "Collider:setEnabled",
+                "World:overlapShape",
+                "World:setCallbacks"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "sensor",
+                      type = "boolean",
+                      description = "Whether the Collider should be a sensor."
                     }
                   },
                   returns = {}
@@ -35584,13 +36319,11 @@ return {
             {
               name = "setSleepingAllowed",
               summary = "Set whether the Collider is allowed to sleep.",
-              description = "Sets whether the Collider is allowed to sleep.",
+              description = "Sets whether the Collider is allowed to automatically go to sleep.\n\nWhen enabled, the Collider will go to sleep if it hasn't moved in a while.  The physics engine does not simulate movement for colliders that are asleep, which saves a lot of CPU for a typical physics world where most objects are at rest at any given time.",
               key = "Collider:setSleepingAllowed",
               module = "lovr.physics",
-              notes = "If sleeping is enabled, the simulation will put the Collider to sleep if it hasn't moved in a while. Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nIt is possible to set the default value for new colliders using `World:setSleepingAllowed`.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
+              notes = "Sleeping is enabled by default.  Sleeping can be disabled globally using the `allowSleep` option in `lovr.physics.newWorld`.\n\nColliders can still be put to sleep manually with `Collider:setAwake`, even if automatic sleeping is disabled.\n\nSleeping colliders will wake up when:\n\n- Colliding with a moving collider\n- Awakened explicitly with `Collider:setAwake`\n- Changing position `Collider:setPosition` or `Collider:setOrientation`\n- Changing velocity (to something non-zero)\n- Applying force, torque, or an impulse\n- Enabling a joint connected to the sleeping collider\n\nNotably, the following will not wake up the collider:\n\n- Changing its kinematic state with `Collider:setKinematic`\n- Changing its shape with `Collider:addShape` or `Collider:removeShape`\n- Disabling or destroying a sleeping collider it is resting on\n\nSensors will never go to sleep.",
               related = {
-                "World:isSleepingAllowed",
-                "World:setSleepingAllowed",
                 "Collider:isAwake",
                 "Collider:setAwake"
               },
@@ -35598,7 +36331,7 @@ return {
                 {
                   arguments = {
                     {
-                      name = "allowed",
+                      name = "sleepy",
                       type = "boolean",
                       description = "Whether the Collider can go to sleep."
                     }
@@ -35610,11 +36343,11 @@ return {
             {
               name = "setTag",
               summary = "Set the Collider's tag.",
-              description = "Sets the Collider's tag.",
+              description = "Sets the Collider's tag.\n\nTags are strings that represent the category of a collider.  Use `World:enableCollisionBetween` and `World:disableCollisionBetween` to control which pairs of tags should collide with each other.  Physics queries like `World:raycast` also use tags to filter their results.\n\nThe list of available tags is set in `lovr.physics.newWorld`.",
               key = "Collider:setTag",
               module = "lovr.physics",
-              notes = "Collision between tags can be enabled and disabled using `World:enableCollisionBetween` and `World:disableCollisionBetween`.",
               related = {
+                "World:getTags",
                 "World:disableCollisionBetween",
                 "World:enableCollisionBetween",
                 "World:isCollisionEnabledBetween",
@@ -35626,7 +36359,7 @@ return {
                     {
                       name = "tag",
                       type = "string",
-                      description = "The Collider's collision tag."
+                      description = "The Collider's tag."
                     }
                   },
                   returns = {}
@@ -35640,11 +36373,17 @@ return {
             },
             {
               name = "setUserData",
-              summary = "Set the Collider's user data.",
-              description = "Associates a custom value with the Collider.",
+              summary = "Associate a Lua value with the Collider.",
+              description = "Associates a Lua value with the Collider.",
               key = "Collider:setUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Collider in callbacks.",
+              notes = "Set the user data to `nil` to clear any existing reference.\n\nThe userdata is useful for linking a Collider with custom data:\n\n    local collider = world:raycast(origin, direction, 'enemy')\n\n    if collider then\n      -- Get the enemy object from its Collider\n      local enemy = collider:getUserData()\n      enemy.health = 0\n    end\n\nThe user data is not shared between threads.  Each thread has its own user data for the Collider.",
+              related = {
+                "Shape:getUserData",
+                "Shape:setUserData",
+                "Joint:getUserData",
+                "Joint:setUserData"
+              },
               variants = {
                 {
                   arguments = {
@@ -35655,6 +36394,206 @@ return {
                     }
                   },
                   returns = {}
+                }
+              }
+            }
+          },
+          sections = {}
+        },
+        {
+          name = "ConeJoint",
+          summary = "TODO",
+          description = "TODO",
+          key = "ConeJoint",
+          module = "lovr.physics",
+          methods = {
+            {
+              name = "getAxis",
+              summary = "Get the axis of the cone.",
+              description = "Returns the axis of the ConeJoint, in world space.  The axis is relative to the first Collider connected to the Joint, so it will rotate as the collider does.  The relative angle between the axis and the second collider will be constrained based on the ConeJoint's angle limit.",
+              key = "ConeJoint:getAxis",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getLimit",
+              summary = "Get the angle limit of the ConeJoint.",
+              description = "Returns the angle limit of the ConeJoint.  The relative angle between the ConeJoint's axis and the second Collider will be constrained to this limit.",
+              key = "ConeJoint:getLimit",
+              module = "lovr.physics",
+              notes = "The default limit is zero, preventing any rotation away from the axis.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "limit",
+                      type = "number",
+                      description = "The angle limit, in radians."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setLimit",
+              summary = "Set the angle limit of the ConeJoint.",
+              description = "Returns the angle limit of the ConeJoint.  The relative angle between the ConeJoint's axis and the second Collider will be constrained to this limit.",
+              key = "ConeJoint:setLimit",
+              module = "lovr.physics",
+              notes = "The default limit is zero, preventing any rotation away from the axis.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "limit",
+                      type = "number",
+                      description = "The new limit in radians, between 0 and pi."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "ConvexShape",
+          summary = "TODO",
+          description = "TODO",
+          key = "ConvexShape",
+          module = "lovr.physics",
+          methods = {
+            {
+              name = "getFace",
+              summary = "Get the point indices of one of the faces of the convex hull.",
+              description = "Returns the indices of points that make up one of the faces of the convex hull.",
+              key = "ConvexShape:getFace",
+              module = "lovr.physics",
+              related = {
+                "ConvexShape:getPoint",
+                "ConvexShape:getFaceCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the face."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "points",
+                      type = "table",
+                      description = "A table with point indices.  Use `ConvexShape:getPoint` to get the coordinates.  The points are given in counterclockwise order."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFaceCount",
+              summary = "Get the number of faces in the convex hull.",
+              description = "Returns the number of faces in the convex hull.",
+              key = "ConvexShape:getFaceCount",
+              module = "lovr.physics",
+              related = {
+                "ConvexShape:getFace"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of faces."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPoint",
+              summary = "Get one of the points in the convex hull.",
+              description = "Returns one of the points in the convex hull, in local space.",
+              key = "ConvexShape:getPoint",
+              module = "lovr.physics",
+              related = {
+                "ConvexShape:getPointCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPointCount",
+              summary = "Get the number of points in the convex hull.",
+              description = "Returns the number of points in the convex hull.",
+              key = "ConvexShape:getPointCount",
+              module = "lovr.physics",
+              notes = "This isn't necessarily the same as the number of points or vertices that were used to create the shape, since points inside the hull will be discarded.",
+              related = {
+                "ConvexShape:getPoint"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of points."
+                    }
+                  }
                 }
               }
             }
@@ -35678,6 +36617,10 @@ return {
               description = "Returns the length of the CylinderShape.",
               key = "CylinderShape:getLength",
               module = "lovr.physics",
+              related = {
+                "CylinderShape:getRadius",
+                "CylinderShape:setRadius"
+              },
               variants = {
                 {
                   arguments = {},
@@ -35697,6 +36640,10 @@ return {
               description = "Returns the radius of the CylinderShape.",
               key = "CylinderShape:getRadius",
               module = "lovr.physics",
+              related = {
+                "CylinderShape:getLength",
+                "CylinderShape:setLength"
+              },
               variants = {
                 {
                   arguments = {},
@@ -35716,6 +36663,11 @@ return {
               description = "Sets the length of the CylinderShape.",
               key = "CylinderShape:setLength",
               module = "lovr.physics",
+              notes = "This changes the mass of the shape.  If the shape is attached to a collider with automatic mass enabled, the mass properties of the collider will update as well.\n\nChanging shapes can make the physics engine explode since it can cause objects to overlap in unnatural ways.",
+              related = {
+                "CylinderShape:getRadius",
+                "CylinderShape:setRadius"
+              },
               variants = {
                 {
                   arguments = {
@@ -35735,6 +36687,11 @@ return {
               description = "Sets the radius of the CylinderShape.",
               key = "CylinderShape:setRadius",
               module = "lovr.physics",
+              notes = "This changes the mass of the shape.  If the shape is attached to a collider with automatic mass enabled, the mass properties of the collider will update as well.\n\nChanging shapes can make the physics engine explode since it can cause objects to overlap in unnatural ways.",
+              related = {
+                "CylinderShape:getLength",
+                "CylinderShape:setLength"
+              },
               variants = {
                 {
                   arguments = {
@@ -35762,242 +36719,106 @@ return {
           extends = "Joint",
           methods = {
             {
-              name = "getAnchors",
-              summary = "Get the anchor points of the DistanceJoint.",
-              description = "Returns the anchor points of the DistanceJoint.",
-              key = "DistanceJoint:getAnchors",
+              name = "getLimits",
+              summary = "Get the minimum and maximum distance.",
+              description = "Returns the minimum and maximum distance allowed between the Colliders.",
+              key = "DistanceJoint:getLimits",
               module = "lovr.physics",
+              notes = "The limits default to the distance between the Colliders when the Joint was created.",
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "x1",
+                      name = "min",
                       type = "number",
-                      description = "The x coordinate of the first anchor point, in world coordinates."
+                      description = "The minimum distance, in meters.  The Colliders won't be able to get closer than this."
                     },
                     {
-                      name = "y1",
+                      name = "max",
                       type = "number",
-                      description = "The y coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z1",
-                      type = "number",
-                      description = "The z coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "x2",
-                      type = "number",
-                      description = "The x coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y2",
-                      type = "number",
-                      description = "The y coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z2",
-                      type = "number",
-                      description = "The z coordinate of the second anchor point, in world coordinates."
+                      description = "The maximum distance, in meters.  The Colliders won't be able to get further than this."
                     }
                   }
                 }
               }
             },
             {
-              name = "getDistance",
-              summary = "Get the target distance of the DistanceJoint.",
-              description = "Returns the target distance for the DistanceJoint.  The joint tries to keep the Colliders this far apart.",
-              key = "DistanceJoint:getDistance",
+              name = "getSpring",
+              summary = "Get the spring parameters of the joint.",
+              description = "Returns the DistanceJoint's spring parameters.  Use this to control how fast the joint pulls the colliders back together at the distance limits.",
+              key = "DistanceJoint:getSpring",
               module = "lovr.physics",
+              notes = "Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled and the limits will be as stiff as possible.\n\nThe damping ratio controls how quickly the oscillation slows down:\n\n- Undamped: Zero damping will cause the spring to oscillate forever.  (Note that the spring may\n  still lose a small amount of energy over time).\n- Underdamped: Damping less than one results in a system that is underdamped.  The spring will\n  oscillate around the target, but the oscillations will decay over time, eventually stabilizing\n  at the target.\n- Overdamped: Damping greater than one will not have any oscillation, and the spring will take\n  extra time to reach the target.\n- Critical Damping: When the damping is exactly 1.0, there is no oscillation and the spring\n  takes the minimum amount of time to reach the target (based on the frequency).\n\nThe default damping ratio is zero.",
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "distance",
+                      name = "frequency",
                       type = "number",
-                      description = "The target distance."
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring."
                     }
                   }
                 }
               }
             },
             {
-              name = "getResponseTime",
-              summary = "Get the response time of the joint.",
-              description = "Returns the response time of the joint.  See `World:setResponseTime` for more info.",
-              key = "DistanceJoint:getResponseTime",
+              name = "setLimits",
+              summary = "Set the minimum and maximum distance.",
+              description = "Sets the minimum and maximum distance allowed between the Colliders.",
+              key = "DistanceJoint:setLimits",
               module = "lovr.physics",
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
+              notes = "The limits default to the distance between the Colliders when the Joint was created.",
               variants = {
                 {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "responseTime",
-                      type = "number",
-                      description = "The response time setting for the joint."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTightness",
-              summary = "Get the joint tightness.",
-              description = "Returns the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
-              key = "DistanceJoint:getTightness",
-              module = "lovr.physics",
-              related = {
-                "BallJoint:getTightness",
-                "BallJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "tightness",
-                      type = "number",
-                      description = "The tightness of the joint."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "setAnchors",
-              summary = "Set the anchor points of the DistanceJoint.",
-              description = "Sets the anchor points of the DistanceJoint.",
-              key = "DistanceJoint:setAnchors",
-              module = "lovr.physics",
-              variants = {
-                {
-                  description = "Sets the anchor points using numbers.",
                   arguments = {
                     {
-                      name = "x1",
+                      name = "min",
                       type = "number",
-                      description = "The x coordinate of the first anchor point, in world coordinates."
+                      description = "The minimum distance, in meters.  The Colliders won't be able to get closer than this.",
+                      default = "0"
                     },
                     {
-                      name = "y1",
+                      name = "max",
                       type = "number",
-                      description = "The y coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z1",
-                      type = "number",
-                      description = "The z coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "x2",
-                      type = "number",
-                      description = "The x coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y2",
-                      type = "number",
-                      description = "The y coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z2",
-                      type = "number",
-                      description = "The z coordinate of the second anchor point, in world coordinates."
+                      description = "The maximum distance, in meters.  The Colliders won't be able to get further than this.",
+                      default = "min"
                     }
                   },
                   returns = {}
                 },
                 {
-                  description = "Sets the anchor points using vectors.",
+                  description = "Remove the limits, setting the minimum distance to zero and the maximum distance to infinity.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSpring",
+              summary = "Set the spring parameters of the joint.",
+              description = "Sets the DistanceJoint's spring parameters.  Use this to control how fast the joint pulls the colliders back together at the distance limits.",
+              key = "DistanceJoint:setSpring",
+              module = "lovr.physics",
+              notes = "Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled and the limits will be as stiff as possible.\n\nThe damping ratio controls how quickly the oscillation slows down:\n\n- Undamped: Zero damping will cause the spring to oscillate forever.  (Note that the spring may\n  still lose a small amount of energy over time).\n- Underdamped: Damping less than one results in a system that is underdamped.  The spring will\n  oscillate around the target, but the oscillations will decay over time, eventually stabilizing\n  at the target.\n- Overdamped: Damping greater than one will not have any oscillation, and the spring will take\n  extra time to reach the target.\n- Critical Damping: When the damping is exactly 1.0, there is no oscillation and the spring\n  takes the minimum amount of time to reach the target (based on the frequency).\n\nThe default damping ratio is zero.",
+              variants = {
+                {
                   arguments = {
                     {
-                      name = "first",
-                      type = "Vec3",
-                      description = "The first anchor point, in world coordinates."
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
                     },
                     {
-                      name = "second",
-                      type = "Vec3",
-                      description = "The second anchor point, in world coordinates."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setDistance",
-              summary = "Set the target distance of the DistanceJoint.",
-              description = "Sets the target distance for the DistanceJoint.  The joint tries to keep the Colliders this far apart.",
-              key = "DistanceJoint:setDistance",
-              module = "lovr.physics",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "distance",
+                      name = "damping",
                       type = "number",
-                      description = "The new target distance."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setResponseTime",
-              summary = "Set the response time of the joint.",
-              description = "Sets the response time of the joint.  See `World:setResponseTime` for more info.",
-              key = "DistanceJoint:setResponseTime",
-              module = "lovr.physics",
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "responseTime",
-                      type = "number",
-                      description = "The new response time setting for the joint."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setTightness",
-              summary = "Set the joint tightness.",
-              description = "Sets the tightness of the joint.  See `World:setTightness` for how this affects the joint.",
-              key = "DistanceJoint:setTightness",
-              module = "lovr.physics",
-              related = {
-                "BallJoint:getTightness",
-                "BallJoint:setTightness",
-                "World:getTightness",
-                "World:setTightness"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "tightness",
-                      type = "number",
-                      description = "The tightness of the joint."
+                      description = "The damping ratio of the spring."
                     }
                   },
                   returns = {}
@@ -36066,10 +36887,15 @@ return {
             },
             {
               name = "getAngle",
-              summary = "Get the angle of the HingeJoint.",
-              description = "Get the angle between the two colliders attached to the HingeJoint.  When the joint is created or when the anchor or axis is set, the current angle is the new \"zero\" angle.",
+              summary = "Get the current angle of the HingeJoint.",
+              description = "Returns the current angle of the HingeJoint, relative to the rest position.",
               key = "HingeJoint:getAngle",
               module = "lovr.physics",
+              related = {
+                "HingeJoint:getAxis",
+                "HingeJoint:getLimits",
+                "HingeJoint:setLimits"
+              },
               variants = {
                 {
                   arguments = {},
@@ -36085,10 +36911,14 @@ return {
             },
             {
               name = "getAxis",
-              summary = "Get the HingeJoint's axis.",
-              description = "Returns the axis of the hinge.",
+              summary = "Get the rotation axis of the HingeJoint.",
+              description = "Returns the axis of the hinge, in world space.",
               key = "HingeJoint:getAxis",
               module = "lovr.physics",
+              related = {
+                "HingeJoint:getAngle",
+                "Joint:getAnchors"
+              },
               variants = {
                 {
                   arguments = {},
@@ -36113,31 +36943,48 @@ return {
               }
             },
             {
+              name = "getFriction",
+              summary = "Get the friction of the HingeJoint.",
+              description = "Returns the friction of the HingeJoint.  This is a maximum torque force that will be applied, in newton meters.",
+              key = "HingeJoint:getFriction",
+              module = "lovr.physics",
+              notes = "Friction is only applied when the motor is disabled.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "friction",
+                      type = "number",
+                      description = "The friction, in newton meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getLimits",
-              summary = "Get the HingeJoint's angle limits.",
-              description = "Returns the upper and lower limits of the hinge angle.  These will be between -π and π.",
+              summary = "Get the angle limits of the HingeJoint.",
+              description = "Returns the angle limits of the HingeJoint.  The \"zero\" angle is determined by the relative position of the colliders at the time the joint was created.",
               key = "HingeJoint:getLimits",
               module = "lovr.physics",
+              notes = "The default limits are -π and π.",
               related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit"
+                "HingeJoint:getAngle"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "lower",
+                      name = "min",
                       type = "number",
-                      description = "The lower limit, in radians."
+                      description = "The minimum angle, in radians.  Always between -π and 0."
                     },
                     {
-                      name = "upper",
+                      name = "max",
                       type = "number",
-                      description = "The upper limit, in radians."
+                      description = "The maximum angle, in radians.  Always between 0 and π."
                     }
                   }
                 }
@@ -36164,6 +37011,35 @@ return {
                       name = "limit",
                       type = "number",
                       description = "The lower limit, in radians."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSpring",
+              summary = "Get the spring parameters of the HingeJoint.",
+              description = "Returns the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge \"soft\".  When the motor is active, a separate set of spring parameters can be set on the motor, see `HingeJoint:setMotorSpring`.",
+              key = "HingeJoint:getSpring",
+              module = "lovr.physics",
+              notes = "Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled and the limits will be as stiff as possible.\n\nThe damping ratio controls how quickly the oscillation slows down:\n\n- Undamped: Zero damping will cause the spring to oscillate forever.  (Note that the spring may\n  still lose a small amount of energy over time).\n- Underdamped: Damping less than one results in a system that is underdamped.  The spring will\n  oscillate around the target, but the oscillations will decay over time, eventually stabilizing\n  at the target.\n- Overdamped: Damping greater than one will not have any oscillation, and the spring will take\n  extra time to reach the target.\n- Critical Damping: When the damping is exactly 1.0, there is no oscillation and the spring\n  takes the minimum amount of time to reach the target (based on the frequency).\n\nThe default damping ratio is zero.",
+              related = {
+                "HingeJoint:getMotorSpring",
+                "HingeJoint:setMotorSpring"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring."
                     }
                   }
                 }
@@ -36278,32 +37154,54 @@ return {
               }
             },
             {
+              name = "setFriction",
+              summary = "Set the friction of the HingeJoint.",
+              description = "Sets the friction of the HingeJoint.  This is a maximum torque force that will be applied, in newton meters.",
+              key = "HingeJoint:setFriction",
+              module = "lovr.physics",
+              notes = "Friction is only applied when the motor is disabled.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "friction",
+                      type = "number",
+                      description = "The friction, in newton meters."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setLimits",
-              summary = "Set the HingeJoint's angle limits.",
-              description = "Sets the upper and lower limits of the hinge angle.  These should be between -π and π.",
+              summary = "Set the angle limits of the HingeJoint.",
+              description = "Sets the angle limits of the HingeJoint.  The \"zero\" angle is determined by the relative position of the colliders at the time the joint was created.",
               key = "HingeJoint:setLimits",
               module = "lovr.physics",
+              notes = "The default limits are -π and π.",
               related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit"
+                "HingeJoint:getAngle"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "lower",
+                      name = "min",
                       type = "number",
-                      description = "The lower limit, in radians."
+                      description = "The minimum angle, in radians.  Should be between -π and 0."
                     },
                     {
-                      name = "upper",
+                      name = "max",
                       type = "number",
-                      description = "The upper limit, in radians."
+                      description = "The maximum angle, in radians.  Should be between 0 and π."
                     }
                   },
+                  returns = {}
+                },
+                {
+                  description = "Disable the limits, setting them to -π and π.",
+                  arguments = {},
                   returns = {}
                 }
               }
@@ -36328,6 +37226,35 @@ return {
                       name = "limit",
                       type = "number",
                       description = "The lower limit, in radians."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSpring",
+              summary = "Set the spring parameters of the HingeJoint.",
+              description = "Sets the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge \"soft\".  When the motor is active, a separate set of spring parameters can be set on the motor, see `HingeJoint:setMotorSpring`.",
+              key = "HingeJoint:setSpring",
+              module = "lovr.physics",
+              notes = "Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled and the limits will be as stiff as possible.\n\nThe damping ratio controls how quickly the oscillation slows down:\n\n- Undamped: Zero damping will cause the spring to oscillate forever.  (Note that the spring may\n  still lose a small amount of energy over time).\n- Underdamped: Damping less than one results in a system that is underdamped.  The spring will\n  oscillate around the target, but the oscillations will decay over time, eventually stabilizing\n  at the target.\n- Overdamped: Damping greater than one will not have any oscillation, and the spring will take\n  extra time to reach the target.\n- Critical Damping: When the damping is exactly 1.0, there is no oscillation and the spring\n  takes the minimum amount of time to reach the target (based on the frequency).\n\nThe default damping ratio is zero.",
+              related = {
+                "HingeJoint:getMotorSpring",
+                "HingeJoint:setMotorSpring"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring."
                     }
                   },
                   returns = {}
@@ -36381,11 +37308,13 @@ return {
             {
               name = "destroy",
               summary = "Destroy the Joint.",
-              description = "Destroy the Joint, removing it from Colliders it's attached to.",
+              description = "Destroys the Joint, removing it from the World and breaking the connection between its Colliders.  There is no way to get the Joint back after destroying it, and attempting to use it will throw an error.  To temporarily disable a Joint, use `Joint:setEnabled`.",
               key = "Joint:destroy",
               module = "lovr.physics",
-              notes = "Calling functions on the Joint after destroying it is a bad idea.",
+              notes = "Joints are automatically destroyed if either of their Colliders are destroyed or if the World is destroyed or garbage collected.",
               related = {
+                "Joint:isDestroyed",
+                "Joint:setEnabled",
                 "Collider:destroy",
                 "Shape:destroy",
                 "World:destroy"
@@ -36398,11 +37327,61 @@ return {
               }
             },
             {
+              name = "getAnchors",
+              summary = "Get the anchor points of the Joint.",
+              description = "Returns the world space anchor points of the Joint.  Joints are attached to each collider at a single point, which is defined when the Joint is created.",
+              key = "Joint:getAnchors",
+              module = "lovr.physics",
+              related = {
+                "Joint:getColliders"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The x coordinate of the anchor point on the first Collider, in world space."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The y coordinate of the anchor point on the first Collider, in world space."
+                    },
+                    {
+                      name = "z1",
+                      type = "number",
+                      description = "The z coordinate of the anchor point on the first Collider, in world space."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x coordinate of the anchor point on the second Collider, in world space."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y coordinate of the anchor point on the second Collider, in world space."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z coordinate of the anchor point on the second Collider, in world space."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getColliders",
               summary = "Get the Colliders the Joint is attached to.",
-              description = "Returns the Colliders the Joint is attached to.  All Joints are attached to two colliders.",
+              description = "Returns the Colliders the Joint is attached to.",
               key = "Joint:getColliders",
               module = "lovr.physics",
+              related = {
+                "Collider:getJoints"
+              },
               variants = {
                 {
                   arguments = {},
@@ -36422,14 +37401,79 @@ return {
               }
             },
             {
+              name = "getForce",
+              summary = "Get the force used to satisfy the Joint's constraint.",
+              description = "Returns the magnitude of the force used to satisfy the Joint's constraint during the last physics update, in newtons.\n\nThis is useful for breakable joints.  Use `Joint:destroy` to break the joint if its force goes above a threshold.",
+              key = "Joint:getForce",
+              module = "lovr.physics",
+              notes = "This does not include the motor force of a `SliderJoint`, see `SliderJoint:getMotorForce`. that.",
+              related = {
+                "Joint:getTorque",
+                "SliderJoint:getMotorForce"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "force",
+                      type = "number",
+                      description = "The magnitude of the force used to satisfy the Joint's constraint."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPriority",
+              summary = "Get the priority of the Joint.",
+              description = "Returns the priority of the Joint.  Joints with a higher priority are more likely to be solved correctly.  Priority values are non-negative integers.",
+              key = "Joint:getPriority",
+              module = "lovr.physics",
+              notes = "The default priority is zero.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "priority",
+                      type = "number",
+                      description = "The integer priority value."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTorque",
+              summary = "Get the torque used to satisfy the Joint's constraint.",
+              description = "Returns the magnitude of the torque used to satisfy the Joint's constraint during the last physics update, in newton meters.\n\nThis is useful for breakable joints.  Use `Joint:destroy` to break the joint if its torque goes above a threshold.",
+              key = "Joint:getTorque",
+              module = "lovr.physics",
+              notes = "This does not include the motor force of a `HingeJoint`, see `HingeJoint:getMotorForce`.",
+              related = {
+                "Joint:getTorque",
+                "HingeJoint:getMotorForce"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "torque",
+                      type = "number",
+                      description = "The magnitude of the torque used to satisfy the Joint's constraint."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getType",
               summary = "Get the type of the Joint.",
               description = "Returns the type of the Joint.",
               key = "Joint:getType",
               module = "lovr.physics",
-              related = {
-                "JointType"
-              },
               variants = {
                 {
                   arguments = {},
@@ -36445,10 +37489,17 @@ return {
             },
             {
               name = "getUserData",
-              summary = "Get the Joint's user data.",
-              description = "Returns the user data associated with the Joint.",
+              summary = "Get the Lua value associated with the Joint.",
+              description = "Returns the Lua value associated with the Joint.",
               key = "Joint:getUserData",
               module = "lovr.physics",
+              notes = "The user data is not shared between threads.  Each thread has its own user data for the Joint.",
+              related = {
+                "Collider:getUserData",
+                "Collider:setUserData",
+                "Shape:getUserData",
+                "Shape:setUserData"
+              },
               variants = {
                 {
                   arguments = {},
@@ -36463,11 +37514,41 @@ return {
               }
             },
             {
+              name = "isDestroyed",
+              summary = "Check if a Joint is destroyed.",
+              description = "Returns whether a Joint has been destroyed.  This the only method that can be called on a destroyed Joint, using the Joint in any other way will error.",
+              key = "Joint:isDestroyed",
+              module = "lovr.physics",
+              related = {
+                "Joint:destroy",
+                "Joint:isEnabled",
+                "Joint:setEnabled",
+                "Collider:destroy",
+                "Shape:destroy",
+                "World:destroy"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "destroyed",
+                      type = "boolean",
+                      description = "Whether the Joint has been destroyed."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isEnabled",
               summary = "Check if the Joint is enabled.",
-              description = "Returns whether the Joint is enabled.",
+              description = "Returns whether the Joint is enabled.  Disabled joints do not affect the simulation in any way. Use `Joint:setEnabled` to reactivate the Joint later.  If the Joint is no longer needed, `Joint:destroy` is a better option that completely removes the Joint from the simulation.",
               key = "Joint:isEnabled",
               module = "lovr.physics",
+              related = {
+                "Joint:destroy"
+              },
               variants = {
                 {
                   arguments = {},
@@ -36484,9 +37565,12 @@ return {
             {
               name = "setEnabled",
               summary = "Enable or disable the Joint.",
-              description = "Enable or disable the Joint.",
+              description = "Enable or disable the Joint.  Disabled joints do not affect the simulation in any way.  If the Joint is no longer needed, `Joint:destroy` is a better option that completely removes the Joint from the simulation.",
               key = "Joint:setEnabled",
               module = "lovr.physics",
+              related = {
+                "Joint:destroy"
+              },
               variants = {
                 {
                   arguments = {
@@ -36501,18 +37585,45 @@ return {
               }
             },
             {
+              name = "setPriority",
+              summary = "Set the priority of the Joint.",
+              description = "Sets the priority of the Joint.  Joints with a higher priority are more likely to be solved correctly.  Priority values are non-negative integers.",
+              key = "Joint:setPriority",
+              module = "lovr.physics",
+              notes = "The default priority is zero.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "priority",
+                      type = "number",
+                      description = "The integer priority value."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setUserData",
-              summary = "Set the Joint's user data.",
-              description = "Sets the user data associated with the Joint.",
+              summary = "Associate a Lua value with the Joint.",
+              description = "Associates a Lua value with the Joint.",
               key = "Joint:setUserData",
               module = "lovr.physics",
+              notes = "Set the user data to `nil` to clear any existing reference.\n\nThe user data is not shared between threads.  Each thread has its own user data for the Joint.",
+              related = {
+                "Collider:getUserData",
+                "Collider:setUserData",
+                "Shape:getUserData",
+                "Shape:setUserData"
+              },
               variants = {
                 {
                   arguments = {
                     {
                       name = "data",
                       type = "*",
-                      description = "The custom value associated with the Joint."
+                      description = "The custom value to associate with the Joint."
                     }
                   },
                   returns = {}
@@ -36561,11 +37672,12 @@ return {
             {
               name = "destroy",
               summary = "Destroy the Shape.",
-              description = "Destroy the Shape, removing it from Colliders it's attached to.",
+              description = "Destroys the Shape, removing it from the Collider it's attached to.",
               key = "Shape:destroy",
               module = "lovr.physics",
-              notes = "Calling functions on the Shape after destroying it is a bad idea.",
+              notes = "Calling methods on the Shape after destroying it will error (except for `Shape:isDestroyed`).\n\nIf the Shape is attached to a Collider with automatic mass enabled, the collider's mass properties will update.",
               related = {
+                "Shape:isDestroyed",
                 "Collider:destroy",
                 "Joint:destroy",
                 "World:destroy"
@@ -36580,7 +37692,7 @@ return {
             {
               name = "getAABB",
               summary = "Get the Shape's axis aligned bounding box.",
-              description = "Returns the bounding box for the Shape.",
+              description = "Returns the axis aligned bounding box of the Shape.",
               key = "Shape:getAABB",
               module = "lovr.physics",
               related = {
@@ -36627,12 +37739,14 @@ return {
             {
               name = "getCollider",
               summary = "Get the Collider the Shape is attached to.",
-              description = "Returns the Collider the Shape is attached to.",
+              description = "Returns the Collider the Shape is attached to.\n\nThis function will return `nil` if the Shape is not attached to a Collider.  When a Shape isn't attached to a Collider, the Shape can still be used for queries with `World:overlapShape` and `World:shapecast`.",
               key = "Shape:getCollider",
               module = "lovr.physics",
               notes = "A Shape can only be attached to one Collider at a time.",
               related = {
                 "Collider",
+                "Collider:getShape",
+                "Collider:getShapes",
                 "Collider:addShape",
                 "Collider:removeShape"
               },
@@ -36643,7 +37757,86 @@ return {
                     {
                       name = "collider",
                       type = "Collider",
-                      description = "The Collider the Shape is attached to."
+                      description = "The Collider the Shape is attached to, or nil if the Shape isn't attached to a Collider."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getDensity",
+              summary = "Get the density of the Shape.",
+              description = "Returns the density of the Shape, in kilograms per cubic meter.  The density, combined with the volume of the Shape, determines the Shape's overall mass.",
+              key = "Shape:getDensity",
+              module = "lovr.physics",
+              notes = "The default density is 1,000, which is the density of water.\n\n`MeshShape` and `TerrainShape` do not have volume, and return 0.",
+              related = {
+                "Shape:getVolume",
+                "Shape:getMass"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "density",
+                      type = "number",
+                      description = "The density of the Shape, in kilograms per cubic meter."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getInertia",
+              summary = "Get the inertia of the Shape.",
+              description = "Returns the inertia of the Shape.\n\nInertia is kind of like \"angular mass\".  Regular mass determines how resistant a Collider is to linear forces (movement), whereas inertia determines how resistant the Collider is to torque (rotation).  Colliders with less inertia are more spinny.\n\nIn 3D, inertia is represented by a 3x3 matrix, called a tensor.  To make calculations easier, the physics engine stores the inertia using eigenvalue decomposition, splitting the matrix into a diagonal matrix and a rotation.  It's complicated!\n\nIn a realistic simulation, mass and inertia follow a linear relationship.  If the mass of an object increases, the diagonal part of its inertia should increase proportionally.",
+              key = "Shape:getInertia",
+              module = "lovr.physics",
+              notes = "`MeshShape` and `TerrainShape` do not have mass or volue, and for those shapes this function returns zeroes.",
+              related = {
+                "Shape:getMass",
+                "Shape:getCenterOfMass",
+                "Collider:getInertia"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "dx",
+                      type = "number",
+                      description = "The x component of the diagonal matrix."
+                    },
+                    {
+                      name = "dy",
+                      type = "number",
+                      description = "The y component of the diagonal matrix."
+                    },
+                    {
+                      name = "dz",
+                      type = "number",
+                      description = "The z component of the diagonal matrix."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the inertia rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the inertia rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the inertia rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the inertia rotation axis."
                     }
                   }
                 }
@@ -36651,50 +37844,29 @@ return {
             },
             {
               name = "getMass",
-              summary = "Compute mass properties of the Shape.",
-              description = "Computes mass properties of the Shape.",
+              summary = "Get the mass of the Shape.",
+              description = "Returns the mass of the Shape, in kilograms.  The mass is the volume multiplied by the density.",
               key = "Shape:getMass",
               module = "lovr.physics",
+              notes = "The mass of a Collider is the sum of the mass of all of its Shapes.  The center of a mass of a Collider is the average of all of its Shapes, weighted by their mass.\n\n`MeshShape` and `TerrainShape` do not have mass, and will return 0.",
               related = {
                 "Collider:getMass",
                 "Collider:setMass",
-                "Collider:getMassData",
-                "Collider:setMassData"
+                "Collider:resetMassData",
+                "Shape:getVolume",
+                "Shape:getDensity",
+                "Shape:setDensity",
+                "Shape:getInertia",
+                "Shape:getCenterOfMass"
               },
               variants = {
                 {
-                  arguments = {
-                    {
-                      name = "density",
-                      type = "number",
-                      description = "The density to use, in kilograms per cubic meter."
-                    }
-                  },
+                  arguments = {},
                   returns = {
-                    {
-                      name = "cx",
-                      type = "number",
-                      description = "The x position of the center of mass."
-                    },
-                    {
-                      name = "cy",
-                      type = "number",
-                      description = "The y position of the center of mass."
-                    },
-                    {
-                      name = "cz",
-                      type = "number",
-                      description = "The z position of the center of mass."
-                    },
                     {
                       name = "mass",
                       type = "number",
-                      description = "The mass of the Shape."
-                    },
-                    {
-                      name = "inertia",
-                      type = "table",
-                      description = "A table containing 6 values of the rotational inertia tensor matrix.  The table contains the 3 diagonal elements of the matrix (upper left to bottom right), followed by the 3 elements of the upper right portion of the 3x3 matrix."
+                      description = "The mass of the Shape, in kilograms."
                     }
                   }
                 }
@@ -36797,8 +37969,8 @@ return {
             },
             {
               name = "getPosition",
-              summary = "Get the Shape's position.",
-              description = "Get the position of the Shape relative to its Collider.",
+              summary = "Get the position of the Shape in the world.",
+              description = "Get the position of the Shape in the world.",
               key = "Shape:getPosition",
               module = "lovr.physics",
               related = {
@@ -36836,9 +38008,6 @@ return {
               description = "Returns the type of the Shape.",
               key = "Shape:getType",
               module = "lovr.physics",
-              related = {
-                "ShapeType"
-              },
               variants = {
                 {
                   arguments = {},
@@ -36854,11 +38023,17 @@ return {
             },
             {
               name = "getUserData",
-              summary = "Get the Shape's user data.",
-              description = "Returns the user data associated with the Shape.",
+              summary = "Get the Lua value associated with the Shape.",
+              description = "Returns the Lua value associated with the Shape.",
               key = "Shape:getUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Shape in callbacks.",
+              notes = "The user data is not shared between threads.  Each thread has its own user data for the Shape.",
+              related = {
+                "Collider:getUserData",
+                "Collider:setUserData",
+                "Joint:getUserData",
+                "Joint:setUserData"
+              },
               variants = {
                 {
                   arguments = {},
@@ -36867,6 +38042,57 @@ return {
                       name = "data",
                       type = "*",
                       description = "The custom value associated with the Shape."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getVolume",
+              summary = "Get the volume of the Shape.",
+              description = "Returns the volume of the Shape, in cubic meters.",
+              key = "Shape:getVolume",
+              module = "lovr.physics",
+              notes = "`MeshShape` and `TerrainShape` do not have volume, and will return 0.",
+              related = {
+                "Shape:getDensity",
+                "Shape:setDensity",
+                "Shape:getMass",
+                "Shape:getAABB"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "volume",
+                      type = "number",
+                      description = "The volume of the shape, in cubic meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isDestroyed",
+              summary = "Check if the Shape is destroyed.",
+              description = "Returns whether the Shape has been destroyed.  Destroyed shapes can not be used for anything.",
+              key = "Shape:isDestroyed",
+              module = "lovr.physics",
+              related = {
+                "Shape:destroy",
+                "Collider:isDestroyed",
+                "Joint:isDestroyed",
+                "World:isDestroyed"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "destroyed",
+                      type = "boolean",
+                      description = "Whether the Shape has been destroyed."
                     }
                   }
                 }
@@ -36893,21 +38119,26 @@ return {
               }
             },
             {
-              name = "isSensor",
-              summary = "Check if the Shape is a sensor.",
-              description = "Returns whether the Shape is a sensor.  Sensors do not trigger any collision response, but they still report collisions in `World:collide`.",
-              key = "Shape:isSensor",
+              name = "setDensity",
+              summary = "Set the density of the Shape.",
+              description = "Sets the density of the Shape, in kilograms per cubic meter.  The density, combined with the volume of the Shape, determines the Shape's overall mass.",
+              key = "Shape:setDensity",
               module = "lovr.physics",
+              notes = "This changes the mass of the Shape.  If the Shape is attached to a Collider with automatic mass enabled, the Collider's mass properties will change as well.\n\nThe default density is 1,000, which is the density of water.\n\n`MeshShape` and `TerrainShape` do not have mass.",
+              related = {
+                "Shape:getVolume",
+                "Shape:getMass"
+              },
               variants = {
                 {
-                  arguments = {},
-                  returns = {
+                  arguments = {
                     {
-                      name = "sensor",
-                      type = "boolean",
-                      description = "Whether the Shape is a sensor."
+                      name = "density",
+                      type = "number",
+                      description = "The density of the Shape, in kilograms per cubic meter."
                     }
-                  }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -37102,38 +38333,25 @@ return {
               }
             },
             {
-              name = "setSensor",
-              summary = "Set the sensor status for the Shape.",
-              description = "Sets whether this Shape is a sensor.  When a Shape is a sensor, it will not generate any collision response when it collides with things, but collisions can still be detected with `World:collide` and `World:getContacts`.",
-              key = "Shape:setSensor",
-              module = "lovr.physics",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "sensor",
-                      type = "boolean",
-                      description = "Whether the Shape should be a sensor."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "setUserData",
-              summary = "Set the Shape's user data.",
-              description = "Sets the user data associated with the Shape.",
+              summary = "Associate a Lua value with the Shape.",
+              description = "Associates a Lua value with the Shape.",
               key = "Shape:setUserData",
               module = "lovr.physics",
-              notes = "User data can be useful to identify the Shape in callbacks.",
+              notes = "Set the user data to `nil` to clear any existing reference.\n\nThe user data is not shared between threads.  Each thread has its own user data for the Shape.",
+              related = {
+                "Collider:getUserData",
+                "Collider:setUserData",
+                "Joint:getUserData",
+                "Joint:setUserData"
+              },
               variants = {
                 {
                   arguments = {
                     {
                       name = "data",
                       type = "*",
-                      description = "The custom value associated with the Shape."
+                      description = "The custom value to associate with the Shape."
                     }
                   },
                   returns = {}
@@ -37457,6 +38675,7 @@ return {
               description = "Sets the radius of the SphereShape.",
               key = "SphereShape:setRadius",
               module = "lovr.physics",
+              notes = "This changes the mass of the shape.  If the shape is attached to a collider with automatic mass enabled, the mass properties of the collider will update as well.\n\nChanging shapes can make the physics engine explode since it can cause objects to overlap in unnatural ways.",
               variants = {
                 {
                   arguments = {
@@ -37486,9 +38705,17 @@ return {
           methods = {}
         },
         {
+          name = "WeldJoint",
+          summary = "TODO",
+          description = "TODO",
+          key = "WeldJoint",
+          module = "lovr.physics",
+          methods = {}
+        },
+        {
           name = "World",
-          summary = "An independent physics simulation.",
-          description = "A World is an object that holds the colliders, joints, and shapes in a physics simulation.",
+          summary = "An object holding all the colliders and joints in a physics simulation.",
+          description = "- World holds all the physics objects\n- After creating the world, add colliders to it\n- Be sure to update the world with world:update\n- World has lots of settings that can be tweaked when creating the world",
           key = "World",
           module = "lovr.physics",
           constructors = {
@@ -37496,91 +38723,18 @@ return {
           },
           methods = {
             {
-              name = "collide",
-              tag = "worldCollision",
-              summary = "Attempt to collide two shapes.",
-              description = "Attempt to collide two shapes.  Internally this sets up constraint forces to move the shapes' colliders apart if they are touching.  The colliders won't actually move until `World:update` is called again to advance the physics simulation.\n\nCollision responses can be customized using friction and restitution (bounciness) parameters, and default to using a mix between the parameters of the two colliders.\n\nUsually this is called internally by `World:update`, or in a custom collision resolver passed to `World:update`.\n\nIf you want to detect if objects are touching without colliding them, use `World:getContacts` or make one or both of the shapes sensors using `Shape:setSensor`.",
-              key = "World:collide",
-              module = "lovr.physics",
-              notes = "For friction, numbers in the range of 0-1 are common, but larger numbers can also be used.\n\nFor restitution, numbers in the range 0-1 should be used.\n\nThis function respects collision tags, so using `World:disableCollisionBetween` and `World:enableCollisionBetween` will change the behavior of this function.",
-              related = {
-                "World:computeOverlaps",
-                "World:overlaps",
-                "World:disableCollisionBetween",
-                "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween",
-                "Collider:setFriction",
-                "Collider:setRestitution"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "shapeA",
-                      type = "Shape",
-                      description = "The first shape."
-                    },
-                    {
-                      name = "shapeB",
-                      type = "Shape",
-                      description = "The second shape."
-                    },
-                    {
-                      name = "friction",
-                      type = "number",
-                      description = "The friction parameter for the collision.",
-                      default = "nil"
-                    },
-                    {
-                      name = "restitution",
-                      type = "number",
-                      description = "The restitution (bounciness) parameter for the collision.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "collided",
-                      type = "boolean",
-                      description = "Whether the shapes collided."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "computeOverlaps",
-              tag = "worldCollision",
-              summary = "Compute pairs of shapes that are close to each other.",
-              description = "Detects which pairs of shapes in the world are near each other and could be colliding.  After calling this function, the `World:overlaps` iterator can be used to iterate over the overlaps, and `World:collide` can be used to resolve a collision for the shapes (if any). Usually this is called automatically by `World:update`.",
-              key = "World:computeOverlaps",
-              module = "lovr.physics",
-              examples = {
-                {
-                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
-                }
-              },
-              notes = "This performs the \"broad phase\" culling of objects in the World, usually using a spatial hash or other acceleration structure like a quad tree or octree.",
-              related = {
-                "World:overlaps",
-                "World:collide",
-                "World:update"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "destroy",
               tag = "worldBasics",
               summary = "Destroy the World!!  Muahaha!",
-              description = "Destroy the World!",
+              description = "Destroys the World.  This will destroy all colliders, shapes, and joints in the world.  After calling this function, the world can no longer be used.  Attempting to call a method on the World after destroying it will error, with the exception of `World:isDestroyed`.",
               key = "World:destroy",
               module = "lovr.physics",
-              notes = "Bad things will happen if you destroy the world and then try to access it or anything that was in it.",
+              notes = "If a World gets garbage collected, it will be destroyed and, consequently, all of the colliders, shapes, and joints in the World will be destroyed as well, even if they can still be reached by Lua.  This is an exception to the way objects in LÖVR normally work, and is done to avoid issues with cycles in reference counting.",
+              related = {
+                "Collider:destroy",
+                "Shape:destroy",
+                "Joint:destroy"
+              },
               variants = {
                 {
                   arguments = {},
@@ -37592,14 +38746,16 @@ return {
               name = "disableCollisionBetween",
               tag = "worldCollision",
               summary = "Disable collision between two tags.",
-              description = "Disables collision between two collision tags.",
+              description = "Disables collision between two tags.  Use `Collider:setTag` to set a Collider's tag.",
               key = "World:disableCollisionBetween",
               module = "lovr.physics",
-              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags.",
+              notes = "By default, collision is enabled between all tags.\n\nAnother way of disabling collisions is by using the `filter` callback in `World:setCallbacks`. However, using tags is much faster than using the callback, because the physics engine calls the callback later in the collision detection process.  With tags, the colliders are ignored much earlier and precise collision detection is never performed.\n\nTags can be marked as \"static\" when the world is created, as an optimization hint.  Static tags will never collide with other static tags, regardless of whether collision is enabled between them.",
               related = {
-                "lovr.physics.newWorld",
                 "World:enableCollisionBetween",
-                "World:isCollisionEnabledBetween"
+                "World:isCollisionEnabledBetween",
+                "lovr.physics.newWorld",
+                "World:getTags",
+                "Collider:setTag"
               },
               variants = {
                 {
@@ -37623,14 +38779,16 @@ return {
               name = "enableCollisionBetween",
               tag = "worldCollision",
               summary = "Enable collision between two tags.",
-              description = "Enables collision between two collision tags.",
+              description = "Enables collision between two tags.  Use `Collider:setTag` to set a Collider's tag.",
               key = "World:enableCollisionBetween",
               module = "lovr.physics",
-              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags.",
+              notes = "By default, collision is enabled between all tags.\n\nTags can be marked as \"static\" when the world is created, as an optimization hint.  Static tags will never collide with other static tags, regardless of whether collision is enabled between them.",
               related = {
-                "lovr.physics.newWorld",
                 "World:disableCollisionBetween",
-                "World:isCollisionEnabledBetween"
+                "World:isCollisionEnabledBetween",
+                "lovr.physics.newWorld",
+                "World:getTags",
+                "Collider:setTag"
               },
               variants = {
                 {
@@ -37657,6 +38815,7 @@ return {
               description = "Returns the angular damping parameters of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:getAngularDamping",
               module = "lovr.physics",
+              deprecated = true,
               notes = "This sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setAngularDamping`.",
               related = {
                 "Collider:getAngularDamping",
@@ -37681,12 +38840,82 @@ return {
               }
             },
             {
+              name = "getCallbacks",
+              summary = "Get the World's collision callbacks.",
+              description = "- Returns the callbacks assigned to the World.\n- The callbacks are described in more detail on `World:setCallbacks`.",
+              key = "World:getCallbacks",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "callbacks",
+                      type = "table",
+                      description = "The World collision callbacks.",
+                      table = {
+                        {
+                          name = "filter",
+                          type = "function",
+                          description = "The function used to filter collisions."
+                        },
+                        {
+                          name = "enter",
+                          type = "function",
+                          description = "The function called when 2 colliders start touching."
+                        },
+                        {
+                          name = "exit",
+                          type = "function",
+                          description = "The function called when 2 colliders stop touching."
+                        },
+                        {
+                          name = "contact",
+                          type = "function",
+                          description = "The function called every frame while 2 colliders are in contact."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getColliderCount",
+              tag = "colliders",
+              summary = "Get the number of colliders in the world.",
+              description = "Returns the number of colliders in the world.  This includes sleeping and disabled colliders.",
+              key = "World:getColliderCount",
+              module = "lovr.physics",
+              notes = "The world has a maximum number of colliders, configured when creating the world.  The default is 8192.  Trying to create more than this will error.",
+              related = {
+                "World:getColliders",
+                "World:getJointCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of colliders in the World."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getColliders",
               tag = "colliders",
-              summary = "Get a table of all Colliders in the World.",
-              description = "Returns a table of all Colliders in the World.",
+              summary = "Get a list of colliders in the World.",
+              description = "Returns a list of colliders in the world.  This includes sleeping and disabled colliders.",
               key = "World:getColliders",
               module = "lovr.physics",
+              related = {
+                "World:getColliderCount",
+                "World:getJoints"
+              },
               variants = {
                 {
                   arguments = {},
@@ -37694,58 +38923,7 @@ return {
                     {
                       name = "colliders",
                       type = "table",
-                      description = "A table of `Collider` objects."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "t",
-                      type = "table",
-                      description = "A table to fill with Colliders and return."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "colliders",
-                      type = "table",
-                      description = "A table of `Collider` objects."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getContacts",
-              tag = "worldCollision",
-              summary = "Get a list of points where a pair of shapes touch.",
-              description = "Computes collision information between two shapes and returns a list of contacts where the shapes intersect.  Each contact point consists of a position, a normal vector, and a penetration depth.",
-              key = "World:getContacts",
-              module = "lovr.physics",
-              notes = "This only detects collision information, it does not cause the shapes to collide with each other.  Use `World:collide` for that.\n\nThis function ignores collision tags.",
-              related = {
-                "World:collide"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "shapeA",
-                      type = "Shape",
-                      description = "The first shape."
-                    },
-                    {
-                      name = "shapeB",
-                      type = "Shape",
-                      description = "The second shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "contacts",
-                      type = "table",
-                      description = "A list of contacts.  Each contact consists of 7 numbers: the contact position, the normal vector, and a depth value indicating how far the shapes intersect each other at the contact point (`{ x, y, z, nx, ny, nz, depth }`)."
+                      description = "The list of `Collider` objects in the World."
                     }
                   }
                 }
@@ -37755,27 +38933,82 @@ return {
               name = "getGravity",
               tag = "worldProperties",
               summary = "Get the gravity of the World.",
-              description = "Returns the gravity of the World.",
+              description = "Returns the World's gravity.  Gravity is a constant acceleration applied to all colliders.  The default is `(0, -9.81, 0)` meters per second squared, causing colliders to fall downward.\n\nUse `Collider:setGravityScale` to change gravity strength for a single collider.",
               key = "World:getGravity",
               module = "lovr.physics",
+              notes = "Kinematic colliders ignore gravity, since they are not moved by forces.  Colliders with higher mass do not fall faster.",
+              related = {
+                "Collider:getGravityScale",
+                "Collider:setGravityScale",
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping"
+              },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "xg",
+                      name = "gx",
                       type = "number",
-                      description = "The x component of the gravity force."
+                      description = "The x component of the gravity force, in meters per second squared."
                     },
                     {
-                      name = "yg",
+                      name = "gy",
                       type = "number",
-                      description = "The y component of the gravity force."
+                      description = "The y component of the gravity force, in meters per second squared."
                     },
                     {
-                      name = "zg",
+                      name = "gz",
                       type = "number",
-                      description = "The z component of the gravity force."
+                      description = "The z component of the gravity force, in meters per second squared."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getJointCount",
+              tag = "joints",
+              summary = "Get the number of joints in the world.",
+              description = "Returns the number of joints in the world.  This includes disabled joints.",
+              key = "World:getJointCount",
+              module = "lovr.physics",
+              related = {
+                "World:getJoints",
+                "World:getColliderCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of joints in the World."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getJoints",
+              tag = "joints",
+              summary = "Get a list of joints in the World.",
+              description = "Returns a table with all the joints in the World.  This includes disabled joints.",
+              key = "World:getJoints",
+              module = "lovr.physics",
+              related = {
+                "World:getJointCount",
+                "World:getColliders"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "joints",
+                      type = "table",
+                      description = "The list of `Joint` objects in the World."
                     }
                   }
                 }
@@ -37788,6 +39021,7 @@ return {
               description = "Returns the linear damping parameters of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:getLinearDamping",
               module = "lovr.physics",
+              deprecated = true,
               notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nThis sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setLinearDamping`.",
               related = {
                 "Collider:getLinearDamping",
@@ -37818,6 +39052,7 @@ return {
               description = "Returns the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
               key = "World:getResponseTime",
               module = "lovr.physics",
+              deprecated = true,
               related = {
                 "BallJoint:getResponseTime",
                 "BallJoint:setResponseTime",
@@ -37846,6 +39081,7 @@ return {
               description = "Returns the step count of the World.  The step count influences how many steps are taken during a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The default step count is 20.",
               key = "World:getStepCount",
               module = "lovr.physics",
+              deprecated = true,
               related = {
                 "World:update"
               },
@@ -37865,12 +39101,14 @@ return {
             {
               name = "getTags",
               tag = "worldCollision",
-              summary = "Get the list of tags the World was created with.",
-              description = "Returns the list of collision tags used when creating the World.",
+              summary = "Get the World's list of collision tags.",
+              description = "Returns the list of collision tags that were specified when the World was created.  Tags are assigned to colliders using `Collider:setTag`, and collision can be enabled/disabled for pairs of tags with `World:enableCollisionBetween` and `World:disableCollisionBetween`.",
               key = "World:getTags",
               module = "lovr.physics",
               related = {
                 "lovr.physics.newWorld",
+                "Collider:getTag",
+                "Collider:setTag",
                 "World:enableCollisionBetween",
                 "World:disableCollisionBetween",
                 "World:isCollisionEnabledBetween"
@@ -37895,6 +39133,7 @@ return {
               description = "Returns the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:getTightness",
               module = "lovr.physics",
+              deprecated = true,
               related = {
                 "DistanceJoint:getTightness",
                 "DistanceJoint:setTightness"
@@ -37916,14 +39155,16 @@ return {
               name = "isCollisionEnabledBetween",
               tag = "worldCollision",
               summary = "Check if two tags can collide.",
-              description = "Returns whether collisions are currently enabled between two tags.",
+              description = "Returns whether collisions are enabled between a pair of tags.",
               key = "World:isCollisionEnabledBetween",
               module = "lovr.physics",
-              notes = "Tags must be set up when creating the World, see `lovr.physics.newWorld`.\n\nBy default, collision is enabled between all tags.",
+              notes = "If either tag is nil, this function returns true, for convenience.  For example, the following function will still work if either of the colliders don't have a tag:\n\n    function willCollide(c1, c2)\n      return world:isCollisionEnabledBetween(c1:getTag(), c2:getTag())\n    end\n\nBy default, collision is enabled between all tags.\n\nTags can be marked as \"static\" when the world is created, as an optimization hint.  Static tags will never collide with other static tags, regardless of whether collision is enabled between them.",
               related = {
-                "lovr.physics.newWorld",
                 "World:disableCollisionBetween",
-                "World:enableCollisionBetween"
+                "World:enableCollisionBetween",
+                "lovr.physics.newWorld",
+                "World:getTags",
+                "Collider:setTag"
               },
               variants = {
                 {
@@ -37931,14 +39172,12 @@ return {
                     {
                       name = "tag1",
                       type = "string",
-                      description = "The first tag, or `nil` to use a wildcard.",
-                      default = "nil"
+                      description = "The first tag."
                     },
                     {
                       name = "tag2",
                       type = "string",
-                      description = "The second tag, or `nil` to use a wildcard.",
-                      default = "nil"
+                      description = "The second tag."
                     }
                   },
                   returns = {
@@ -37958,6 +39197,7 @@ return {
               description = "Returns whether colliders can go to sleep in the World.",
               key = "World:isSleepingAllowed",
               module = "lovr.physics",
+              deprecated = true,
               notes = "If sleeping is enabled, the World will try to detect colliders that haven't moved for a while and put them to sleep.  Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nThis can be set on individual colliders.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
               related = {
                 "Collider:isSleepingAllowed",
@@ -37982,17 +39222,19 @@ return {
               name = "newBoxCollider",
               tag = "colliders",
               summary = "Add a Collider with a BoxShape to the World.",
-              description = "Adds a new Collider to the World with a BoxShape already attached.",
+              description = "Adds a Collider to the world and attaches a `BoxShape`.",
               key = "World:newBoxCollider",
               module = "lovr.physics",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.",
               related = {
                 "BoxShape",
                 "Collider",
                 "World:newCollider",
+                "World:newSphereCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
+                "World:newConvexCollider",
                 "World:newMeshCollider",
-                "World:newSphereCollider",
                 "World:newTerrainCollider"
               },
               variants = {
@@ -38001,37 +39243,37 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the center of the box.",
+                      description = "The x coordinate of the center of the box, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the center of the box.",
+                      description = "The y coordinate of the center of the box, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the center of the box.",
+                      description = "The z coordinate of the center of the box, in meters.",
                       default = "0"
                     },
                     {
                       name = "width",
                       type = "number",
-                      description = "The total width of the box, in meters.",
+                      description = "The width of the box, in meters.",
                       default = "1"
                     },
                     {
                       name = "height",
                       type = "number",
-                      description = "The total height of the box, in meters.",
+                      description = "The height of the box, in meters.",
                       default = "width"
                     },
                     {
                       name = "depth",
                       type = "number",
-                      description = "The total depth of the box, in meters.",
+                      description = "The depth of the box, in meters.",
                       default = "width"
                     }
                   },
@@ -38070,17 +39312,19 @@ return {
               name = "newCapsuleCollider",
               tag = "colliders",
               summary = "Add a Collider with a CapsuleShape to the World.",
-              description = "Adds a new Collider to the World with a CapsuleShape already attached.",
+              description = "Adds a Collider to the world and attaches a `CapsuleShape`.",
               key = "World:newCapsuleCollider",
               module = "lovr.physics",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.\n\nThe length of the capsule goes along its local Z axis.",
               related = {
                 "CapsuleShape",
                 "Collider",
                 "World:newCollider",
                 "World:newBoxCollider",
-                "World:newCylinderCollider",
-                "World:newMeshCollider",
                 "World:newSphereCollider",
+                "World:newCylinderCollider",
+                "World:newConvexCollider",
+                "World:newMeshCollider",
                 "World:newTerrainCollider"
               },
               variants = {
@@ -38159,23 +39403,24 @@ return {
               name = "newCollider",
               tag = "colliders",
               summary = "Add a Collider to the World.",
-              description = "Adds a new Collider to the World.",
+              description = "Adds a new Collider to the World.\n\nThe Collider won't have any shapes attached to it.",
               key = "World:newCollider",
               module = "lovr.physics",
               examples = {
                 {
-                  description = "Create a new world, add a collider to it, and update it, printing out the collider's position as it falls.",
-                  code = "function lovr.load()\n  world = lovr.physics.newWorld()\n  box = world:newBoxCollider()\nend\n\nfunction lovr.update(dt)\n  world:update(dt)\n  print(box:getPosition())\nend"
+                  code = "function lovr.load()\n  world = lovr.physics.newWorld()\n  collider = world:newCollider(0, 0, 0)\n  shape = lovr.physics.newSphereShape(.5)\n  collider:addShape(shape)\nend"
                 }
               },
-              notes = "This function creates a collider without any shapes attached to it, which means it won't collide with anything.  To add a shape to the collider, use `Collider:addShape`, or use one of the following functions to create the collider:\n\n- `World:newBoxCollider`\n- `World:newCapsuleCollider`\n- `World:newCylinderCollider`\n- `World:newSphereCollider`",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.",
               related = {
                 "World:newBoxCollider",
+                "World:newSphereCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
+                "World:newConvexCollider",
                 "World:newMeshCollider",
-                "World:newSphereCollider",
                 "World:newTerrainCollider",
+                "Collider:addShape",
                 "Collider",
                 "Shape"
               },
@@ -38185,20 +39430,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x position of the Collider.",
-                      default = "0"
+                      description = "The x position of the Collider."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y position of the Collider.",
-                      default = "0"
+                      description = "The y position of the Collider."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z position of the Collider.",
-                      default = "0"
+                      description = "The z position of the Collider."
                     }
                   },
                   returns = {
@@ -38228,20 +39470,319 @@ return {
               }
             },
             {
+              name = "newConvexCollider",
+              tag = "colliders",
+              summary = "Add a Collider with a ConvexShape to the World.",
+              description = "Adds a Collider to the world and attaches a `ConvexShape`.  A `ConvexShape` is a convex hull of a set of points, kinda like if you wrapped them in wrapping paper.",
+              key = "World:newConvexCollider",
+              module = "lovr.physics",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.\n\nComputing the convex hull is expensive.  If you need a lot of colliders with the same convex hull shape, it's much faster to pass an existing ConvexShape to this function.",
+              related = {
+                "ConvexShape",
+                "Collider",
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newSphereCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newMeshCollider",
+                "World:newTerrainCollider"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "points",
+                      type = "table",
+                      description = "A list of vertices to compute a convex hull from.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D point)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule, in meters."
+                    },
+                    {
+                      name = "points",
+                      type = "table",
+                      description = "A list of vertices to compute a convex hull from.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D point)."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "modelData",
+                      type = "ModelData",
+                      description = "The ModelData to compute a convex hull from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule, in meters."
+                    },
+                    {
+                      name = "modelData",
+                      type = "ModelData",
+                      description = "The ModelData to compute a convex hull from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to compute a convex hull from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule, in meters."
+                    },
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to compute a convex hull from."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule, in meters."
+                    },
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the collider, in meters.",
+                      default = "0"
+                    },
+                    {
+                      name = "template",
+                      type = "ConvexShape",
+                      description = "An existing ConvexShape to clone."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the capsule, in meters."
+                    },
+                    {
+                      name = "template",
+                      type = "ConvexShape",
+                      description = "An existing ConvexShape to clone."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "newCylinderCollider",
               tag = "colliders",
               summary = "Add a Collider with a CylinderShape to the World.",
-              description = "Adds a new Collider to the World with a CylinderShape already attached.",
+              description = "Adds a Collider to the world and attaches a `CylinderShape`.",
               key = "World:newCylinderCollider",
               module = "lovr.physics",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.\n\nThe length of the cylinder goes along its local Z axis.",
               related = {
                 "CylinderShape",
                 "Collider",
                 "World:newCollider",
                 "World:newBoxCollider",
-                "World:newCapsuleCollider",
-                "World:newMeshCollider",
                 "World:newSphereCollider",
+                "World:newCapsuleCollider",
+                "World:newConvexCollider",
+                "World:newMeshCollider",
                 "World:newTerrainCollider"
               },
               variants = {
@@ -38320,16 +39861,19 @@ return {
               name = "newMeshCollider",
               tag = "colliders",
               summary = "Add a Collider with a MeshShape to the World.",
-              description = "Adds a new Collider to the World with a MeshShape already attached.",
+              description = "Adds a Collider to the world and attaches a `MeshShape`.\n\nColliders with mesh shapes are immobile and can only be used for static environment objects. The collider will be kinematic and forces/velocities will not move it.  Also, these colliders will not detect collisions with other kinematic objects.\n\nMeshShapes are not treated as solid objects, but instead a collection of triangles.  They do not have mass or volume, and there is no concept of being \"inside\" a mesh.  `ConvexShape` is a good alternative for solid objects with an arbitrary shape.",
               key = "World:newMeshCollider",
               module = "lovr.physics",
+              notes = "The triangles in a MeshShape should use counterclockwise winding.",
               related = {
                 "Collider",
+                "MeshShape",
                 "World:newCollider",
                 "World:newBoxCollider",
+                "World:newSphereCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
-                "World:newSphereCollider",
+                "World:newConvexCollider",
                 "World:newTerrainCollider",
                 "Model:getTriangles"
               },
@@ -38339,12 +39883,28 @@ return {
                     {
                       name = "vertices",
                       type = "table",
-                      description = "The table of vertices in the mesh.  Each vertex is a table with 3 numbers."
+                      description = "A table of vertices in the mesh.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D vertex)."
                     },
                     {
                       name = "indices",
                       type = "table",
-                      description = "A table of triangle indices representing how the vertices are connected in the Mesh."
+                      description = "A table of triangle indices representing how the vertices are connected together into triangles."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "modelData",
+                      type = "ModelData",
+                      description = "A ModelData to use for the mesh data."
                     }
                   },
                   returns = {
@@ -38370,6 +39930,38 @@ return {
                       description = "The new Collider."
                     }
                   }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "A Mesh to use for the mesh data.  It must use the `cpu` storage mode."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "template",
+                      type = "MeshShape",
+                      description = "An existing MeshShape to reuse."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The new Collider."
+                    }
+                  }
                 }
               }
             },
@@ -38377,9 +39969,10 @@ return {
               name = "newSphereCollider",
               tag = "colliders",
               summary = "Add a Collider with a SphereShape to the World.",
-              description = "Adds a new Collider to the World with a SphereShape already attached.",
+              description = "Adds a Collider to the world and attaches a `SphereShape`.",
               key = "World:newSphereCollider",
               module = "lovr.physics",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.",
               related = {
                 "SphereShape",
                 "Collider",
@@ -38387,6 +39980,7 @@ return {
                 "World:newBoxCollider",
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
+                "World:newConvexCollider",
                 "World:newMeshCollider",
                 "World:newTerrainCollider"
               },
@@ -38454,12 +40048,12 @@ return {
               name = "newTerrainCollider",
               tag = "colliders",
               summary = "Add a Collider with a TerrainShape to the World.",
-              description = "Adds a new Collider to the World with a TerrainShape already attached.",
+              description = "Adds a Collider to the world and attaches a `TerrainShape`.\n\nColliders with terrain shapes are immobile and can only be used for static environment objects. The collider will be kinematic and forces/velocities will not move it.  Also, these colliders will not detect collisions with other kinematic objects.\n\nTerrainShapes are not treated as solid objects, but instead a collection of triangles.  They do not have mass or volume, and there is no concept of being \"inside\" the terrain.",
               key = "World:newTerrainCollider",
               module = "lovr.physics",
-              notes = "The collider will be positioned at 0, 0, 0.  Unlike other colliders, it will automatically be set as kinematic when created.",
               related = {
                 "Collider",
+                "TerrainShape",
                 "World:newCollider",
                 "World:newBoxCollider",
                 "World:newCapsuleCollider",
@@ -38497,7 +40091,7 @@ return {
                     {
                       name = "heightmap",
                       type = "Image",
-                      description = "A heightmap image describing the terrain elevation at different points.  The red channel brightness of each pixel determines the elevation at corresponding coordinates."
+                      description = "A heightmap image describing the terrain elevation at different points.  The red channel brightness of each pixel determines the elevation at corresponding coordinates.  The image must be square and must have one of the formats supported by `Image:getPixel`."
                     },
                     {
                       name = "stretch",
@@ -38525,7 +40119,7 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function that computes terrain height from x and z coordinates.  The x and z inputs will range from `-scale / 2` to `scale / 2`.",
+                      description = "A function that returns terrain height from x and z coordinates.  The x and z inputs will range from `-scale / 2` to `scale / 2`.",
                       arguments = {
                         {
                           name = "x",
@@ -38559,32 +40153,262 @@ return {
               }
             },
             {
-              name = "overlaps",
-              tag = "worldCollision",
-              summary = "Iterate over pairs of nearby shapes.",
-              description = "Returns an iterator that can be used to iterate over \"overlaps\", or potential collisions between pairs of shapes in the World.  This should be called after using `World:computeOverlaps` to compute the list of overlaps. Usually this is called automatically by `World:update`.",
-              key = "World:overlaps",
+              name = "overlapShape",
+              tag = "worldQueries",
+              summary = "Find colliders that overlap a shape.",
+              description = "- Collides a shape with the world, returning all colliders that the shape touches.\n- You can provide a shape and a transform\n- Or a collider which will use the collider's shape and pose.\n- You can pass a tag filter to filter results by tags\n- You can pass a callback which will be called for each hit, or leave nil to get the first hit\n\nTests a shape or collider against the World, returning intersecting shapes.  This function can take a Shape or a Collider.  When given a Shape, the pose of the shape in the world must be specified.  When given a Collider, all shapes attached to the collider will be checked for collisions, and no pose is necessary since the pose of the Collider will be used.\n\nA tag filter can be given to filter out shapes by their collider's tag:\n\n- Use nil to skip filtering.\n- Pass a tag name to only return shapes whose collider has that tag.\n- Pass a tag name with a ~ in front of it to exclude colliders with that tag.\n- Pass multiple tags separated by spaces to include multiple tags (works with ~ too).\n\nProvide an optional callback to call for each shape detected.  If the callbacks nil, this function returns the first shape detected.  In either case this function returns the shape, the hit position, and a penetration vector.  The penetration vector represents the direction and distance the shape would need to move so that it is no longer colliding with the input shape.",
+              key = "World:overlapShape",
               module = "lovr.physics",
-              examples = {
-                {
-                  code = "world:computeOverlaps()\nfor shapeA, shapeB in world:overlaps() do\n  local areColliding = world:collide(shapeA, shapeB)\n  print(shapeA, shapeB, areColliding)\nend"
-                }
-              },
               related = {
-                "World:computeOverlaps",
-                "World:collide",
-                "World:update"
+                "World:shapecast",
+                "World:raycast",
+                "World:queryBox",
+                "World:querySphere"
               },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to test."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position to place the shape at, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position to place the shape at, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position to place the shape at, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle the shape is rotated around its rotation axis, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "Tags to filter by, or nil for no filter.",
+                      default = "nil"
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The callback to call for each intersection detected."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to test."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to place the shape at, in meters."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the shape."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "Tags to filter by, or nil for no filter.",
+                      default = "nil"
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The callback to call for each intersection detected."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to test."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position to place the shape at, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position to place the shape at, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position to place the shape at, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle the shape is rotated around its rotation axis, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "Tags to filter by, or nil for no filter.",
+                      default = "nil"
+                    }
+                  },
                   returns = {
                     {
-                      name = "iterator",
-                      type = "function",
-                      description = "A Lua iterator, usable in a for loop.",
-                      arguments = {},
-                      returns = {}
+                      name = "collider",
+                      type = "Collider",
+                      description = "The collider that was hit."
+                    },
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The shape that was hit."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of a world space contact point on the surface of the shape."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of a world space contact point on the surface of the shape."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of a world space contact point on the surface of the shape."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the penetration vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the penetration vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the penetration vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to test."
+                    },
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to place the shape at, in meters."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the shape."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "Tags to filter by, or nil for no filter.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The collider that was hit."
+                    },
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The shape that was hit."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of a world space contact point on the surface of the shape."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of a world space contact point on the surface of the shape."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of a world space contact point on the surface of the shape."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the penetration vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the penetration vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the penetration vector."
                     }
                   }
                 }
@@ -38592,17 +40416,17 @@ return {
             },
             {
               name = "queryBox",
-              tag = "worldBasics",
-              summary = "Find all shapes that intersect a box.",
-              description = "Finds all the shapes that intersect a box and calls a function for each one.",
+              tag = "worldQueries",
+              summary = "Find colliders that intersect an axis-aligned box.",
+              description = "Find colliders within an axis-aligned bounding box.  This is a fast but imprecise query that only checks a rough box around colliders.  Use `World:overlapShape` for an exact collision test.\n\nRough queries like this are useful for doing a quick check before doing lots of more expensive collision testing.\n\nPass a callback function to call for each collider detected, or leave the callback off and this function will return the first collider found.",
               key = "World:queryBox",
               module = "lovr.physics",
-              notes = "Currently there is no way to specify a rotated box.",
+              notes = "This will return sleeping colliders and sensors, but it will ignore disabled colliders.",
               related = {
                 "World:querySphere",
-                "World:raycast",
-                "World:getContacts",
-                "Shape:setSensor"
+                "World:overlapShape",
+                "World:shapecast",
+                "World:raycast"
               },
               variants = {
                 {
@@ -38610,45 +40434,117 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the center of the box."
+                      description = "The x coordinate of the center of the box, in meters."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the center of the box."
+                      description = "The y coordinate of the center of the box, in meters."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z coordinate of the center of the box."
+                      description = "The z coordinate of the center of the box, in meters."
                     },
                     {
-                      name = "w",
+                      name = "width",
                       type = "number",
-                      description = "The width of the box."
+                      description = "The width of the box, in meters"
                     },
                     {
-                      name = "h",
+                      name = "height",
                       type = "number",
-                      description = "The height of the box."
+                      description = "The height of the box, in meters"
                     },
                     {
-                      name = "d",
+                      name = "depth",
                       type = "number",
-                      description = "The depth of the box."
+                      description = "The depth of the box, in meters."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
+                      default = "nil"
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the box, in meters."
+                    },
+                    {
+                      name = "size",
+                      type = "Vec3",
+                      description = "The size of the box, in meters."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the box, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the box, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the box, in meters."
+                    },
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the box, in meters"
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the box, in meters"
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth of the box, in meters."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
                       default = "nil"
                     }
                   },
                   returns = {
                     {
-                      name = "any",
-                      type = "boolean",
-                      description = "Whether there were any intersections."
+                      name = "collider",
+                      type = "Collider",
+                      description = "A Collider that intersected the box."
                     }
                   }
                 },
@@ -38657,25 +40553,25 @@ return {
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The position of the center of the box."
+                      description = "The position of the center of the box, in meters."
                     },
                     {
                       name = "size",
                       type = "Vec3",
-                      description = "The size of the box."
+                      description = "The size of the box, in meters."
                     },
                     {
-                      name = "callback",
-                      type = "function",
-                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
                       default = "nil"
                     }
                   },
                   returns = {
                     {
-                      name = "any",
-                      type = "boolean",
-                      description = "Whether there were any intersections."
+                      name = "collider",
+                      type = "Collider",
+                      description = "A Collider that intersected the box."
                     }
                   }
                 }
@@ -38683,16 +40579,16 @@ return {
             },
             {
               name = "querySphere",
-              tag = "worldBasics",
-              summary = "Find all shapes that intersect a sphere.",
-              description = "Finds all the shapes that intersect a sphere and calls a function for each one.",
+              tag = "worldQueries",
+              summary = "Find colliders that intersect a sphere.",
+              description = "Find colliders within a sphere.  This is a fast but imprecise query that only checks a rough box around colliders.  Use `World:overlapShape` for an exact collision test.\n\nRough queries like this are useful for doing a quick check before doing lots of more expensive collision testing.\n\nPass a callback function to call for each collider detected, or leave the callback off and this function will return the first collider found.",
               key = "World:querySphere",
               module = "lovr.physics",
               related = {
                 "World:queryBox",
-                "World:raycast",
-                "World:getContacts",
-                "Shape:setSensor"
+                "World:overlapShape",
+                "World:shapecast",
+                "World:raycast"
               },
               variants = {
                 {
@@ -38715,20 +40611,82 @@ return {
                     {
                       name = "radius",
                       type = "number",
-                      description = "The radius of the sphere."
+                      description = "The radius of the sphere, in meters"
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
+                      default = "nil"
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the center of the sphere."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere, in meters"
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the sphere."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the sphere."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the sphere."
+                    },
+                    {
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the sphere, in meters"
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
                       default = "nil"
                     }
                   },
                   returns = {
                     {
-                      name = "any",
-                      type = "boolean",
-                      description = "Whether there were any intersections."
+                      name = "collider",
+                      type = "Collider",
+                      description = "A Collider that intersected the sphere."
                     }
                   }
                 },
@@ -38742,20 +40700,20 @@ return {
                     {
                       name = "radius",
                       type = "number",
-                      description = "The radius of the sphere."
+                      description = "The radius of the sphere, in meters"
                     },
                     {
-                      name = "callback",
-                      type = "function",
-                      description = "An optional function to call when an intersection is detected.  The function will be called with a single `Shape` argument, and it may return `false` to cancel the query.",
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
                       default = "nil"
                     }
                   },
                   returns = {
                     {
-                      name = "any",
-                      type = "boolean",
-                      description = "Whether there were any intersections."
+                      name = "collider",
+                      type = "Collider",
+                      description = "A Collider that intersected the sphere."
                     }
                   }
                 }
@@ -38763,18 +40721,15 @@ return {
             },
             {
               name = "raycast",
-              tag = "worldBasics",
-              summary = "Cast a ray through the World, calling a function for each hit.",
-              description = "Casts a ray through the World, calling a function every time the ray intersects with a Shape.",
+              tag = "worldQueries",
+              summary = "Find colliders that intersect a line.",
+              description = "Traces a ray through the world and calls a function for each collider that was hit.\n\nThe callback can be left off, in which case the closest hit will be returned.",
               key = "World:raycast",
               module = "lovr.physics",
-              examples = {
-                {
-                  code = "function lovr.load()\n  world = lovr.physics.newWorld()\n  world:newSphereCollider(0, 0, 0, 2)\n\n  -- Cast a ray through the sphere\n  local x1, y1, z1 = .5, 3, 0\n  local x2, y2, z2 = -.5, -2, 0\n  world:raycast(x1, y1, z1, x2, y2, z2, function(shape, x, y, z, nx, ny, nz)\n    print('Collision detected!', shape, x, y, z, nx, ny, nz)\n  end)\nend"
-                }
-              },
-              notes = "The callback is passed the shape that was hit, the hit position (in world coordinates), and the normal vector of the hit.",
+              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the raycast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nRaycasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
               related = {
+                "World:shapecast",
+                "World:overlapShape",
                 "World:queryBox",
                 "World:querySphere"
               },
@@ -38784,38 +40739,48 @@ return {
                     {
                       name = "x1",
                       type = "number",
-                      description = "The x coordinate of the starting position of the ray."
+                      description = "The x coordinate of the origin of the ray."
                     },
                     {
                       name = "y1",
                       type = "number",
-                      description = "The y coordinate of the starting position of the ray."
+                      description = "The y coordinate of the origin of the ray."
                     },
                     {
                       name = "z1",
                       type = "number",
-                      description = "The z coordinate of the starting position of the ray."
+                      description = "The z coordinate of the origin of the ray."
                     },
                     {
                       name = "x2",
                       type = "number",
-                      description = "The x coordinate of the ending position of the ray."
+                      description = "The x coordinate of the endpoint of the ray."
                     },
                     {
                       name = "y2",
                       type = "number",
-                      description = "The y coordinate of the ending position of the ray."
+                      description = "The y coordinate of the endpoint of the ray."
                     },
                     {
                       name = "z2",
                       type = "number",
-                      description = "The z coordinate of the ending position of the ray."
+                      description = "The z coordinate of the endpoint of the ray."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "The function to call when an intersection is detected.  It can return `false` to cancel checks against additional shapes.",
+                      description = "The function to call when an intersection is detected (see notes).",
                       arguments = {
+                        {
+                          name = "collider",
+                          type = "Collider"
+                        },
                         {
                           name = "shape",
                           type = "Shape"
@@ -38843,9 +40808,19 @@ return {
                         {
                           name = "nz",
                           type = "number"
+                        },
+                        {
+                          name = "fraction",
+                          type = "number"
                         }
                       },
-                      returns = {}
+                      returns = {
+                        {
+                          name = "limit",
+                          type = "number",
+                          default = "1.0"
+                        }
+                      }
                     }
                   },
                   returns = {}
@@ -38853,20 +40828,30 @@ return {
                 {
                   arguments = {
                     {
-                      name = "start",
+                      name = "origin",
                       type = "Vec3",
-                      description = "The starting position of the ray."
+                      description = "The origin of the ray."
                     },
                     {
-                      name = "end",
+                      name = "endpoint",
                       type = "Vec3",
-                      description = "The end position of the ray."
+                      description = "The endpoint of the ray."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "The function to call when an intersection is detected.  It can return `false` to cancel checks against additional shapes.",
+                      description = "The function to call when an intersection is detected (see notes).",
                       arguments = {
+                        {
+                          name = "collider",
+                          type = "Collider"
+                        },
                         {
                           name = "shape",
                           type = "Shape"
@@ -38894,12 +40879,166 @@ return {
                         {
                           name = "nz",
                           type = "number"
+                        },
+                        {
+                          name = "fraction",
+                          type = "number"
                         }
                       },
-                      returns = {}
+                      returns = {
+                        {
+                          name = "limit",
+                          type = "number",
+                          default = "1.0"
+                        }
+                      }
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The x coordinate of the origin of the ray."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The y coordinate of the origin of the ray."
+                    },
+                    {
+                      name = "z1",
+                      type = "number",
+                      description = "The z coordinate of the origin of the ray."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x coordinate of the endpoint of the ray."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y coordinate of the endpoint of the ray."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z coordinate of the endpoint of the ray."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The Collider that was hit."
+                    },
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape that was hit."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the impact point, in world space."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the impact point, in world space."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the impact point, in world space."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "origin",
+                      type = "Vec3",
+                      description = "The origin of the ray."
+                    },
+                    {
+                      name = "endpoint",
+                      type = "Vec3",
+                      description = "The endpoint of the ray."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The Collider that was hit."
+                    },
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape that was hit."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the impact point, in world space."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the impact point, in world space."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the impact point, in world space."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    }
+                  }
                 }
               }
             },
@@ -38910,6 +41049,7 @@ return {
               description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "World:setAngularDamping",
               module = "lovr.physics",
+              deprecated = true,
               notes = "This sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setAngularDamping`.",
               related = {
                 "Collider:getAngularDamping",
@@ -38935,12 +41075,60 @@ return {
               }
             },
             {
+              name = "setCallbacks",
+              summary = "Set the World's collision callbacks.",
+              description = "Assigns collision callbacks to the world.\n\n- They are\n  - filter: filters collisions\n  - start: called when colliders start touching\n  - end: called when colliders stop touching\n  - contact: called each frame while colliders are touching, with detailed contact info\n- World:update must be called from the thread that assigns the callbacks.",
+              key = "World:setCallbacks",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "callbacks",
+                      type = "table",
+                      description = "The World collision callbacks.",
+                      table = {
+                        {
+                          name = "filter",
+                          type = "function",
+                          description = "The function to use to filter collisions."
+                        },
+                        {
+                          name = "enter",
+                          type = "function",
+                          description = "The function to call when 2 colliders start touching."
+                        },
+                        {
+                          name = "exit",
+                          type = "function",
+                          description = "The function to call when 2 colliders stop touching."
+                        },
+                        {
+                          name = "contact",
+                          type = "function",
+                          description = "The function to call every frame while 2 colliders are in contact."
+                        }
+                      }
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setGravity",
               tag = "worldProperties",
               summary = "Set the gravity of the World.",
-              description = "Sets the gravity of the World.",
+              description = "Sets the World's gravity.  Gravity is a constant acceleration applied to all colliders.  The default is `(0, -9.81, 0)` meters per second squared, causing colliders to fall downward.\n\nUse `Collider:setGravityScale` to change gravity strength for a single collider.",
               key = "World:setGravity",
               module = "lovr.physics",
+              notes = "Kinematic colliders ignore gravity, since they are not moved by forces.  Colliders with higher mass do not fall faster.",
+              related = {
+                "Collider:getGravityScale",
+                "Collider:setGravityScale",
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping"
+              },
               variants = {
                 {
                   arguments = {
@@ -38981,6 +41169,7 @@ return {
               description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move. Damping is only applied when linear velocity is over the threshold value.",
               key = "World:setLinearDamping",
               module = "lovr.physics",
+              deprecated = true,
               notes = "A linear damping of 0 means colliders won't slow down over time.  This is the default.\n\nThis sets the default damping for newly-created colliders.  Damping can also be set on a per-collider basis using `Collider:setLinearDamping`.",
               related = {
                 "Collider:getLinearDamping",
@@ -39012,6 +41201,7 @@ return {
               description = "Sets the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
               key = "World:setResponseTime",
               module = "lovr.physics",
+              deprecated = true,
               related = {
                 "BallJoint:getResponseTime",
                 "BallJoint:setResponseTime",
@@ -39040,6 +41230,7 @@ return {
               description = "Sets whether colliders can go to sleep in the World.",
               key = "World:setSleepingAllowed",
               module = "lovr.physics",
+              deprecated = true,
               notes = "If sleeping is enabled, the World will try to detect colliders that haven't moved for a while and put them to sleep.  Sleeping colliders don't impact the physics simulation, which makes updates more efficient and improves physics performance.  However, the physics engine isn't perfect at waking up sleeping colliders and this can lead to bugs where colliders don't react to forces or collisions properly.\n\nThis can be set on individual colliders.\n\nColliders can be manually put to sleep or woken up using `Collider:setAwake`.",
               related = {
                 "Collider:isSleepingAllowed",
@@ -39067,6 +41258,7 @@ return {
               description = "Sets the step count of the World.  The step count influences how many steps are taken during a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The default step count is 20.",
               key = "World:setStepCount",
               module = "lovr.physics",
+              deprecated = true,
               related = {
                 "World:update"
               },
@@ -39090,6 +41282,7 @@ return {
               description = "Sets the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:setTightness",
               module = "lovr.physics",
+              deprecated = true,
               related = {
                 "BallJoint:getTightness",
                 "BallJoint:setTightness",
@@ -39112,17 +41305,393 @@ return {
               }
             },
             {
+              name = "shapecast",
+              tag = "worldQueries",
+              summary = "Move a shape through the world and return any colliders it touches.",
+              description = "Moves a shape from a starting point to an endpoint and returns any colliders it touches along its path.\n\nThis is similar to a raycast, but with a `Shape` instead of a point.",
+              key = "World:shapecast",
+              module = "lovr.physics",
+              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the shapecast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nShapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
+              related = {
+                "World:raycast",
+                "World:collideShape",
+                "World:queryBox",
+                "World:querySphere"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The x position to start at."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The y position to start at."
+                    },
+                    {
+                      name = "z1",
+                      type = "number",
+                      description = "The z position to start at."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x position to move the shape to."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y position to move the shape to."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z position to move the shape to."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the shape around its rotation axis, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the rotation axis."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The function to call when an intersection is detected (see notes).",
+                      arguments = {
+                        {
+                          name = "collider",
+                          type = "Collider"
+                        },
+                        {
+                          name = "shape",
+                          type = "Shape"
+                        },
+                        {
+                          name = "x",
+                          type = "number"
+                        },
+                        {
+                          name = "y",
+                          type = "number"
+                        },
+                        {
+                          name = "z",
+                          type = "number"
+                        },
+                        {
+                          name = "nx",
+                          type = "number"
+                        },
+                        {
+                          name = "ny",
+                          type = "number"
+                        },
+                        {
+                          name = "nz",
+                          type = "number"
+                        },
+                        {
+                          name = "fraction",
+                          type = "number"
+                        }
+                      },
+                      returns = {
+                        {
+                          name = "limit",
+                          type = "number",
+                          default = "1.0"
+                        }
+                      }
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to start at."
+                    },
+                    {
+                      name = "destination",
+                      type = "Vec3",
+                      description = "The position to move the shape to."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the shape."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    },
+                    {
+                      name = "callback",
+                      type = "function",
+                      description = "The function to call when an intersection is detected (see notes).",
+                      arguments = {
+                        {
+                          name = "collider",
+                          type = "Collider"
+                        },
+                        {
+                          name = "shape",
+                          type = "Shape"
+                        },
+                        {
+                          name = "x",
+                          type = "number"
+                        },
+                        {
+                          name = "y",
+                          type = "number"
+                        },
+                        {
+                          name = "z",
+                          type = "number"
+                        },
+                        {
+                          name = "nx",
+                          type = "number"
+                        },
+                        {
+                          name = "ny",
+                          type = "number"
+                        },
+                        {
+                          name = "nz",
+                          type = "number"
+                        },
+                        {
+                          name = "fraction",
+                          type = "number"
+                        }
+                      },
+                      returns = {
+                        {
+                          name = "limit",
+                          type = "number",
+                          default = "1.0"
+                        }
+                      }
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The x position to start at."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The y position to start at."
+                    },
+                    {
+                      name = "z1",
+                      type = "number",
+                      description = "The z position to start at."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x position to move the shape to."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y position to move the shape to."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z position to move the shape to."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the shape around its rotation axis, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the rotation axis."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the rotation axis."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the rotation axis."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The Collider that was hit."
+                    },
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape that was hit."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the impact point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the impact point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the impact point."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position to start at."
+                    },
+                    {
+                      name = "destination",
+                      type = "Vec3",
+                      description = "The position to move the shape to."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation of the shape."
+                    },
+                    {
+                      name = "filter",
+                      type = "string",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "collider",
+                      type = "Collider",
+                      description = "The Collider that was hit."
+                    },
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape that was hit."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the impact point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the impact point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the impact point."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "update",
               tag = "worldBasics",
-              summary = "Update the World.",
-              description = "Updates the World, advancing the physics simulation forward in time and resolving collisions between colliders in the World.",
+              summary = "Advance the physics simulation.",
+              description = "Updates the World, advancing the physics simulation forward in time and moving all the colliders.",
               key = "World:update",
               module = "lovr.physics",
-              notes = "It is common to pass the `dt` variable from `lovr.update` into this function.\n\nThe default collision resolver function is:\n\n    function defaultResolver(world)\n      world:computeOverlaps()\n      for shapeA, shapeB in world:overlaps() do\n        world:collide(shapeA, shapeB)\n      end\n    end\n\nAdditional logic could be introduced to the collision resolver function to add custom collision behavior or to change the collision parameters (like friction and restitution) on a per-collision basis.\n\n> If possible, use a fixed timestep value for updating the World. It will greatly improve the\n> accuracy of the simulation and reduce bugs. For more information on implementing a fixed\n> timestep loop, see [this article](http://gafferongames.com/game-physics/fix-your-timestep/).",
+              examples = {
+                {
+                  code = "function lovr.update(dt)\n  world:update(dt)\nend"
+                }
+              },
+              notes = "By default, the World updates at a fixed timestep.  This means that the physics simulation will always update with a constant rate, for example 60 \"ticks\" per second.  This improves stability of the simulation and decouples physics from rendering.  Collider poses are automatically interpolated between the two most recent ticks, ensuring smooth movement even if the tick rate is lower than the rendering rate.\n\nFixed timestep can be disabled by setting the `tickRate` option to 0 in `lovr.physics.newWorld`. This will use a variable timestep where the `dt` value passed to this function will be applied directly to the physics simulation.\n\nThis function must be called from the last thread that called `World:setCallbacks`.  If no callbacks are set, then this can be called from any thread.",
               related = {
-                "World:computeOverlaps",
-                "World:overlaps",
-                "World:collide"
+                "lovr.physics.newWorld"
               },
               variants = {
                 {
@@ -39131,28 +41700,6 @@ return {
                       name = "dt",
                       type = "number",
                       description = "The amount of time to advance the simulation forward."
-                    },
-                    {
-                      name = "resolver",
-                      type = "function",
-                      description = "The collision resolver function to use.  This will be called before updating to allow for custom collision processing.  If absent, a default will be used.",
-                      arguments = {
-                        {
-                          name = "world",
-                          type = "World"
-                        }
-                      },
-                      returns = {},
-                      default = "nil",
-                      variants = {
-                        {
-                          arguments = {
-                            "dt",
-                            "resolver"
-                          },
-                          returns = {}
-                        }
-                      }
                     }
                   },
                   returns = {}
@@ -39160,50 +41707,29 @@ return {
               }
             }
           },
-          notes = "Be sure to update the World in `lovr.update` using `World:update`, otherwise everything will stand still.",
-          sections = {
-            {
-              name = "Basics",
-              tag = "worldBasics"
-            },
-            {
-              name = "Colliders",
-              tag = "colliders",
-              description = "The following functions add Colliders to the World.  `World:newCollider` adds an \"empty\" Collider without any Shapes attached, whereas the other functions are shortcut functions to add Colliders with Shapes already attached to them."
-            },
-            {
-              name = "Properties",
-              tag = "worldProperties",
-              description = "The following functions are global properties of the simulation that apply to all new Colliders."
-            },
-            {
-              name = "Collision",
-              tag = "worldCollision",
-              description = "When the World is created using `lovr.physics.newWorld`, it is possible to specify a list of collision tags for the World.  Colliders can then be assigned a tag.  You can enable and disable collision between pairs of tags.  There are also some helper functions to quickly identify pairs of colliders that are near each other and test whether or not they are colliding.  These are used internally by default by `World:update`, but you can override this behavior and use the functions directly for custom collision behavior."
-            }
-          }
+          sections = {}
         }
       },
       sections = {
         {
-          name = "Worlds",
+          name = "World",
           tag = "world",
-          description = "A physics World holds all of the colliders and joints in the simulation.  It must be updated every frame using `World:update`, during which it will move all the colliders and resolve collisions between them."
+          description = "- Object containing all of the physics objects\n- Usually you just have 1, but sometimes it's useful to have independent universes\n- Once a World is created, you can add colliders to the world and connect em with joints\n- Call World:update each frame to move all the colliders\n- You can issue queries against the world, like raycasts"
         },
         {
           name = "Colliders",
           tag = "colliders",
-          description = "Colliders are objects that represent a single rigid body in the physics simulation. They can have forces applied to them and collide with other colliders."
+          description = "- A Collider is a single \"object\" in the physics simulation\n- A Collider has a \"Shape\" which determines its collision shape and its mass\n- Colliders collide with other colliders\n- Colliders be moved by applying forces to them"
         },
         {
           name = "Shapes",
           tag = "shapes",
-          description = "Shapes are 3D physics shapes that can be attached to colliders.  Shapes define, well, the shape of a Collider and how it collides with other objects.  Without any Shapes, a collider wouldn't collide with anything.\n\nNormally, you don't need to create Shapes yourself, as there are convenience functions on the World that will create colliders with shapes already attached.  However, you can attach multiple Shapes to a collider to create more complicated objects, and sometimes it can be useful to access the individual Shapes on a collider."
+          description = "- Shapes define the collision shape of a collider\n- Normally you don't need to create shapes manually, you can use convenience constructors\n- Use Collider:setShape to change the shape of a collider\n- Multiple Colliders can share a shape"
         },
         {
           name = "Joints",
           tag = "joints",
-          description = "Joints are objects that constrain the movement of colliders in various ways.  Joints are attached to two colliders when they're created and usually have a concept of an \"anchor\", which is where the Joint is attached to relative to the colliders.  Joints can be used to create all sorts of neat things like doors, drawers, buttons, levers, or pendulums."
+          description = "- Joints attach colliders together and constrain their movement in various ways.\n- Joints usually have anchor points which is the attachment point on each collider.\n- Joint:getForce/Joint:getTorque is cool"
         }
       }
     },

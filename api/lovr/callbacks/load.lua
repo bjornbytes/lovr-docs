@@ -6,13 +6,18 @@ return {
     work, like loading resources and initializing classes and variables.
   ]],
   arguments = {
-    {
-      name = 'arg',
+    arg = {
       type = 'table',
       description = 'The command line arguments provided to the program.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'arg' },
+      returns = {}
+    }
+  },
   example = [[
     function lovr.load(arg)
       model = lovr.graphics.newModel('sponza.gltf')

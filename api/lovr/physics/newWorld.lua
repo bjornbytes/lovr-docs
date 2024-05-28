@@ -157,9 +157,5 @@ return {
       arguments = { 'settings' },
       returns = { 'world' }
     }
-  },
-  example = {
-    -- show creating the world with default settings, so you can copy-paste
-    -- maybe another one with a bouncing sphere
   }
 }

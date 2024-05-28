@@ -52,6 +52,7 @@ return {
       description = 'The inertia rotation.'
     }
   },
+  returns = {},
   variants = {
     {
       arguments = { 'dx', 'dy', 'dz', 'angle', 'ax', 'ay', 'az' },

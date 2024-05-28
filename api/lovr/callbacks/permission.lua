@@ -7,18 +7,22 @@ return {
     granted or denied.
   ]],
   arguments = {
-    {
-      name = 'permission',
+    permission = {
       type = 'Permission',
       description = 'The type of permission.'
     },
-    {
-      name = 'granted',
+    granted = {
       type = 'boolean',
       description = 'Whether permission was granted or denied.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'permission', 'granted' },
+      returns = {}
+    }
+  },
   related = {
     'lovr.system.requestPermission'
   }

@@ -8,13 +8,18 @@ return {
     speed.
   ]],
   arguments = {
-    {
-      name = 'dt',
+    dt = {
       type = 'number',
       description = 'The number of seconds elapsed since the last update.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'dt' },
+      returns = {}
+    }
+  },
   example = [[
     function lovr.update(dt)
       ball.vy = ball.vy + ball.gravity * dt

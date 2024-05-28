@@ -8,13 +8,18 @@ return {
     stop calling `lovr.draw`.
   ]],
   arguments = {
-    {
-      name = 'visible',
+    visible = {
       type = 'boolean',
       description = 'Whether the application is visible in the headset display.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'visible' },
+      returns = {}
+    }
+  },
   related = {
     'lovr.headset.isVisible',
     'lovr.focus'

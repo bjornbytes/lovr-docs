@@ -14,23 +14,26 @@ return {
     by calling the callback.
   ]],
   arguments = {
-    {
-      name = 'message',
+    message = {
       type = 'string',
       description = 'The log message.  It may end in a newline.'
     },
-    {
-      name = 'level',
+    level = {
       type = 'string',
       description = 'The log level (`debug`, `info`, `warn`, or `error`).'
     },
-    {
-      name = 'tag',
+    tag = {
       type = 'string',
       description = 'The log tag.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'message', 'level', 'tag' },
+      returns = {}
+    }
+  },
   related = {
     'Pass:text'
   }

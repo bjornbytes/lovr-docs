@@ -8,17 +8,21 @@ return {
     HUD could be rendered.
   ]],
   arguments = {
-    {
-      name = 'pass',
+    pass = {
       type = 'Pass',
       description = 'A render pass targeting the window.'
     }
   },
   returns = {
-    {
-      name = 'skip',
+    skip = {
       type = 'boolean',
       description = 'If truthy, the input Pass will not be submitted to the GPU.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'pass' },
+      returns = { 'skip' }
     }
   },
   example = {

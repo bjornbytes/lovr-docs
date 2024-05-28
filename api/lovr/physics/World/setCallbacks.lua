@@ -41,8 +41,8 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'callbacks' }
-      returns = {},
+      arguments = { 'callbacks' },
+      returns = {}
     }
   }
 }

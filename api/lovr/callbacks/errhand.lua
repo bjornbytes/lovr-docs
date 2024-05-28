@@ -16,15 +16,13 @@ return {
     to the window.
   ]],
   arguments = {
-    {
-      name = 'message',
+    message = {
       type = 'string',
       description = 'The error message.'
     }
   },
   returns = {
-    {
-      name = 'handler',
+    handler = {
       type = 'function',
       arguments = {},
       returns = {
@@ -37,6 +35,12 @@ return {
         The error handler function.  It should return nil to continue running, "restart" to restart
         the app, or a number representing an exit status.
       ]]
+    }
+  },
+  variants = {
+    {
+      arguments = { 'message' },
+      returns = { 'handler' }
     }
   },
   example = {

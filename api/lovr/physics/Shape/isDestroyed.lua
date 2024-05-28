@@ -10,6 +10,12 @@ return {
       description = 'Whether the Shape has been destroyed.'
     }
   },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'destroyed' }
+    }
+  },
   related = {
     'Shape:destroy',
     'Collider:isDestroyed',

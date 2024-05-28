@@ -8,18 +8,22 @@ return {
     The default implementation of this callback will call `lovr.errhand` with the error.
   ]],
   arguments = {
-    {
-      name = 'thread',
+    thread = {
       type = 'Thread',
       description = 'The Thread that errored.'
     },
-    {
-      name = 'message',
+    message = {
       type = 'string',
       description = 'The error message.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'thread', 'message' },
+      returns = {}
+    }
+  },
   related = {
     'Thread',
     'Thread:getError',

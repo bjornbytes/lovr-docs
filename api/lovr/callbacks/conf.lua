@@ -7,8 +7,7 @@ return {
     file that's loaded before the rest of the framework initializes.
   ]],
   arguments = {
-    {
-      name = 't',
+    t = {
       type = 'table',
       description = 'The table to edit the configuration settings on.',
       table = {
@@ -252,6 +251,12 @@ return {
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 't' },
+      returns = {}
+    }
+  },
   notes = [[
     Disabling unused modules can improve startup time.
 

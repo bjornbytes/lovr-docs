@@ -137,7 +137,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'start', 'end', 'filter', 'callback' },
+      arguments = { 'origin', 'endpoint', 'filter', 'callback' },
       returns = {}
     },
     {
@@ -145,7 +145,7 @@ return {
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     },
     {
-      arguments = { 'start', 'end', 'filter' },
+      arguments = { 'origin', 'endpoint', 'filter' },
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     }
   },

@@ -56,7 +56,7 @@ return {
       type = 'Vec3',
       description = 'The position to start at.'
     },
-    endpoint = {
+    destination = {
       type = 'Vec3',
       description = 'The position to move the shape to.'
     },

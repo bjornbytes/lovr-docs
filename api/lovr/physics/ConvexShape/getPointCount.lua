@@ -17,7 +17,7 @@ return {
   notes = [[
     This isn't necessarily the same as the number of points or vertices that were used to create the
     shape, since points inside the hull will be discarded.
-  ]]
+  ]],
   related = {
     'ConvexShape:getPoint'
   }

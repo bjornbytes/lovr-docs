@@ -7,10 +7,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
+    abort = {
       type = 'boolean',
-      name = 'abort',
       description = 'Whether quitting should be aborted.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'abort' }
     }
   },
   example = [[

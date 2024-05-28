@@ -8,13 +8,18 @@ return {
     make sense to pause the game or reduce visual fidelity when the application loses focus.
   ]],
   arguments = {
-    {
-      name = 'focused',
+    focused = {
       type = 'boolean',
       description = 'Whether the program is now focused.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'focused' },
+      returns = {}
+    }
+  },
   related = {
     'lovr.headset.isFocused',
     'lovr.visible'

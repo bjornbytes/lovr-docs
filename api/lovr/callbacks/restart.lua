@@ -9,10 +9,15 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
+    cookie = {
       type = '*',
-      name = 'cookie',
       description = 'The value to send to the next `lovr.load`.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'cookie' }
     }
   },
   notes = [[

@@ -28,27 +28,27 @@ return {
       type = 'number',
       description = 'The z component of the diagonal matrix.'
     },
-    qx = {
+    angle = {
       type = 'number',
-      description = 'The x component of the inertia rotation quaternion.'
+      description = 'The angle of the inertia rotation.'
     },
-    qy = {
+    ax = {
       type = 'number',
-      description = 'The y component of the inertia rotation quaternion.'
+      description = 'The x component of the inertia rotation axis.'
     },
-    qz = {
+    ay = {
       type = 'number',
-      description = 'The z component of the inertia rotation quaternion.'
+      description = 'The y component of the inertia rotation axis.'
     },
-    qw = {
+    az = {
       type = 'number',
-      description = 'The w component of the inertia rotation quaternion.'
+      description = 'The z component of the inertia rotation axis.'
     }
   },
   variants = {
     {
       arguments = {},
-      returns = { 'dx', 'dy', 'dz', 'qx', 'qy', 'qz', 'qw' }
+      returns = { 'dx', 'dy', 'dz', 'angle', 'ax', 'ay', 'az' }
     }
   },
   notes = [[
@@ -58,8 +58,7 @@ return {
     Use `Collider:resetMassData` to reset the inertia and other mass properties based on the
     Collider's shapes.
 
-    If the Collider is kinematic or all rotation axes are disabled, this returns 0 for the diagonal
-    and an identity quaternion for the rotation.
+    If the Collider is kinematic or all rotation axes are disabled, this returns zeroes.
   ]],
   related = {
     'Collider:getMass',

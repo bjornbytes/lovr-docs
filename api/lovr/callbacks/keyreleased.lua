@@ -3,18 +3,22 @@ return {
   summary = 'Called when a key is released.',
   description = 'This callback is called when a key is released.',
   arguments = {
-    {
-      name = 'key',
+    key = {
       type = 'KeyCode',
       description = 'The key that was released.'
     },
-    {
-      name = 'scancode',
+    scancode = {
       type = 'number',
       description = 'The id of the key (ignores keyboard layout, may vary between keyboards).'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'key', 'scancode' },
+      returns = {}
+    }
+  },
   related = {
     'lovr.system.wasKeyReleased',
     'lovr.keypressed',

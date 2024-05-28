@@ -8,15 +8,20 @@ return {
     called with `!`.
   ]],
   arguments = {
-    {
-      name = 'text',
+    text = {
       type = 'string',
       description = 'The UTF-8 encoded character.'
     },
-    {
-      name = 'code',
+    code = {
       type = 'number',
       description = 'The integer codepoint of the character.'
+    }
+  },
+  returns = {},
+  variants = {
+    {
+      arguments = { 'text', 'code' },
+      returns = {}
     }
   },
   notes = [[
@@ -25,7 +30,6 @@ return {
     `utf8` library included with LÖVR can be used to manipulate UTF-8 strings.  `Pass:text` will
     also correctly handle UTF-8.
   ]],
-  returns = {},
   related = {
     'lovr.keypressed',
     'lovr.keyreleased'

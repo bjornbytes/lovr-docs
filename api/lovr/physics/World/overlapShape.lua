@@ -128,9 +128,6 @@ return {
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     }
   },
-  example = {
-    -- Show an example of colliding a sphere and getting all the stuff it touches
-  },
   related = {
     'World:shapecast',
     'World:raycast',

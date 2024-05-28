@@ -3,28 +3,30 @@ return {
   summary = 'Called when the mouse is moved.',
   description = 'This callback is called when the mouse is moved.',
   arguments = {
-    {
-      name = 'x',
+    x = {
       type = 'number',
       description = 'The new x position of the mouse.'
     },
-    {
-      name = 'y',
+    y = {
       type = 'number',
       description = 'The new y position of the mouse.'
     },
-    {
-      name = 'dx',
+    dx = {
       type = 'number',
       description = 'The movement on the x axis since the last mousemove event.'
     },
-    {
-      name = 'dy',
+    dy = {
       type = 'number',
       description = 'The movement on the y axis since the last mousemove event.'
     }
   },
   returns = {},
+  variants = {
+    {
+      arguments = { 'x', 'y', 'dx', 'dy' },
+      returns = {}
+    }
+  },
   related = {
     'lovr.mousepressed',
     'lovr.mousereleased',

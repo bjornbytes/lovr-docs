@@ -58,12 +58,13 @@ local function warnIf(cond, ...)
 end
 
 -- Processors
-local function processExample(example)
+local function processExample(example, key)
   if type(example) == 'string' then
     return {
       code = unindent(example)
     }
   else
+    assert(example.code, string.format('%s example is missing code', key))
     example.description = unwrap(example.description)
     example.code = unindent(example.code)
   end
@@ -99,7 +100,7 @@ local function processFunction(path, parent)
   fn.examples = pluralify(fn, 'example')
 
   for k, example in ipairs(fn.examples or {}) do
-    fn.examples[k] = processExample(example)
+    fn.examples[k] = processExample(example, fn.key)
   end
 
   assert(fn.variants, string.format('Function %q is missing variants', fn.key))
@@ -163,6 +164,7 @@ end
 
 local function processObject(path, parent)
   local object = require(path .. '.init')
+  assert(type(object) == 'table', string.format('%s/init.lua did not return a table', path))
 
   object.key = path:match('[^/]+$')
   object.name = object.key
@@ -210,7 +212,7 @@ local function processObject(path, parent)
   end
 
   for k, example in ipairs(object.examples or {}) do
-    object.examples[k] = processExample(example)
+    object.examples[k] = processExample(example, object.key)
   end
 
   track(object)
@@ -236,7 +238,7 @@ local function processModule(path)
 
   module.examples = pluralify(module, 'example')
   for k, example in ipairs(module.examples or {}) do
-    module.examples[k] = processExample(example)
+    module.examples[k] = processExample(example, module.key)
   end
 
   for _, file in ipairs(lovr.filesystem.getDirectoryItems(path)) do
@@ -296,12 +298,12 @@ local function validateFunction(fn)
   for _, variant in ipairs(fn.variants) do
     for _, arg in ipairs(variant.arguments) do
       warnIf(not arg or not arg.name, 'Invalid argument for variant of %s', fn.key)
-      warnIf(not arg.type or (arg.type:match('^[A-Z]') and not lookup[arg.type]), 'Invalid or missing argument type %s in %s', arg.type, fn.key)
+      warnIf(not arg.type or (arg.type:match('^[A-Z]') and not lookup[arg.type]), 'Invalid or missing argument type in %s', fn.key)
     end
 
     for _, ret in ipairs(variant.returns) do
       warnIf(not ret or not ret.name, 'Invalid return for variant of %s', fn.key)
-      warnIf(not ret.type or (ret.type:match('^[A-Z]') and not lookup[ret.type]), 'Invalid or missing return type %s for %s variant', ret.type, fn.key)
+      warnIf(not ret.type or (ret.type:match('^[A-Z]') and not lookup[ret.type]), 'Invalid or missing return type in %s', fn.key)
     end
   end
 

@@ -7,8 +7,7 @@ return {
   ]],
   arguments = {},
   returns = {
-    {
-      name = 'loop',
+    loop = {
       type = 'function',
       arguments = {},
       returns = {
@@ -18,6 +17,12 @@ return {
         }
       },
       description = 'The main loop function.'
+    }
+  },
+  variants = {
+    {
+      arguments = {},
+      returns = { 'loop' }
     }
   },
   notes = [[

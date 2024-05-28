@@ -17,7 +17,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'lower', 'upper' },
+      arguments = { 'min', 'max' },
       returns = {}
     },
     {
