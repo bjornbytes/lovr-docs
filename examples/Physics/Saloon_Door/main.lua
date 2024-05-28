@@ -32,7 +32,7 @@ function lovr.draw(pass)
 end
 
 function lovr.update(dt)
-  world:update(1 / 72)
+  world:update(dt)
   -- every few seconds simulate a push
   if lovr.timer.getTime() % 3 < dt then
     door1:applyForce(0, 0, -50)

@@ -36,7 +36,6 @@ local world
 local collisionCallbacks = {}
 local boxes = {}
 
-local framerate = 1 / 72 -- fixed framerate is recommended for physics updates
 local hand_torque = 20
 local hand_force = 30000
 
@@ -74,7 +73,7 @@ end
 
 function lovr.update(dt)
   -- override collision resolver to notify all colliders that have registered their callbacks
-  world:update(framerate, function(world)
+  world:update(dt, function(world)
     world:computeOverlaps()
     for shapeA, shapeB in world:overlaps() do
       local areColliding = world:collide(shapeA, shapeB)

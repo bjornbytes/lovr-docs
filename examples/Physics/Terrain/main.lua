@@ -42,7 +42,7 @@ function lovr.update(dt)
       1)
     table.insert(box_colliders, collider)
   end
-  world:update(1 / 60)
+  world:update(dt)
 end
 
 function lovr.draw(pass)

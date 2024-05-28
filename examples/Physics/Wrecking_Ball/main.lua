@@ -47,7 +47,7 @@ end
 
 
 function lovr.update(dt)
-  world:update(1 / 72)
+  world:update(dt)
 end
 
 

@@ -26,7 +26,7 @@ local isFirstFrame = true
 
 function lovr.update(dt)
   -- Update the physics simulation
-  world:update(1 / 60)
+  world:update(dt)
 
   -- Place boxes on controllers
   for i, hand in ipairs(lovr.headset.getHands()) do
