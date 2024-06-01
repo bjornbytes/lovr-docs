@@ -51,8 +51,7 @@ Tips
 
 - It is possible to restart the app from the command line by running:
 
-<pre><code>
-adb shell am start -S org.lovr.app/org.lovr.app.Activity
+<pre><code>adb shell am start -S org.lovr.app/org.lovr.app.Activity
 </code></pre>
 
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
