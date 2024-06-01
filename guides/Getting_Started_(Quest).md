@@ -23,7 +23,7 @@ Download the latest Android APK from the [Downloads page](https://lovr.org/downl
 
 Install it to the device:
 
-    $ adb install lovr.apk
+    $ adb install -r lovr.apk
 
 Try running it by navigating to the "Library" -> "Unknown Sources" menu of the headset and running
 the `org.lovr.app` app.  You should see the no game screen.
@@ -51,9 +51,7 @@ Tips
 
 - It is possible to restart the app from the command line by running:
 
-<pre><code>adb shell am force-stop org.lovr.app
-adb shell am start org.lovr.app/org.lovr.app.Activity
-</code></pre>
+    adb shell am start -S org.lovr.app/org.lovr.app.Activity
 
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
   `adb logcat -s LOVR`.
