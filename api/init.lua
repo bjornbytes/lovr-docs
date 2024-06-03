@@ -32557,6 +32557,27 @@ return {
           }
         },
         {
+          name = "MotorMode",
+          summary = "The different states for joint motors.",
+          description = "The different ways the motor on a joint can be used.",
+          key = "MotorMode",
+          module = "lovr.physics",
+          related = {
+            "HingeJoint:setMotorMode",
+            "SliderJoint:setMotorMode"
+          },
+          values = {
+            {
+              name = "position",
+              description = "The motor drives to a particular value."
+            },
+            {
+              name = "velocity",
+              description = "The motor drives to a particular speed."
+            }
+          }
+        },
+        {
           name = "ShapeType",
           summary = "Types of physics shapes.",
           description = "Represents the different types of physics Shapes available.",
@@ -34125,12 +34146,12 @@ return {
               }
             },
             {
-              name = "getEnabledAxes",
+              name = "getDegreesOfFreedom",
               summary = "Get the enabled translation/rotation axes.",
-              description = "Get the axes that are enabled for translation and rotation.",
-              key = "Collider:getEnabledAxes",
+              description = "Get the degrees of freedom of the Collider.",
+              key = "Collider:getDegreesOfFreedom",
               module = "lovr.physics",
-              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all axes.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.",
+              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all degrees of freedom.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.",
               variants = {
                 {
                   arguments = {},
@@ -34500,40 +34521,6 @@ return {
               }
             },
             {
-              name = "getLocalCenter",
-              summary = "Get the Collider's center of mass.",
-              description = "Returns the Collider's center of mass.",
-              key = "Collider:getLocalCenter",
-              module = "lovr.physics",
-              related = {
-                "Collider:getLocalPoint",
-                "Collider:getMassData",
-                "Collider:setMassData"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "cx",
-                      type = "number",
-                      description = "The x position of the center of mass."
-                    },
-                    {
-                      name = "cy",
-                      type = "number",
-                      description = "The y position of the center of mass."
-                    },
-                    {
-                      name = "cz",
-                      type = "number",
-                      description = "The z position of the center of mass."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getLocalPoint",
               summary = "Transform a point from world space to collider space.",
               description = "Transforms a point from world coordinates into local coordinates relative to the Collider.",
@@ -34719,50 +34706,6 @@ return {
               }
             },
             {
-              name = "getMassData",
-              summary = "Compute mass properties for the Collider.",
-              description = "Computes mass properties for the Collider.",
-              key = "Collider:getMassData",
-              module = "lovr.physics",
-              related = {
-                "Collider:getMass",
-                "Collider:setMass",
-                "Shape:getMass"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "cx",
-                      type = "number",
-                      description = "The x position of the center of mass."
-                    },
-                    {
-                      name = "cy",
-                      type = "number",
-                      description = "The y position of the center of mass."
-                    },
-                    {
-                      name = "cz",
-                      type = "number",
-                      description = "The z position of the center of mass."
-                    },
-                    {
-                      name = "mass",
-                      type = "number",
-                      description = "The computed mass of the Collider."
-                    },
-                    {
-                      name = "inertia",
-                      type = "table",
-                      description = "A table containing 6 values of the rotational inertia tensor matrix.  The table contains the 3 diagonal elements of the matrix (upper left to bottom right), followed by the 3 elements of the upper right portion of the 3x3 matrix."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getOrientation",
               summary = "Get the orientation of the Collider.",
               description = "Returns the orientation of the Collider in angle/axis representation.",
@@ -34919,6 +34862,61 @@ return {
                 {
                   arguments = {},
                   returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Collider is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRawPose",
+              summary = "Get the raw pose of the Collider, without any interpolation.",
+              description = "Returns the position and orientation of the Collider, without any interpolation applied.",
+              key = "Collider:getRawPose",
+              module = "lovr.physics",
+              notes = "To disable all interpolation, disable fixed timestep by setting the `tickRate` to 0 when creating the world.",
+              related = {
+                "Collider:getRawPosition",
+                "Collider:getRawOrientation",
+                "Collider:getPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the Collider, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the Collider, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the Collider, in meters."
+                    },
                     {
                       name = "angle",
                       type = "number",
@@ -35722,6 +35720,31 @@ return {
               }
             },
             {
+              name = "setDegreesOfFreedom",
+              summary = "Set the enabled translation/rotation axes.",
+              description = "Set the degrees of freedom of the Collider.",
+              key = "Collider:setDegreesOfFreedom",
+              module = "lovr.physics",
+              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all degrees of freedom.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.\n\nWhen all translation axes are disabled, `Collider:getMass` will return 0.\n\nWhen all rotation axes are disabled, `Collider:getInertia` will return zero/identity.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "translation",
+                      type = "string",
+                      description = "A string containing the world-space axes the Collider is allowed to move on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all translation."
+                    },
+                    {
+                      name = "rotation",
+                      type = "string",
+                      description = "A string containing the world-space axes the Collider is allowed to rotate on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all rotation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setEnabled",
               summary = "Enable or disable the Collider.",
               description = "Enables or disables the Collider.  When a Collider is disabled, it is removed from the World and does not impact the physics simulation in any way.  The Collider keeps all of its state and can be re-enabled to add it back to the World.",
@@ -35737,31 +35760,6 @@ return {
                       name = "enable",
                       type = "boolean",
                       description = "Whether the Collider should be enabled."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setEnabledAxes",
-              summary = "Set the enabled translation/rotation axes.",
-              description = "Set the axes that are enabled for translation and rotation.",
-              key = "Collider:setEnabledAxes",
-              module = "lovr.physics",
-              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all axes.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.\n\nWhen all translation axes are disabled, `Collider:getMass` will return 0.\n\nWhen all rotation axes are disabled, `Collider:getInertia` will return zero/identity.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "translation",
-                      type = "string",
-                      description = "A string containing the world-space axes the Collider is allowed to move on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all translation."
-                    },
-                    {
-                      name = "rotation",
-                      type = "string",
-                      description = "A string containing the world-space axes the Collider is allowed to rotate on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all rotation."
                     }
                   },
                   returns = {}
@@ -36039,50 +36037,6 @@ return {
                       name = "mass",
                       type = "number",
                       description = "The new mass for the Collider, in kilograms."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setMassData",
-              summary = "Set mass properties for the Collider.",
-              description = "Sets mass properties for the Collider.",
-              key = "Collider:setMassData",
-              module = "lovr.physics",
-              related = {
-                "Collider:getMass",
-                "Collider:setMass",
-                "Shape:getMass"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "cx",
-                      type = "number",
-                      description = "The x position of the center of mass."
-                    },
-                    {
-                      name = "cy",
-                      type = "number",
-                      description = "The y position of the center of mass."
-                    },
-                    {
-                      name = "cz",
-                      type = "number",
-                      description = "The z position of the center of mass."
-                    },
-                    {
-                      name = "mass",
-                      type = "number",
-                      description = "The computed mass of the Collider."
-                    },
-                    {
-                      name = "inertia",
-                      type = "table",
-                      description = "A table containing 6 values of the rotational inertia tensor matrix.  The table contains the 3 diagonal elements of the matrix (upper left to bottom right), followed by the 3 elements of the upper right portion of the 3x3 matrix."
                     }
                   },
                   returns = {}
@@ -36406,6 +36360,7 @@ return {
           description = "TODO",
           key = "ConeJoint",
           module = "lovr.physics",
+          extends = "Joint",
           methods = {
             {
               name = "getAxis",
@@ -36484,6 +36439,7 @@ return {
           description = "TODO",
           key = "ConvexShape",
           module = "lovr.physics",
+          extends = "Shape",
           methods = {
             {
               name = "getFace",
@@ -36813,12 +36769,14 @@ return {
                     {
                       name = "frequency",
                       type = "number",
-                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled.",
+                      default = "0.0"
                     },
                     {
                       name = "damping",
                       type = "number",
-                      description = "The damping ratio of the spring."
+                      description = "The damping ratio of the spring.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -36841,50 +36799,6 @@ return {
           },
           extends = "Joint",
           methods = {
-            {
-              name = "getAnchors",
-              summary = "Get the anchor points of the HingeJoint.",
-              description = "Returns the anchor points of the HingeJoint.",
-              key = "HingeJoint:getAnchors",
-              module = "lovr.physics",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x1",
-                      type = "number",
-                      description = "The x coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y1",
-                      type = "number",
-                      description = "The y coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z1",
-                      type = "number",
-                      description = "The z coordinate of the first anchor point, in world coordinates."
-                    },
-                    {
-                      name = "x2",
-                      type = "number",
-                      description = "The x coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y2",
-                      type = "number",
-                      description = "The y coordinate of the second anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z2",
-                      type = "number",
-                      description = "The z coordinate of the second anchor point, in world coordinates."
-                    }
-                  }
-                }
-              }
-            },
             {
               name = "getAngle",
               summary = "Get the current angle of the HingeJoint.",
@@ -36991,26 +36905,127 @@ return {
               }
             },
             {
-              name = "getLowerLimit",
-              summary = "Get the HingeJoint's lower angle limit.",
-              description = "Returns the lower limit of the hinge angle.  This will be greater than -π.",
-              key = "HingeJoint:getLowerLimit",
+              name = "getMaxMotorTorque",
+              summary = "Get the maximum amount of torque the motor can use.",
+              description = "Returns the maximum amount of torque the motor can use to reach its target, in newton meters.\n\nThere are separate limits for each direction the hinge can move.  They're usually kept the same, but one of them can be set to zero to make a motor that can only push in one direction.  Note that both limits are positive.",
+              key = "HingeJoint:getMaxMotorTorque",
               module = "lovr.physics",
               related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
+                "HingeJoint:getMotorTorque"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "limit",
+                      name = "positive",
                       type = "number",
-                      description = "The lower limit, in radians."
+                      description = "The maximum amount of torque the motor can use to push the hinge in the \"positive\" direction, in newton meters."
+                    },
+                    {
+                      name = "negative",
+                      type = "number",
+                      description = "The maximum amount of torque the motor can use to push the hinge in the \"negative\" direction, in newton meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorMode",
+              summary = "Get the motor mode of the HingeJoint.",
+              description = "Returns the motor mode of the HingeJoint.  When enabled, the motor will drive the hinge to a target angle (for the `position` mode) or a target speed (for the `velocity` mode), set by `HingeJoint:setMotorTarget`.",
+              key = "HingeJoint:getMotorMode",
+              module = "lovr.physics",
+              related = {
+                "HingeJoint:getMotorTarget",
+                "HingeJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "mode",
+                      type = "MotorMode",
+                      description = "The mode of the motor, or `nil` if the motor is disabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorSpring",
+              summary = "Get the spring parameters of the motor target.",
+              description = "Returns the spring parameters of the motor target.  These are similar to the spring parameters set by `HingeJoint:setSpring`, but they apply to the motor when it reaches its target instead of the angle limits of the hinge joint.  Note that these only take effect when the motor mode is `position`.",
+              key = "HingeJoint:getMotorSpring",
+              module = "lovr.physics",
+              notes = "See `HingeJoint:setSpring` for more detailed info on how the spring parameters work.",
+              related = {
+                "HingeJoint:getSpring",
+                "HingeJoint:setSpring",
+                "HingeJoint:getMotorTarget",
+                "HingeJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorTarget",
+              summary = "Get the target of the hinge motor.",
+              description = "Returns the target value for the HingeJoint's motor.  This is either a target angle or a target velocity, based on the mode set by `HingeJoint:setMotorMode`.",
+              key = "HingeJoint:getMotorTarget",
+              module = "lovr.physics",
+              related = {
+                "HingeJoint:getMotorMode",
+                "HingeJoint:setMotorMode"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "target",
+                      type = "number",
+                      description = "The target value, in radians or radians per second, depending on the mode."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorTorque",
+              summary = "Get the current motor torque.",
+              description = "Returns the current torque the motor is using to reach its target, in newton meters.",
+              key = "HingeJoint:getMotorTorque",
+              module = "lovr.physics",
+              related = {
+                "HingeJoint:getMaxMotorTorque",
+                "HingeJoint:setMaxMotorTorque"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "torque",
+                      type = "number",
+                      description = "The current torque, in newton meters."
                     }
                   }
                 }
@@ -37018,7 +37033,7 @@ return {
             },
             {
               name = "getSpring",
-              summary = "Get the spring parameters of the HingeJoint.",
+              summary = "Get the spring parameters of the HingeJoint limits.",
               description = "Returns the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge \"soft\".  When the motor is active, a separate set of spring parameters can be set on the motor, see `HingeJoint:setMotorSpring`.",
               key = "HingeJoint:getSpring",
               module = "lovr.physics",
@@ -37042,114 +37057,6 @@ return {
                       description = "The damping ratio of the spring."
                     }
                   }
-                }
-              }
-            },
-            {
-              name = "getUpperLimit",
-              summary = "Get the HingeJoint's upper angle limit.",
-              description = "Returns the upper limit of the hinge angle.  This will be less than π.",
-              key = "HingeJoint:getUpperLimit",
-              module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "limit",
-                      type = "number",
-                      description = "The upper limit, in radians."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "setAnchor",
-              summary = "Set the anchor point of the HingeJoint.",
-              description = "Sets a new anchor point for the HingeJoint.",
-              key = "HingeJoint:setAnchor",
-              module = "lovr.physics",
-              variants = {
-                {
-                  description = "Sets the anchor point using numbers.",
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the anchor point, in world coordinates."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the anchor point, in world coordinates."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate of the anchor point, in world coordinates."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Sets the anchor point using a vector.",
-                  arguments = {
-                    {
-                      name = "anchor",
-                      type = "Vec3",
-                      description = "The anchor point, in world coordinates."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setAxis",
-              summary = "Set the HingeJoint's axis.",
-              description = "Sets the axis of the hinge.",
-              key = "HingeJoint:setAxis",
-              module = "lovr.physics",
-              variants = {
-                {
-                  description = "Set the axis using numbers.",
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the axis."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the axis."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the axis."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Set the axis using a vector.",
-                  arguments = {
-                    {
-                      name = "axis",
-                      type = "Vec3",
-                      description = "The axis."
-                    }
-                  },
-                  returns = {}
                 }
               }
             },
@@ -37207,25 +37114,112 @@ return {
               }
             },
             {
-              name = "setLowerLimit",
-              summary = "Set the HingeJoint's lower angle limit.",
-              description = "Sets the lower limit of the hinge angle.  This should be greater than -π.",
-              key = "HingeJoint:setLowerLimit",
+              name = "setMaxMotorTorque",
+              summary = "Set the maximum amount of torque the motor can use.",
+              description = "Sets the maximum amount of torque the motor can use to reach its target, in newton meters.\n\nThere are separate limits for each direction the hinge can move.  They're usually kept the same, but one of them can be set to zero to make a motor that can only push in one direction.  Note that both limits are positive.",
+              key = "HingeJoint:setMaxMotorTorque",
               module = "lovr.physics",
               related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getUpperLimit",
-                "HingeJoint:setUpperLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
+                "HingeJoint:getMotorTorque"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "limit",
+                      name = "positive",
                       type = "number",
-                      description = "The lower limit, in radians."
+                      description = "The maximum amount of torque the motor can use to push the hinge in the \"positive\" direction, in newton meters.",
+                      default = "math.huge"
+                    },
+                    {
+                      name = "negative",
+                      type = "number",
+                      description = "The maximum amount of torque the motor can use to push the hinge in the \"negative\" direction, in newton meters.",
+                      default = "positive"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setMotorMode",
+              summary = "Set the motor mode of the HingeJoint.",
+              description = "Sets the motor mode of the HingeJoint.  When enabled, the motor will drive the hinge to a target angle (for the `position` mode) or a target speed (for the `velocity` mode), set by `HingeJoint:setMotorTarget`.",
+              key = "HingeJoint:setMotorMode",
+              module = "lovr.physics",
+              related = {
+                "HingeJoint:getMotorTarget",
+                "HingeJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mode",
+                      type = "MotorMode",
+                      description = "The mode of the motor."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disables the motor.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setMotorSpring",
+              summary = "Set the spring parameters of the motor target.",
+              description = "Sets the spring parameters of the motor target.  These are similar to the spring parameters set by `HingeJoint:setSpring`, but they apply to the motor when it reaches its target instead of the angle limits of the hinge joint.  Note that these only take effect when the motor mode is `position`.",
+              key = "HingeJoint:setMotorSpring",
+              module = "lovr.physics",
+              notes = "See `HingeJoint:setSpring` for more detailed info on how the spring parameters work.",
+              related = {
+                "HingeJoint:getSpring",
+                "HingeJoint:setSpring",
+                "HingeJoint:getMotorTarget",
+                "HingeJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled.",
+                      default = "0.0"
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setMotorTarget",
+              summary = "Set the target of the hinge motor.",
+              description = "Sets the target value for the HingeJoint's motor.  This is either a target angle or a target velocity, based on the mode set by `HingeJoint:setMotorMode`.",
+              key = "HingeJoint:setMotorTarget",
+              module = "lovr.physics",
+              related = {
+                "HingeJoint:getMotorMode",
+                "HingeJoint:setMotorMode"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "target",
+                      type = "number",
+                      description = "The target value, in radians or radians per second, depending on the mode."
                     }
                   },
                   returns = {}
@@ -37234,7 +37228,7 @@ return {
             },
             {
               name = "setSpring",
-              summary = "Set the spring parameters of the HingeJoint.",
+              summary = "Set the spring parameters of the HingeJoint limits.",
               description = "Sets the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge \"soft\".  When the motor is active, a separate set of spring parameters can be set on the motor, see `HingeJoint:setMotorSpring`.",
               key = "HingeJoint:setSpring",
               module = "lovr.physics",
@@ -37249,38 +37243,14 @@ return {
                     {
                       name = "frequency",
                       type = "number",
-                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled.",
+                      default = "0.0"
                     },
                     {
                       name = "damping",
                       type = "number",
-                      description = "The damping ratio of the spring."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setUpperLimit",
-              summary = "Set the HingeJoint's upper angle limit.",
-              description = "Sets the upper limit of the hinge angle.  This should be less than π.",
-              key = "HingeJoint:setUpperLimit",
-              module = "lovr.physics",
-              related = {
-                "HingeJoint:getAngle",
-                "HingeJoint:getLowerLimit",
-                "HingeJoint:setLowerLimit",
-                "HingeJoint:getLimits",
-                "HingeJoint:setLimits"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "limit",
-                      type = "number",
-                      description = "The upper limit, in radians."
+                      description = "The damping ratio of the spring.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -37453,7 +37423,7 @@ return {
               notes = "This does not include the motor force of a `HingeJoint`, see `HingeJoint:getMotorForce`.",
               related = {
                 "Joint:getTorque",
-                "HingeJoint:getMotorForce"
+                "HingeJoint:getMotorTorque"
               },
               variants = {
                 {
@@ -37737,6 +37707,41 @@ return {
               }
             },
             {
+              name = "getCenterOfMass",
+              summary = "Get the center of mass of the Shape.",
+              description = "Returns the center of mass of the Shape.  Currently the only shape that can have a non-zero center of mass is `ConvexShape`.",
+              key = "Shape:getCenterOfMass",
+              module = "lovr.physics",
+              notes = "`MeshShape` and `TerrainShape` do not have a well-defined mass, this function returns zero for those shapes.",
+              related = {
+                "Collider:getCenterOfMass",
+                "Shape:getOffset",
+                "Shape:setOffset"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the center of mass."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the center of mass."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the center of mass."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getCollider",
               summary = "Get the Collider the Shape is attached to.",
               description = "Returns the Collider the Shape is attached to.\n\nThis function will return `nil` if the Shape is not attached to a Collider.  When a Shape isn't attached to a Collider, the Shape can still be used for queries with `World:overlapShape` and `World:shapecast`.",
@@ -37873,16 +37878,70 @@ return {
               }
             },
             {
+              name = "getOffset",
+              summary = "Get the local offset of the Shape.",
+              description = "Returns the local offset of the Shape.  When the Shape is attached to a Collider, it will have this offset relative to the Collider.",
+              key = "Shape:getOffset",
+              module = "lovr.physics",
+              related = {
+                "Shape:getPosition",
+                "Shape:getOrientation",
+                "Shape:getPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The local x offset of the Shape, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The local y offset of the Shape, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The local z offset of the Shape, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the Shape is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getOrientation",
-              summary = "Get the Shape's orientation.",
-              description = "Get the orientation of the Shape relative to its Collider.",
+              summary = "Get the orientation of the Shape.",
+              description = "Get the orientation of the Shape in world space, taking into account the position and orientation of the Collider it's attached to, if any.  Shapes that aren't attached to a Collider will return their local offset.",
               key = "Shape:getOrientation",
               module = "lovr.physics",
               related = {
                 "Shape:getPosition",
-                "Shape:setPosition",
                 "Shape:getPose",
-                "Shape:setPose"
+                "Shape:getOffset",
+                "Shape:setOffset"
               },
               variants = {
                 {
@@ -37915,14 +37974,14 @@ return {
             {
               name = "getPose",
               summary = "Get the pose of the Shape.",
-              description = "Returns the position and orientation of the Shape, relative to its Collider.",
+              description = "Returns the position and orientation of the Shape in world space, taking into the account the position and orientation of the Collider it's attached to, if any.  Shapes that aren't attached to a Collider will return their local offset.",
               key = "Shape:getPose",
               module = "lovr.physics",
               related = {
                 "Shape:getPosition",
-                "Shape:setPosition",
                 "Shape:getOrientation",
-                "Shape:setOrientation"
+                "Shape:getOffset",
+                "Shape:setOffset"
               },
               variants = {
                 {
@@ -37969,15 +38028,15 @@ return {
             },
             {
               name = "getPosition",
-              summary = "Get the position of the Shape in the world.",
-              description = "Get the position of the Shape in the world.",
+              summary = "Get the position of the Shape.",
+              description = "Returns the position of the Shape in world space, taking into the account the position and orientation of the Collider it's attached to, if any.  Shapes that aren't attached to a Collider will return their local offset.",
               key = "Shape:getPosition",
               module = "lovr.physics",
               related = {
                 "Shape:getOrientation",
-                "Shape:setOrientation",
                 "Shape:getPose",
-                "Shape:setPose"
+                "Shape:getOffset",
+                "Shape:setOffset"
               },
               variants = {
                 {
@@ -37986,17 +38045,17 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x offset."
+                      description = "The x position, in world space."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y offset."
+                      description = "The y position, in world space."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z offset."
+                      description = "The z position, in world space."
                     }
                   }
                 }
@@ -38099,26 +38158,6 @@ return {
               }
             },
             {
-              name = "isEnabled",
-              summary = "Check if the Shape is enabled.",
-              description = "Returns whether the Shape is enabled.",
-              key = "Shape:isEnabled",
-              module = "lovr.physics",
-              notes = "Disabled shapes won't collide with anything.",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "enabled",
-                      type = "boolean",
-                      description = "Whether the Shape is enabled."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "setDensity",
               summary = "Set the density of the Shape.",
               description = "Sets the density of the Shape, in kilograms per cubic meter.  The density, combined with the volume of the Shape, determines the Shape's overall mass.",
@@ -38143,107 +38182,33 @@ return {
               }
             },
             {
-              name = "setEnabled",
-              summary = "Enable or disable the Shape.",
-              description = "Enable or disable the Shape.",
-              key = "Shape:setEnabled",
+              name = "setOffset",
+              summary = "Set the local offset of the Shape.",
+              description = "Sets the local offset of the Shape.  When the Shape is attached to a Collider, it will have this offset relative to the Collider.",
+              key = "Shape:setOffset",
               module = "lovr.physics",
-              notes = "Disabled shapes won't collide with anything.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "enabled",
-                      type = "boolean",
-                      description = "Whether the Shape should be enabled."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setOrientation",
-              summary = "Set the Shape's orientation.",
-              description = "Set the orientation of the Shape relative to its Collider.",
-              key = "Shape:setOrientation",
-              module = "lovr.physics",
-              notes = "If the Shape isn't attached to a Collider, this will error.",
               related = {
                 "Shape:getPosition",
-                "Shape:setPosition"
-              },
-              variants = {
-                {
-                  description = "Set the orientation of the Shape using numbers.",
-                  arguments = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the Shape is rotated."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the rotation axis."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the rotation axis."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the rotation axis."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Set the orientation of the Shape using a quaternion.",
-                  arguments = {
-                    {
-                      name = "orientation",
-                      type = "Quat",
-                      description = "The orientation of the Shape."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setPose",
-              summary = "Set the pose of the Shape.",
-              description = "Sets the position and orientation of the Shape, relative to its Collider.",
-              key = "Shape:setPose",
-              module = "lovr.physics",
-              notes = "If the Shape isn't attached to a Collider, this will error.",
-              related = {
-                "Shape:getPosition",
-                "Shape:setPosition",
                 "Shape:getOrientation",
-                "Shape:setOrientation"
+                "Shape:getPose"
               },
               variants = {
                 {
-                  description = "Set the pose of the Shape using numbers.",
                   arguments = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x position of the Shape, in meters."
+                      description = "The local x offset of the Shape, in meters."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y position of the Shape, in meters."
+                      description = "The local y offset of the Shape, in meters."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z position of the Shape, in meters."
+                      description = "The local z offset of the Shape, in meters."
                     },
                     {
                       name = "angle",
@@ -38269,63 +38234,16 @@ return {
                   returns = {}
                 },
                 {
-                  description = "Set the pose of the Shape using vector types.",
                   arguments = {
                     {
                       name = "position",
                       type = "Vec3",
-                      description = "The position of the Shape, in meters."
+                      description = "The local offset of the Shape, in meters."
                     },
                     {
-                      name = "orientation",
+                      name = "rotation",
                       type = "Quat",
-                      description = "The orientation of the Shape."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setPosition",
-              summary = "Set the Shape's position.",
-              description = "Set the position of the Shape relative to its Collider.",
-              key = "Shape:setPosition",
-              module = "lovr.physics",
-              notes = "If the Shape isn't attached to a Collider, this will error.",
-              related = {
-                "Shape:getOrientation",
-                "Shape:setOrientation"
-              },
-              variants = {
-                {
-                  description = "Set the position of the Shape using numbers.",
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x offset."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y offset."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z offset."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Set the position of the Shape using a vector.",
-                  arguments = {
-                    {
-                      name = "position",
-                      type = "Vec3",
-                      description = "The position."
+                      description = "The local rotation of the Shape, in meters."
                     }
                   },
                   returns = {}
@@ -38373,10 +38291,13 @@ return {
           methods = {
             {
               name = "getAxis",
-              summary = "Get the SliderJoint's axis.",
-              description = "Returns the axis of the slider.",
+              summary = "Get the axis of the SliderJoint.",
+              description = "Returns the axis of the slider, in world space.",
               key = "SliderJoint:getAxis",
               module = "lovr.physics",
+              related = {
+                "SliderJoint:getPosition"
+              },
               variants = {
                 {
                   arguments = {},
@@ -38401,57 +38322,175 @@ return {
               }
             },
             {
-              name = "getLimits",
-              summary = "Get the SliderJoint's limits.",
-              description = "Returns the upper and lower limits of the slider position.",
-              key = "SliderJoint:getLimits",
+              name = "getFriction",
+              summary = "Get the friction of the SliderJoint.",
+              description = "Returns the friction of the SliderJoint.  This is a maximum friction force that will be applied, in newtons, opposing movement along the slider axis.",
+              key = "SliderJoint:getFriction",
               module = "lovr.physics",
-              related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit"
-              },
+              notes = "Friction is only applied when the motor is disabled.",
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "lower",
+                      name = "friction",
                       type = "number",
-                      description = "The lower limit."
-                    },
-                    {
-                      name = "upper",
-                      type = "number",
-                      description = "The upper limit."
+                      description = "The maximum friction force, in newtons."
                     }
                   }
                 }
               }
             },
             {
-              name = "getLowerLimit",
-              summary = "Get the SliderJoint's lower limit.",
-              description = "Returns the lower limit of the slider position.",
-              key = "SliderJoint:getLowerLimit",
+              name = "getLimits",
+              summary = "Get the position limits of the SliderJoint.",
+              description = "Returns the position limits of the SliderJoint.  The \"zero\" position is determined by the relative position of the colliders at the time the joint was created, and positive positions are further apart along the slider axis.",
+              key = "SliderJoint:getLimits",
               module = "lovr.physics",
+              notes = "The default limits are -math.huge and math.huge (no limits).",
               related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
+                "SliderJoint:getPosition"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "limit",
+                      name = "min",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The minimum position, in meters.  Must be less than or equal to zero."
+                    },
+                    {
+                      name = "max",
+                      type = "number",
+                      description = "The maximum position, in meters.  Must be greater than or equal to zero."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMaxMotorForce",
+              summary = "Get the maximum amount of force the motor can use.",
+              description = "Returns the maximum amount of force the motor can use to reach its target, in newtons.\n\nThere are separate limits for each direction the slider can move.  They're usually kept the same, but one of them can be set to zero to make a motor that can only push in one direction. Note that both limits are positive.",
+              key = "SliderJoint:getMaxMotorForce",
+              module = "lovr.physics",
+              related = {
+                "SliderJoint:getMotorForce"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "positive",
+                      type = "number",
+                      description = "The maximum amount of force the motor can use to push the slider in the \"positive\" direction, in newtons."
+                    },
+                    {
+                      name = "negative",
+                      type = "number",
+                      description = "The maximum amount of force the motor can use to push the slider in the \"negative\" direction, in newtons."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorForce",
+              summary = "Get the current motor force.",
+              description = "Returns the current force the motor is using to reach its target, in newtons.",
+              key = "SliderJoint:getMotorForce",
+              module = "lovr.physics",
+              related = {
+                "SliderJoint:getMaxMotorForce",
+                "SliderJoint:setMaxMotorForce"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "force",
+                      type = "number",
+                      description = "The current force, in newtons."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorMode",
+              summary = "Get the motor mode of the SliderJoint.",
+              description = "Returns the motor mode of the SliderJoint.  When enabled, the motor will drive the slider to a target position (for the `position` mode) or a target speed (for the `velocity` mode), set by `SliderJoint:setMotorTarget`.",
+              key = "SliderJoint:getMotorMode",
+              module = "lovr.physics",
+              related = {
+                "SliderJoint:getMotorTarget",
+                "SliderJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "mode",
+                      type = "MotorMode",
+                      description = "The mode of the motor, or `nil` if the motor is disabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorSpring",
+              summary = "Get the spring parameters of the motor target.",
+              description = "Returns the spring parameters of the motor target.  These are similar to the spring parameters set by `SliderJoint:setSpring`, but they apply to the motor when it reaches its target instead of the position limits of the slider joint.  Note that these only take effect when the motor mode is `position`.",
+              key = "SliderJoint:getMotorSpring",
+              module = "lovr.physics",
+              notes = "See `SliderJoint:setSpring` for more detailed info on how the spring parameters work.",
+              related = {
+                "SliderJoint:getSpring",
+                "SliderJoint:setSpring",
+                "SliderJoint:getMotorTarget",
+                "SliderJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMotorTarget",
+              summary = "Get the target of the slider motor.",
+              description = "Returns the target value for the SliderJoint's motor.  This is either a target position or a target velocity, based on the mode set by `SliderJoint:setMotorMode`.",
+              key = "SliderJoint:getMotorTarget",
+              module = "lovr.physics",
+              related = {
+                "SliderJoint:getMotorMode",
+                "SliderJoint:setMotorMode"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "target",
+                      type = "number",
+                      description = "The target value, in meters or meters per second, depending on the mode."
                     }
                   }
                 }
@@ -38460,15 +38499,12 @@ return {
             {
               name = "getPosition",
               summary = "Get how far the SliderJoint is extended.",
-              description = "Returns how far the slider joint is extended (zero is the position the slider was created at, positive values are further apart).",
+              description = "Returns the position of the slider joint.  The \"zero\" position is the relative distance the colliders were at when the joint is created, and positive positions are further apart along the slider's axis.",
               key = "SliderJoint:getPosition",
               module = "lovr.physics",
               related = {
                 "SliderJoint:getAxis",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit"
+                "SliderJoint:setLimits"
               },
               variants = {
                 {
@@ -38477,73 +38513,55 @@ return {
                     {
                       name = "position",
                       type = "number",
-                      description = "The joint position along its axis."
+                      description = "The position of the slider joint, in meters."
                     }
                   }
                 }
               }
             },
             {
-              name = "getUpperLimit",
-              summary = "Get the SliderJoint's upper limit.",
-              description = "Returns the upper limit of the slider position.",
-              key = "SliderJoint:getUpperLimit",
+              name = "getSpring",
+              summary = "Get the spring parameters of the SliderJoint limits.",
+              description = "Returns the spring parameters of the SliderJoint.  Use this to make the position limits of the slider \"soft\".  When the motor is active, a separate set of spring parameters can be set on the motor, see `SliderJoint:setMotorSpring`.",
+              key = "SliderJoint:getSpring",
               module = "lovr.physics",
+              notes = "Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled and the limits will be as stiff as possible.\n\nThe damping ratio controls how quickly the oscillation slows down:\n\n- Undamped: Zero damping will cause the spring to oscillate forever.  (Note that the spring may\n  still lose a small amount of energy over time).\n- Underdamped: Damping less than one results in a system that is underdamped.  The spring will\n  oscillate around the target, but the oscillations will decay over time, eventually stabilizing\n  at the target.\n- Overdamped: Damping greater than one will not have any oscillation, and the spring will take\n  extra time to reach the target.\n- Critical Damping: When the damping is exactly 1.0, there is no oscillation and the spring\n  takes the minimum amount of time to reach the target (based on the frequency).\n\nThe default damping ratio is zero.",
               related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
+                "SliderJoint:getMotorSpring",
+                "SliderJoint:setMotorSpring"
               },
               variants = {
                 {
                   arguments = {},
                   returns = {
                     {
-                      name = "limit",
+                      name = "frequency",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled."
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring."
                     }
                   }
                 }
               }
             },
             {
-              name = "setAxis",
-              summary = "Set the SliderJoint's axis.",
-              description = "Sets the axis of the slider.",
-              key = "SliderJoint:setAxis",
+              name = "setFriction",
+              summary = "Set the friction of the SliderJoint.",
+              description = "Sets the friction of the SliderJoint.  This is a maximum friction force that will be applied, in newtons, opposing movement along the slider axis.",
+              key = "SliderJoint:setFriction",
               module = "lovr.physics",
+              notes = "Friction is only applied when the motor is disabled.",
               variants = {
                 {
-                  description = "Set the axis using numbers.",
                   arguments = {
                     {
-                      name = "x",
+                      name = "friction",
                       type = "number",
-                      description = "The x component of the axis."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the axis."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the axis."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Set the axis using a vector.",
-                  arguments = {
-                    {
-                      name = "axis",
-                      type = "Vec3",
-                      description = "The axis."
+                      description = "The maximum friction force, in newtons."
                     }
                   },
                   returns = {}
@@ -38552,29 +38570,60 @@ return {
             },
             {
               name = "setLimits",
-              summary = "Set the SliderJoint's limits.",
-              description = "Sets the upper and lower limits of the slider position.",
+              summary = "Set the position limits of the SliderJoint.",
+              description = "Sets the position limits of the SliderJoint.  The \"zero\" position is determined by the relative position of the colliders at the time the joint was created, and positive distances are further apart on the slider axis.",
               key = "SliderJoint:setLimits",
               module = "lovr.physics",
+              notes = "The default limits are -math.huge and math.huge.",
               related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit"
+                "SliderJoint:getPosition"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "lower",
+                      name = "min",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The minimum position, in meters.  Must be less than or equal to zero."
                     },
                     {
-                      name = "upper",
+                      name = "max",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The maximum position, in meters.  Must be greater than or equal to zero."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disable the limits, setting them to -math.huge and math.huge.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setMaxMotorForce",
+              summary = "Set the maximum amount of force the motor can use.",
+              description = "Sets the maximum amount of force the motor can use to reach its target, in newtons.\n\nThere are separate limits for each direction the slider can move.  They're usually kept the same, but one of them can be set to zero to make a motor that can only push in one direction. Note that both limits are positive.",
+              key = "SliderJoint:setMaxMotorForce",
+              module = "lovr.physics",
+              related = {
+                "SliderJoint:getMotorForce"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "positive",
+                      type = "number",
+                      description = "The maximum amount of force the motor can use to push the slider in the \"positive\" direction, in newtons.",
+                      default = "math.huge"
+                    },
+                    {
+                      name = "negative",
+                      type = "number",
+                      description = "The maximum amount of force the motor can use to push the slider in the \"negative\" direction, in newtons.",
+                      default = "positive"
                     }
                   },
                   returns = {}
@@ -38582,25 +38631,60 @@ return {
               }
             },
             {
-              name = "setLowerLimit",
-              summary = "Set the SliderJoint's lower limit.",
-              description = "Sets the lower limit of the slider position.",
-              key = "SliderJoint:setLowerLimit",
+              name = "setMotorMode",
+              summary = "Set the motor mode of the SliderJoint.",
+              description = "Sets the motor mode of the SliderJoint.  When enabled, the motor will drive the slider to a target position (for the `position` mode) or a target speed (for the `velocity` mode), set by `SliderJoint:setMotorTarget`.",
+              key = "SliderJoint:setMotorMode",
               module = "lovr.physics",
               related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getUpperLimit",
-                "SliderJoint:setUpperLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
+                "SliderJoint:getMotorTarget",
+                "SliderJoint:setMotorTarget"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "limit",
+                      name = "mode",
+                      type = "MotorMode",
+                      description = "The mode of the motor."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disables the motor.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setMotorSpring",
+              summary = "Set the spring parameters of the motor target.",
+              description = "Sets the spring parameters of the motor target.  These are similar to the spring parameters set by `SldierJoint:setSpring`, but they apply to the motor when it reaches its target instead of the position limits of the slider joint.  Note that these only take effect when the motor mode is `position`.",
+              key = "SliderJoint:setMotorSpring",
+              module = "lovr.physics",
+              notes = "See `SldierJoint:setSpring` for more detailed info on how the spring parameters work.",
+              related = {
+                "SliderJoint:getSpring",
+                "SliderJoint:setSpring",
+                "SliderJoint:getMotorTarget",
+                "SliderJoint:setMotorTarget"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "frequency",
                       type = "number",
-                      description = "The lower limit."
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled.",
+                      default = "0.0"
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -38608,25 +38692,53 @@ return {
               }
             },
             {
-              name = "setUpperLimit",
-              summary = "Set the SliderJoint's upper limit.",
-              description = "Sets the upper limit of the slider position.",
-              key = "SliderJoint:setUpperLimit",
+              name = "setMotorTarget",
+              summary = "Set the target of the slider motor.",
+              description = "Sets the target value for the SliderJoint's motor.  This is either a target position or a target velocity, based on the mode set by `SliderJoint:setMotorMode`.",
+              key = "SliderJoint:setMotorTarget",
               module = "lovr.physics",
               related = {
-                "SliderJoint:getPosition",
-                "SliderJoint:getLowerLimit",
-                "SliderJoint:setLowerLimit",
-                "SliderJoint:getLimits",
-                "SliderJoint:setLimits"
+                "SliderJoint:getMotorMode",
+                "SliderJoint:setMotorMode"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "limit",
+                      name = "target",
                       type = "number",
-                      description = "The upper limit."
+                      description = "The target value, in meters or meters per second, depending on the mode."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSpring",
+              summary = "Set the spring parameters of the SliderJoint limits.",
+              description = "Sets the spring parameters of the SliderJoint.  Use this to make the position limits of the slider \"soft\".  When the motor is active, a separate set of spring parameters can be set on the motor, see `SliderJoint:setMotorSpring`.",
+              key = "SliderJoint:setSpring",
+              module = "lovr.physics",
+              notes = "Higher frequencies make the spring more stiff.  When zero (the default), the spring is disabled and the limits will be as stiff as possible.\n\nThe damping ratio controls how quickly the oscillation slows down:\n\n- Undamped: Zero damping will cause the spring to oscillate forever.  (Note that the spring may\n  still lose a small amount of energy over time).\n- Underdamped: Damping less than one results in a system that is underdamped.  The spring will\n  oscillate around the target, but the oscillations will decay over time, eventually stabilizing\n  at the target.\n- Overdamped: Damping greater than one will not have any oscillation, and the spring will take\n  extra time to reach the target.\n- Critical Damping: When the damping is exactly 1.0, there is no oscillation and the spring\n  takes the minimum amount of time to reach the target (based on the frequency).\n\nThe default damping ratio is zero.",
+              related = {
+                "SliderJoint:getMotorSpring",
+                "SliderJoint:setMotorSpring"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "frequency",
+                      type = "number",
+                      description = "The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When zero, the spring is disabled.",
+                      default = "0.0"
+                    },
+                    {
+                      name = "damping",
+                      type = "number",
+                      description = "The damping ratio of the spring.",
+                      default = "1.0"
                     }
                   },
                   returns = {}
@@ -38710,6 +38822,7 @@ return {
           description = "TODO",
           key = "WeldJoint",
           module = "lovr.physics",
+          extends = "Joint",
           methods = {}
         },
         {
@@ -38724,7 +38837,6 @@ return {
           methods = {
             {
               name = "destroy",
-              tag = "worldBasics",
               summary = "Destroy the World!!  Muahaha!",
               description = "Destroys the World.  This will destroy all colliders, shapes, and joints in the world.  After calling this function, the world can no longer be used.  Attempting to call a method on the World after destroying it will error, with the exception of `World:isDestroyed`.",
               key = "World:destroy",
@@ -38744,7 +38856,6 @@ return {
             },
             {
               name = "disableCollisionBetween",
-              tag = "worldCollision",
               summary = "Disable collision between two tags.",
               description = "Disables collision between two tags.  Use `Collider:setTag` to set a Collider's tag.",
               key = "World:disableCollisionBetween",
@@ -38777,7 +38888,6 @@ return {
             },
             {
               name = "enableCollisionBetween",
-              tag = "worldCollision",
               summary = "Enable collision between two tags.",
               description = "Enables collision between two tags.  Use `Collider:setTag` to set a Collider's tag.",
               key = "World:enableCollisionBetween",
@@ -38810,7 +38920,6 @@ return {
             },
             {
               name = "getAngularDamping",
-              tag = "worldProperties",
               summary = "Get the angular damping of the World.",
               description = "Returns the angular damping parameters of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time.",
               key = "World:getAngularDamping",
@@ -38931,7 +39040,6 @@ return {
             },
             {
               name = "getGravity",
-              tag = "worldProperties",
               summary = "Get the gravity of the World.",
               description = "Returns the World's gravity.  Gravity is a constant acceleration applied to all colliders.  The default is `(0, -9.81, 0)` meters per second squared, causing colliders to fall downward.\n\nUse `Collider:setGravityScale` to change gravity strength for a single collider.",
               key = "World:getGravity",
@@ -39016,7 +39124,6 @@ return {
             },
             {
               name = "getLinearDamping",
-              tag = "worldProperties",
               summary = "Get the linear damping of the World.",
               description = "Returns the linear damping parameters of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move.",
               key = "World:getLinearDamping",
@@ -39047,20 +39154,11 @@ return {
             },
             {
               name = "getResponseTime",
-              tag = "worldProperties",
               summary = "Get the response time of the World.",
               description = "Returns the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
               key = "World:getResponseTime",
               module = "lovr.physics",
               deprecated = true,
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {},
@@ -39076,7 +39174,6 @@ return {
             },
             {
               name = "getStepCount",
-              tag = "worldProperties",
               summary = "Get the step count of the World.",
               description = "Returns the step count of the World.  The step count influences how many steps are taken during a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The default step count is 20.",
               key = "World:getStepCount",
@@ -39100,7 +39197,6 @@ return {
             },
             {
               name = "getTags",
-              tag = "worldCollision",
               summary = "Get the World's list of collision tags.",
               description = "Returns the list of collision tags that were specified when the World was created.  Tags are assigned to colliders using `Collider:setTag`, and collision can be enabled/disabled for pairs of tags with `World:enableCollisionBetween` and `World:disableCollisionBetween`.",
               key = "World:getTags",
@@ -39128,16 +39224,11 @@ return {
             },
             {
               name = "getTightness",
-              tag = "worldProperties",
               summary = "Get the tightness of joints in the World.",
               description = "Returns the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:getTightness",
               module = "lovr.physics",
               deprecated = true,
-              related = {
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness"
-              },
               variants = {
                 {
                   arguments = {},
@@ -39153,7 +39244,6 @@ return {
             },
             {
               name = "isCollisionEnabledBetween",
-              tag = "worldCollision",
               summary = "Check if two tags can collide.",
               description = "Returns whether collisions are enabled between a pair of tags.",
               key = "World:isCollisionEnabledBetween",
@@ -39191,8 +39281,32 @@ return {
               }
             },
             {
+              name = "isDestroyed",
+              summary = "Check if the World has been destroyed.",
+              description = "Returns whether the World has been destroyed.  Destroyed worlds can not be used for anything.",
+              key = "World:isDestroyed",
+              module = "lovr.physics",
+              related = {
+                "World:destroy",
+                "Collider:isDestroyed",
+                "Shape:isDestroyed",
+                "Joint:isDestroyed"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "destroyed",
+                      type = "boolean",
+                      description = "Whether the World has been destroyed."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "isSleepingAllowed",
-              tag = "worldProperties",
               summary = "Check if colliders can go to sleep.",
               description = "Returns whether colliders can go to sleep in the World.",
               key = "World:isSleepingAllowed",
@@ -40154,7 +40268,6 @@ return {
             },
             {
               name = "overlapShape",
-              tag = "worldQueries",
               summary = "Find colliders that overlap a shape.",
               description = "- Collides a shape with the world, returning all colliders that the shape touches.\n- You can provide a shape and a transform\n- Or a collider which will use the collider's shape and pose.\n- You can pass a tag filter to filter results by tags\n- You can pass a callback which will be called for each hit, or leave nil to get the first hit\n\nTests a shape or collider against the World, returning intersecting shapes.  This function can take a Shape or a Collider.  When given a Shape, the pose of the shape in the world must be specified.  When given a Collider, all shapes attached to the collider will be checked for collisions, and no pose is necessary since the pose of the Collider will be used.\n\nA tag filter can be given to filter out shapes by their collider's tag:\n\n- Use nil to skip filtering.\n- Pass a tag name to only return shapes whose collider has that tag.\n- Pass a tag name with a ~ in front of it to exclude colliders with that tag.\n- Pass multiple tags separated by spaces to include multiple tags (works with ~ too).\n\nProvide an optional callback to call for each shape detected.  If the callbacks nil, this function returns the first shape detected.  In either case this function returns the shape, the hit position, and a penetration vector.  The penetration vector represents the direction and distance the shape would need to move so that it is no longer colliding with the input shape.",
               key = "World:overlapShape",
@@ -40416,7 +40529,6 @@ return {
             },
             {
               name = "queryBox",
-              tag = "worldQueries",
               summary = "Find colliders that intersect an axis-aligned box.",
               description = "Find colliders within an axis-aligned bounding box.  This is a fast but imprecise query that only checks a rough box around colliders.  Use `World:overlapShape` for an exact collision test.\n\nRough queries like this are useful for doing a quick check before doing lots of more expensive collision testing.\n\nPass a callback function to call for each collider detected, or leave the callback off and this function will return the first collider found.",
               key = "World:queryBox",
@@ -40579,7 +40691,6 @@ return {
             },
             {
               name = "querySphere",
-              tag = "worldQueries",
               summary = "Find colliders that intersect a sphere.",
               description = "Find colliders within a sphere.  This is a fast but imprecise query that only checks a rough box around colliders.  Use `World:overlapShape` for an exact collision test.\n\nRough queries like this are useful for doing a quick check before doing lots of more expensive collision testing.\n\nPass a callback function to call for each collider detected, or leave the callback off and this function will return the first collider found.",
               key = "World:querySphere",
@@ -40721,7 +40832,6 @@ return {
             },
             {
               name = "raycast",
-              tag = "worldQueries",
               summary = "Find colliders that intersect a line.",
               description = "Traces a ray through the world and calls a function for each collider that was hit.\n\nThe callback can be left off, in which case the closest hit will be returned.",
               key = "World:raycast",
@@ -41044,7 +41154,6 @@ return {
             },
             {
               name = "setAngularDamping",
-              tag = "worldProperties",
               summary = "Set the angular damping of the World.",
               description = "Sets the angular damping of the World.  Angular damping makes things less \"spinny\", making them slow down their angular velocity over time. Damping is only applied when angular velocity is over the threshold value.",
               key = "World:setAngularDamping",
@@ -41117,7 +41226,6 @@ return {
             },
             {
               name = "setGravity",
-              tag = "worldProperties",
               summary = "Set the gravity of the World.",
               description = "Sets the World's gravity.  Gravity is a constant acceleration applied to all colliders.  The default is `(0, -9.81, 0)` meters per second squared, causing colliders to fall downward.\n\nUse `Collider:setGravityScale` to change gravity strength for a single collider.",
               key = "World:setGravity",
@@ -41164,7 +41272,6 @@ return {
             },
             {
               name = "setLinearDamping",
-              tag = "worldProperties",
               summary = "Set the linear damping of the World.",
               description = "Sets the linear damping of the World.  Linear damping is similar to drag or air resistance, slowing down colliders over time as they move. Damping is only applied when linear velocity is over the threshold value.",
               key = "World:setLinearDamping",
@@ -41196,20 +41303,11 @@ return {
             },
             {
               name = "setResponseTime",
-              tag = "worldProperties",
               summary = "Set the response time of the World.",
               description = "Sets the response time factor of the World.\n\nThe response time controls how relaxed collisions and joints are in the physics simulation, and functions similar to inertia.  A low response time means collisions are resolved quickly, and higher values make objects more spongy and soft.\n\nThe value can be any positive number.  It can be changed on a per-joint basis for `DistanceJoint` and `BallJoint` objects.",
               key = "World:setResponseTime",
               module = "lovr.physics",
               deprecated = true,
-              related = {
-                "BallJoint:getResponseTime",
-                "BallJoint:setResponseTime",
-                "DistanceJoint:getResponseTime",
-                "DistanceJoint:setResponseTime",
-                "World:getTightness",
-                "World:setTightness"
-              },
               variants = {
                 {
                   arguments = {
@@ -41225,7 +41323,6 @@ return {
             },
             {
               name = "setSleepingAllowed",
-              tag = "worldProperties",
               summary = "Set whether colliders can go to sleep.",
               description = "Sets whether colliders can go to sleep in the World.",
               key = "World:setSleepingAllowed",
@@ -41253,7 +41350,6 @@ return {
             },
             {
               name = "setStepCount",
-              tag = "worldProperties",
               summary = "Set the step count of the World.",
               description = "Sets the step count of the World.  The step count influences how many steps are taken during a call to `World:update`.  A higher number of steps will be slower, but more accurate.  The default step count is 20.",
               key = "World:setStepCount",
@@ -41277,20 +41373,11 @@ return {
             },
             {
               name = "setTightness",
-              tag = "worldProperties",
               summary = "Set the tightness of joints in the World.",
               description = "Sets the tightness of joints in the World.\n\nThe tightness controls how much force is applied to colliders connected by joints.  With a value of 0, no force will be applied and joints won't have any effect.  With a tightness of 1, a strong force will be used to try to keep the Colliders constrained.  A tightness larger than 1 will overcorrect the joints, which can sometimes be desirable.  Negative tightness values are not supported.",
               key = "World:setTightness",
               module = "lovr.physics",
               deprecated = true,
-              related = {
-                "BallJoint:getTightness",
-                "BallJoint:setTightness",
-                "DistanceJoint:getTightness",
-                "DistanceJoint:setTightness",
-                "World:getResponseTime",
-                "World:setResponseTime"
-              },
               variants = {
                 {
                   arguments = {
@@ -41306,7 +41393,6 @@ return {
             },
             {
               name = "shapecast",
-              tag = "worldQueries",
               summary = "Move a shape through the world and return any colliders it touches.",
               description = "Moves a shape from a starting point to an endpoint and returns any colliders it touches along its path.\n\nThis is similar to a raycast, but with a `Shape` instead of a point.",
               key = "World:shapecast",
@@ -41314,7 +41400,7 @@ return {
               notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the shapecast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nShapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
               related = {
                 "World:raycast",
-                "World:collideShape",
+                "World:overlapShape",
                 "World:queryBox",
                 "World:querySphere"
               },
@@ -41679,7 +41765,6 @@ return {
             },
             {
               name = "update",
-              tag = "worldBasics",
               summary = "Advance the physics simulation.",
               description = "Updates the World, advancing the physics simulation forward in time and moving all the colliders.",
               key = "World:update",

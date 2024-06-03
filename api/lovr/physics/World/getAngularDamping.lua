@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Get the angular damping of the World.',
   description = [[
     Returns the angular damping parameters of the World.  Angular damping makes things less

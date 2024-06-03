@@ -120,12 +120,12 @@ local function processFunction(path, parent)
     assert(variant.returns, string.format('%q variant #%d is missing returns', fn.key, i))
 
     for j, name in ipairs(variant.arguments) do
-      warnIf(not fn.arguments[name], string.format('Function %q variant argument %q does not exist', fn.key, name))
+      warnIf(not fn.arguments[name], string.format('%s uses unknown argument %s', fn.key, name))
       variant.arguments[j] = copy(fn.arguments[name])
     end
 
     for j, name in ipairs(variant.returns) do
-      warnIf(not fn.returns[name], string.format('Function %q variant return %q does not exist', fn.key, name))
+      warnIf(not fn.returns[name], string.format('%s uses unknown return %s', fn.key, name))
       variant.returns[j] = copy(fn.returns[name])
     end
   end
@@ -267,8 +267,8 @@ end
 -- Validation
 local function validateRelated(item)
   for _, key in ipairs(item.related or {}) do
-    warnIf(not lookup[key], 'Related item for %s not found: %s', item.key, key)
-    warnIf(key == item.key, 'Item %s should not be related to itself', key)
+    warnIf(not lookup[key], '%s has unknown related item %s', item.key, key)
+    warnIf(key == item.key, '%s should not be related to itself', key)
   end
 end
 
@@ -329,6 +329,12 @@ local function validateObject(object)
       hasMethod[method.name] = true
     end
 
+    if object.extends then
+      for i, method in ipairs(lookup[object.extends].methods) do
+        hasMethod[method.name] = true
+      end
+    end
+
     local ignore = {
       type = true,
       release = true,
@@ -354,7 +360,9 @@ local function validateModule(module)
 
   for _, fn in ipairs(module.functions) do
     validateFunction(fn)
-    warnIf(dev and t and not t[fn.name], '%s has docs for unknown function %s', module.key, fn.name)
+    if dev and not fn.deprecated then
+      warnIf(t and not t[fn.name], '%s has docs for unknown function %s', module.key, fn.name)
+    end
   end
 
   for _, fn in ipairs(module.enums) do

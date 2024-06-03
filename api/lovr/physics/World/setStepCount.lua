@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Set the step count of the World.',
   description = [[
     Sets the step count of the World.  The step count influences how many steps are taken during a

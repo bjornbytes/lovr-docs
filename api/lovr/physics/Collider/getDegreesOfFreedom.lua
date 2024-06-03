@@ -1,6 +1,6 @@
 return {
   summary = 'Get the enabled translation/rotation axes.',
-  description = 'Get the axes that are enabled for translation and rotation.',
+  description = 'Get the degrees of freedom of the Collider.',
   arguments = {},
   returns = {
     translation = {
@@ -29,7 +29,8 @@ return {
   notes = [[
     The default state is `xyz` for both translation and rotation.
 
-    The physics engine does not support disabling all axes.  At least one translation or rotation
-    axis needs to be enabled.  To disable all movement for a collider, make it kinematic.
+    The physics engine does not support disabling all degrees of freedom.  At least one translation
+    or rotation axis needs to be enabled.  To disable all movement for a collider, make it
+    kinematic.
   ]]
 }

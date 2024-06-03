@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Set the tightness of joints in the World.',
   description = [[
     Sets the tightness of joints in the World.
@@ -23,13 +22,5 @@ return {
       arguments = { 'tightness' },
       returns = {}
     }
-  },
-  related = {
-    'BallJoint:getTightness',
-    'BallJoint:setTightness',
-    'DistanceJoint:getTightness',
-    'DistanceJoint:setTightness',
-    'World:getResponseTime',
-    'World:setResponseTime'
   }
 }

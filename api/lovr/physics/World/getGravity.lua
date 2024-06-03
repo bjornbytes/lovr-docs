@@ -1,5 +1,4 @@
 return {
-  tag = 'worldProperties',
   summary = 'Get the gravity of the World.',
   description = [[
     Returns the World's gravity.  Gravity is a constant acceleration applied to all colliders.  The

@@ -1,5 +1,4 @@
 return {
-  tag = 'worldQueries',
   summary = 'Move a shape through the world and return any colliders it touches.',
   description = [[
     Moves a shape from a starting point to an endpoint and returns any colliders it touches along
@@ -192,7 +191,7 @@ return {
   ]],
   related = {
     'World:raycast',
-    'World:collideShape',
+    'World:overlapShape',
     'World:queryBox',
     'World:querySphere'
   }

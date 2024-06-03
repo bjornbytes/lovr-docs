@@ -1,5 +1,4 @@
 return {
-  tag = 'worldCollision',
   summary = 'Disable collision between two tags.',
   description = [[
     Disables collision between two tags.  Use `Collider:setTag` to set a Collider's tag.

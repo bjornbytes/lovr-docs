@@ -28,8 +28,8 @@ return {
   returns = {},
   variants = {
     {
-      arguments = {},
-      returns = { 'positive', 'negative' }
+      arguments = { 'positive', 'negative' },
+      returns = {}
     }
   },
   related = {

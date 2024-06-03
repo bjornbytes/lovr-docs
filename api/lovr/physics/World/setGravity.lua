@@ -1,5 +1,4 @@
 return {
-  tag = 'worldProperties',
   summary = 'Set the gravity of the World.',
   description = [[
     Sets the World's gravity.  Gravity is a constant acceleration applied to all colliders.  The

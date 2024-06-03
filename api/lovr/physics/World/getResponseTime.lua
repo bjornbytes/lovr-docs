@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Get the response time of the World.',
   description = [[
     Returns the response time factor of the World.
@@ -24,13 +23,5 @@ return {
       arguments = {},
       returns = { 'responseTime' }
     }
-  },
-  related = {
-    'BallJoint:getResponseTime',
-    'BallJoint:setResponseTime',
-    'DistanceJoint:getResponseTime',
-    'DistanceJoint:setResponseTime',
-    'World:getTightness',
-    'World:setTightness'
   }
 }

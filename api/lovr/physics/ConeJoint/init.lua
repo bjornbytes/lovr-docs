@@ -1,4 +1,5 @@
 return {
   summary = 'TODO',
-  description = 'TODO'
+  description = 'TODO',
+  extends = 'Joint'
 }

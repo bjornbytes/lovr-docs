@@ -1,5 +1,4 @@
 return {
-  tag = 'worldQueries',
   summary = 'Find colliders that overlap a shape.',
   description = [[
     - Collides a shape with the world, returning all colliders that the shape touches.

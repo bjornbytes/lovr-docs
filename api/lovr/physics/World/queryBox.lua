@@ -1,5 +1,4 @@
 return {
-  tag = 'worldQueries',
   summary = 'Find colliders that intersect an axis-aligned box.',
   description = [[
     Find colliders within an axis-aligned bounding box.  This is a fast but imprecise query that

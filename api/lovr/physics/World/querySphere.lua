@@ -1,5 +1,4 @@
 return {
-  tag = 'worldQueries',
   summary = 'Find colliders that intersect a sphere.',
   description = [[
     Find colliders within a sphere.  This is a fast but imprecise query that only checks a rough box

@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Set the linear damping of the World.',
   description = [[
     Sets the linear damping of the World.  Linear damping is similar to drag or air resistance,

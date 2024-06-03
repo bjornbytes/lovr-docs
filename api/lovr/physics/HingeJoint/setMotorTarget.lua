@@ -13,7 +13,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'mode' },
+      arguments = { 'target' },
       returns = {}
     }
   },

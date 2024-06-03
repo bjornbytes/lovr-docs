@@ -1,6 +1,6 @@
 return {
   summary = 'Set the enabled translation/rotation axes.',
-  description = 'Set the axes that are enabled for translation and rotation.',
+  description = 'Set the degrees of freedom of the Collider.',
   arguments = {
     translation = {
       type = 'string',
@@ -29,8 +29,9 @@ return {
   notes = [[
     The default state is `xyz` for both translation and rotation.
 
-    The physics engine does not support disabling all axes.  At least one translation or rotation
-    axis needs to be enabled.  To disable all movement for a collider, make it kinematic.
+    The physics engine does not support disabling all degrees of freedom.  At least one translation
+    or rotation axis needs to be enabled.  To disable all movement for a collider, make it
+    kinematic.
 
     When all translation axes are disabled, `Collider:getMass` will return 0.
 

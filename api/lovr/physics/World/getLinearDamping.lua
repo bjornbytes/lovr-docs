@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Get the linear damping of the World.',
   description = [[
     Returns the linear damping parameters of the World.  Linear damping is similar to drag or air

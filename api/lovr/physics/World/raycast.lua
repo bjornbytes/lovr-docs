@@ -1,5 +1,4 @@
 return {
-  tag = 'worldQueries',
   summary = 'Find colliders that intersect a line.',
   description = [[
     Traces a ray through the world and calls a function for each collider that was hit.

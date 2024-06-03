@@ -1,5 +1,4 @@
 return {
-  tag = 'worldBasics',
   summary = 'Destroy the World!!  Muahaha!',
   description = [[
     Destroys the World.  This will destroy all colliders, shapes, and joints in the world.  After

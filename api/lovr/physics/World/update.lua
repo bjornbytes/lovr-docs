@@ -1,5 +1,4 @@
 return {
-  tag = 'worldBasics',
   summary = 'Advance the physics simulation.',
   description = [[
     Updates the World, advancing the physics simulation forward in time and moving all the

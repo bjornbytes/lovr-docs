@@ -1,5 +1,4 @@
 return {
-  tag = 'worldCollision',
   summary = 'Check if two tags can collide.',
   description = [[
     Returns whether collisions are enabled between a pair of tags.

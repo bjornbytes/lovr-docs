@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Get the step count of the World.',
   description = [[
     Returns the step count of the World.  The step count influences how many steps are taken during

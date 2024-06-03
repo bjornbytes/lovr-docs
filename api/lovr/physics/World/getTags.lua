@@ -1,5 +1,4 @@
 return {
-  tag = 'worldCollision',
   summary = 'Get the World\'s list of collision tags.',
   description = [[
     Returns the list of collision tags that were specified when the World was created.  Tags are

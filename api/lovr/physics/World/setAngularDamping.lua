@@ -1,6 +1,5 @@
 return {
   deprecated = true,
-  tag = 'worldProperties',
   summary = 'Set the angular damping of the World.',
   description = [[
     Sets the angular damping of the World.  Angular damping makes things less "spinny", making them
