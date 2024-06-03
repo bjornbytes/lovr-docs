@@ -24,7 +24,7 @@ return {
     This does not include the motor force of a `HingeJoint`, see `HingeJoint:getMotorForce`.
   ]],
   related = {
-    'Joint:getTorque',
+    'Joint:getForce',
     'HingeJoint:getMotorTorque'
   }
 }

@@ -34980,7 +34980,7 @@ return {
             {
               name = "getRestitution",
               summary = "Get the bounciness of the Collider.",
-              description = "Returns the restitution of the Collider.  Restitution makes a Collider bounce when it collides with other objects.  A restitution value of zero would result in an inelastic collision response, whereas 1.0 would result in an elastic collision that preserves all of the velocity.",
+              description = "Returns the restitution of the Collider.  Restitution makes a Collider bounce when it collides with other objects.  A restitution value of zero would result in an inelastic collision response, whereas 1.0 would result in an elastic collision that preserves all of the velocity. The restitution can be bigger than 1.0 to make the collision even more bouncy.",
               key = "Collider:getRestitution",
               module = "lovr.physics",
               notes = "To improve stability of the simulation and allow colliders to come to rest, restitution is only applied if the collider is moving above a certain speed.  This can be configured using the `restitutionThreshold` option in `lovr.physics.newWorld`.",
@@ -36434,6 +36434,358 @@ return {
           }
         },
         {
+          name = "Contact",
+          summary = "TODO",
+          description = "TODO",
+          key = "Contact",
+          module = "lovr.physics",
+          methods = {
+            {
+              name = "getColliders",
+              summary = "Get the two Colliders that are in contact.",
+              description = "Returns the two Colliders that are in contact.",
+              key = "Contact:getColliders",
+              module = "lovr.physics",
+              related = {
+                "Contact:getShapes"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "first",
+                      type = "Collider",
+                      description = "The first collider."
+                    },
+                    {
+                      name = "second",
+                      type = "Collider",
+                      description = "The second collider."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFriction",
+              summary = "Get the friction of the Contact.",
+              description = "Returns the friction of the Contact.  Lower friction makes it easier for the colliders to slide against each other.",
+              key = "Contact:getFriction",
+              module = "lovr.physics",
+              related = {
+                "Collider:getFriction",
+                "Collider:setFriction",
+                "Contact:getRestitution",
+                "Contact:setRestitution"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "friction",
+                      type = "number",
+                      description = "The contact friction."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNormal",
+              summary = "Get the normal vector of the Contact.",
+              description = "Returns the normal vector of the Contact.  This is a direction vector that represents which direction the second collider should move to resolve the collision.",
+              key = "Contact:getNormal",
+              module = "lovr.physics",
+              related = {
+                "Contact:getOverlap",
+                "Contact:getPoints"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getOverlap",
+              summary = "Get the amount of overlap between the colliders.",
+              description = "Returns the amount of overlap between the colliders.",
+              key = "Contact:getOverlap",
+              module = "lovr.physics",
+              related = {
+                "Contact:getNormal"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "overlap",
+                      type = "number",
+                      description = "The amount of overlap, in meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPoints",
+              summary = "Get the contact points of the Contact.",
+              description = "Returns the contact points of the Contact.  These are the points where the colliders are intersecting.",
+              key = "Contact:getPoints",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "...points",
+                      type = "number",
+                      description = "Triplets of x/y/z numbers, one for each contact point."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getRestitution",
+              summary = "Get the bounciness of the Contact.",
+              description = "Returns the restitution of the Contact.  Restitution makes the Colliders bounce off of each other.  A restitution value of zero results in an inelastic collision response, whereas 1.0 results in an elastic collision that preserves all of the velocity.  Restitution can be bigger than 1.0 to make the collision even more bouncy.",
+              key = "Contact:getRestitution",
+              module = "lovr.physics",
+              notes = "The default restitution is the maximum restitution of either of the colliders.",
+              related = {
+                "Collider:getRestitution",
+                "Collider:setRestitution",
+                "Contact:getFriction",
+                "Contact:setFriction"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "restitution",
+                      type = "number",
+                      description = "The contact restitution."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getShapes",
+              summary = "Get the two Shapes that are in contact.",
+              description = "Returns the two Shapes that are in contact.",
+              key = "Contact:getShapes",
+              module = "lovr.physics",
+              related = {
+                "Contact:getColliders"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "first",
+                      type = "Shape",
+                      description = "The first shape."
+                    },
+                    {
+                      name = "second",
+                      type = "Shape",
+                      description = "The second shape."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSurfaceVelocity",
+              summary = "Get the surface velocity of the Contact.",
+              description = "Returns the world space surface velocity of the Contact.  This can be used to achieve a conveyor belt effect.",
+              key = "Contact:getSurfaceVelocity",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the surface velocity."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the surface velocity."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the surface velocity."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isEnabled",
+              summary = "Check if the Contact is enabled.",
+              description = "Returns whether the Contact is enabled.  Disabled contacts do not generate any collision response.  Use `Contact:setEnabled` to disable a contact to selectively ignore certain collisions.",
+              key = "Contact:isEnabled",
+              module = "lovr.physics",
+              related = {
+                "Collider:isEnabled",
+                "Collider:setEnabled",
+                "World:setCallbacks"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the Contact is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setEnabled",
+              summary = "Enable or disable the Contact.",
+              description = "Enables or disables the Contact.  Disabled contacts do not generate any collision response.",
+              key = "Contact:setEnabled",
+              module = "lovr.physics",
+              notes = "Note that this is the slowest way to ignore a collision.  Faster ways to disable collisions (in increasing order of speed) are:\n\n- The `filter` callback in `World:setCallbacks`\n- Disabling collision between tags with `World:disableCollisionBetween`\n- Removing the collider from the World completely with `Collider:setEnabled`",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether the Contact should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setFriction",
+              summary = "Set the friction of the Contact.",
+              description = "Sets the friction of the Contact.  Lower friction makes it easier for the colliders to slide against each other.  This overrides the default friction computed by the friction of the two Colliders.",
+              key = "Contact:setFriction",
+              module = "lovr.physics",
+              notes = "The default friction is computed from the geometric mean of the Colliders' friction:\n\n    friction = (frictionA * frictionB) ^ .5\n\nNegative frictions will be clamped to zero.",
+              related = {
+                "Collider:getFriction",
+                "Collider:setFriction",
+                "Contact:getRestitution",
+                "Contact:setRestitution"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "friction",
+                      type = "number",
+                      description = "The contact friction."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setRestitution",
+              summary = "Set the bounciness of the Contact.",
+              description = "Sets the restitution of the Contact.  Restitution makes the Colliders bounce off of each other. A restitution value of zero results in an inelastic collision response, whereas 1.0 results in an elastic collision that preserves all of the velocity.  Restitution can be bigger than 1.0 to make the collision even more bouncy.",
+              key = "Contact:setRestitution",
+              module = "lovr.physics",
+              notes = "The default restitution is the maximum restitution of either of the colliders.\n\nNegative restitution values will be clamped to zero.",
+              related = {
+                "Collider:getRestitution",
+                "Collider:setRestitution",
+                "Contact:getFriction",
+                "Contact:setFriction"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "restitution",
+                      type = "number",
+                      description = "The contact restitution."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSurfaceVelocity",
+              summary = "Set the surface velocity of the Contact.",
+              description = "Sets the world space surface velocity of the Contact.  This can be used to achieve a conveyor belt effect.",
+              key = "Contact:setSurfaceVelocity",
+              module = "lovr.physics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the surface velocity."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the surface velocity."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the surface velocity."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "velocity",
+                      type = "Vec3",
+                      description = "The surface velocity."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          }
+        },
+        {
           name = "ConvexShape",
           summary = "TODO",
           description = "TODO",
@@ -37422,7 +37774,7 @@ return {
               module = "lovr.physics",
               notes = "This does not include the motor force of a `HingeJoint`, see `HingeJoint:getMotorForce`.",
               related = {
-                "Joint:getTorque",
+                "Joint:getForce",
                 "HingeJoint:getMotorTorque"
               },
               variants = {
