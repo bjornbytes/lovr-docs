@@ -1,9 +1,9 @@
 return {
-  summary = 'Set the motor mode of the HingeJoint.',
+  summary = 'Set the motor mode of the SliderJoint.',
   description = [[
-    Sets the motor mode of the HingeJoint.  When enabled, the motor will drive the hinge to a target
-    angle (for the `position` mode) or a target speed (for the `velocity` mode), set by
-    `HingeJoint:setMotorTarget`.
+    Sets the motor mode of the SliderJoint.  When enabled, the motor will drive the slider to a
+    target position (for the `position` mode) or a target speed (for the `velocity` mode), set by
+    `SliderJoint:setMotorTarget`.
   ]],
   arguments = {
     mode = {
@@ -24,7 +24,7 @@ return {
     }
   },
   related = {
-    'HingeJoint:getMotorTarget',
-    'HingeJoint:setMotorTarget'
+    'SliderJoint:getMotorTarget',
+    'SliderJoint:setMotorTarget'
   }
 }

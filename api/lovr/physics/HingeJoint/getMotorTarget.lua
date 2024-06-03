@@ -1,7 +1,7 @@
 return {
   summary = 'Get the target of the hinge motor.',
   description = [[
-    Sets the target value for the HingeJoint's motor.  This is either a target angle or a target
+    Returns the target value for the HingeJoint's motor.  This is either a target angle or a target
     velocity, based on the mode set by `HingeJoint:setMotorMode`.
   ]],
   arguments = {},
@@ -14,7 +14,7 @@ return {
   variants = {
     {
       arguments = {},
-      returns = { 'mode' }
+      returns = { 'target' }
     }
   },
   related = {

@@ -1,28 +1,29 @@
 return {
-  summary = 'Get the SliderJoint\'s limits.',
-  description = 'Returns the upper and lower limits of the slider position.',
+  summary = 'Get the position limits of the SliderJoint.',
+  description = [[
+    Returns the position limits of the SliderJoint.  The "zero" position is determined by the
+    relative position of the colliders at the time the joint was created, and positive positions are
+    further apart along the slider axis.
+  ]],
   arguments = {},
   returns = {
-    lower = {
+    min = {
       type = 'number',
-      description = 'The lower limit.'
+      description = 'The minimum position, in meters.  Must be less than or equal to zero.'
     },
-    upper = {
+    max = {
       type = 'number',
-      description = 'The upper limit.'
+      description = 'The maximum position, in meters.  Must be greater than or equal to zero.'
     }
   },
   variants = {
     {
       arguments = {},
-      returns = { 'lower', 'upper' }
+      returns = { 'min', 'max' }
     }
   },
+  notes = 'The default limits are -math.huge and math.huge (no limits).',
   related = {
-    'SliderJoint:getPosition',
-    'SliderJoint:getLowerLimit',
-    'SliderJoint:setLowerLimit',
-    'SliderJoint:getUpperLimit',
-    'SliderJoint:setUpperLimit'
+    'SliderJoint:getPosition'
   }
 }

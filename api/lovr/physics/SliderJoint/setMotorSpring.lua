@@ -2,9 +2,9 @@ return {
   summary = 'Set the spring parameters of the motor target.',
   description = [[
     Sets the spring parameters of the motor target.  These are similar to the spring parameters set
-    by `HingeJoint:setSpring`, but they apply to the motor when it reaches its target instead of the
-    angle limits of the hinge joint.  Note that these only take effect when the motor mode is
-    `position`.
+    by `SldierJoint:setSpring`, but they apply to the motor when it reaches its target instead of
+    the position limits of the slider joint.  Note that these only take effect when the motor mode
+    is `position`.
   ]],
   arguments = {
     frequency = {
@@ -28,11 +28,11 @@ return {
       returns = {}
     }
   },
-  notes = 'See `HingeJoint:setSpring` for more detailed info on how the spring parameters work.',
+  notes = 'See `SldierJoint:setSpring` for more detailed info on how the spring parameters work.',
   related = {
-    'HingeJoint:getSpring',
-    'HingeJoint:setSpring',
-    'HingeJoint:getMotorTarget',
-    'HingeJoint:setMotorTarget'
+    'SliderJoint:getSpring',
+    'SliderJoint:setSpring',
+    'SliderJoint:getMotorTarget',
+    'SliderJoint:setMotorTarget'
   }
 }

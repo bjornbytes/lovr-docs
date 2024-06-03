@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the SliderJoint\'s axis.',
-  description = 'Returns the axis of the slider.',
+  summary = 'Get the axis of the SliderJoint.',
+  description = 'Returns the axis of the slider, in world space.',
   arguments = {},
   returns = {
     x = {
@@ -21,5 +21,8 @@ return {
       arguments = {},
       returns = { 'x', 'y', 'z' }
     }
+  },
+  related = {
+    'SliderJoint:getPosition'
   }
 }

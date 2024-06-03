@@ -20,6 +20,6 @@ return {
   },
   related = {
     'HingeJoint:getMotorTarget',
-    'HingeJonit:setMotorTarget'
+    'HingeJoint:setMotorTarget'
   }
 }

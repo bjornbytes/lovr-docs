@@ -25,6 +25,6 @@ return {
   ]],
   related = {
     'Joint:getTorque',
-    'HingeJoint:getMotorForce'
+    'HingeJoint:getMotorTorque'
   }
 }
