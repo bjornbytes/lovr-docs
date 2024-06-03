@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the spring parameters of the HingeJoint.',
+  summary = 'Get the spring parameters of the HingeJoint limits.',
   description = [[
     Returns the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge
     "soft".  When the motor is active, a separate set of spring parameters can be set on the motor,

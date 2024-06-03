@@ -7,6 +7,7 @@ return {
   arguments = {
     frequency = {
       type = 'number',
+      default = '0.0',
       description = [[
         The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When
         zero, the spring is disabled.
@@ -14,6 +15,7 @@ return {
     },
     damping = {
       type = 'number',
+      default = '1.0',
       description = 'The damping ratio of the spring.'
     }
   },

@@ -1,5 +1,5 @@
 return {
-  summary = 'Set the spring parameters of the HingeJoint.',
+  summary = 'Set the spring parameters of the HingeJoint limits.',
   description = [[
     Sets the spring parameters of the HingeJoint.  Use this to make the angle limits of the hinge
     "soft".  When the motor is active, a separate set of spring parameters can be set on the motor,
@@ -8,6 +8,7 @@ return {
   arguments = {
     frequency = {
       type = 'number',
+      default = '0.0',
       description = [[
         The frequency of the spring, in hertz.  Higher frequencies make the spring more stiff.  When
         zero, the spring is disabled.
@@ -15,6 +16,7 @@ return {
     },
     damping = {
       type = 'number',
+      default = '1.0',
       description = 'The damping ratio of the spring.'
     }
   },
