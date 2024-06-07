@@ -223,6 +223,43 @@ function lovr.load()
   pass:send('w', { { 1, 2 }, { 3, 4 } })
   pass:send('s', { a = 1, b = 2, c = 3 })
   pass:send('t', { { a = 1, b = 2, c = 3 }, { a = 4, b = 5, c = 6 } })
+
+  -- Shader:getBufferFormat
+  shader = lovr.graphics.newShader([[
+    struct S { float x, y; };
+
+    buffer Buffer1 { float x; } a;
+    buffer Buffer2 { float x, y; } b;
+    buffer Buffer3 { float x[4]; } c;
+    buffer Buffer4 { float x[4], y[4]; } d;
+    buffer Buffer5 { S s; } e;
+    buffer Buffer6 { S s[2]; } f;
+
+    void lovrmain() {}
+  ]])
+
+  local format, length = shader:getBufferFormat('Buffer1')
+  assert(#format == 1 and length == nil)
+  assert(format[1].type == 'f32' and format[1].name == 'x')
+
+  local format, length = shader:getBufferFormat('Buffer2')
+  assert(#format == 2 and length == nil)
+  assert(format[1].type == 'f32' and format[1].name == 'x' and format[1].offset == 0)
+  assert(format[2].type == 'f32' and format[2].name == 'y' and format[2].offset == 4)
+
+  local format, length = shader:getBufferFormat('Buffer3')
+  assert(#format == 1 and length == 4)
+  assert(format[1] == 'f32')
+
+  local format, length = shader:getBufferFormat('Buffer4')
+  assert(#format == 2 and length == nil)
+  assert(format[1].type == 'f32' and format[1].length == 4)
+  assert(format[2].type == 'f32' and format[2].length == 4 and format[2].offset == 16)
+
+  local format, length = shader:getBufferFormat('Buffer5')
+  assert(#format == 1 and length == nil)
+  assert(type(format[1].type) == 'table' and #format[1].type == 2)
+  assert(format[1].type[1].name == 'x' and format[1].type[2].name == 'y')
 end
 
 lovr.event.quit()
