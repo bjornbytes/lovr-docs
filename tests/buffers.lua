@@ -193,7 +193,7 @@ function lovr.load()
   if ok and ffi then
     buffer = lovr.graphics.newBuffer('float')
     ffi.cast('float*', buffer:mapData())[0] = 7
-    assert(buffer:getData()[1] == 7)
+    assert(buffer:getData() == 7)
   end
 
   -- Push constants
