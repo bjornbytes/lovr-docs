@@ -115,23 +115,20 @@ Android
 
 ### Setup
 
-Currently, it's only possible to compile for Android on a macOS or Linux system.  On Windows,
-[Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) works.
+Compiling for Android is supported on Windows, macOS, and Linux.
 
-First, make sure the Java JDK is installed (version 17 is known to work).
+First, make sure the Java JDK is installed (version 17 is confirmed to work).
 
-Next, install the Android SDK (29) and NDK (21.4.7075529).  The [Android command line
+Next, install the Android SDK (29) and NDK (26.3.11579264).  The [Android command line
 tools](https://developer.android.com/studio#command-line-tools-only) contain an `sdkmanager` tool
 that can be used to install the Android SDK, NDK, and other build tools:
 
-    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;34.0.0" "cmake;3.22.1" "ndk;21.4.7075529" "platform-tools" "platforms;android-29"
+    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;34.0.0" "cmake;3.22.1" "ndk;26.3.11579264" "platform-tools" "platforms;android-29"
 
 The SDK will be installed to the chosen `sdk_root` path.  To reduce the SDK size, the `emulator`
 package can be safely uninstalled:
 
     $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk --uninstall emulator
-
-Note where the SDK is installed.  Some paths in the SDK will need to be specified.
 
 Finally, compiling a LÖVR APK requires a copy of the `glslangValidator` tool installed on the
 system. Most package managers will offer this as part of a `glslang` or `glslang-tools` package.
@@ -141,8 +138,8 @@ system. Most package managers will offer this as part of a `glslang` or `glslang
 The following CMake variables need to be set, either using the CMake GUI or by using `-D` flags on
 the command line:
 
-- Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is usually at
-  `ndk-bundle/build/cmake/android.toolchain.cmake` inside the Android SDK.
+- Set `CMAKE_TOOLCHAIN_FILE` to the path to `android.toolchain.cmake`.  This is located at
+  `build/cmake/android.toolchain.cmake` inside the Android NDK folder.
 - Set `ANDROID_SDK` to the path to the Android SDK.
 - Set `ANDROID_ABI` to `arm64-v8a`.
 - Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use (e.g. `29`).
@@ -152,7 +149,9 @@ the command line:
   described in [Creating a Keystore](#creating-a-keystore) below.
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
 - Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
-- Windows: Make sure you add `-G "Unix Makefiles"` so it doesn't try to use Visual Studio.
+- Windows: Add the `-G Ninja` flag to use the Ninja generator instead of Visual Studio.  Ensure that
+  `/path/to/android/sdk/cmake/bin` is added to the `PATH` environment variable so CMake is able to
+  find `ninja.exe`.
 
 Here's an example of a full CMake incantation that produces `lovr.apk` in the build folder:
 
@@ -175,11 +174,11 @@ To install the APK, an Android device needs to be connected.  Run
 
     $ adb devices
 
-to ensure that a device is connected, then run
+and ensure a device is listed, then run
 
-    $ adb install lovr.apk
+    $ adb install -r lovr.apk
 
-To install the apk.  The `-r` flag can be used to overwrite an existing apk.
+To install the APK.
 
 ### Adding Project Code
 
