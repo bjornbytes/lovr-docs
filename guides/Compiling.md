@@ -29,7 +29,7 @@ repository, so make sure you clone with the `--recursive` flag or run
 - OpenXR
 - Vulkan SDK
 - msdfgen
-- ODE
+- Jolt Physics
 
 LÖVR requires a C compiler that supports C11.  GCC 4.9, clang 3.1, and Windows SDK 2104 support C11.
 
