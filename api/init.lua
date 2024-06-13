@@ -37621,7 +37621,9 @@ return {
           key = "Joint",
           module = "lovr.physics",
           constructors = {
+            "lovr.physics.newWeldJoint",
             "lovr.physics.newBallJoint",
+            "lovr.physics.newConeJoint",
             "lovr.physics.newDistanceJoint",
             "lovr.physics.newHingeJoint",
             "lovr.physics.newSliderJoint"
