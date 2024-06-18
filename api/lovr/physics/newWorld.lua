@@ -1,11 +1,7 @@
 return {
   tag = 'world',
   summary = 'Create a new World.',
-  description = [[
-    - Creates a new physics world
-    - After creating the world, add colliders to it
-    - Call :update each frame
-  ]],
+  description = 'Creates a new physics World.',
   arguments = {
     settings = {
       type = 'table',
@@ -16,10 +12,8 @@ return {
           type = 'table',
           default = '{}',
           description = [[
-            - A list of collision tags (array).
-            - Up to 31.
-            - Each collider can be given a collision tag.
-            - You can ignore collision between certain tags.
+            A list of collision tags (strings).  Colliders can be assigned a tag, and collision can
+            be enabled and disabled between different tags.  There is a maximum of 31 tags.
           ]]
         },
         {
@@ -27,10 +21,11 @@ return {
           type = 'table',
           default = '{}',
           description = [[
-            - An optional list of collision tags that should be considered 'static'.
-            - Any colliders with a static tag will be set to kinematic.
-            - Static colliders will also never move.
-            - Static tags are managed in a separate broad phase layer, which is good for perf.
+            An optional list of collision tags that should be "static".  Colliders with one of these
+            tags will be kinematic and will not move from velocities or forces, but they can still
+            be manually repositioned.  The physics engine puts static colliders in their own
+            collision tree, which optimizes performance.  It's meant to be used for static
+            environment objects in a level that will never move.
           ]]
         },
         {
@@ -38,9 +33,14 @@ return {
           type = 'number',
           default = '60',
           description = [[
-            - How often to update the simulation, in Hz.
-            - Higher values increase accuracy but use more CPU.
-            - 0 disables fixed timestep
+            The number of physics updates to perform per second for fixed timestep physics
+            simulation, or zero to disable fixed timestep.  When fixed timestep is active, any time
+            passed to `World:update` will be accumulated, and the physics simulation will run only
+            when there's as much time as the fixed timestep.  This decouples the physics update rate
+            from the rendering rate, which improves stability.  Collider poses will be interpolated
+            between the two most recent ticks.  Higher values result in more accurate simulation, at
+            the cost of CPU usage.  Use zero to disable fixed timestep and directly update the
+            physics simulation when `World:update` is called.
           ]]
         },
         {
@@ -48,9 +48,9 @@ return {
           type = 'number',
           default = '0',
           description = [[
-            - A limit on the number of physics updates per call to World:update.
-            - Can be used to prevent "spiral of death".
-            - 0 means no limit
+            The maximum number of physics ticks to run during any given call to `World:update`.
+            This can be used to avoid a "spiral of death" where the physics engine can't keep up
+            with all the ticks when a large `dt` value is given.  Zero means no limit.
           ]]
         },
         {
@@ -58,10 +58,8 @@ return {
           type = 'number',
           default = '16384',
           description = [[
-            - Max number of colliders
-            - Creating more than this will error
-            - Reducing this will use less memory
-            - Max max is 2^23 (around 8 million)
+            The maximum number of Colliders in the World.  Increasing this will use more memory.
+            This can't be bigger than 2^23 (around 8 million).
           ]]
         },
         {
@@ -69,10 +67,9 @@ return {
           type = 'boolean',
           default = 'true',
           description = [[
-            - Whether the simulation should be deterministic.
-            - What deterministic means.
-            - Maybe mention that this sorts everything.
-            - Disabling will improve performance slightly.
+            Whether the simulation should be deterministic, meaning it will behave exactly the same
+            given the same starting conditions and inputs.  Disabling this will improve performance
+            slightly.
           ]]
         },
         {
@@ -80,9 +77,10 @@ return {
           type = 'boolean',
           default = 'true',
           description = [[
-            - Whether this World and its Colliders can be used from multiple threads simultaneously.
-            - This is achieved by locking the objects whenever reading or writing stuff.
-            - Disabling may result in a slight performance gain if you aren't using threads.
+            Whether the World and the objects it contains can be used from multiple threads.  This
+            will use a set of locks to ensure only one thread can access a Collider at a given time.
+            Disable this to potentially get a small performance boost when only using the World from
+            a single Thread.
           ]]
         },
         {
@@ -90,9 +88,9 @@ return {
           type = 'boolean',
           default = 'true',
           description = [[
-            - Whether colliders should be allowed to go to sleep when they come to rest.
-            - Sleeping colliders aren't processed until something hits them or a force is applied.
-            - Sleeping improves performance a lot, recommended to leave it enabled.
+            Whether colliders should be allowed to go to sleep when they come to rest.  Sleeping
+            colliders don't need to simulate movement until something hits them.  This improves
+            performance a lot for a typical physics scene where many objects are at rest.
           ]]
         },
         {
@@ -100,28 +98,24 @@ return {
           type = 'number',
           default = '0.2',
           description = [[
-            - The amount of stabilization force to apply, 0-1.
-            - If the value is too high, physics will behave erratically.
-            - If it's too low, objects will be kinda spongy.
-            - .2 - .8 is recommended.
+            How quickly the physics engine corrects position error from collisions and joints, from
+            0 to 1.  If the value is too low, objects will be spongy, but if it's too high then
+            physics will explode.  Values between .2 and .8 are recommended.
           ]]
         },
         {
           name = 'maxPenetration',
           type = 'number',
           default = '.01',
-          description = 'The max amount that colliders are allowed to overlap.'
+          description = 'The maximum amount that colliders are allowed to overlap, in meters.'
         },
         {
           name = 'minBounceVelocity',
           type = 'number',
           default = '1.0',
           description = [[
-            - The minimum velocity, in meters per second, required for collider resitution
-            (bounciness) to have an effect.
-            - Make it smaller if you want slow-moving colliders to still bounce.
-            - But keep in mind that you don't want it too low, otherwise colliders will not come to
-              rest as easily.
+            A velocity below which restitution (bounciness) will not be applied, in meters per
+            second.  If this is too low then objects may have trouble coming to rest.
           ]]
         },
         {
@@ -129,9 +123,8 @@ return {
           type = 'number',
           default = '10',
           description = [[
-            - The number of solver velocity iterations to run per tick.
-            - Should be at least 2.
-            - Bigger values improve accuracy but require more CPU.
+            The number of solver velocity iterations to run per tick.  This must be at least 2.
+            Larger values will increase accuracy but use more CPU.
           ]]
         },
         {
@@ -139,8 +132,8 @@ return {
           type = 'number',
           default = '2',
           description = [[
-            - The number of solver position iterations to run per tick.
-            - Bigger values improve accuracy but require more CPU.
+            The number of solver position iterations to run per tick.  Larger values will increase
+            accuracy but use more CPU.
           ]]
         }
       }
@@ -157,5 +150,8 @@ return {
       arguments = { 'settings' },
       returns = { 'world' }
     }
+  },
+  related = {
+    'World:update'
   }
 }
