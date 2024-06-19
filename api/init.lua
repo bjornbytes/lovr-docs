@@ -33542,25 +33542,25 @@ return {
                     {
                       name = "tags",
                       type = "table",
-                      description = "A list of collision tags (strings).  Colliders can be assigned a tag, and collision can be enabled and disabled between different tags.  There is a maximum of 31 tags.",
+                      description = "The list of collision tags (strings).  Colliders can be assigned a tag, and collision can be enabled and disabled between different tags.  There is a maximum of 31 tags.",
                       default = "{}"
                     },
                     {
                       name = "staticTags",
                       type = "table",
-                      description = "An optional list of collision tags that should be \"static\".  Colliders with one of these tags will be kinematic and will not move from velocities or forces, but they can still be manually repositioned.  The physics engine puts static colliders in their own collision tree, which optimizes performance.  It's meant to be used for static environment objects in a level that will never move.",
+                      description = "An optional list of collision tags that are \"static\".  Colliders with a static tag will not move, and the physics engine uses this for optimization.",
                       default = "{}"
                     },
                     {
-                      name = "tickRate",
+                      name = "timestep",
                       type = "number",
-                      description = "The number of physics updates to perform per second for fixed timestep physics simulation, or zero to disable fixed timestep.  When fixed timestep is active, any time passed to `World:update` will be accumulated, and the physics simulation will run only when there's as much time as the fixed timestep.  This decouples the physics update rate from the rendering rate, which improves stability.  Collider poses will be interpolated between the two most recent ticks.  Higher values result in more accurate simulation, at the cost of CPU usage.  Use zero to disable fixed timestep and directly update the physics simulation when `World:update` is called.",
-                      default = "60"
+                      description = "The physics timestep, or zero to disable fixed timestep.  When fixed timestep is active, any time passed to `World:update` will be accumulated, and the physics simulation will run only when there's as much time as the fixed timestep.  This decouples the physics update rate from the rendering rate, which improves stability. Collider poses will be interpolated between the two most recent ticks.  Lower values result in more accurate simulation, at the cost of CPU usage.  Use zero to disable fixed timestep and directly update the physics simulation when `World:update` is called.",
+                      default = "1 / 60"
                     },
                     {
-                      name = "tickLimit",
+                      name = "maxSteps",
                       type = "number",
-                      description = "The maximum number of physics ticks to run during any given call to `World:update`. This can be used to avoid a \"spiral of death\" where the physics engine can't keep up with all the ticks when a large `dt` value is given.  Zero means no limit.",
+                      description = "The maximum number of physics steps to run during any given call to `World:update`. This can be used to avoid a \"spiral of death\" where the physics engine can't keep up when a large `dt` value is given.  Zero means no limit.",
                       default = "0"
                     },
                     {
@@ -33568,12 +33568,6 @@ return {
                       type = "number",
                       description = "The maximum number of Colliders in the World.  Increasing this will use more memory. This can't be bigger than 2^23 (around 8 million).",
                       default = "16384"
-                    },
-                    {
-                      name = "deterministic",
-                      type = "boolean",
-                      description = "Whether the simulation should be deterministic, meaning it will behave exactly the same given the same starting conditions and inputs.  Disabling this will improve performance slightly.",
-                      default = "true"
                     },
                     {
                       name = "threadSafe",
@@ -33600,7 +33594,7 @@ return {
                       default = ".01"
                     },
                     {
-                      name = "minBounceVelocity",
+                      name = "restitutionThreshold",
                       type = "number",
                       description = "A velocity below which restitution (bounciness) will not be applied, in meters per second.  If this is too low then objects may have trouble coming to rest.",
                       default = "1.0"

@@ -12,8 +12,8 @@ return {
           type = 'table',
           default = '{}',
           description = [[
-            A list of collision tags (strings).  Colliders can be assigned a tag, and collision can
-            be enabled and disabled between different tags.  There is a maximum of 31 tags.
+            The list of collision tags (strings).  Colliders can be assigned a tag, and collision
+            can be enabled and disabled between different tags.  There is a maximum of 31 tags.
           ]]
         },
         {
@@ -21,36 +21,32 @@ return {
           type = 'table',
           default = '{}',
           description = [[
-            An optional list of collision tags that should be "static".  Colliders with one of these
-            tags will be kinematic and will not move from velocities or forces, but they can still
-            be manually repositioned.  The physics engine puts static colliders in their own
-            collision tree, which optimizes performance.  It's meant to be used for static
-            environment objects in a level that will never move.
+            An optional list of collision tags that are "static".  Colliders with a static tag will
+            not move, and the physics engine uses this for optimization.
           ]]
         },
         {
-          name = 'tickRate',
+          name = 'timestep',
           type = 'number',
-          default = '60',
+          default = '1 / 60',
           description = [[
-            The number of physics updates to perform per second for fixed timestep physics
-            simulation, or zero to disable fixed timestep.  When fixed timestep is active, any time
-            passed to `World:update` will be accumulated, and the physics simulation will run only
-            when there's as much time as the fixed timestep.  This decouples the physics update rate
-            from the rendering rate, which improves stability.  Collider poses will be interpolated
-            between the two most recent ticks.  Higher values result in more accurate simulation, at
-            the cost of CPU usage.  Use zero to disable fixed timestep and directly update the
-            physics simulation when `World:update` is called.
+            The physics timestep, or zero to disable fixed timestep.  When fixed timestep is active,
+            any time passed to `World:update` will be accumulated, and the physics simulation will
+            run only when there's as much time as the fixed timestep.  This decouples the physics
+            update rate from the rendering rate, which improves stability. Collider poses will be
+            interpolated between the two most recent ticks.  Lower values result in more accurate
+            simulation, at the cost of CPU usage.  Use zero to disable fixed timestep and directly
+            update the physics simulation when `World:update` is called.
           ]]
         },
         {
-          name = 'tickLimit',
+          name = 'maxSteps',
           type = 'number',
           default = '0',
           description = [[
-            The maximum number of physics ticks to run during any given call to `World:update`.
-            This can be used to avoid a "spiral of death" where the physics engine can't keep up
-            with all the ticks when a large `dt` value is given.  Zero means no limit.
+            The maximum number of physics steps to run during any given call to `World:update`. This
+            can be used to avoid a "spiral of death" where the physics engine can't keep up when a
+            large `dt` value is given.  Zero means no limit.
           ]]
         },
         {
@@ -60,16 +56,6 @@ return {
           description = [[
             The maximum number of Colliders in the World.  Increasing this will use more memory.
             This can't be bigger than 2^23 (around 8 million).
-          ]]
-        },
-        {
-          name = 'deterministic',
-          type = 'boolean',
-          default = 'true',
-          description = [[
-            Whether the simulation should be deterministic, meaning it will behave exactly the same
-            given the same starting conditions and inputs.  Disabling this will improve performance
-            slightly.
           ]]
         },
         {
@@ -110,7 +96,7 @@ return {
           description = 'The maximum amount that colliders are allowed to overlap, in meters.'
         },
         {
-          name = 'minBounceVelocity',
+          name = 'restitutionThreshold',
           type = 'number',
           default = '1.0',
           description = [[
