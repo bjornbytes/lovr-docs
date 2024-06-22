@@ -33311,6 +33311,86 @@ return {
           }
         },
         {
+          name = "newWeldJoint",
+          tag = "joints",
+          summary = "Create a new WeldJoint.",
+          description = "Creates a new WeldJoint.",
+          key = "lovr.physics.newWeldJoint",
+          module = "lovr.physics",
+          notes = "The joint will try to keep the Colliders in the relative pose they were at when the joint was created.",
+          related = {
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newConeJoint",
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newSliderJoint"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the anchor point, in world coordinates."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the anchor point, in world coordinates."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the anchor point, in world coordinates."
+                }
+              },
+              returns = {
+                {
+                  name = "joint",
+                  type = "WeldJoint",
+                  description = "The new WeldJoint."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "anchor",
+                  type = "Vec3",
+                  description = "The anchor point, in world coordinates."
+                }
+              },
+              returns = {
+                {
+                  name = "joint",
+                  type = "WeldJoint",
+                  description = "The new WeldJoint."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newWorld",
           tag = "world",
           summary = "Create a new World.",
