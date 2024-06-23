@@ -41623,9 +41623,19 @@ return {
             {
               name = "setCallbacks",
               summary = "Set the World's collision callbacks.",
-              description = "Assigns collision callbacks to the world.\n\n- They are\n  - filter: filters collisions\n  - start: called when colliders start touching\n  - end: called when colliders stop touching\n  - contact: called each frame while colliders are touching, with detailed contact info\n- World:update must be called from the thread that assigns the callbacks.",
+              description = "Assigns collision callbacks to the world.  These callbacks are used to filter collisions or get notifications when colliders start or stop touching.  Callbacks are called during `World:update`.\n\n### Filter\n\nFilters collisions.  Receives two colliders and returns a boolean indicating if they should collide.  Note that it is much faster to use tags and `World:enableCollisionBetween` to control collision.  This should only be used when the logic for filtering the collision is highly dynamic.\n\n### Enter\n\nCalled when two colliders begin touching.  Receives two colliders and a `Contact` object with more information about the collision.  The `contact` callback will also be called for this collision.\n\n### Exit\n\nCalled when two colliders stop touching.  Receives two colliders.\n\n### Contact\n\nCalled continuously while two colliders are touching.  Receives two colliders and a `Contact` object with more information about the collision.  The contact can also be disabled to disable the collision response, and its friction/resitution/velocity can be changed.  There can be multiple active contact areas (called \"manifolds\") between a pair of colliders; this callback will be called for each one.",
               key = "World:setCallbacks",
               module = "lovr.physics",
+              examples = {
+                {
+                  code = "world:setCallbacks({\n  filter = function(a, b)\n    return true\n  end,\n  enter = function(a, b, contact)\n    -- play sounds, spawn particles, etc.\n    -- the collision has not been resolved yet, so the velocity of a and b\n    -- is the velocity before the collision, and can be used to estimate the\n    -- collision force\n  end,\n  exit = function(a, b)\n    -- a and b have stopped touching!\n  end,\n  contact = function(a, b, contact)\n    -- a and b are touching this frame\n    -- use sparingly, as this may be called many times per frame\n    -- use Contact:setFriction and Contact:setResitution to update\n    -- the contact behavior, or Contact:setSurfaceVelocity, for a\n    -- conveyor belt effect, or Contact:setEnabled to disable the\n    -- collision completely.\n  end\n})"
+                }
+              },
+              notes = "The `Thread` that last set these callbacks must also be the thread to call `World:update`.",
+              related = {
+                "World:update",
+                "Contact"
+              },
               variants = {
                 {
                   arguments = {
