@@ -5,7 +5,10 @@ return {
   arguments = {
     colliderA = {
       type = 'Collider',
-      description = 'The first collider to attach the Joint to.'
+      description = [[
+        The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position
+        in the World.
+      ]]
     },
     colliderB = {
       type = 'Collider',
