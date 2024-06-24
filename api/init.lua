@@ -32795,6 +32795,106 @@ return {
           }
         },
         {
+          name = "newConeJoint",
+          tag = "joints",
+          summary = "Create a new ConeJoint.",
+          description = "Creates a new ConeJoint.",
+          key = "lovr.physics.newConeJoint",
+          module = "lovr.physics",
+          notes = "A ConeJoint is similar to a BallJoint, where the relative position between the colliders will be constrained to a single point.  However, the ConeJoint also limits the rotation away from the cone axis.  This can be useful for limb joints, ropes, etc.",
+          related = {
+            "lovr.physics.newWeldJoint",
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newSliderJoint"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the joint anchor point, in world space."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the joint anchor point, in world space."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the joint anchor point, in world space."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the cone axis, in world space."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the cone axis, in world space."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the cone axis, in world space."
+                }
+              },
+              returns = {
+                {
+                  name = "cone",
+                  type = "ConeJoint",
+                  description = "The new ConeJoint."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "colliderA",
+                  type = "Collider",
+                  description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
+                },
+                {
+                  name = "colliderB",
+                  type = "Collider",
+                  description = "The second collider to attach the Joint to."
+                },
+                {
+                  name = "anchor",
+                  type = "Vec3",
+                  description = "The joint anchor point, in world space."
+                },
+                {
+                  name = "axis",
+                  type = "Vec3",
+                  description = "The cone axis, in world space."
+                }
+              },
+              returns = {
+                {
+                  name = "cone",
+                  type = "ConeJoint",
+                  description = "The new ConeJoint."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newCylinderShape",
           tag = "shapes",
           summary = "Create a new CylinderShape.",
