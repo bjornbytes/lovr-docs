@@ -9817,10 +9817,6 @@ return {
               description = "Two 32-bit signed integers."
             },
             {
-              name = "i32x2",
-              description = "Two 32-bit signed integers."
-            },
-            {
               name = "i32x3",
               description = "Three 32-bit signed integers."
             },
@@ -37160,7 +37156,7 @@ return {
         {
           name = "DistanceJoint",
           summary = "A fixed distance joint.",
-          description = "A DistanceJoint is a type of `Joint` that tries to keep two colliders a fixed distance apart. The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.",
+          description = "A DistanceJoint is a type of `Joint` that tries to keep two colliders within a certain distance. The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.",
           key = "DistanceJoint",
           module = "lovr.physics",
           constructors = {
