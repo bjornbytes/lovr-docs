@@ -42962,6 +42962,25 @@ return {
               }
             },
             {
+              name = "getCount",
+              summary = "Get the number of messages in the Channel.",
+              description = "Returns the number of messages in the Channel.",
+              key = "Channel:getCount",
+              module = "lovr.thread",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of messages in the Channel."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "hasRead",
               summary = "Get whether a message has been read.",
               description = "Returns whether or not the message with the given ID has been read.  Every call to `Channel:push` returns a message ID.",
