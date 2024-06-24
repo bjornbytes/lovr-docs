@@ -84,10 +84,6 @@ return {
       description = 'Two 32-bit signed integers.'
     },
     {
-      name = 'i32x2',
-      description = 'Two 32-bit signed integers.'
-    },
-    {
       name = 'i32x3',
       description = 'Three 32-bit signed integers.'
     },
