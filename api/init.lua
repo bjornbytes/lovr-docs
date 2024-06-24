@@ -33437,47 +33437,6 @@ return {
                   name = "colliderB",
                   type = "Collider",
                   description = "The second collider to attach the Joint to."
-                },
-                {
-                  name = "x",
-                  type = "number",
-                  description = "The x position of the anchor point, in world coordinates."
-                },
-                {
-                  name = "y",
-                  type = "number",
-                  description = "The y position of the anchor point, in world coordinates."
-                },
-                {
-                  name = "z",
-                  type = "number",
-                  description = "The z position of the anchor point, in world coordinates."
-                }
-              },
-              returns = {
-                {
-                  name = "joint",
-                  type = "WeldJoint",
-                  description = "The new WeldJoint."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "colliderA",
-                  type = "Collider",
-                  description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
-                },
-                {
-                  name = "colliderB",
-                  type = "Collider",
-                  description = "The second collider to attach the Joint to."
-                },
-                {
-                  name = "anchor",
-                  type = "Vec3",
-                  description = "The anchor point, in world coordinates."
                 }
               },
               returns = {
@@ -39355,10 +39314,13 @@ return {
         },
         {
           name = "WeldJoint",
-          summary = "TODO",
-          description = "TODO",
+          summary = "A joint that welds two colliders together.",
+          description = "A WeldJoint is a `Joint` that restricts all relative motion between two colliders, as though they were welded together into a single object.  All six degrees of freedom are constrained.\n\nWeldJoints are useful for making breakable objects.  Several colliders can be welded together with joints, and if `Joint:getForce` reports a large enough value, the joints can be disabled or destroyed, allowing the pieces to move freely.",
           key = "WeldJoint",
           module = "lovr.physics",
+          constructors = {
+            "lovr.physics.newWeldJoint"
+          },
           extends = "Joint",
           methods = {}
         },

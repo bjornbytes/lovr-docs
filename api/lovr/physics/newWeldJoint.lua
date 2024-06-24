@@ -13,22 +13,6 @@ return {
     colliderB = {
       type = 'Collider',
       description = 'The second collider to attach the Joint to.'
-    },
-    x = {
-      type = 'number',
-      description = 'The x position of the anchor point, in world coordinates.'
-    },
-    y = {
-      type = 'number',
-      description = 'The y position of the anchor point, in world coordinates.'
-    },
-    z = {
-      type = 'number',
-      description = 'The z position of the anchor point, in world coordinates.'
-    },
-    anchor = {
-      type = 'Vec3',
-      description = 'The anchor point, in world coordinates.'
     }
   },
   returns = {
@@ -39,11 +23,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'colliderA', 'colliderB', 'x', 'y', 'z' },
-      returns = { 'joint' }
-    },
-    {
-      arguments = { 'colliderA', 'colliderB', 'anchor' },
+      arguments = { 'colliderA', 'colliderB' },
       returns = { 'joint' }
     }
   },
