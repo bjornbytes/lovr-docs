@@ -273,6 +273,9 @@ local function validateRelated(item)
 end
 
 local function validateEnum(enum)
+  warnIf(not enum.summary, 'Enum %s is missing summary', enum.name)
+  warnIf(not enum.description, 'Enum %s is missing description', enum.name)
+
   for i, value in ipairs(enum.values) do
     warnIf(not value.name, 'Enum %s value #%d is missing name', enum.name, i)
     warnIf(not value.description, 'Enum %s value #%d is missing description', enum.name, i)

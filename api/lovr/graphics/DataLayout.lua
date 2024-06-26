@@ -1,4 +1,5 @@
 return {
+  summary = 'Different ways of padding GPU buffer data.',
   description = [[
     The different ways to pack Buffer fields into memory.
 

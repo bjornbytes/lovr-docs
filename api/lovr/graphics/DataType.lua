@@ -1,4 +1,5 @@
 return {
+  summary = 'Different types for `Buffer` fields.',
   description = [[
     Different types for `Buffer` fields.  These are scalar, vector, or matrix types, usually packed
     into small amounts of space to reduce the amount of memory they occupy.

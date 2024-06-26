@@ -1,4 +1,5 @@
 return {
+  summary = 'Different types of input devices supported by the `lovr.headset` module.',
   description = 'Different types of input devices supported by the `lovr.headset` module.',
   values = {
     {

@@ -1,4 +1,5 @@
 return {
+  summary = 'Different eyes a Layer can show up in.',
   description = 'The different eyes a Layer can show up in',
   values = {
     {

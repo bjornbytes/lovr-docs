@@ -3280,6 +3280,7 @@ return {
         },
         {
           name = "TextureFormat",
+          summary = "Different pixel formats in `Image` and `Texture` objects.",
           description = "Different data layouts for pixels in `Image` and `Texture` objects.\n\nFormats starting with `d` are depth formats, used for depth/stencil render targets.\n\nFormats starting with `bc` and `astc` are compressed formats.  Compressed formats have better performance since they stay compressed on the CPU and GPU, reducing the amount of memory bandwidth required to look up all the pixels needed for shading.\n\nFormats without the `f` suffix are unsigned normalized formats, which store values in the range `[0,1]`.  The `f` suffix indicates a floating point format which can store values outside this range, and is used for HDR rendering or storing data in a texture.",
           key = "TextureFormat",
           module = "lovr.data",
@@ -9713,6 +9714,7 @@ return {
         },
         {
           name = "DataLayout",
+          summary = "Different ways of padding GPU buffer data.",
           description = "The different ways to pack Buffer fields into memory.\n\nThe default is `packed`, which is suitable for vertex buffers and index buffers.  It doesn't add any padding between elements, and so it doesn't waste any space.  However, this layout won't necessarily work for uniform buffers and storage buffers.\n\nThe `std140` layout corresponds to the std140 layout used for uniform buffers in GLSL.  It adds the most padding between fields, and requires the stride to be a multiple of 16.  Example:\n\n    layout(std140) uniform ObjectScales { float scales[64]; };\n\nThe `std430` layout corresponds to the std430 layout used for storage buffers in GLSL.  It adds some padding between certain types, and may round up the stride.  Example:\n\n    layout(std430) buffer TileSizes { vec2 sizes[]; }",
           key = "DataLayout",
           module = "lovr.graphics",
@@ -9739,6 +9741,7 @@ return {
         },
         {
           name = "DataType",
+          summary = "Different types for `Buffer` fields.",
           description = "Different types for `Buffer` fields.  These are scalar, vector, or matrix types, usually packed into small amounts of space to reduce the amount of memory they occupy.\n\nThe names are encoded as follows:\n\n- The data type:\n  - `i` for signed integer\n  - `u` for unsigned integer\n  - `sn` for signed normalized (-1 to 1)\n  - `un` for unsigned normalized (0 to 1)\n  - `f` for floating point\n- The bit depth of each component\n- The letter `x` followed by the component count (for vectors)",
           key = "DataType",
           module = "lovr.graphics",
@@ -10234,6 +10237,7 @@ return {
         },
         {
           name = "TextureType",
+          summary = "The different types of textures.",
           description = "Different types of textures.  Textures are multidimensional blocks of GPU memory, and the texture's type determines how many dimensions there are, and adds some semantics about what the 3rd dimension means.",
           key = "TextureType",
           module = "lovr.graphics",
@@ -10258,6 +10262,7 @@ return {
         },
         {
           name = "TextureUsage",
+          summary = "Different operations `Texture` can be used for.",
           description = "These are the different things `Texture`s can be used for.  When creating a Texture, a set of these flags can be provided, restricting what operations are allowed on the texture.  Using a smaller set of flags may improve performance.  If none are provided, the only usage flag applied is `sample`.",
           key = "TextureUsage",
           module = "lovr.graphics",
@@ -23783,6 +23788,7 @@ return {
       enums = {
         {
           name = "Device",
+          summary = "Different types of input devices supported by the `lovr.headset` module.",
           description = "Different types of input devices supported by the `lovr.headset` module.",
           key = "Device",
           module = "lovr.headset",
@@ -23926,6 +23932,7 @@ return {
         },
         {
           name = "DeviceAxis",
+          summary = "Different axes on an input device.",
           description = "Axes on an input device.",
           key = "DeviceAxis",
           module = "lovr.headset",
@@ -23954,6 +23961,7 @@ return {
         },
         {
           name = "DeviceButton",
+          summary = "Different buttons on an input device.",
           description = "Buttons on an input device.",
           key = "DeviceButton",
           module = "lovr.headset",
@@ -24062,6 +24070,7 @@ return {
         },
         {
           name = "ViewMask",
+          summary = "Different eyes a Layer can show up in.",
           description = "The different eyes a Layer can show up in",
           key = "ViewMask",
           module = "lovr.headset",

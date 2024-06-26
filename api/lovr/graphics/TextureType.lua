@@ -1,4 +1,5 @@
 return {
+  summary = 'The different types of textures.',
   description = [[
     Different types of textures.  Textures are multidimensional blocks of GPU memory, and the
     texture's type determines how many dimensions there are, and adds some semantics about what the

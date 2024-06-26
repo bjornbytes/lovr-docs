@@ -1,4 +1,5 @@
 return {
+  summary = 'Different pixel formats in `Image` and `Texture` objects.',
   description = [[
     Different data layouts for pixels in `Image` and `Texture` objects.
 

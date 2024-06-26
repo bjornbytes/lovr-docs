@@ -1,4 +1,5 @@
 return {
+  summary = 'Different buttons on an input device.',
   description = 'Buttons on an input device.',
   values = {
     {

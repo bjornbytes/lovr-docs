@@ -1,4 +1,5 @@
 return {
+  summary = 'Different operations `Texture` can be used for.',
   description = [[
     These are the different things `Texture`s can be used for.  When creating a Texture, a set of
     these flags can be provided, restricting what operations are allowed on the texture.  Using a

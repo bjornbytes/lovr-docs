@@ -1,4 +1,5 @@
 return {
+  summary = 'Different axes on an input device.',
   description = 'Axes on an input device.',
   values = {
     {
