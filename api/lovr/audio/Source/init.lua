@@ -21,7 +21,7 @@ return {
       tag = 'sourcePlayback'
     },
     {
-      name = 'Spatial Effects',
+      name = 'Effects',
       tag = 'sourceEffects'
     },
     {
