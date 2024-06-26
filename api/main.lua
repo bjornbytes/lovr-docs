@@ -281,6 +281,33 @@ local function validateEnum(enum)
   validateRelated(enum)
 end
 
+local function validateType(type, fields, key, kind)
+  if not type then
+    warn('Missing %s type in %s', kind, key)
+  elseif type:match('^[A-Z]') then
+    warnIf(not lookup[type], 'Invalid %s type "%s" in %s', kind, type, key)
+  else
+    local valid = {
+      boolean = true,
+      number = true,
+      table = true,
+      string = true,
+      userdata = true,
+      lightuserdata = true,
+      ['function'] = true,
+      ['*'] = true
+    }
+
+    warnIf(not valid[type], 'Invalid %s type "%s" in %s', kind, type, key)
+
+    if type == 'table' and fields then
+      for i, field in ipairs(fields) do
+        validateType(field.type, field.table, key, kind)
+      end
+    end
+  end
+end
+
 local function validateFunction(fn)
   if fn.tag then
     local found = false
@@ -298,12 +325,12 @@ local function validateFunction(fn)
   for _, variant in ipairs(fn.variants) do
     for _, arg in ipairs(variant.arguments) do
       warnIf(not arg or not arg.name, 'Invalid argument for variant of %s', fn.key)
-      warnIf(not arg.type or (arg.type:match('^[A-Z]') and not lookup[arg.type]), 'Invalid or missing argument type in %s', fn.key)
+      validateType(arg.type, arg.table, fn.key, 'argument')
     end
 
     for _, ret in ipairs(variant.returns) do
       warnIf(not ret or not ret.name, 'Invalid return for variant of %s', fn.key)
-      warnIf(not ret.type or (ret.type:match('^[A-Z]') and not lookup[ret.type]), 'Invalid or missing return type in %s', fn.key)
+      validateType(ret.type, ret.table, fn.key, 'return')
     end
   end
 
