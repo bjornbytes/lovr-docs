@@ -64,7 +64,7 @@ return {
             },
             {
               name = '[3]',
-              type = 'WrapMod',
+              type = 'WrapMode',
               description = 'The "z" wrap mode for 3D textures.'
             }
           }
