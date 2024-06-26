@@ -16,8 +16,10 @@ return {
     }
   },
   variants = {
-    arguments = {},
-    returns = { 'width', 'height' }
+    {
+      arguments = {},
+      returns = { 'width', 'height' }
+    }
   },
   notes = 'When a layer is created, its width and height are 1 meter.'
 }
