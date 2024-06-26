@@ -8914,8 +8914,8 @@ return {
               },
               returns = {
                 {
-                  name = "table",
-                  type = "items",
+                  name = "items",
+                  type = "table",
                   description = "A table with a string for each file and subfolder in the directory."
                 }
               }
@@ -12440,7 +12440,7 @@ return {
                         },
                         {
                           name = "[3]",
-                          type = "WrapMod",
+                          type = "WrapMode",
                           description = "The \"z\" wrap mode for 3D textures."
                         }
                       }
