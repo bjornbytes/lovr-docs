@@ -26066,10 +26066,20 @@ return {
               module = "lovr.headset",
               notes = "When a layer is created, its width and height are 1 meter.",
               variants = {
-                arguments = {},
-                returns = {
-                  "width",
-                  "height"
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the layer, in meters."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the layer, in meters."
+                    }
+                  }
                 }
               }
             },
