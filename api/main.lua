@@ -103,7 +103,7 @@ local function processFunction(path, parent)
     fn.examples[k] = processExample(example, fn.key)
   end
 
-  assert(fn.variants, string.format('Function %q is missing variants', fn.key))
+  assert(fn.variants and #fn.variants > 0, string.format('Function %q is missing variants', fn.key))
   assert(fn.arguments, string.format('Function %q does not have arguments list', fn.key))
   assert(fn.returns, string.format('Function %q does not have returns list', fn.key))
 

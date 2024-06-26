@@ -13,7 +13,9 @@ return {
   },
   returns = {},
   variants = {
-    arguments = { 'views' },
-    returns = {}
+    {
+      arguments = { 'views' },
+      returns = {}
+    }
   }
 }

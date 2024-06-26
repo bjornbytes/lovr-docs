@@ -26136,9 +26136,15 @@ return {
               key = "Layer:getViewMask",
               module = "lovr.headset",
               variants = {
-                arguments = {},
-                returns = {
-                  "views"
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "views",
+                      type = "ViewMask",
+                      description = "The view mask of the layer."
+                    }
+                  }
                 }
               }
             },
@@ -26410,10 +26416,16 @@ return {
               key = "Layer:setViewMask",
               module = "lovr.headset",
               variants = {
-                arguments = {
-                  "views"
-                },
-                returns = {}
+                {
+                  arguments = {
+                    {
+                      name = "views",
+                      type = "ViewMask",
+                      description = "The view mask of the layer."
+                    }
+                  },
+                  returns = {}
+                }
               }
             },
             {
