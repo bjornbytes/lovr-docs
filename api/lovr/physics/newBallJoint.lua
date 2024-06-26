@@ -51,6 +51,9 @@ return {
     A ball joint is like a ball and socket between the two colliders.  It tries to keep the distance
     between the colliders and the anchor position the same, but does not constrain the angle between
     them.
+
+    If the anchor is nil, the position of the first Collider is the anchor.  If the first collider
+    is nil, then the position of the second Collider is the anchor.
   ]],
   related = {
     'lovr.physics.newDistanceJoint',

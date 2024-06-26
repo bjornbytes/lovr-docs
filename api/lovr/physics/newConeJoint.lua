@@ -67,6 +67,11 @@ return {
     A ConeJoint is similar to a BallJoint, where the relative position between the colliders will be
     constrained to a single point.  However, the ConeJoint also limits the rotation away from the
     cone axis.  This can be useful for limb joints, ropes, etc.
+
+    If the anchor is nil, the position of the first Collider is the anchor.  If the first Collider
+    is nil, the position of the second collider is the anchor.
+
+    If the axis is nil, it defaults to the direction between the anchor and the second Collider.
   ]],
   related = {
     'lovr.physics.newWeldJoint',

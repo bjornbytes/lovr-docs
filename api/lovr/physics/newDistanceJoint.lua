@@ -67,6 +67,8 @@ return {
     A distance joint tries to keep the two colliders a fixed distance apart.  The distance is
     determined by the initial distance between the anchor points.  The joint allows for rotation on
     the anchor points.
+
+    If no anchors are given, they default to the positions of the Colliders.
   ]],
   related = {
     'lovr.physics.newBallJoint',

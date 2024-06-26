@@ -157,15 +157,6 @@ return {
           description = 'The maximum number of bytes used by `shared` variables in compute shaders.'
         },
         {
-          name = 'shaderConstantSize',
-          type = 'number',
-          description = [[
-            The maximum number of bytes of push constants that can be in a Shader.  Push constants
-            are shared between stages, so the stage with the largest amount of push constant data
-            will count towards this limit.
-          ]]
-        },
-        {
           name = 'indirectDrawCount',
           type = 'number',
           description = 'The maximum number of draws that can be issued by an indirect draw call.'

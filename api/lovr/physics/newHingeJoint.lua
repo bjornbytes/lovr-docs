@@ -65,6 +65,11 @@ return {
   },
   notes = [[
     A hinge joint constrains two colliders to allow rotation only around the hinge's axis.
+
+    If the anchor is nil, the position of the first Collider is the anchor.  If the first Collider
+    is nil, the position of the second collider is the anchor.
+
+    If the axis is nil, it defaults to the direction between the anchor and the second Collider.
   ]],
   related = {
     'lovr.physics.newBallJoint',

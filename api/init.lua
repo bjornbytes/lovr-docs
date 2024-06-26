@@ -11135,11 +11135,6 @@ return {
                       description = "The maximum number of bytes used by `shared` variables in compute shaders."
                     },
                     {
-                      name = "shaderConstantSize",
-                      type = "number",
-                      description = "The maximum number of bytes of push constants that can be in a Shader.  Push constants are shared between stages, so the stage with the largest amount of push constant data will count towards this limit."
-                    },
-                    {
                       name = "indirectDrawCount",
                       type = "number",
                       description = "The maximum number of draws that can be issued by an indirect draw call."
@@ -32629,7 +32624,7 @@ return {
           description = "Creates a new BallJoint.",
           key = "lovr.physics.newBallJoint",
           module = "lovr.physics",
-          notes = "A ball joint is like a ball and socket between the two colliders.  It tries to keep the distance between the colliders and the anchor position the same, but does not constrain the angle between them.",
+          notes = "A ball joint is like a ball and socket between the two colliders.  It tries to keep the distance between the colliders and the anchor position the same, but does not constrain the angle between them.\n\nIf the anchor is nil, the position of the first Collider is the anchor.  If the first collider is nil, then the position of the second Collider is the anchor.",
           related = {
             "lovr.physics.newDistanceJoint",
             "lovr.physics.newHingeJoint",
@@ -32797,7 +32792,7 @@ return {
           description = "Creates a new ConeJoint.",
           key = "lovr.physics.newConeJoint",
           module = "lovr.physics",
-          notes = "A ConeJoint is similar to a BallJoint, where the relative position between the colliders will be constrained to a single point.  However, the ConeJoint also limits the rotation away from the cone axis.  This can be useful for limb joints, ropes, etc.",
+          notes = "A ConeJoint is similar to a BallJoint, where the relative position between the colliders will be constrained to a single point.  However, the ConeJoint also limits the rotation away from the cone axis.  This can be useful for limb joints, ropes, etc.\n\nIf the anchor is nil, the position of the first Collider is the anchor.  If the first Collider is nil, the position of the second collider is the anchor.\n\nIf the axis is nil, it defaults to the direction between the anchor and the second Collider.",
           related = {
             "lovr.physics.newWeldJoint",
             "lovr.physics.newBallJoint",
@@ -32939,7 +32934,7 @@ return {
           description = "Creates a new DistanceJoint.",
           key = "lovr.physics.newDistanceJoint",
           module = "lovr.physics",
-          notes = "A distance joint tries to keep the two colliders a fixed distance apart.  The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.",
+          notes = "A distance joint tries to keep the two colliders a fixed distance apart.  The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.\n\nIf no anchors are given, they default to the positions of the Colliders.",
           related = {
             "lovr.physics.newBallJoint",
             "lovr.physics.newHingeJoint",
@@ -33037,7 +33032,7 @@ return {
           description = "Creates a new HingeJoint.",
           key = "lovr.physics.newHingeJoint",
           module = "lovr.physics",
-          notes = "A hinge joint constrains two colliders to allow rotation only around the hinge's axis.",
+          notes = "A hinge joint constrains two colliders to allow rotation only around the hinge's axis.\n\nIf the anchor is nil, the position of the first Collider is the anchor.  If the first Collider is nil, the position of the second collider is the anchor.\n\nIf the axis is nil, it defaults to the direction between the anchor and the second Collider.",
           related = {
             "lovr.physics.newBallJoint",
             "lovr.physics.newDistanceJoint",
