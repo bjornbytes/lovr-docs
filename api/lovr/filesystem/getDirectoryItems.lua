@@ -9,15 +9,15 @@ return {
     }
   },
   returns = {
-    table = {
-      type = 'items',
+    items = {
+      type = 'table',
       description = 'A table with a string for each file and subfolder in the directory.'
     }
   },
   variants = {
     {
       arguments = { 'path' },
-      returns = { 'table' }
+      returns = { 'items' }
     }
   },
   notes = [[
