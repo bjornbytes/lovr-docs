@@ -25,12 +25,16 @@ return {
     is `gequal`, depth values of 0.0 are on the far plane and depth values of 1.0 are on the near
     plane, closer to the camera.
 
+    The near and far clipping planes are set with `Pass:setProjection`.  The default is set with
+    `lovr.headset.setClipDistance`.
+
     A depth buffer must be present to use the depth test, but this is enabled by default.
   ]],
   related = {
     'Pass:setDepthWrite',
     'Pass:setDepthOffset',
     'Pass:setDepthClamp',
-    'Pass:setStencilTest'
+    'Pass:setStencilTest',
+    'Pass:setProjection'
   }
 }

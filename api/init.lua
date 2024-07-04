@@ -20634,12 +20634,13 @@ return {
               description = "Sets the depth test.",
               key = "Pass:setDepthTest",
               module = "lovr.graphics",
-              notes = "When using LÖVR's default projection (reverse Z with infinite far plane) the default depth test is `gequal`, depth values of 0.0 are on the far plane and depth values of 1.0 are on the near plane, closer to the camera.\n\nA depth buffer must be present to use the depth test, but this is enabled by default.",
+              notes = "When using LÖVR's default projection (reverse Z with infinite far plane) the default depth test is `gequal`, depth values of 0.0 are on the far plane and depth values of 1.0 are on the near plane, closer to the camera.\n\nThe near and far clipping planes are set with `Pass:setProjection`.  The default is set with `lovr.headset.setClipDistance`.\n\nA depth buffer must be present to use the depth test, but this is enabled by default.",
               related = {
                 "Pass:setDepthWrite",
                 "Pass:setDepthOffset",
                 "Pass:setDepthClamp",
-                "Pass:setStencilTest"
+                "Pass:setStencilTest",
+                "Pass:setProjection"
               },
               variants = {
                 {
@@ -20773,7 +20774,7 @@ return {
               description = "Sets the projection for a single view.  4 field of view angles can be used, similar to the field of view returned by `lovr.headset.getViewAngles`.  Alternatively, a projection matrix can be used for other types of projections like orthographic, oblique, etc.\n\nUp to 6 views are supported.  The Pass returned by `lovr.headset.getPass` will have its views automatically configured to match the headset.",
               key = "Pass:setProjection",
               module = "lovr.graphics",
-              notes = "A far clipping plane of 0.0 can be used for an infinite far plane with reversed Z range.  This is the default because it improves depth precision and reduces Z fighting.  Using a non-infinite far plane requires the depth buffer to be cleared to 1.0 instead of 0.0 and the default depth test to be changed to `lequal` instead of `gequal`.",
+              notes = "A far clipping plane of 0.0 can be used for an infinite far plane with reversed Z range.  This is the default because it improves depth precision and reduces Z fighting.  Using a non-infinite far plane requires the depth buffer to be cleared to 1.0 instead of 0.0 and the default depth test to be changed to `lequal` instead of `gequal`.\n\nBy default, the projection is set by the headset.  Each HMD has a specific field of view given by `lovr.headset.getViewAngles`, and the clipping planes can be customized with `lovr.headset.setClipDistance`.",
               related = {
                 "lovr.headset.getViewAngles",
                 "lovr.headset.getViewCount",
