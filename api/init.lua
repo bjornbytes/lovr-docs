@@ -22812,6 +22812,39 @@ return {
                   }
                 }
               }
+            },
+            {
+              name = "hasVariable",
+              summary = "Check if the Shader has a variable.",
+              description = "Returns whether the Shader has a variable.",
+              key = "Shader:hasVariable",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  code = "for key, texture in pairs(textures) do\n  if shader:hasVariable(key) then\n    pass:send(key, texture)\n  end\nend"
+                }
+              },
+              notes = "This will return true if the variable is a buffer, texture, sampler, or other uniform variable (anything that can be sent with `Pass:send`).",
+              related = {
+                "Pass:send"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "name",
+                      type = "string"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "exists",
+                      type = "boolean",
+                      description = "Whether the Shader has the variable."
+                    }
+                  }
+                }
+              }
             }
           }
         },
