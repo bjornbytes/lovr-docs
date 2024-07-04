@@ -4,6 +4,7 @@ return {
   arguments = {
     name = {
       type = 'string',
+      description = 'The name of the variable to check.'
     }
   },
   returns = {

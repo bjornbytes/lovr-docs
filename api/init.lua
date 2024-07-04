@@ -22833,7 +22833,8 @@ return {
                   arguments = {
                     {
                       name = "name",
-                      type = "string"
+                      type = "string",
+                      description = "The name of the variable to check."
                     }
                   },
                   returns = {
