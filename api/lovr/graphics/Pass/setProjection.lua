@@ -61,6 +61,10 @@ return {
     is the default because it improves depth precision and reduces Z fighting.  Using a non-infinite
     far plane requires the depth buffer to be cleared to 1.0 instead of 0.0 and the default depth
     test to be changed to `lequal` instead of `gequal`.
+
+    By default, the projection is set by the headset.  Each HMD has a specific field of view given
+    by `lovr.headset.getViewAngles`, and the clipping planes can be customized with
+    `lovr.headset.setClipDistance`.
   ]],
   related = {
     'lovr.headset.getViewAngles',
