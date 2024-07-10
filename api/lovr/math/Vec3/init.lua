@@ -5,6 +5,13 @@ return {
     'lovr.math.newVec3',
     'lovr.math.vec3'
   },
+  swizzles = {
+    components = {
+      { 'x', 'y', 'z' },
+      { 'r', 'g', 'b' },
+      { 's', 't', 'p' }
+    }
+  },
   related = {
     'Vec2',
     'Vec4',

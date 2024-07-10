@@ -30752,6 +30752,22 @@ return {
             "Vec3",
             "Vec4",
             "Vectors"
+          },
+          swizzles = {
+            components = {
+              {
+                "x",
+                "y"
+              },
+              {
+                "r",
+                "g"
+              },
+              {
+                "s",
+                "t"
+              }
+            }
           }
         },
         {
@@ -31687,6 +31703,25 @@ return {
             "Vec2",
             "Vec4",
             "Vectors"
+          },
+          swizzles = {
+            components = {
+              {
+                "x",
+                "y",
+                "z"
+              },
+              {
+                "r",
+                "g",
+                "b"
+              },
+              {
+                "s",
+                "t",
+                "p"
+              }
+            }
           }
         },
         {
@@ -32532,6 +32567,28 @@ return {
             "Vec2",
             "Vec3",
             "Vectors"
+          },
+          swizzles = {
+            components = {
+              {
+                "x",
+                "y",
+                "z",
+                "w"
+              },
+              {
+                "r",
+                "g",
+                "b",
+                "a"
+              },
+              {
+                "s",
+                "t",
+                "p",
+                "q"
+              }
+            }
           }
         },
         {
