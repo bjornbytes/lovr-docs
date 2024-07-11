@@ -84,7 +84,6 @@ end
 
 -- The scene is drawn in this callback
 local function sceneDraw(pass)
-
   -- Draw text on the left and right
   for _, sign in ipairs { -1, 1 } do
     pass:push()
@@ -101,7 +100,7 @@ end
 -- This simple function is used to render a render pass that
 -- draws one texture onto another with the blur shader
 local function fullScreenDraw(source, destination, blurSize)
-  local pass = lovr.graphics.getPass('render', { destination, depth = false, samples = 1 })
+  local pass = lovr.graphics.newPass({ destination, depth = false, samples = 1 })
   pass:setSampler(clampler)
   pass:setShader(screenShader)
   pass:send('sourceTexture', source)
@@ -112,15 +111,13 @@ end
 
 function lovr.draw(pass)
   if not applyBlur then
-
     -- No-postprocessing path: Call scene-draw callback without doing anything fancy
     sceneDraw(pass)
-
   else
     local passes = {}
 
     -- Start by drawing the scene to one of our temp textures.
-    local scene = lovr.graphics.getPass('render', tempTexture[1])
+    local scene = lovr.graphics.newPass(tempTexture[1])
 
     -- Make the scene pass use the same cameras as the headset
     for i = 1, pass:getViewCount() do
