@@ -70,8 +70,8 @@ return {
     Use `Collider:resetMassData` to reset the inertia and other mass properties based on the
     Collider's shapes.
 
-    If the Collider is kinematic or all rotation axes are disabled, this returns 0 for the diagonal
-    and an identity quaternion for the rotation.
+    If the Collider is kinematic or all rotation axes are disabled, the collider behaves as though
+    it has infinite inertia, and this function will do nothing.
   ]],
   related = {
     'Collider:getMass',
