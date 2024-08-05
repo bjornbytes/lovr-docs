@@ -13,23 +13,24 @@ local gap = 0.01
 
 
 function lovr.load()
-  world = lovr.physics.newWorld(0, -9.8, 0, false)
+  world = lovr.physics.newWorld({ restitutionThreshold = .05 })
   -- a static geometry from which balls are suspended
   local size = vec3(1.2, 0.1, 0.3)
-  frame = world:newBoxCollider(vec3(0, 2, -1), size)
+  frame = world:newBoxCollider(vec3(0, 2, -2), size)
   frame:setKinematic(true)
   framePose = lovr.math.newMat4(frame:getPose()):scale(size)
   -- create balls along the length of frame and attach them with two distance joints to frame
   for x = -0.5, 0.5, 1 / count do
-    local ball = world:newSphereCollider(vec3(x, 1, -1), radius - gap)
-    ball:setRestitution(1)
-    lovr.physics.newDistanceJoint(frame, ball, vec3(x, 2, -1 + 0.25), vec3(x, 1, -1))
-    lovr.physics.newDistanceJoint(frame, ball, vec3(x, 2, -1 - 0.25), vec3(x, 1, -1))
+    local ball = world:newSphereCollider(vec3(x, 1, -2), radius - gap)
+    ball:setRestitution(1.0)
     table.insert(balls, ball)
+
+    lovr.physics.newDistanceJoint(frame, ball, vec3(x, 2, -2 + 0.25), vec3(x, 1, -2))
+    lovr.physics.newDistanceJoint(frame, ball, vec3(x, 2, -2 - 0.25), vec3(x, 1, -2))
   end
   -- displace the last ball to set the Newton's cradle in motion
   local lastBall = balls[#balls]
-  lastBall:setPosition(vec3(lastBall:getPosition()) + vec3(5 * radius, 5 * radius, 0))
+  lastBall:applyLinearImpulse(.6, 0, 0)
   lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end
 

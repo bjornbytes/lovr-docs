@@ -28,10 +28,10 @@ function lovr.update(dt)
 
   local ox, oy, oz = lovr.headset.getPosition('hand/left/point')
   local dx, dy, dz = quat(lovr.headset.getOrientation('hand/left/point')):direction():mul(50):unpack()
-  local collider, x, y, z = world:raycast(ox, oy, oz, ox + dx, oy + dy, oz + dz)
+  local collider, shape, x, y, z = world:raycast(ox, oy, oz, ox + dx, oy + dy, oz + dz)
 
-  if shape then
-    selectedBox = shape:getCollider()
+  if collider then
+    selectedBox = collider
     hitpoint:set(x, y, z)
   end
 end

@@ -2,9 +2,8 @@ return {
   tag = 'colliders',
   summary = 'Add a Collider to the World.',
   description = [[
-    Adds a new Collider to the World.
-
-    The Collider won't have any shapes attached to it.
+    Adds a new Collider to the World, without attaching any Shapes to it.  Use `Collider:addShape`
+    to add shapes.
   ]],
   arguments = {
     x = {

@@ -1,10 +1,10 @@
 function lovr.load()
   world = lovr.physics.newWorld()
-  world:setLinearDamping(.01)
-  world:setAngularDamping(.005)
 
   -- Create the ground
-  world:newBoxCollider(0, 0, 0, 50, .05, 50):setKinematic(true)
+  ground = world:newBoxCollider(0, -1, 0, 50, 2, 50)
+  ground:setKinematic(true)
+  ground:setFriction(1.0)
 
   -- Create boxes!
   boxes = {}
@@ -12,7 +12,6 @@ function lovr.load()
     for y = .125, 2, .2499 do
       local box = world:newBoxCollider(x, y, -2 - y / 5, .25)
       table.insert(boxes, box)
-      box:setFriction(.8)
     end
   end
 

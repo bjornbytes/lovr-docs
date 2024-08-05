@@ -88,7 +88,7 @@ function lovr.draw(pass)
   pass:setMaterial(puffMaterial)
   pass:setDepthWrite(false)
   pass:setShader(redPuffShader)
-  pass:send('headPosition', lovr.headset.getPosition('head'))
+  pass:send('headPosition', { lovr.headset.getPosition('head') })
   for _, puff in pairs(redPuffs) do
     pass:plane(puff.position, .1)
   end

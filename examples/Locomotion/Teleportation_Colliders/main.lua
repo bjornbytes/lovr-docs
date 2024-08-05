@@ -32,8 +32,8 @@ function motion.teleport(dt)
   local target = vec3(handPose:mul(0, 0, -motion.teleportDistance))
   local intersectionDistance = math.huge
   local closestHit
-  physicsWorld:raycast(origin, target,
-    function(shape, x, y, z, nx, ny, nz)
+  physicsWorld:raycast(origin, target, nil,
+    function(collider, shape, x, y, z, nx, ny, nz)
       local position = vec3(x, y, z)
       local normal = vec3(nx, ny, nz)
       local distance = (origin - position):length()
@@ -106,13 +106,13 @@ end
 local function makeColumn(x, z, height, color)
   height = math.abs(height)
   local collider = physicsWorld:newCylinderCollider(x, height / 2, z, 2, height)
-  local shape = collider:getShapes()[1]
+  local shape = collider:getShape()
   collider:setOrientation(math.pi/2,  1,0,0)
   collider:setKinematic(true)
   local column = {
-    collider=collider,
-    shape=shape,
-    color=color,
+    collider = collider,
+    shape = shape,
+    color = color,
   }
   table.insert(columns, column)
 end
@@ -159,7 +159,7 @@ function lovr.draw(pass)
   for i, column in ipairs(columns) do
     local x,y,z, angle, ax,ay,az = column.collider:getPose()
     local l, r = column.shape:getLength(), column.shape:getRadius()
-    pass:setColor(unpack(column.color))
+    pass:setColor(column.color)
     pass:cylinder(x,y,z, r,l, angle, ax,ay,az, true, 0,2*math.pi, 20)
   end
   -- Teleportation curve and target, rendering of blinking overlay

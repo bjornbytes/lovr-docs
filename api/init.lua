@@ -36051,7 +36051,7 @@ return {
               description = "Sets the inertia of the Collider.\n\nInertia is kind of like \"angular mass\".  Regular mass determines how resistant the Collider is to linear forces (movement), whereas inertia determines how resistant the Collider is to torque (rotation).  Colliders with less inertia are more spinny.\n\nIn 3D, inertia is represented by a 3x3 matrix, called a tensor.  To make calculations easier, the physics engine stores the inertia using eigenvalue decomposition, splitting the matrix into a diagonal matrix and a rotation.  It's complicated!\n\nIn a realistic simulation, mass and inertia follow a linear relationship.  If the mass of an object increases, the diagonal part of its inertia should increase proportionally.",
               key = "Collider:setInertia",
               module = "lovr.physics",
-              notes = "By default, the inertia of the Collider is kept up to date automatically as the Collider's shapes change.  To disable this, use `Collider:setAutomaticMass`.\n\nUse `Collider:resetMassData` to reset the inertia and other mass properties based on the Collider's shapes.\n\nIf the Collider is kinematic or all rotation axes are disabled, this returns 0 for the diagonal and an identity quaternion for the rotation.",
+              notes = "By default, the inertia of the Collider is kept up to date automatically as the Collider's shapes change.  To disable this, use `Collider:setAutomaticMass`.\n\nUse `Collider:resetMassData` to reset the inertia and other mass properties based on the Collider's shapes.\n\nIf the Collider is kinematic or all rotation axes are disabled, the collider behaves as though it has infinite inertia, and this function will do nothing.",
               related = {
                 "Collider:getMass",
                 "Collider:setMass",
@@ -40082,7 +40082,7 @@ return {
               name = "newCollider",
               tag = "colliders",
               summary = "Add a Collider to the World.",
-              description = "Adds a new Collider to the World.\n\nThe Collider won't have any shapes attached to it.",
+              description = "Adds a new Collider to the World, without attaching any Shapes to it.  Use `Collider:addShape` to add shapes.",
               key = "World:newCollider",
               module = "lovr.physics",
               examples = {
