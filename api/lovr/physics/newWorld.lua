@@ -1,5 +1,4 @@
 return {
-  tag = 'world',
   summary = 'Create a new World.',
   description = 'Creates a new physics World.',
   arguments = {

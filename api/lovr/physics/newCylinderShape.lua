@@ -1,5 +1,4 @@
 return {
-  tag = 'shapes',
   summary = 'Create a new CylinderShape.',
   description = 'Creates a new CylinderShape.',
   arguments = {
@@ -30,9 +29,10 @@ return {
   related = {
     'CylinderShape',
     'lovr.physics.newBoxShape',
-    'lovr.physics.newCapsuleShape',
-    'lovr.physics.newMeshShape',
     'lovr.physics.newSphereShape',
+    'lovr.physics.newCapsuleShape',
+    'lovr.physics.newConvexShape',
+    'lovr.physics.newMeshShape',
     'lovr.physics.newTerrainShape'
   }
 }

@@ -1,5 +1,4 @@
 return {
-  tag = 'shapes',
   summary = 'Create a new MeshShape.',
   description = 'Creates a new MeshShape.',
   arguments = {
@@ -41,9 +40,10 @@ return {
   related = {
     'MeshShape',
     'lovr.physics.newBoxShape',
+    'lovr.physics.newSphereShape',
     'lovr.physics.newCapsuleShape',
     'lovr.physics.newCylinderShape',
-    'lovr.physics.newSphereShape',
+    'lovr.physics.newConvexShape',
     'lovr.physics.newTerrainShape',
     'Model:getTriangles'
   }

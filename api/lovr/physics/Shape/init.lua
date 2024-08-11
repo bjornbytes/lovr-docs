@@ -11,9 +11,10 @@ return {
     'lovr.physics.newMeshShape',
     'lovr.physics.newTerrainShape',
     'World:newBoxCollider',
+    'World:newSphereCollider',
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
-    'World:newSphereCollider',
+    'World:newConvexCollider',
     'World:newMeshCollider',
     'World:newTerrainCollider'
   }

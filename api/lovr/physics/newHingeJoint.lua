@@ -1,5 +1,4 @@
 return {
-  tag = 'joints',
   summary = 'Create a new HingeJoint.',
   description = 'Creates a new HingeJoint.',
   arguments = {

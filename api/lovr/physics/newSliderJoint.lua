@@ -1,5 +1,4 @@
 return {
-  tag = 'joints',
   summary = 'Create a new SliderJoint.',
   description = 'Creates a new SliderJoint.',
   arguments = {

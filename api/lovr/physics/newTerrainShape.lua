@@ -1,5 +1,4 @@
 return {
-  tag = 'shapes',
   summary = 'Create a new TerrainShape.',
   description = 'Creates a new TerrainShape.',
   arguments = {
@@ -82,10 +81,11 @@ return {
   related = {
     'TerrainShape',
     'lovr.physics.newBoxShape',
+    'lovr.physics.newSphereShape',
     'lovr.physics.newCapsuleShape',
     'lovr.physics.newCylinderShape',
+    'lovr.physics.newConvexShape',
     'lovr.physics.newMeshShape',
-    'lovr.physics.newSphereShape',
     'lovr.data.newImage'
   }
 }

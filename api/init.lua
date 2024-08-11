@@ -32700,7 +32700,6 @@ return {
       functions = {
         {
           name = "newBallJoint",
-          tag = "joints",
           summary = "Create a new BallJoint.",
           description = "Creates a new BallJoint.",
           key = "lovr.physics.newBallJoint",
@@ -32778,7 +32777,6 @@ return {
         },
         {
           name = "newBoxShape",
-          tag = "shapes",
           summary = "Create a new BoxShape.",
           description = "Creates a new BoxShape.",
           key = "lovr.physics.newBoxShape",
@@ -32786,10 +32784,11 @@ return {
           notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
           related = {
             "BoxShape",
+            "lovr.physics.newSphereShape",
             "lovr.physics.newCapsuleShape",
             "lovr.physics.newCylinderShape",
+            "lovr.physics.newConvexShape",
             "lovr.physics.newMeshShape",
-            "lovr.physics.newSphereShape",
             "lovr.physics.newTerrainShape"
           },
           variants = {
@@ -32826,7 +32825,6 @@ return {
         },
         {
           name = "newCapsuleShape",
-          tag = "shapes",
           summary = "Create a new CapsuleShape.",
           description = "Creates a new CapsuleShape.  Capsules are cylinders with hemispheres on each end.",
           key = "lovr.physics.newCapsuleShape",
@@ -32835,9 +32833,10 @@ return {
           related = {
             "CapsuleShape",
             "lovr.physics.newBoxShape",
-            "lovr.physics.newCylinderShape",
-            "lovr.physics.newMeshShape",
             "lovr.physics.newSphereShape",
+            "lovr.physics.newCylinderShape",
+            "lovr.physics.newConvexShape",
+            "lovr.physics.newMeshShape",
             "lovr.physics.newTerrainShape"
           },
           variants = {
@@ -32868,7 +32867,6 @@ return {
         },
         {
           name = "newConeJoint",
-          tag = "joints",
           summary = "Create a new ConeJoint.",
           description = "Creates a new ConeJoint.",
           key = "lovr.physics.newConeJoint",
@@ -32967,8 +32965,106 @@ return {
           }
         },
         {
+          name = "newConvexShape",
+          summary = "Create a new ConvexShape.",
+          description = "Creates a new ConvexShape.",
+          key = "lovr.physics.newConvexShape",
+          module = "lovr.physics",
+          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
+          related = {
+            "ConvexShape",
+            "lovr.physics.newBoxShape",
+            "lovr.physics.newSphereShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newCylinderShape",
+            "lovr.physics.newMeshShape",
+            "lovr.physics.newTerrainShape"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "points",
+                  type = "table",
+                  description = "A list of vertices to compute a convex hull from.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D point)."
+                }
+              },
+              returns = {
+                {
+                  name = "shape",
+                  type = "ConvexShape",
+                  description = "The new ConvexShape."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The ModelData to compute a convex hull from."
+                }
+              },
+              returns = {
+                {
+                  name = "shape",
+                  type = "ConvexShape",
+                  description = "The new ConvexShape."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The Model to compute a convex hull from."
+                }
+              },
+              returns = {
+                {
+                  name = "shape",
+                  type = "ConvexShape",
+                  description = "The new ConvexShape."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                }
+              },
+              returns = {
+                {
+                  name = "shape",
+                  type = "ConvexShape",
+                  description = "The new ConvexShape."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "template",
+                  type = "ConvexShape",
+                  description = "An existing ConvexShape to clone."
+                }
+              },
+              returns = {
+                {
+                  name = "shape",
+                  type = "ConvexShape",
+                  description = "The new ConvexShape."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newCylinderShape",
-          tag = "shapes",
           summary = "Create a new CylinderShape.",
           description = "Creates a new CylinderShape.",
           key = "lovr.physics.newCylinderShape",
@@ -32977,9 +33073,10 @@ return {
           related = {
             "CylinderShape",
             "lovr.physics.newBoxShape",
-            "lovr.physics.newCapsuleShape",
-            "lovr.physics.newMeshShape",
             "lovr.physics.newSphereShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newConvexShape",
+            "lovr.physics.newMeshShape",
             "lovr.physics.newTerrainShape"
           },
           variants = {
@@ -33010,7 +33107,6 @@ return {
         },
         {
           name = "newDistanceJoint",
-          tag = "joints",
           summary = "Create a new DistanceJoint.",
           description = "Creates a new DistanceJoint.",
           key = "lovr.physics.newDistanceJoint",
@@ -33108,7 +33204,6 @@ return {
         },
         {
           name = "newHingeJoint",
-          tag = "joints",
           summary = "Create a new HingeJoint.",
           description = "Creates a new HingeJoint.",
           key = "lovr.physics.newHingeJoint",
@@ -33206,7 +33301,6 @@ return {
         },
         {
           name = "newMeshShape",
-          tag = "shapes",
           summary = "Create a new MeshShape.",
           description = "Creates a new MeshShape.",
           key = "lovr.physics.newMeshShape",
@@ -33215,9 +33309,10 @@ return {
           related = {
             "MeshShape",
             "lovr.physics.newBoxShape",
+            "lovr.physics.newSphereShape",
             "lovr.physics.newCapsuleShape",
             "lovr.physics.newCylinderShape",
-            "lovr.physics.newSphereShape",
+            "lovr.physics.newConvexShape",
             "lovr.physics.newTerrainShape",
             "Model:getTriangles"
           },
@@ -33263,7 +33358,6 @@ return {
         },
         {
           name = "newSliderJoint",
-          tag = "joints",
           summary = "Create a new SliderJoint.",
           description = "Creates a new SliderJoint.",
           key = "lovr.physics.newSliderJoint",
@@ -33341,7 +33435,6 @@ return {
         },
         {
           name = "newSphereShape",
-          tag = "shapes",
           summary = "Create a new SphereShape.",
           description = "Creates a new SphereShape.",
           key = "lovr.physics.newSphereShape",
@@ -33352,6 +33445,7 @@ return {
             "lovr.physics.newBoxShape",
             "lovr.physics.newCapsuleShape",
             "lovr.physics.newCylinderShape",
+            "lovr.physics.newConvexShape",
             "lovr.physics.newMeshShape",
             "lovr.physics.newTerrainShape"
           },
@@ -33377,7 +33471,6 @@ return {
         },
         {
           name = "newTerrainShape",
-          tag = "shapes",
           summary = "Create a new TerrainShape.",
           description = "Creates a new TerrainShape.",
           key = "lovr.physics.newTerrainShape",
@@ -33386,10 +33479,11 @@ return {
           related = {
             "TerrainShape",
             "lovr.physics.newBoxShape",
+            "lovr.physics.newSphereShape",
             "lovr.physics.newCapsuleShape",
             "lovr.physics.newCylinderShape",
+            "lovr.physics.newConvexShape",
             "lovr.physics.newMeshShape",
-            "lovr.physics.newSphereShape",
             "lovr.data.newImage"
           },
           variants = {
@@ -33484,7 +33578,6 @@ return {
         },
         {
           name = "newWeldJoint",
-          tag = "joints",
           summary = "Create a new WeldJoint.",
           description = "Creates a new WeldJoint.",
           key = "lovr.physics.newWeldJoint",
@@ -33523,7 +33616,6 @@ return {
         },
         {
           name = "newWorld",
-          tag = "world",
           summary = "Create a new World.",
           description = "Creates a new physics World.",
           key = "lovr.physics.newWorld",
@@ -33825,15 +33917,16 @@ return {
         {
           name = "Collider",
           summary = "A single object in a physics simulation.",
-          description = "- Colliders represent a single rigid body\n- Colliders exist in a World\n- Applying a force to a collider will move it\n- Gravity is a force the world applies to all its colliders each update\n- Colliders collide with other colliders",
+          description = "Colliders represent a single rigid body in the physics simulation.",
           key = "Collider",
           module = "lovr.physics",
           constructors = {
             "World:newCollider",
             "World:newBoxCollider",
+            "World:newSphereCollider",
             "World:newCapsuleCollider",
             "World:newCylinderCollider",
-            "World:newSphereCollider",
+            "World:newConvexCollider",
             "World:newMeshCollider",
             "World:newTerrainCollider"
           },
@@ -36560,7 +36653,96 @@ return {
               }
             }
           },
-          sections = {}
+          sections = {
+            {
+              name = "Motion",
+              links = {
+                "Collider:getPosition",
+                "Collider:setPosition",
+                "Collider:getOrientation",
+                "Collider:setOrientation",
+                "Collider:getPose",
+                "Collider:setPose",
+                "Collider:getRawPosition",
+                "Collider:getRawOrientation",
+                "Collider:getRawPose",
+                "Collider:getLocalPoint",
+                "Collider:getWorldPoint",
+                "Collider:getAABB",
+                "Collider:getLinearVelocity",
+                "Collider:setLinearVelocity",
+                "Collider:getAngularVelocity",
+                "Collider:setAngularVelocity",
+                "Collider:getLinearVelocityFromLocalPoint",
+                "Collider:getLinearVelocityFromWorldPoint",
+                "Collider:moveKinematic",
+                "Collider:applyForce",
+                "Collider:applyTorque",
+                "Collider:applyLinearImpulse",
+                "Collider:applyAngularImpulse",
+                "Collider:getLinearDamping",
+                "Collider:setLinearDamping",
+                "Collider:getAngularDamping",
+                "Collider:setAngularDamping",
+                "Collider:isKinematic",
+                "Collider:setKinematic",
+                "Collider:isContinuous",
+                "Collider:setContinuous",
+                "Collider:getDegreesOfFreedom",
+                "Collider:setDegreesOfFreedom",
+                "Collider:getGravityScale",
+                "Collider:setGravityScale",
+                "Collider:isSleepingAllowed",
+                "Collider:setSleepingAllowed",
+                "Collider:isAwake",
+                "Collider:setAwake"
+              }
+            },
+            {
+              name = "Collision",
+              links = {
+                "Collider:getTag",
+                "Collider:setTag",
+                "Collider:getShape",
+                "Collider:getShapes",
+                "Collider:addShape",
+                "Collider:removeShape",
+                "Collider:isSensor",
+                "Collider:setSensor",
+                "Collider:getFriction",
+                "Collider:setFriction",
+                "Collider:getRestitution",
+                "Collider:setRestitution"
+              }
+            },
+            {
+              name = "Mass",
+              links = {
+                "Collider:getMass",
+                "Collider:setMass",
+                "Collider:getInertia",
+                "Collider:setInertia",
+                "Collider:getCenterOfMass",
+                "Collider:setCenterOfMass",
+                "Collider:getAutomaticMass",
+                "Collider:setAutomaticMass",
+                "Collider:resetMassData"
+              }
+            },
+            {
+              name = "Miscellaneous",
+              links = {
+                "Collider:getUserData",
+                "Collider:setUserData",
+                "Collider:isEnabled",
+                "Collider:setEnabled",
+                "Collider:getWorld",
+                "Collider:getJoints",
+                "Collider:destroy",
+                "Collider:isDestroyed"
+              }
+            }
+          }
         },
         {
           name = "ConeJoint",
@@ -38194,9 +38376,10 @@ return {
             "lovr.physics.newMeshShape",
             "lovr.physics.newTerrainShape",
             "World:newBoxCollider",
+            "World:newSphereCollider",
             "World:newCapsuleCollider",
             "World:newCylinderCollider",
-            "World:newSphereCollider",
+            "World:newConvexCollider",
             "World:newMeshCollider",
             "World:newTerrainCollider"
           },
@@ -39393,7 +39576,7 @@ return {
         {
           name = "World",
           summary = "An object holding all the colliders and joints in a physics simulation.",
-          description = "- World holds all the physics objects\n- After creating the world, add colliders to it\n- Be sure to update the world with world:update\n- World has lots of settings that can be tweaked when creating the world",
+          description = "A World is an object that holds all of the colliders and joints in a physics simulation.\n\nBe sure to call `World:update` on the World every frame to advance the simulation.",
           key = "World",
           module = "lovr.physics",
           constructors = {
@@ -39556,7 +39739,6 @@ return {
             },
             {
               name = "getColliderCount",
-              tag = "colliders",
               summary = "Get the number of colliders in the world.",
               description = "Returns the number of colliders in the world.  This includes sleeping and disabled colliders.",
               key = "World:getColliderCount",
@@ -39581,7 +39763,6 @@ return {
             },
             {
               name = "getColliders",
-              tag = "colliders",
               summary = "Get a list of colliders in the World.",
               description = "Returns a list of colliders in the world.  This includes sleeping and disabled colliders.",
               key = "World:getColliders",
@@ -39641,7 +39822,6 @@ return {
             },
             {
               name = "getJointCount",
-              tag = "joints",
               summary = "Get the number of joints in the world.",
               description = "Returns the number of joints in the world.  This includes disabled joints.",
               key = "World:getJointCount",
@@ -39665,7 +39845,6 @@ return {
             },
             {
               name = "getJoints",
-              tag = "joints",
               summary = "Get a list of joints in the World.",
               description = "Returns a table with all the joints in the World.  This includes disabled joints.",
               key = "World:getJoints",
@@ -39899,7 +40078,6 @@ return {
             },
             {
               name = "newBoxCollider",
-              tag = "colliders",
               summary = "Add a Collider with a BoxShape to the World.",
               description = "Adds a Collider to the world and attaches a `BoxShape`.",
               key = "World:newBoxCollider",
@@ -39989,7 +40167,6 @@ return {
             },
             {
               name = "newCapsuleCollider",
-              tag = "colliders",
               summary = "Add a Collider with a CapsuleShape to the World.",
               description = "Adds a Collider to the world and attaches a `CapsuleShape`.",
               key = "World:newCapsuleCollider",
@@ -40080,7 +40257,6 @@ return {
             },
             {
               name = "newCollider",
-              tag = "colliders",
               summary = "Add a Collider to the World.",
               description = "Adds a new Collider to the World, without attaching any Shapes to it.  Use `Collider:addShape` to add shapes.",
               key = "World:newCollider",
@@ -40150,7 +40326,6 @@ return {
             },
             {
               name = "newConvexCollider",
-              tag = "colliders",
               summary = "Add a Collider with a ConvexShape to the World.",
               description = "Adds a Collider to the world and attaches a `ConvexShape`.  A `ConvexShape` is a convex hull of a set of points, kinda like if you wrapped them in wrapping paper.",
               key = "World:newConvexCollider",
@@ -40447,7 +40622,6 @@ return {
             },
             {
               name = "newCylinderCollider",
-              tag = "colliders",
               summary = "Add a Collider with a CylinderShape to the World.",
               description = "Adds a Collider to the world and attaches a `CylinderShape`.",
               key = "World:newCylinderCollider",
@@ -40538,7 +40712,6 @@ return {
             },
             {
               name = "newMeshCollider",
-              tag = "colliders",
               summary = "Add a Collider with a MeshShape to the World.",
               description = "Adds a Collider to the world and attaches a `MeshShape`.\n\nColliders with mesh shapes are immobile and can only be used for static environment objects. The collider will be kinematic and forces/velocities will not move it.  Also, these colliders will not detect collisions with other kinematic objects.\n\nMeshShapes are not treated as solid objects, but instead a collection of triangles.  They do not have mass or volume, and there is no concept of being \"inside\" a mesh.  `ConvexShape` is a good alternative for solid objects with an arbitrary shape.",
               key = "World:newMeshCollider",
@@ -40646,7 +40819,6 @@ return {
             },
             {
               name = "newSphereCollider",
-              tag = "colliders",
               summary = "Add a Collider with a SphereShape to the World.",
               description = "Adds a Collider to the world and attaches a `SphereShape`.",
               key = "World:newSphereCollider",
@@ -40725,7 +40897,6 @@ return {
             },
             {
               name = "newTerrainCollider",
-              tag = "colliders",
               summary = "Add a Collider with a TerrainShape to the World.",
               description = "Adds a Collider to the world and attaches a `TerrainShape`.\n\nColliders with terrain shapes are immobile and can only be used for static environment objects. The collider will be kinematic and forces/velocities will not move it.  Also, these colliders will not detect collisions with other kinematic objects.\n\nTerrainShapes are not treated as solid objects, but instead a collection of triangles.  They do not have mass or volume, and there is no concept of being \"inside\" the terrain.",
               key = "World:newTerrainCollider",
@@ -42367,29 +42538,111 @@ return {
               }
             }
           },
-          sections = {}
+          sections = {
+            {
+              name = "Basics",
+              links = {
+                "World:update",
+                "World:getGravity",
+                "World:setGravity",
+                "World:getCallbacks",
+                "World:setCallbacks",
+                "World:destroy",
+                "World:isDestroyed"
+              }
+            },
+            {
+              name = "Queries",
+              description = "Queries answer some question about the World, like \"do any colliders intersect this line?\" or \"are there any colliders inside this sphere?\".  There are 3 types of queries:\n\n- \"cast\" tests sweep a shape along a line and figure out which colliders are in its path.\n- \"overlap\" tests place a shape at a position and figure out which colliders it touches.\n- \"query\" tests are similar to overlap tests, but they are fast and inexact.  They only\n  check the bounding box of a collider, and only support testing against simple shapes.",
+              links = {
+                "World:raycast",
+                "World:shapecast",
+                "World:overlapShape",
+                "World:queryBox",
+                "World:querySphere"
+              }
+            },
+            {
+              name = "Collision Tags",
+              description = "Collision tags are used to ignore collision between certain pairs of colliders.  The list of available tags is defined when creating the world, and colliders can be given a tag using `Collider:setTag`.",
+              links = {
+                "World:getTags",
+                "World:disableCollisionBetween",
+                "World:enableCollisionBetween",
+                "World:isCollisionEnabledBetween"
+              }
+            },
+            {
+              name = "Colliders",
+              links = {
+                "World:newCollider",
+                "World:newBoxCollider",
+                "World:newSphereCollider",
+                "World:newCapsuleCollider",
+                "World:newCylinderCollider",
+                "World:newConvexCollider",
+                "World:newMeshCollider",
+                "World:newTerrainCollider",
+                "World:getColliderCount",
+                "World:getColliders"
+              }
+            },
+            {
+              name = "Joints",
+              links = {
+                "World:getJointCount",
+                "World:getJoints"
+              }
+            }
+          }
         }
       },
       sections = {
         {
           name = "World",
-          tag = "world",
-          description = "- Object containing all of the physics objects\n- Usually you just have 1, but sometimes it's useful to have independent universes\n- Once a World is created, you can add colliders to the world and connect em with joints\n- Call World:update each frame to move all the colliders\n- You can issue queries against the world, like raycasts"
+          description = "A World holds all of the objects in a physics simulation.  Use methods like `World:newBoxCollider` to add objects to the world.  Call `World:update` each frame to advance the physics simulation and calculate new positions for all the colliders.",
+          links = {
+            "lovr.physics.newWorld"
+          }
         },
         {
           name = "Colliders",
-          tag = "colliders",
-          description = "- A Collider is a single \"object\" in the physics simulation\n- A Collider has a \"Shape\" which determines its collision shape and its mass\n- Colliders collide with other colliders\n- Colliders be moved by applying forces to them"
+          description = "A Collider is a single \"object\" in the physics world.  A Collider has zero or more `Shape` objects attached to it, which determine its collision shape.  Colliders can be connected together with `Joint` objects.",
+          links = {
+            "World:newCollider",
+            "World:newBoxCollider",
+            "World:newSphereCollider",
+            "World:newCapsuleCollider",
+            "World:newCylinderCollider",
+            "World:newConvexCollider",
+            "World:newMeshCollider",
+            "World:newTerrainCollider"
+          }
         },
         {
           name = "Shapes",
-          tag = "shapes",
-          description = "- Shapes define the collision shape of a collider\n- Normally you don't need to create shapes manually, you can use convenience constructors\n- Use Collider:setShape to change the shape of a collider\n- Multiple Colliders can share a shape"
+          description = "Shapes define the collision shape of a collider.  Normally it isn't necessary to create shapes manually, instead convenience methods like `World:newSphereCollider` will create a collider with a shape attached.",
+          links = {
+            "lovr.physics.newBoxShape",
+            "lovr.physics.newSphereShape",
+            "lovr.physics.newCapsuleShape",
+            "lovr.physics.newCylinderShape",
+            "lovr.physics.newConvexShape",
+            "lovr.physics.newMeshShape",
+            "lovr.physics.newTerrainShape"
+          }
         },
         {
           name = "Joints",
-          tag = "joints",
-          description = "- Joints attach colliders together and constrain their movement in various ways.\n- Joints usually have anchor points which is the attachment point on each collider.\n- Joint:getForce/Joint:getTorque is cool"
+          description = "Joints connect colliders together and constrain their movement in various ways.",
+          links = {
+            "lovr.physics.newWeldJoint",
+            "lovr.physics.newBallJoint",
+            "lovr.physics.newConeJoint",
+            "lovr.physics.newDistanceJoint",
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newSliderJoint"
+          }
         }
       }
     },

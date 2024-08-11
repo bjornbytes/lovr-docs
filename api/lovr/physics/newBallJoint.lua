@@ -1,5 +1,4 @@
 return {
-  tag = 'joints',
   summary = 'Create a new BallJoint.',
   description = 'Creates a new BallJoint.',
   arguments = {

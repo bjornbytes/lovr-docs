@@ -5,43 +5,63 @@ return {
   sections = {
     {
       name = 'World',
-      tag = 'world',
       description = [[
-        - Object containing all of the physics objects
-        - Usually you just have 1, but sometimes it's useful to have independent universes
-        - Once a World is created, you can add colliders to the world and connect em with joints
-        - Call World:update each frame to move all the colliders
-        - You can issue queries against the world, like raycasts
-      ]]
+        A World holds all of the objects in a physics simulation.  Use methods like
+        `World:newBoxCollider` to add objects to the world.  Call `World:update` each frame to
+        advance the physics simulation and calculate new positions for all the colliders.
+      ]],
+      links = {
+        'lovr.physics.newWorld'
+      }
     },
     {
       name = 'Colliders',
-      tag = 'colliders',
       description = [[
-        - A Collider is a single "object" in the physics simulation
-        - A Collider has a "Shape" which determines its collision shape and its mass
-        - Colliders collide with other colliders
-        - Colliders be moved by applying forces to them
-      ]]
+        A Collider is a single "object" in the physics world.  A Collider has zero or more `Shape`
+        objects attached to it, which determine its collision shape.  Colliders can be connected
+        together with `Joint` objects.
+      ]],
+      links = {
+        'World:newCollider',
+        'World:newBoxCollider',
+        'World:newSphereCollider',
+        'World:newCapsuleCollider',
+        'World:newCylinderCollider',
+        'World:newConvexCollider',
+        'World:newMeshCollider',
+        'World:newTerrainCollider'
+      }
     },
     {
       name = 'Shapes',
-      tag = 'shapes',
       description = [[
-        - Shapes define the collision shape of a collider
-        - Normally you don't need to create shapes manually, you can use convenience constructors
-        - Use Collider:setShape to change the shape of a collider
-        - Multiple Colliders can share a shape
-      ]]
+        Shapes define the collision shape of a collider.  Normally it isn't necessary to create
+        shapes manually, instead convenience methods like `World:newSphereCollider` will create a
+        collider with a shape attached.
+      ]],
+      links = {
+        'lovr.physics.newBoxShape',
+        'lovr.physics.newSphereShape',
+        'lovr.physics.newCapsuleShape',
+        'lovr.physics.newCylinderShape',
+        'lovr.physics.newConvexShape',
+        'lovr.physics.newMeshShape',
+        'lovr.physics.newTerrainShape'
+      }
     },
     {
       name = 'Joints',
-      tag = 'joints',
       description = [[
-        - Joints attach colliders together and constrain their movement in various ways.
-        - Joints usually have anchor points which is the attachment point on each collider.
-        - Joint:getForce/Joint:getTorque is cool
-      ]]
+        Joints connect colliders together and constrain their movement in various ways.
+      ]],
+      links = {
+        'lovr.physics.newWeldJoint',
+        'lovr.physics.newBallJoint',
+        'lovr.physics.newConeJoint',
+        'lovr.physics.newDistanceJoint',
+        'lovr.physics.newHingeJoint',
+        'lovr.physics.newSliderJoint'
+      }
     }
   }
 }

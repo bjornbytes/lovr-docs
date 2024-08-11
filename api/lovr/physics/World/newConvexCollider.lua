@@ -1,5 +1,4 @@
 return {
-  tag = 'colliders',
   summary = 'Add a Collider with a ConvexShape to the World.',
   description = [[
     Adds a Collider to the world and attaches a `ConvexShape`.  A `ConvexShape` is a convex hull of

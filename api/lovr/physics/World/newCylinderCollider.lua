@@ -1,5 +1,4 @@
 return {
-  tag = 'colliders',
   summary = 'Add a Collider with a CylinderShape to the World.',
   description = 'Adds a Collider to the world and attaches a `CylinderShape`.',
   arguments = {

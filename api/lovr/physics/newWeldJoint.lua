@@ -1,5 +1,4 @@
 return {
-  tag = 'joints',
   summary = 'Create a new WeldJoint.',
   description = 'Creates a new WeldJoint.',
   arguments = {

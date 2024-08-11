@@ -1,5 +1,4 @@
 return {
-  tag = 'shapes',
   summary = 'Create a new BoxShape.',
   description = 'Creates a new BoxShape.',
   arguments = {
@@ -34,10 +33,11 @@ return {
   notes = 'A Shape can be attached to a Collider using `Collider:addShape`.',
   related = {
     'BoxShape',
+    'lovr.physics.newSphereShape',
     'lovr.physics.newCapsuleShape',
     'lovr.physics.newCylinderShape',
+    'lovr.physics.newConvexShape',
     'lovr.physics.newMeshShape',
-    'lovr.physics.newSphereShape',
     'lovr.physics.newTerrainShape'
   }
 }

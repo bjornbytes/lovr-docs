@@ -1,5 +1,4 @@
 return {
-  tag = 'joints',
   summary = 'Create a new DistanceJoint.',
   description = 'Creates a new DistanceJoint.',
   arguments = {

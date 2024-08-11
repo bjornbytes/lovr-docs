@@ -1,5 +1,4 @@
 return {
-  tag = 'colliders',
   summary = 'Add a Collider with a TerrainShape to the World.',
   description = [[
     Adds a Collider to the world and attaches a `TerrainShape`.

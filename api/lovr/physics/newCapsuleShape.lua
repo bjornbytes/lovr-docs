@@ -1,5 +1,4 @@
 return {
-  tag = 'shapes',
   summary = 'Create a new CapsuleShape.',
   description = 'Creates a new CapsuleShape.  Capsules are cylinders with hemispheres on each end.',
   arguments = {
@@ -30,9 +29,10 @@ return {
   related = {
     'CapsuleShape',
     'lovr.physics.newBoxShape',
-    'lovr.physics.newCylinderShape',
-    'lovr.physics.newMeshShape',
     'lovr.physics.newSphereShape',
+    'lovr.physics.newCylinderShape',
+    'lovr.physics.newConvexShape',
+    'lovr.physics.newMeshShape',
     'lovr.physics.newTerrainShape'
   }
 }

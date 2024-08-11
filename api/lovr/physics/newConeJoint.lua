@@ -1,5 +1,4 @@
 return {
-  tag = 'joints',
   summary = 'Create a new ConeJoint.',
   description = 'Creates a new ConeJoint.',
   arguments = {

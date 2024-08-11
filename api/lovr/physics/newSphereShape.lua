@@ -1,5 +1,4 @@
 return {
-  tag = 'shapes',
   summary = 'Create a new SphereShape.',
   description = 'Creates a new SphereShape.',
   arguments = {
@@ -27,6 +26,7 @@ return {
     'lovr.physics.newBoxShape',
     'lovr.physics.newCapsuleShape',
     'lovr.physics.newCylinderShape',
+    'lovr.physics.newConvexShape',
     'lovr.physics.newMeshShape',
     'lovr.physics.newTerrainShape'
   }

@@ -1,5 +1,4 @@
 return {
-  tag = 'colliders',
   summary = 'Add a Collider with a BoxShape to the World.',
   description = 'Adds a Collider to the world and attaches a `BoxShape`.',
   arguments = {
