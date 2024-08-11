@@ -25924,7 +25924,7 @@ return {
         {
           name = "Layer",
           summary = "A quad in 3D space.",
-          description = "TODO",
+          description = "A Layer is a textured plane placed in 3D space.  Layers are sent directly to the VR runtime and composited along with the rest of the 3D content.  This has several advantages compared to rendering the texture into the 3D scene with `Pass:draw`:\n\n- Better tracking.  The VR runtime composites the texture later in time, using a more accurate\n  head pose.\n- Better resolution, less shimmery.  Regular 3D content must have lens distortion correction\n  applied to it, whereas layers are composited after distortion correction, meaning they have a\n  higher pixel density.  The layer can also use a higher resolution than the main headset\n  texture, allowing for extra resolution on the 2D content without having to supersample all of\n  the 3D rendering.\n- Supersampling and sharpening effects.  Some headset runtimes (currently just Quest) can also\n  supersample and sharpen layers.\n\nCombined, all of this makes a noticeable difference when rendering 2D content on a Layer, especially improving text readability.",
           key = "Layer",
           module = "lovr.headset",
           constructors = {
