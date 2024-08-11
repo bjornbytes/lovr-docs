@@ -35773,6 +35773,21 @@ return {
               }
             },
             {
+              name = "moveKinematic",
+              summary = "TODO",
+              description = "TODO",
+              key = "Collider:moveKinematic",
+              module = "lovr.physics",
+              notes = "",
+              related = {},
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "removeShape",
               summary = "Remove a Shape from the Collider.",
               description = "Removes a Shape from the Collider.",
