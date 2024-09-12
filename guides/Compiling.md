@@ -142,6 +142,7 @@ the command line:
   `build/cmake/android.toolchain.cmake` inside the Android NDK folder.
 - Set `ANDROID_SDK` to the path to the Android SDK.
 - Set `ANDROID_ABI` to `arm64-v8a`.
+- Set `ANDROID_STL` to `c++_shared`.
 - Set `ANDROID_NATIVE_API_LEVEL` to the Android version to use (e.g. `29`).
 - Set `ANDROID_BUILD_TOOLS_VERSION` to one of the versions listed in the `build-tools` folder.
 - Set `ANDROID_KEYSTORE` to the path to they keystore file.  See "Creating a Keystore" below.
@@ -161,6 +162,7 @@ Here's an example of a full CMake incantation that produces `lovr.apk` in the bu
         -D CMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
         -D ANDROID_SDK=/path/to/android \
         -D ANDROID_ABI=arm64-v8a \
+        -D ANDROID_STL=c++_shared \
         -D ANDROID_NATIVE_API_LEVEL=29 \
         -D ANDROID_BUILD_TOOLS_VERSION=34.0.0 \
         -D ANDROID_KEYSTORE=/path/to/test.keystore \
