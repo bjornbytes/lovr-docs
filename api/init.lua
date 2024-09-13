@@ -26086,29 +26086,6 @@ return {
               }
             },
             {
-              name = "getSharpen",
-              summary = "Get the sharpening mode of the layer.",
-              description = "Returns whether the layer is sharpened.  This will improve quality when the layer is rendered at a larger size than its texture resolution, at the cost of performance.  Sharpening is currently only supported on Quest devices.",
-              key = "Layer:getSharpen",
-              module = "lovr.headset",
-              related = {
-                "Layer:getSupersample",
-                "Layer:setSupersample"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "sharpen",
-                      type = "boolean",
-                      description = "Whether the layer is sharpened."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getSize",
               summary = "Get the size of the layer.",
               description = "Returns the width and height of the layer.  This is the size of the plane the layer is rendered onto, not the resolution of the layer's texture in pixels.",
@@ -26128,29 +26105,6 @@ return {
                       name = "height",
                       type = "number",
                       description = "The height of the layer, in meters."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getSupersample",
-              summary = "Get the supersample mode of the layer.",
-              description = "Returns whether the layer is supersampled.  This will improve quality when the layer is rendered at a smaller size than its texture resolution, at the cost of performance.  Supersampling is currently only supported on Quest devices.",
-              key = "Layer:getSupersample",
-              module = "lovr.headset",
-              related = {
-                "Layer:getSharpen",
-                "Layer:setSharpen"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "supersampled",
-                      type = "boolean",
-                      description = "Whether the layer is supersampled."
                     }
                   }
                 }
@@ -26389,29 +26343,6 @@ return {
               }
             },
             {
-              name = "setSharpen",
-              summary = "Set the sharpening mode of the layer.",
-              description = "Sets the sharpen mode for the layer.  This will improve quality when the layer is rendered at a larger size than its texture resolution, at the cost of performance.  Sharpening is currently only supported on Quest devices.",
-              key = "Layer:setSharpen",
-              module = "lovr.headset",
-              related = {
-                "Layer:getSupersample",
-                "Layer:setSupersample"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "sharpen",
-                      type = "boolean",
-                      description = "Whether sharpening should be enabled."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "setSize",
               summary = "Set the size of the layer.",
               description = "Sets the width and height of the layer.  This is the size of the plane the layer is rendered onto, not the resolution of the layer's texture in pixels.",
@@ -26430,29 +26361,6 @@ return {
                       name = "height",
                       type = "number",
                       description = "The height of the layer, in meters."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setSupersample",
-              summary = "Set the supersample mode of the layer.",
-              description = "Sets the supersample mode for the layer.  This will improve quality when the layer is rendered at a smaller size than its texture resolution, at the cost of performance.  Supersampling is currently only supported on Quest devices.",
-              key = "Layer:setSupersample",
-              module = "lovr.headset",
-              related = {
-                "Layer:getSharpen",
-                "Layer:setSharpen"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "supersampled",
-                      type = "boolean",
-                      description = "Whether supersampling should be enabled."
                     }
                   },
                   returns = {}
