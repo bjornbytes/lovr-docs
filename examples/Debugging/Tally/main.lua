@@ -6,7 +6,7 @@ end
 
 function lovr.update(dt)
   while readbacks[1] and readbacks[1]:isComplete() do
-    pixels = readbacks[1]:getData()[1]
+    pixels = readbacks[1]:getData()
     table.remove(readbacks, 1)
   end
 end
