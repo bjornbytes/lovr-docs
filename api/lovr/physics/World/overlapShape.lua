@@ -7,10 +7,7 @@ return {
     - You can pass a tag filter to filter results by tags
     - You can pass a callback which will be called for each hit, or leave nil to get the first hit
 
-    Tests a shape or collider against the World, returning intersecting shapes.  This function can
-    take a Shape or a Collider.  When given a Shape, the pose of the shape in the world must be
-    specified.  When given a Collider, all shapes attached to the collider will be checked for
-    collisions, and no pose is necessary since the pose of the Collider will be used.
+    Places a shape in the World, returning any shapes it intersects.
 
     A tag filter can be given to filter out shapes by their collider's tag:
 
