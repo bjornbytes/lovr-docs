@@ -33552,18 +33552,6 @@ return {
                       default = "{}"
                     },
                     {
-                      name = "timestep",
-                      type = "number",
-                      description = "The physics timestep, or zero to disable fixed timestep.  When fixed timestep is active, any time passed to `World:update` will be accumulated, and the physics simulation will run only when there's as much time as the fixed timestep.  This decouples the physics update rate from the rendering rate, which improves stability. Collider poses will be interpolated between the two most recent ticks.  Lower values result in more accurate simulation, at the cost of CPU usage.  Use zero to disable fixed timestep and directly update the physics simulation when `World:update` is called.",
-                      default = "1 / 60"
-                    },
-                    {
-                      name = "maxSteps",
-                      type = "number",
-                      description = "The maximum number of physics steps to run during any given call to `World:update`. This can be used to avoid a \"spiral of death\" where the physics engine can't keep up when a large `dt` value is given.  Zero means no limit.",
-                      default = "0"
-                    },
-                    {
                       name = "maxColliders",
                       type = "number",
                       description = "The maximum number of Colliders in the World.  Increasing this will use more memory. This can't be bigger than 2^23 (around 8 million).",
@@ -34920,10 +34908,9 @@ return {
               description = "Returns the orientation of the Collider in angle/axis representation.",
               key = "Collider:getOrientation",
               module = "lovr.physics",
-              notes = "When the World is using a fixed timestep, this returns an interpolated orientation between the last two physics updates.  Use `Collider:getRawOrientation` to get the raw orientation without any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to disable fixed timestep and all collider interpolation.",
+              notes = "If `World:interpolate` has been called, this returns an interpolated orientation between the last two physics updates.",
               related = {
                 "Collider:applyTorque",
-                "Collider:getRawOrientation",
                 "Collider:getAngularVelocity",
                 "Collider:setAngularVelocity",
                 "Collider:getPosition",
@@ -34965,11 +34952,10 @@ return {
               description = "Returns the position and orientation of the Collider.",
               key = "Collider:getPose",
               module = "lovr.physics",
-              notes = "When the World is using a fixed timestep, this returns an interpolated pose between the last two physics updates.  Use `Collider:getRawPose` to get the raw pose without any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to disable fixed timestep and all collider interpolation.",
+              notes = "If `World:interpolate` has been called, this returns an interpolated pose between the last two physics updates.",
               related = {
                 "Collider:getPosition",
-                "Collider:getOrientation",
-                "Collider:getRawPose"
+                "Collider:getOrientation"
               },
               variants = {
                 {
@@ -35020,148 +35006,15 @@ return {
               description = "Returns the position of the Collider.",
               key = "Collider:getPosition",
               module = "lovr.physics",
-              notes = "When the World is using a fixed timestep, this returns an interpolated position between the last two physics updates.  Use `Collider:getRawPosition` to get the raw position without any smoothing applied.  Alternatively, set the `tickRate` to 0 when creating the world to disable fixed timestep and all collider interpolation.",
+              notes = "If `World:interpolate` has been called, this returns an interpolated position between the last two physics updates.",
               related = {
                 "Collider:applyForce",
-                "Collider:getRawPosition",
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
                 "Collider:getOrientation",
                 "Collider:setOrientation",
                 "Collider:getPose",
                 "Collider:setPose"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x position of the Collider, in meters."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y position of the Collider, in meters."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z position of the Collider, in meters."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getRawOrientation",
-              summary = "Get the raw orientation of the Collider, without any interpolation.",
-              description = "Returns the raw orientation of the Collider, without any interpolation applied.",
-              key = "Collider:getRawOrientation",
-              module = "lovr.physics",
-              notes = "To disable all interpolation, disable fixed timestep by setting the `tickRate` to 0 when creating the world.",
-              related = {
-                "Collider:getOrientation",
-                "Collider:setOrientation",
-                "Collider:getRawPosition",
-                "Collider:getPosition"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the Collider is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getRawPose",
-              summary = "Get the raw pose of the Collider, without any interpolation.",
-              description = "Returns the position and orientation of the Collider, without any interpolation applied.",
-              key = "Collider:getRawPose",
-              module = "lovr.physics",
-              notes = "To disable all interpolation, disable fixed timestep by setting the `tickRate` to 0 when creating the world.",
-              related = {
-                "Collider:getRawPosition",
-                "Collider:getRawOrientation",
-                "Collider:getPose"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x position of the Collider, in meters."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y position of the Collider, in meters."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z position of the Collider, in meters."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the Collider is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getRawPosition",
-              summary = "Get the raw position of the Collider, without any interpolation.",
-              description = "Returns the raw position of the Collider, without any interpolation applied.",
-              key = "Collider:getRawPosition",
-              module = "lovr.physics",
-              notes = "To disable all interpolation, disable fixed timestep by setting the `tickRate` to 0 when creating the world.",
-              related = {
-                "Collider:getPosition",
-                "Collider:setPosition",
-                "Collider:getRawOrientation",
-                "Collider:getOrientation"
               },
               variants = {
                 {
@@ -36586,9 +36439,6 @@ return {
                 "Collider:setOrientation",
                 "Collider:getPose",
                 "Collider:setPose",
-                "Collider:getRawPosition",
-                "Collider:getRawOrientation",
-                "Collider:getRawPose",
                 "Collider:getLocalPoint",
                 "Collider:getWorldPoint",
                 "Collider:getAABB",

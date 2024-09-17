@@ -25,30 +25,6 @@ return {
           ]]
         },
         {
-          name = 'timestep',
-          type = 'number',
-          default = '1 / 60',
-          description = [[
-            The physics timestep, or zero to disable fixed timestep.  When fixed timestep is active,
-            any time passed to `World:update` will be accumulated, and the physics simulation will
-            run only when there's as much time as the fixed timestep.  This decouples the physics
-            update rate from the rendering rate, which improves stability. Collider poses will be
-            interpolated between the two most recent ticks.  Lower values result in more accurate
-            simulation, at the cost of CPU usage.  Use zero to disable fixed timestep and directly
-            update the physics simulation when `World:update` is called.
-          ]]
-        },
-        {
-          name = 'maxSteps',
-          type = 'number',
-          default = '0',
-          description = [[
-            The maximum number of physics steps to run during any given call to `World:update`. This
-            can be used to avoid a "spiral of death" where the physics engine can't keep up when a
-            large `dt` value is given.  Zero means no limit.
-          ]]
-        },
-        {
           name = 'maxColliders',
           type = 'number',
           default = '16384',
