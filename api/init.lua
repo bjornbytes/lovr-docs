@@ -25932,6 +25932,31 @@ return {
           },
           methods = {
             {
+              name = "getDimensions",
+              summary = "Get the size of the layer.",
+              description = "Returns the width and height of the layer.  This is the size of the Layer's plane in meters, not the resolution of the layer's texture in pixels.",
+              key = "Layer:getDimensions",
+              module = "lovr.headset",
+              notes = "When a layer is created, its width and height are 1 meter.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the layer, in meters."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the layer, in meters."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getOrientation",
               summary = "Get the orientation of the layer.",
               description = "Returns the orientation of the layer.",
@@ -26086,31 +26111,6 @@ return {
               }
             },
             {
-              name = "getSize",
-              summary = "Get the size of the layer.",
-              description = "Returns the width and height of the layer.  This is the size of the plane the layer is rendered onto, not the resolution of the layer's texture in pixels.",
-              key = "Layer:getSize",
-              module = "lovr.headset",
-              notes = "When a layer is created, its width and height are 1 meter.",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the layer, in meters."
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the layer, in meters."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getTexture",
               summary = "Get the texture for the layer.",
               description = "Returns the texture for the layer.  This is the texture that will be pasted onto the layer.",
@@ -26183,6 +26183,31 @@ return {
                       description = "The height of the viewport, in pixels."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setDimensions",
+              summary = "Set the size of the layer.",
+              description = "Sets the width and height of the layer.  This is the size of the Layer's plane in meters, not not the resolution of the layer's texture in pixels.",
+              key = "Layer:setDimensions",
+              module = "lovr.headset",
+              notes = "When a layer is created, its width and height are 1 meter.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width of the layer, in meters."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height of the layer, in meters."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -26336,31 +26361,6 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z position of the layer."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setSize",
-              summary = "Set the size of the layer.",
-              description = "Sets the width and height of the layer.  This is the size of the plane the layer is rendered onto, not the resolution of the layer's texture in pixels.",
-              key = "Layer:setSize",
-              module = "lovr.headset",
-              notes = "When a layer is created, its width and height are 1 meter.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the layer, in meters."
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the layer, in meters."
                     }
                   },
                   returns = {}
