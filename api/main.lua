@@ -355,7 +355,9 @@ local function validateObject(object)
     local hasMethod = {}
 
     for _, method in ipairs(object.methods or {}) do
-      warnIf(not metatable[method.name], '%s has docs for unknown method %s', object.name, method.name)
+      if not metatable[method.name] and not method.deprecated then
+        warn('%s has docs for unknown method %s', object.name, method.name)
+      end
       hasMethod[method.name] = true
     end
 
