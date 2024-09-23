@@ -4,10 +4,13 @@ function lovr.load()
   dirt = lovr.graphics.newTexture('dirt.png')
 
   triplanar = lovr.graphics.newShader('unlit', [[
-    uniform texture2D textureX;
-    uniform texture2D textureY;
-    uniform texture2D textureZ;
-    uniform float textureScale;
+    layout(set = 2, binding = 0) uniform texture2D textureX;
+    layout(set = 2, binding = 1) uniform texture2D textureY;
+    layout(set = 2, binding = 2) uniform texture2D textureZ;
+    
+    Constants {
+      float textureScale;
+    };
 
     vec4 lovrmain() {
       vec2 xscale = vec2(-sign(Normal.x), -1.);
