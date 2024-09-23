@@ -54,10 +54,6 @@ return {
       type = 'Vec3',
       description = 'The position of the center of the capsule.'
     },
-    scale = {
-      type = 'Vec3',
-      description = 'The size of the capsule (x and y scale the radius, z is the length).'
-    },
     orientation = {
       type = 'Quat',
       description = 'The orientation of the capsule.'
@@ -92,7 +88,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'position', 'scale', 'orientation', 'segments' },
+      arguments = { 'position', 'radius', 'length', 'orientation', 'segments' },
       returns = {}
     },
     {

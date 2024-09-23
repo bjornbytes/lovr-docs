@@ -17436,9 +17436,16 @@ return {
                       description = "The position of the center of the capsule."
                     },
                     {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The size of the capsule (x and y scale the radius, z is the length)."
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the capsule.",
+                      default = "1.0"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the capsule.",
+                      default = "1"
                     },
                     {
                       name = "orientation",
@@ -17811,9 +17818,16 @@ return {
                       description = "The position of the center of the base of the cone."
                     },
                     {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The size of the cone (x and y scale the radius, z is the length)."
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cone.",
+                      default = "1"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the cone.",
+                      default = "1"
                     },
                     {
                       name = "orientation",
@@ -18087,9 +18101,16 @@ return {
                       description = "The position of the center of the cylinder."
                     },
                     {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The size of the cylinder (x and y scale the radius, z is the length)."
+                      name = "radius",
+                      type = "number",
+                      description = "The radius of the cylinder.",
+                      default = "1"
+                    },
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the cylinder.",
+                      default = "1"
                     },
                     {
                       name = "orientation",
