@@ -25,6 +25,7 @@ return {
   'Environment/Skybox',
   'Environment/Terrain_-_Heightmap',
   'Environment/Terrain_-_Procedural',
+  'Environment/Triplanar_Mapping',
   'Lighting/Cel_Shading',
   'Lighting/Circular_Shadows',
   'Lighting/PBR_Materials',
