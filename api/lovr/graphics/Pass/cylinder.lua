@@ -52,10 +52,6 @@ return {
       type = 'Vec3',
       description = 'The position of the center of the cylinder.'
     },
-    scale = {
-      type = 'Vec3',
-      description = 'The size of the cylinder (x and y scale the radius, z is the length).'
-    },
     orientation = {
       type = 'Quat',
       description = 'The orientation of the cylinder.'
@@ -99,7 +95,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'position', 'scale', 'orientation', 'capped', 'angle1', 'angle2', 'segments' },
+      arguments = { 'position', 'radius', 'length', 'orientation', 'capped', 'angle1', 'angle2', 'segments' },
       returns = {}
     },
     {

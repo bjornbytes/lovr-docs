@@ -52,10 +52,6 @@ return {
       type = 'Vec3',
       description = 'The position of the center of the base of the cone.'
     },
-    scale = {
-      type = 'Vec3',
-      description = 'The size of the cone (x and y scale the radius, z is the length).'
-    },
     orientation = {
       type = 'Quat',
       description = 'The orientation of the cone.'
@@ -85,7 +81,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'position', 'scale', 'orientation', 'segments' },
+      arguments = { 'position', 'radius', 'length', 'orientation', 'segments' },
       returns = {}
     },
     {
