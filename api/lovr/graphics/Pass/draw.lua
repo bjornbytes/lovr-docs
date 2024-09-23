@@ -51,6 +51,10 @@ return {
       type = 'Vec3',
       description = 'The position to draw the object at.'
     },
+    scale3 = {
+      type = 'Vec3',
+      description = 'The scale of the object, as a vector.'
+    },
     orientation = {
       type = 'Quat',
       description = 'The orientation of the object.'
@@ -72,7 +76,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'object', 'position', 'scale', 'orientation', 'instances' },
+      arguments = { 'object', 'position', 'scale3', 'orientation', 'instances' },
       returns = {}
     },
     {

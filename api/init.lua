@@ -18479,10 +18479,9 @@ return {
                       description = "The position to draw the object at."
                     },
                     {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale of the object.",
-                      default = "1"
+                      name = "scale3",
+                      type = "Vec3",
+                      description = "The scale of the object, as a vector."
                     },
                     {
                       name = "orientation",
