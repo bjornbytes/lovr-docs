@@ -41947,6 +41947,11 @@ return {
                 {
                   arguments = {
                     {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to cast."
+                    },
+                    {
                       name = "x1",
                       type = "number",
                       description = "The x position to start at."
@@ -42058,6 +42063,11 @@ return {
                 {
                   arguments = {
                     {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to cast."
+                    },
+                    {
                       name = "position",
                       type = "Vec3",
                       description = "The position to start at."
@@ -42133,6 +42143,11 @@ return {
                 },
                 {
                   arguments = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to cast."
+                    },
                     {
                       name = "x1",
                       type = "number",
@@ -42235,6 +42250,11 @@ return {
                 },
                 {
                   arguments = {
+                    {
+                      name = "shape",
+                      type = "Shape",
+                      description = "The Shape to cast."
+                    },
                     {
                       name = "position",
                       type = "Vec3",
