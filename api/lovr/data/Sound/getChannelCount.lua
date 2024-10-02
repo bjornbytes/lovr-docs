@@ -18,6 +18,7 @@ return {
     }
   },
   related = {
-    'Sound:getChannelLayout'
+    'Sound:getChannelLayout',
+    'Sound:getByteStride'
   }
 }

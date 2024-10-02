@@ -16,6 +16,7 @@ return {
   },
   related = {
     'Sound:getChannelLayout',
+    'Sound:getByteStride',
     'Sound:getSampleRate'
   }
 }

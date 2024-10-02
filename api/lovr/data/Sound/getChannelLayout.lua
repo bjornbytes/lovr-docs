@@ -15,6 +15,7 @@ return {
     }
   },
   related = {
-    'Sound:getChannelCount'
+    'Sound:getChannelCount',
+    'Sound:getByteStride'
   }
 }

@@ -4470,6 +4470,44 @@ return {
               }
             },
             {
+              name = "getPointer",
+              summary = "Get a raw pointer to the Image pixel data.",
+              description = "Returns a raw pointer to the Image's pixel data.  This can be used to interface with other C libraries or the LuaJIT FFI.",
+              key = "Image:getPointer",
+              module = "lovr.data",
+              examples = {
+                {
+                  description = "Simple example of writing to Image pixels with LuaJIT's FFI module.",
+                  code = "local ffi = require 'ffi'\n\nfunction lovr.load()\n  image = lovr.data.newImage(2, 2)\n\n  ffi.cdef [[\n    typedef struct { uint8_t r, g, b, a; } Pixel;\n  ]]\n\n  pointer = image:getPointer()\n  pixels = ffi.cast('Pixel*', pointer)\n  pixels[0] = { 255, 0, 0, 255 }\n  pixels[1] = { 0, 255, 0, 255 }\n  pixels[2] = { 0, 0, 255, 255 }\n  pixels[3] = { 255, 255, 255, 255 }\n\n  texture = lovr.graphics.newTexture(image)\nend\n\nfunction lovr.draw(pass)\n  pass:setSampler('nearest')\n  pass:fill(texture)\nend"
+                }
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "level",
+                      type = "number",
+                      description = "The mipmap level to get the pointer of (for DDS and KTX images).",
+                      default = "1"
+                    },
+                    {
+                      name = "layer",
+                      type = "number",
+                      description = "The array layer to get the pointer of (for DDS and KTX images).",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "pointer",
+                      type = "userdata",
+                      description = "A pointer to the raw pixel data."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getWidth",
               summary = "Get the width of the Image.",
               description = "Returns the width of the Image, in pixels.",
@@ -7745,6 +7783,29 @@ return {
               }
             },
             {
+              name = "getByteStride",
+              summary = "Get the byte stride of the Sound.",
+              description = "Returns the byte stride of the Sound.  This is the size of each frame, in bytes.  For example, a stereo sound with a 32-bit floating point format would have a stride of 8 (4 bytes per sample, and 2 samples per frame).",
+              key = "Sound:getByteStride",
+              module = "lovr.data",
+              related = {
+                "Sound:getChannelCount",
+                "Sound:getFormat"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "stride",
+                      type = "number",
+                      description = "The size of a frame, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getCapacity",
               summary = "Get the number of frames that can be written to the Sound.",
               description = "Returns the number of frames that can be written to the Sound.  For stream sounds, this is the number of frames that can be written without overwriting existing data.  For normal sounds, this returns the same value as `Sound:getFrameCount`.",
@@ -7775,7 +7836,8 @@ return {
               key = "Sound:getChannelCount",
               module = "lovr.data",
               related = {
-                "Sound:getChannelLayout"
+                "Sound:getChannelLayout",
+                "Sound:getByteStride"
               },
               variants = {
                 {
@@ -7797,7 +7859,8 @@ return {
               key = "Sound:getChannelLayout",
               module = "lovr.data",
               related = {
-                "Sound:getChannelCount"
+                "Sound:getChannelCount",
+                "Sound:getByteStride"
               },
               variants = {
                 {
@@ -7846,6 +7909,7 @@ return {
               module = "lovr.data",
               related = {
                 "Sound:getChannelLayout",
+                "Sound:getByteStride",
                 "Sound:getSampleRate"
               },
               variants = {
@@ -14321,6 +14385,43 @@ return {
               }
             },
             {
+              name = "getDrawRange",
+              summary = "Get the range of vertices drawn by the Mesh.",
+              description = "Returns the range of vertices drawn by the Mesh.  If different sets of mesh data are stored in a single Mesh object, the draw range can be used to select different sets of vertices to render.",
+              key = "Mesh:getDrawRange",
+              module = "lovr.graphics",
+              related = {
+                "Mesh:setIndices"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the first vertex that will be drawn (or the first index, if the Mesh has vertex indices)."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices that will be drawn (or indices, if the Mesh has vertex indices)."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "When the Mesh has vertex indices, an offset that will be added to the index values before fetching the corresponding vertex.  This is ignored if the Mesh does not have vertex indices."
+                    }
+                  }
+                },
+                {
+                  description = "This function returns nothing if no draw range is set.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "getIndexBuffer",
               summary = "Get the Buffer backing the vertex indices of the Mesh.",
               description = "Returns the `Buffer` object that holds the data for the vertex indices in the Mesh.\n\nThis can be `nil` if the Mesh doesn't have any indices.\n\nIf a Mesh uses the `cpu` storage mode, the index buffer is internal to the `Mesh` and this function will return `nil`.  This ensures that the CPU data for the Mesh does not get out of sync with the GPU data in the Buffer.",
@@ -14626,6 +14727,44 @@ return {
               }
             },
             {
+              name = "setDrawRange",
+              summary = "Set the range of vertices drawn by the Mesh.",
+              description = "Sets the range of vertices drawn by the Mesh.  If different sets of mesh data are stored in a single Mesh object, the draw range can be used to select different sets of vertices to render.",
+              key = "Mesh:setDrawRange",
+              module = "lovr.graphics",
+              notes = "When using an index buffer, the draw range defines a range of indices to render instead of a range of vertices.  Additionally, a vertex offset can be set, which is added to the values in the index buffer before fetching the vertices.  This makes it easier to pack multiple sets of indexed mesh data in a single Mesh object, without having to manually offset the data in each index buffer.",
+              related = {
+                "Mesh:setIndices"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the first vertex that will be drawn (or the first index, if the Mesh has vertex indices)."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices that will be drawn (or indices, if the Mesh has vertex indices)."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "When the Mesh has vertex indices, an offset that will be added to the index values before fetching the corresponding vertex.  This is ignored if the Mesh does not have vertex indices."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disable the draw range.  The Mesh will draw all of its vertices.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setIndexBuffer",
               summary = "Set a Buffer for the Mesh to use for vertex indices.",
               description = "Sets a `Buffer` object the Mesh will use for vertex indices.\n\nThis can only be used if the Mesh uses the `gpu` storage mode.\n\nThe Buffer must have a single field with the `u16`, `u32`, `index16`, or `index32` type.",
@@ -14742,7 +14881,7 @@ return {
               description = "Sets the data for vertices in the Mesh.",
               key = "Mesh:setVertices",
               module = "lovr.graphics",
-              notes = "CPU meshes will write the data to CPU memory and upload any changes to the GPU before the Mesh is drawn.  GPU meshes don't store this CPU copy of the data, and will immediately upload the new vertex data to VRAM.  This means that multiple calls to this function might be slower on a `gpu` mesh.",
+              notes = "Note that a `Pass` that draws a Mesh will only \"see\" the vertices as they exist when the pass is submitted.  So, if this function is used to change vertices multiple times before submitting the Pass, only the final value of each vertex will be used.  Example:\n\n    function lovr.draw(pass)\n      -- Due to the second :setVertices call below, the Mesh\n      -- contains a sphere when this pass is submitted!  So\n      -- this code will actually draw 2 spheres!\n      mesh:setVertices(cube)\n      pass:draw(mesh, x1, y1, z1)\n\n      mesh:setVertices(sphere)\n      pass:draw(mesh, x2, y2, z2)\n    end\n\nIf you want multiple meshes, then use multiple Mesh objects!  Or, *append* vertices to the Mesh instead of replacing them, and use `Mesh:setDrawRange` to control which vertices are drawn for a particular draw call.\n\nCPU meshes will write the data to CPU memory and upload any changes to the GPU before the Mesh is drawn.  GPU meshes don't store this CPU copy of the data, and will immediately upload the new vertex data to VRAM.  This means that multiple calls to this function might be slower on a `gpu` mesh.",
               related = {
                 "Mesh:getVertexBuffer",
                 "Mesh:getVertexFormat",
@@ -18704,6 +18843,30 @@ return {
               }
             },
             {
+              name = "getLabel",
+              summary = "Get the debug label of the Pass.",
+              description = "Returns the debug label of the Pass, which will show up when the Pass is printed and in some graphics debugging tools.  This is set when the Pass is created, and can't be changed afterwards.",
+              key = "Pass:getLabel",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newPass",
+                "Texture:getLabel",
+                "Shader:getLabel"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "The label, or nil if none was set."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getProjection",
               tag = "camera",
               summary = "Get the field of view.",
@@ -18787,46 +18950,6 @@ return {
                       name = "samples",
                       type = "number",
                       description = "The number of samples used for rendering.  Currently, will be 1 or 4."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getScissor",
-              tag = "camera",
-              summary = "Get the scissor rectangle.",
-              description = "Returns the scissor rectangle, or `nil` if no scissor is set.  Any pixels outside the scissor rectangle will not be drawn.",
-              key = "Pass:getScissor",
-              module = "lovr.graphics",
-              notes = "The scissor will apply to all draws in a Pass when the pass is submitted.\n\nThe default scissor rectangle covers the entire dimensions of the render pass textures.",
-              related = {
-                "Pass:getViewport",
-                "Pass:setViewport"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the upper-left corner of the scissor rectangle."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the upper-left corner of the scissor rectangle."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "The width of the scissor rectangle."
-                    },
-                    {
-                      name = "h",
-                      type = "number",
-                      description = "The height of the scissor rectangle."
                     }
                   }
                 }
@@ -19085,59 +19208,6 @@ return {
                       name = "matrix",
                       type = "Mat4",
                       description = "The matrix containing the view pose."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getViewport",
-              tag = "camera",
-              summary = "Get the viewport.",
-              description = "Returns the viewport, or `nil` if no viewport is set.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
-              key = "Pass:getViewport",
-              module = "lovr.graphics",
-              notes = "The viewport will apply to all draws in a Pass when the pass is submitted.\n\nThe viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
-              related = {
-                "Pass:getScissor",
-                "Pass:setScissor",
-                "Pass:getDimensions"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the upper-left corner of the viewport."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the upper-left corner of the viewport."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "The width of the viewport."
-                    },
-                    {
-                      name = "h",
-                      type = "number",
-                      description = "The height of the viewport.  May be negative."
-                    },
-                    {
-                      name = "dmin",
-                      type = "number",
-                      description = "The min component of the depth range.",
-                      default = "0.0"
-                    },
-                    {
-                      name = "dmax",
-                      type = "number",
-                      description = "The max component of the depth range.",
-                      default = "1.0"
                     }
                   }
                 }
@@ -19886,6 +19956,92 @@ return {
                       name = "...",
                       type = "*",
                       description = "More points."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "polygon",
+              tag = "drawing",
+              summary = "Draw a polygon.",
+              description = "Draws a polygon.  The 3D vertices must be coplanar (all lie on the same plane), and the polygon must be convex (does not intersect itself or have any angles between vertices greater than 180 degrees), otherwise rendering artifacts may occur.",
+              key = "Pass:polygon",
+              module = "lovr.graphics",
+              notes = "Currently, the polygon will not have normal vectors.\n\n`Mesh` objects can also be used to draw arbitrary triangle meshes.",
+              related = {
+                "Pass:points",
+                "Pass:line",
+                "Pass:draw"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The x coordinate of the first vertex."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The y coordinate of the first vertex."
+                    },
+                    {
+                      name = "z1",
+                      type = "number",
+                      description = "The z coordinate of the first vertex."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x coordinate of the next vertex."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y coordinate of the next vertex."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z coordinate of the next vertex."
+                    },
+                    {
+                      name = "...",
+                      type = "*",
+                      description = "More vertices to add to the polygon."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      description = "A table of numbers or `Vec3` objects (not a mix) representing vertices of the polygon."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "v1",
+                      type = "Vec3",
+                      description = "A vector containing the position of the first vertex of the polygon."
+                    },
+                    {
+                      name = "v2",
+                      type = "Vec3",
+                      description = "A vector containing the position of the next vertex on the polygon."
+                    },
+                    {
+                      name = "...",
+                      type = "*",
+                      description = "More vertices to add to the polygon."
                     }
                   },
                   returns = {}
@@ -20734,6 +20890,7 @@ return {
               description = "Sets whether the front or back faces of triangles are culled.",
               key = "Pass:setCullMode",
               module = "lovr.graphics",
+              deprecated = true,
               notes = "By default, face culling is disabled.",
               related = {
                 "Pass:setViewCull",
@@ -20870,6 +21027,36 @@ return {
                       description = "Whether the depth buffer should be affected by draws."
                     }
                   },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setFaceCull",
+              tag = "pipeline",
+              summary = "Control triangle face culling.",
+              description = "Sets whether the front or back faces of triangles are culled.",
+              key = "Pass:setFaceCull",
+              module = "lovr.graphics",
+              notes = "By default, face culling is disabled.",
+              related = {
+                "Pass:setViewCull",
+                "Pass:setWinding"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mode",
+                      type = "CullMode",
+                      description = "Whether `front` faces, `back` faces, or `none` of the faces should be culled."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disable face culling.",
+                  arguments = {},
                   returns = {}
                 }
               }
@@ -21073,9 +21260,8 @@ return {
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "The scissor will apply to all draws in a Pass when the pass is submitted, even if this function is called after adding the draws.\n\n`x` and `y` can not be negative.  `w` and `h` must be positive.\n\nBy default, the scissor is disabled and will cover the entire render area.",
+              notes = "`x` and `y` can not be negative.  `w` and `h` must be positive.\n\nBy default, the scissor covers the entire canvas.",
               related = {
-                "Pass:getViewport",
                 "Pass:setViewport"
               },
               variants = {
@@ -21431,9 +21617,8 @@ return {
               description = "Sets the viewport.  Everything rendered will get mapped to the rectangle defined by the viewport.  More specifically, this defines the transformation from normalized device coordinates to pixel coordinates.",
               key = "Pass:setViewport",
               module = "lovr.graphics",
-              notes = "The viewport will apply to all draws in a Pass when the pass is submitted, even if this function is called after adding the draws.\n\nThe viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the target textures, with min depth and max depth respectively set to 0 and 1.",
+              notes = "The viewport rectangle can use floating point numbers.\n\nA negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used to flip the rendering vertically.\n\nThe default viewport extends from `(0, 0)` to the dimensions of the canvas, with min depth and max depth respectively set to 0 and 1.",
               related = {
-                "Pass:getScissor",
                 "Pass:setScissor",
                 "Pass:getDimensions"
               },
@@ -22723,6 +22908,30 @@ return {
               }
             },
             {
+              name = "getLabel",
+              summary = "Get the debug label of the Shader.",
+              description = "Returns the debug label of the Shader, which will show up when the Shader is printed and in some graphics debugging tools.  This is set when the Shader is created, and can't be changed afterwards.",
+              key = "Shader:getLabel",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newShader",
+                "Texture:getLabel",
+                "Pass:getLabel"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "The label, or nil if none was set."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getType",
               summary = "Get the type of the Shader.",
               description = "Returns whether the shader is a graphics or compute shader.",
@@ -23209,6 +23418,30 @@ return {
                       name = "height",
                       type = "number",
                       description = "The height of the Texture, in pixels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getLabel",
+              summary = "Get the debug label of the Texture.",
+              description = "Returns the debug label of the Texture, which will show up when the Texture is printed and in some graphics debugging tools.  This is set when the Texture is created, and can't be changed afterwards.",
+              key = "Texture:getLabel",
+              module = "lovr.graphics",
+              related = {
+                "lovr.graphics.newTexture",
+                "Shader:getLabel",
+                "Pass:getLabel"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "label",
+                      type = "string",
+                      description = "The label, or nil if none was set."
                     }
                   }
                 }

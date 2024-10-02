@@ -47,19 +47,15 @@ return {
     }
   },
   notes = [[
-    The viewport will apply to all draws in a Pass when the pass is submitted, even if this function
-    is called after adding the draws.
-
     The viewport rectangle can use floating point numbers.
 
     A negative viewport height (with a y coordinate equal to the bottom of the viewport) can be used
     to flip the rendering vertically.
 
-    The default viewport extends from `(0, 0)` to the dimensions of the target textures, with min
-    depth and max depth respectively set to 0 and 1.
+    The default viewport extends from `(0, 0)` to the dimensions of the canvas, with min depth and
+    max depth respectively set to 0 and 1.
   ]],
   related = {
-    'Pass:getScissor',
     'Pass:setScissor',
     'Pass:getDimensions'
   }

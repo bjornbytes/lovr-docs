@@ -35,15 +35,11 @@ return {
     }
   },
   notes = [[
-    The scissor will apply to all draws in a Pass when the pass is submitted, even if this function
-    is called after adding the draws.
-
     `x` and `y` can not be negative.  `w` and `h` must be positive.
 
-    By default, the scissor is disabled and will cover the entire render area.
+    By default, the scissor covers the entire canvas.
   ]],
   related = {
-    'Pass:getViewport',
     'Pass:setViewport'
   }
 }
