@@ -23647,6 +23647,26 @@ return {
               }
             },
             {
+              name = "getSampler",
+              tag = "texture-sampler",
+              summary = "Get the Sampler assigned to the Texture.",
+              description = "Returns the Sampler object previously assigned with `Texture:setSampler`.\n\nThis API is experimental, and subject to change in the future!",
+              key = "Texture:getSampler",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "sampler",
+                      type = "Sampler",
+                      description = "The Sampler object."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getType",
               tag = "texture-metadata",
               summary = "Get the type of the Texture.",
@@ -23979,6 +23999,41 @@ return {
                   returns = {}
                 }
               }
+            },
+            {
+              name = "setSampler",
+              tag = "texture-sampler",
+              summary = "Set sampler settings for the Texture.",
+              description = "Sets sampler settings for the texture.  This can either be a `FilterMode` like `nearest`, or a `Sampler` object, which allows configuring all of the filtering and wrapping settings.\n\nThere are other ways of using custom samplers for a texture, but they have disadvantages:\n\n- `Sampler` objects can be sent to shaders and used to sample from the texture, but this\n  requires writing custom shader code and sending sampler objects with `Pass:send`, which is\n  inconvenient.\n- `Pass:setSampler` exists, but it applies to all textures in all draws in the Pass.  It doesn't\n  allow for changing filtering settings on a per-texture basis.\n\nThis API is experimental, and subject to change in the future!",
+              key = "Texture:setSampler",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mode",
+                      type = "FilterMode",
+                      description = "The FilterMode shaders will use when reading pixels from the texture."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "sampler",
+                      type = "Sampler",
+                      description = "The Sampler object shaders will use when reading pixels from the texture."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Remove the texture's sampler, instead using the one set by `Pass:setSampler`.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
             }
           },
           sections = {
@@ -23993,6 +24048,10 @@ return {
             {
               name = "Texture Views",
               tag = "texture-view"
+            },
+            {
+              name = "Sampler",
+              tag = "texture-sampler"
             }
           }
         }

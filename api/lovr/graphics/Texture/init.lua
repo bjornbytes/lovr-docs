@@ -20,6 +20,10 @@ return {
     {
       name = 'Texture Views',
       tag = 'texture-view'
+    },
+    {
+      name = 'Sampler',
+      tag = 'texture-sampler'
     }
   }
 }
