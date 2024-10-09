@@ -152,6 +152,6 @@ return {
     If image data is provided, mipmaps will be generated for any missing mipmap levels.
   ]],
   related = {
-    'Texture:newView'
+    'lovr.graphics.newTextureView'
   }
 }

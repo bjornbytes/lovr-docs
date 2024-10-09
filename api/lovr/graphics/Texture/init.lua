@@ -6,8 +6,7 @@ return {
     textures loaded from images provide surface data to `Material` objects.
   ]],
   constructors = {
-    'lovr.graphics.newTexture',
-    'Texture:newView'
+    'lovr.graphics.newTexture'
   },
   sections = {
     {

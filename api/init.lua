@@ -11237,7 +11237,7 @@ return {
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
           deprecated = true,
-          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `Texture:newView`.\n\nFor `compute` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
+          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `lovr.graphics.newTextureView`.\n\nFor `compute` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
           related = {
             "lovr.graphics.submit",
             "lovr.graphics.getWindowPass",
@@ -12370,7 +12370,7 @@ return {
           description = "Creates and returns a new Pass object.  The canvas (the set of textures the Pass renders to) can be specified when creating the Pass, or later using `Pass:setCanvas`.",
           key = "lovr.graphics.newPass",
           module = "lovr.graphics",
-          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `Texture:newView`.",
+          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `lovr.graphics.newTextureView`.",
           related = {
             "lovr.graphics.submit",
             "lovr.graphics.getWindowPass",
@@ -12690,7 +12690,7 @@ return {
           module = "lovr.graphics",
           notes = "If no `type` is provided in the options table, LÖVR will guess the `TextureType` of the Texture based on the number of layers:\n\n- If there's only 1 layer, the type will be `2d`.\n- If there are 6 images provided, the type will be `cube`.\n- Otherwise, the type will be `array`.\n\nNote that an Image can contain multiple layers and mipmaps.  When a single Image is provided, its layer count will be used as the Texture's layer count.\n\nIf multiple Images are used to initialize the Texture, they must all have a single layer, and their dimensions, format, and mipmap counts must match.\n\nWhen providing cubemap images in a table, they can be in one of the following forms:\n\n    { 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' }\n    { right = 'px.png', left = 'nx.png', top = 'py.png', bottom = 'ny.png', back = 'pz.png', front = 'nz.png' }\n    { px = 'px.png', nx = 'nx.png', py = 'py.png', ny = 'ny.png', pz = 'pz.png', nz = 'nz.png' }\n\n(Where 'p' stands for positive and 'n' stands for negative).\n\nIf no `usage` is provided in the options table, LÖVR will guess the `TextureUsage` of the Texture.  The `sample` usage is always included, but if the texture was created without any images then the texture will have the `render` usage as well.\n\nThe supported image formats are png, jpg, hdr, dds, ktx1, ktx2, and astc.\n\nIf image data is provided, mipmaps will be generated for any missing mipmap levels.",
           related = {
-            "Texture:newView"
+            "lovr.graphics.newTextureView"
           },
           variants = {
             {
@@ -13077,6 +13077,71 @@ return {
                   name = "texture",
                   type = "Texture",
                   description = "The new Texture."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newTextureView",
+          tag = "texture-view",
+          summary = "Create a texture view referencing a parent Texture.",
+          description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType`, and it may reference a subset of the parent texture's layers and mipmap levels.\n\nTexture views are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as an array\n  texture.\n- Rendering to a particular array layer or mipmap level of a texture.\n- Binding a particular range of layers or mipmap levels to a shader.",
+          key = "lovr.graphics.newTextureView",
+          module = "lovr.graphics",
+          deprecated = true,
+          related = {
+            "lovr.graphics.newTexture"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "parent",
+                  type = "Texture",
+                  description = "The parent Texture to create a view of."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Options for the texture view.",
+                  table = {
+                    type = {
+                      type = "TextureType",
+                      description = "The texture type of the view.  Defaults to the type of the parent."
+                    },
+                    label = {
+                      type = "string",
+                      description = "An optional label for the view that will show up in debugging tools."
+                    },
+                    layer = {
+                      type = "number",
+                      description = "The index of the first layer referenced by the view.",
+                      default = "1"
+                    },
+                    layercount = {
+                      type = "number",
+                      description = "            The number of layers in the view.  Defaults to 1 if a layer index is provided, otherwise\n            the view will reference all layers.\n          ",
+                      default = "nil"
+                    },
+                    mipmap = {
+                      type = "number",
+                      description = "The index of the first mipmap referenced by the view.",
+                      default = "1"
+                    },
+                    mipmapcount = {
+                      type = "number",
+                      description = "            The number of mipmap levels in the view.  Defaults to 1 if a mipmap index is provided,\n            otherwise the view will reference all mipmaps.\n          ",
+                      default = "nil"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "view",
+                  type = "Texture",
+                  description = "The new texture view."
                 }
               }
             }
@@ -20600,7 +20665,7 @@ return {
               description = "Sets the Pass's canvas.  The canvas is a set of textures that the Pass will draw to when it's submitted, along with configuration for the depth buffer and antialiasing.",
               key = "Pass:setCanvas",
               module = "lovr.graphics",
-              notes = "Changing the canvas will reset the pass, as though `Pass:reset` was called.\n\nAll textures must have the same dimensions, layer counts, and multisample counts.  They also must have been created with the `render` usage flag.\n\nThe number of layers in the textures determines how many views (cameras) the pass has.  Each draw will be rendered to all texture layers, as seen from the corresponding camera.  For example, VR rendering will use a canvas texture with 2 layers, one for each eye.\n\nTo render to a specific mipmap level or layer of a texture, use texture views (`Texture:newView`).\n\nMipmaps will be regenerated for all of canvas textures at the end of a render pass.\n\nIf the Pass has multiple color textures, a fragment shader should be used to write a different color to each texture.  Here's an example that writes red to the first texture and blue to the second texture:\n\n    // Declare an output variable for the second texture\n    layout(location = 1) out vec4 secondColor;\n\n    vec4 lovrmain() {\n      secondColor = vec4(0, 0, 1, 1);\n      return vec4(1, 0, 0, 1);\n    }",
+              notes = "Changing the canvas will reset the pass, as though `Pass:reset` was called.\n\nAll textures must have the same dimensions, layer counts, and multisample counts.  They also must have been created with the `render` usage flag.\n\nThe number of layers in the textures determines how many views (cameras) the pass has.  Each draw will be rendered to all texture layers, as seen from the corresponding camera.  For example, VR rendering will use a canvas texture with 2 layers, one for each eye.\n\nTo render to a specific mipmap level or layer of a texture, use texture views (`lovr.graphics.newTextureView`).\n\nMipmaps will be regenerated for all of canvas textures at the end of a render pass.\n\nIf the Pass has multiple color textures, a fragment shader should be used to write a different color to each texture.  Here's an example that writes red to the first texture and blue to the second texture:\n\n    // Declare an output variable for the second texture\n    layout(location = 1) out vec4 secondColor;\n\n    vec4 lovrmain() {\n      secondColor = vec4(0, 0, 1, 1);\n      return vec4(1, 0, 0, 1);\n    }",
               related = {
                 "Pass:getClear",
                 "Pass:setClear",
@@ -23101,8 +23166,7 @@ return {
           key = "Texture",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.newTexture",
-            "Texture:newView"
+            "lovr.graphics.newTexture"
           },
           methods = {
             {
@@ -23498,30 +23562,6 @@ return {
               }
             },
             {
-              name = "getParent",
-              tag = "texture-view",
-              summary = "Get the parent of a texture view.",
-              description = "Returns the parent of a Texture view, which is the Texture that it references.  Returns `nil` if the Texture is not a view.",
-              key = "Texture:getParent",
-              module = "lovr.graphics",
-              related = {
-                "Texture:isView",
-                "Texture:newView"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "parent",
-                      type = "Texture",
-                      description = "The parent of the texture, or `nil` if the texture is not a view."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getPixels",
               tag = "texture-transfer",
               summary = "Get the pixels of the Texture.",
@@ -23681,30 +23721,6 @@ return {
               }
             },
             {
-              name = "isView",
-              tag = "texture-view",
-              summary = "Check if a Texture is a texture view.",
-              description = "Returns whether a Texture is a texture view, created with `Texture:newView`.",
-              key = "Texture:isView",
-              module = "lovr.graphics",
-              related = {
-                "Texture:getParent",
-                "Texture:newView"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "view",
-                      type = "boolean",
-                      description = "Whether the Texture is a texture view."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "newReadback",
               tag = "texture-transfer",
               summary = "Read back the contents of the Texture asynchronously.",
@@ -23767,86 +23783,6 @@ return {
                       name = "readback",
                       type = "Readback",
                       description = "A new Readback object."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "newView",
-              tag = "texture-view",
-              summary = "Create a texture view referencing a parent Texture.",
-              description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType` from the parent, and it may reference a subset of the parent texture's layers and mipmap levels.\n\nTexture views can be used as render targets in a render pass and they can be bound to Shaders. They can not currently be used for transfer operations.  They are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as\n  an array texture.\n- Rendering to a particular image or mipmap level of a texture.\n- Binding a particular image or mipmap level to a shader.",
-              key = "Texture:newView",
-              module = "lovr.graphics",
-              related = {
-                "Texture:isView",
-                "Texture:getParent",
-                "lovr.graphics.newTexture"
-              },
-              variants = {
-                {
-                  description = "Create a 2D texture view referencing a single layer and mipmap.",
-                  arguments = {
-                    {
-                      name = "layer",
-                      type = "number",
-                      description = "The index of the first layer in the view.",
-                      default = "1"
-                    },
-                    {
-                      name = "mipmap",
-                      type = "number",
-                      description = "The index of the first mipmap in the view.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "view",
-                      type = "Texture",
-                      description = "The new texture view."
-                    }
-                  }
-                },
-                {
-                  description = "Create a texture view with an explicit type, layer range, and mipmap range.",
-                  arguments = {
-                    {
-                      name = "type",
-                      type = "TextureType",
-                      description = "The texture type of the view."
-                    },
-                    {
-                      name = "layer",
-                      type = "number",
-                      description = "The index of the first layer in the view.",
-                      default = "1"
-                    },
-                    {
-                      name = "layerCount",
-                      type = "number",
-                      description = "The number of layers in the view, or `nil` to use all remaining layers.",
-                      default = "nil"
-                    },
-                    {
-                      name = "mipmap",
-                      type = "number",
-                      description = "The index of the first mipmap in the view.",
-                      default = "1"
-                    },
-                    {
-                      name = "mipmapCount",
-                      type = "number",
-                      description = "The number of mipmaps in the view, or `nil` to use all remaining mipmaps.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "view",
-                      type = "Texture",
-                      description = "The new texture view."
                     }
                   }
                 }
@@ -41956,7 +41892,7 @@ return {
                   code = "world:setCallbacks({\n  filter = function(a, b)\n    return true\n  end,\n  enter = function(a, b, contact)\n    -- play sounds, spawn particles, etc.\n    -- the collision has not been resolved yet, so the velocity of a and b\n    -- is the velocity before the collision, and can be used to estimate the\n    -- collision force\n  end,\n  exit = function(a, b)\n    -- a and b have stopped touching!\n  end,\n  contact = function(a, b, contact)\n    -- a and b are touching this frame\n    -- use sparingly, as this may be called many times per frame\n    -- use Contact:setFriction and Contact:setResitution to update\n    -- the contact behavior, or Contact:setSurfaceVelocity, for a\n    -- conveyor belt effect, or Contact:setEnabled to disable the\n    -- collision completely.\n  end\n})"
                 }
               },
-              notes = "The `Thread` that last set these callbacks must also be the thread to call `World:update`.",
+              notes = "The `Thread` that last set these callbacks must also be the thread to call `World:update`.\n\nNote that when a collider goes to sleep, its active contacts will be removed and the `exit` callback will be called.",
               related = {
                 "World:update",
                 "Contact"

@@ -62,7 +62,7 @@ return {
     example, VR rendering will use a canvas texture with 2 layers, one for each eye.
 
     To render to a specific mipmap level or layer of a texture, use texture views
-    (`Texture:newView`).
+    (`lovr.graphics.newTextureView`).
 
     Mipmaps will be regenerated for all of canvas textures at the end of a render pass.
 

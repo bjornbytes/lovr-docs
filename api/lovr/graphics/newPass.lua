@@ -93,7 +93,7 @@ return {
     - Mipmaps will automatically be generated for textures at the end of the render pass.
     - It's okay to have zero color textures, but in this case there must be a depth texture.
     - It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by
-      rendering to texture views, see `Texture:newView`.
+      rendering to texture views, see `lovr.graphics.newTextureView`.
   ]],
   related = {
     'lovr.graphics.submit',
