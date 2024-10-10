@@ -48,5 +48,6 @@ An overview of the folder structure:
 - `src/core` contains shared engine code.  It's usually lower-level and not specific to LÖVR.
 - `src/lib` contains smaller third party libraries.
 - `src/modules` has a folder for each module.
+- `test` contains unit tests, used to catch bugs introduced by changes.  Run them with `lovr test`.
 
-Branches other than master and dev may be force-pushed during development to keep history clean.
+Branches other than dev and stable may be force-pushed during development to keep history clean.
