@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/LLS-Addons/main/schemas/addon_config.schema.json",
+  "name": "LÖVR",
+  "words": [
+    "lovr%.%w+"
+  ],
+  "settings": {
+    "Lua.runtime.version": "LuaJIT",
+    "Lua.diagnostics.globals": [
+      "lovr"
+    ]
+  }
+}
