@@ -29797,6 +29797,35 @@ return {
               }
             },
             {
+              name = "getEuler",
+              summary = "Get the euler angles of the quaternion.",
+              description = "Returns the euler angles of the quaternion, in YXZ order.",
+              key = "Quat:getEuler",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pitch",
+                      type = "number",
+                      description = "The pitch (x axis rotation)."
+                    },
+                    {
+                      name = "yaw",
+                      type = "number",
+                      description = "The yaw (y axis rotation)."
+                    },
+                    {
+                      name = "roll",
+                      type = "number",
+                      description = "The roll (z axis rotation)."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "length",
               summary = "Get the length of the quaternion.",
               description = "Returns the length of the quaternion.",
@@ -30007,6 +30036,41 @@ return {
                 {
                   description = "Reset the quaternion to the identity (0, 0, 0, 1).",
                   arguments = {},
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Quat",
+                      description = "The modified quaternion."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setEuler",
+              summary = "Set the value of the quaternion using euler angles.",
+              description = "Sets the value of the quaternion using euler angles.  The rotation order is YXZ.",
+              key = "Quat:setEuler",
+              module = "lovr.math",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "pitch",
+                      type = "number",
+                      description = "The pitch (x axis rotation)."
+                    },
+                    {
+                      name = "yaw",
+                      type = "number",
+                      description = "The yaw (y axis rotation)."
+                    },
+                    {
+                      name = "roll",
+                      type = "number",
+                      description = "The roll (z axis rotation)."
+                    }
+                  },
                   returns = {
                     {
                       name = "self",
