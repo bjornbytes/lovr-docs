@@ -183,8 +183,8 @@ The following built-in variables are available only in vertex shaders:
     </tr>
     <tr>
       <td><code>VertexTangent</code></td>
-      <td>vec3</td>
-      <td>The tangent vector of the current vertex.</td>
+      <td>vec4</td>
+      <td>The tangent vector of the current vertex (w is sign of tangent basis).</td>
     </tr>
     <tr>
       <td><code>Projection</code></td>
