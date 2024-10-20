@@ -82,6 +82,10 @@ return {
           type = 'number'
         },
         {
+          name = 'triangle',
+          type = 'number'
+        },
+        {
           name = 'fraction',
           type = 'number'
         }
@@ -128,6 +132,10 @@ return {
     nz = {
       type = 'number',
       description = 'The z component of the normal vector.'
+    },
+    triangle = {
+      type = 'number',
+      description = 'The index of the triangle that was hit, or nil if a MeshShape was not hit.'
     }
   },
   variants = {
@@ -141,11 +149,11 @@ return {
     },
     {
       arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'filter' },
-      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
+      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz', 'triangle' }
     },
     {
       arguments = { 'origin', 'endpoint', 'filter' },
-      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
+      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz', 'triangle' }
     }
   },
   notes = [[

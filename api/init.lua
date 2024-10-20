@@ -41741,6 +41741,10 @@ return {
                           type = "number"
                         },
                         {
+                          name = "triangle",
+                          type = "number"
+                        },
+                        {
                           name = "fraction",
                           type = "number"
                         }
@@ -41809,6 +41813,10 @@ return {
                         },
                         {
                           name = "nz",
+                          type = "number"
+                        },
+                        {
+                          name = "triangle",
                           type = "number"
                         },
                         {
@@ -41906,6 +41914,11 @@ return {
                       name = "nz",
                       type = "number",
                       description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number",
+                      description = "The index of the triangle that was hit, or nil if a MeshShape was not hit."
                     }
                   }
                 },
@@ -41968,6 +41981,11 @@ return {
                       name = "nz",
                       type = "number",
                       description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number",
+                      description = "The index of the triangle that was hit, or nil if a MeshShape was not hit."
                     }
                   }
                 }
