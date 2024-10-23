@@ -70,6 +70,11 @@ return {
       returns = { 'collider' }
     },
     {
+      description = [[
+        Clones an existing MeshShape, which is faster than passing the same mesh multiple times.
+        Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of
+        the template.
+      ]],
       arguments = { 'template' },
       returns = { 'collider' }
     }

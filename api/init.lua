@@ -33190,7 +33190,6 @@ return {
           description = "Creates a new ConvexShape.",
           key = "lovr.physics.newConvexShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
           related = {
             "ConvexShape",
             "lovr.physics.newBoxShape",
@@ -33207,6 +33206,12 @@ return {
                   name = "points",
                   type = "table",
                   description = "A list of vertices to compute a convex hull from.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D point)."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the points.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -33223,6 +33228,12 @@ return {
                   name = "modelData",
                   type = "ModelData",
                   description = "The ModelData to compute a convex hull from."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the points.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -33239,6 +33250,12 @@ return {
                   name = "model",
                   type = "Model",
                   description = "The Model to compute a convex hull from."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the points.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -33255,6 +33272,12 @@ return {
                   name = "mesh",
                   type = "Mesh",
                   description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the points.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -33266,11 +33289,18 @@ return {
               }
             },
             {
+              description = "Clones an existing ConvexShape, which is faster than passing the same points multiple times. Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of the template.",
               arguments = {
                 {
                   name = "template",
                   type = "ConvexShape",
                   description = "An existing ConvexShape to clone."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the points.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -33525,7 +33555,6 @@ return {
           description = "Creates a new MeshShape.",
           key = "lovr.physics.newMeshShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`.",
           related = {
             "MeshShape",
             "lovr.physics.newBoxShape",
@@ -33548,6 +33577,34 @@ return {
                   name = "indices",
                   type = "table",
                   description = "A table of triangle indices representing how the vertices are connected in the Mesh."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the mesh vertices.",
+                  default = "1.0"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "MeshShape",
+                  description = "The new MeshShape."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "The ModelData to use the vertices from."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the mesh vertices.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -33564,6 +33621,57 @@ return {
                   name = "model",
                   type = "Model",
                   description = "A Model to use for the mesh data.  Similar to calling `Model:getTriangles` and passing it to this function, but has better performance."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the mesh vertices.",
+                  default = "1.0"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "MeshShape",
+                  description = "The new MeshShape."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "The Mesh to use the vertices from.  It must use the `cpu` storage mode."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the mesh vertices.",
+                  default = "1.0"
+                }
+              },
+              returns = {
+                {
+                  name = "mesh",
+                  type = "MeshShape",
+                  description = "The new MeshShape."
+                }
+              }
+            },
+            {
+              description = "Clones an existing MeshShape, which is faster than passing the same mesh multiple times. Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of the template.",
+              arguments = {
+                {
+                  name = "template",
+                  type = "MeshShape",
+                  description = "An existing MeshShape to clone."
+                },
+                {
+                  name = "scale",
+                  type = "number",
+                  description = "A scale to apply to the mesh vertices.",
+                  default = "1.0"
                 }
               },
               returns = {
@@ -37379,6 +37487,29 @@ return {
                   }
                 }
               }
+            },
+            {
+              name = "getScale",
+              summary = "Get the scale the ConvexShape was created with.",
+              description = "Returns the scale the ConvexShape was created with.",
+              key = "ConvexShape:getScale",
+              module = "lovr.physics",
+              related = {
+                "lovr.physics.newConvexShape",
+                "World:newConvexCollider"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale."
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -38445,7 +38576,31 @@ return {
             "World:newMeshCollider"
           },
           extends = "Shape",
-          methods = {}
+          methods = {
+            {
+              name = "getScale",
+              summary = "Get the scale the MeshShape was created with.",
+              description = "Returns the scale the MeshShape was created with.",
+              key = "MeshShape:getScale",
+              module = "lovr.physics",
+              related = {
+                "lovr.physics.newMeshShape",
+                "World:newMeshCollider"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale."
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
         {
           name = "Shape",
@@ -38469,6 +38624,65 @@ return {
             "World:newTerrainCollider"
           },
           methods = {
+            {
+              name = "containsPoint",
+              summary = "Check if a point is inside the shape.",
+              description = "Returns whether a point is inside the Shape.\n\nThis takes into account the pose of the Shape's collider (if any), as well as its local offset set with `Shape:setOffset`.",
+              key = "Shape:containsPoint",
+              module = "lovr.physics",
+              related = {
+                "Shape:raycast",
+                "World:raycast",
+                "World:shapecast",
+                "World:overlapShape",
+                "World:queryBox",
+                "World:querySphere"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the point."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "hit",
+                      type = "boolean",
+                      description = "Whether the point is inside the Shape."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "point",
+                      type = "Vec3",
+                      description = "The point, as a vector."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "hit",
+                      type = "boolean",
+                      description = "Whether the point is inside the Shape."
+                    }
+                  }
+                }
+              }
+            },
             {
               name = "destroy",
               summary = "Destroy the Shape.",
@@ -38982,6 +39196,143 @@ return {
                       name = "destroyed",
                       type = "boolean",
                       description = "Whether the Shape has been destroyed."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "raycast",
+              summary = "Cast a ray against the shape",
+              description = "Casts a ray against the Shape and returns the first intersection.\n\nThis takes into account the pose of the Shape's collider (if any), as well as its local offset set with `Shape:setOffset`.",
+              key = "Shape:raycast",
+              module = "lovr.physics",
+              related = {
+                "World:raycast",
+                "Shape:containsPoint",
+                "World:shapecast",
+                "World:overlapShape"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x1",
+                      type = "number",
+                      description = "The x coordinate of the origin of the ray."
+                    },
+                    {
+                      name = "y1",
+                      type = "number",
+                      description = "The y coordinate of the origin of the ray."
+                    },
+                    {
+                      name = "z1",
+                      type = "number",
+                      description = "The z coordinate of the origin of the ray."
+                    },
+                    {
+                      name = "x2",
+                      type = "number",
+                      description = "The x coordinate of the endpoint of the ray."
+                    },
+                    {
+                      name = "y2",
+                      type = "number",
+                      description = "The y coordinate of the endpoint of the ray."
+                    },
+                    {
+                      name = "z2",
+                      type = "number",
+                      description = "The z coordinate of the endpoint of the ray."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the impact point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the impact point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the impact point."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number",
+                      description = "The index of the triangle that was hit, or `nil` if this is not a MeshShape."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "origin",
+                      type = "Vec3",
+                      description = "The origin of the ray."
+                    },
+                    {
+                      name = "endpoint",
+                      type = "Vec3",
+                      description = "The endpoint of the ray."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the impact point."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the impact point."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the impact point."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number",
+                      description = "The index of the triangle that was hit, or `nil` if this is not a MeshShape."
                     }
                   }
                 }
@@ -40072,6 +40423,31 @@ return {
               }
             },
             {
+              name = "interpolate",
+              summary = "Interpolate collider poses.",
+              description = "Interpolates collider poses between their previous pose and their current pose.  Methods like `Collider:getPosition` and `Collider:getOrientation` will return the smoothed values.\n\nAfter `World:update` is called, any interpolation is reset and `World:interpolate` will need to be called again to recompute the interpolated poses.\n\nThis can be used to decouple the physics tick rate from the rendering rate.  For example, the physics simulation can be run at a fixed rate of 30Hz, and collider poses can be interpolated before rendering.  This leads to a more stable simulation, and allows the physics rate to be increased or decreased as desired, independent of the current display refresh rate.",
+              key = "World:interpolate",
+              module = "lovr.physics",
+              examples = {
+                {
+                  description = "An example of a fixed timestep physics update.",
+                  code = "function lovr.load()\n  world = lovr.physics.newWorld()\n  time = 0\n  timestep = 1 / 30 -- 30Hz\nend\n\nfunction lovr.update(dt)\n  time = time + dt\n\n  -- Update as many times as needed, if any\n  while time >= timestep do\n    world:update(timestep)\n    time = time - timestep\n\n    -- Potentially do per-tick gameplay logic here\n    -- like check for collisions or apply impulses\n  end\n\n  -- Interpolate the colliders\n  local alpha = time / timestep\n  world:interpolate(alpha)\nend\n\nfunction lovr.draw(pass)\n  -- Draw colliders as usual, using `Collider:getPose` etc.\nend"
+                }
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "alpha",
+                      type = "number",
+                      description = "The interpolation parameter.  An alpha of zero will use the previous collider pose, an alpha of 1.0 will use the latest collider pose, etc."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "isCollisionEnabledBetween",
               summary = "Check if two tags can collide.",
               description = "Returns whether collisions are enabled between a pair of tags.",
@@ -40415,7 +40791,7 @@ return {
               description = "Adds a Collider to the world and attaches a `ConvexShape`.  A `ConvexShape` is a convex hull of a set of points, kinda like if you wrapped them in wrapping paper.",
               key = "World:newConvexCollider",
               module = "lovr.physics",
-              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.\n\nComputing the convex hull is expensive.  If you need a lot of colliders with the same convex hull shape, it's much faster to pass an existing ConvexShape to this function.",
+              notes = "This will throw an error if there are too many colliders in the world.  The limit defaults to 16384 and can be changed in `lovr.physics.newWorld`.",
               related = {
                 "ConvexShape",
                 "Collider",
@@ -40452,6 +40828,12 @@ return {
                       name = "points",
                       type = "table",
                       description = "A list of vertices to compute a convex hull from.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D point)."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40473,6 +40855,12 @@ return {
                       name = "points",
                       type = "table",
                       description = "A list of vertices to compute a convex hull from.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D point)."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40507,6 +40895,12 @@ return {
                       name = "modelData",
                       type = "ModelData",
                       description = "The ModelData to compute a convex hull from."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40528,6 +40922,12 @@ return {
                       name = "modelData",
                       type = "ModelData",
                       description = "The ModelData to compute a convex hull from."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40562,6 +40962,12 @@ return {
                       name = "model",
                       type = "Model",
                       description = "The Model to compute a convex hull from."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40583,6 +40989,12 @@ return {
                       name = "model",
                       type = "Model",
                       description = "The Model to compute a convex hull from."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40617,6 +41029,12 @@ return {
                       name = "mesh",
                       type = "Mesh",
                       description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40638,6 +41056,12 @@ return {
                       name = "mesh",
                       type = "Mesh",
                       description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40649,6 +41073,7 @@ return {
                   }
                 },
                 {
+                  description = "Clones an existing ConvexShape, which is faster than passing the same points multiple times. Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of the template.",
                   arguments = {
                     {
                       name = "x",
@@ -40672,6 +41097,12 @@ return {
                       name = "template",
                       type = "ConvexShape",
                       description = "An existing ConvexShape to clone."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40683,6 +41114,7 @@ return {
                   }
                 },
                 {
+                  description = "Clones an existing ConvexShape, which is faster than passing the same points multiple times. Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of the template.",
                   arguments = {
                     {
                       name = "position",
@@ -40693,6 +41125,12 @@ return {
                       name = "template",
                       type = "ConvexShape",
                       description = "An existing ConvexShape to clone."
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "A scale to apply to the points.",
+                      default = "1.0"
                     }
                   },
                   returns = {
@@ -40885,6 +41323,7 @@ return {
                   }
                 },
                 {
+                  description = "Clones an existing MeshShape, which is faster than passing the same mesh multiple times. Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of the template.",
                   arguments = {
                     {
                       name = "template",
@@ -41659,6 +42098,7 @@ return {
               module = "lovr.physics",
               notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the raycast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nRaycasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
               related = {
+                "Shape:raycast",
                 "World:shapecast",
                 "World:overlapShape",
                 "World:queryBox",

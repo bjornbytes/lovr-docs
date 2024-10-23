@@ -46,6 +46,11 @@ return {
     template = {
       type = 'ConvexShape',
       description = 'An existing ConvexShape to clone.'
+    },
+    scale = {
+      type  = 'number',
+      default = '1.0',
+      description = 'A scale to apply to the points.'
     }
   },
   returns = {
@@ -56,52 +61,59 @@ return {
   },
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'points' },
+      arguments = { 'x', 'y', 'z', 'points', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'position', 'points' },
+      arguments = { 'position', 'points', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'x', 'y', 'z', 'modelData' },
+      arguments = { 'x', 'y', 'z', 'modelData', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'position', 'modelData' },
+      arguments = { 'position', 'modelData', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'x', 'y', 'z', 'model' },
+      arguments = { 'x', 'y', 'z', 'model', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'position', 'model' },
+      arguments = { 'position', 'model', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'x', 'y', 'z', 'mesh' },
+      arguments = { 'x', 'y', 'z', 'mesh', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'position', 'mesh' },
+      arguments = { 'position', 'mesh', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'x', 'y', 'z', 'template' },
+      description = [[
+        Clones an existing ConvexShape, which is faster than passing the same points multiple times.
+        Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of
+        the template.
+      ]],
+      arguments = { 'x', 'y', 'z', 'template', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'position', 'template' },
+      description = [[
+        Clones an existing ConvexShape, which is faster than passing the same points multiple times.
+        Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of
+        the template.
+      ]],
+      arguments = { 'position', 'template', 'scale' },
       returns = { 'collider' }
     }
   },
   notes = [[
     This will throw an error if there are too many colliders in the world.  The limit defaults to
     16384 and can be changed in `lovr.physics.newWorld`.
-
-    Computing the convex hull is expensive.  If you need a lot of colliders with the same convex
-    hull shape, it's much faster to pass an existing ConvexShape to this function.
   ]],
   related = {
     'ConvexShape',

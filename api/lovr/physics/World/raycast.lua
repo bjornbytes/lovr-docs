@@ -173,6 +173,7 @@ return {
     Raycasts will hit sensors and sleeping colliders, but will not hit disabled colliders.
   ]],
   related = {
+    'Shape:raycast',
     'World:shapecast',
     'World:overlapShape',
     'World:queryBox',

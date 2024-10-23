@@ -24,6 +24,11 @@ return {
     template = {
       type = 'ConvexShape',
       description = 'An existing ConvexShape to clone.'
+    },
+    scale = {
+      type  = 'number',
+      default = '1.0',
+      description = 'A scale to apply to the points.'
     }
   },
   returns = {
@@ -34,27 +39,31 @@ return {
   },
   variants = {
     {
-      arguments = { 'points' },
+      arguments = { 'points', 'scale' },
       returns = { 'shape' }
     },
     {
-      arguments = { 'modelData' },
+      arguments = { 'modelData', 'scale' },
       returns = { 'shape' }
     },
     {
-      arguments = { 'model' },
+      arguments = { 'model', 'scale' },
       returns = { 'shape' }
     },
     {
-      arguments = { 'mesh' },
+      arguments = { 'mesh', 'scale' },
       returns = { 'shape' }
     },
     {
-      arguments = { 'template' },
+      description = [[
+        Clones an existing ConvexShape, which is faster than passing the same points multiple times.
+        Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of
+        the template.
+      ]],
+      arguments = { 'template', 'scale' },
       returns = { 'shape' }
     }
   },
-  notes = 'A Shape can be attached to a Collider using `Collider:addShape`.',
   related = {
     'ConvexShape',
     'lovr.physics.newBoxShape',
