@@ -17,7 +17,7 @@ return {
       type = 'number',
       description = [[
         The interpolation parameter.  An alpha of zero will use the previous collider pose, an alpha
-        of 1.0 will use the latest collider pose, etc.
+        of 1.0 will use the latest collider pose, etc.  Can be less than zero or greater than one.
       ]]
     }
   },
