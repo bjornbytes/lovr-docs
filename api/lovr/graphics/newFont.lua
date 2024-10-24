@@ -5,11 +5,11 @@ return {
   arguments = {
     filename = {
       type = 'string',
-      description = 'A path to a TTF file.'
+      description = 'A path to a TTF or BMFont file.'
     },
     blob = {
       type = 'Blob',
-      description = 'A Blob containing TTF file data.'
+      description = 'A Blob containing TTF or BMFont file data.'
     },
     rasterizer = {
       type = 'Rasterizer',
@@ -19,8 +19,8 @@ return {
       type = 'number',
       default = '32',
       description = [[
-        The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory,
-        but have better quality.
+        The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use
+        more memory, but have better quality.
       ]]
     },
     spread = {
@@ -42,12 +42,12 @@ return {
   },
   variants = {
     {
-      description = 'Creates a new Font from a TTF file.',
+      description = 'Creates a new Font from a font file.',
       arguments = { 'filename', 'size', 'spread' },
       returns = { 'font' }
     },
     {
-      description = 'Creates a new Font from TTF data.',
+      description = 'Creates a new Font from font data.',
       arguments = { 'blob', 'size', 'spread' },
       returns = { 'font' }
     },

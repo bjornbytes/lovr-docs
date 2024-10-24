@@ -3682,7 +3682,7 @@ return {
         {
           name = "newRasterizer",
           summary = "Create a new Rasterizer.",
-          description = "Creates a new Rasterizer from a TTF file.",
+          description = "Creates a new Rasterizer from a TTF or BMFont file.",
           key = "lovr.data.newRasterizer",
           module = "lovr.data",
           variants = {
@@ -3692,7 +3692,7 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
               },
@@ -3714,7 +3714,7 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
               },
@@ -3736,7 +3736,7 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
               },
@@ -12149,17 +12149,17 @@ return {
           },
           variants = {
             {
-              description = "Creates a new Font from a TTF file.",
+              description = "Creates a new Font from a font file.",
               arguments = {
                 {
                   name = "filename",
                   type = "string",
-                  description = "A path to a TTF file."
+                  description = "A path to a TTF or BMFont file."
                 },
                 {
                   name = "size",
                   type = "number",
-                  description = "The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory, but have better quality.",
+                  description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
@@ -12178,17 +12178,17 @@ return {
               }
             },
             {
-              description = "Creates a new Font from TTF data.",
+              description = "Creates a new Font from font data.",
               arguments = {
                 {
                   name = "blob",
                   type = "Blob",
-                  description = "A Blob containing TTF file data."
+                  description = "A Blob containing TTF or BMFont file data."
                 },
                 {
                   name = "size",
                   type = "number",
-                  description = "The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory, but have better quality.",
+                  description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
@@ -12212,7 +12212,7 @@ return {
                 {
                   name = "size",
                   type = "number",
-                  description = "The size of the Font in pixels.  Larger sizes are slower to initialize and use more memory, but have better quality.",
+                  description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
@@ -14141,7 +14141,7 @@ return {
         {
           name = "Font",
           summary = "A Font used to render text.",
-          description = "Font objects are used to render text with `Pass:text`.  The active font can be changed using `Pass:setFont`.  The default font is Varela Round, which is used when no font is active, and can be retrieved using `lovr.graphics.getDefaultFont`.  Custom fonts can be loaded from TTF files using `lovr.graphics.newFont`.\n\nEach Font uses a `Rasterizer` to load the TTF file and create images for each glyph. As text is drawn, the Font uploads images from the Rasterizer to a GPU texture atlas as needed.  The Font also performs text layout and mesh generation for strings of text.\n\nLÖVR uses a text rendering technique called \"multichannel signed distance fields\" (MSDF), which makes the font rendering remain crisp when text is viewed up close.",
+          description = "Font objects are used to render text with `Pass:text`.  The active font can be changed using `Pass:setFont`.  The default font is Varela Round, which is used when no font is active, and can be retrieved using `lovr.graphics.getDefaultFont`.  Custom fonts can be loaded from TTF and BMFont files using `lovr.graphics.newFont`.\n\nEach Font uses a `Rasterizer` to load the font and create images for each glyph. As text is drawn, the Font uploads images from the Rasterizer to a GPU texture atlas as needed.  The Font also performs text layout and mesh generation for strings of text.\n\nFor TTF fonts, LÖVR uses a text rendering technique called \"multichannel signed distance fields\" (MSDF), which makes the font rendering remain crisp when text is viewed up close.",
           key = "Font",
           module = "lovr.graphics",
           constructors = {

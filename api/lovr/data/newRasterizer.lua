@@ -1,6 +1,6 @@
 return {
   summary = 'Create a new Rasterizer.',
-  description = 'Creates a new Rasterizer from a TTF file.',
+  description = 'Creates a new Rasterizer from a TTF or BMFont file.',
   arguments = {
     filename = {
       type = 'string',
@@ -14,8 +14,9 @@ return {
       type = 'number',
       default = '32',
       description = [[
-        The resolution to render the fonts at, in pixels.  Higher resolutions use more memory and
-        processing power but may provide better quality results for some fonts/situations.
+        The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more
+        memory and processing power but may provide better quality results for some
+        fonts/situations.
       ]]
     }
   },
