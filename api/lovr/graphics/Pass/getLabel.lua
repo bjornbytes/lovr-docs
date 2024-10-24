@@ -1,4 +1,5 @@
 return {
+  tag = 'pass-misc',
   summary = 'Get the debug label of the Pass.',
   description = [[
     Returns the debug label of the Pass, which will show up when the Pass is printed and in some

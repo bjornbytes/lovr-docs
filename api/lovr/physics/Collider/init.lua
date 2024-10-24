@@ -23,6 +23,8 @@ return {
         'Collider:setPose',
         'Collider:getLocalPoint',
         'Collider:getWorldPoint',
+        'Collider:getLocalVector',
+        'Collider:getWorldVector',
         'Collider:getAABB',
         'Collider:getLinearVelocity',
         'Collider:setLinearVelocity',

@@ -36,7 +36,10 @@ return {
     {
       name = 'Layers',
       tag = 'layers',
-      description = 'TODO'
+      description = [[
+        Layers are 2D textured quads that can be placed in 3D space.  They are higher quality than
+        rendering regular planes in the 3D scene.
+      ]]
     },
     {
       name = 'Miscellaneous',

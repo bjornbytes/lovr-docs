@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-files',
   summary = 'Stop watching files.',
   description = 'Stops watching files.',
   arguments = {},

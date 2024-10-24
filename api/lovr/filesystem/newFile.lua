@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-files',
   summary = 'Open a file, returning a `File` object.',
   description = [[
     Opens a file, returning a `File` object that can be used to read/write the file contents.

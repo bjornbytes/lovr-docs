@@ -1,4 +1,5 @@
 return {
+  tag = 'texture-metadata',
   summary = 'Get the debug label of the Texture.',
   description = [[
     Returns the debug label of the Texture, which will show up when the Texture is printed and in

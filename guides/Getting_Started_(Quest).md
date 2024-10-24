@@ -54,5 +54,7 @@ Tips
 <pre><code>adb shell am start -S org.lovr.app/org.lovr.app.Activity
 </code></pre>
 
+- You can call `lovr.filesystem.watch` to start watching files in the `sdcard` folder, automatically
+  restarting when new files are pushed.
 - If you need to use `print` in Lua for debug messages, you can see those in a terminal by running
   `adb logcat -s LOVR`.

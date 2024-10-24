@@ -549,6 +549,29 @@ return {
       }
     },
     {
+      name = "mount",
+      tag = "callbacks",
+      summary = "Called when the headset is put on or taken off.",
+      description = "The `lovr.mount` callback is called when the headset is put on or taken off.",
+      key = "lovr.mount",
+      module = "lovr",
+      related = {
+        "lovr.headset.isMounted"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "mounted",
+              type = "boolean",
+              description = "Whether the headset is mounted."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
       name = "mousemoved",
       tag = "callbacks",
       summary = "Called when the mouse is moved.",
@@ -1309,6 +1332,7 @@ return {
       functions = {
         {
           name = "getAbsorption",
+          tag = "listener",
           summary = "Get the absorption coefficients.",
           description = "Returns the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and the attenuation effect is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones. This can be used to apply \"underwater\" effects and stuff.",
           key = "lovr.audio.getAbsorption",
@@ -1816,6 +1840,7 @@ return {
         },
         {
           name = "setAbsorption",
+          tag = "listener",
           summary = "Set the absorption coefficients.",
           description = "Sets the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and the attenuation effect is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones.  This can be used to apply \"underwater\" effects and stuff.",
           key = "lovr.audio.setAbsorption",
@@ -9501,6 +9526,7 @@ return {
         },
         {
           name = "newFile",
+          tag = "filesystem-files",
           summary = "Open a file, returning a `File` object.",
           description = "Opens a file, returning a `File` object that can be used to read/write the file contents.\n\nNormally you can just use `lovr.filesystem.read`, `lovr.filesystem.write`, etc.  However, those methods open and close the file each time they are called.  So, when performing multiple operations on a file, creating a File object and keeping it open will have less overhead.",
           key = "lovr.filesystem.newFile",
@@ -9687,6 +9713,7 @@ return {
         },
         {
           name = "unwatch",
+          tag = "filesystem-files",
           summary = "Stop watching files.",
           description = "Stops watching files.",
           key = "lovr.filesystem.unwatch",
@@ -9704,6 +9731,7 @@ return {
         },
         {
           name = "watch",
+          tag = "filesystem-files",
           summary = "Start watching the filesystem for changes.",
           description = "Starts watching the filesystem for changes.  File events will be reported by the `lovr.filechanged` callback.\n\nCurrently, on PC, only files in the source directory will be watched.  On Android, files in the save directory will be watched instead, so that pushing new files with `adb` can be detected.",
           key = "lovr.filesystem.watch",
@@ -19328,6 +19356,7 @@ return {
             },
             {
               name = "getLabel",
+              tag = "pass-misc",
               summary = "Get the debug label of the Pass.",
               description = "Returns the debug label of the Pass, which will show up when the Pass is printed and in some graphics debugging tools.  This is set when the Pass is created, and can't be changed afterwards.",
               key = "Pass:getLabel",
@@ -23908,6 +23937,7 @@ return {
             },
             {
               name = "getLabel",
+              tag = "texture-metadata",
               summary = "Get the debug label of the Texture.",
               description = "Returns the debug label of the Texture, which will show up when the Texture is printed and in some graphics debugging tools.  This is set when the Texture is created, and can't be changed afterwards.",
               key = "Texture:getLabel",
@@ -26031,6 +26061,31 @@ return {
           }
         },
         {
+          name = "isMounted",
+          tag = "headset-misc",
+          summary = "Check if the headset is \"mounted\" (worn on a head).",
+          description = "Returns whether the headset is mounted.  Usually this uses a proximity sensor on the headset to detect whether someone is wearing the headset.",
+          key = "lovr.headset.isMounted",
+          module = "lovr.headset",
+          related = {
+            "lovr.mount",
+            "lovr.headset.isFocused",
+            "lovr.headset.isVisible"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "mounted",
+                  type = "boolean",
+                  description = "Whether the headset is mounted."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isSeated",
           tag = "playArea",
           summary = "Check if the coordinate space is standing or seated.",
@@ -26407,6 +26462,7 @@ return {
         },
         {
           name = "start",
+          tag = "headset-misc",
           summary = "Starts the headset session.",
           description = "Starts the headset session.  This must be called after the graphics module is initialized, and can only be called once.  Normally it is called automatically by `boot.lua`.",
           key = "lovr.headset.start",
@@ -27113,7 +27169,7 @@ return {
         {
           name = "Layers",
           tag = "layers",
-          description = "TODO"
+          description = "Layers are 2D textured quads that can be placed in 3D space.  They are higher quality than rendering regular planes in the 3D scene."
         },
         {
           name = "Miscellaneous",
@@ -37280,6 +37336,8 @@ return {
                 "Collider:setPose",
                 "Collider:getLocalPoint",
                 "Collider:getWorldPoint",
+                "Collider:getLocalVector",
+                "Collider:getWorldVector",
                 "Collider:getAABB",
                 "Collider:getLinearVelocity",
                 "Collider:setLinearVelocity",
@@ -43568,6 +43626,7 @@ return {
               name = "Basics",
               links = {
                 "World:update",
+                "World:interpolate",
                 "World:getGravity",
                 "World:setGravity",
                 "World:getCallbacks",

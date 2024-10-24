@@ -1,4 +1,5 @@
 return {
+  tag = 'listener',
   summary = 'Get the absorption coefficients.',
   description = [[
     Returns the global air absorption coefficients for the medium.  This affects Sources that have

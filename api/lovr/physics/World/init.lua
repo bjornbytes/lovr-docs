@@ -11,6 +11,7 @@ return {
       name = 'Basics',
       links = {
         'World:update',
+        'World:interpolate',
         'World:getGravity',
         'World:setGravity',
         'World:getCallbacks',

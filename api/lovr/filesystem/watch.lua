@@ -1,4 +1,5 @@
 return {
+  tag = 'filesystem-files',
   summary = 'Start watching the filesystem for changes.',
   description = [[
     Starts watching the filesystem for changes.  File events will be reported by the

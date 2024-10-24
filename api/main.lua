@@ -347,6 +347,26 @@ local function validateObject(object)
 
   for _, method in ipairs(object.methods or {}) do
     validateFunction(method)
+
+    if object.sections and not method.deprecated then
+      local found = false
+
+      for _, section in ipairs(object.sections) do
+        if section.tag and section.tag == method.tag then
+          found = true
+          break
+        else
+          for _, link in ipairs(section.links or {}) do
+            if link == method.key then
+              found = true
+              break
+            end
+          end
+        end
+      end
+
+      warnIf(not found, '%s is missing a parent link/tag', method.key)
+    end
   end
 
   local metatable = debug.getregistry()[object.name]
@@ -392,8 +412,29 @@ local function validateModule(module)
 
   for _, fn in ipairs(module.functions) do
     validateFunction(fn)
+
     if dev and not fn.deprecated then
       warnIf(t and not t[fn.name], '%s has docs for unknown function %s', module.key, fn.name)
+    end
+
+    if module.sections and not fn.deprecated then
+      local found = false
+
+      for _, section in ipairs(module.sections) do
+        if section.tag and section.tag == fn.tag then
+          found = true
+          break
+        else
+          for _, link in ipairs(section.links or {}) do
+            if link == fn.key then
+              found = true
+              break
+            end
+          end
+        end
+      end
+
+      warnIf(not found, '%s is missing a parent link/tag', fn.key)
     end
   end
 
