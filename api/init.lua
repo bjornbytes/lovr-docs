@@ -325,6 +325,41 @@ return {
       }
     },
     {
+      name = "filechanged",
+      tag = "callbacks",
+      summary = "Called when a file is changed.",
+      description = "The `lovr.filechanged` callback is called when a file is changed.  File watching must be enabled, either by passing `--watch` when starting LÖVR or by calling `lovr.filesystem.watch`.\n\nCurrently, only files in the source directory are watched.  On Android, files in the sdcard directory are watched.",
+      key = "lovr.filechanged",
+      module = "lovr",
+      notes = "LÖVR provides a default implementation for `lovr.filechanged` that restarts the project if a non-hidden file was changed:\n\n    function lovr.filechanged(path)\n      if not path:match('^%.') then\n        lovr.event.restart()\n      end\n    end",
+      related = {
+        "lovr.filesystem.watch",
+        "lovr.filesystem.unwatch"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "path",
+              type = "string",
+              description = "The path to the file that changed."
+            },
+            {
+              name = "action",
+              type = "FileAction",
+              description = "What happened to the file."
+            },
+            {
+              name = "oldpath",
+              type = "string",
+              description = "The old path, for `rename` actions."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
       name = "focus",
       tag = "callbacks",
       summary = "Called when the application gains or loses input focus.",
@@ -8861,6 +8896,31 @@ return {
       key = "lovr.filesystem",
       enums = {
         {
+          name = "FileAction",
+          summary = "Different actions that can be taken on files.",
+          description = "The different actions that can be taken on files, reported by `lovr.filechanged` when filesystem watching is active.",
+          key = "FileAction",
+          module = "lovr.filesystem",
+          values = {
+            {
+              name = "create",
+              description = "The file was created."
+            },
+            {
+              name = "delete",
+              description = "The file was deleted."
+            },
+            {
+              name = "modify",
+              description = "The file's contents were modified."
+            },
+            {
+              name = "rename",
+              description = "The file was renamed."
+            }
+          }
+        },
+        {
           name = "OpenMode",
           summary = "Different ways to open a file.",
           description = "Different ways to open a `File` with `lovr.filesystem.newFile`.",
@@ -9622,6 +9682,40 @@ return {
                   description = "Whether the archive was unmounted."
                 }
               }
+            }
+          }
+        },
+        {
+          name = "unwatch",
+          summary = "Stop watching files.",
+          description = "Stops watching files.",
+          key = "lovr.filesystem.unwatch",
+          module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.watch",
+            "lovr.filechanged"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "watch",
+          summary = "Start watching the filesystem for changes.",
+          description = "Starts watching the filesystem for changes.  File events will be reported by the `lovr.filechanged` callback.\n\nCurrently, on PC, only files in the source directory will be watched.  On Android, files in the save directory will be watched instead, so that pushing new files with `adb` can be detected.",
+          key = "lovr.filesystem.watch",
+          module = "lovr.filesystem",
+          related = {
+            "lovr.filesystem.unwatch",
+            "lovr.filechanged"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
             }
           }
         },
