@@ -20,5 +20,8 @@ return {
       returns = { 'size' }
     }
   },
-  notes = 'If the file does not exist, an error is thrown.'
+  notes = 'If the file does not exist, an error is thrown.',
+  related = {
+    'File:getSize'
+  }
 }

@@ -1,11 +1,7 @@
 return {
   tag = 'layers',
   summary = 'Create a new Layer.',
-  description = [[
-    Creates a new Layer.
-
-    TODO
-  ]],
+  description = 'Creates a new `Layer`.',
   arguments = {
     width = {
       type = 'number',
@@ -25,7 +21,8 @@ return {
           description = [[
             Whether the VR runtime is allowed to apply filtering effects to the Layer, such as
             sharpening and supersampling.  This can improve text legibility and reduces "shimmering"
-            artifacts, but may reduce performance.
+            artifacts, but may reduce performance.  Currently only Quest will apply this automatic
+            filtering.
           ]]
         }
       }

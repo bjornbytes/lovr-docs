@@ -19,6 +19,8 @@ return {
   notes = [[
     This function may return a different `Texture` object each frame.  The return value should not
     be cached.
+
+    The texture will have the `rgba8` format, with `sample` and `render` usage flags.
   ]],
   related = {
     'Layer:getPass'

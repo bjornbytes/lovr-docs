@@ -8859,7 +8859,29 @@ return {
       summary = "Provides access to the filesystem.",
       description = "The `lovr.filesystem` module provides access to the filesystem.\n\nAll files written will go in a special folder called the \"save directory\".  The location of the save directory is platform-specific:\n\n<table>\n  <tr>\n    <td>Windows</td>\n    <td><code>C:\\Users\\&lt;user&gt;\\AppData\\Roaming\\LOVR\\&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>macOS</td>\n    <td><code>/Users/&lt;user&gt;/Library/Application Support/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Linux</td>\n    <td><code>/home/&lt;user&gt;/.local/share/LOVR/&lt;identity&gt;</code></td>\n  </tr>\n  <tr>\n    <td>Android</td>\n    <td><code>/sdcard/Android/data/&lt;identity&gt;/files</code></td>\n  </tr> </table>\n\n`<identity>` is a unique identifier for the project, and can be set in `lovr.conf`.  On Android, the identity can not be changed and will always be the package id (e.g. `org.lovr.app`).\n\nWhen files are read, they will be searched for in multiple places.  By default, the save directory is checked first, then the project source (folder or zip).  That way, when data is written to a file, any future reads will see the new data.  The `t.saveprecedence` conf setting can be used to change this precedence.\n\nConceptually, `lovr.filesystem` uses a \"virtual filesystem\", which is an ordered list of folders and zip files that are merged into a single filesystem hierarchy.  Folders and archives in the list can be added and removed with `lovr.filesystem.mount` and `lovr.filesystem.unmount`.\n\nLÖVR extends Lua's `require` function to look for modules in the virtual filesystem.  The search patterns can be changed with `lovr.filesystem.setRequirePath`, similar to `package.path`.",
       key = "lovr.filesystem",
-      enums = {},
+      enums = {
+        {
+          name = "OpenMode",
+          summary = "Different ways to open a file.",
+          description = "Different ways to open a `File` with `lovr.filesystem.newFile`.",
+          key = "OpenMode",
+          module = "lovr.filesystem",
+          values = {
+            {
+              name = "r",
+              description = "Open the file for reading."
+            },
+            {
+              name = "w",
+              description = "Open the file for writing (overwrites existing data)."
+            },
+            {
+              name = "a",
+              description = "Open the file for appending."
+            }
+          }
+        }
+      },
       functions = {
         {
           name = "append",
@@ -9134,6 +9156,9 @@ return {
           key = "lovr.filesystem.getSize",
           module = "lovr.filesystem",
           notes = "If the file does not exist, an error is thrown.",
+          related = {
+            "File:getSize"
+          },
           variants = {
             {
               arguments = {
@@ -9415,6 +9440,51 @@ return {
           }
         },
         {
+          name = "newFile",
+          summary = "Open a file, returning a `File` object.",
+          description = "Opens a file, returning a `File` object that can be used to read/write the file contents.\n\nNormally you can just use `lovr.filesystem.read`, `lovr.filesystem.write`, etc.  However, those methods open and close the file each time they are called.  So, when performing multiple operations on a file, creating a File object and keeping it open will have less overhead.",
+          key = "lovr.filesystem.newFile",
+          module = "lovr.filesystem",
+          examples = {
+            {
+              code = "function lovr.load()\n  local file = lovr.filesystem.newFile('asdf.txt', 'w')\n  file:write('asdf')\n  file:release()\nend"
+            }
+          },
+          related = {
+            "lovr.filesystem.read",
+            "lovr.filesystem.write",
+            "lovr.filesystem.append"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "path",
+                  type = "string",
+                  description = "The path of the file to open."
+                },
+                {
+                  name = "mode",
+                  type = "OpenMode",
+                  description = "The mode to open the file in (`r`, `w`, or `a`)."
+                }
+              },
+              returns = {
+                {
+                  name = "file",
+                  type = "File",
+                  description = "A new file object, or nil if an error occurred."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if an error occurred."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "read",
           tag = "filesystem-files",
           summary = "Read a file.",
@@ -9614,7 +9684,262 @@ return {
           }
         }
       },
-      objects = {},
+      objects = {
+        {
+          name = "File",
+          summary = "Represents an open file handle.",
+          description = "A File is an object that provides read or write access to a file on the filesystem.",
+          key = "File",
+          module = "lovr.filesystem",
+          constructors = {
+            "lovr.filesystem.newFile"
+          },
+          methods = {
+            {
+              name = "getMode",
+              summary = "Get the mode the file was opened in.",
+              description = "Returns the mode the file was opened in.",
+              key = "File:getMode",
+              module = "lovr.filesystem",
+              related = {
+                "File:getPath"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "mode",
+                      type = "OpenMode",
+                      description = "The mode the file was opened in (`r`, `w`, or `a`)."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPath",
+              summary = "Get the file's path.",
+              description = "Returns the file's path.",
+              key = "File:getPath",
+              module = "lovr.filesystem",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "path",
+                      type = "string",
+                      description = "The file path."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSize",
+              summary = "Get the size of the File.",
+              description = "Returns the size of the file, in bytes.",
+              key = "File:getSize",
+              module = "lovr.filesystem",
+              related = {
+                "lovr.filesystem.getSize"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The size of the file, in bytes, or nil if an error occurred."
+                    },
+                    {
+                      name = "error",
+                      type = "string",
+                      description = "The error message, if an error occurred."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isEOF",
+              summary = "Check if the end of the file has been reached.",
+              description = "Returns whether the end of file has been reached.  When true, `File:read` will no longer return data.",
+              key = "File:isEOF",
+              module = "lovr.filesystem",
+              related = {
+                "File:seek",
+                "File:tell",
+                "File:getSize"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "eof",
+                      type = "boolean",
+                      description = "Whether the end of the file has been reached."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "read",
+              summary = "Read data from the file.",
+              description = "Reads data from the file.",
+              key = "File:read",
+              module = "lovr.filesystem",
+              notes = "The file must have been opened for reading.\n\nThe maximum number of bytes that can be read at a time is 2^53 - 1.",
+              related = {
+                "File:write",
+                "lovr.filesystem.read",
+                "lovr.filesystem.newBlob"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "bytes",
+                      type = "number",
+                      description = "The number of bytes to read from the file, or `nil` to read the rest of the file."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "data",
+                      type = "string",
+                      description = "The data that was read, or nil if an error occurred."
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes that were read, or the error message if an error occurred."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "seek",
+              summary = "Seek to a position in the file.",
+              description = "Seeks to a new position in the file.  `File:read` and `File:write` will read/write relative to this position.",
+              key = "File:seek",
+              module = "lovr.filesystem",
+              related = {
+                "File:tell",
+                "File:getSize"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The new file offset, in bytes."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "tell",
+              summary = "Get the seek position of the file.",
+              description = "Returns the seek position of the file, which is where `File:read` and `File:write will read/write from.",
+              key = "File:tell",
+              module = "lovr.filesystem",
+              related = {
+                "File:seek"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The file offset, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "write",
+              summary = "Write data to the file.",
+              description = "Writes data to the file.",
+              key = "File:write",
+              module = "lovr.filesystem",
+              notes = "The maximum number of bytes that can be written at a time is 2^53 - 1.\n\nUse `File:seek` to control where the data is written.",
+              related = {
+                "File:read",
+                "lovr.filesystem.write",
+                "lovr.filesystem.append"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "string",
+                      type = "string",
+                      description = "A string to write to the file."
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes to write, or nil to write all of the data from the string/Blob.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "success",
+                      type = "boolean",
+                      description = "Whether the data was successfully written."
+                    },
+                    {
+                      name = "message",
+                      type = "string",
+                      description = "The error message."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "The Blob containing data to write to the file."
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes to write, or nil to write all of the data from the string/Blob.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "success",
+                      type = "boolean",
+                      description = "Whether the data was successfully written."
+                    },
+                    {
+                      name = "message",
+                      type = "string",
+                      description = "The error message."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       sections = {
         {
           name = "Files",
@@ -25729,7 +26054,7 @@ return {
           name = "newLayer",
           tag = "layers",
           summary = "Create a new Layer.",
-          description = "Creates a new Layer.\n\nTODO",
+          description = "Creates a new `Layer`.",
           key = "lovr.headset.newLayer",
           module = "lovr.headset",
           related = {
@@ -26172,7 +26497,7 @@ return {
         {
           name = "Layer",
           summary = "A quad in 3D space.",
-          description = "A Layer is a textured plane placed in 3D space.  Layers are sent directly to the VR runtime and composited along with the rest of the 3D content.  This has several advantages compared to rendering the texture into the 3D scene with `Pass:draw`:\n\n- Better tracking.  The VR runtime composites the texture later in time, using a more accurate\n  head pose.\n- Better resolution, less shimmery.  Regular 3D content must have lens distortion correction\n  applied to it, whereas layers are composited after distortion correction, meaning they have a\n  higher pixel density.  The layer can also use a higher resolution than the main headset\n  texture, allowing for extra resolution on the 2D content without having to supersample all of\n  the 3D rendering.\n- Supersampling and sharpening effects.  Some headset runtimes (currently just Quest) can also\n  supersample and sharpen layers.\n\nCombined, all of this makes a noticeable difference when rendering 2D content on a Layer, especially improving text readability.",
+          description = "A Layer is a textured plane placed in 3D space.  Layers are sent directly to the VR runtime and composited along with the rest of the 3D content.  This has several advantages compared to rendering the texture into the 3D scene with `Pass:draw`:\n\n- Better tracking.  The VR runtime composites the texture later in the rendering process, using a more accurate head pose.\n- Better resolution, less shimmery.  Regular 3D content must have lens distortion correction\n  applied to it, whereas layers are composited after distortion correction, meaning they have a\n  higher pixel density.  The layer can also use a higher resolution than the main headset\n  texture, allowing for extra resolution on the 2D content without having to supersample all of\n  the 3D rendering.\n- Supersampling and sharpening effects.  Some headset runtimes (currently just Quest) can also\n  supersample and sharpen layers.\n\nCombined, all of this makes a massive difference in quality when rendering 2D content on a Layer, especially improving text readability.",
           key = "Layer",
           module = "lovr.headset",
           constructors = {
@@ -26250,7 +26575,7 @@ return {
               description = "Returns the render pass for the layer.  This can be used to render to the layer.",
               key = "Layer:getPass",
               module = "lovr.headset",
-              notes = "This function will reset the Layer's render pass when it is called.\n\nThe Pass will have its background color cleared to the background color, set using `lovr.graphics.setBackgroundColor`.\n\nThe Pass will have its view matrix set to the identity matrix, and its projection will be set to an orthographic matrix where the top left of the texture is at the origin and the bottom right of the texture will be at `(width, height)` in pixels.",
+              notes = "This function will reset the Layer's render pass when it is called, as though `Pass:reset` was called.\n\nThe Pass will have its background color cleared to the background color, set using `lovr.graphics.setBackgroundColor`.\n\nThe Pass will have its view matrix set to the origin, and its projection will be set to an orthographic matrix where the top left of the texture is at the origin and the bottom right of the texture will be at `(width, height)` in pixels.",
               related = {
                 "Layer:getTexture"
               },
@@ -26364,7 +26689,7 @@ return {
               description = "Returns the texture for the layer.  This is the texture that will be pasted onto the layer.",
               key = "Layer:getTexture",
               module = "lovr.headset",
-              notes = "This function may return a different `Texture` object each frame.  The return value should not be cached.",
+              notes = "This function may return a different `Texture` object each frame.  The return value should not be cached.\n\nThe texture will have the `rgba8` format, with `sample` and `render` usage flags.",
               related = {
                 "Layer:getPass"
               },
