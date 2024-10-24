@@ -1,5 +1,5 @@
 return {
-  summary = 'Cast a ray against the shape',
+  summary = 'Cast a ray against the shape.',
   description = [[
     Casts a ray against the Shape and returns the first intersection.
 

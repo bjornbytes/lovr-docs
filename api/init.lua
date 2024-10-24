@@ -39204,7 +39204,7 @@ return {
             },
             {
               name = "raycast",
-              summary = "Cast a ray against the shape",
+              summary = "Cast a ray against the shape.",
               description = "Casts a ray against the Shape and returns the first intersection.\n\nThis takes into account the pose of the Shape's collider (if any), as well as its local offset set with `Shape:setOffset`.",
               key = "Shape:raycast",
               module = "lovr.physics",
