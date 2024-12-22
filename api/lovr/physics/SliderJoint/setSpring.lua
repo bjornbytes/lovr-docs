@@ -16,7 +16,7 @@ return {
     },
     damping = {
       type = 'number',
-      default = '1.0',
+      default = '0.0',
       description = 'The damping ratio of the spring.'
     }
   },
