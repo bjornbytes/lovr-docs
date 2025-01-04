@@ -33,9 +33,9 @@ return {
     }
   },
   notes = [[
-    Changing the shader will preserve resource bindings (the ones set using `Pass:send`) **unless**
-    the new shader declares a resource for a binding number using a different type than the current
-    shader.  In this case, the resource "type" means one of the following:
+    Changing the shader will preserve variable values (the ones set using `Pass:send`) **unless**
+    the new shader declares a variable with the same as one in the old shader, but a different type.
+    The variable "type" means one of the following:
 
     - Uniform buffer (`uniform`).
     - Storage buffer (`buffer`).
@@ -43,15 +43,16 @@ return {
     - Storage texture, (`uniform image<type>`).
     - Sampler (`uniform sampler`).
 
-    If the new shader doesn't declare a resource in a particular binding number, any resource there
-    will be preserved.
+    If there's a clash in types, the variable will be reset to use a default resource:
 
-    If there's a clash in resource types like this, the variable will be "cleared".  Using a
-    buffer variable that has been cleared is not well-defined, and may return random data or even
-    crash the GPU.  For textures, white pixels will be returned.  Samplers will use `linear`
-    filtering and the `repeat` wrap mode.
+    - Buffer variables do not have well-defined behavior when they are reset like this, and may
+      return random data or even crash the GPU.
+    - Texture variable will use a default texture with a single white pixel.
+    - Sampler variables will use a default sampler with a `linear` filter mode and `repeat` wrap
+      mode.
 
-    Changing the shader will not clear push constants set in the `Constants` block.
+    Uniform variables with basic types like `float`, `vec3`, `mat4`, etc. will have their data
+    preserved as long as both shaders declare the variable with the same name and type.
   ]],
   related = {
     'Pass:send',
