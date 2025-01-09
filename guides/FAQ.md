@@ -7,7 +7,8 @@ Yes, LÖVR will automatically use a fake headset system that you can control wit
 if there isn't any VR hardware detected.
 
 You can also set the `t.modules.headset` flag to false in `lovr.conf` to disable VR completely and
-develop a traditional 3D desktop application.
+develop a traditional 3D desktop application.  Note that running flatscreen apps on mobile phones is
+not currently supported.
 
 Keep in mind that LÖVR is primarily designed for creating VR experiences, which have their own
 design considerations.  This means that LÖVR does not prioritize features common in other
