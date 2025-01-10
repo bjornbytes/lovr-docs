@@ -117,9 +117,9 @@ add a plugin library to an existing APK without recompiling the whole framework.
 
 :::note
 The plugin library must be compiled for the same architecture as the rest of the APK!  Most Android
-devices use the ARM64 architecture (but Magic Leap 2 uses x86_64). On Unix systems, you can run
+devices use the ARM64 architecture (but Magic Leap 2 uses x86\_64). On Unix systems, you can run
 `file myplugin.so` to check the architecture: it will say `ARM aarch64` for ARM64 or `x86-64` for
-x86_64.
+x86\_64.
 :::
 
 First, add the plugin to the APK.  APKs are just zip archives, so the `zip` command can do this.
