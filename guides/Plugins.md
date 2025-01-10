@@ -24,7 +24,7 @@ case, be sure to require the plugin with the lib prefix: `require 'liblovr-plugi
 :::
 
 :::note
-On Android, plugins are searched for in the `lib/arm64-v8a` folder of the APK.
+On Android, LÖVR looks for plugins in the `lib/arm64-v8a` folder of the APK.
 :::
 
 Plugins are not officially supported in WebAssembly yet, but this is theoretically possible.
@@ -109,6 +109,37 @@ next to the executable, and checks the `lib/arm64-v8a` folder of the APK).
 
 Android
 ---
+
+### Adding Plugins to an APK
+
+Instead of adding plugins to the `plugins` folder and building an APK with CMake, it is possible to
+add a plugin library to an existing APK without recompiling the whole framework.
+
+:::note
+The plugin library must be compiled for the same architecture as the rest of the APK!  Most Android
+devices use the ARM64 architecture (but Magic Leap 2 uses x86_64). On Unix systems, you can run
+`file myplugin.so` to check the architecture: it will say `ARM aarch64` for ARM64 or `x86-64` for
+x86_64.
+:::
+
+First, add the plugin to the APK.  APKs are just zip archives, so the `zip` command can do this.
+It's important to add the library without any compression, using the `-Zs` flag.  The library also
+needs to be in a `lib/arm64-v8a` folder, so it gets added to the correct path in the APK.
+
+    zip -u -Zs lovr.apk lib/arm64-v8a/myplugin.so
+
+Next, run zipalign on the APK.  This ensures the library is aligned to a 4096 byte page boundary,
+which Android requires for libraries loaded from APKs.
+
+    zipalign -f -p 4 lovr.apk lovr.apk.tmp
+
+Finally, resign the APK:
+
+    apksigner sign --ks /path/to/key.keystore --ks-pass pass:hunter2 --in lovr.apk.tmp --out lovr.apk
+
+This will produce a new, signed APK with the plugin in it!
+
+### Using JNI in Plugins
 
 Android currently offers no way for a native library to get access to the `JNIEnv*` pointer if that
 native library was loaded by another native library.  This means that LÖVR plugins have no way to
