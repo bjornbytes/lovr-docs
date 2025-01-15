@@ -233,12 +233,12 @@ return {
             {
               name = 'width',
               type = 'number',
-              description = 'The width of the window.'
+              description = 'The width of the window (or 0 to use the monitor width).'
             },
             {
               name = 'height',
               type = 'number',
-              description = 'The height of the window.'
+              description = 'The height of the window (or 0 to use the monitor height) .'
             },
             {
               name = 'fullscreen',
