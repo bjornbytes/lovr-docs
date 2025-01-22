@@ -1,5 +1,3 @@
-lovr.filesystem.watch()
-
 local function getJointDirection(skeleton, joint)
   return quat(unpack(skeleton[joint], 5)):direction()
 end
