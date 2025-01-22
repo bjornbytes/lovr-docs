@@ -26,6 +26,7 @@ end
 local function isThumbsUp(skeleton)
   return skeleton and
     getCurl(skeleton, 'thumb') < .1 and
+    getJointDirection(skeleton, 6).y > .4 and
     getCurl(skeleton, 'index') > .6 and
     getCurl(skeleton, 'middle') > .6 and
     getCurl(skeleton, 'ring') > .6 and
