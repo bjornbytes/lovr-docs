@@ -182,9 +182,9 @@ return {
   example = [[
     function lovr.load()
       local vertices = {
-        vec3(  0,  .4, 0), vec4(1, 0, 0, 1),
-        vec3(-.5, -.4, 0), vec4(0, 1, 0, 1),
-        vec3( .5, -.4, 0), vec4(0, 0, 1, 1)
+        { vec3(  0,  .4, 0), vec4(1, 0, 0, 1) },
+        { vec3(-.5, -.4, 0), vec4(0, 1, 0, 1) },
+        { vec3( .5, -.4, 0), vec4(0, 0, 1, 1) }
       }
 
       local format = {
@@ -198,5 +198,8 @@ return {
     function lovr.draw(pass)
       pass:mesh(triangle, 0, 1.7, -1)
     end
-  ]]
+  ]],
+  related = {
+    'Pass:setMeshMode',
+  }
 }
