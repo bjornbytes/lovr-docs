@@ -87,6 +87,10 @@ return {
       dispatch. It's equivalent to `WorkgroupID * WorkgroupSize + LocalThreadID` (usually what you
       want!)
 
+    There are limits to the number of workgroups that can be dispatched, see the `workgroupCount`
+    limit in `lovr.graphics.getLimits`.  The local workgroup size is also limited by the
+    `workgroupSize` and `totalWorkgroupSize` limits.
+
     Indirect compute dispatches are useful to "chain" compute shaders together, while keeping all of
     the data on the GPU.  The first dispatch can do some computation and write some results to
     buffers, then the second indirect dispatch can use the data in those buffers to know how many
@@ -144,6 +148,7 @@ return {
   related = {
     'Pass:barrier',
     'Pass:setShader',
-    'Pass:send'
+    'Pass:send',
+    'lovr.graphics.getLimits'
   }
 }

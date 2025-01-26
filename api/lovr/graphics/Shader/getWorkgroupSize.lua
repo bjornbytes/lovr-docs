@@ -28,5 +28,12 @@ return {
   notes = [[
     For example, if the workgroup size is `8x8x1` and `16x16x16` workgroups are dispatched, then the
     compute shader will run `16 * 16 * 16 * (8 * 8 * 1) = 262144` times.
-  ]]
+
+    The maximum workgroup size is hardware-specific, and is given by the `workgroupSize` and
+    `totalWorkgroupSize` limit in `lovr.graphics.getLimits`.
+  ]],
+  related = {
+    'Pass:compute',
+    'lovr.graphics.getLimits'
+  }
 }
