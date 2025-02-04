@@ -18,14 +18,17 @@ return {
     },
     drawcount = {
       type = 'number',
+      default = '1',
       description = 'The number of indirect draws to draw.'
     },
     offset = {
       type = 'number',
+      default = '0',
       description = 'A byte offset into the draw buffer.'
     },
     stride = {
       type = 'number',
+      default = '0',
       description = 'The number of bytes between consecutive elements in the draw buffer.'
     },
     x = {
@@ -160,8 +163,30 @@ return {
     },
     {
       description = [[
-        Perform indirect draws.  `drawcount` meshes from the vertex and index buffer will be drawn,
-        using parameters starting from `offset` bytes in the `draws` buffer.
+        Perform indirect draws by specifying a `draws` command buffer. This allows for the drawing
+        of instanced geometry to be orchestrated by a compute shader that writes to the `draws`
+        buffer. The `draws` buffer contains one or more commands that define how to draw instances.
+        The `stride` is autodetected if not specified (20 for indexed geometry and 16 for
+        non-indexed geometry).
+
+        The `draws` buffer needs to use one of these formats:
+        ``Lua
+        { -- drawing with vertices and indices
+          { name = 'indexCount', type = 'u32' },
+          { name = 'instanceCount', type = 'u32' },
+          { name = 'firstIndex', type = 'u32' },
+          { name = 'vertexOffset', type = 'i32' },
+          { name = 'firstInstance', type = 'u32' }
+        }
+        ```
+        ``Lua
+        { -- drawing with vertices; indices = nil
+          { name = 'vertexCount', type = 'u32' },
+          { name = 'instanceCount', type = 'u32' },
+          { name = 'firstVertex', type = 'u32' },
+          { name = 'firstInstance', type = 'u32' }
+        }
+        ```
       ]],
       arguments = { 'vertices', 'indices', 'draws', 'drawcount', 'offset', 'stride' },
       returns = {}
