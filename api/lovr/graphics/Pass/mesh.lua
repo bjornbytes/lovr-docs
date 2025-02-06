@@ -29,7 +29,11 @@ return {
     stride = {
       type = 'number',
       default = '0',
-      description = 'The number of bytes between consecutive elements in the draw buffer.'
+      description = [[
+        The number of bytes between consecutive elements in the draw buffer.  When zero or nil, the
+        stride is autodetected, and will be 20 bytes when an index buffer is provided and 16 bytes
+        otherwise.
+      ]]
     },
     x = {
       type = 'number',
@@ -163,13 +167,14 @@ return {
     },
     {
       description = [[
-        Perform indirect draws by specifying a `draws` command buffer. This allows for the drawing
+        Perform indirect draws by specifying a `draws` command buffer.  This allows for the drawing
         of instanced geometry to be orchestrated by a compute shader that writes to the `draws`
-        buffer. The `draws` buffer contains one or more commands that define how to draw instances.
-        The `stride` is autodetected if not specified (20 for indexed geometry and 16 for
-        non-indexed geometry).
+        buffer.  The `draws` buffer contains one or more commands that define how to draw instances.
+        The `stride` determines the number of bytes between each draw command.  By default the draws
+        are assumed to be tightly packed, with 20 bytes between indexed draws and 16 bytes for
+        non-indexed draws.
 
-        The `draws` buffer needs to use one of these formats:
+        The `draws` buffer should use one of these formats:
 
             { -- drawing with vertices and indices
               { name = 'indexCount', type = 'u32' },

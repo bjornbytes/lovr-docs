@@ -20232,7 +20232,7 @@ return {
                   returns = {}
                 },
                 {
-                  description = "Perform indirect draws by specifying a `draws` command buffer. This allows for the drawing of instanced geometry to be orchestrated by a compute shader that writes to the `draws` buffer. The `draws` buffer contains one or more commands that define how to draw instances. The `stride` is autodetected if not specified (20 for indexed geometry and 16 for non-indexed geometry).\n\nThe `draws` buffer needs to use one of these formats:\n\n    { -- drawing with vertices and indices\n      { name = 'indexCount', type = 'u32' },\n      { name = 'instanceCount', type = 'u32' },\n      { name = 'firstIndex', type = 'u32' },\n      { name = 'vertexOffset', type = 'i32' },\n      { name = 'firstInstance', type = 'u32' }\n    }\n\n    { -- drawing with vertices; indices = nil\n      { name = 'vertexCount', type = 'u32' },\n      { name = 'instanceCount', type = 'u32' },\n      { name = 'firstVertex', type = 'u32' },\n      { name = 'firstInstance', type = 'u32' }\n    }",
+                  description = "Perform indirect draws by specifying a `draws` command buffer.  This allows for the drawing of instanced geometry to be orchestrated by a compute shader that writes to the `draws` buffer.  The `draws` buffer contains one or more commands that define how to draw instances. The `stride` determines the number of bytes between each draw command.  By default the draws are assumed to be tightly packed, with 20 bytes between indexed draws and 16 bytes for non-indexed draws.\n\nThe `draws` buffer should use one of these formats:\n\n    { -- drawing with vertices and indices\n      { name = 'indexCount', type = 'u32' },\n      { name = 'instanceCount', type = 'u32' },\n      { name = 'firstIndex', type = 'u32' },\n      { name = 'vertexOffset', type = 'i32' },\n      { name = 'firstInstance', type = 'u32' }\n    }\n\n    { -- drawing with vertices; indices = nil\n      { name = 'vertexCount', type = 'u32' },\n      { name = 'instanceCount', type = 'u32' },\n      { name = 'firstVertex', type = 'u32' },\n      { name = 'firstInstance', type = 'u32' }\n    }",
                   arguments = {
                     {
                       name = "vertices",
@@ -20265,7 +20265,7 @@ return {
                     {
                       name = "stride",
                       type = "number",
-                      description = "The number of bytes between consecutive elements in the draw buffer.",
+                      description = "The number of bytes between consecutive elements in the draw buffer.  When zero or nil, the stride is autodetected, and will be 20 bytes when an index buffer is provided and 16 bytes otherwise.",
                       default = "0"
                     }
                   },
