@@ -20232,7 +20232,7 @@ return {
                   returns = {}
                 },
                 {
-                  description = "Perform indirect draws.  `drawcount` meshes from the vertex and index buffer will be drawn, using parameters starting from `offset` bytes in the `draws` buffer.",
+                  description = "Perform indirect draws by specifying a `draws` command buffer. This allows for the drawing of instanced geometry to be orchestrated by a compute shader that writes to the `draws` buffer. The `draws` buffer contains one or more commands that define how to draw instances. The `stride` is autodetected if not specified (20 for indexed geometry and 16 for non-indexed geometry).\n\nThe `draws` buffer needs to use one of these formats: ``Lua { -- drawing with vertices and indices\n  { name = 'indexCount', type = 'u32' },\n  { name = 'instanceCount', type = 'u32' },\n  { name = 'firstIndex', type = 'u32' },\n  { name = 'vertexOffset', type = 'i32' },\n  { name = 'firstInstance', type = 'u32' } }\n``` ``Lua { -- drawing with vertices; indices = nil\n  { name = 'vertexCount', type = 'u32' },\n  { name = 'instanceCount', type = 'u32' },\n  { name = 'firstVertex', type = 'u32' },\n  { name = 'firstInstance', type = 'u32' } }\n```",
                   arguments = {
                     {
                       name = "vertices",
@@ -20253,17 +20253,20 @@ return {
                     {
                       name = "drawcount",
                       type = "number",
-                      description = "The number of indirect draws to draw."
+                      description = "The number of indirect draws to draw.",
+                      default = "1"
                     },
                     {
                       name = "offset",
                       type = "number",
-                      description = "A byte offset into the draw buffer."
+                      description = "A byte offset into the draw buffer.",
+                      default = "0"
                     },
                     {
                       name = "stride",
                       type = "number",
-                      description = "The number of bytes between consecutive elements in the draw buffer."
+                      description = "The number of bytes between consecutive elements in the draw buffer.",
+                      default = "0"
                     }
                   },
                   returns = {}
