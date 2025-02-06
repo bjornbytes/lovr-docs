@@ -26885,25 +26885,6 @@ return {
               }
             },
             {
-              name = "getViewMask",
-              summary = "Get the view mask of the layer.",
-              description = "Returns the view mask of the layer.  This is which eyes the layer will show up in, and is meant to be used for stereo images, where 1 layer is rendered in the left eye and another layer is rendred in the right eye at the same position.",
-              key = "Layer:getViewMask",
-              module = "lovr.headset",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "views",
-                      type = "ViewMask",
-                      description = "The view mask of the layer."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getViewport",
               summary = "Get the viewport of the layer.",
               description = "Returns the viewport of the layer.  The viewport is a 2D region of pixels that the layer will display within its plane.",
@@ -27112,25 +27093,6 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z position of the layer."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setViewMask",
-              summary = "Set the view mask of the layer.",
-              description = "Sets the view mask of the layer.  This is which eyes the layer will show up in, and is meant to be used for stereo images, where 1 layer is rendered in the left eye and another layer is rendred in the right eye at the same position.",
-              key = "Layer:setViewMask",
-              module = "lovr.headset",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "views",
-                      type = "ViewMask",
-                      description = "The view mask of the layer."
                     }
                   },
                   returns = {}
