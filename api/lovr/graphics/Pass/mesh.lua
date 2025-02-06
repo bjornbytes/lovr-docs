@@ -170,23 +170,21 @@ return {
         non-indexed geometry).
 
         The `draws` buffer needs to use one of these formats:
-        ``Lua
-        { -- drawing with vertices and indices
-          { name = 'indexCount', type = 'u32' },
-          { name = 'instanceCount', type = 'u32' },
-          { name = 'firstIndex', type = 'u32' },
-          { name = 'vertexOffset', type = 'i32' },
-          { name = 'firstInstance', type = 'u32' }
-        }
-        ```
-        ``Lua
-        { -- drawing with vertices; indices = nil
-          { name = 'vertexCount', type = 'u32' },
-          { name = 'instanceCount', type = 'u32' },
-          { name = 'firstVertex', type = 'u32' },
-          { name = 'firstInstance', type = 'u32' }
-        }
-        ```
+
+            { -- drawing with vertices and indices
+              { name = 'indexCount', type = 'u32' },
+              { name = 'instanceCount', type = 'u32' },
+              { name = 'firstIndex', type = 'u32' },
+              { name = 'vertexOffset', type = 'i32' },
+              { name = 'firstInstance', type = 'u32' }
+            }
+
+            { -- drawing with vertices; indices = nil
+              { name = 'vertexCount', type = 'u32' },
+              { name = 'instanceCount', type = 'u32' },
+              { name = 'firstVertex', type = 'u32' },
+              { name = 'firstInstance', type = 'u32' }
+            }
       ]],
       arguments = { 'vertices', 'indices', 'draws', 'drawcount', 'offset', 'stride' },
       returns = {}
