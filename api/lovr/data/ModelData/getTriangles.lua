@@ -20,7 +20,10 @@ return {
     },
     indices = {
       type = 'table',
-      description = 'The vertex indices.  Every 3 indices describes a triangle.'
+      description = [[
+        A list of numbers representing how to connect the vertices into triangles.  Each number is
+        a 1-based index into the `vertices` table, and every 3 indices form a triangle.
+      ]]
     }
   },
   variants = {
