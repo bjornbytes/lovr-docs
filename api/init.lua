@@ -375,7 +375,7 @@ return {
       name = "focus",
       tag = "callbacks",
       summary = "Called when the application gains or loses input focus.",
-      description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the Steam dashboard).  The callback receives a single argument, focused, which is a boolean indicating whether or not the application is now focused.  It may make sense to pause the game or reduce visual fidelity when the application loses focus.",
+      description = "The `lovr.focus` callback is called whenever the application acquires or loses focus (for example, when opening or closing the system VR menu).  The callback receives a `focused` argument, indicating whether or not the application is now focused.  Additionally, both the headset and desktop window have separate focus states, so a `display` argument indicates which display gained or lost input focus.  It may make sense to pause the game, reduce visual fidelity, or mute audio when the application loses focus.",
       key = "lovr.focus",
       module = "lovr",
       related = {
@@ -389,6 +389,11 @@ return {
               name = "focused",
               type = "boolean",
               description = "Whether the program is now focused."
+            },
+            {
+              name = "display",
+              type = "DisplayType",
+              description = "Whether the headset or desktop window changed input focus."
             }
           },
           returns = {}
@@ -970,7 +975,7 @@ return {
       name = "visible",
       tag = "callbacks",
       summary = "Called when the application gains or loses visibility.",
-      description = "The `lovr.visible` callback is called whenever the application becomes visible or invisible. `lovr.draw` may still be called even while invisible to give the VR runtime timing info.  If the VR runtime decides the application doesn't need to render anymore, LÖVR will detect this and stop calling `lovr.draw`.",
+      description = "The `lovr.visible` callback is called whenever the application becomes visible or invisible. `lovr.draw` may still be called even while invisible to give the VR runtime timing info.  If the VR runtime decides the application doesn't need to render anymore, LÖVR will detect this and stop calling `lovr.draw`.\n\nThis event is also fired when the desktop window is minimized or restored.  It's possible to distinguish between the headset and window using the `display` parameter.",
       key = "lovr.visible",
       module = "lovr",
       related = {
@@ -984,6 +989,11 @@ return {
               name = "visible",
               type = "boolean",
               description = "Whether the application is visible in the headset display."
+            },
+            {
+              name = "display",
+              type = "DisplayType",
+              description = "Whether the headset or desktop window changed visibility."
             }
           },
           returns = {}
@@ -8399,6 +8409,27 @@ return {
       key = "lovr.event",
       enums = {
         {
+          name = "DisplayType",
+          summary = "Distinguishes between the headset and window displays.",
+          description = "This enum is used to distinguish whether a display is the headset display or the desktop window.",
+          key = "DisplayType",
+          module = "lovr.event",
+          related = {
+            "lovr.focus",
+            "lovr.visible"
+          },
+          values = {
+            {
+              name = "headset",
+              description = "The headset."
+            },
+            {
+              name = "window",
+              description = "The desktop window."
+            }
+          }
+        },
+        {
           name = "KeyCode",
           summary = "Keys that can be pressed.",
           description = "Keys that can be pressed on a keyboard.  Notably, numpad keys are missing right now.",
@@ -13553,8 +13584,8 @@ return {
         },
         {
           name = "newTextureView",
-          tag = "texture-view",
-          summary = "Create a texture view referencing a parent Texture.",
+          tag = "graphics-objects",
+          summary = "Create a texture view.",
           description = "Creates a new Texture view.  A texture view does not store any pixels on its own, but instead uses the pixel data of a \"parent\" Texture object.  The width, height, format, sample count, and usage flags all match the parent.  The view may have a different `TextureType`, and it may reference a subset of the parent texture's layers and mipmap levels.\n\nTexture views are used for:\n\n- Reinterpretation of texture contents.  For example, a cubemap can be treated as an array\n  texture.\n- Rendering to a particular array layer or mipmap level of a texture.\n- Binding a particular range of layers or mipmap levels to a shader.",
           key = "lovr.graphics.newTextureView",
           module = "lovr.graphics",
@@ -23595,7 +23626,8 @@ return {
           key = "Texture",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.newTexture"
+            "lovr.graphics.newTexture",
+            "lovr.graphics.newTextureView"
           },
           methods = {
             {
@@ -24481,10 +24513,6 @@ return {
               tag = "texture-transfer"
             },
             {
-              name = "Texture Views",
-              tag = "texture-view"
-            },
-            {
               name = "Sampler",
               tag = "texture-sampler"
             }
@@ -24798,31 +24826,6 @@ return {
             {
               name = "add",
               description = "Color values from virtual content will be added to the real world.  This is the most common mode used for AR.  Notably, black pixels will not show up at all."
-            }
-          }
-        },
-        {
-          name = "ViewMask",
-          summary = "Different eyes a Layer can show up in.",
-          description = "The different eyes a Layer can show up in",
-          key = "ViewMask",
-          module = "lovr.headset",
-          related = {
-            "Layer:getViewMask",
-            "Layer:setViewMask"
-          },
-          values = {
-            {
-              name = "both",
-              description = "The layer will show up in both eyes."
-            },
-            {
-              name = "left",
-              description = "The layer will only show up in the left eye."
-            },
-            {
-              name = "right",
-              description = "The layer will only show up in the right eye."
             }
           }
         }
@@ -26683,6 +26686,61 @@ return {
           },
           methods = {
             {
+              name = "getColor",
+              summary = "Get the color of the layer.",
+              description = "Returns the color of the layer.  This will tint the contents of its texture.  It can be used to fade the layer without re-rendering its texture, which is especially useful for layers created with the `static` option.",
+              key = "Layer:getColor",
+              module = "lovr.headset",
+              notes = "The default color is white (all 1s).\n\nNot every headset system supports layer colors.  See the `layerColor` property of `lovr.headset.getFeatures` to check for support.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the color."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the color."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the color."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the color."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getCurve",
+              summary = "Get the curve of the layer.",
+              description = "Returns the curve of the layer.  Curving a layer renders it on a piece of a cylinder instead of a plane. The radius of the cylinder is `1 / curve` meters, so increasing the curve decreases the radius of the cylinder.",
+              key = "Layer:getCurve",
+              module = "lovr.headset",
+              notes = "When a layer is created, its curve is zero.\n\nNot every headset system supports curved layers.  See the `layerCurve` property of `lovr.headset.getFeatures` to check for support.\n\nNo matter what the curve is, the center of the layer texture will always get rendered at the layer's pose.\n\nThe largest possible curve is `2 * math.pi / width`, where `width` is the width of the layer in meters.  This would cause the cylinder to fully wrap around.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "curve",
+                      type = "number",
+                      description = "The curve of the layer."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDimensions",
               summary = "Get the size of the layer.",
               description = "Returns the width and height of the layer.  This is the size of the Layer's plane in meters, not the resolution of the layer's texture in pixels.",
@@ -26915,6 +26973,89 @@ return {
                       description = "The height of the viewport, in pixels."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setColor",
+              summary = "Set the color of the layer.",
+              description = "Sets the color of the layer.  This will tint the contents of its texture.  It can be used to fade the layer without re-rendering its texture, which is especially useful for layers created with the `static` option.",
+              key = "Layer:setColor",
+              module = "lovr.headset",
+              notes = "The default color is white (all 1s).\n\nNot every headset system supports layer colors.  See the `layerColor` property of `lovr.headset.getFeatures` to check for support.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The red component of the color."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The green component of the color."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The blue component of the color."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the color.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "table",
+                      descriptioin = "A table of 3 or 4 color components."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "hex",
+                      type = "number",
+                      description = "A hexcode."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The alpha component of the color.",
+                      default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setCurve",
+              summary = "Set the curve of the layer.",
+              description = "Sets the curve of the layer.  Curving a layer renders it on a piece of a cylinder instead of a plane. The radius of the cylinder is `1 / curve` meters, so increasing the curve decreases the radius of the cylinder.",
+              key = "Layer:setCurve",
+              module = "lovr.headset",
+              notes = "When a layer is created, its curve is zero.\n\nNot every headset system supports curved layers.  See the `layerCurve` property of `lovr.headset.getFeatures` to check for support.  If curved layers are not supported, this function will do nothing.\n\nNo matter what the curve is, the center of the layer texture will always get rendered at the layer's pose.\n\nThe largest possible curve is `2 * math.pi / width`, where `width` is the width of the layer in meters.  This would cause the cylinder to fully wrap around.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "curve",
+                      type = "number",
+                      description = "The curve of the layer.  Negative values or zero means no curve.",
+                      default = "0"
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -44082,6 +44223,33 @@ return {
           }
         },
         {
+          name = "isWindowFocused",
+          tag = "system-window",
+          summary = "Check if the desktop window is focused.",
+          description = "Returns whether the desktop window is focused.",
+          key = "lovr.system.isWindowFocused",
+          module = "lovr.system",
+          related = {
+            "lovr.focus",
+            "lovr.headset.isFocused",
+            "lovr.system.openWindow",
+            "lovr.system.isWindowOpen",
+            "lovr.system.isWindowVisible"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "focused",
+                  type = "boolean",
+                  description = "Whether the desktop window is focused."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isWindowOpen",
           tag = "system-window",
           summary = "Check if the desktop window is open.",
@@ -44089,7 +44257,9 @@ return {
           key = "lovr.system.isWindowOpen",
           module = "lovr.system",
           related = {
-            "lovr.system.openWindow"
+            "lovr.system.openWindow",
+            "lovr.system.isWindowVisible",
+            "lovr.system.isWindowFocused"
           },
           variants = {
             {
@@ -44099,6 +44269,33 @@ return {
                   name = "open",
                   type = "boolean",
                   description = "Whether the desktop window is open."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "isWindowVisible",
+          tag = "system-window",
+          summary = "Check if the desktop window is visible.",
+          description = "Returns whether the desktop window is visible (open and not minimized).",
+          key = "lovr.system.isWindowVisible",
+          module = "lovr.system",
+          related = {
+            "lovr.visible",
+            "lovr.headset.isVisible",
+            "lovr.system.openWindow",
+            "lovr.system.isWindowOpen",
+            "lovr.system.isWindowFocused"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "visible",
+                  type = "boolean",
+                  description = "Whether the desktop window is visible."
                 }
               }
             }

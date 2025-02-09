@@ -1,6 +1,6 @@
 return {
-  tag = 'texture-view',
-  summary = 'Create a texture view referencing a parent Texture.',
+  tag = 'graphics-objects',
+  summary = 'Create a texture view.',
   description = [[
     Creates a new Texture view.  A texture view does not store any pixels on its own, but instead
     uses the pixel data of a "parent" Texture object.  The width, height, format, sample count, and

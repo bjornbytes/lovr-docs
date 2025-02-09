@@ -20,6 +20,8 @@ return {
     }
   },
   related = {
-    'lovr.system.openWindow'
+    'lovr.system.openWindow',
+    'lovr.system.isWindowVisible',
+    'lovr.system.isWindowFocused'
   }
 }

@@ -365,7 +365,7 @@ local function validateObject(object)
         end
       end
 
-      warnIf(not found, '%s is missing a parent link/tag', method.key)
+      warnIf(not found, '%s is missing from its parent\'s page', method.key)
     end
   end
 
@@ -438,9 +438,15 @@ local function validateModule(module)
     end
   end
 
+  local ignore = {
+    setSource = true,
+    getBundlePath = true,
+    openConsole = true
+  }
+
   for name in pairs(t or {}) do
     local key = ('%s.%s'):format(module.key, name)
-    warnIf(not lookup[key], 'Missing docs for %s', key)
+    warnIf(not ignore[name] and not lookup[key], 'Missing docs for %s', key)
   end
 
   for _, fn in ipairs(module.enums) do

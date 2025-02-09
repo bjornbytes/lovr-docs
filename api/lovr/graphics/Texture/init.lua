@@ -6,7 +6,8 @@ return {
     textures loaded from images provide surface data to `Material` objects.
   ]],
   constructors = {
-    'lovr.graphics.newTexture'
+    'lovr.graphics.newTexture',
+    'lovr.graphics.newTextureView'
   },
   sections = {
     {
@@ -16,10 +17,6 @@ return {
     {
       name = 'Transfers',
       tag = 'texture-transfer'
-    },
-    {
-      name = 'Texture Views',
-      tag = 'texture-view'
     },
     {
       name = 'Sampler',
