@@ -27,6 +27,7 @@ return {
       returns = { 'x', 'y', 'z' }
     }
   },
+  notes = 'Currently, the point positions do not include the scale of the convex shape.',
   related = {
     'ConvexShape:getPointCount'
   }
