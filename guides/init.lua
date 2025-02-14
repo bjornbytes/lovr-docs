@@ -10,5 +10,6 @@ return {
   'Contributing',
   'Compiling',
   'FAQ',
-  'v0.17.0'
+  'v0.17.0',
+  'v0.18.0'
 }
