@@ -1,12 +1,6 @@
 return {
   summary = 'Find colliders that overlap a shape.',
   description = [[
-    - Collides a shape with the world, returning all colliders that the shape touches.
-    - You can provide a shape and a transform
-    - Or a collider which will use the collider's shape and pose.
-    - You can pass a tag filter to filter results by tags
-    - You can pass a callback which will be called for each hit, or leave nil to get the first hit
-
     Places a shape in the World, returning any shapes it intersects.
 
     A tag filter can be given to filter out shapes by their collider's tag:
@@ -61,6 +55,14 @@ return {
     orientation = {
       type = 'Quat',
       description = 'The orientation of the shape.'
+    },
+    maxDistance = {
+      type = 'number',
+      default = '0',
+      description = [[
+        The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes
+        touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.
+      ]]
     },
     filter = {
       type = 'string',
