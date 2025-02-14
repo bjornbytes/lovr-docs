@@ -24770,6 +24770,27 @@ return {
           }
         },
         {
+          name = "FoveationLevel",
+          summary = "Different foveation levels.",
+          description = "The different levels of foveation supported by `lovr.headset.setFoveation`.",
+          key = "FoveationLevel",
+          module = "lovr.headset",
+          values = {
+            {
+              name = "low",
+              description = "Low foveation."
+            },
+            {
+              name = "medium",
+              description = "Medium foveation."
+            },
+            {
+              name = "high",
+              description = "High foveation."
+            }
+          }
+        },
+        {
           name = "HeadsetDriver",
           summary = "VR APIs.",
           description = "These are all of the supported VR APIs that LÖVR can use to power the lovr.headset module.  You can change the order of headset drivers using `lovr.conf` to prefer or exclude specific VR APIs.\n\nAt startup, LÖVR searches through the list of drivers in order.",
@@ -25439,6 +25460,32 @@ return {
                       description = "Whether the `filter` option is supported for Layers."
                     }
                   }
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getFoveation",
+          tag = "headset",
+          summary = "Get the current foveation settings.",
+          description = "Returns the current foveation settings, previously set by `lovr.headset.setFoveation`.'",
+          key = "lovr.headset.getFoveation",
+          module = "lovr.headset",
+          notes = "Foveation is disabled by default.",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "level",
+                  type = "FoveationLevel",
+                  description = "The foveation level (or the maximum level when dynamic foveation is active)."
+                },
+                {
+                  name = "dynamic",
+                  type = "boolean",
+                  description = "Whether dynamic foveation is active, allowing the system to reduce foveation based on GPU load."
                 }
               }
             }
@@ -26467,6 +26514,50 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the display refresh rate was successfully set."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "setFoveation",
+          tag = "headset",
+          summary = "Set foveated rendering settings.",
+          description = "Sets foveated rendering settings.  Currently only fixed foveated rendering is supported.  This renders the edges of the screen at a lower resolution to improve GPU performance.  Higher foveation levels will save more GPU time, but make the edges of the screen more blocky.",
+          key = "lovr.headset.setFoveation",
+          module = "lovr.headset",
+          notes = "Foveation is disabled by default.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "level",
+                  type = "FoveationLevel",
+                  description = "The foveation level (or the maximum level when dynamic foveation is active)."
+                },
+                {
+                  name = "dynamic",
+                  type = "boolean",
+                  description = "Whether the system is allowed to dynamically adjust the foveation level based on GPU load.",
+                  default = "true"
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether foveation was enabled successfully."
+                }
+              }
+            },
+            {
+              description = "Disables foveation.",
+              arguments = {},
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether foveation was enabled successfully."
                 }
               }
             }
