@@ -9,9 +9,12 @@ return {
     The message can have a "tag" that is a short string representing the sender, and a "level"
     indicating how severe the message is.
 
-    The `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver
-    (tagged as `GPU`).  It is also possible to emit customlog messages using `lovr.event.push`, or
-    by calling the callback.
+    The `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver,
+    tagged as `GPU`.  The `t.headset.debug` will enable OpenXR messages from the VR runtime,
+    tagged as `XR`.
+
+    It is also possible to emit custom log messages using `lovr.event.push`, or by calling the
+    callback.
   ]],
   arguments = {
     message = {

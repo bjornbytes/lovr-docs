@@ -500,7 +500,7 @@ return {
       name = "log",
       tag = "callbacks",
       summary = "Called when a message is logged.",
-      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver (tagged as `GPU`).  It is also possible to emit customlog messages using `lovr.event.push`, or by calling the callback.",
+      description = "This callback is called when a message is logged.  The default implementation of this callback prints the message to the console using `print`, but it's possible to override this callback to render messages in VR, write them to a file, filter messages, and more.\n\nThe message can have a \"tag\" that is a short string representing the sender, and a \"level\" indicating how severe the message is.\n\nThe `t.graphics.debug` flag in `lovr.conf` can be used to get log messages from the GPU driver, tagged as `GPU`.  The `t.headset.debug` will enable OpenXR messages from the VR runtime, tagged as `XR`.\n\nIt is also possible to emit custom log messages using `lovr.event.push`, or by calling the callback.",
       key = "lovr.log",
       module = "lovr",
       related = {
