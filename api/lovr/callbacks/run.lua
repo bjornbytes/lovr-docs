@@ -47,18 +47,14 @@ return {
           if lovr.system then lovr.system.pollEvents() end
           if lovr.event then
             for name, a, b, c, d in lovr.event.poll() do
-              if name == 'restart' then
-                local cookie = lovr.restart and lovr.restart()
-                return 'restart', cookie
-              elseif name == 'quit' and (not lovr.quit or not lovr.quit(a)) then
-                return a or 0
-              end
-              if lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end
+              if name == 'restart' then return 'restart', lovr.restart and lovr.restart()
+              elseif name == 'quit' and (not lovr.quit or not lovr.quit(a)) then return a or 0
+              elseif name ~= 'quit' and lovr.handlers[name] then lovr.handlers[name](a, b, c, d) end
             end
           end
           local dt = 0
           if lovr.timer then dt = lovr.timer.step() end
-          if lovr.headset then dt = lovr.headset.update() end
+          if lovr.headset and lovr.headset.isActive() then dt = lovr.headset.update() end
           if lovr.update then lovr.update(dt) end
           if lovr.graphics then
             local headset = lovr.headset and lovr.headset.getPass()
