@@ -70,6 +70,9 @@ Tips
   `lovr.exe`, or specify the `--console` flag when running on the command line.
 - If you have the headset module disabled, be sure to set the y value of the cube to 0 instead of
   1.7.
+- On macOS, if you get an error that says LÖVR can't be opened, run
+  `xattr -d com.apple.quarantine lovr.app` from the terminal (ensuring you're in the same directory
+  as `lovr.app`) to allow it to run.
 
 Next Steps
 ---
