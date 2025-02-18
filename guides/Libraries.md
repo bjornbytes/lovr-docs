@@ -98,6 +98,10 @@ General Lua libraries:
       <td>A library for object oriented programming in Lua.</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/1bardesign/batteries">lodr</a></td>
+      <td>Reusable dependencies for games made with Lua.</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/rxi/classic">classic</a></td>
       <td>Class library.</td>
     </tr>
@@ -112,6 +116,10 @@ General Lua libraries:
     <tr>
       <td><a href="https://github.com/airstruck/knife">knife</a></td>
       <td>A collection of useful micromodules for Lua.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/eigenbom/lua-geo2d">lua-geo2d</a></td>
+      <td>Lua library for 2D computational geometry.</td>
     </tr>
     <tr>
       <td><a href="https://github.com/rxi/lume">lume</a></td>
