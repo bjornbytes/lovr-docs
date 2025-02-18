@@ -98,7 +98,7 @@ General Lua libraries:
       <td>A library for object oriented programming in Lua.</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/1bardesign/batteries">lodr</a></td>
+      <td><a href="https://github.com/1bardesign/batteries">batteries</a></td>
       <td>Reusable dependencies for games made with Lua.</td>
     </tr>
     <tr>
