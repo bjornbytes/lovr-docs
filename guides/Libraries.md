@@ -71,6 +71,10 @@ LÖVR-specific libraries:
       <td>Mouse input.</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/bjornbytes/lovr-neovim">lovr-neovim</a></td>
+      <td>Embed a neovim editor in LÖVR.</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/jmiskovic/lovr-phywire">lovr-phywire</a></td>
       <td>Visualizer for LÖVR physics internals.</td>
     </tr>
