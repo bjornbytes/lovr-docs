@@ -67,7 +67,7 @@ function lovr.draw(pass)
   pass:skybox(skybox)
 
   pass:setShader(shader)
-  pass:send('cubemap', skybox)
+  pass:send('cubemap', environmentMap)
   pass:send('sphericalHarmonics', sphericalHarmonics)
   pass:draw(model, 0, 1.5, -1.5, .5)
 end
