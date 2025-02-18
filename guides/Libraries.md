@@ -35,10 +35,6 @@ LÖVR-specific libraries:
       <td>A lightweight text editor written in Lua and hosted on LÖVR platform.</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/mcclure/lodr">lodr</a></td>
-      <td>A live-reloading wrapper for LÖVR.</td>
-    </tr>
-    <tr>
       <td><a href="https://github.com/jmiskovic/lovr-atmo">lovr-atmo</a></td>
       <td>Atmosphere rendering for LÖVR framework</td>
     </tr>
