@@ -128,7 +128,12 @@ return {
     information about each field.  Each inner table has the following keys:
 
     - `type` is the `DataType` of the field and is required.
-    - `name` is the name of the field, used to match table keys and vertex attribute names.
+    - `name` is the name of the field.  The field name is used to match table keys up to buffer
+      fields when writing table data to the Buffer, and is also used to match up buffer fields with
+      vertex attribute names declared in a `Shader`.  LÖVR has a set of <a
+      href="Shaders#vertex-attributes">default vertex attributes</a> that shaders will automatically
+      use, allowing you to create a custom mesh without having to write shader code or add custom
+      vertex attributes in a shader.
     - `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next
       to each other sequentially in memory, subject to any padding required by the Buffer's layout.
       In practice this means that you probably want to provide an `offset` for either all of the
