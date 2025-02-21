@@ -127,6 +127,15 @@ function argumentType(arg)
   end
 end
 
+--- Returns the name of a function argument.
+function argumentName(arg)
+  if arg.name:sub(1, 3) == '...' then
+    return '...'
+  else
+    return arg.name
+  end
+end
+
 --- Renders the header (description, notes, examples, etc.) for anything that's like a function.
 local function renderFunctionHeader(out, func)
   add(out, "")
@@ -172,7 +181,7 @@ local function renderType(out, tag, variant)
   end
 
   local params = join(map(variant.arguments, function(arg)
-    return ("%s%s: %s"):format(arg.name, optionalSuffix(arg), argumentType(arg))
+    return ("%s%s: %s"):format(argumentName(arg), optionalSuffix(arg), argumentType(arg))
   end), ", ")
 
   add(out, doc(("%s fun(%s): %s"):format(tag, params, returns)))
@@ -184,7 +193,7 @@ local function renderFunctionVariant(out, func, variant)
   -- Document parameters
   if variant.arguments then
     for _, arg in ipairs(variant.arguments) do
-      add(out, doc(("@param %s%s %s %s"):format(arg.name, optionalSuffix(arg), argumentType(arg), arg.description)))
+      add(out, doc(("@param %s%s %s %s"):format(argumentName(arg), optionalSuffix(arg), argumentType(arg), arg.description)))
     end
   end
 
@@ -197,7 +206,7 @@ local function renderFunctionVariant(out, func, variant)
 
   -- Build function signature
   local signature = join(map(variant.arguments, function(arg)
-    return arg.name
+    return argumentName(arg)
   end), ", ")
 
   add(out, ("function %s(%s) end"):format(func.key, signature))
