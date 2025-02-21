@@ -21286,7 +21286,7 @@ return {
                     {
                       name = "t",
                       type = "table",
-                      descriptioin = "A table of 3 or 4 color components."
+                      description = "A table of 3 or 4 color components."
                     }
                   },
                   returns = {}
@@ -27276,7 +27276,7 @@ return {
                     {
                       name = "t",
                       type = "table",
-                      descriptioin = "A table of 3 or 4 color components."
+                      description = "A table of 3 or 4 color components."
                     }
                   },
                   returns = {}
