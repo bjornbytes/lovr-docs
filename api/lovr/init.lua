@@ -28,7 +28,7 @@ return {
     {
       name = 'Version',
       tag = 'version',
-      description = 'This function can be used to get the current version of LÖVR.'
+      description = 'This function returns the current version of LÖVR.'
     },
     {
       name = 'Libraries',
