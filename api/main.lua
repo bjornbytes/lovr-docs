@@ -1,5 +1,3 @@
-local serpent = require 'serpent'
-
 local f = io.popen('git branch --show-current')
 local dev = f and f:read('*a'):match('%w+') == 'dev'
 f:close()
@@ -493,37 +491,17 @@ function lovr.load()
   table.sort(api.modules, function(a, b) return a.key < b.key end)
   table.sort(api.callbacks, function(a, b) return a.key < b.key end)
 
-  -- Serialize
-  local file = io.open(lovr.filesystem.getSource() .. '/init.lua', 'w')
-  assert(file, 'Could not open init.lua for writing')
+  -- Run generators
+  for i, file in ipairs(lovr.filesystem.getDirectoryItems('generators')) do
+    local name = file:gsub('%.lua$', '')
+    local ok, generator = pcall(require, 'generators.' .. name)
 
-  local keyPriority = {
-    name = 1,
-    tag = 2,
-    summary = 3,
-    type = 4,
-    description = 5,
-    key = 6,
-    module = 7,
-    arguments = 8,
-    returns = 9
-  }
-  local function sort(keys, t)
-    table.sort(keys, function(lhs, rhs)
-      local leftPrio = keyPriority[lhs]
-      local rightPrio = keyPriority[rhs]
-      if leftPrio and rightPrio then
-        return leftPrio < rightPrio
-      elseif leftPrio or rightPrio then
-        return leftPrio ~= nil
-      else
-        return lhs < rhs
-      end
-    end)
+    if not ok then
+      print(('Could not load generator %q: %s'):format(name, generator))
+    elseif not arg[1] or arg[1] == name then
+      generator(api)
+    end
   end
-  local contents = 'return ' .. serpent.block(api, { comment = false, sortkeys = sort })
-  file:write(contents)
-  file:close()
 
   -- Bye
   lovr.event.quit()
