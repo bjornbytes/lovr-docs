@@ -15,6 +15,12 @@ jobs:
     name: Generate
     runs-on: ubuntu-latest
     steps:
+      - name: Update Packages
+        run: sudo apt update
+
+      - name: Install Packages
+        run: sudo apt install -y libfuse2
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
