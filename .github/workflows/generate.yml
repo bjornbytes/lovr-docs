@@ -37,7 +37,7 @@ jobs:
 
       - name: Format
         run: |
-          curl -s https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.1/stylua-linux-x86_64.zip > stylua.zip
+          curl -o stylua.zip -sL https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.1/stylua-linux-x86_64.zip
           unzip stylua.zip
           chmod +x stylua
           ./stylua library
