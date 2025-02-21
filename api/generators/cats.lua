@@ -68,7 +68,7 @@ end
 --- contains newlines, they are prefixed with `---`.
 local function doc(str)
   str = str or ""
-  return "---" .. str:gsub("\n", "\n---")
+  return "---" .. str:gsub("\n", "\n---"):gsub('%s*$', '')
 end
 
 --- Determines if a parameter is optional. If it is, returns a `?` suffix.
