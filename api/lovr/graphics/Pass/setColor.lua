@@ -22,7 +22,7 @@ return {
     },
     t = {
       type = 'table',
-      descriptioin = 'A table of 3 or 4 color components.'
+      description = 'A table of 3 or 4 color components.'
     },
     hex = {
       type = 'number',
