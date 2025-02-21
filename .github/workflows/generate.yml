@@ -6,6 +6,8 @@ on:
       - dev
     paths:
       - 'api/lovr/**.lua'
+      - 'api/generators/*.lua'
+      - 'api/main.lua'
 
 permissions:
   contents: write
@@ -32,6 +34,13 @@ jobs:
 
       - name: Generate
         run: ./lovr-x86_64.AppImage docs/api
+
+      - name: Format
+        run: |
+          curl -s https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.1/stylua-linux-x86_64.zip > stylua.zip
+          unzip stylua.zip
+          chmod +x stylua
+          ./stylua library
 
       - name: Checkout cats branch
         uses: actions/checkout@v4
