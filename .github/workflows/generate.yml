@@ -1,0 +1,48 @@
+name: Generate
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'api/lovr/**.lua'
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    name: Generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: docs
+
+      - name: Download LÖVR
+        run: curl -sOL https://lovr.org/f/lovr-x86_64.AppImage && chmod +x lovr-x86_64.AppImage
+
+      - name: Generate
+        run: ./lovr-x86_64.AppImage docs/api
+
+      - name: Checkout cats branch
+        uses: actions/checkout@v4
+        with:
+          ref: cats
+          path: cats
+
+      - name: Publish
+        run: |
+          rm -rf cats/library
+          mv library cats
+          cd cats
+          if ! git diff --quiet; then
+            git config --global user.name 'bjornbytes'
+            git config --global user.email '784805+bjornbytes@users.noreply.github.com'
+            git commit -am "Rebuild;"
+            git push origin cats
+          else
+            echo "No changes."
+          fi
