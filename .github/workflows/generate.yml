@@ -6,8 +6,7 @@ on:
       - dev
     paths:
       - 'api/**.lua'
-    paths-ignore:
-      - 'api/init.lua'
+      - '!api/init.lua'
 
 permissions:
   contents: write
