@@ -5,9 +5,9 @@ on:
     branches:
       - dev
     paths:
-      - 'api/lovr/**.lua'
-      - 'api/generators/*.lua'
-      - 'api/main.lua'
+      - 'api/**.lua'
+    paths-ignore:
+      - 'api/init.lua'
 
 permissions:
   contents: write
