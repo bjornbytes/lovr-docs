@@ -1179,7 +1179,7 @@ return {
         {
           name = "Version",
           tag = "version",
-          description = "This function can be used to get the current version of LÖVR."
+          description = "This function returns the current version of LÖVR."
         },
         {
           name = "Libraries",
@@ -34863,7 +34863,7 @@ return {
                       default = "0.2"
                     },
                     {
-                      name = "maxPenetration",
+                      name = "maxOverlap",
                       type = "number",
                       description = "The maximum amount that colliders are allowed to overlap, in meters.",
                       default = ".01"
@@ -45300,11 +45300,12 @@ return {
         {
           name = "getDelta",
           summary = "Get the time elapsed since the last update.",
-          description = "Returns the time between the last two frames.  This is the same value as the `dt` argument provided to `lovr.update`.",
+          description = "Returns the time between the last two frames.  This is the same value as the `dt` argument provided to `lovr.update` when VR is disabled.  When VR is enabled, the `dt` will instead be `lovr.headset.getDeltaTime`.",
           key = "lovr.timer.getDelta",
           module = "lovr.timer",
           notes = "The return value of this function will remain the same until `lovr.timer.step` is called.  This function should not be used to measure times for game behavior or benchmarking, use `lovr.timer.getTime` for that.",
           related = {
+            "lovr.headset.getDeltaTime",
             "lovr.timer.getTime",
             "lovr.update"
           },

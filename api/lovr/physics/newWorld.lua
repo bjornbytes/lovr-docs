@@ -65,7 +65,7 @@ return {
           ]]
         },
         {
-          name = 'maxPenetration',
+          name = 'maxOverlap',
           type = 'number',
           default = '.01',
           description = 'The maximum amount that colliders are allowed to overlap, in meters.'
