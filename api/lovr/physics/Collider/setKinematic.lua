@@ -1,7 +1,7 @@
 return {
   summary = 'Set whether the Collider is kinematic.',
   description = [[
-    Sets whether the Collider is kinematic.',
+    Sets whether the Collider is kinematic.
 
     Kinematic colliders behave like they have infinite mass.  They ignore forces applied to them
     from gravity, joints, and collisions, but they can still move if given a velocity.  Kinematic
