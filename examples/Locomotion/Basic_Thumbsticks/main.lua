@@ -27,7 +27,10 @@ function motion.smooth(dt)
     local x, y = lovr.headset.getAxis('right', 'thumbstick')
     -- Smooth horizontal turning
     if math.abs(x) > motion.thumbstickDeadzone then
+      local hx, _, hz = lovr.headset.getPosition()
+      motion.pose:translate(hx, 0, hz)
       motion.pose:rotate(-x * motion.turningSpeed * dt, 0, 1, 0)
+      motion.pose:translate(-hx, 0, -hz)
     end
   end
   if lovr.headset.isTracked('left') then
@@ -54,7 +57,10 @@ function motion.snap(dt)
     local x, y = lovr.headset.getAxis('right', 'thumbstick')
     if math.abs(x) > motion.thumbstickDeadzone and motion.thumbstickCooldown < 0 then
       local angle = -x / math.abs(x) * motion.snapTurnAngle
+      local hx, _, hz = lovr.headset.getPosition()
+      motion.pose:translate(hx, 0, hz)
       motion.pose:rotate(angle, 0, 1, 0)
+      motion.pose:translate(-hx, 0, -hz)
       motion.thumbstickCooldown = motion.thumbstickCooldownTime
     end
   end
