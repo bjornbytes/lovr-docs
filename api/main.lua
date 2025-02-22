@@ -491,16 +491,13 @@ function lovr.load()
   table.sort(api.modules, function(a, b) return a.key < b.key end)
   table.sort(api.callbacks, function(a, b) return a.key < b.key end)
 
-  -- Run generators
-  for i, file in ipairs(lovr.filesystem.getDirectoryItems('generators')) do
-    local name = file:gsub('%.lua$', '')
-    local ok, generator = pcall(require, 'generators.' .. name)
+  -- Generate
+  local ok, generator = pcall(require, 'generators.' .. (arg[1] or 'lua'))
 
-    if not ok then
-      print(('Could not load generator %q: %s'):format(name, generator))
-    elseif not arg[1] or arg[1] == name then
-      generator(api)
-    end
+  if not ok then
+    print(('Could not load generator %q: %s'):format(name, generator))
+  else
+    generator(api)
   end
 
   -- Bye

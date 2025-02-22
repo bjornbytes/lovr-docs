@@ -32,7 +32,7 @@ jobs:
         run: curl -sOL https://lovr.org/f/lovr-x86_64.AppImage && chmod +x lovr-x86_64.AppImage
 
       - name: Generate
-        run: ./lovr-x86_64.AppImage docs/api
+        run: ./lovr-x86_64.AppImage docs/api cats
 
       - name: Format
         run: |
