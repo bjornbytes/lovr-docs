@@ -37322,7 +37322,7 @@ return {
             {
               name = "setKinematic",
               summary = "Set whether the Collider is kinematic.",
-              description = "Sets whether the Collider is kinematic.',\n\nKinematic colliders behave like they have infinite mass.  They ignore forces applied to them from gravity, joints, and collisions, but they can still move if given a velocity.  Kinematic colliders don't collide with other kinematic colliders.  They're useful for static environment objects in a level, or for objects that have their position managed outside of the physics system like tracked hands.",
+              description = "Sets whether the Collider is kinematic.\n\nKinematic colliders behave like they have infinite mass.  They ignore forces applied to them from gravity, joints, and collisions, but they can still move if given a velocity.  Kinematic colliders don't collide with other kinematic colliders.  They're useful for static environment objects in a level, or for objects that have their position managed outside of the physics system like tracked hands.",
               key = "Collider:setKinematic",
               module = "lovr.physics",
               notes = "If a Collider has a `MeshShape` or a `TerrainShape`, the collider will always be kinematic and this function will do nothing.",
@@ -37909,7 +37909,7 @@ return {
             {
               name = "setLimit",
               summary = "Set the angle limit of the ConeJoint.",
-              description = "Returns the angle limit of the ConeJoint.  The relative angle between the ConeJoint's axis and the second Collider will be constrained to this limit.",
+              description = "Sets the angle limit of the ConeJoint.  The relative angle between the ConeJoint's axis and the second Collider will be constrained to this limit.",
               key = "ConeJoint:setLimit",
               module = "lovr.physics",
               notes = "The default limit is zero, preventing any rotation away from the axis.",
