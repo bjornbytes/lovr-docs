@@ -6,7 +6,7 @@ return {
     the convex hull of the mesh instead of using the exact triangles of the object.
 
     Convex shapes can be created from a `Model`, `ModelData`, `Mesh`, or a table of point positions,
-    just like `MeshShape`.
+    similar to `MeshShape`.
 
     Convex shapes can be cloned by passing in an existing ConvexShape to clone:
 
@@ -16,8 +16,8 @@ return {
 
     The clone will reuse all of the data from the parent, which speeds things up a lot.
 
-    Convex shapes can have a custom scale applied to their points, and clones can have a different
-    scale than their parents.
+    Convex shapes can have a custom scale applied to their points, and clones can have their own
+    scale.
   ]],
   extends = 'Shape',
   constructors = {
