@@ -38345,7 +38345,7 @@ return {
               description = "Returns one of the points in the convex hull, in local space.",
               key = "ConvexShape:getPoint",
               module = "lovr.physics",
-              notes = "Currently, the point positions do not include the scale of the convex shape.",
+              notes = "The point positions will be scaled by the ConvexShape's scale, see `ConvexShape:getScale`.",
               related = {
                 "ConvexShape:getPointCount"
               },
