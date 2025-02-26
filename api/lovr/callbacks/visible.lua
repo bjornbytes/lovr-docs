@@ -13,7 +13,7 @@ return {
   arguments = {
     visible = {
       type = 'boolean',
-      description = 'Whether the application is visible in the headset display.'
+      description = 'Whether the application is visible.'
     },
     display = {
       type = 'DisplayType',

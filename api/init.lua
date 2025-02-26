@@ -988,7 +988,7 @@ return {
             {
               name = "visible",
               type = "boolean",
-              description = "Whether the application is visible in the headset display."
+              description = "Whether the application is visible."
             },
             {
               name = "display",
