@@ -21,8 +21,6 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(.8, .8, .8)
 end
 
-local isFirstFrame = true
-
 function lovr.update(dt)
   -- Update the physics simulation
   world:update(dt)
@@ -51,7 +49,7 @@ function lovr.draw(pass)
     drawBox(pass, box)
   end
 
-  if lovr.headset.getDriver() ~= 'desktop' then
+  if lovr.headset.getDriver() ~= 'simulator' then
     pass:setColor(0, 0, 1)
     for i, box in ipairs(controllerBoxes) do
       drawBox(pass, box)
