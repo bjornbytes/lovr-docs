@@ -4057,6 +4057,7 @@ return {
               key = "Blob:getI8",
               module = "lovr.data",
               related = {
+                "Blob:setI8",
                 "Blob:getU8",
                 "Blob:getI16",
                 "Blob:getU16",
@@ -4098,6 +4099,7 @@ return {
               key = "Blob:getU8",
               module = "lovr.data",
               related = {
+                "Blob:setU8",
                 "Blob:getI8",
                 "Blob:getI16",
                 "Blob:getU16",
@@ -4139,6 +4141,7 @@ return {
               key = "Blob:getI16",
               module = "lovr.data",
               related = {
+                "Blob:setI16",
                 "Blob:getI8",
                 "Blob:getU8",
                 "Blob:getU16",
@@ -4180,6 +4183,7 @@ return {
               key = "Blob:getU16",
               module = "lovr.data",
               related = {
+                "Blob:setU16",
                 "Blob:getI8",
                 "Blob:getU8",
                 "Blob:getI16",
@@ -4221,6 +4225,7 @@ return {
               key = "Blob:getI32",
               module = "lovr.data",
               related = {
+                "Blob:setI32",
                 "Blob:getI8",
                 "Blob:getU8",
                 "Blob:getI16",
@@ -4262,6 +4267,7 @@ return {
               key = "Blob:getU32",
               module = "lovr.data",
               related = {
+                "Blob:setU32",
                 "Blob:getI8",
                 "Blob:getU8",
                 "Blob:getI16",
@@ -4303,6 +4309,7 @@ return {
               key = "Blob:getF32",
               module = "lovr.data",
               related = {
+                "Blob:setF32",
                 "Blob:getI8",
                 "Blob:getU8",
                 "Blob:getI16",
@@ -4344,6 +4351,7 @@ return {
               key = "Blob:getF64",
               module = "lovr.data",
               related = {
+                "Blob:setF64",
                 "Blob:getI8",
                 "Blob:getU8",
                 "Blob:getI16",
@@ -4375,6 +4383,414 @@ return {
                       description = "`count` 64-bit doubles."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setI8",
+              summary = "Write 8-bit signed integers to the Blob.",
+              description = "Writes 8-bit signed integers to the Blob.",
+              key = "Blob:setI8",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from\n-127 to 128)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from -127 to 128)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setU8",
+              summary = "Write 8-bit unsigned integers to the Blob.",
+              description = "Writes 8-bit unsigned integers to the Blob.",
+              key = "Blob:setU8",
+              module = "lovr.data",
+              related = {
+                "Blob:getU8",
+                "Blob:setI8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setI16",
+              summary = "Write 16-bit signed integers to the Blob.",
+              description = "Writes 16-bit signed integers to the Blob.",
+              key = "Blob:setI16",
+              module = "lovr.data",
+              related = {
+                "Blob:getI16",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from\n-32768 to 32767)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from -32768 to 32767)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setU16",
+              summary = "Write 16-bit unsigned integers to the Blob.",
+              description = "Writes 16-bit unsigned integers to the Blob.",
+              key = "Blob:setU16",
+              module = "lovr.data",
+              related = {
+                "Blob:getU16",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setI32",
+              summary = "Write 32-bit signed integers to the Blob.",
+              description = "Writes 32-bit signed integers to the Blob.",
+              key = "Blob:setI32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI32",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from\n-2147483648 to 2147483647)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from -2147483648 to 2147483647)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setU32",
+              summary = "Write 32-bit unsigned integers to the Blob.",
+              description = "Writes 32-bit unsigned integers to the Blob.",
+              key = "Blob:setU32",
+              module = "lovr.data",
+              related = {
+                "Blob:getU32",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setF32",
+              summary = "Write 32-bit floating point numbers to the Blob.",
+              description = "Writes 32-bit floating point numbers to the Blob.",
+              key = "Blob:setF32",
+              module = "lovr.data",
+              related = {
+                "Blob:getF32",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 32-bit floats (each taking up 4 bytes)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 32-bit floats (each taking up 4 bytes)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setF64",
+              summary = "Write 64-bit floating point numbers to the Blob.",
+              description = "Writes 64-bit floating point numbers to the Blob.",
+              key = "Blob:setF64",
+              module = "lovr.data",
+              related = {
+                "Blob:getF64",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 64-bit floating point numbers (each taking up 8 bytes)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at.",
+                      default = "0"
+                    },
+                    {
+                      name = "table",
+                      type = "number",
+                      description = "A table of numbers to write to the blob as 64-bit floating point numbers (each taking up 8 bytes)."
+                    }
+                  },
+                  returns = {}
                 }
               }
             }

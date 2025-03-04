@@ -26,6 +26,7 @@ return {
     }
   },
   related = {
+    'Blob:setU32',
     'Blob:getI8',
     'Blob:getU8',
     'Blob:getI16',

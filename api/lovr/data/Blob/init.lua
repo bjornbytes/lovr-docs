@@ -26,6 +26,14 @@ return {
     'Blob:getI32',
     'Blob:getU32',
     'Blob:getF32',
-    'Blob:getF64'
+    'Blob:getF64',
+    'Blob:setI8',
+    'Blob:setU8',
+    'Blob:setI16',
+    'Blob:setU16',
+    'Blob:setI32',
+    'Blob:setU32',
+    'Blob:setF32',
+    'Blob:setF64'
   }
 }
