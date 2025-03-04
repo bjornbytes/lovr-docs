@@ -26,8 +26,8 @@ function lovr.load()
   end
 
   -- Create a Buffer to store positions for lots of models
-  transformBuffer = lovr.graphics.newBuffer(transforms, 'mat4')
-  offsetBuffer = lovr.graphics.newBuffer(offsets, 'mat4')
+  transformBuffer = lovr.graphics.newBuffer('mat4', transforms)
+  offsetBuffer = lovr.graphics.newBuffer('mat4', offsets)
 
   -- Create the compute shader, we will run this once per frame
   computeShader = lovr.graphics.newShader([[
