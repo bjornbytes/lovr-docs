@@ -4,7 +4,6 @@ return {
   arguments = {
     offset = {
       type = 'number',
-      default = '0',
       description = 'A non-negative byte offset to start writing at.'
     },
     ['...'] = {

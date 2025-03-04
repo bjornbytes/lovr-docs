@@ -4408,8 +4408,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4424,8 +4423,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4459,8 +4457,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4475,8 +4472,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4510,8 +4506,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4526,8 +4521,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4561,8 +4555,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4577,8 +4570,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4612,8 +4604,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4628,8 +4619,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4663,8 +4653,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4679,8 +4668,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4714,8 +4702,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4730,8 +4717,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
@@ -4765,8 +4751,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "...",
@@ -4781,8 +4766,7 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at.",
-                      default = "0"
+                      description = "A non-negative byte offset to start writing at."
                     },
                     {
                       name = "table",
