@@ -158,3 +158,15 @@ use the JNI.  To work around this, before LÖVR calls `luaopen_supermegaplugin`,
     int luaopen_supermegaplugin(lua_State* L) {
       // can use jni!
     }
+
+Troubleshooting
+---
+
+If a plugin isn't loading properly, it can help to see errors from the dynamic linker.  On Linux,
+the `LD_DEBUG` environment variable is able to print out a lot of information about library loading:
+
+    LD_DEBUG=libs lovr .
+
+On Android, setting the following property will log messages and errors from the dynamic linker:
+
+    adb shell setprop debug.ld.app.org.lovr.app dlerror,dlopen
