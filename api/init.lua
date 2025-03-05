@@ -3390,6 +3390,10 @@ return {
               description = "Four 8-bit channels.  4 bytes per pixel."
             },
             {
+              name = "bgra8",
+              description = "Four 8-bit channels.  4 bytes per pixel."
+            },
+            {
               name = "r16",
               description = "One 16-bit channel.  2 bytes per pixel."
             },
