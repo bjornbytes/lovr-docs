@@ -42953,6 +42953,12 @@ return {
                       description = "The z component of the axis of rotation."
                     },
                     {
+                      name = "maxDistance",
+                      type = "number",
+                      description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
+                      default = "0"
+                    },
+                    {
                       name = "filter",
                       type = "string",
                       description = "Tags to filter by, or nil for no filter.",
@@ -42982,6 +42988,12 @@ return {
                       name = "orientation",
                       type = "Quat",
                       description = "The orientation of the shape."
+                    },
+                    {
+                      name = "maxDistance",
+                      type = "number",
+                      description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
+                      default = "0"
                     },
                     {
                       name = "filter",
@@ -43038,6 +43050,12 @@ return {
                       name = "az",
                       type = "number",
                       description = "The z component of the axis of rotation."
+                    },
+                    {
+                      name = "maxDistance",
+                      type = "number",
+                      description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
+                      default = "0"
                     },
                     {
                       name = "filter",
@@ -43105,6 +43123,12 @@ return {
                       name = "orientation",
                       type = "Quat",
                       description = "The orientation of the shape."
+                    },
+                    {
+                      name = "maxDistance",
+                      type = "number",
+                      description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
+                      default = "0"
                     },
                     {
                       name = "filter",

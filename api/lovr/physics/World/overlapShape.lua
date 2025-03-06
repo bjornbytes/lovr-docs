@@ -110,19 +110,19 @@ return {
   },
   variants = {
     {
-      arguments = { 'shape', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'filter', 'callback' },
+      arguments = { 'shape', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'maxDistance', 'filter', 'callback' },
       returns = {}
     },
     {
-      arguments = { 'shape', 'position', 'orientation', 'filter', 'callback' },
+      arguments = { 'shape', 'position', 'orientation', 'maxDistance', 'filter', 'callback' },
       returns = {}
     },
     {
-      arguments = { 'shape', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'filter' },
+      arguments = { 'shape', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'maxDistance', 'filter' },
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     },
     {
-      arguments = { 'shape', 'position', 'orientation', 'filter' },
+      arguments = { 'shape', 'position', 'orientation', 'maxDistance', 'filter' },
       returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
     }
   },
