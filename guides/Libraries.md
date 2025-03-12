@@ -39,6 +39,10 @@ LÖVR-specific libraries:
       <td>Atmosphere rendering for LÖVR framework</td>
     </tr>
     <tr>
+      <td><a href="https://github.com/DonaldHays/lovr-base-shading">lovr-base-shading</a></td>
+      <td>A simple phong light, fog, and shadow shading model for LÖVR</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/jmiskovic/lovr-cam">lovr-cam</a></td>
       <td>Orbiting camera library</td>
     </tr>
