@@ -7,7 +7,7 @@ return {
     Shader code is usually written in GLSL and compiled to SPIR-V bytecode.  SPIR-V is faster to
     load but requires a build step.  Either form can be used to create a shader.
 
-    By default, the provided shader code is expected to implement a `void lovrmain() { ... }`
+    By default, the provided shader code is expected to implement a `vec4 lovrmain() { ... }`
     function that is called for each vertex or fragment.  If the `raw` option is set to `true`, the
     code is treated as a raw shader and the `lovrmain` function is not required. In this case, the
     shader code is expected to implement its own `main` function.
