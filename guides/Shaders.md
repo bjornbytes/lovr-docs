@@ -435,6 +435,39 @@ Shader Inputs
 It's also possible to send values or objects from Lua to a Shader.  There are a few different ways
 to do this, each with their own tradeoffs (speed, size, ease of use, etc.).
 
+### Flags
+
+Shaders can have specialization constant flags, which are values that are set when creating a
+shader, and persist for every execution of that shader.
+
+Flags are declared using `constant_id` values, and can be overridden in `lovr.graphics.newShader`:
+
+    lovr.graphics.newShader('unlit', [[
+      layout(constant_id = 0) const bool flag_forceColor = false;
+      layout(constant_id = 1) const float flag_r = 1;
+      layout(constant_id = 2) const float flag_g = 1;
+      layout(constant_id = 3) const float flag_b = 1;
+      layout(constant_id = 4) const float flag_a = 1;
+
+      vec4 lovrmain() {
+        if (flag_forceColor) {
+          return vec4(flag_r, flag_g, flag_b, flag_a);
+        } else {
+          return Color;
+        }
+      }
+    ]], {
+      flags = {
+        forceColor = true,
+        g = 0,
+        b = 0.5
+      }
+    })
+
+LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
+separate them from other GLSL variables, the `flag_` prefix will be stripped when matching against
+flag table keys in `lovr.graphics.newShader`.
+
 ### Uniforms
 
 Shaders can declare uniforms, which can be booleans, numbers, vectors, or matrices.  These have a
