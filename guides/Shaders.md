@@ -437,12 +437,13 @@ to do this, each with their own tradeoffs (speed, size, ease of use, etc.).
 
 ### Flags
 
-Shaders can have specialization constant flags, which are values that are set when creating a
-shader, and persist for every execution of that shader.
+Shaders can have specialization constant flags, which are constant values that are set when creating
+a shader.
 
-Flags are declared using `constant_id` values, and can be overridden in `lovr.graphics.newShader`:
+Flags are declared using the `constant_id` qualifier, and can be overridden in
+`lovr.graphics.newShader`:
 
-    lovr.graphics.newShader('unlit', [[
+    shader = lovr.graphics.newShader('unlit', [[
       layout(constant_id = 0) const bool flag_forceColor = false;
       layout(constant_id = 1) const float flag_r = 1;
       layout(constant_id = 2) const float flag_g = 1;
@@ -467,6 +468,24 @@ Flags are declared using `constant_id` values, and can be overridden in `lovr.gr
 LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
 separate them from other GLSL variables, the `flag_` prefix will be stripped when matching against
 flag table keys in `lovr.graphics.newShader`.
+
+It is also possible to use `Shader:clone` to create a copy of a shader with different flag values:
+
+    clone = shader:clone({
+      forceColor = true,
+      r = 1.0,
+      g = 0.0
+      b = 0.8
+    })
+
+The advantage of cloning a shader (rather than using `:gsub` to change the shader code) is that the
+shader code for a clone doesn't need to be recompiled!  This can make it much faster to create lots
+of different shaders with slightly different constants or behaviors (sometimes called ubershaders).
+
+Another advantage is that you can compile shaders ahead of time with `lovr.graphics.compileShader`
+and package the compiled shaders with the game.  Flags can then be used at runtime to specialize
+shaders with values based on information that can only be known at runtime (perhaps something unique
+to the current GPU).
 
 ### Uniforms
 
