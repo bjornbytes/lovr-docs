@@ -21,6 +21,8 @@ Search for "lovr" in the addon manager and install it.
 
 That's it!  LÖVR autocomplete should now be working.
 
+![LuaLS Autocompleting Stuff](https://lovr.org/static/img/luals_working.png)
+
 Manual Installation
 ---
 
