@@ -1,17 +1,16 @@
 VS Code Setup
 ===
 
-[VS Code](https://code.visualstudio.com) is a popular text editor with a powerful Lua extension that
-provides typechecking and autocomplete, [Lua Language Server](https://luals.github.io) (or LuaLS).
+[VS Code](https://code.visualstudio.com) is a popular text editor with a powerful [Lua Language
+Server](https://luals.github.io) extension that provides typechecking and autocomplete for Lua.
 LuaLS has an official addon for LÖVR, which allows VS Code to autocomplete the LÖVR API with
 detailed type information generated from the docs.
 
 Setup
 ---
 
-To start, install the LuaLS extension.  You can do this by pressing `Ctrl + Shift + P` and typing
-"install extensions".  In the extension menu, search for "Lua" and install the extension from
-sumneko.
+To start, install the LuaLS extension.  Press `Ctrl + Shift + P` and type "install extensions".  In
+the extension menu, search for "Lua" and install the extension from sumneko.
 
 <img src="/img/luals_install.png" alt="VS Code Extension Menu" width="70%"/>
 
