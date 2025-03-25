@@ -8,6 +8,7 @@ return {
   'Plugins',
   'Distribution',
   'Contributing',
+  'VS_Code_Setup',
   'Compiling',
   'FAQ',
   'v0.17.0',
