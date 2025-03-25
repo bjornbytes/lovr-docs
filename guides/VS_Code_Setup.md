@@ -13,12 +13,12 @@ To start, install the LuaLS extension.  You can do this by pressing `Ctrl + Shif
 "install extensions".  In the extension menu, search for "Lua" and install the extension from
 sumneko.
 
-<img src="/img/luals_install.png" alt="VS Code Extension Menu" width="50%"/>
+<img src="/img/luals_install.png" alt="VS Code Extension Menu" width="70%"/>
 
 Next, open the LuaLS addon manager.  Press `Ctrl + Shift + P` again and search for "addon manager".
 Search for "lovr" in the addon manager and install it.
 
-<img src="/img/luals_lovr.png" alt="LuaLS Addon Menu" width="50%"/>
+![LuaLS Addon Menu](https://lovr.org/static/img/luals_lovr.png)
 
 That's it!  LÖVR autocomplete should now be working.
 
