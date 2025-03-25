@@ -7,6 +7,8 @@ local ENABLE_SEE_TAGS = false
 -- from the `lovr.math` module.
 local INCLUDE_GLOBALS = true
 
+local root = lovr.filesystem.getSource()
+
 local function getPath(filename, sep)
   sep = sep or "/"
   return filename:match("(.*" .. sep .. ")")
@@ -18,15 +20,17 @@ end
 
 --- Writes `contents` into a file identified by `filename`.
 local function writeFile(filename, contents)
+  local fullpath = ('%s/cats/%s'):format(root, filename)
+
   -- make sure the directory exists
-  local path = getPath(filename)
+  local path = getPath(fullpath)
   if path then
     ensureDirectoryExists(path)
   end
 
-  local file = io.open(filename, "w")
+  local file = io.open(fullpath, "w")
   if not file then
-    print("Failed to open file for writing: " .. filename)
+    print("Failed to open file for writing: " .. fullpath)
     return
   end
 
@@ -349,6 +353,21 @@ local function generateCallbackDocumentation(api)
   writeFile("library/callback.lua", join(out, "\n"))
 end
 
+local function generateAddonConfig()
+  local out = {}
+
+  add(out, '{')
+  add(out, '  "name": "LÖVR",')
+  add(out, '  "words": ["lovr%.%w+"],')
+  add(out, '  "settings": {')
+  add(out, '    "Lua.runtime.version": "LuaJIT",')
+  add(out, '    "Lua.diagnostics.globals": ["lovr"]')
+  add(out, '  }')
+  add(out, '}')
+
+  writeFile("config.json", join(out, "\n"))
+end
+
 local function generateGlobalsDocumentation()
   local out = {}
   add(out, doc("@meta"))
@@ -369,6 +388,7 @@ end
 return function(api)
   generateModuleDocumentation(api)
   generateCallbackDocumentation(api)
+  generateAddonConfig()
 
   if INCLUDE_GLOBALS then
     generateGlobalsDocumentation()
