@@ -55,6 +55,21 @@ local function warnIf(cond, ...)
   if cond then warn(...) end
 end
 
+local function getVisibleDirectoryItems(path)
+  local input = lovr.filesystem.getDirectoryItems(path)
+  local output = {}
+
+  for _, item in pairs(input) do
+    if item:match('^%.') then
+      warn('Skipping hidden file "%s"', item)
+    else
+      table.insert(output, item)
+    end
+  end
+
+  return output
+end
+
 -- Processors
 local function processExample(example, key)
   if type(example) == 'string' then
@@ -181,7 +196,7 @@ local function processObject(path, parent)
 
   local methods = {}
 
-  for _, file in ipairs(lovr.filesystem.getDirectoryItems(path)) do
+  for _, file in ipairs(getVisibleDirectoryItems(path)) do
     if file ~= 'init.lua' then
       local method = file:gsub('%..+$', '')
       local key = ('%s:%s'):format(object.name, method)
@@ -239,22 +254,18 @@ local function processModule(path)
     module.examples[k] = processExample(example, module.key)
   end
 
-  for _, file in ipairs(lovr.filesystem.getDirectoryItems(path)) do
-    if file:match('^%.') then
-      warn('Skipping hidden file "%s"', file)
-    else
-      local childPath = path .. '/' .. file
-      local childModule = childPath:gsub('%..+$', '')
-      local isFile = lovr.filesystem.isFile(childPath)
-      local capitalized = file:match('^[A-Z]')
+  for _, file in ipairs(getVisibleDirectoryItems(path)) do
+    local childPath = path .. '/' .. file
+    local childModule = childPath:gsub('%..+$', '')
+    local isFile = lovr.filesystem.isFile(childPath)
+    local capitalized = file:match('^[A-Z]')
 
-      if file ~= 'init.lua' and not capitalized and isFile then
-        table.insert(module.functions, processFunction(childModule, module))
-      elseif capitalized and not isFile then
-        table.insert(module.objects, processObject(childModule, module))
-      elseif capitalized and isFile then
-        table.insert(module.enums, processEnum(childModule, module))
-      end
+    if file ~= 'init.lua' and not capitalized and isFile then
+      table.insert(module.functions, processFunction(childModule, module))
+    elseif capitalized and not isFile then
+      table.insert(module.objects, processObject(childModule, module))
+    elseif capitalized and isFile then
+      table.insert(module.enums, processEnum(childModule, module))
     end
   end
 
@@ -478,7 +489,7 @@ function lovr.load()
 
   -- Callbacks
   local callbacks = 'lovr/callbacks'
-  for _, file in ipairs(lovr.filesystem.getDirectoryItems(callbacks)) do
+  for _, file in ipairs(getVisibleDirectoryItems(callbacks)) do
     table.insert(api.callbacks, processFunction(callbacks .. '/' .. file:gsub('%.lua', ''), api.modules[1]))
   end
 
