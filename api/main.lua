@@ -240,17 +240,21 @@ local function processModule(path)
   end
 
   for _, file in ipairs(lovr.filesystem.getDirectoryItems(path)) do
-    local childPath = path .. '/' .. file
-    local childModule = childPath:gsub('%..+$', '')
-    local isFile = lovr.filesystem.isFile(childPath)
-    local capitalized = file:match('^[A-Z]')
+    if file:match('^%.') then
+      warn('Skipping hidden file "%s"', file)
+    else
+      local childPath = path .. '/' .. file
+      local childModule = childPath:gsub('%..+$', '')
+      local isFile = lovr.filesystem.isFile(childPath)
+      local capitalized = file:match('^[A-Z]')
 
-    if file ~= 'init.lua' and not capitalized and isFile then
-      table.insert(module.functions, processFunction(childModule, module))
-    elseif capitalized and not isFile then
-      table.insert(module.objects, processObject(childModule, module))
-    elseif capitalized and isFile then
-      table.insert(module.enums, processEnum(childModule, module))
+      if file ~= 'init.lua' and not capitalized and isFile then
+        table.insert(module.functions, processFunction(childModule, module))
+      elseif capitalized and not isFile then
+        table.insert(module.objects, processObject(childModule, module))
+      elseif capitalized and isFile then
+        table.insert(module.enums, processEnum(childModule, module))
+      end
     end
   end
 
