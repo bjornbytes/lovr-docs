@@ -2,12 +2,15 @@ function lovr.load()
   -- This holds the thread code
   -- This must be wrapped with [[]] or '' to allow the engine to run it as Lua
   threadCode = [[
-    local lovr = { thread = require 'lovr.thread' }
+    local lovr = {}
+    lovr.thread = require 'lovr.thread'
+    lovr.timer = require 'lovr.timer'
     local channel = lovr.thread.getChannel('test')
     local x = 0
     while true do
       x = x + 1
       channel:push(x)
+      lovr.timer.sleep(.1)
     end
   ]]
 
@@ -22,8 +25,10 @@ function lovr.load()
 end
 
 function lovr.update(dt)
-  -- Read and delete the message
-  message = channel:pop()
+  -- Read and delete any messages in the queue
+  while channel:peek() do
+    message = channel:pop()
+  end
 end
 
 function lovr.draw(pass)
