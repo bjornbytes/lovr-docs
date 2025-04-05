@@ -12,12 +12,16 @@ return {
     success = {
       type = 'boolean',
       description = 'Whether the path was removed.'
+    },
+    error = {
+      type = 'string',
+      description = 'The error message, if any.'
     }
   },
   variants = {
     {
       arguments = { 'path' },
-      returns = { 'success' }
+      returns = { 'success', 'error' }
     }
   },
   notes = [[

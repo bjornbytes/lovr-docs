@@ -9453,9 +9453,14 @@ return {
               },
               returns = {
                 {
-                  name = "bytes",
+                  name = "success",
                   type = "number",
-                  description = "The number of bytes actually appended to the file."
+                  description = "Whether the operation was successful."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if there was an error."
                 }
               }
             },
@@ -9474,9 +9479,14 @@ return {
               },
               returns = {
                 {
-                  name = "bytes",
+                  name = "success",
                   type = "number",
-                  description = "The number of bytes actually appended to the file."
+                  description = "Whether the operation was successful."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if there was an error."
                 }
               }
             }
@@ -9503,6 +9513,11 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the directory was created."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if there was a failure."
                 }
               }
             }
@@ -9616,7 +9631,12 @@ return {
                 {
                   name = "time",
                   type = "number",
-                  description = "The modification time of the file, in seconds, or `nil` if it's unknown."
+                  description = "The modification time of the file, in seconds, or `nil` if there was an error."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if there was an error."
                 }
               }
             }
@@ -9950,6 +9970,11 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the archive was successfully mounted."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if the archive failed to mount."
                 }
               }
             }
@@ -10038,7 +10063,6 @@ return {
           description = "Read the contents of a file.",
           key = "lovr.filesystem.read",
           module = "lovr.filesystem",
-          notes = "If the file does not exist or cannot be read, nil is returned.",
           variants = {
             {
               arguments = {
@@ -10046,24 +10070,18 @@ return {
                   name = "filename",
                   type = "string",
                   description = "The name of the file to read."
-                },
-                {
-                  name = "bytes",
-                  type = "number",
-                  description = "The number of bytes to read (if -1, all bytes will be read).",
-                  default = "-1"
                 }
               },
               returns = {
                 {
                   name = "contents",
                   type = "string",
-                  description = "The contents of the file."
+                  description = "The contents of the file, or nil if the file could not be read."
                 },
                 {
-                  name = "bytes",
-                  type = "number",
-                  description = "The number of bytes read from the file."
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if any."
                 }
               }
             }
@@ -10091,6 +10109,11 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the path was removed."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if any."
                 }
               }
             }
@@ -10240,6 +10263,11 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the write was successful."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if there was an error."
                 }
               }
             },
@@ -10261,6 +10289,11 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether the write was successful."
+                },
+                {
+                  name = "error",
+                  type = "string",
+                  description = "The error message, if there was an error."
                 }
               }
             }

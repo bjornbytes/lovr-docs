@@ -11,13 +11,17 @@ return {
   returns = {
     time = {
       type = 'number',
-      description = 'The modification time of the file, in seconds, or `nil` if it\'s unknown.'
+      description = 'The modification time of the file, in seconds, or `nil` if there was an error.'
+    },
+    error = {
+      type = 'string',
+      description = 'The error message, if there was an error.'
     }
   },
   variants = {
     {
       arguments = { 'path' },
-      returns = { 'time' }
+      returns = { 'time', 'error' }
     }
   }
 }

@@ -20,16 +20,20 @@ return {
     success = {
       type = 'boolean',
       description = 'Whether the write was successful.'
+    },
+    error = {
+      type = 'string',
+      description = 'The error message, if there was an error.'
     }
   },
   variants = {
     {
       arguments = { 'filename', 'content' },
-      returns = { 'success' }
+      returns = { 'success', 'error' }
     },
     {
       arguments = { 'filename', 'blob' },
-      returns = { 'success' }
+      returns = { 'success', 'error' }
     }
   },
   notes = [[

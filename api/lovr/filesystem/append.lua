@@ -17,19 +17,23 @@ return {
     }
   },
   returns = {
-    bytes = {
+    success = {
       type = 'number',
-      description = 'The number of bytes actually appended to the file.'
+      description = 'Whether the operation was successful.'
+    },
+    error = {
+      type = 'string',
+      description = 'The error message, if there was an error.'
     }
   },
   variants = {
     {
       arguments = { 'filename', 'content' },
-      returns = { 'bytes' }
+      returns = { 'success', 'error' }
     },
     {
       arguments = { 'filename', 'blob' },
-      returns = { 'bytes' }
+      returns = { 'success', 'error' }
     }
   },
   notes = 'If the file does not exist, it is created.'

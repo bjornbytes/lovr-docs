@@ -35,12 +35,16 @@ return {
     success = {
       type = 'boolean',
       description = 'Whether the archive was successfully mounted.'
+    },
+    error = {
+      type = 'string',
+      description = 'The error message, if the archive failed to mount.'
     }
   },
   variants = {
     {
       arguments = { 'path', 'mountpoint', 'append', 'root' },
-      returns = { 'success' }
+      returns = { 'success', 'error' }
     }
   },
   notes = [[

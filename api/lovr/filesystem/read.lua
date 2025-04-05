@@ -6,28 +6,22 @@ return {
     filename = {
       type = 'string',
       description = 'The name of the file to read.'
-    },
-    bytes = {
-      type = 'number',
-      default = '-1',
-      description = 'The number of bytes to read (if -1, all bytes will be read).'
     }
   },
   returns = {
     contents = {
       type = 'string',
-      description = 'The contents of the file.'
+      description = 'The contents of the file, or nil if the file could not be read.'
     },
-    bytes = {
-      type = 'number',
-      description = 'The number of bytes read from the file.'
+    error = {
+      type = 'string',
+      description = 'The error message, if any.'
     }
   },
   variants = {
     {
-      arguments = { 'filename', 'bytes' },
-      returns = { 'contents', 'bytes' }
+      arguments = { 'filename' },
+      returns = { 'contents', 'error' }
     }
-  },
-  notes = 'If the file does not exist or cannot be read, nil is returned.'
+  }
 }

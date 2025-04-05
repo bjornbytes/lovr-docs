@@ -15,12 +15,16 @@ return {
     success = {
       type = 'boolean',
       description = 'Whether the directory was created.'
+    },
+    error = {
+      type = 'string',
+      description = 'The error message, if there was a failure.'
     }
   },
   variants = {
     {
       arguments = { 'path' },
-      returns = { 'success' }
+      returns = { 'success', 'error' }
     }
   }
 }
