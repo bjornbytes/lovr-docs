@@ -1,4 +1,7 @@
 -- This demo renders a scene with several uses of stencil maps (skip down to comment "Stencils here")
+-- Note: Stencils need to be enabled in conf.lua
+-- t.graphics.stencil = true
+-- t.headset.stencil = true
 --
 -- Sample contributed by andi mcc
 
