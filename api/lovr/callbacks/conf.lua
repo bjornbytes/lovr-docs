@@ -137,6 +137,14 @@ return {
               description = 'Whether the desktop window rendering should be antialiased.'
             },
             {
+              name = 'hdr',
+              type = 'boolean',
+              description = [[
+                Whether the (**super experimental**) HDR mode should be enabled.  See
+                `lovr.graphics.isHDR`.
+              ]]
+            },
+            {
               name = 'shadercache',
               type = 'boolean',
               description = 'Whether the shader cache should be loaded and saved to disk.'

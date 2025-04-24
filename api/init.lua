@@ -145,6 +145,11 @@ return {
                       description = "Whether the desktop window rendering should be antialiased."
                     },
                     {
+                      name = "hdr",
+                      type = "boolean",
+                      description = "Whether the (**super experimental**) HDR mode should be enabled.  See `lovr.graphics.isHDR`."
+                    },
+                    {
                       name = "shadercache",
                       type = "boolean",
                       description = "Whether the shader cache should be loaded and saved to disk."
@@ -12340,6 +12345,27 @@ return {
                   name = "srgb",
                   type = "boolean",
                   description = "Whether the GPU supports these operations for textures with this format, when created with the `linear` flag set to `false`."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "isHDR",
+          tag = "graphics-global",
+          summary = "Check if the **super experimental** HDR mode is active.",
+          description = "Returns whether the **super experimental** HDR mode is active.\n\nTo enable HDR, add `t.graphics.hdr` to `lovr.conf`.  When enabled, LÖVR will try to create an HDR10 window.  If the GPU supports it, then this function will return true and the window texture will be HDR:\n\n- Its format will be `rgb10a2` instead of `rgba8`.\n- The display will assume its colors are in the Rec.2020 color space, instead of sRGB.\n- The display will assume its colors are encoded with the PQ transfer function, instead of sRGB.\n\nFor now, it's up to you to write PQ-encoded Rec.2020 color data from your shader when rendering to the window.",
+          key = "lovr.graphics.isHDR",
+          module = "lovr.graphics",
+          notes = "The following shader helper functions make it easier to convert between sRGB colors and HDR10:\n\n    vec3 pqToLinear(vec3 color);\n    vec3 linearToPQ(vec3 color);\n    vec3 sRGBToRec2020(vec3 color);\n    vec3 rec2020ToSRGB(vec3 color);",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "hdr",
+                  type = "boolean",
+                  description = "Whether HDR is enabled."
                 }
               }
             }
