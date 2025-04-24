@@ -69,6 +69,14 @@ return {
           name = 'int16',
           type = 'boolean',
           description = 'Whether shader code can use signed and unsigned 16-bit integers.'
+        },
+        {
+          name = 'cubic',
+          type = 'boolean',
+          description = [[
+            Whether the GPU supports cubic texture filtering.  To check for specific format support,
+            use `lovr.graphics.isFormatSupported` with the `cubic` `TextureFeature`.
+          ]]
         }
       }
     }

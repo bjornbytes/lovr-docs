@@ -26,6 +26,12 @@ return {
     {
       name = 'blit',
       description = 'The Texture can be used with `Pass:blit` and `Pass:generateMipmaps`.'
+    },
+    {
+      name = 'cubic',
+      description = [[
+        The Texture can be used with a sampler that uses a `cubic` filter mode.  See `FilterMode`.
+      ]]
     }
   }
 }

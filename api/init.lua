@@ -10994,6 +10994,10 @@ return {
             {
               name = "linear",
               description = "A smooth appearance where neighboring pixels are averaged."
+            },
+            {
+              name = "cubic",
+              description = "An even smoother appearance, but slower and typically only available on mobile GPUs. Use `lovr.graphics.isFormatSupported('format', 'cubic')` to check for support for a specific format, or `lovr.graphics.getFeatures().cubic` to see if cubic filtering is supported at all.\n\nNote that this can only be used for `min` and `mag` options in sampler.  Trying to use this for the `mip` filter mode will silently fall back to `linear`."
             }
           }
         },
@@ -11225,6 +11229,10 @@ return {
             {
               name = "blit",
               description = "The Texture can be used with `Pass:blit` and `Pass:generateMipmaps`."
+            },
+            {
+              name = "cubic",
+              description = "The Texture can be used with a sampler that uses a `cubic` filter mode.  See `FilterMode`."
             }
           }
         },
@@ -11986,6 +11994,11 @@ return {
                       name = "int16",
                       type = "boolean",
                       description = "Whether shader code can use signed and unsigned 16-bit integers."
+                    },
+                    {
+                      name = "cubic",
+                      type = "boolean",
+                      description = "Whether the GPU supports cubic texture filtering.  To check for specific format support, use `lovr.graphics.isFormatSupported` with the `cubic` `TextureFeature`."
                     }
                   }
                 }
@@ -13485,7 +13498,7 @@ return {
           name = "newShader",
           tag = "graphics-objects",
           summary = "Create a new Shader.",
-          description = "Creates a Shader, which is a small program that runs on the GPU.\n\nShader code is usually written in GLSL and compiled to SPIR-V bytecode.  SPIR-V is faster to load but requires a build step.  Either form can be used to create a shader.\n\nBy default, the provided shader code is expected to implement a `void lovrmain() { ... }` function that is called for each vertex or fragment.  If the `raw` option is set to `true`, the code is treated as a raw shader and the `lovrmain` function is not required. In this case, the shader code is expected to implement its own `main` function.",
+          description = "Creates a Shader, which is a small program that runs on the GPU.\n\nShader code is usually written in GLSL and compiled to SPIR-V bytecode.  SPIR-V is faster to load but requires a build step.  Either form can be used to create a shader.\n\nBy default, the provided shader code is expected to implement a `vec4 lovrmain() { ... }` function that is called for each vertex or fragment.  If the `raw` option is set to `true`, the code is treated as a raw shader and the `lovrmain` function is not required. In this case, the shader code is expected to implement its own `main` function.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
           related = {
