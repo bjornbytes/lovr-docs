@@ -55,8 +55,10 @@ return {
     is nil, then the position of the second Collider is the anchor.
   ]],
   related = {
+    'lovr.physics.newConeJoint',
     'lovr.physics.newDistanceJoint',
     'lovr.physics.newHingeJoint',
-    'lovr.physics.newSliderJoint'
+    'lovr.physics.newSliderJoint',
+    'lovr.physics.newWeldJoint'
   }
 }

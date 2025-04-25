@@ -51,7 +51,9 @@ return {
   ]],
   related = {
     'lovr.physics.newBallJoint',
+    'lovr.physics.newConeJoint',
     'lovr.physics.newDistanceJoint',
-    'lovr.physics.newHingeJoint'
+    'lovr.physics.newHingeJoint',
+    'lovr.physics.newWeldJoint'
   }
 }
