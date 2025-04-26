@@ -1,9 +1,10 @@
 return {
   summary = 'Wrap a string into a sequence of lines.',
   description = [[
-    Returns a table of wrapped lines for a piece of text, given a line length limit.  Newlines are
-    handled correctly.  The wrap limit units depend on the pixel density of the font.  With the
-    default pixel density, the units correspond to meters when the font is drawn at 1.0 scale.
+    Returns a table of wrapped lines for a piece of text, given a line length limit.
+
+    By default the units for `limit` are in meters.  If text is being drawn with scale applied, make
+    sure the scale is also applied to the `limit`.
   ]],
   arguments = {
     string = {
@@ -25,7 +26,7 @@ return {
   returns = {
     lines = {
       type = 'table',
-      description = 'A table strings, one for each wrapped line (without any color information).'
+      description = 'A table of strings, one for each wrapped line.'
     }
   },
   variants = {
@@ -38,6 +39,10 @@ return {
       returns = { 'lines' }
     }
   },
+  notes = [[
+    The font's pixel density is incorporated into the limit.  So if the font's pixel density is
+    changed to 1 (changing the font's units to pixels), the `limit` will be in pixels as well.
+  ]],
   related = {
     'Font:getWidth',
     'Font:getHeight',
