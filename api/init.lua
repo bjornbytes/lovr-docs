@@ -27240,9 +27240,13 @@ return {
           name = "start",
           tag = "headset-misc",
           summary = "Starts the headset session.",
-          description = "Starts the headset session.  This must be called after the graphics module is initialized, and can only be called once.  Normally it is called automatically by `boot.lua`.",
+          description = "Starts the headset session.  This must be called after the graphics module is initialized. Normally it is called automatically by `boot.lua`, but this can be disabled by setting `t.headset.start` to false in `lovr.conf`.",
           key = "lovr.headset.start",
           module = "lovr.headset",
+          related = {
+            "lovr.headset.stop",
+            "lovr.headset.isActive"
+          },
           variants = {
             {
               arguments = {},
