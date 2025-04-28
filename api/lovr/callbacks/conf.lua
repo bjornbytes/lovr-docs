@@ -162,6 +162,11 @@ return {
               description = 'An ordered list of preferred headset drivers.'
             },
             {
+              name = 'start',
+              type = 'boolean',
+              description = 'Whether a VR session should begin at startup.'
+            },
+            {
               name = 'supersample',
               type = 'number',
               description = [[
@@ -333,6 +338,7 @@ return {
 
           -- Headset settings
           t.headset.drivers = { 'openxr', 'simulator' }
+          t.headset.start = true
           t.headset.supersample = false
           t.headset.seated = false
           t.headset.antialias = true
