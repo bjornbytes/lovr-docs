@@ -13048,7 +13048,7 @@ return {
           name = "newShader",
           tag = "graphics-objects",
           summary = "Create a new Shader.",
-          description = "Creates a Shader, which is a small program that runs on the GPU.\n\nShader code is usually written in GLSL and compiled to SPIR-V bytecode.  SPIR-V is faster to load but requires a build step.  Either form can be used to create a shader.\n\nBy default, the provided shader code is expected to implement a `void lovrmain() { ... }` function that is called for each vertex or fragment.  If the `raw` option is set to `true`, the code is treated as a raw shader and the `lovrmain` function is not required. In this case, the shader code is expected to implement its own `main` function.",
+          description = "Creates a Shader, which is a small program that runs on the GPU.\n\nShader code is usually written in GLSL and compiled to SPIR-V bytecode.  SPIR-V is faster to load but requires a build step.  Either form can be used to create a shader.\n\nBy default, the provided shader code is expected to implement a `vec4 lovrmain() { ... }` function that is called for each vertex or fragment.  If the `raw` option is set to `true`, the code is treated as a raw shader and the `lovrmain` function is not required. In this case, the shader code is expected to implement its own `main` function.",
           key = "lovr.graphics.newShader",
           module = "lovr.graphics",
           related = {
@@ -26180,6 +26180,30 @@ return {
           }
         },
         {
+          name = "isActive",
+          tag = "headset-misc",
+          summary = "Check if the headset session is active.",
+          description = "Returns whether a headset session is active.  When true, there is an active connection to the VR hardware.  When false, most headset methods will not work properly until `lovr.headset.start` is used to start a session.",
+          key = "lovr.headset.isActive",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.start",
+            "lovr.headset.stop"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "active",
+                  type = "boolean",
+                  description = "Whether the headset session is active."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isDown",
           tag = "input",
           summary = "Get the state of a button on a device.",
@@ -26739,9 +26763,32 @@ return {
           name = "start",
           tag = "headset-misc",
           summary = "Starts the headset session.",
-          description = "Starts the headset session.  This must be called after the graphics module is initialized, and can only be called once.  Normally it is called automatically by `boot.lua`.",
+          description = "Starts the headset session.  This must be called after the graphics module is initialized. Normally it is called automatically by `boot.lua`, but this can be disabled by setting `t.headset.start` to false in `lovr.conf`.",
           key = "lovr.headset.start",
           module = "lovr.headset",
+          related = {
+            "lovr.headset.stop",
+            "lovr.headset.isActive"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "stop",
+          tag = "headset-misc",
+          summary = "Stop the headset session.",
+          description = "Stops the headset session.  This tears down the connection to the VR runtime and hardware. `lovr.draw` will instead start rendering to the desktop window, as though the headset module was disabled.  However, certain information about the headset can still be queried, such as its name, supported passthrough modes, display size, etc.  A headset session can be started later using `lovr.headset.start`.",
+          key = "lovr.headset.stop",
+          module = "lovr.headset",
+          notes = "The headset module behaves in the following manner when there is no headset session:\n\n- `lovr.headset.isActive` returns `false`.\n- `lovr.headset.getPass` returns `nil`.\n- All devices will be untracked.",
+          related = {
+            "lovr.headset.start",
+            "lovr.headset.isActive"
+          },
           variants = {
             {
               arguments = {},
