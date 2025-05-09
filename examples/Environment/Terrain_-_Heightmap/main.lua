@@ -10,12 +10,12 @@ vec4 lovrmain() {
   return fragmentClip;
 } ]], [[
 /* FRAGMENT shader */
-vec4 fragmentView;
+in vec4 fragmentClip;
 
 uniform vec3 fogColor;
 
 vec4 lovrmain() {
-  float fogAmount = atan(length(fragmentView) * 0.1) * 2.0 / PI;
+  float fogAmount = atan(length(fragmentClip) * 0.1) * 2.0 / PI;
   return vec4(mix(Color.rgb, fogColor, fogAmount), Color.a);
 }]]}
 
