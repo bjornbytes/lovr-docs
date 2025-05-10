@@ -4,7 +4,7 @@ function lovr.load()
       vec3 planePosition = vec3(0, 1.7, 0);
       vec3 planeNormal = vec3(0, -1, 0);
 
-      gl_ClipDistance[0] = dot(PositionWorld - planePosition, planeNormal);
+      ClipDistance[0] = dot(PositionWorld - planePosition, planeNormal);
 
       return DefaultPosition;
     }
