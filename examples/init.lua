@@ -47,6 +47,7 @@ return {
   'Audio/Sine_Wave_Generator',
   'Effects/Billboards',
   'Effects/Blur',
+  'Effects/Clipping',
   'Effects/Stereo_Image',
   'Effects/Cubemap_Generate',
   'Effects/Cubemap_Texturing',
