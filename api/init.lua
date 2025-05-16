@@ -33845,9 +33845,11 @@ return {
           module = "lovr.physics",
           notes = "A ball joint is like a ball and socket between the two colliders.  It tries to keep the distance between the colliders and the anchor position the same, but does not constrain the angle between them.\n\nIf the anchor is nil, the position of the first Collider is the anchor.  If the first collider is nil, then the position of the second Collider is the anchor.",
           related = {
+            "lovr.physics.newConeJoint",
             "lovr.physics.newDistanceJoint",
             "lovr.physics.newHingeJoint",
-            "lovr.physics.newSliderJoint"
+            "lovr.physics.newSliderJoint",
+            "lovr.physics.newWeldJoint"
           },
           variants = {
             {
@@ -34283,8 +34285,10 @@ return {
           notes = "A distance joint tries to keep the two colliders a fixed distance apart.  The distance is determined by the initial distance between the anchor points.  The joint allows for rotation on the anchor points.\n\nIf no anchors are given, they default to the positions of the Colliders.",
           related = {
             "lovr.physics.newBallJoint",
+            "lovr.physics.newConeJoint",
             "lovr.physics.newHingeJoint",
-            "lovr.physics.newSliderJoint"
+            "lovr.physics.newSliderJoint",
+            "lovr.physics.newWeldJoint"
           },
           variants = {
             {
@@ -34380,8 +34384,10 @@ return {
           notes = "A hinge joint constrains two colliders to allow rotation only around the hinge's axis.\n\nIf the anchor is nil, the position of the first Collider is the anchor.  If the first Collider is nil, the position of the second collider is the anchor.\n\nIf the axis is nil, it defaults to the direction between the anchor and the second Collider.",
           related = {
             "lovr.physics.newBallJoint",
+            "lovr.physics.newConeJoint",
             "lovr.physics.newDistanceJoint",
-            "lovr.physics.newSliderJoint"
+            "lovr.physics.newSliderJoint",
+            "lovr.physics.newWeldJoint"
           },
           variants = {
             {
@@ -34612,8 +34618,10 @@ return {
           notes = "A slider joint constrains two colliders to only allow movement along the slider's axis.",
           related = {
             "lovr.physics.newBallJoint",
+            "lovr.physics.newConeJoint",
             "lovr.physics.newDistanceJoint",
-            "lovr.physics.newHingeJoint"
+            "lovr.physics.newHingeJoint",
+            "lovr.physics.newWeldJoint"
           },
           variants = {
             {
