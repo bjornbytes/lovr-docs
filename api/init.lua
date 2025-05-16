@@ -4,7 +4,7 @@ return {
       name = "conf",
       tag = "callbacks",
       summary = "Called to read configuration settings at startup.",
-      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.\n\n:::note Make sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes. :::",
+      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.\n\n:::note\nMake sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes.\n:::",
       key = "lovr.conf",
       module = "lovr",
       examples = {
