@@ -27,8 +27,8 @@ end
 local function unwrap(str)
   if not str then return str end
   str = unindent(str)
-  return str:gsub('([^\n])\n(%S)', function(a, b)
-    if b == '-' or b == '>' then
+  return str:gsub('([^\n]+)\n(%S)', function(a, b)
+    if b == '-' or b == '>' or b == ':' or a:match(':::') then
       return a .. '\n' .. b
     else
       return a .. ' ' .. b
