@@ -189,7 +189,7 @@ return {
     The callback function is passed a collider, a shape, a world-space point, a world-space normal,
     a triangle index (for mesh shapes), and a fraction:
 
-        function(collider, shape, x, y, z, nx, ny, nz, fraction)
+        function(collider, shape, x, y, z, nx, ny, nz, tri, fraction)
           return fraction
         end
 
