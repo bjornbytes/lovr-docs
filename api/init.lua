@@ -43104,7 +43104,7 @@ return {
               description = "Traces a ray through the world and calls a function for each collider that was hit.\n\nThe callback can be left off, in which case the closest hit will be returned.",
               key = "World:raycast",
               module = "lovr.physics",
-              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the raycast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nRaycasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
+              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, a triangle index, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, tri, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the raycast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nRaycasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
               related = {
                 "Shape:raycast",
                 "World:shapecast",
@@ -43694,7 +43694,7 @@ return {
               description = "Moves a shape from a starting point to an endpoint and returns any colliders it touches along its path.\n\nThis is similar to a raycast, but with a `Shape` instead of a point.",
               key = "World:shapecast",
               module = "lovr.physics",
-              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the shapecast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nShapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
+              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, a triangle index (for mesh shapes), and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the shapecast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nShapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
               related = {
                 "World:raycast",
                 "World:overlapShape",
@@ -43803,6 +43803,10 @@ return {
                           type = "number"
                         },
                         {
+                          name = "triangle",
+                          type = "number"
+                        },
+                        {
                           name = "fraction",
                           type = "number"
                         }
@@ -43881,6 +43885,10 @@ return {
                         },
                         {
                           name = "nz",
+                          type = "number"
+                        },
+                        {
+                          name = "triangle",
                           type = "number"
                         },
                         {
@@ -44003,6 +44011,16 @@ return {
                       name = "nz",
                       type = "number",
                       description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number",
+                      description = "The triangle that was hit, or `nil` if a MeshShape was not hit."
+                    },
+                    {
+                      name = "fraction",
+                      type = "number",
+                      description = "The fraction along the ray where the impact occurred."
                     }
                   }
                 },
@@ -44075,6 +44093,16 @@ return {
                       name = "nz",
                       type = "number",
                       description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number",
+                      description = "The triangle that was hit, or `nil` if a MeshShape was not hit."
+                    },
+                    {
+                      name = "fraction",
+                      type = "number",
+                      description = "The fraction along the ray where the impact occurred."
                     }
                   }
                 }

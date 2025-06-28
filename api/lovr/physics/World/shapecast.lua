@@ -107,6 +107,10 @@ return {
           type = 'number'
         },
         {
+          name = 'triangle',
+          type = 'number'
+        },
+        {
           name = 'fraction',
           type = 'number'
         }
@@ -153,6 +157,14 @@ return {
     nz = {
       type = 'number',
       description = 'The z component of the normal vector.'
+    },
+    triangle = {
+      type = 'number',
+      description = 'The triangle that was hit, or `nil` if a MeshShape was not hit.'
+    },
+    fraction = {
+      type = 'number',
+      description = 'The fraction along the ray where the impact occurred.'
     }
   },
   variants = {
@@ -166,16 +178,16 @@ return {
     },
     {
       arguments = { 'shape', 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', 'angle', 'ax', 'ay', 'az', 'filter' },
-      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
+      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz', 'triangle', 'fraction' }
     },
     {
       arguments = { 'shape', 'position', 'destination', 'orientation', 'filter' },
-      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
+      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz', 'triangle', 'fraction' }
     }
   },
   notes = [[
     The callback function is passed a collider, a shape, a world-space point, a world-space normal,
-    and a fraction:
+    a triangle index (for mesh shapes), and a fraction:
 
         function(collider, shape, x, y, z, nx, ny, nz, fraction)
           return fraction

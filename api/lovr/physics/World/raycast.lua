@@ -158,9 +158,9 @@ return {
   },
   notes = [[
     The callback function is passed a collider, a shape, a world-space point, a world-space normal,
-    and a fraction:
+    a triangle index, and a fraction:
 
-        function(collider, shape, x, y, z, nx, ny, nz, fraction)
+        function(collider, shape, x, y, z, nx, ny, nz, tri, fraction)
           return fraction
         end
 
