@@ -43694,7 +43694,7 @@ return {
               description = "Moves a shape from a starting point to an endpoint and returns any colliders it touches along its path.\n\nThis is similar to a raycast, but with a `Shape` instead of a point.",
               key = "World:shapecast",
               module = "lovr.physics",
-              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, a triangle index (for mesh shapes), and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the shapecast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nShapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
+              notes = "The callback function is passed a collider, a shape, a world-space point, a world-space normal, a triangle index (for mesh shapes), and a fraction:\n\n    function(collider, shape, x, y, z, nx, ny, nz, tri, fraction)\n      return fraction\n    end\n\nThe callback can return a fraction value used to limit the range of further hits.  For example:\n\n- Returning 0.0 will abort the shapecast and ignore all other hits.\n- Returning 1.0 will call the callback for all hits.\n- Returning `fraction` will return successively closer hits.\n\nShapecasts will hit sensors and sleeping colliders, but will not hit disabled colliders.",
               related = {
                 "World:raycast",
                 "World:overlapShape",
