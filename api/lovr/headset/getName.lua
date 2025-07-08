@@ -18,5 +18,5 @@ return {
       returns = { 'name' }
     }
   },
-  notes = 'The simulator driver name will always be `Simulator`.'
+  notes = 'When headset simulator is used this function returns `nil`.'
 }
