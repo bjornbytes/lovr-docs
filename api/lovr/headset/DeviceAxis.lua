@@ -17,6 +17,10 @@ return {
     {
       name = 'grip',
       description = 'A grip button or grab gesture (1D).'
+    },
+    {
+      name = 'nib',
+      description = 'The pressure sensitivity of the nib (tip) of a `stylus` device.'
     }
   },
   related = {

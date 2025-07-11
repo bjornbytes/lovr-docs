@@ -25160,6 +25160,10 @@ return {
               description = "A tracked keyboard."
             },
             {
+              name = "stylus",
+              description = "A tracked pen or pointer."
+            },
+            {
               name = "eye/left",
               description = "The left eye."
             },
@@ -25199,6 +25203,10 @@ return {
             {
               name = "grip",
               description = "A grip button or grab gesture (1D)."
+            },
+            {
+              name = "nib",
+              description = "The pressure sensitivity of the nib (tip) of a `stylus` device."
             }
           }
         },
@@ -25216,6 +25224,10 @@ return {
             {
               name = "thumbstick",
               description = "The thumbstick."
+            },
+            {
+              name = "thumbrest",
+              description = "The thumbrest."
             },
             {
               name = "touchpad",
@@ -25246,8 +25258,8 @@ return {
               description = "The Y button."
             },
             {
-              name = "proximity",
-              description = "The proximity sensor on a headset."
+              name = "nib",
+              description = "The nib (tip) of the `stylus` device."
             }
           }
         },

@@ -120,6 +120,10 @@ return {
       description = 'A tracked keyboard.'
     },
     {
+      name = 'stylus',
+      description = 'A tracked pen or pointer.'
+    },
+    {
       name = 'eye/left',
       description = 'The left eye.'
     },

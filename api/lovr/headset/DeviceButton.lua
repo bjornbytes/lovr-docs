@@ -11,6 +11,10 @@ return {
       description = 'The thumbstick.'
     },
     {
+      name = 'thumbrest',
+      description = 'The thumbrest.'
+    },
+    {
       name = 'touchpad',
       description = 'The touchpad.'
     },
@@ -39,8 +43,8 @@ return {
       description = 'The Y button.'
     },
     {
-      name = 'proximity',
-      description = 'The proximity sensor on a headset.'
+      name = 'nib',
+      description = 'The nib (tip) of the `stylus` device.'
     }
   }
 }
