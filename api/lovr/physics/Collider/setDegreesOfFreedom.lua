@@ -36,5 +36,7 @@ return {
     When all translation axes are disabled, `Collider:getMass` will return 0.
 
     When all rotation axes are disabled, `Collider:getInertia` will return zero/identity.
+
+    This function does nothing if the Collider is kinematic.
   ]]
 }

@@ -26070,7 +26070,7 @@ return {
           description = "Returns the name of the headset as a string.  The exact string that is returned depends on the hardware and VR SDK that is currently in use.",
           key = "lovr.headset.getName",
           module = "lovr.headset",
-          notes = "The simulator driver name will always be `Simulator`.",
+          notes = "When headset simulator is used this function returns `nil`.",
           variants = {
             {
               arguments = {},
@@ -37638,7 +37638,7 @@ return {
               description = "Set the degrees of freedom of the Collider.",
               key = "Collider:setDegreesOfFreedom",
               module = "lovr.physics",
-              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all degrees of freedom.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.\n\nWhen all translation axes are disabled, `Collider:getMass` will return 0.\n\nWhen all rotation axes are disabled, `Collider:getInertia` will return zero/identity.",
+              notes = "The default state is `xyz` for both translation and rotation.\n\nThe physics engine does not support disabling all degrees of freedom.  At least one translation or rotation axis needs to be enabled.  To disable all movement for a collider, make it kinematic.\n\nWhen all translation axes are disabled, `Collider:getMass` will return 0.\n\nWhen all rotation axes are disabled, `Collider:getInertia` will return zero/identity.\n\nThis function does nothing if the Collider is kinematic.",
               variants = {
                 {
                   arguments = {
