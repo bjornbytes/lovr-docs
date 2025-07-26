@@ -33,9 +33,6 @@ return {
       returns = { 't' }
     }
   },
-  notes = [[
-    This function will always return 2 points if the Curve is a line with only 2 control points.
-  ]],
   related = {
     'Curve:evaluate',
     'Curve:slice',
