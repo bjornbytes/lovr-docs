@@ -1,6 +1,6 @@
 return {
-  deprecated = true,
   tag = 'headset',
+  deprecated = 'Replaced by `lovr.headset.getRefreshRate`.',
   summary = 'Get the refresh rate of the display.',
   description = 'Returns the refresh rate of the headset display, in Hz.',
   arguments = {},

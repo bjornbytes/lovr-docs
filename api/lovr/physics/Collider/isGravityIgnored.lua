@@ -1,5 +1,5 @@
 return {
-  deprecated = true,
+  deprecated = 'This function has been replaced by `Collider:getGravityScale`.',
   summary = 'Check if the Collider ignores gravity.',
   description = 'Returns whether the Collider is currently ignoring gravity.',
   arguments = {},

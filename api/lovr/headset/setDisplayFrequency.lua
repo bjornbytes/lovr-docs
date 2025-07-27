@@ -1,6 +1,6 @@
 return {
-  deprecated = true,
   tag = 'headset',
+  deprecated = 'Replaced by `lovr.headset.setRefreshRate`.',
   summary = 'Set the display refresh rate.',
   description = 'Sets the display refresh rate, in Hz.',
   arguments = {
