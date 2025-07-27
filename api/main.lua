@@ -94,6 +94,7 @@ local function processFunction(path, parent)
 
   fn.name = path:match('[^/]+$')
   fn.key = parent.name:match('^[A-Z]') and (parent.key .. ':' .. fn.name) or (path:gsub('/', '.'):gsub('callbacks%.', ''))
+  fn.deprecated = type(fn.deprecated) == 'string' and unwrap(fn.deprecated) or fn.deprecated
   fn.description = unwrap(fn.description)
   fn.module = parent.module or parent.key
   fn.notes = unwrap(fn.notes)
