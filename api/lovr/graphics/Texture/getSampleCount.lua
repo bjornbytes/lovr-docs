@@ -21,6 +21,6 @@ return {
   },
   related = {
     'lovr.graphics.newTexture',
-    'Pass:getSampleCount'
+    'Pass:setCanvas'
   }
 }

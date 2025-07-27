@@ -46,8 +46,7 @@ return {
     buffer with offsets (or multiple buffers).
   ]],
   constructors = {
-    'lovr.graphics.newBuffer',
-    'lovr.graphics.getBuffer'
+    'lovr.graphics.newBuffer'
   },
   sections = {
     {

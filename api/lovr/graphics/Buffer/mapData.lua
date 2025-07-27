@@ -42,7 +42,6 @@ return {
     - It is better to write data to the pointer sequentially.  Random access may be slower.
   ]],
   related = {
-    'Blob:getPointer',
-    'Buffer:getPointer'
+    'Blob:getPointer'
   }
 }

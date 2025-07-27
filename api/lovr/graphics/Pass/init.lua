@@ -22,8 +22,7 @@ return {
   constructors = {
     'lovr.graphics.newPass',
     'lovr.graphics.getWindowPass',
-    'lovr.headset.getPass',
-    'lovr.graphics.getPass'
+    'lovr.headset.getPass'
   },
   sections = {
     {

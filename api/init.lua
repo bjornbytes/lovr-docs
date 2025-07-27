@@ -10639,33 +10639,6 @@ return {
           }
         },
         {
-          name = "PassType",
-          summary = "Different types of Passes.",
-          description = "The three different types of `Pass` objects.  Each Pass has a single type, which determines the type of work it does and which functions can be called on it.",
-          key = "PassType",
-          module = "lovr.graphics",
-          deprecated = true,
-          related = {
-            "lovr.graphics.getPass",
-            "lovr.graphics.submit",
-            "Pass:getType"
-          },
-          values = {
-            {
-              name = "render",
-              description = "A render pass renders graphics to a set of up to four color textures and an optional depth texture.  The textures all need to have the same dimensions and sample counts.  The textures can have multiple layers, and all rendering work will be broadcast to each layer.  Each layer can use a different camera pose, which is used for stereo rendering."
-            },
-            {
-              name = "compute",
-              description = "A compute pass runs compute shaders.  Compute passes usually only call `Pass:setShader`, `Pass:send`, and `Pass:compute`.  All of the compute work in a single compute pass is run in parallel, so multiple compute passes should be used if one compute pass needs to happen after a different one."
-            },
-            {
-              name = "transfer",
-              description = "A transfer pass copies data to and from GPU memory in `Buffer` and `Texture` objects. Transfer passes use `Pass:copy`, `Pass:clear`, `Pass:blit`, `Pass:mipmap`, and `Pass:read`. Similar to compute passes, all the work in a transfer pass happens in parallel, so multiple passes should be used if the transfers need to be ordered."
-            }
-          }
-        },
-        {
           name = "ShaderStage",
           summary = "Different shader stages.",
           description = "Different shader stages.  Graphics shaders have a `vertex` and `fragment` stage, and compute shaders have a single `compute` stage.",
@@ -11020,396 +10993,6 @@ return {
           }
         },
         {
-          name = "getBuffer",
-          tag = "graphics-objects",
-          summary = "Get a temporary Buffer.",
-          description = "Returns a temporary Buffer.",
-          key = "lovr.graphics.getBuffer",
-          module = "lovr.graphics",
-          deprecated = true,
-          examples = {
-            {
-              description = "Examples of different buffer formats.",
-              code = "-- 2 matrices\nlovr.graphics.getBuffer('mat4', 2)\n\n-- 3 integers, with initial data\nlovr.graphics.getBuffer('int', { 1, 2, 3 })\n\n-- a simple mesh:\nlovr.graphics.getBuffer({\n  { name = 'VertexPosition', type = 'vec3' },\n  { name = 'VertexColor', type = 'color' }\n}, 4)\n\n-- a uniform buffer with vec3's, using the std140 packing\nlovr.graphics.getBuffer({ 'vec3', layout = 'std140' }, data)\n\n-- a uniform buffer with key-value fields\nlovr.graphics.getBuffer({\n  { 'AmbientColor', 'vec3' },\n  { 'LightPosition', 'vec3' },\n  { 'LightType', 'u32' },\n  { 'LightColor', 'vec4' },\n  layout = 'std140'\n})\n\n-- a buffer with nested structure and array types\nlovr.graphics.getBuffer({\n  { 'globals', {\n    { 'ObjectCount', 'int' },\n    { 'WorldSize', 'vec2' },\n    { 'Scale', 'float' }\n  }},\n  { 'materials', {\n    { 'Color', 'vec4' },\n    { 'Glow', 'vec3' },\n    { 'Roughness', 'float' }\n  }, length = 32 },\n  layout = 'std430'\n})\n\n-- a buffer using a variable from a shader:\nlovr.graphics.getBuffer(shader:getBufferFormat('transforms'))"
-            }
-          },
-          notes = "The format table can contain a list of `DataType`s or a list of tables to provide extra information about each field.  Each inner table has the following keys:\n\n- `type` is the `DataType` of the field and is required.\n- `name` is the name of the field, used to match table keys and vertex attribute names.\n- `offset` is the byte offset of the field.  Any fields with a `nil` offset will be placed next\n  to each other sequentially in memory, subject to any padding required by the Buffer's layout.\n  In practice this means that you probably want to provide an `offset` for either all of the\n  fields or none of them.\n- `length` is the array size of the field.\n\nAs a shorthand, the name, type, and optionally the length of a field can be provided as a list instead of using keys.\n\nIf no table or Blob is used to define the initial Buffer contents, its data will be undefined.",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The size of the Buffer, in bytes."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                },
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                },
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                },
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                },
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                },
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                },
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                },
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            }
-          }
-        },
-        {
           name = "getDefaultFont",
           tag = "graphics-objects",
           summary = "Get the default Font.",
@@ -11735,110 +11318,6 @@ return {
           }
         },
         {
-          name = "getPass",
-          tag = "graphics-objects",
-          summary = "Get a temporary Pass.",
-          description = "Creates and returns a temporary Pass object.",
-          key = "lovr.graphics.getPass",
-          module = "lovr.graphics",
-          deprecated = "Temporary passes have been removed.  This function was replaced by `lovr.graphics.newPass`.",
-          notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `lovr.graphics.newTextureView`.\n\nFor `compute` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
-          related = {
-            "lovr.graphics.submit",
-            "lovr.graphics.getWindowPass",
-            "lovr.headset.getPass"
-          },
-          variants = {
-            {
-              description = "Create a compute pass.",
-              arguments = {
-                {
-                  name = "type",
-                  type = "PassType",
-                  description = "The type of pass to create."
-                }
-              },
-              returns = {
-                {
-                  name = "pass",
-                  type = "Pass",
-                  description = "The new Pass."
-                }
-              }
-            },
-            {
-              description = "Create a render pass.",
-              arguments = {
-                {
-                  name = "type",
-                  type = "PassType",
-                  description = "The type of pass to create."
-                },
-                {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The texture the render pass will render to.  Ignored for non-render passes."
-                }
-              },
-              returns = {
-                {
-                  name = "pass",
-                  type = "Pass",
-                  description = "The new Pass."
-                }
-              }
-            },
-            {
-              description = "Create a render pass, with options.",
-              arguments = {
-                {
-                  name = "type",
-                  type = "PassType",
-                  description = "The type of pass to create."
-                },
-                {
-                  name = "canvas",
-                  type = "table",
-                  description = "Render pass configuration.  Up to 4 textures can be provided in table keys 1 through 4. Ignored for non-render passes.",
-                  table = {
-                    {
-                      name = "depth",
-                      type = "table",
-                      description = "Depth/stencil buffer configuration.  In addition to a table, it can be a `Texture`, a `TextureFormat`, or `false` to disable the depth buffer.",
-                      table = {
-                        {
-                          name = "format",
-                          type = "TextureFormat",
-                          description = "The format of the depth buffer texture, which must be a depth format (the ones that start with `d`).  LÖVR will create or reuse an internal depth buffer with this format.",
-                          default = "'d32f'"
-                        },
-                        {
-                          name = "texture",
-                          type = "Texture",
-                          description = "A Texture to use as the depth buffer.  Takes precedence over `format`."
-                        }
-                      }
-                    },
-                    {
-                      name = "samples",
-                      type = "number",
-                      description = "The number of multisamples to use.  Can be 4 for antialiasing, or 1 to disable antialiasing.",
-                      default = "4"
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "pass",
-                  type = "Pass",
-                  description = "The new Pass."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getWindowPass",
           tag = "graphics-objects",
           summary = "Get the window pass.",
@@ -12139,179 +11618,6 @@ return {
                   description = "The new Buffer."
                 }
               }
-            },
-            {
-              arguments = {
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                },
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                },
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                },
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                },
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              },
-              deprecated = true
             }
           }
         },
@@ -13840,8 +13146,7 @@ return {
           key = "Buffer",
           module = "lovr.graphics",
           constructors = {
-            "lovr.graphics.newBuffer",
-            "lovr.graphics.getBuffer"
+            "lovr.graphics.newBuffer"
           },
           methods = {
             {
@@ -14001,45 +13306,6 @@ return {
               }
             },
             {
-              name = "getPointer",
-              tag = "buffer-transfer",
-              summary = "Get a writable pointer to the Buffer's memory.",
-              description = "Returns a pointer to GPU memory and schedules a copy from this pointer to the buffer's data. The data in the pointer will replace the data in the buffer.  This is intended for use with the LuaJIT FFI or for passing to C libraries.",
-              key = "Buffer:getPointer",
-              module = "lovr.graphics",
-              deprecated = true,
-              notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
-              related = {
-                "Blob:getPointer",
-                "Buffer:mapData"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A byte offset in the buffer to write to.",
-                      default = "0"
-                    },
-                    {
-                      name = "extent",
-                      type = "number",
-                      description = "The number of bytes to replace.  If nil, writes to the rest of the buffer.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "pointer",
-                      type = "lightuserdata",
-                      description = "A pointer to the Buffer's memory."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getSize",
               tag = "buffer-metadata",
               summary = "Get the size of the Buffer, in bytes.",
@@ -14089,30 +13355,6 @@ return {
               }
             },
             {
-              name = "isTemporary",
-              tag = "buffer-metadata",
-              summary = "Check if the Buffer is temporary.",
-              description = "Returns whether the Buffer is temporary.",
-              key = "Buffer:isTemporary",
-              module = "lovr.graphics",
-              deprecated = "Temporary buffers have been removed, this function always returns false.",
-              related = {
-                "lovr.graphics.getBuffer"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "temporary",
-                      type = "boolean",
-                      description = "Whether the Buffer is temporary."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "mapData",
               tag = "buffer-transfer",
               summary = "Get a writable pointer to the Buffer's memory.",
@@ -14121,8 +13363,7 @@ return {
               module = "lovr.graphics",
               notes = "The pointer remains valid until the next call to `lovr.graphics.submit`, during which the data in the pointer will be uploaded to the buffer.\n\nThe initial contents of the pointer are undefined.\n\nSpecial care should be taken when writing data:\n\n- Reading data from the pointer will be very slow on some systems, and should be avoided.\n- It is better to write data to the pointer sequentially.  Random access may be slower.",
               related = {
-                "Blob:getPointer",
-                "Buffer:getPointer"
+                "Blob:getPointer"
               },
               variants = {
                 {
@@ -18059,8 +17300,7 @@ return {
           constructors = {
             "lovr.graphics.newPass",
             "lovr.graphics.getWindowPass",
-            "lovr.headset.getPass",
-            "lovr.graphics.getPass"
+            "lovr.headset.getPass"
           },
           methods = {
             {
@@ -19512,27 +18752,6 @@ return {
               }
             },
             {
-              name = "getSampleCount",
-              tag = "canvas",
-              summary = "Get the antialiasing setting of a render pass.",
-              description = "Returns the antialiasing setting of a render pass.",
-              key = "Pass:getSampleCount",
-              module = "lovr.graphics",
-              deprecated = true,
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "samples",
-                      type = "number",
-                      description = "The number of samples used for rendering.  Currently, will be 1 or 4."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getStats",
               tag = "pass-misc",
               summary = "Get statistics for the Pass.",
@@ -19624,51 +18843,6 @@ return {
                       name = "offset",
                       type = "number",
                       description = "An offset in the buffer where results will be written."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTarget",
-              tag = "canvas",
-              summary = "Get the textures a render pass is rendering to.",
-              description = "Returns the textures a render pass is rendering to.",
-              key = "Pass:getTarget",
-              module = "lovr.graphics",
-              deprecated = true,
-              related = {
-                "Pass:getClear"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "target",
-                      type = "table",
-                      description = "A table of the color textures targeted by the pass, with an additional `depth` key if the pass has a depth texture."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getType",
-              tag = "pass-misc",
-              summary = "Get the type of the Pass.",
-              description = "Returns the type of the pass (render, compute, or transfer).  The type restricts what kinds of functions can be called on the pass.",
-              key = "Pass:getType",
-              module = "lovr.graphics",
-              deprecated = true,
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "type",
-                      type = "PassType",
-                      description = "The type of the Pass."
                     }
                   }
                 }
@@ -24103,7 +23277,7 @@ return {
               module = "lovr.graphics",
               related = {
                 "lovr.graphics.newTexture",
-                "Pass:getSampleCount"
+                "Pass:setCanvas"
               },
               variants = {
                 {
@@ -25242,51 +24416,6 @@ return {
           }
         },
         {
-          name = "getDisplayFrequencies",
-          tag = "headset",
-          summary = "Get the list of refresh rates supported by the display.",
-          description = "Returns a table with all the refresh rates supported by the headset display, in Hz.",
-          key = "lovr.headset.getDisplayFrequencies",
-          module = "lovr.headset",
-          deprecated = "Replaced by `lovr.headset.getRefreshRates`.",
-          related = {
-            "lovr.headset.setDisplayFrequency"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "frequencies",
-                  type = "table",
-                  description = "A flat table of the refresh rates supported by the headset display, nil if not supported."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getDisplayFrequency",
-          tag = "headset",
-          summary = "Get the refresh rate of the display.",
-          description = "Returns the refresh rate of the headset display, in Hz.",
-          key = "lovr.headset.getDisplayFrequency",
-          module = "lovr.headset",
-          deprecated = "Replaced by `lovr.headset.getRefreshRate`.",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "frequency",
-                  type = "number",
-                  description = "The frequency of the display, or `nil` if I have no idea what it is."
-                }
-              }
-            }
-          }
-        },
-        {
           name = "getDisplayHeight",
           tag = "headset",
           summary = "Get the height of the headset display.",
@@ -25654,30 +24783,6 @@ return {
                   name = "az",
                   type = "number",
                   description = "The z component of the axis of rotation."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getOriginType",
-          tag = "playArea",
-          summary = "Get the type of tracking origin of the headset.",
-          description = "Returns the type of origin used for the tracking volume.  The different types of origins are explained on the `HeadsetOrigin` page.",
-          key = "lovr.headset.getOriginType",
-          module = "lovr.headset",
-          deprecated = "Replaced by `lovr.headset.isSeated`.",
-          related = {
-            "HeadsetOrigin"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "origin",
-                  type = "HeadsetOrigin",
-                  description = "The type of origin."
                 }
               }
             }
@@ -26579,34 +25684,6 @@ return {
                 }
               },
               returns = {}
-            }
-          }
-        },
-        {
-          name = "setDisplayFrequency",
-          tag = "headset",
-          summary = "Set the display refresh rate.",
-          description = "Sets the display refresh rate, in Hz.",
-          key = "lovr.headset.setDisplayFrequency",
-          module = "lovr.headset",
-          deprecated = "Replaced by `lovr.headset.setRefreshRate`.",
-          notes = "Changing the display refresh-rate also changes the frequency of lovr.update() and lovr.draw() as they depend on the display frequency.",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "frequency",
-                  type = "number",
-                  description = "The new refresh rate, in Hz."
-                }
-              },
-              returns = {
-                {
-                  name = "success",
-                  type = "boolean",
-                  description = "Whether the display refresh rate was successfully set."
-                }
-              }
             }
           }
         },
@@ -29441,6 +28518,7 @@ return {
               description = "Returns a list of points on the Curve.  The number of points can be specified to get a more or less detailed representation, and it is also possible to render a subsection of the Curve.",
               key = "Curve:render",
               module = "lovr.math",
+              notes = "This function will always return 2 points if the Curve is a line with only 2 control points.",
               related = {
                 "Curve:evaluate",
                 "Curve:slice",

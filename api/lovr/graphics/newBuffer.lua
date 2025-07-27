@@ -91,36 +91,6 @@ return {
     {
       arguments = { 'type', 'blob' },
       returns = { 'buffer' }
-    },
-    {
-      deprecated = true,
-      arguments = { 'length', 'type' },
-      returns = { 'buffer' }
-    },
-    {
-      deprecated = true,
-      arguments = { 'data', 'type' },
-      returns = { 'buffer' }
-    },
-    {
-      deprecated = true,
-      arguments = { 'length', 'format' },
-      returns = { 'buffer' }
-    },
-    {
-      deprecated = true,
-      arguments = { 'data', 'format' },
-      returns = { 'buffer' }
-    },
-    {
-      deprecated = true,
-      arguments = { 'blob', 'type' },
-      returns = { 'buffer' }
-    },
-    {
-      deprecated = true,
-      arguments = { 'blob', 'format' },
-      returns = { 'buffer' }
     }
   },
   notes = [[
