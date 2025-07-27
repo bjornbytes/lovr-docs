@@ -11741,7 +11741,7 @@ return {
           description = "Creates and returns a temporary Pass object.",
           key = "lovr.graphics.getPass",
           module = "lovr.graphics",
-          deprecated = true,
+          deprecated = "    Temporary passes have been removed.  This function was replaced by `lovr.graphics.newPass`.\n  ",
           notes = "Fun facts about render passes:\n\n- Textures must have been created with the `render` `TextureUsage`.\n- Textures must have the same dimensions, layer counts, and sample counts.\n- When rendering to textures with multiple layers, each draw will be broadcast to all layers.\n  Render passes have multiple \"views\" (cameras), and each layer uses a corresponding view,\n  allowing each layer to be rendered from a different viewpoint.  This enables fast stereo\n  rendering, but can also be used to efficiently render to cubemaps.  The `ViewIndex` variable\n  can also be used in shaders to set up any desired per-view behavior.\n- Mipmaps will automatically be generated for textures at the end of the render pass.\n- It's okay to have zero color textures, but in this case there must be a depth texture.\n- It's possible to render to a specific mipmap level of a Texture, or a subset of its layers, by\n  rendering to texture views, see `lovr.graphics.newTextureView`.\n\nFor `compute` passes, all of the commands in the pass act as though they run in parallel.  This means that writing to the same element of a buffer twice, or writing to it and reading from it again is not guaranteed to work properly on all GPUs.  If compute or transfers need to be sequenced, multiple passes should be used.  It is, however, completely fine to read and write to non-overlapping regions of the same buffer or texture.",
           related = {
             "lovr.graphics.submit",
@@ -29441,7 +29441,6 @@ return {
               description = "Returns a list of points on the Curve.  The number of points can be specified to get a more or less detailed representation, and it is also possible to render a subsection of the Curve.",
               key = "Curve:render",
               module = "lovr.math",
-              notes = "This function will always return 2 points if the Curve is a line with only 2 control points.",
               related = {
                 "Curve:evaluate",
                 "Curve:slice",

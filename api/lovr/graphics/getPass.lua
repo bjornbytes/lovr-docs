@@ -1,7 +1,9 @@
 return {
-  deprecated = true,
   tag = 'graphics-objects',
   summary = 'Get a temporary Pass.',
+  deprecated = [[
+    Temporary passes have been removed.  This function was replaced by `lovr.graphics.newPass`.
+  ]],
   description = 'Creates and returns a temporary Pass object.',
   arguments = {
     type = {
