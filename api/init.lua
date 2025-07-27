@@ -14571,7 +14571,7 @@ return {
               description = "Returns whether the Buffer is temporary.",
               key = "Buffer:isTemporary",
               module = "lovr.graphics",
-              deprecated = true,
+              deprecated = "Temporary buffers have been removed, this function always returns false.",
               related = {
                 "lovr.graphics.getBuffer"
               },
@@ -21893,7 +21893,7 @@ return {
               description = "Sets whether the front or back faces of triangles are culled.",
               key = "Pass:setCullMode",
               module = "lovr.graphics",
-              deprecated = true,
+              deprecated = "This function has been replaced by `Pass:setFaceCull`.",
               notes = "By default, face culling is disabled.",
               related = {
                 "Pass:setViewCull",
@@ -25725,7 +25725,7 @@ return {
           description = "Returns a table with all the refresh rates supported by the headset display, in Hz.",
           key = "lovr.headset.getDisplayFrequencies",
           module = "lovr.headset",
-          deprecated = true,
+          deprecated = "Replaced by `lovr.headset.getRefreshRates`.",
           related = {
             "lovr.headset.setDisplayFrequency"
           },
@@ -25749,7 +25749,7 @@ return {
           description = "Returns the refresh rate of the headset display, in Hz.",
           key = "lovr.headset.getDisplayFrequency",
           module = "lovr.headset",
-          deprecated = true,
+          deprecated = "Replaced by `lovr.headset.getRefreshRate`.",
           variants = {
             {
               arguments = {},
@@ -26143,7 +26143,7 @@ return {
           description = "Returns the type of origin used for the tracking volume.  The different types of origins are explained on the `HeadsetOrigin` page.",
           key = "lovr.headset.getOriginType",
           module = "lovr.headset",
-          deprecated = true,
+          deprecated = "Replaced by `lovr.headset.isSeated`.",
           related = {
             "HeadsetOrigin"
           },
@@ -27066,7 +27066,7 @@ return {
           description = "Sets the display refresh rate, in Hz.",
           key = "lovr.headset.setDisplayFrequency",
           module = "lovr.headset",
-          deprecated = true,
+          deprecated = "Replaced by `lovr.headset.setRefreshRate`.",
           notes = "Changing the display refresh-rate also changes the frequency of lovr.update() and lovr.draw() as they depend on the display frequency.",
           variants = {
             {
@@ -37279,7 +37279,7 @@ return {
               description = "Returns whether the Collider is currently ignoring gravity.",
               key = "Collider:isGravityIgnored",
               module = "lovr.physics",
-              deprecated = true,
+              deprecated = "This function has been replaced by `Collider:getGravityScale`.",
               variants = {
                 {
                   arguments = {},
@@ -37710,7 +37710,7 @@ return {
               description = "Sets whether the Collider should ignore gravity.",
               key = "Collider:setGravityIgnored",
               module = "lovr.physics",
-              deprecated = true,
+              deprecated = "This function has been replaced by `Collider:setGravityScale`.",
               variants = {
                 {
                   arguments = {

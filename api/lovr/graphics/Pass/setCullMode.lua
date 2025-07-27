@@ -1,6 +1,6 @@
 return {
   tag = 'pipeline',
-  deprecated = true,
+  deprecated = 'This function has been replaced by `Pass:setFaceCull`.',
   summary = 'Control triangle face culling.',
   description = 'Sets whether the front or back faces of triangles are culled.',
   arguments = {

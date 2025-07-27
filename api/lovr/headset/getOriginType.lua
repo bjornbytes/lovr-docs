@@ -1,6 +1,6 @@
 return {
-  deprecated = true,
   tag = 'playArea',
+  deprecated = 'Replaced by `lovr.headset.isSeated`.',
   summary = 'Get the type of tracking origin of the headset.',
   description = [[
     Returns the type of origin used for the tracking volume.  The different types of origins are
