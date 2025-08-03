@@ -108,7 +108,8 @@ return {
       to each other sequentially in memory, subject to any padding required by the Buffer's layout.
       In practice this means that you probably want to provide an `offset` for either all of the
       fields or none of them.
-    - `length` is the array size of the field.
+    - `length` is the array size of the field (optional, leave as `nil` for non-arrays).
+    - `stride` is the number of bytes between each item in an array (optional).
 
     As a shorthand, the name, type, and optionally the length of a field can be provided as a list
     instead of using keys.
