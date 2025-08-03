@@ -24371,6 +24371,10 @@ return {
               description = "A thumbstick (2D)."
             },
             {
+              name = "thumbrest",
+              description = "A rest (1D, pressure sensitivity, also available as a `DeviceButton`)."
+            },
+            {
               name = "touchpad",
               description = "A touchpad (2D)."
             },
@@ -24380,7 +24384,7 @@ return {
             },
             {
               name = "nib",
-              description = "The pressure sensitivity of the nib (tip) of a `stylus` device."
+              description = "The pressure sensitivity of the nib (tip) of a `stylus` device.  Also available on the `hand/left` and `hand/right` devices for the stylus nibs on touch pro controllers."
             }
           }
         },
@@ -24433,7 +24437,7 @@ return {
             },
             {
               name = "nib",
-              description = "The nib (tip) of the `stylus` device."
+              description = "The nib (tip) of the `stylus` device.  Also available on `hand/left` and `hand/right` devices for the stylus tips on touch pro controllers."
             }
           }
         },
@@ -26041,41 +26045,28 @@ return {
         {
           name = "newModel",
           tag = "controller-models",
-          summary = "Get a Model for a device.",
-          description = "Returns a new Model for the specified device.",
+          summary = "Load a model for an active device.",
+          description = "Loads a new Model object for the specified model key.\n\nModel keys are lightuserdata values that act as an ID for a specific model.  Use `lovr.headset.getModelKeys` to retrieve a list of model keys for the currently connected hardware.\n\nIt is recommended to refresh the list of model keys in the `lovr.modelschanged` event, which gets fired whenever the list of keys changes.  `lovr.modelschanged` is also fired once at startup when the models are ready to load.  In the callback, you can get the new list of model keys and load models for any keys that haven't been loaded yet.\n\nThere isn't any correspondence between a model key and a `Device`, because there could be multiple models for a device, or some models that do not correspond to a device at all.  For example, the hand device could have a model for a controller, a wrist tracker, or a hand mesh.\n\nOnce a model is loaded, call `lovr.headset.isTracked` with the model to check if it should be visible, and `lovr.headset.getPose` to get the position and orientation to draw the model at.\n\nTo reposition the nodes in the model to match the current state of the buttons, joysticks, etc., call `lovr.headset.animate` with the model.",
           key = "lovr.headset.newModel",
           module = "lovr.headset",
           examples = {
             {
-              code = "local models = {}\n\nfunction lovr.draw(pass)\n  for i, hand in ipairs(lovr.headset.getHands()) do\n    models[hand] = models[hand] or lovr.headset.newModel(hand)\n\n    if models[hand] then\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)\n      pass:draw(models[hand], x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend"
+              code = "local models = {}\n\nfunction lovr.draw(pass)\n  for k, model in pairs(models) do\n    if lovr.headset.isTracked(model) then\n      lovr.headset.animate(model)\n\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(model)\n      pass:draw(model, x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend\n\nfunction lovr.modelschanged()\n  local newModels = {}\n\n  for i, key in ipairs(lovr.headset.getModelKeys()) do\n    newModels[key] = models[key] or lovr.headset.newModel(key)\n  end\n\n  models = newModels\nend"
             }
           },
-          notes = "Currently this is only implemented for hand models on the Oculus Quest.",
           related = {
-            "lovr.headset.animate"
+            "lovr.headset.animate",
+            "lovr.headset.isTracked",
+            "lovr.modelschanged",
+            "lovr.graphics.newModel"
           },
           variants = {
             {
               arguments = {
                 {
-                  name = "device",
-                  type = "Device",
-                  description = "The device to load a model for.",
-                  default = "'head'"
-                },
-                {
-                  name = "options",
-                  type = "table",
-                  description = "Options for loading the model.",
-                  default = "{}",
-                  table = {
-                    {
-                      name = "animated",
-                      type = "boolean",
-                      description = "Whether an animatable model should be loaded, for use with `lovr.headset.animate`.",
-                      default = "false"
-                    }
-                  }
+                  name = "key",
+                  type = "lightuserdata",
+                  description = "A model key to load, previously obtained with `lovr.headset.getModelKeys`."
                 }
               },
               returns = {
@@ -26085,6 +26076,24 @@ return {
                   description = "The new Model, or `nil` if a model could not be loaded."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to load a model for.",
+                  default = "'head'"
+                }
+              },
+              returns = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The new Model, or `nil` if a model could not be loaded."
+                }
+              },
+              deprecated = true
             }
           }
         },

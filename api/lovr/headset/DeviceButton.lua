@@ -44,7 +44,10 @@ return {
     },
     {
       name = 'nib',
-      description = 'The nib (tip) of the `stylus` device.'
+      description = [[
+        The nib (tip) of the `stylus` device.  Also available on `hand/left` and `hand/right`
+        devices for the stylus tips on touch pro controllers.
+      ]]
     }
   }
 }

@@ -11,6 +11,10 @@ return {
       description = 'A thumbstick (2D).'
     },
     {
+      name = 'thumbrest',
+      description = 'A rest (1D, pressure sensitivity, also available as a `DeviceButton`).'
+    },
+    {
       name = 'touchpad',
       description = 'A touchpad (2D).'
     },
@@ -20,7 +24,10 @@ return {
     },
     {
       name = 'nib',
-      description = 'The pressure sensitivity of the nib (tip) of a `stylus` device.'
+      description = [[
+        The pressure sensitivity of the nib (tip) of a `stylus` device.  Also available on the
+        `hand/left` and `hand/right` devices for the stylus nibs on touch pro controllers.
+      ]]
     }
   },
   related = {
