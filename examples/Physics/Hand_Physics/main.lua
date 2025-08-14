@@ -42,23 +42,24 @@ local hand_force = 30000
 function lovr.load()
   world = lovr.physics.newWorld(0, -2, 0, false) -- low gravity and no collider sleeping
   -- ground plane
-  local box = world:newBoxCollider(vec3(0, 0, 0), vec3(20, 0.1, 20))
+  local box = world:newBoxCollider(vector(0, 0, 0), vector(20, 0.1, 20))
   box:setKinematic(true)
   table.insert(boxes, box)
   -- create a fort of boxes
   lovr.math.setRandomSeed(0)
   for angle = 0, 2 * math.pi, 2 * math.pi / 12 do
     for height = 0.3, 1.5, 0.4 do
-      local pose = mat4():rotate(angle, 0,1,0):translate(0, height, -1)
-      local size = vec3(0.3, 0.4, 0.2)
-      local box = world:newBoxCollider(vec3(pose), size)
-      box:setOrientation(quat(pose))
+      local orientation = quaternion(angle, 0,1,0)
+      local position = orientation * vector(0, height, -1)
+      local size = vector(0.3, 0.4, 0.2)
+      local box = world:newBoxCollider(position, size)
+      box:setOrientation(orientation)
       table.insert(boxes, box)
     end
   end
   -- make colliders for two hands
   for i = 1, 2 do
-    hands.colliders[i] = world:newBoxCollider(vec3(0,2,0), vec3(0.04, 0.08, 0.08))
+    hands.colliders[i] = world:newBoxCollider(vector(0,2,0), vector(0.04, 0.08, 0.08))
     hands.colliders[i]:setLinearDamping(0.7)
     hands.colliders[i]:setAngularDamping(0.9)
     hands.colliders[i]:setMass(0.5)
@@ -88,21 +89,24 @@ function lovr.update(dt)
   -- hand updates - location, orientation, solidify on trigger button, grab on grip button
   for i, hand in pairs(lovr.headset.getHands()) do
     -- align collider with controller by applying force (position) and torque (orientation)
-    local rw = mat4(lovr.headset.getPose(hand))   -- real world pose of controllers
-    local vr = mat4(hands.colliders[i]:getPose()) -- vr pose of palm colliders
-    local angle, ax,ay,az = quat(rw):mul(quat(vr):conjugate()):unpack()
+    local handPosition = vector(lovr.headset.getPosition(hand))
+    local handOrientation = quaternion(lovr.headset.getOrientation(hand))
+    local colliderOrientation = quaternion(hands.colliders[i]:getOrientation())
+    local rotation = handOrientation * colliderOrientation:conjugate()
+    local angle, ax,ay,az = rotation:toangleaxis()
     angle = ((angle + math.pi) % (2 * math.pi) - math.pi) -- for minimal motion wrap to (-pi, +pi) range
-    hands.colliders[i]:applyTorque(vec3(ax, ay, az):mul(angle * dt * hand_torque))
-    hands.colliders[i]:applyForce((vec3(rw) - vec3(vr)):mul(dt * hand_force))
+    hands.colliders[i]:applyTorque(vector(ax, ay, az) * (angle * dt * hand_torque))
+    local delta = vector(lovr.headset.getPosition(hand)) - vector(hands.colliders[i]:getPosition())
+    hands.colliders[i]:applyForce(delta * dt * hand_force)
     -- solidify when trigger touched
     hands.solid[i] = lovr.headset.isDown(hand, 'trigger')
-    hands.colliders[i]:getShapes()[1]:setSensor(not hands.solid[i])
+    hands.colliders[i]:setSensor(not hands.solid[i])
     -- hold/release colliders
     if lovr.headset.isDown(hand, 'grip') and hands.touching[i] and not hands.holding[i] then
       hands.holding[i] = hands.touching[i]
       -- grab object with ball joint to drag it, and slider joint to also match the orientation
-      lovr.physics.newBallJoint(hands.colliders[i], hands.holding[i], vr:mul(0, 0, 0))
-      lovr.physics.newSliderJoint(hands.colliders[i], hands.holding[i], quat(vr):direction())
+      lovr.physics.newBallJoint(hands.colliders[i], hands.holding[i], hands.colliders[i]:getPosition())
+      lovr.physics.newSliderJoint(hands.colliders[i], hands.holding[i], colliderOrientation:direction())
     end
     if lovr.headset.wasReleased(hand, 'grip') and hands.holding[i] then
       for _,joint in ipairs(hands.colliders[i]:getJoints()) do
@@ -130,14 +134,12 @@ end
 
 
 function drawBoxCollider(pass, collider, is_sensor)
-  -- query current pose (location and orientation)
-  local pose = mat4(collider:getPose())
-  -- query dimensions of box
-  local shape = collider:getShapes()[1]
-  local size = vec3(shape:getDimensions())
   -- draw box
-  pose:scale(size)
-  pass:box(pose, is_sensor and 'line' or 'fill')
+  pass:push()
+  pass:transform(collider:getPose())
+  pass:scale(collider:getShape():getDimensions())
+  pass:box(nil, is_sensor and 'line' or 'fill')
+  pass:pop()
 end
 
 

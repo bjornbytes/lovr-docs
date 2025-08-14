@@ -1,5 +1,5 @@
 box = {
-  position = lovr.math.newVec3(0, 1, -.25),
+  position = vector(0, 1, -.25),
   size = .25
 }
 
@@ -7,27 +7,26 @@ function lovr.load()
   drag = {
     active = false,
     hand = nil,
-    offset = lovr.math.newVec3()
+    offset = vector()
   }
 end
 
 function lovr.update(dt)
   for i, hand in ipairs(lovr.headset.getHands()) do
     if lovr.headset.wasPressed(hand, 'trigger') then
-      local offset = box.position - vec3(lovr.headset.getPosition(hand))
+      local offset = box.position - vector(lovr.headset.getPosition(hand))
       local halfSize = box.size / 2
       local x, y, z = offset:unpack()
       if math.abs(x) < halfSize and math.abs(y) < halfSize and math.abs(z) < halfSize then
         drag.active = true
         drag.hand = hand
-        drag.offset:set(offset)
+        drag.offset = offset
       end
     end
   end
 
   if drag.active then
-    local handPosition = vec3(lovr.headset.getPosition(drag.hand))
-    box.position:set(handPosition + drag.offset)
+    box.position = drag.offset + vector(lovr.headset.getPosition(drag.hand))
 
     if lovr.headset.wasReleased(drag.hand, 'trigger') then
       drag.active = false
@@ -37,10 +36,11 @@ end
 
 function lovr.draw(pass)
   pass:setColor(drag.active and 0x80ee80 or 0xee8080)
-  pass:cube(box.position, box.size, quat(), 'line')
+  pass:cube(box.position, box.size, nil, 'line')
 
+  pass:setColor(0xffffff)
   for i, hand in ipairs(lovr.headset.getHands()) do
-    pass:setColor(0xffffff)
-    pass:cube(mat4(lovr.headset.getPose(hand)):scale(.01))
+    local x, y, z, angle, ax, ay, az = lovr.headset.getPose(hand)
+    pass:cube(x, y, z, .01, angle, ax, ay, az)
   end
 end

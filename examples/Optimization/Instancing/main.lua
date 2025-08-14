@@ -7,10 +7,10 @@ function lovr.load()
   local transforms = {}
   local random, randomNormal = lovr.math.random, lovr.math.randomNormal
   for i = 1, MONKEYS do
-    local position = vec3(randomNormal(8), randomNormal(8), randomNormal(8))
-    local orientation = quat(random(2 * math.pi), random(), random(), random())
-    local scale = vec3(.75)
-    transforms[i] = mat4(position, scale, orientation)
+    local position = vector(randomNormal(8), randomNormal(8), randomNormal(8))
+    local orientation = quaternion(random(2 * math.pi), random(), random(), random())
+    local scale = vector(.75)
+    transforms[i] = lovr.math.newMat4(position, scale, orientation)
   end
 
   -- Put them in a buffer
@@ -36,5 +36,5 @@ function lovr.draw(pass)
   pass:setCullMode('back')
   pass:setShader(shader)
   pass:send('Transforms', transformBuffer)
-  pass:draw(monkey, mat4(), MONKEYS)
+  pass:draw(monkey, nil, MONKEYS)
 end

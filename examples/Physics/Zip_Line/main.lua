@@ -8,21 +8,20 @@ local world
 
 function lovr.load()
   world = lovr.physics.newWorld(0, -3, 0, false)
-  local hanger = world:newBoxCollider(vec3(1, 1.9, -1), vec3(0.1, 0.1, 0.3))
+  local hanger = world:newBoxCollider(vector(1, 1.9, -1), vector(0.1, 0.1, 0.3))
   hanger:setKinematic(true)
-  local trolley = world:newBoxCollider(vec3(-1, 2, -1), vec3(0.2, 0.2, 0.5))
+  local trolley = world:newBoxCollider(vector(-1, 2, -1), vector(0.2, 0.2, 0.5))
   trolley:setRestitution(0.7)
   -- calculate axis that passes through centers of hanger and trolley
-  local sliderAxis = vec3(hanger:getPosition()) - vec3(trolley:getPosition())
+  local sliderAxis = vector(hanger:getPosition()) - vector(trolley:getPosition())
   -- constraint the trolley so that it can only slide along specified axis without any rotation
   joint = lovr.physics.newSliderJoint(hanger, trolley, sliderAxis)
   -- hang a weight from trolley
-  local weight = world:newCapsuleCollider(vec3(-1, 1.5, -1), 0.1, 0.4)
+  local weight = world:newCapsuleCollider(vector(-1, 1.5, -1), 0.1, 0.4)
   weight:setOrientation(math.pi/2, 1,0,0)
   weight:setLinearDamping(0.005)
   weight:setAngularDamping(0.01)
-  local joint = lovr.physics.newDistanceJoint(trolley, weight, vec3(trolley:getPosition()), vec3(weight:getPosition()) + vec3(0, 0.3, 0))
-  joint:setResponseTime(10) -- make the hanging rope streachable
+  local joint = lovr.physics.newDistanceJoint(trolley, weight, vector(trolley:getPosition()), vector(weight:getPosition()) + vector(0, 0.3, 0))
 
   lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 end

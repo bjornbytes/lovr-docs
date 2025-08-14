@@ -13,7 +13,7 @@ local motion = {
   blinkTime = 0.5,
   blinkStopwatch = math.huge,
   teleportValid = false,
-  targetPosition = lovr.math.newVec3(),
+  targetPosition = vector(),
   teleportCurve = lovr.math.newCurve(3),
 }
 
@@ -22,19 +22,19 @@ lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)
 function motion.teleport(dt)
   -- Teleportation determining target position and executing jump when triggered
   local handPose = mat4(motion.pose):mul(mat4(lovr.headset.getPose('hand/right/point')))
-  local handPosition = vec3(handPose)
-  local handDirection = quat(handPose):direction()
+  local handPosition = vector(handPose:getPosition())
+  local handDirection = quaternion(handPose:getOrientation()):direction()
   -- Intersect with ground plane
-  local ratio =  vec3(handPose).y / handDirection.y
+  local ratio =  handPosition.y / handDirection.y
   local intersectionDistance = math.sqrt(handPosition.y^2 + (handDirection.x * ratio)^2 + (handDirection.z * ratio)^2)
-  motion.targetPosition:set(handPose:translate(0, 0, -intersectionDistance))
+  motion.targetPosition = vector(handPose:translate(0, 0, -intersectionDistance):getPosition())
   -- Check if target position is a valid teleport target
   motion.teleportValid = motion.targetPosition.y < handPosition.y and
     (handPosition - motion.targetPosition):length() < motion.teleportDistance
   -- Construct teleporter visualization curve 
-  local midPoint = vec3(handPosition):lerp(motion.targetPosition, 0.3)
+  local midPoint = handPosition:lerp(motion.targetPosition, 0.3)
   if motion.teleportValid then
-    midPoint:add(vec3(0, 0.1 * intersectionDistance, 0)) -- Fake a parabola
+    midPoint = midPoint + vector(0, 0.1 * intersectionDistance, 0) -- Fake a parabola
   end
   motion.teleportCurve:setPoint(1, handPosition)
   motion.teleportCurve:setPoint(2, midPoint)
@@ -46,10 +46,9 @@ function motion.teleport(dt)
   -- Preform jump with VR pose offset by relative distance between here and there
   if motion.blinkStopwatch < 0 and
      motion.blinkStopwatch + dt >= 0 then
-    local headsetXZ = vec3(lovr.headset.getPosition())
-    headsetXZ.y = 0
+    local headsetXZ = vector(lovr.headset.getPosition()) * vector(1, 0, 1)
     local newPosition = motion.targetPosition - headsetXZ
-    motion.pose:set(newPosition, vec3(1,1,1), quat(motion.pose)) -- ZAAPP
+    motion.pose:set(newPosition, 1,1,1, motion.pose:getOrientation()) -- ZAAPP
   end
   -- Snap horizontal turning (often combined with teleport mechanics)
   if lovr.headset.isTracked('right') then
@@ -93,10 +92,8 @@ function lovr.draw(pass)
   local radius = 0.04
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
-    local poseRW = mat4(lovr.headset.getPose(hand))
-    local poseVR = mat4(motion.pose):mul(poseRW)
-    poseVR:scale(radius)
-    pass:sphere(poseVR)
+    local position = motion.pose * vector(lovr.headset.getPosition(hand))
+    pass:sphere(position, radius)
   end
   -- Some scenery
   lovr.math.setRandomSeed(0)

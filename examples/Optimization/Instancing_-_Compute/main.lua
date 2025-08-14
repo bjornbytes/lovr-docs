@@ -9,20 +9,20 @@ function lovr.load()
   local random, randomNormal = lovr.math.random, lovr.math.randomNormal
   local transforms = {}
   for i = 1, MONKEYS do
-    local position = vec3(randomNormal(8), randomNormal(8), randomNormal(8))
-    local orientation = quat(random(2 * math.pi), random(), random(), random())
-    local scale = vec3(.75)
-    transforms[i] = mat4(position, scale, orientation)
+    local position = vector(randomNormal(8), randomNormal(8), randomNormal(8))
+    local orientation = quaternion(random(2 * math.pi), random(), random(), random())
+    local scale = vector(.75)
+    transforms[i] = lovr.math.newMat4(position, scale, orientation)
   end
 
   -- More random transforms-- this will correspond to the transform applied to each monkey per frame
   local offsets = {}
   for i = 1, MONKEYS do
-    local position = vec3(randomNormal(1), randomNormal(8), randomNormal(8)):mul(ASSUME_FRAMERATE)
+    local position = vector(randomNormal(1), randomNormal(8), randomNormal(8)):mul(ASSUME_FRAMERATE)
     local radianSwing = ASSUME_FRAMERATE * math.pi / 2
-    local orientation = quat(random(-radianSwing, radianSwing), random(), random(), random())
-    local scale = vec3(1)
-    offsets[i] = mat4(position, scale, orientation)
+    local orientation = quaternion(random(-radianSwing, radianSwing), random(), random(), random())
+    local scale = vector(1)
+    offsets[i] = lovr.math.newMat4(position, scale, orientation)
   end
 
   -- Create a Buffer to store positions for lots of models
@@ -69,5 +69,5 @@ function lovr.draw(pass)
   pass:send('TransformBuffer', transformBuffer)
   pass:setCullMode('back')
   pass:setBlendMode(nil)
-  pass:draw(model, mat4(), MONKEYS)
+  pass:draw(model, nil, MONKEYS)
 end

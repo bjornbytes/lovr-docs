@@ -5,7 +5,7 @@ function lovr.load()
 
   camera = {
     transform = lovr.math.newMat4(),
-    position = lovr.math.newVec3(),
+    position = vector(),
     movespeed = 10,
     pitch = 0,
     yaw = 0
@@ -13,24 +13,25 @@ function lovr.load()
 end
 
 function lovr.update(dt)
-  local velocity = vec4()
+  local vx, vy, vz = 0, 0, 0
 
   if lovr.system.isKeyDown('w', 'up') then
-    velocity.z = -1
+    vz = -1
   elseif lovr.system.isKeyDown('s', 'down') then
-    velocity.z = 1
+    vz = 1
   end
 
   if lovr.system.isKeyDown('a', 'left') then
-    velocity.x = -1
+    vx = -1
   elseif lovr.system.isKeyDown('d', 'right') then
-    velocity.x = 1
+    vx = 1
   end
 
-  if #velocity > 0 then
-    velocity:normalize()
-    velocity:mul(camera.movespeed * dt)
-    camera.position:add(camera.transform:mul(velocity).xyz)
+  local velocity = vector(vx, vy, vz)
+
+  if velocity:length() > 0 then
+    velocity = velocity:normalize() * camera.movespeed * dt
+    camera.position = camera.position + camera.transform:mul(velocity, 0) -- Just apply transform's rotation to velocity
   end
 
   camera.transform:identity()

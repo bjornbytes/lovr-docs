@@ -48,7 +48,8 @@ end
 function lovr.draw(pass)
   pass:setColor(0.925, 0.745, 0.137)
   for _, collider in ipairs(box_colliders) do
-    pass:box(mat4(collider:getPose()))
+    local x, y, z, angle, ax, ay, az = collider:getPose()
+    pass:cube(x, y, z, 1, angle, ax, ay, az)
   end
 
   pass:setColor(0.565, 0.404, 0.463)

@@ -1,9 +1,10 @@
 local random = lovr.math.random
 local boxes = {}
 local selectedBox = nil
-local hitpoint = lovr.math.newVec3()
+local hitpoint = nil
 local red = { 1, .5, .5 }
 local green = { .5, 1, .5 }
+local device = 'hand/left/point'
 
 function lovr.load()
   lovr.graphics.setBackgroundColor(.2, .2, .22)
@@ -26,13 +27,13 @@ function lovr.update(dt)
 
   world:update(dt)
 
-  local ox, oy, oz = lovr.headset.getPosition('hand/left/point')
-  local dx, dy, dz = quat(lovr.headset.getOrientation('hand/left/point')):direction():mul(50):unpack()
-  local collider, shape, x, y, z = world:raycast(ox, oy, oz, ox + dx, oy + dy, oz + dz)
+  local origin = vector(lovr.headset.getPosition(device))
+  local direction = vector(lovr.headset.getDirection(device))
+  local collider, shape, x, y, z = world:raycast(origin, origin + direction * 50)
 
   if collider then
     selectedBox = collider
-    hitpoint:set(x, y, z)
+    hitpoint = vector(x, y, z)
   end
 end
 
@@ -40,7 +41,7 @@ function lovr.draw(pass)
   -- Boxes
   for i, box in ipairs(boxes) do
     pass:setColor(box == selectedBox and green or red)
-    pass:cube(vec3(box:getPosition()), .28, quat(box:getOrientation()))
+    pass:cube(vector(box:getPosition()), .28, box:getOrientation())
   end
 
   -- Dot
@@ -50,8 +51,8 @@ function lovr.draw(pass)
   end
 
   -- Laser pointer
-  local hand = vec3(lovr.headset.getPosition('hand/left/point'))
-  local direction = quat(lovr.headset.getOrientation('hand/left/point')):direction()
+  local hand = vector(lovr.headset.getPosition(device))
+  local direction = vector(lovr.headset.getDirection(device))
   pass:setColor(1, 1, 1)
   pass:line(hand, selectedBox and hitpoint or (hand + direction * 50))
 end

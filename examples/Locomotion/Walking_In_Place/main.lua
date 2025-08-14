@@ -44,7 +44,7 @@ function motion.walkinplace(dt)
     motion.warmup = motion.warmup + dt
     return
   end
-  local direction = quat(lovr.headset.getOrientation('head')):direction()
+  local direction = vector(lovr.headset.getDirection())
   local pitch = direction.y
   -- Detect pitch changes (looking up/down) and inhibit walking until pitch motion ends
   motion.headPitch = ((pitch - motion.headPitch) * 0.1 + motion.headPitch)
@@ -58,7 +58,7 @@ function motion.walkinplace(dt)
   -- Apply estimated walk intensity to speed
   -- Simple lowpass IIR is applied for smoothness and inertia
   motion.speed = motion.speed * (1 - motion.damping) + walkIntensity * walkInhibit
-  direction.y = 0
+  direction = direction * vector(1, 0, 1)
   motion.pose:translate(direction * motion.speed * dt)
 end
 
@@ -76,10 +76,8 @@ function lovr.draw(pass)
   local radius = 0.04
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
-    local poseRW = mat4(lovr.headset.getPose(hand))
-    local poseVR = mat4(motion.pose):mul(poseRW)
-    poseVR:scale(radius)
-    pass:sphere(poseVR)
+    local position = motion.pose * vector(lovr.headset.getPosition(hand))
+    pass:sphere(position, radius)
   end
   -- Some scenery
   lovr.math.setRandomSeed(0)

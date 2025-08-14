@@ -8,10 +8,9 @@ function lovr.load()
   for x = 0, puffImageSize - 1 do
     for y = 0, puffImageSize - 1 do
       local radius = puffImageSize / 2 - 1
-      local distanceFromCenter = vec2(radius, radius):distance(vec2(x, y))
+      local distanceFromCenter = vector(radius, radius, 0):distance(vector(x, y, 0))
       local depth = math.sqrt(radius^2 - distanceFromCenter^2)
       puffImage:setPixel(x, y, 1, 1, 1, depth / radius)
-      lovr.math.drain()
     end
   end
   puffTexture = lovr.graphics.newTexture(puffImage)
@@ -21,7 +20,7 @@ function lovr.load()
   redPuffs = {}
   for i = 1, 100 do
     table.insert(redPuffs, {
-      position = lovr.math.newVec3(
+      position = vector(
         lovr.math.random() - .5,
         lovr.math.random() - .5 + 1.7,
         lovr.math.random() - .5
@@ -31,7 +30,7 @@ function lovr.load()
   bluePuffs = {}
   for i = 1, 100 do
     table.insert(bluePuffs, {
-      position = lovr.math.newVec3(
+      position = vector(
         lovr.math.random() - .5, 
         lovr.math.random() - .5 + 1.7,
         lovr.math.random() - .5
@@ -83,12 +82,14 @@ end
 function lovr.draw(pass)
   pass:setSampler('nearest')                                         -- try uncommenting
 
+  local head = vector(lovr.headset.getPosition())
+
   -- red puffs
   pass:setColor(1, .9, .9)
   pass:setMaterial(puffMaterial)
   pass:setDepthWrite(false)
   pass:setShader(redPuffShader)
-  pass:send('headPosition', { lovr.headset.getPosition('head') })
+  pass:send('headPosition', head)
   for _, puff in pairs(redPuffs) do
     pass:plane(puff.position, .1)
   end
@@ -97,7 +98,6 @@ function lovr.draw(pass)
   -- blue puffs
   pass:setColor(.9, 1, 1)
   for _, puff in pairs(bluePuffs) do
-    puff.orientation = quat(mat4():target(puff.position, vec3(lovr.headset.getPosition('head'))))
-    pass:plane(puff.position, .1, .1, puff.orientation)
+    pass:plane(puff.position, .1, .1, quaternion.lookdir(head - puff.position))
   end
 end

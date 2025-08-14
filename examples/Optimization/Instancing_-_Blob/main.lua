@@ -11,13 +11,13 @@ function lovr.load()
   local pointer = ffi.cast("float*",transformBlob:getPointer())
   local random, randomNormal = lovr.math.random, lovr.math.randomNormal
   for i = 1, MONKEYS do
-    local position = vec3(randomNormal(8), randomNormal(8), randomNormal(8))
-    local orientation = quat(random(2 * math.pi), random(), random(), random())
-    local scale = vec3(.75)
-    local transform = mat4(position, scale, orientation)
-    local components = {transform:unpack(true)}
-    for i2,v in ipairs(components) do
-      pointer[(i-1)*16 + (i2-1)] = v
+    local position = vector(randomNormal(8), randomNormal(8), randomNormal(8))
+    local orientation = quaternion(random(2 * math.pi), random(), random(), random())
+    local scale = vector(.75)
+    local transform = lovr.math.newMat4(position, scale, orientation)
+    local components = { transform:unpack(true) }
+    for i2, v in ipairs(components) do
+      pointer[(i - 1) * 16 + (i2 - 1)] = v
     end
   end
 
@@ -41,5 +41,5 @@ function lovr.draw(pass)
   pass:setCullMode('back')
   pass:setBlendMode(nil)
   pass:send('TransformBuffer', buffer)
-  pass:draw(model, mat4(), MONKEYS)
+  pass:draw(model, nil, MONKEYS)
 end

@@ -16,7 +16,7 @@ local button = {
   text = 'Please click me',
   textSize = .1,
   count = 0,
-  position = lovr.math.newVec3(0, 1, -3),
+  position = vector(0, 1, -3),
   width = 1.0,
   height = .4,
   hover = false,
@@ -29,14 +29,14 @@ function lovr.update()
   button.hover, button.active = false, false
 
   for i, hand in ipairs(lovr.headset.getHands()) do
-    tips[hand] = tips[hand] or lovr.math.newVec3()
+    tips[hand] = tips[hand] or vector
 
     -- Ray info:
-    local rayPosition = vec3(lovr.headset.getPosition(hand .. '/point'))
-    local rayDirection = vec3(lovr.headset.getDirection(hand .. '/point'))
+    local rayPosition = vector(lovr.headset.getPosition(hand .. '/point'))
+    local rayDirection = vector(lovr.headset.getDirection(hand .. '/point'))
 
     -- Call the raycast helper function to get the intersection point of the ray and the button plane
-    local hit = raycast(rayPosition, rayDirection, button.position, vec3(0, 0, 1))
+    local hit = raycast(rayPosition, rayDirection, button.position, vector(0, 0, 1))
 
     local inside = false
     if hit then
@@ -61,7 +61,7 @@ function lovr.update()
 
     -- Set the end position of the pointer.  If the raycast produced a hit position then use that,
     -- otherwise extend the pointer's ray outwards by 50 meters and use it as the tip.
-    tips[hand]:set(inside and hit or (rayPosition + rayDirection * 50))
+    tips[hand] = inside and hit or (rayPosition + rayDirection * 50)
   end
 end
 
@@ -78,12 +78,12 @@ function lovr.draw(pass)
 
   -- Button text (add a small amount to the z to put the text slightly in front of button)
   pass:setColor(1, 1, 1)
-  pass:text(button.text, button.position + vec3(0, 0, .001), button.textSize)
-  pass:text('Count: ' .. button.count, button.position + vec3(0, .5, 0), .1)
+  pass:text(button.text, button.position + vector(0, 0, .001), button.textSize)
+  pass:text('Count: ' .. button.count, button.position + vector(0, .5, 0), .1)
 
   -- Pointers
   for hand, tip in pairs(tips) do
-    local position = vec3(lovr.headset.getPosition(hand))
+    local position = vector(lovr.headset.getPosition(hand))
 
     pass:setColor(1, 1, 1)
     pass:sphere(position, .01)
