@@ -1,5 +1,5 @@
 local function getJointDirection(skeleton, joint)
-  return quat(unpack(skeleton[joint], 5)):direction()
+  return quaternion(unpack(skeleton[joint], 5)):direction()
 end
 
 local function getCurl(skeleton, finger)
@@ -8,8 +8,7 @@ local function getCurl(skeleton, finger)
   local directions = {}
 
   repeat
-    local orientation = quat(unpack(skeleton[fingers[finger] + #directions], 5))
-    table.insert(directions, orientation:direction())
+    table.insert(directions, getJointDirection(skeleton, fingers[finger] + #directions))
   until #directions == jointCount
 
   local straightness = 0
@@ -53,7 +52,7 @@ local function drawSkeleton(pass, skeleton)
   pass:setColor(0xf0f0f0)
 
   for i, joint in ipairs(skeleton) do
-    pass:sphere(vec3(unpack(joint)), .01)
+    pass:sphere(joint, .01)
   end
 
   pass:setColor(0xb0b0b0)
@@ -62,8 +61,8 @@ local function drawSkeleton(pass, skeleton)
     local base = ({ 3, 7, 12, 17, 22 })[f]
     local length = f == 1 and 3 or 4
     for j = 1, length do
-      local from = vec3(unpack(skeleton[base + j - 1]))
-      local to = vec3(unpack(skeleton[base + j - 0]))
+      local from = vector(unpack(skeleton[base + j - 1]))
+      local to = vector(unpack(skeleton[base + j - 0]))
       pass:capsule(from, to, .002)
     end
   end

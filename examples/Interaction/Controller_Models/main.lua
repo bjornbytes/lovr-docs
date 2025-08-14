@@ -3,13 +3,16 @@ function lovr.load()
     left = lovr.headset.newModel('hand/left'),
     right = lovr.headset.newModel('hand/right')
   }
+
+  transform = lovr.math.newMat4()
 end
 
 function lovr.draw(pass)
   for hand, model in pairs(models) do
     if lovr.headset.isTracked(hand) then
       lovr.headset.animate(model)
-      pass:draw(model, mat4(lovr.headset.getPose(hand)))
+      transform:set(lovr.headset.getPose(hand))
+      pass:draw(model, transform)
     end
   end
 

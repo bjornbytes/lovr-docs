@@ -5,9 +5,9 @@ using slider joint. Beware that slider joint loses its accuracy/stability when a
 objects are too far away. Increasing object mass of helps with stability.            --]]
 
 local world
-local p1 = Vec3(1, 1.9, -1)
-local p2 = Vec3(-1, 2, -1)
-local p3 = Vec3(-1, 1.5, -1)
+local p1 = vector(1, 1.9, -1)
+local p2 = vector(-1, 2, -1)
+local p3 = vector(-1, 1.5, -1)
 
 function lovr.load()
   world = lovr.physics.newWorld(0, -3, 0, false)
@@ -25,7 +25,7 @@ function lovr.load()
   weight:setLinearDamping(0.005)
   weight:setAngularDamping(0.01)
   local joint = lovr.physics.newDistanceJoint(trolley, weight,
-    p2, p3 + vec3(0, 0.3, 0))
+    p2, p3 + vector(0, 0.3, 0))
   joint:setSpring(4, 0.5) -- make the hanging rope streachable
 
   lovr.graphics.setBackgroundColor(0.1, 0.1, 0.1)

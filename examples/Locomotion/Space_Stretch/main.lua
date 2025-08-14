@@ -2,9 +2,7 @@
 -- left grip + right grip + right trigger: reset the view
 
 local motion = {
-  pose = lovr.math.newMat4(0,0,0, 1,1,1, 0, 0,1,0),
-  left_anchor_vr = lovr.math.newVec3(),
-  right_anchor_vr = lovr.math.newVec3(),
+  pose = lovr.math.newMat4()
 }
 
 local palette = {0x0d2b45, 0x203c56, 0x544e68, 0x8d697a, 0xd08159, 0xffaa5e, 0xffd4a3, 0xffecd6}
@@ -12,13 +10,13 @@ lovr.graphics.setBackgroundColor(palette[1])
 
 
 function lovr.update(dt)
-  local left_vr  = vec3(motion.pose:mul(lovr.headset.getPosition('hand/left')))
-  local right_vr = vec3(motion.pose:mul(lovr.headset.getPosition('hand/right')))
+  local left_vr  = motion.pose * vector(lovr.headset.getPosition('hand/left'))
+  local right_vr = motion.pose * vector(lovr.headset.getPosition('hand/right'))
   if lovr.headset.wasPressed('hand/left', 'grip') then
-    motion.left_anchor_vr:set(left_vr)
+    motion.left_anchor_vr = left_vr
   end
   if lovr.headset.wasPressed('hand/right', 'grip') then
-    motion.right_anchor_vr:set(right_vr)
+    motion.right_anchor_vr = right_vr
   end
   if lovr.headset.isDown('hand/left',  'grip') and
      lovr.headset.isDown('hand/right', 'grip') then
@@ -30,20 +28,20 @@ function lovr.update(dt)
     -- the change of scale must also affect the viewpoint location
     x, y, z = x * offset_scale, y * offset_scale, z * offset_scale
     -- Position: the mid-point of anchors is compared to midpoint of current controllers position
-    local midpoint_anchor     = vec3(motion.left_anchor_vr):lerp(motion.right_anchor_vr, 0.5)
-    local midpoint_controller = vec3(left_vr):lerp(right_vr, 0.5)
-    local offset_position = vec3(midpoint_anchor):sub(midpoint_controller)
+    local midpoint_anchor     = motion.left_anchor_vr:lerp(motion.right_anchor_vr, 0.5)
+    local midpoint_controller = left_vr:lerp(right_vr, 0.5)
+    local offset_position = midpoint_anchor - midpoint_controller
     x, y, z = x + offset_position.x, y + offset_position.y, z + offset_position.z
     motion.pose:set(x, y, z, scale, scale, scale, angle, ax, ay, az)  -- apply transition and scaling
     -- Rotation: get angle between current controllers and anchors in XZ
-    local l_to_r_anchor = vec3(motion.right_anchor_vr):sub(motion.left_anchor_vr)
-    local l_to_r_controller = vec3(right_vr):sub(left_vr)
+    local l_to_r_anchor = motion.right_anchor_vr - motion.left_anchor_vr
+    local l_to_r_controller = right_vr - left_vr
     local sign = 1
-    if vec3(l_to_r_controller):cross(vec3(l_to_r_anchor)):dot(vec3(0, 1, 0)) < 0 then
+    if l_to_r_controller:cross(l_to_r_anchor):dot(vector(0, 1, 0)) < 0 then
       sign = -1
     end
-    l_to_r_anchor = l_to_r_anchor.xz:normalize()
-    l_to_r_controller = l_to_r_controller.xz:normalize()
+    l_to_r_anchor = (l_to_r_anchor * vector(1, 0, 1)):normalize()
+    l_to_r_controller = (l_to_r_controller * vector(1, 0, 1)):normalize()
     local cos_angle = l_to_r_controller:dot(l_to_r_anchor)
     cos_angle = math.max(-1, math.min(1, cos_angle))
     local offset_rotation = math.acos(cos_angle) * sign
@@ -51,8 +49,8 @@ function lovr.update(dt)
     -- pose & anchor reset
     if lovr.headset.isDown('hand/right', 'trigger') then
       motion.pose:set()
-      motion.left_anchor_vr:set(left_vr)
-      motion.right_anchor_vr:set(right_vr)
+      motion.left_anchor_vr = left_vr
+      motion.right_anchor_vr = right_vr
     end
   end
 end
@@ -63,15 +61,13 @@ function lovr.draw(pass)
   -- Render hands
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
-    local poseRW = mat4(lovr.headset.getPose(hand))
-    local poseVR = mat4(motion.pose):mul(poseRW)
+    local position = motion.pose * vector(lovr.headset.getPosition(hand))
     if lovr.headset.isDown(hand, 'grip') then
       pass:setColor(palette[6])
     else
       pass:setColor(palette[8])
     end
-    poseVR:scale(0.02)
-    pass:sphere(poseVR)
+    pass:sphere(position, .02)
   end
   -- An example scene
   local t = lovr.timer.getTime()

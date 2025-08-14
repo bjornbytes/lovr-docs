@@ -120,7 +120,7 @@ function lovr.draw(pass)
       pass:setDepthWrite(false)
       for i = 1, #hand.skeleton do
         local x, y, z, _, angle, ax, ay, az = unpack(hand.skeleton[i])
-        pass:sphere(mat4(x, y, z, angle, ax, ay, az):scale(.003))
+        pass:sphere(x, y, z, .003, angle, ax, ay, az)
       end
       pass:setDepthWrite(true)
 

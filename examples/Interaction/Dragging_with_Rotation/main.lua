@@ -1,21 +1,21 @@
 function lovr.load()
-  boxMatrix = lovr.math.newMat4() --inialize box
-  boxMatrix:set(
-    vec3(0,1,-1), --global position
-    vec3(0.25,0.25,0.25), --scale
-    quat(0,0,0,0) --global rotation
-  )
+  boxMatrix = lovr.math.newMat4()
+  boxMatrix:translate(0, 1, -1)
+  boxMatrix:scale(.25)
 
-  offset = lovr.math.newMat4() --initialize offset matrix
+  -- offset matrix represents transform from hand -> box
+  offset = lovr.math.newMat4()
 end
 
 function lovr.update(dt)
-  if lovr.headset.wasPressed('left','trigger') then
-    offset:set(mat4(lovr.headset.getPose('left')):invert() * boxMatrix)
-  end
+  for i, hand in ipairs(lovr.headset.getHands()) do
+    if lovr.headset.wasPressed(hand, 'trigger') then
+      offset:set(lovr.headset.getPose(hand)):invert():mul(boxMatrix)
+    end
 
-  if lovr.headset.isDown('left','trigger') then
-    boxMatrix:set(mat4(lovr.headset.getPose('left')) * (offset))
+    if lovr.headset.isDown(hand, 'trigger') then
+      boxMatrix:set(lovr.headset.getPose(hand)):mul(offset)
+    end
   end
 end
 
@@ -23,7 +23,6 @@ function lovr.draw(pass)
   pass:box(boxMatrix, 'line')
 
   for i, hand in ipairs(lovr.headset.getHands()) do
-    local x, y, z = lovr.headset.getPosition(hand)
-    pass:sphere(x, y, z, .01)
+    pass:sphere(vector(lovr.headset.getPosition(hand)), .01)
   end
 end

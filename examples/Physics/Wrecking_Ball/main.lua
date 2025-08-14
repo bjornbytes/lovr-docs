@@ -14,25 +14,25 @@ Some steps that can help solve the issue:
 local world
 
 function lovr.load()
-  world = lovr.physics.newWorld(0, -3, 0, false)
+  world = lovr.physics.newWorld({ stabilization = .5 })
   -- ground plane
-  local box = world:newBoxCollider(vec3(0, -0.05, 0), vec3(20, 0.1, 20))
+  local box = world:newBoxCollider(vector(0, -0.05, 0), vector(20, 0.1, 20))
   box:setKinematic(true)
   -- hanger
-  local hangerPosition = vec3(0, 2, -1)
-  local hanger = world:newBoxCollider(hangerPosition, vec3(0.3, 0.1, 0.3))
+  local hangerPosition = vector(0, 2, -1)
+  local hanger = world:newBoxCollider(hangerPosition, vector(0.3, 0.1, 0.3))
   hanger:setKinematic(true)
   -- ball
-  local ballPosition = vec3(-1, 1.5, -1)
+  local ballPosition = vector(-1, 1.5, -1)
   local ball = world:newSphereCollider(ballPosition, 0.2)
   ball:setMass(10)
   -- rope
   local firstEnd, lastEnd = makeRope(
-    hangerPosition + vec3(0, -0.1, 0),
-    ballPosition   + vec3(0,  0.3, 0),
+    hangerPosition + vector(0, -0.1, 0),
+    ballPosition   + vector(0,  0.3, 0),
     0.02, 10)
-  lovr.physics.newDistanceJoint(hanger, firstEnd, hangerPosition, vec3(firstEnd:getPosition()))
-  lovr.physics.newDistanceJoint(ball, lastEnd, ballPosition, vec3(lastEnd:getPosition()))
+  lovr.physics.newDistanceJoint(hanger, firstEnd, hangerPosition, vector(firstEnd:getPosition()))
+  lovr.physics.newDistanceJoint(ball, lastEnd, ballPosition, vector(lastEnd:getPosition()))
   -- brick wall
   local x = 0.3
   local even = true
@@ -56,7 +56,7 @@ function lovr.draw(pass)
   for i, collider in ipairs(world:getColliders()) do
     local shade = (i - 10) / #world:getColliders()
     pass:setColor(shade, shade, shade)
-    local shape = collider:getShapes()[1]
+    local shape = collider:getShape()
     local shapeType = shape:getType()
     local x,y,z, angle, ax,ay,az = collider:getPose()
     if shapeType == 'box' then
@@ -75,14 +75,14 @@ function makeRope(origin, destination, thickness, elements)
   thickness = thickness or length / 100
   elements = elements or 30
   elementSize = length / elements
-  local orientation = vec3(destination - origin):normalize()
+  local orientation = quaternion.lookdir(destination - origin)
   local first, last, prev
   for i = 1, elements do
-    local position = vec3(origin):lerp(destination, (i - 0.5) / elements)
-    local anchor   = vec3(origin):lerp(destination, (i - 1.0) / elements)
-    element = world:newBoxCollider(position, vec3(thickness, thickness, elementSize * 0.95))
+    local position = origin:lerp(destination, (i - 0.5) / elements)
+    local anchor   = origin:lerp(destination, (i - 1.0) / elements)
+    element = world:newBoxCollider(position, vector(thickness, thickness, elementSize * 0.95))
     element:setGravityIgnored(true)
-    element:setOrientation(quat(orientation))
+    element:setOrientation(orientation)
     element:setMass(0.1)
     if prev then
       local joint = lovr.physics.newHingeJoint(prev, element)

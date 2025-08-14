@@ -1,8 +1,8 @@
 function lovr.draw(pass)
   for i, hand in ipairs(lovr.headset.getHands()) do
     hand = hand .. '/point'
-    local position = vec3(lovr.headset.getPosition(hand))
-    local direction = quat(lovr.headset.getOrientation(hand)):direction()
+    local position = vector(lovr.headset.getPosition(hand))
+    local direction = vector(lovr.headset.getDirection(hand))
 
     pass:setColor(1, 1, 1)
     pass:sphere(position, .01)

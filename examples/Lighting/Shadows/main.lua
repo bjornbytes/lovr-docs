@@ -4,7 +4,7 @@
 ]]
 
 local z = -2
-local light_pos = lovr.math.newVec3(3.0, 4.0, z)
+local light_pos = vector(3.0, 4.0, z)
 local light_orthographic = false -- Use orthographic light
 local shadow_map_size = 2048
 
@@ -13,7 +13,9 @@ local debug_show_shadow_map = false -- Enable to view shadow map in overlap
 
 local shader, render_texture
 local shadow_map_texture, shadow_map_sampler
-local light_space_matrix
+local view_matrix = lovr.math.newMat4()
+local projection_matrix = lovr.math.newMat4()
+local light_space_matrix = lovr.math.newMat4()
 local shadow_map_pass, lighting_pass
 
 local function render_scene(pass)
@@ -111,18 +113,18 @@ local function render_shadow_map(draw)
   if light_orthographic then
     local radius = 3
     local far_plane = 15
-    projection = mat4():orthographic(-radius, radius, -radius, radius, near_plane, far_plane)
+    projection:orthographic(-radius, radius, -radius, radius, near_plane, far_plane)
   else
-    projection = mat4():perspective(math.pi / 3, 1, near_plane)
+    projection:perspective(math.pi / 3, 1, near_plane)
   end
 
-  local view = mat4():lookAt(light_pos, vec3(0, 1, z))
+  view_matrix:lookAt(light_pos, vector(0, 1, z))
 
-  light_space_matrix = mat4(projection):mul(view)
+  light_space_matrix:set(projection_matrix):mul(view_matrix)
 
   shadow_map_pass:reset()
-  shadow_map_pass:setProjection(1, projection)
-  shadow_map_pass:setViewPose(1, view, true)
+  shadow_map_pass:setProjection(1, projection_matrix)
+  shadow_map_pass:setViewPose(1, view_matrix, true)
   if light_orthographic then
     -- Note for ortho projection with a far plane the depth coord is reversed
     shadow_map_pass:setDepthTest('lequal')

@@ -35,13 +35,13 @@ function motion.smooth(dt)
   end
   if lovr.headset.isTracked('left') then
     local x, y = lovr.headset.getAxis('left', 'thumbstick')
-    local direction = quat(lovr.headset.getOrientation(motion.directionFrom)):direction()
+    local direction = vector(lovr.headset.getDirection(motion.directionFrom))
     if not motion.flying then
-      direction.y = 0
+      direction = vector(direction.x, 0, direction.z)
     end
     -- Smooth strafe movement
     if math.abs(x) > motion.thumbstickDeadzone then
-      local strafeVector = quat(-math.pi / 2, 0,1,0):mul(vec3(direction))
+      local strafeVector = quaternion(-math.pi / 2, 0,1,0) * direction
       motion.pose:translate(strafeVector * x * motion.walkingSpeed * dt)
     end
     -- Smooth Forward/backward movement
@@ -68,12 +68,11 @@ function motion.snap(dt)
   if lovr.headset.isTracked('left') then
     local x, y = lovr.headset.getAxis('left', 'thumbstick')
     if math.abs(y) > motion.thumbstickDeadzone and motion.thumbstickCooldown < 0 then
-      local moveVector = quat(lovr.headset.getOrientation('head')):direction()
+      local moveVector = vector(lovr.headset.getDirection('head'))
       if not motion.flying then
-        moveVector.y = 0
+        moveVector = vector(moveVector.x, 0, moveVector.z)
       end
-      moveVector:mul(y / math.abs(y) * motion.dashDistance)
-      motion.pose:translate(moveVector)
+      motion.pose:translate(moveVector * (y / math.abs(y) * motion.dashDistance))
       motion.thumbstickCooldown = motion.thumbstickCooldownTime
     end
   end
@@ -86,7 +85,7 @@ function lovr.update(dt)
     motion.flying = true
   elseif lovr.headset.wasReleased('left', 'grip') then
     motion.flying = false
-    local height = vec3(motion.pose).y
+    local _, height = motion.pose:getPosition()
     motion.pose:translate(0, -height, 0)
   end
   if lovr.headset.isDown('right', 'grip') then
@@ -103,10 +102,8 @@ function lovr.draw(pass)
   local radius = 0.05
   for _, hand in ipairs(lovr.headset.getHands()) do
     -- Whenever pose of hand or head is used, need to account for VR movement
-    local poseRW = mat4(lovr.headset.getPose(hand))
-    local poseVR = mat4(motion.pose):mul(poseRW)
-    poseVR:scale(radius)
-    pass:sphere(poseVR)
+    local position = motion.pose * vector(lovr.headset.getPosition(hand))
+    pass:sphere(position, radius)
   end
   -- Some scenery
   lovr.math.setRandomSeed(0)

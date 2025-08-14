@@ -59,9 +59,10 @@ function lovr.load()
 end
 
 function lovr.update()
-  left = vec3(lovr.headset.getPosition('left'))
-  right = vec3(lovr.headset.getPosition('right'))
-  head = vec3(mat4(lovr.headset.getPose('head')):translate(0, -.1, -.1))
+  left = vector(lovr.headset.getPosition('left'))
+  right = vector(lovr.headset.getPosition('right'))
+  local rotation = quaternion(lovr.headset.getOrientation('head'))
+  head = vector(lovr.headset.getPose('head')) + vector(0, -.1, -.1):rotate(rotation)
 end
 
 function lovr.draw(pass)
@@ -91,6 +92,6 @@ function lovr.draw(pass)
 
   -- hands
   pass:setColor(.9, .7, .1)
-  pass:sphere(vec3(lovr.headset.getPosition('left')), .05)
-  pass:sphere(vec3(lovr.headset.getPosition('right')), .05)
+  pass:sphere(vector(lovr.headset.getPosition('left')), .05)
+  pass:sphere(vector(lovr.headset.getPosition('right')), .05)
 end

@@ -10,56 +10,57 @@ local scene = {}
 function scene.load()
 	scene.floorSize = 6
 	scene.cubeCount = 60
-	scene.boundMin = lovr.math.newVec3(-10, -1, -10)
-	scene.boundMax = lovr.math.newVec3(10,   9,  10)
+	scene.boundMin = vector(-10, -1, -10)
+	scene.boundMax = vector(10,   9,  10)
 	scene.speed = 1
 	scene.rotateSpeed = 1
 	scene.cubeSize = 0.2
 	scene.cubes = {}
 
-	scene.sphereCenter = lovr.math.newVec3(0, 1.5, -0.5)
+	scene.sphereCenter = vector(0, 1.5, -0.5)
 	scene.sphereRad = 0.125
 
-	for i=1,scene.cubeCount do
+	for i = 1, scene.cubeCount do
 		scene.generate(i, true)
 	end
 end
 
 local function randomQuaternion()
-	-- Formula from http://planning.cs.uiuc.edu/node198.html
-	local u,v,w = math.random(), math.random(), math.random()
-	return lovr.math.newQuat( math.sqrt(1-u)*math.sin(2*v*math.pi),
-		        math.sqrt(1-u)*math.cos(2*v*math.pi),
-		        math.sqrt(u)*math.sin(2*w*math.pi),
-		        math.sqrt(u)*math.cos(2*w*math.pi),
-		        true ) -- Raw components
+	local u, v, w = math.random(), math.random(), math.random()
+	return quaternion.pack(
+		math.sqrt(1 - u) * math.sin(2 * v * math.pi),
+		math.sqrt(1 - u) * math.cos(2 * v * math.pi),
+		math.sqrt(u) * math.sin(2 * w * math.pi),
+		math.sqrt(u) * math.cos(2 * w * math.pi)
+	)
 end
 
 function scene.generate(i, randomZ) -- Generate each cube with random position and color and a random rotational velocity
 	local cube = {}
-	cube.at = lovr.math.newVec3()
-	cube.at.x = scene.boundMin.x + math.random()*(scene.boundMax.x-scene.boundMin.x)
-	cube.at.y = scene.boundMin.y + math.random()*(scene.boundMax.y-scene.boundMin.y)
+	local x = scene.boundMin.x + math.random() * (scene.boundMax.x - scene.boundMin.x)
+	local y = scene.boundMin.y + math.random() * (scene.boundMax.y - scene.boundMin.y)
+	local z
 	if randomZ then
-		cube.at.z = scene.boundMin.z + math.random()*(scene.boundMax.z-scene.boundMin.z)
+		z = scene.boundMin.z + math.random() * (scene.boundMax.z - scene.boundMin.z)
 	else
-		cube.at.z = scene.boundMin.z
+		z = scene.boundMin.z
 	end
+	cube.at = vector(x, y, z)
 	cube.rotateBasis = randomQuaternion()
-	cube.rotateTarget = lovr.math.newQuat(cube.rotateBasis:conjugate())
+	cube.rotateTarget = cube.rotateBasis:conjugate()
 	cube.rotate = cube.rotateBasis
-	cube.color = {math.random()*0.8, math.random()*0.8, math.random()*0.8}
+	cube.color = { math.random() * 0.8, math.random() * 0.8, math.random() * 0.8 }
 	scene.cubes[i] = cube
 end
 
 function scene.update(dt) -- On each frame, move each cube and spin it a little
-	for i,cube in ipairs(scene.cubes) do
-		cube.at.z = cube.at.z + scene.speed*dt
+	for i, cube in ipairs(scene.cubes) do
+		cube.at = cube.at + vector(0, 0, scene.speed * dt)
 		if cube.at.z > scene.boundMax.z then -- If cube left the scene bounds respawn it
 			scene.generate(i)
 		else
-			local rotateAmount = (cube.at.z - scene.boundMin.z)/(scene.boundMax.z-scene.boundMin.z)
-			cube.rotate = cube.rotateBasis:slerp( cube.rotateTarget, rotateAmount )
+			local rotateAmount = (cube.at.z - scene.boundMin.z) / (scene.boundMax.z - scene.boundMin.z)
+			cube.rotate = cube.rotateBasis:slerp(cube.rotateTarget, rotateAmount)
 		end
 	end
 end
@@ -67,20 +68,22 @@ end
 function scene.draw(pass)
 
 	-- First, draw a floor
-	local floorRecenter = scene.floorSize/2 + 0.5
-	for x=1,scene.floorSize do for y=1,scene.floorSize do
-		if (x+y)%2==0 then
-			pass:setColor(0.25,0.25,0.25)
-		else
-			pass:setColor(0.5,0.5,0.5)
+	local floorRecenter = scene.floorSize / 2 + 0.5
+	for x = 1, scene.floorSize do
+		for y = 1,scene.floorSize do
+			if (x + y) % 2==0 then
+				pass:setColor(0.25, 0.25, 0.25)
+			else
+				pass:setColor(0.5, 0.5, 0.5)
+			end
+			pass:plane(x - floorRecenter, 0, y - floorRecenter, 1, 1, math.pi / 2, 1, 0, 0)
 		end
-		pass:plane(x-floorRecenter,0,y-floorRecenter, 1,1, math.pi/2,1,0,0)
-	end end
+	end
 
 	-- Draw cubes
-	for _,cube in ipairs(scene.cubes) do
+	for _, cube in ipairs(scene.cubes) do
 		pass:setColor(unpack(cube.color))
-		pass:cube(cube.at.x, cube.at.y, cube.at.z, scene.cubeSize, cube.rotate:unpack())
+		pass:cube(cube.at, scene.cubeSize, cube.rotate:unpack())
 	end
 end
 
@@ -88,33 +91,25 @@ end
 
 local cubemap = {}
 
-local unitX = lovr.math.newVec3(1,0,0)
-local unitY = lovr.math.newVec3(0,1,0)
-local unitZ = lovr.math.newVec3(0,0,1)
+local unitX = vector(1, 0, 0)
+local unitY = vector(0, 1, 0)
+local unitZ = vector(0, 0, 1)
 
 function cubemap.load()
-	-- Create cubemap textures
-	local cubemapWidth, cubemapHeight = 256, 256
-	cubemap.texture = lovr.graphics.newTexture(cubemapWidth, cubemapHeight, 6, { type = "cube" })
-	cubemap.faces = {}
+	-- Create cubemap texture
+	cubemap.texture = lovr.graphics.newTexture(256, 256, 6, { type = "cube" })
 
 	-- Precalculate cubemap View-Projection matrices
 	local center = scene.sphereCenter
-	cubemap.facePerspective = lovr.math.newMat4():perspective(math.rad(90.0), 1, .1, 0)
-	for i,matrix in ipairs{
-		-- Not sure why the x flip is needed!
-		lovr.math.mat4():lookAt(center, center - unitX, vec3(0, 1, 0)),
-		lovr.math.mat4():lookAt(center, center + unitX, vec3(0, 1, 0)),
-		lovr.math.mat4():lookAt(center, center + unitY, vec3(0, 0, -1)),
-		lovr.math.mat4():lookAt(center, center - unitY, vec3(0, 0, 1)),
-		lovr.math.mat4():lookAt(center, center + unitZ, vec3(0, 1, 0)),
-		lovr.math.mat4():lookAt(center, center - unitZ, vec3(0, 1, 0))
-	} do
-		-- Each face will contain a matrix
-		local face = {}
-		face.matrix = lovr.math.newMat4(matrix)
-		cubemap.faces[i] = face
-	end
+	cubemap.facePerspective = lovr.math.newMat4():perspective(math.rad(90), 1, .1, 0)
+	cubemap.faces = {
+		lovr.math.newMat4():lookAt(center, center - unitX, vec3(0, 1, 0)),
+		lovr.math.newMat4():lookAt(center, center + unitX, vec3(0, 1, 0)),
+		lovr.math.newMat4():lookAt(center, center + unitY, vec3(0, 0, -1)),
+		lovr.math.newMat4():lookAt(center, center - unitY, vec3(0, 0, 1)),
+		lovr.math.newMat4():lookAt(center, center + unitZ, vec3(0, 1, 0)),
+		lovr.math.newMat4():lookAt(center, center - unitZ, vec3(0, 1, 0))
+	}
 
 	-- Create reflection shader
 	cubemap.shader = lovr.graphics.newShader('unlit', [[
@@ -140,7 +135,7 @@ function cubemap.draw()
 
 	for i = 1, 6 do
 		cubemap.pass:setProjection(i, cubemap.facePerspective)
-		cubemap.pass:setViewPose(i,cubemap.faces[i].matrix,true)
+		cubemap.pass:setViewPose(i, cubemap.faces[i], true)
 	end
 
 	scene.draw(cubemap.pass)
@@ -163,10 +158,10 @@ function lovr.draw(pass)
 	scene.draw(pass)
 
 	-- Draw sphere textured with cube map
-	pass:setColor(1,0.6,0.6)
+	pass:setColor(1, 0.6, 0.6)
 	pass:setShader(cubemap.shader)
-	pass:send("cubemap", cubemap.texture)
-	pass:sphere(scene.sphereCenter.x, scene.sphereCenter.y, scene.sphereCenter.z, scene.sphereRad)
+	pass:send('cubemap', cubemap.texture)
+	pass:sphere(scene.sphereCenter, scene.sphereRad)
 
 	return lovr.graphics.submit(cubemap.pass, pass)
 end
