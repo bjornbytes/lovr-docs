@@ -37,6 +37,7 @@ return {
     },
     options = {
       type = 'table',
+      default = 'nil',
       description = 'Texture options.',
       table = {
         {

@@ -19,7 +19,8 @@ return {
     },
     options = {
       type = 'table',
-      description = 'Model options.',
+      default = 'nil',
+      description = 'An optional table of Model options.',
       table = {
         {
           name = 'mipmaps',

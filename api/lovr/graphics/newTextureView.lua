@@ -21,6 +21,7 @@ return {
     },
     options = {
       type = 'table',
+      default = 'nil',
       description = 'Options for the texture view.',
       table = {
         {

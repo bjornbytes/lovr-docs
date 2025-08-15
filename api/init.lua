@@ -1748,6 +1748,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options.",
+                  default = "nil",
                   table = {
                     {
                       name = "decode",
@@ -1795,6 +1796,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options.",
+                  default = "nil",
                   table = {
                     {
                       name = "decode",
@@ -1842,6 +1844,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options.",
+                  default = "nil",
                   table = {
                     {
                       name = "decode",
@@ -12553,7 +12556,8 @@ return {
                 {
                   name = "options",
                   type = "table",
-                  description = "Model options.",
+                  description = "An optional table of Model options.",
+                  default = "nil",
                   table = {
                     {
                       name = "mipmaps",
@@ -12588,7 +12592,8 @@ return {
                 {
                   name = "options",
                   type = "table",
-                  description = "Model options.",
+                  description = "An optional table of Model options.",
+                  default = "nil",
                   table = {
                     {
                       name = "mipmaps",
@@ -12623,7 +12628,8 @@ return {
                 {
                   name = "options",
                   type = "table",
-                  description = "Model options.",
+                  description = "An optional table of Model options.",
+                  default = "nil",
                   table = {
                     {
                       name = "mipmaps",
@@ -12860,7 +12866,8 @@ return {
                 {
                   name = "options",
                   type = "table",
-                  description = "Shader options.",
+                  description = "An optional table of Shader options.",
+                  default = "nil",
                   table = {
                     {
                       name = "flags",
@@ -12899,7 +12906,8 @@ return {
                 {
                   name = "options",
                   type = "table",
-                  description = "Shader options.",
+                  description = "An optional table of Shader options.",
+                  default = "nil",
                   table = {
                     {
                       name = "flags",
@@ -12938,7 +12946,8 @@ return {
                 {
                   name = "options",
                   type = "table",
-                  description = "Shader options.",
+                  description = "An optional table of Shader options.",
+                  default = "nil",
                   table = {
                     {
                       name = "flags",
@@ -12991,6 +13000,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Texture options.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -13058,6 +13068,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Texture options.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -13130,6 +13141,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Texture options.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -13192,6 +13204,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Texture options.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -13254,6 +13267,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Texture options.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -13316,6 +13330,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Texture options.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -13391,6 +13406,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Options for the texture view.",
+                  default = "nil",
                   table = {
                     {
                       name = "type",
@@ -19513,8 +19529,8 @@ return {
                       description = "The z coordinate of the next point."
                     },
                     {
-                      name = "...",
-                      type = "*",
+                      name = "...numbers",
+                      type = "number",
                       description = "More points to add to the line."
                     }
                   },
@@ -19543,8 +19559,8 @@ return {
                       description = "A vector containing the position of the next point on the line."
                     },
                     {
-                      name = "...",
-                      type = "*",
+                      name = "...vectors",
+                      type = "number",
                       description = "More points to add to the line."
                     }
                   },
@@ -34459,6 +34475,7 @@ return {
                   name = "settings",
                   type = "table",
                   description = "An optional table with settings for the physics simulation.",
+                  default = "nil",
                   table = {
                     {
                       name = "tags",

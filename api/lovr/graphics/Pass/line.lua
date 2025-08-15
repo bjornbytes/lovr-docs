@@ -44,15 +44,19 @@ return {
       type = 'Vec3',
       description = 'A vector containing the position of the next point on the line.'
     },
-    ['...'] = {
-      type = '*',
+    ['...numbers'] = {
+      type = 'number',
+      description = 'More points to add to the line.'
+    },
+    ['...vectors'] = {
+      type = 'number',
       description = 'More points to add to the line.'
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', '...' },
+      arguments = { 'x1', 'y1', 'z1', 'x2', 'y2', 'z2', '...numbers' },
       returns = {}
     },
     {
@@ -60,7 +64,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'v1', 'v2', '...' },
+      arguments = { 'v1', 'v2', '...vectors' },
       returns = {}
     }
   },

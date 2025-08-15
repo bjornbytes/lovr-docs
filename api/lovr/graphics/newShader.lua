@@ -39,7 +39,8 @@ return {
     },
     options = {
       type = 'table',
-      description = 'Shader options.',
+      default = 'nil',
+      description = 'An optional table of Shader options.',
       table = {
         {
           name = 'flags',

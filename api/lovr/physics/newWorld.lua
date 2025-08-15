@@ -4,6 +4,7 @@ return {
   arguments = {
     settings = {
       type = 'table',
+      default = 'nil',
       description = 'An optional table with settings for the physics simulation.',
       table = {
         {

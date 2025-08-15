@@ -13,6 +13,7 @@ return {
     },
     options = {
       type = 'table',
+      default = 'nil',
       description = 'Optional options for the Layer.',
       table = {
         {
