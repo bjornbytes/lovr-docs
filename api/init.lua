@@ -19573,7 +19573,7 @@ return {
                     },
                     {
                       name = "...vectors",
-                      type = "number",
+                      type = "Vec3",
                       description = "More points to add to the line."
                     }
                   },
