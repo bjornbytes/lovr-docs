@@ -33,9 +33,9 @@ return {
         A string, path to a file, or Blob containing GLSL or SPIR-V code for the compute stage.
       ]]
     },
-    default = {
+    defaultshader = {
       type = 'DefaultShader',
-      description = 'The default shader to use.'
+      description = 'One of the default shaders to use.'
     },
     options = {
       type = 'table',
@@ -90,7 +90,7 @@ return {
       description = [[
         Create a copy of one of the default shaders (used to provide different flags).
       ]],
-      arguments = { 'default', 'options' },
+      arguments = { 'defaultshader', 'options' },
       returns = { 'shader' }
     }
   },

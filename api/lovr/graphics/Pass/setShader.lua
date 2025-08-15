@@ -10,7 +10,7 @@ return {
       type = 'Shader',
       description = 'The shader to use.'
     },
-    default = {
+    defaultshader = {
       type = 'DefaultShader',
       description = 'One of the default shaders to use.'
     }
@@ -23,7 +23,7 @@ return {
     },
     {
       description = 'Use one of the default shaders for drawing.',
-      arguments = { 'default' },
+      arguments = { 'defaultshader' },
       returns = {}
     },
     {

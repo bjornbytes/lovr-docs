@@ -12931,9 +12931,9 @@ return {
               description = "Create a copy of one of the default shaders (used to provide different flags).",
               arguments = {
                 {
-                  name = "default",
+                  name = "defaultshader",
                   type = "DefaultShader",
-                  description = "The default shader to use."
+                  description = "One of the default shaders to use."
                 },
                 {
                   name = "options",
@@ -21501,7 +21501,7 @@ return {
                   description = "Use one of the default shaders for drawing.",
                   arguments = {
                     {
-                      name = "default",
+                      name = "defaultshader",
                       type = "DefaultShader",
                       description = "One of the default shaders to use."
                     }
