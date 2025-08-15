@@ -3970,6 +3970,7 @@ return {
             "lovr.data.newBlob",
             "lovr.filesystem.newBlob"
           },
+          extends = "Object",
           methods = {
             {
               name = "getSize",

@@ -13,6 +13,7 @@ return {
 
     A Blob's size cannot be changed once it is created.
   ]],
+  extends = 'Object',
   constructors = { 'lovr.data.newBlob', 'lovr.filesystem.newBlob' },
   methods = {
     'Blob:getSize',
