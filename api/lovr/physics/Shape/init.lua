@@ -3,6 +3,7 @@ return {
   description = [[
     A Shape is a physics object that can be attached to colliders to define their shape.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.physics.newBoxShape',
     'lovr.physics.newSphereShape',

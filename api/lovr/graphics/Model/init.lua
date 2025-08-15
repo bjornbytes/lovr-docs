@@ -19,6 +19,7 @@ return {
     Models can have materials, which are collections of properties and textures that define how its
     surface is affected by lighting.  Each mesh in the model can use a single material.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newModel',
     'lovr.headset.newModel'

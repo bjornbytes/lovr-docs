@@ -21,6 +21,7 @@ return {
     In shader code, non-texture material properties can be accessed as `Material.<property>`, and
     material textures can be accessed as `<Type>Texture`, e.g. `RoughnessTexture`.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newMaterial'
   }

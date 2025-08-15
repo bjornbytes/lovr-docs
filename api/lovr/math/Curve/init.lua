@@ -12,6 +12,7 @@ return {
     Note that for longer or more complicated curves (like in a drawing application) it can be easier
     to store the path as several Curve objects.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.math.newCurve',
     'Curve:slice'

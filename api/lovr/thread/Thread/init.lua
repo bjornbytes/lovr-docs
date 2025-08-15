@@ -8,6 +8,7 @@ return {
 
     To get `require` to work properly, add `require 'lovr.filesystem'` to the thread code.
   ]],
+  extends = 'Object',
   constructor = 'lovr.thread.newThread',
   related = {
     'lovr.threaderror',

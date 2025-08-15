@@ -1,6 +1,7 @@
 return {
   summary = 'A single object in a physics simulation.',
   description = 'Colliders represent a single rigid body in the physics simulation.',
+  extends = 'Object',
   constructors = {
     'World:newCollider',
     'World:newBoxCollider',

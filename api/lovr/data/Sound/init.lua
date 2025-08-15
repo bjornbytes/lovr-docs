@@ -52,5 +52,6 @@ return {
     format (ACN channel ordering and SN3D channel normalization).  The AMB format is supported for
     import and will automatically get converted to AmbiX.  See `lovr.data.newSound` for more info.
   ]],
+  extends = 'Object',
   constructor = 'lovr.data.newSound'
 }

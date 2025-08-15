@@ -5,5 +5,6 @@ return {
 
     Usually you can just use `Font` objects.
   ]],
+  extends = 'Object',
   constructor = 'lovr.data.newRasterizer'
 }

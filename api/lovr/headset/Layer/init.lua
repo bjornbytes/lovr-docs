@@ -20,5 +20,6 @@ return {
 
     Note that currently the VR simulator does not support layers.
   ]],
+  extends = 'Object',
   constructor = 'lovr.headset.newLayer'
 }

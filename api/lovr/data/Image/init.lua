@@ -10,6 +10,7 @@ return {
     individual pixels, load Textures in a background thread, or use the FFI to efficiently access
     the raw image data.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.data.newImage'
   }

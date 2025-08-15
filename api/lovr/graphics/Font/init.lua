@@ -13,6 +13,7 @@ return {
     For TTF fonts, LÖVR uses a text rendering technique called "multichannel signed distance fields"
     (MSDF), which makes the font rendering remain crisp when text is viewed up close.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newFont',
     'lovr.graphics.getDefaultFont'

@@ -10,5 +10,6 @@ return {
     Usually you can just load a `Model` directly, but using a `ModelData` can be helpful if you want
     to load models in a thread or access more low-level information about the Model.
   ]],
+  extends = 'Object',
   constructor = 'lovr.data.newModelData'
 }

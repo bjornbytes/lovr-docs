@@ -7,6 +7,7 @@ return {
     fashion. The following types of data can be passed through Channels: nil, boolean, number,
     string, lightuserdata, table, vector, and any LÖVR object.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.thread.newChannel',
     'lovr.thread.getChannel'

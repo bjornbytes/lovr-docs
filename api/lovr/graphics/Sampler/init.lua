@@ -13,6 +13,7 @@ return {
 
     The properties of a Sampler are immutable, and can't be changed after it's created.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newSampler'
   }

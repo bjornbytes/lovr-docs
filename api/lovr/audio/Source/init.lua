@@ -11,6 +11,7 @@ return {
     `Source:seek` and `Source:tell` can be used to control the playback position of the Source.  A
     Source can be set to loop when it reaches the end using `Source:setLooping`.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.audio.newSource',
     'Source:clone'

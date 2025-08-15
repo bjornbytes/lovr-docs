@@ -5,6 +5,7 @@ return {
 
     Be sure to call `World:update` on the World every frame to advance the simulation.
   ]],
+  extends = 'Object',
   constructor = 'lovr.physics.newWorld',
   sections = {
     {

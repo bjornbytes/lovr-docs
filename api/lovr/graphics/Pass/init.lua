@@ -19,6 +19,7 @@ return {
     `lovr.draw` is called every frame with a `Pass` that is configured to render to either the
     headset or the window.  The Pass will automatically get submitted afterwards.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newPass',
     'lovr.graphics.getWindowPass',

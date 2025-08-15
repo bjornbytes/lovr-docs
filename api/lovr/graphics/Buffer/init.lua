@@ -45,6 +45,7 @@ return {
     can't be 2 things at once!  If you need multiple versions of data, it's best to use a bigger
     buffer with offsets (or multiple buffers).
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newBuffer'
   },

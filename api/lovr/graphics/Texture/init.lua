@@ -5,6 +5,7 @@ return {
     which are one-dimensional.  Textures are used as the destination for rendering operations, and
     textures loaded from images provide surface data to `Material` objects.
   ]],
+  extends = 'Object',
   constructors = {
     'lovr.graphics.newTexture',
     'lovr.graphics.newTextureView'

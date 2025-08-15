@@ -1,6 +1,7 @@
 return {
   summary = 'Joins two Colliders together.',
   description = 'A Joint is a physics object that constrains the movement of two Colliders.',
+  extends = 'Object',
   constructors = {
     'lovr.physics.newWeldJoint',
     'lovr.physics.newBallJoint',

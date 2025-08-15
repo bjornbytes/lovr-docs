@@ -24,5 +24,6 @@ return {
 
     The **bounding box** of the Mesh allows LÖVR to skip rendering it when it's out of view.
   ]],
+  extends = 'Object',
   constructor = 'lovr.graphics.newMesh'
 }

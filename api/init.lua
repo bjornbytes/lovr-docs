@@ -2310,6 +2310,7 @@ return {
             "lovr.audio.newSource",
             "Source:clone"
           },
+          extends = "Object",
           methods = {
             {
               name = "clone",
@@ -4807,6 +4808,7 @@ return {
           constructors = {
             "lovr.data.newImage"
           },
+          extends = "Object",
           methods = {
             {
               name = "encode",
@@ -5229,6 +5231,7 @@ return {
           constructors = {
             "lovr.data.newModelData"
           },
+          extends = "Object",
           methods = {
             {
               name = "getAnimationChannelCount",
@@ -7533,6 +7536,7 @@ return {
           constructors = {
             "lovr.data.newRasterizer"
           },
+          extends = "Object",
           methods = {
             {
               name = "getAdvance",
@@ -8271,6 +8275,7 @@ return {
           constructors = {
             "lovr.data.newSound"
           },
+          extends = "Object",
           methods = {
             {
               name = "getBlob",
@@ -10324,6 +10329,7 @@ return {
           constructors = {
             "lovr.filesystem.newFile"
           },
+          extends = "Object",
           methods = {
             {
               name = "getMode",
@@ -13641,6 +13647,7 @@ return {
           constructors = {
             "lovr.graphics.newBuffer"
           },
+          extends = "Object",
           methods = {
             {
               name = "clear",
@@ -14067,6 +14074,7 @@ return {
             "lovr.graphics.newFont",
             "lovr.graphics.getDefaultFont"
           },
+          extends = "Object",
           methods = {
             {
               name = "getAscent",
@@ -14560,6 +14568,7 @@ return {
           constructors = {
             "lovr.graphics.newMaterial"
           },
+          extends = "Object",
           methods = {
             {
               name = "getProperties",
@@ -14591,6 +14600,7 @@ return {
           constructors = {
             "lovr.graphics.newMesh"
           },
+          extends = "Object",
           methods = {
             {
               name = "computeBoundingBox",
@@ -15257,6 +15267,7 @@ return {
             "lovr.graphics.newModel",
             "lovr.headset.newModel"
           },
+          extends = "Object",
           methods = {
             {
               name = "animate",
@@ -17796,6 +17807,7 @@ return {
             "lovr.graphics.getWindowPass",
             "lovr.headset.getPass"
           },
+          extends = "Object",
           methods = {
             {
               name = "barrier",
@@ -22743,6 +22755,7 @@ return {
             "Buffer:newReadback",
             "Texture:newReadback"
           },
+          extends = "Object",
           methods = {
             {
               name = "getBlob",
@@ -22866,6 +22879,7 @@ return {
           constructors = {
             "lovr.graphics.newSampler"
           },
+          extends = "Object",
           methods = {
             {
               name = "getAnisotropy",
@@ -23030,6 +23044,7 @@ return {
             "lovr.graphics.newShader",
             "Shader:clone"
           },
+          extends = "Object",
           methods = {
             {
               name = "clone",
@@ -23302,6 +23317,7 @@ return {
             "lovr.graphics.newTexture",
             "lovr.graphics.newTextureView"
           },
+          extends = "Object",
           methods = {
             {
               name = "clear",
@@ -26589,6 +26605,7 @@ return {
           constructors = {
             "lovr.headset.newLayer"
           },
+          extends = "Object",
           methods = {
             {
               name = "getColor",
@@ -28797,6 +28814,7 @@ return {
             "lovr.math.newCurve",
             "Curve:slice"
           },
+          extends = "Object",
           methods = {
             {
               name = "addPoint",
@@ -30684,6 +30702,7 @@ return {
           constructors = {
             "lovr.math.newRandomGenerator"
           },
+          extends = "Object",
           methods = {
             {
               name = "getSeed",
@@ -34765,6 +34784,7 @@ return {
             "World:newMeshCollider",
             "World:newTerrainCollider"
           },
+          extends = "Object",
           methods = {
             {
               name = "addShape",
@@ -38766,6 +38786,7 @@ return {
             "lovr.physics.newHingeJoint",
             "lovr.physics.newSliderJoint"
           },
+          extends = "Object",
           methods = {
             {
               name = "destroy",
@@ -39157,6 +39178,7 @@ return {
             "World:newMeshCollider",
             "World:newTerrainCollider"
           },
+          extends = "Object",
           methods = {
             {
               name = "containsPoint",
@@ -40594,6 +40616,7 @@ return {
           constructors = {
             "lovr.physics.newWorld"
           },
+          extends = "Object",
           methods = {
             {
               name = "destroy",
@@ -44710,6 +44733,7 @@ return {
             "lovr.thread.newChannel",
             "lovr.thread.getChannel"
           },
+          extends = "Object",
           methods = {
             {
               name = "clear",
@@ -44882,6 +44906,7 @@ return {
           constructors = {
             "lovr.thread.newThread"
           },
+          extends = "Object",
           methods = {
             {
               name = "getError",

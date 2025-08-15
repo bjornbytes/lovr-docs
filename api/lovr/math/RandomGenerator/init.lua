@@ -5,5 +5,6 @@ return {
     pseudo-random numbers. If you just need basic randomness, you can use `lovr.math.random` without
     needing to create a random generator.
   ]],
+  extends = 'Object',
   constructor = 'lovr.math.newRandomGenerator'
 }
