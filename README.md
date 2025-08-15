@@ -6,11 +6,14 @@ This repository contains the documentation for [LÖVR](https://github.com/bjornb
 There are four main types of documentation here:
 
 - The **`api`** folder contains a Lua table with metadata for all LÖVR functions and objects.
-  - This is used to generate documentation, but is also useful for integrating with other tools
-  (e.g. autocomplete for the LÖVR API in text editors).
-  - Each function, object, etc. has a Lua file that exports its metadata.  These are aggregated
-  into a single table stored in `init.lua`.  The aggregator is a LÖVR script, you can run it by
-  typing `lovr api` at the root of this repository.
+  - Each function, object, module, etc. has a Lua file that exports its metadata.
+  - `api/init.lua` contains a single Lua table with all the aggregated documentation.
+  - This data is used to generate the documentation on the website, but there are also scripts to
+  generate type definitions for other tools, like [LuaLS](https://luals.github.io) and [TypeScriptToLua](https://github.com/TypeScriptToLua/TypeScriptToLua).
+  - Run `lovr api` to regenerate `init.lua`
+  - Run `lovr api cats` to generate CATS definitions (output to `api/cats`).
+  - Run `lovr api typescript` to generate TypeScriptToLua definitions (output to `api/typescript`).
+  - The individual generator scripts are located at `api/generators`.
 - The **`examples`** folder contains small LÖVR projects demonstrating a specific task/technique.
   They aim to be minimal and easy to understand/copy.
   - The ones listed in the `init.lua` file are shown on the website.
