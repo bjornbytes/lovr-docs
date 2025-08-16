@@ -14,19 +14,9 @@ local function getPath(filename, sep)
   return filename:match("(.*" .. sep .. ")")
 end
 
-local function ensureDirectoryExists(path)
-  os.execute("mkdir -p " .. path)
-end
-
 --- Writes `contents` into a file identified by `filename`.
 local function writeFile(filename, contents)
   local fullpath = ('%s/cats/%s'):format(root, filename)
-
-  -- make sure the directory exists
-  local path = getPath(fullpath)
-  if path then
-    ensureDirectoryExists(path)
-  end
 
   local file = io.open(fullpath, "w")
   if not file then
@@ -386,6 +376,14 @@ local function generateGlobalsDocumentation()
 end
 
 return function(api)
+  local library = root .. "/cats/library"
+
+  if lovr.system.getOS() == "Windows" then
+    os.execute("mkdir " .. library:gsub("/", "\\"))
+  else
+    os.execute("mkdir -p " .. library)
+  end
+
   generateModuleDocumentation(api)
   generateCallbackDocumentation(api)
   generateAddonConfig()

@@ -216,7 +216,13 @@ declare interface Mat4 {
 
 return function (api)
   local path = lovr.filesystem.getSource() .. '/typescript'
-  os.execute("mkdir -p " .. path)
+
+  if lovr.system.getOS() == 'Windows' then
+    os.execute('mkdir ' .. path:gsub('/', '\\'))
+  else
+    os.execute('mkdir -p ' .. path)
+  end
+
   local out = io.open(path .. '/lovr-api.d.ts', 'w')
   assert(out)
 
