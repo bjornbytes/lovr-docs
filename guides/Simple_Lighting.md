@@ -32,9 +32,9 @@ Note for now this is just the default LÖVR vertex shader as listed in the [Shad
 
 Now, we define a new shader with customVertex:
 
-    shader = lovr.graphics.newShader(customVertex, nil, {})
+    shader = lovr.graphics.newShader(customVertex, 'unlit', {})
 
-For the newShader method, passing nil as an argument will use the default fragment shader. Now, to enable the shader, we add to lovr.draw():
+For now, we are using LÖVR's default `unlit` shader for the fragment shader. Now, to enable the shader, we add to lovr.draw():
 
     pass:setShader(shader)
 
