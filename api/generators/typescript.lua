@@ -15,10 +15,11 @@
 -- - table arguments with specified fields
 -- - fn variant documentation
 -- - type and interface documentation
+-- - show call example in documentation (e.g. `const [x, y, z] = collider.getPosition()`)
+-- - fix callbacks being generated with a `this` parameter
 --
 -- todo:
 --
--- - show call example in documentation (e.g. `const [x, y, z] = collider.getPosition()`)
 -- - lovr.graphics.getDevice() more specific return value and documentation
 --   (available in .table field of return value)
 -- - global vector constructors documentation
@@ -30,6 +31,8 @@
 --
 -- - mark draw return value as optional somehow?
 -- - make pass.setColor() explicitly accept vec3/vec4
+
+local include_references = false -- generate @see `other` references in documentation
 
 -- todo: the global constructors should be automated in order to include documentation
 local vector_ops = [[
@@ -259,7 +262,7 @@ return function (api)
     table = 'LuaTable',
     userdata = 'any',
     lightuserdata = 'any',
-    ['function'] = '(...args: any[]) => any',
+    ['function'] = '(this: void, ...args: any[]) => any',
     ['*'] = 'any',
     ['Object'] = 'LovrObject'
   }
@@ -333,10 +336,37 @@ return function (api)
   local function put_fn_variant (fn, variant, is_interface)
     -- docs
     local doc = fn.description
+    -- show call example
+    doc = doc .. '\n\n`'
+    if #variant.returns > 0 then
+      if #variant.returns > 1 then
+        doc = doc .. '['
+      end
+      for i, ret in ipairs (variant.returns) do
+        doc = doc .. ret.name
+        if i < #variant.returns then
+          doc = doc .. ', '
+        end
+      end
+      if #variant.returns > 1 then
+        doc = doc .. ']'
+      end
+      doc = doc .. ' = '
+    end
+    doc = doc .. fn.key:gsub(':', '.')
+    doc = doc .. '('
+    for i, arg in ipairs (variant.arguments) do
+      doc = doc .. arg.name
+      if i < #variant.arguments then
+        doc = doc .. ', '
+      end
+    end
+    doc = doc .. ')'
+    doc = doc .. '`'
     if variant.description then
       doc = doc .. '\n\n' .. variant.description
     end
-    -- todo: show call example
+    -- @params and @returns
     if #variant.arguments > 0 or #variant.returns > 0 then
       doc = doc .. '\n'
       if #variant.arguments > 0 then
@@ -361,7 +391,7 @@ return function (api)
       doc = doc .. '\n\n' .. fn.notes
     end
 
-    if fn.related then
+    if include_references and fn.related then
       doc = doc .. '\n'
       for _, rel in ipairs(fn.related) do
         doc = doc .. '\n@see {@link ' .. rel:gsub(':', '.') .. '}'
@@ -434,7 +464,7 @@ return function (api)
       if enum.notes then
          doc = doc .. '\n\n' .. enum.notes
       end
-      if enum.related then
+      if include_references and enum.related then
         doc = doc .. '\n'
         for _, rel in ipairs(enum.related) do
           doc = doc .. '\n@see {@link ' .. rel:gsub(':', '.') .. '}'
@@ -458,7 +488,7 @@ return function (api)
       if object.notes then
          doc = doc .. '\n\n' .. object.notes
       end
-      if object.related then
+      if include_references and object.related then
         doc = doc .. '\n'
         for _, rel in ipairs(object.related) do
           doc = doc .. '\n@see {@link ' .. rel:gsub(':', '.') .. '}'
