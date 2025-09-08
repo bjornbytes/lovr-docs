@@ -25940,7 +25940,8 @@ return {
           key = "lovr.headset.update",
           module = "lovr.headset",
           related = {
-            "lovr.headset.submit"
+            "lovr.headset.submit",
+            "lovr.run"
           },
           variants = {
             {
