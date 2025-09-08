@@ -5,7 +5,12 @@ return {
     This callback is called right before the application is about to quit.  Use it to perform any
     necessary cleanup work.  A truthy value can be returned from this callback to abort quitting.
   ]],
-  arguments = {},
+  arguments = {
+    code = {
+      type = 'number',
+      description = 'The exit code for the program (zero for success, non-zero for error).'
+    }
+  },
   returns = {
     abort = {
       type = 'boolean',

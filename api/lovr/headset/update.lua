@@ -7,7 +7,15 @@ return {
     of by the default `lovr.run` implementation.
   ]],
   arguments = {},
-  returns = {},
+  returns = {
+    dt = {
+      type = 'number',
+      description = [[
+        The delta time since the last frame.  This is the same value returned by
+        `lovr.headset.getDeltaTime`, and is used by boot.lua.
+      ]]
+    }
+  },
   variants = {
     {
       arguments = {},
@@ -15,6 +23,7 @@ return {
     }
   },
   related = {
-    'lovr.headset.submit'
+    'lovr.headset.submit',
+    'lovr.run'
   }
 }
