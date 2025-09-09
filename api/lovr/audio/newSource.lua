@@ -67,11 +67,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename', 'options' },
-      returns = { 'source' }
-    },
-    {
-      arguments = { 'blob', 'options' },
+      arguments = { 'file', 'options' },
       returns = { 'source' }
     },
     {

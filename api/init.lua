@@ -1739,7 +1739,11 @@ return {
           variants = {
             {
               arguments = {
-                nil,
+                {
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing audio data to load."
+                },
                 {
                   name = "options",
                   type = "table",
@@ -1749,69 +1753,25 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "            Whether to immediately decode compressed sounds, instead of progressively decoding as\n            the Source plays.  Enabling this will use more memory but reduce CPU overhead during\n            playback.  Recommended for short sound effects.\n          ",
+                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
                     },
                     {
                       name = "pitchable",
                       type = "boolean",
-                      description = "            Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to\n            false will improve performance slightly.\n          ",
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
                       default = "true"
                     },
                     {
                       name = "spatial",
                       type = "boolean",
-                      description = "            Whether the Source should use spatial effects.  Non-spatial sources will get routed\n            directly to the speakers without further processing.  Enabling an effect on a\n            non-spatial source will raise an error.\n          ",
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
                       default = "true"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "            A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect\n            name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects\n            can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be\n            enabled.  Ignored if the `spatial` flag is false.\n          ",
-                      default = "nil"
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "source",
-                  type = "Source",
-                  description = "The new Source."
-                }
-              }
-            },
-            {
-              arguments = {
-                nil,
-                {
-                  name = "options",
-                  type = "table",
-                  description = "Optional options.",
-                  default = "nil",
-                  table = {
-                    {
-                      name = "decode",
-                      type = "boolean",
-                      description = "            Whether to immediately decode compressed sounds, instead of progressively decoding as\n            the Source plays.  Enabling this will use more memory but reduce CPU overhead during\n            playback.  Recommended for short sound effects.\n          ",
-                      default = "false"
-                    },
-                    {
-                      name = "pitchable",
-                      type = "boolean",
-                      description = "            Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to\n            false will improve performance slightly.\n          ",
-                      default = "true"
-                    },
-                    {
-                      name = "spatial",
-                      type = "boolean",
-                      description = "            Whether the Source should use spatial effects.  Non-spatial sources will get routed\n            directly to the speakers without further processing.  Enabling an effect on a\n            non-spatial source will raise an error.\n          ",
-                      default = "true"
-                    },
-                    {
-                      name = "effects",
-                      type = "table",
-                      description = "            A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect\n            name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects\n            can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be\n            enabled.  Ignored if the `spatial` flag is false.\n          ",
+                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
                       default = "nil"
                     }
                   }
@@ -5384,7 +5344,11 @@ return {
               variants = {
                 {
                   arguments = {
-                    nil,
+                    {
+                      name = "animation",
+                      type = "string | number",
+                      description = "The name or index of an animation."
+                    },
                     {
                       name = "channel",
                       type = "number",
@@ -5414,7 +5378,11 @@ return {
               variants = {
                 {
                   arguments = {
-                    nil,
+                    {
+                      name = "animation",
+                      type = "string | number",
+                      description = "The name or index of an animation."
+                    },
                     {
                       name = "channel",
                       type = "number",

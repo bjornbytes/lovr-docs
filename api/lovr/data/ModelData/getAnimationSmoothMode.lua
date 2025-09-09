@@ -2,7 +2,7 @@ return {
   summary = 'Get the smooth mode of a channel in an animation.',
   description = 'Returns the smooth mode of a channel in an animation.',
   arguments = {
-    index = {
+    animation = {
       type = 'string | number',
       description = 'The name or index of an animation.'
     },
