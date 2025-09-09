@@ -2,13 +2,9 @@ return {
   summary = 'Get the scale of a node.',
   description = 'Returns the scale of a node.',
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of the node.'
     },
     origin = {
       type = 'OriginType',
@@ -34,11 +30,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'origin' },
-      returns = { 'x', 'y', 'z' }
-    },
-    {
-      arguments = { 'name', 'origin' },
+      arguments = { 'node', 'origin' },
       returns = { 'x', 'y', 'z' }
     }
   },

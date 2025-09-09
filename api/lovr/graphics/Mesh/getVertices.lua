@@ -18,7 +18,7 @@ return {
   },
   returns = {
     vertices = {
-      type = 'table',
+      type = '{{number}}',
       description = [[
         A table of vertices.  Each vertex is a table of numbers for each vertex attribute, given by
         the vertex format of the Mesh.

@@ -2,13 +2,9 @@ return {
   summary = 'Get the orientation of a node.',
   description = 'Returns the orientation of a node.',
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of a node.'
     },
     origin = {
       type = 'OriginType',
@@ -38,11 +34,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'origin' },
-      returns = { 'angle', 'ax', 'ay', 'az' }
-    },
-    {
-      arguments = { 'name', 'origin' },
+      arguments = { 'node', 'origin' },
       returns = { 'angle', 'ax', 'ay', 'az' }
     }
   },

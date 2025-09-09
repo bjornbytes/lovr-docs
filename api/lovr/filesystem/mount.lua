@@ -37,7 +37,7 @@ return {
       description = 'Whether the archive was successfully mounted.'
     },
     error = {
-      type = 'string',
+      type = 'string | nil',
       description = 'The error message, if the archive failed to mount.'
     }
   },

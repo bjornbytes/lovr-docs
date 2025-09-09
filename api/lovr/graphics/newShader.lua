@@ -14,21 +14,21 @@ return {
   ]],
   arguments = {
     vertex = {
-      type = 'string',
+      type = 'string | DefaultShader | Blob',
       description = [[
         A string, path to a file, or Blob containing GLSL or SPIR-V code for the vertex stage.  Can
         also be a `DefaultShader` to use that shader's vertex code.
       ]]
     },
     fragment = {
-      type = 'string',
+      type = 'string | DefaultShader | Blob',
       description = [[
         A string, path to a file, or Blob containing GLSL or SPIR-V code for the fragment stage.
         Can also be a `DefaultShader` to use that shader's fragment code.
       ]]
     },
     compute = {
-      type = 'string',
+      type = 'string | Blob',
       description = [[
         A string, path to a file, or Blob containing GLSL or SPIR-V code for the compute stage.
       ]]

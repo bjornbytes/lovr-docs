@@ -13,14 +13,14 @@ return {
   arguments = {},
   returns = {
     vertices = {
-      type = 'table',
+      type = '{number}',
       description = [[
         The triangle vertex positions, returned as a flat (non-nested) table of numbers.  The
         position of each vertex is given as an x, y, and z coordinate.
       ]]
     },
     indices = {
-      type = 'table',
+      type = '{number}',
       description = [[
         A list of numbers representing how to connect the vertices into triangles.  Each number is
         a 1-based index into the `vertices` table, and every 3 indices form a triangle.

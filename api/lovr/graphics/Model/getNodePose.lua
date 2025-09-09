@@ -2,13 +2,9 @@ return {
   summary = 'Get the pose of a node.',
   description = 'Returns the pose (position and orientation) of a node.',
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of a node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of a node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of a node.'
     },
     origin = {
       type = 'OriginType',
@@ -50,11 +46,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'origin' },
-      returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
-    },
-    {
-      arguments = { 'name', 'origin' },
+      arguments = { 'node', 'origin' },
       returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     }
   },

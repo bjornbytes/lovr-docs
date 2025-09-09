@@ -2,13 +2,9 @@ return {
   summary = 'Get the duration of an animation in the Model.',
   description = 'Returns the duration of an animation in the Model, in seconds.',
   arguments = {
-    name = {
-      type = 'string',
-      description = 'The name of the animation.'
-    },
-    index = {
-      type = 'number',
-      description = 'The animation index.'
+    animation = {
+      type = 'string | number',
+      description = 'The name or index of an animation.'
     }
   },
   returns = {
@@ -19,11 +15,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index' },
-      returns = { 'duration' }
-    },
-    {
-      arguments = { 'name' },
+      arguments = { 'animation' },
       returns = { 'duration' }
     }
   },

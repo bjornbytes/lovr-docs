@@ -2,13 +2,9 @@ return {
   summary = 'Get the position of a node.',
   description = 'Returns the position of a node.',
   arguments = {
-    index = {
-      type = 'number',
+    node = {
+      type = 'string | number',
       description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
     },
     space = {
       type = 'OriginType',
@@ -34,11 +30,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'space' },
-      returns = { 'x', 'y', 'z' }
-    },
-    {
-      arguments = { 'name', 'space' },
+      arguments = { 'node', 'space' },
       returns = { 'x', 'y', 'z' }
     }
   },

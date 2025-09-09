@@ -8,31 +8,23 @@ return {
       description = 'The file to append to.'
     },
     content = {
-      type = 'string',
-      description = 'A string to write to the end of the file.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob containing data to append to the file.'
+      type = 'string | Blob',
+      description = 'A string or Blob to append to the file.'
     }
   },
   returns = {
     success = {
-      type = 'number',
+      type = 'boolean',
       description = 'Whether the operation was successful.'
     },
     error = {
-      type = 'string',
-      description = 'The error message, if there was an error.'
+      type = 'string | nil',
+      description = 'The error message, or `nil` if there was no error.'
     }
   },
   variants = {
     {
       arguments = { 'filename', 'content' },
-      returns = { 'success', 'error' }
-    },
-    {
-      arguments = { 'filename', 'blob' },
       returns = { 'success', 'error' }
     }
   },

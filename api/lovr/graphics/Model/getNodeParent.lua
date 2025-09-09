@@ -2,13 +2,9 @@ return {
   summary = 'Get the parent of a node.',
   description = 'Given a child node, this function returns the index of its parent.',
   arguments = {
-    index = {
+    node = {
       type = 'number',
-      description = 'The index of the child node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the child node.'
+      description = 'The name or index of the child node.'
     }
   },
   returns = {
@@ -19,11 +15,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index' },
-      returns = { 'parent' }
-    },
-    {
-      arguments = { 'name' },
+      arguments = { 'node' },
       returns = { 'parent' }
     }
   },

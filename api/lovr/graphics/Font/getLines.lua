@@ -25,7 +25,7 @@ return {
   },
   returns = {
     lines = {
-      type = 'table',
+      type = '{string}',
       description = 'A table of strings, one for each wrapped line.'
     }
   },

@@ -7,13 +7,9 @@ return {
     won't apply any displacement and will skip processing of the blend shape.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of a blend shape.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of a blend shape.'
+    blendshape = {
+      type = 'string | number',
+      description = 'The name or index of a blend shape.'
     },
     weight = {
       type = 'number',
@@ -23,11 +19,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'index', 'weight' },
-      returns = {}
-    },
-    {
-      arguments = { 'name', 'weight' },
+      arguments = { 'blendshape', 'weight' },
       returns = {}
     }
   },

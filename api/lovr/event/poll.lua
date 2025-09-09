@@ -20,5 +20,10 @@ return {
       arguments = {},
       returns = { 'iterator' }
     }
-  }
+  },
+  example = [[
+    for name, arg1, arg2, arg3 in lovr.event.poll() do
+      print(name, arg1, arg2, arg3)
+    end
+  ]]
 }

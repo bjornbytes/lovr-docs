@@ -14,7 +14,7 @@ return {
       description = 'Whether the path was removed.'
     },
     error = {
-      type = 'string',
+      type = 'string | nil',
       description = 'The error message, if any.'
     }
   },

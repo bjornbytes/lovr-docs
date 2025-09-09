@@ -13,27 +13,22 @@ return {
       description = 'The length of the Buffer.'
     },
     data = {
-      type = 'table',
+      type = 'table | Blob',
       description = [[
         The initial data to put into the Buffer.  The length of the Buffer will be determined by the
-        contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the
-        length calculation requires each field to consistently use one type of data.
+        length of the table or the size of the Blob, combined with the format information.
       ]]
     },
     blob = {
       type = 'Blob',
-      description = [[
-        A Blob with the initial contents of the Buffer.  The size of the Blob will be used to
-        determine the length of the Buffer.
-      ]]
-    },
-    type = {
-      type = 'DataType',
-      description = 'The type of each item in the Buffer.'
+      description = 'A Blob with the initial contents of the Buffer.'
     },
     format = {
-      type = 'table',
-      description = 'A list of fields in the Buffer.',
+      type = 'table | DataType',
+      description = [[
+        A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple
+        arrays.
+      ]],
       table = {
         {
           name = 'layout',
@@ -74,22 +69,6 @@ return {
     },
     {
       arguments = { 'format', 'data' },
-      returns = { 'buffer' }
-    },
-    {
-      arguments = { 'format', 'blob' },
-      returns = { 'buffer' }
-    },
-    {
-      arguments = { 'type', 'length' },
-      returns = { 'buffer' }
-    },
-    {
-      arguments = { 'type', 'data' },
-      returns = { 'buffer' }
-    },
-    {
-      arguments = { 'type', 'blob' },
       returns = { 'buffer' }
     }
   },

@@ -8,7 +8,7 @@ return {
   arguments = {},
   returns = {
     path = {
-      type = 'string',
+      type = 'string | nil',
       description = 'The current working directory, or `nil` if it\'s unknown.'
     }
   },

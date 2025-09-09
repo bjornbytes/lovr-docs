@@ -4,28 +4,20 @@ return {
     Given a parent node, this function returns a table with the indices of its children.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the parent node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the parent node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of the parent node.'
     }
   },
   returns = {
     children = {
-      type = 'table',
-      description = 'A table containing a node index for each child of the node.'
+      type = '{number}',
+      description = 'A table containing the node index of each child of the parent node.'
     }
   },
   variants = {
     {
-      arguments = { 'index' },
-      returns = { 'children' }
-    },
-    {
-      arguments = { 'name' },
+      arguments = { 'node' },
       returns = { 'children' }
     }
   },

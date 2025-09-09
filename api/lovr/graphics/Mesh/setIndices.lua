@@ -9,7 +9,7 @@ return {
   ]],
   arguments = {
     t = {
-      type = 'table',
+      type = '{number}',
       description = 'A list of numbers (1-based).'
     },
     blob = {

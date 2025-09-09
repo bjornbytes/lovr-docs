@@ -4,11 +4,11 @@ return {
   description = 'Submits work to the GPU.',
   arguments = {
     ['...'] = {
-      type = 'Pass',
+      type = 'Pass | false | nil',
       description = 'The pass objects to submit.  Falsy values will be skipped.'
     },
     t = {
-      type = 'table',
+      type = '{Pass | false}',
       description = 'A table of passes to submit.  Falsy values will be skipped.'
     }
   },

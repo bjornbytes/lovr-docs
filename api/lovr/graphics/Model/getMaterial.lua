@@ -2,13 +2,9 @@ return {
   summary = 'Get a Material from the Model.',
   description = 'Returns a `Material` loaded from the Model.',
   arguments = {
-    name = {
-      type = 'string',
-      description = 'The name of the Material to return.'
-    },
-    index = {
-      type = 'number',
-      description = 'The index of the Material to return.'
+    which = {
+      type = 'string | number',
+      description = 'The name or index of the Material to return.'
     }
   },
   returns = {
@@ -19,11 +15,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'name' },
-      returns = { 'material' }
-    },
-    {
-      arguments = { 'index' },
+      arguments = { 'which' },
       returns = { 'material' }
     }
   },

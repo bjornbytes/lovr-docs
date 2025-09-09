@@ -5,13 +5,9 @@ return {
     Loads a 3D model from a file.  Currently, OBJ, glTF, and binary STL files are supported.
   ]],
   arguments = {
-    filename = {
-      type = 'string',
-      description = 'The path to model file.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob containing 3D model data.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing 3D model data to import.'
     },
     modelData = {
       type = 'ModelData',
@@ -49,11 +45,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename', 'options' },
-      returns = { 'model' }
-    },
-    {
-      arguments = { 'blob', 'options' },
+      arguments = { 'file', 'options' },
       returns = { 'model' }
     },
     {

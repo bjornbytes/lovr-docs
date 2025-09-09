@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     path = {
-      type = 'string',
+      type = 'string | nil',
       description = 'The absolute path of the project\'s source, or `nil` if it\'s unknown.'
     }
   },

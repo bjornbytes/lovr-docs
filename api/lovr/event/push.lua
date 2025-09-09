@@ -23,7 +23,8 @@ return {
     }
   },
   notes = [[
-    Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event data.
+    Arguments can be nil, booleans, numbers, strings, lightuserdata, vectors, tables, and LÖVR
+    objects.
   ]],
   related = {
     'lovr.event.poll',

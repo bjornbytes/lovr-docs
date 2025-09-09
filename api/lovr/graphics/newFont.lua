@@ -3,13 +3,9 @@ return {
   summary = 'Create a new Font.',
   description = 'Creates a new Font.',
   arguments = {
-    filename = {
-      type = 'string',
-      description = 'A path to a TTF or BMFont file.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob containing TTF or BMFont file data.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing a TTF or BMFont file.'
     },
     rasterizer = {
       type = 'Rasterizer',
@@ -43,12 +39,7 @@ return {
   variants = {
     {
       description = 'Creates a new Font from a font file.',
-      arguments = { 'filename', 'size', 'spread' },
-      returns = { 'font' }
-    },
-    {
-      description = 'Creates a new Font from font data.',
-      arguments = { 'blob', 'size', 'spread' },
+      arguments = { 'file', 'size', 'spread' },
       returns = { 'font' }
     },
     {

@@ -10,14 +10,18 @@ return {
   },
   returns = {
     size = {
-      type = 'number',
-      description = 'The size of the file, in bytes.'
+      type = 'number | nil',
+      description = 'The size of the file, in bytes, or `nil` if there was an error.'
+    },
+    error = {
+      type = 'string | nil',
+      description = 'The error message, if the operation was not successful.'
     }
   },
   variants = {
     {
       arguments = { 'file' },
-      returns = { 'size' }
+      returns = { 'size', 'error' }
     }
   },
   notes = 'If the file does not exist, an error is thrown.',

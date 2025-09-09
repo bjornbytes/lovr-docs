@@ -2,13 +2,9 @@ return {
   summary = 'Get the transform of a node.',
   description = 'Returns the transform (position, scale, and rotation) of a node.',
   arguments = {
-    index = {
-      type = 'number',
+    node = {
+      type = 'string | number',
       description = 'The index of a node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of a node.'
     },
     origin = {
       type = 'OriginType',
@@ -62,11 +58,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'origin' },
-      returns = { 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' }
-    },
-    {
-      arguments = { 'name', 'origin' },
+      arguments = { 'node', 'origin' },
       returns = { 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' }
     }
   },

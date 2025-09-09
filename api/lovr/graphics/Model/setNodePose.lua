@@ -5,13 +5,9 @@ return {
     pose of the node, relative to its parent.  The scale will remain unchanged.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of a node.'
     },
     x = {
       type = 'number',
@@ -61,19 +57,11 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'index', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'blend' },
+      arguments = { 'node', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'blend' },
       returns = {}
     },
     {
-      arguments = { 'name', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'index', 'position', 'orientation', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'name', 'position', 'orientation', 'blend' },
+      arguments = { 'node', 'position', 'orientation', 'blend' },
       returns = {}
     }
   },

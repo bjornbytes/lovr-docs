@@ -36,7 +36,7 @@ return {
   },
   returns = {
     vertices = {
-      type = 'table',
+      type = '{number}',
       description = 'The table of vertices.  See below for the format of each vertex.'
     },
     material = {
@@ -61,6 +61,9 @@ return {
 
     These could be placed in a vertex buffer using the following buffer format:
 
-        { 'vec2:VertexPosition', 'vec2:VertexUV' }
+        {
+          { 'VertexPosition', 'vec2' },
+          { 'VertexUV', 'vec2' }
+        }
   ]]
 }

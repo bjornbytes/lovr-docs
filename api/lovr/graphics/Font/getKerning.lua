@@ -7,21 +7,12 @@ return {
   ]],
   arguments = {
     first = {
-      type = 'string',
-      description = 'The first character.'
-    },
-    firstCodepoint = {
-      type = 'number',
-      description = 'The first codepoint.'
+      type = 'string | number',
+      description = 'The first character or codepoint.'
     },
     second = {
-      type = 'string',
-      description = 'The second character.'
-    },
-    secondCodepoint = {
-      name = 'secondCodepoint',
-      type = 'number',
-      description = 'The second codepoint.'
+      type = 'string | number',
+      description = 'The second character or codepoint.'
     }
   },
   returns = {
@@ -33,18 +24,6 @@ return {
   variants = {
     {
       arguments = { 'first', 'second' },
-      returns = { 'keming' }
-    },
-    {
-      arguments = { 'firstCodepoint', 'second' },
-      returns = { 'keming' }
-    },
-    {
-      arguments = { 'first', 'secondCodepoint' },
-      returns = { 'keming' }
-    },
-    {
-      arguments = { 'firstCodepoint', 'secondCodepoint' },
       returns = { 'keming' }
     }
   },

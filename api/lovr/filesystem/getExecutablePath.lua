@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     path = {
-      type = 'string',
+      type = 'string | nil',
       description = 'The absolute path of the LÖVR executable, or `nil` if it is unknown.'
     }
   },

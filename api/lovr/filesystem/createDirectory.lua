@@ -2,8 +2,8 @@ return {
   tag = 'filesystem-files',
   summary = 'Create a directory.',
   description = [[
-    Creates a directory in the save directory.  Any parent directories that don't exist will also be
-    created.
+    Creates a directory in the save directory.  Also creates any intermediate directories that don't
+    exist.
   ]],
   arguments = {
     path = {
@@ -17,8 +17,8 @@ return {
       description = 'Whether the directory was created.'
     },
     error = {
-      type = 'string',
-      description = 'The error message, if there was a failure.'
+      type = 'string | nil',
+      description = 'The error message.'
     }
   },
   variants = {

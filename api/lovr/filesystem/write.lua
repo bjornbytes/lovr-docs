@@ -8,12 +8,8 @@ return {
       description = 'The file to write to.'
     },
     content = {
-      type = 'string',
-      description = 'A string to write to the file.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob containing data to write to the file.'
+      type = 'string | Blob',
+      description = 'A string or Blob to write to the file.'
     }
   },
   returns = {
@@ -29,10 +25,6 @@ return {
   variants = {
     {
       arguments = { 'filename', 'content' },
-      returns = { 'success', 'error' }
-    },
-    {
-      arguments = { 'filename', 'blob' },
       returns = { 'success', 'error' }
     }
   },

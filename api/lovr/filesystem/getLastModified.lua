@@ -10,11 +10,11 @@ return {
   },
   returns = {
     time = {
-      type = 'number',
+      type = 'number | nil',
       description = 'The modification time of the file, in seconds, or `nil` if there was an error.'
     },
     error = {
-      type = 'string',
+      type = 'string | nil',
       description = 'The error message, if there was an error.'
     }
   },

@@ -3,7 +3,7 @@ return {
   description = 'Sets the data for vertices in the Mesh.',
   arguments = {
     vertices = {
-      type = 'table',
+      type = '{{number}}',
       description = [[
         A table of vertices, where each vertex is a table of numbers matching the vertex format of
         the Mesh.
@@ -16,15 +16,12 @@ return {
     index = {
       type = 'number',
       default = '1',
-      description = 'The index of the first vertex to return.'
+      description = 'The index of the first vertex to set.'
     },
     count = {
       type = 'number',
       default = 'nil',
-      description = [[
-        The number of vertices to return.  If nil, returns the "rest" of the vertices, based on the
-        `index` argument.
-      ]]
+      description = 'The number of vertices to set.'
     }
   },
   returns = {},

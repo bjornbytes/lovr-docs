@@ -5,13 +5,9 @@ return {
     of the node, relative to its parent.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of a node.'
     },
     angle = {
       type = 'number',
@@ -46,19 +42,11 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'index', 'angle', 'ax', 'ay', 'az', 'blend' },
+      arguments = { 'node', 'angle', 'ax', 'ay', 'az', 'blend' },
       returns = {}
     },
     {
-      arguments = { 'name', 'angle', 'ax', 'ay', 'az', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'index', 'orientation', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'name', 'orientation', 'blend' },
+      arguments = { 'node', 'orientation', 'blend' },
       returns = {}
     }
   },

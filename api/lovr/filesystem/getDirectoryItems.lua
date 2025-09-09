@@ -10,7 +10,7 @@ return {
   },
   returns = {
     items = {
-      type = 'table',
+      type = '{string}',
       description = 'A table with a string for each file and subfolder in the directory.'
     }
   },

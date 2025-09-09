@@ -13,8 +13,11 @@ return {
   },
   returns = {
     realpath = {
-      type = 'string',
-      description = 'The absolute path of the mounted archive containing `path`.'
+      type = 'string | nil',
+      description = [[
+        The absolute path of the mounted archive containing `path`, or `nil` if the file is not in
+        the virtual filesystem.
+      ]]
     }
   },
   variants = {

@@ -31,7 +31,7 @@ return {
       ]]
     },
     table = {
-      type = 'table',
+      type = '{number}',
       description = 'A table containing 3 or 4 color components.'
     }
   },

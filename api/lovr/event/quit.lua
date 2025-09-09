@@ -20,7 +20,7 @@ return {
     }
   },
   notes = [[
-    This function is equivalent to calling `lovr.event.push('quit', <args>)`.
+    This function is equivalent to calling `lovr.event.push('quit', code)`.
 
     The event won't be processed until the next time `lovr.event.poll` is called.
 

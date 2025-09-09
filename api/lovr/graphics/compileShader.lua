@@ -13,12 +13,8 @@ return {
       description = 'The type of shader to compile.'
     },
     source = {
-      type = 'string',
-      description = 'A string or filename with shader code.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob containing shader code.'
+      type = 'string | Blob',
+      description = 'A string, filename, or Blob with shader code.'
     }
   },
   returns = {
@@ -30,10 +26,6 @@ return {
   variants = {
     {
       arguments = { 'stage', 'source' },
-      returns = { 'bytecode' }
-    },
-    {
-      arguments = { 'stage', 'blob' },
       returns = { 'bytecode' }
     }
   },

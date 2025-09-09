@@ -8387,6 +8387,11 @@ return {
           description = "This function returns a Lua iterator for all of the unprocessed items in the event queue.  Each event consists of a name as a string, followed by event-specific arguments.  This function is called in the default implementation of `lovr.run`, so it is normally not necessary to poll for events yourself.",
           key = "lovr.event.poll",
           module = "lovr.event",
+          examples = {
+            {
+              code = "for name, arg1, arg2, arg3 in lovr.event.poll() do\n  print(name, arg1, arg2, arg3)\nend"
+            }
+          },
           variants = {
             {
               arguments = {},
@@ -8408,7 +8413,7 @@ return {
           description = "Pushes an event onto the event queue.  It will be processed the next time `lovr.event.poll` is called.  For an event to be processed properly, there needs to be a function in the `lovr.handlers` table with a key that's the same as the event name.",
           key = "lovr.event.push",
           module = "lovr.event",
-          notes = "Only nil, booleans, numbers, strings, and LÖVR objects are supported types for event data.",
+          notes = "Arguments can be nil, booleans, numbers, strings, lightuserdata, vectors, tables, and LÖVR objects.",
           related = {
             "lovr.event.poll",
             "lovr.event.quit"
@@ -8437,7 +8442,7 @@ return {
           description = "Pushes an event to quit.  An optional number can be passed to set the exit code for the application.  An exit code of zero indicates normal termination, whereas a nonzero exit code indicates that an error occurred.",
           key = "lovr.event.quit",
           module = "lovr.event",
-          notes = "This function is equivalent to calling `lovr.event.push('quit', <args>)`.\n\nThe event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to abort the quitting process.",
+          notes = "This function is equivalent to calling `lovr.event.push('quit', code)`.\n\nThe event won't be processed until the next time `lovr.event.poll` is called.\n\nThe `lovr.quit` callback will be called when the event is processed, which can be used to do any cleanup work.  The callback can also return `false` to abort the quitting process.",
           related = {
             "lovr.quit",
             "lovr.event.poll",
@@ -8553,46 +8558,20 @@ return {
                 },
                 {
                   name = "content",
-                  type = "string",
-                  description = "A string to write to the end of the file."
+                  type = "string | Blob",
+                  description = "A string or Blob to append to the file."
                 }
               },
               returns = {
                 {
                   name = "success",
-                  type = "number",
+                  type = "boolean",
                   description = "Whether the operation was successful."
                 },
                 {
                   name = "error",
-                  type = "string",
-                  description = "The error message, if there was an error."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The file to append to."
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob containing data to append to the file."
-                }
-              },
-              returns = {
-                {
-                  name = "success",
-                  type = "number",
-                  description = "Whether the operation was successful."
-                },
-                {
-                  name = "error",
-                  type = "string",
-                  description = "The error message, if there was an error."
+                  type = "string | nil",
+                  description = "The error message, or `nil` if there was no error."
                 }
               }
             }
@@ -8602,7 +8581,7 @@ return {
           name = "createDirectory",
           tag = "filesystem-files",
           summary = "Create a directory.",
-          description = "Creates a directory in the save directory.  Any parent directories that don't exist will also be created.",
+          description = "Creates a directory in the save directory.  Also creates any intermediate directories that don't exist.",
           key = "lovr.filesystem.createDirectory",
           module = "lovr.filesystem",
           variants = {
@@ -8622,8 +8601,8 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string",
-                  description = "The error message, if there was a failure."
+                  type = "string | nil",
+                  description = "The error message."
                 }
               }
             }
@@ -8642,7 +8621,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string",
+                  type = "string | nil",
                   description = "The absolute path to the appdata directory."
                 }
               }
@@ -8669,7 +8648,7 @@ return {
               returns = {
                 {
                   name = "items",
-                  type = "table",
+                  type = "{string}",
                   description = "A table with a string for each file and subfolder in the directory."
                 }
               }
@@ -8689,7 +8668,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string",
+                  type = "string | nil",
                   description = "The absolute path of the LÖVR executable, or `nil` if it is unknown."
                 }
               }
@@ -8710,7 +8689,7 @@ return {
               returns = {
                 {
                   name = "identity",
-                  type = "string",
+                  type = "string | nil",
                   description = "The name of the save directory, or `nil` if it isn't set."
                 }
               }
@@ -8736,12 +8715,12 @@ return {
               returns = {
                 {
                   name = "time",
-                  type = "number",
+                  type = "number | nil",
                   description = "The modification time of the file, in seconds, or `nil` if there was an error."
                 },
                 {
                   name = "error",
-                  type = "string",
+                  type = "string | nil",
                   description = "The error message, if there was an error."
                 }
               }
@@ -8767,8 +8746,8 @@ return {
               returns = {
                 {
                   name = "realpath",
-                  type = "string",
-                  description = "The absolute path of the mounted archive containing `path`."
+                  type = "string | nil",
+                  description = "The absolute path of the mounted archive containing `path`, or `nil` if the file is not in the virtual filesystem."
                 }
               }
             }
@@ -8843,8 +8822,13 @@ return {
               returns = {
                 {
                   name = "size",
-                  type = "number",
-                  description = "The size of the file, in bytes."
+                  type = "number | nil",
+                  description = "The size of the file, in bytes, or `nil` if there was an error."
+                },
+                {
+                  name = "error",
+                  type = "string | nil",
+                  description = "The error message, if the operation was not successful."
                 }
               }
             }
@@ -8863,7 +8847,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string",
+                  type = "string | nil",
                   description = "The absolute path of the project's source, or `nil` if it's unknown."
                 }
               }
@@ -8883,7 +8867,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string",
+                  type = "string | nil",
                   description = "The absolute path of the user's home directory."
                 }
               }
@@ -8903,7 +8887,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string",
+                  type = "string | nil",
                   description = "The current working directory, or `nil` if it's unknown."
                 }
               }
@@ -9079,7 +9063,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string",
+                  type = "string | nil",
                   description = "The error message, if the archive failed to mount."
                 }
               }
@@ -9181,12 +9165,12 @@ return {
               returns = {
                 {
                   name = "contents",
-                  type = "string",
+                  type = "string | nil",
                   description = "The contents of the file, or nil if the file could not be read."
                 },
                 {
                   name = "error",
-                  type = "string",
+                  type = "string | nil",
                   description = "The error message, if any."
                 }
               }
@@ -9218,7 +9202,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string",
+                  type = "string | nil",
                   description = "The error message, if any."
                 }
               }
@@ -9360,34 +9344,8 @@ return {
                 },
                 {
                   name = "content",
-                  type = "string",
-                  description = "A string to write to the file."
-                }
-              },
-              returns = {
-                {
-                  name = "success",
-                  type = "boolean",
-                  description = "Whether the write was successful."
-                },
-                {
-                  name = "error",
-                  type = "string",
-                  description = "The error message, if there was an error."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The file to write to."
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob containing data to write to the file."
+                  type = "string | Blob",
+                  description = "A string or Blob to write to the file."
                 }
               },
               returns = {
@@ -10466,29 +10424,8 @@ return {
                 },
                 {
                   name = "source",
-                  type = "string",
-                  description = "A string or filename with shader code."
-                }
-              },
-              returns = {
-                {
-                  name = "bytecode",
-                  type = "Blob",
-                  description = "A Blob containing compiled SPIR-V code."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "stage",
-                  type = "ShaderStage",
-                  description = "The type of shader to compile."
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob containing shader code."
+                  type = "string | Blob",
+                  description = "A string, filename, or Blob with shader code."
                 }
               },
               returns = {
@@ -10887,7 +10824,7 @@ return {
               returns = {
                 {
                   name = "pass",
-                  type = "Pass",
+                  type = "Pass | nil",
                   description = "The window pass, or `nil` if there is no window."
                 }
               }
@@ -11018,7 +10955,7 @@ return {
                 {
                   name = "blob",
                   type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                  description = "A Blob with the initial contents of the Buffer."
                 }
               },
               returns = {
@@ -11033,8 +10970,8 @@ return {
               arguments = {
                 {
                   name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
+                  type = "table | DataType",
+                  description = "A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple arrays.",
                   table = {
                     {
                       name = "layout",
@@ -11068,8 +11005,8 @@ return {
               arguments = {
                 {
                   name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
+                  type = "table | DataType",
+                  description = "A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple arrays.",
                   table = {
                     {
                       name = "layout",
@@ -11086,106 +11023,8 @@ return {
                 },
                 {
                   name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "format",
-                  type = "table",
-                  description = "A list of fields in the Buffer.",
-                  table = {
-                    {
-                      name = "layout",
-                      type = "DataLayout",
-                      description = "How to lay out the Buffer fields in memory.",
-                      default = "packed"
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
-                    }
-                  }
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                },
-                {
-                  name = "length",
-                  type = "number",
-                  description = "The length of the Buffer.",
-                  default = "1"
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                },
-                {
-                  name = "data",
-                  type = "table",
-                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the contents of the table.  The contents can be a mix of tables, numbers, and vectors, but the length calculation requires each field to consistently use one type of data."
-                }
-              },
-              returns = {
-                {
-                  name = "buffer",
-                  type = "Buffer",
-                  description = "The new Buffer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "type",
-                  type = "DataType",
-                  description = "The type of each item in the Buffer."
-                },
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob with the initial contents of the Buffer.  The size of the Blob will be used to determine the length of the Buffer."
+                  type = "table | Blob",
+                  description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the length of the table or the size of the Blob, combined with the format information."
                 }
               },
               returns = {
@@ -11215,38 +11054,9 @@ return {
               description = "Creates a new Font from a font file.",
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "A path to a TTF or BMFont file."
-                },
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
-                  default = "32"
-                },
-                {
-                  name = "spread",
-                  type = "number",
-                  description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
-                  default = "4"
-                }
-              },
-              returns = {
-                {
-                  name = "font",
-                  type = "Font",
-                  description = "The new Font."
-                }
-              }
-            },
-            {
-              description = "Creates a new Font from font data.",
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob containing TTF or BMFont file data."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing a TTF or BMFont file."
                 },
                 {
                   name = "size",
@@ -11647,45 +11457,9 @@ return {
             {
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "The path to model file."
-                },
-                {
-                  name = "options",
-                  type = "table",
-                  description = "An optional table of Model options.",
-                  default = "nil",
-                  table = {
-                    {
-                      name = "mipmaps",
-                      type = "boolean",
-                      description = "Whether the textures created for the Model should have mipmaps generated.",
-                      default = "true"
-                    },
-                    {
-                      name = "materials",
-                      type = "boolean",
-                      description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
-                      default = "true"
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "The new Model."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob containing 3D model data."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing 3D model data to import."
                 },
                 {
                   name = "options",
@@ -11953,12 +11727,12 @@ return {
               arguments = {
                 {
                   name = "vertex",
-                  type = "string",
+                  type = "string | DefaultShader | Blob",
                   description = "A string, path to a file, or Blob containing GLSL or SPIR-V code for the vertex stage.  Can also be a `DefaultShader` to use that shader's vertex code."
                 },
                 {
                   name = "fragment",
-                  type = "string",
+                  type = "string | DefaultShader | Blob",
                   description = "A string, path to a file, or Blob containing GLSL or SPIR-V code for the fragment stage. Can also be a `DefaultShader` to use that shader's fragment code."
                 },
                 {
@@ -11998,7 +11772,7 @@ return {
               arguments = {
                 {
                   name = "compute",
-                  type = "string",
+                  type = "string | Blob",
                   description = "A string, path to a file, or Blob containing GLSL or SPIR-V code for the compute stage."
                 },
                 {
@@ -12090,9 +11864,9 @@ return {
             {
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of an image to load."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing an image file to load."
                 },
                 {
                   name = "options",
@@ -12125,13 +11899,13 @@ return {
                     },
                     {
                       name = "mipmaps",
-                      type = "*",
+                      type = "boolean | number",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "table",
+                      type = "{TextureUsage}",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
@@ -12193,13 +11967,13 @@ return {
                     },
                     {
                       name = "mipmaps",
-                      type = "*",
+                      type = "boolean | number",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "table",
+                      type = "{TextureUsage}",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
@@ -12266,13 +12040,13 @@ return {
                     },
                     {
                       name = "mipmaps",
-                      type = "*",
+                      type = "boolean | number",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "table",
+                      type = "{TextureUsage}",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
@@ -12329,13 +12103,13 @@ return {
                     },
                     {
                       name = "mipmaps",
-                      type = "*",
+                      type = "boolean | number",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "table",
+                      type = "{TextureUsage}",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
@@ -12358,7 +12132,7 @@ return {
               arguments = {
                 {
                   name = "images",
-                  type = "table",
+                  type = "{string | Blob | Image}",
                   description = "A table of filenames or Images to load into the Texture."
                 },
                 {
@@ -12392,76 +12166,13 @@ return {
                     },
                     {
                       name = "mipmaps",
-                      type = "*",
+                      type = "boolean | number",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "table",
-                      description = "A list of `TextureUsage` indicating how the texture will be used."
-                    },
-                    {
-                      name = "label",
-                      type = "string",
-                      description = "A label for the Texture that will show up in debugging tools."
-                    }
-                  }
-                }
-              },
-              returns = {
-                {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The new Texture."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "A Blob object holding pixel data to load into the Texture."
-                },
-                {
-                  name = "options",
-                  type = "table",
-                  description = "Texture options.",
-                  default = "nil",
-                  table = {
-                    {
-                      name = "type",
-                      type = "TextureType",
-                      description = "The type of the texture."
-                    },
-                    {
-                      name = "format",
-                      type = "TextureFormat",
-                      description = "The format of the texture (ignored when images are provided).",
-                      default = "'rgba8'"
-                    },
-                    {
-                      name = "linear",
-                      type = "boolean",
-                      description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
-                      default = "false"
-                    },
-                    {
-                      name = "samples",
-                      type = "number",
-                      description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
-                      default = "1"
-                    },
-                    {
-                      name = "mipmaps",
-                      type = "*",
-                      description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
-                      default = "true"
-                    },
-                    {
-                      name = "usage",
-                      type = "table",
+                      type = "{TextureUsage}",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
@@ -12633,7 +12344,7 @@ return {
               arguments = {
                 {
                   name = "table",
-                  type = "table",
+                  type = "{number}",
                   description = "A table containing 3 or 4 color components."
                 }
               },
@@ -12680,7 +12391,7 @@ return {
               arguments = {
                 {
                   name = "...",
-                  type = "Pass",
+                  type = "Pass | false | nil",
                   description = "The pass objects to submit.  Falsy values will be skipped."
                 }
               },
@@ -12696,7 +12407,7 @@ return {
               arguments = {
                 {
                   name = "t",
-                  type = "table",
+                  type = "{Pass | false}",
                   description = "A table of passes to submit.  Falsy values will be skipped."
                 }
               },
@@ -13266,76 +12977,13 @@ return {
                   arguments = {
                     {
                       name = "first",
-                      type = "string",
-                      description = "The first character."
+                      type = "string | number",
+                      description = "The first character or codepoint."
                     },
                     {
                       name = "second",
-                      type = "string",
-                      description = "The second character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "keming",
-                      type = "number",
-                      description = "The kerning between the two glyphs."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "firstCodepoint",
-                      type = "number",
-                      description = "The first codepoint."
-                    },
-                    {
-                      name = "second",
-                      type = "string",
-                      description = "The second character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "keming",
-                      type = "number",
-                      description = "The kerning between the two glyphs."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "first",
-                      type = "string",
-                      description = "The first character."
-                    },
-                    {
-                      name = "secondCodepoint",
-                      type = "number",
-                      description = "The second codepoint."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "keming",
-                      type = "number",
-                      description = "The kerning between the two glyphs."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "firstCodepoint",
-                      type = "number",
-                      description = "The first codepoint."
-                    },
-                    {
-                      name = "secondCodepoint",
-                      type = "number",
-                      description = "The second codepoint."
+                      type = "string | number",
+                      description = "The second character or codepoint."
                     }
                   },
                   returns = {
@@ -13399,7 +13047,7 @@ return {
                   returns = {
                     {
                       name = "lines",
-                      type = "table",
+                      type = "{string}",
                       description = "A table of strings, one for each wrapped line."
                     }
                   }
@@ -13420,7 +13068,7 @@ return {
                   returns = {
                     {
                       name = "lines",
-                      type = "table",
+                      type = "{string}",
                       description = "A table of strings, one for each wrapped line."
                     }
                   }
@@ -13475,7 +13123,7 @@ return {
               description = "Returns a table of vertices for a piece of text, along with a Material to use when rendering it. The Material returned by this function may not be the same if the Font's texture atlas needs to be recreated with a bigger size to make room for more glyphs.",
               key = "Font:getVertices",
               module = "lovr.graphics",
-              notes = "Each vertex is a table of 4 floating point numbers with the following data:\n\n    { x, y, u, v }\n\nThese could be placed in a vertex buffer using the following buffer format:\n\n    { 'vec2:VertexPosition', 'vec2:VertexUV' }",
+              notes = "Each vertex is a table of 4 floating point numbers with the following data:\n\n    { x, y, u, v }\n\nThese could be placed in a vertex buffer using the following buffer format:\n\n    {\n      { 'VertexPosition', 'vec2' },\n      { 'VertexUV', 'vec2' }\n    }",
               variants = {
                 {
                   arguments = {
@@ -13504,7 +13152,7 @@ return {
                   returns = {
                     {
                       name = "vertices",
-                      type = "table",
+                      type = "{number}",
                       description = "The table of vertices.  See below for the format of each vertex."
                     },
                     {
@@ -13541,7 +13189,7 @@ return {
                   returns = {
                     {
                       name = "vertices",
-                      type = "table",
+                      type = "{number}",
                       description = "The table of vertices.  See below for the format of each vertex."
                     },
                     {
@@ -13873,7 +13521,7 @@ return {
                   returns = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A table of numbers with the 1-based vertex indices."
                     }
                   }
@@ -14051,7 +13699,7 @@ return {
                   returns = {
                     {
                       name = "vertices",
-                      type = "table",
+                      type = "{{number}}",
                       description = "A table of vertices.  Each vertex is a table of numbers for each vertex attribute, given by the vertex format of the Mesh."
                     }
                   }
@@ -14223,7 +13871,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A list of numbers (1-based)."
                     }
                   },
@@ -14304,19 +13952,19 @@ return {
                   arguments = {
                     {
                       name = "vertices",
-                      type = "table",
+                      type = "{{number}}",
                       description = "A table of vertices, where each vertex is a table of numbers matching the vertex format of the Mesh."
                     },
                     {
                       name = "index",
                       type = "number",
-                      description = "The index of the first vertex to return.",
+                      description = "The index of the first vertex to set.",
                       default = "1"
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of vertices to return.  If nil, returns the \"rest\" of the vertices, based on the `index` argument.",
+                      description = "The number of vertices to set.",
                       default = "nil"
                     }
                   },
@@ -14332,13 +13980,13 @@ return {
                     {
                       name = "index",
                       type = "number",
-                      description = "The index of the first vertex to return.",
+                      description = "The index of the first vertex to set.",
                       default = "1"
                     },
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of vertices to return.  If nil, returns the \"rest\" of the vertices, based on the `index` argument.",
+                      description = "The number of vertices to set.",
                       default = "nil"
                     }
                   },
@@ -14385,30 +14033,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
+                      name = "animation",
                       type = "string",
-                      description = "The name of an animation in the model file."
-                    },
-                    {
-                      name = "time",
-                      type = "number",
-                      description = "The timestamp to evaluate the keyframes at, in seconds."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "How much of the animation's pose to blend into the nodes, from 0 to 1.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of an animation in the model file."
+                      description = "The name or index of an animation in the model file."
                     },
                     {
                       name = "time",
@@ -14489,25 +14116,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The animation index."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "duration",
-                      type = "number",
-                      description = "The duration of the animation, in seconds."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the animation."
+                      name = "animation",
+                      type = "string | number",
+                      description = "The name or index of an animation."
                     }
                   },
                   returns = {
@@ -14618,25 +14229,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The weight of the blend shape."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a blend shape."
+                      name = "blendshape",
+                      type = "string | number",
+                      description = "The name or index of a blend shape."
                     }
                   },
                   returns = {
@@ -14933,25 +14528,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the Material to return."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "material",
-                      type = "Material",
-                      description = "The material."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the Material to return."
+                      name = "which",
+                      type = "string | number",
+                      description = "The name or index of the Material to return."
                     }
                   },
                   returns = {
@@ -15101,32 +14680,16 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the parent node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of the parent node."
                     }
                   },
                   returns = {
                     {
                       name = "children",
-                      type = "table",
-                      description = "A table containing a node index for each child of the node."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the parent node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "children",
-                      type = "table",
-                      description = "A table containing a node index for each child of the node."
+                      type = "{number}",
+                      description = "A table containing the node index of each child of the parent node."
                     }
                   }
                 }
@@ -15202,46 +14765,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "origin",
-                      type = "OriginType",
-                      description = "Whether the orientation should be returned relative to the root node or the node's parent.",
-                      default = "'root'"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "origin",
@@ -15289,25 +14815,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "node",
                       type = "number",
-                      description = "The index of the child node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "parent",
-                      type = "number",
-                      description = "The index of the parent."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the child node."
+                      description = "The name or index of the child node."
                     }
                   },
                   returns = {
@@ -15341,61 +14851,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a node."
-                    },
-                    {
-                      name = "origin",
-                      type = "OriginType",
-                      description = "Whether the pose should be returned relative to the root node or the node's parent.",
-                      default = "'root'"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x position of the node."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y position of the node."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z position of the node."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "origin",
@@ -15465,41 +14923,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
+                      name = "node",
+                      type = "string | number",
                       description = "The index of the node."
-                    },
-                    {
-                      name = "space",
-                      type = "OriginType",
-                      description = "Whether the position should be returned relative to the root node or the node's parent.",
-                      default = "'root'"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
                     },
                     {
                       name = "space",
@@ -15549,41 +14975,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "origin",
-                      type = "OriginType",
-                      description = "Whether the scale should be returned relative to the root node or the node's parent.",
-                      default = "'root'"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x scale."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y scale."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z scale."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of the node."
                     },
                     {
                       name = "origin",
@@ -15633,76 +15027,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
+                      name = "node",
+                      type = "string | number",
                       description = "The index of a node."
-                    },
-                    {
-                      name = "origin",
-                      type = "OriginType",
-                      description = "Whether the transform should be returned relative to the root node or the node's parent.",
-                      default = "'root'"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x position of the node."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y position of the node."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z position of the node."
-                    },
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x scale of the node."
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y scale of the node."
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z scale of the node."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a node."
                     },
                     {
                       name = "origin",
@@ -15885,12 +15212,12 @@ return {
                   returns = {
                     {
                       name = "vertices",
-                      type = "table",
+                      type = "{number}",
                       description = "The triangle vertex positions, returned as a flat (non-nested) table of numbers.  The position of each vertex is given as an x, y, and z coordinate."
                     },
                     {
                       name = "indices",
-                      type = "table",
+                      type = "{number}",
                       description = "A list of numbers representing how to connect the vertices into triangles.  Each number is a 1-based index into the `vertices` table, and every 3 indices form a triangle."
                     }
                   }
@@ -16042,24 +15369,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    },
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The new weight for the blend shape."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a blend shape."
+                      name = "blendshape",
+                      type = "string | number",
+                      description = "The name or index of a blend shape."
                     },
                     {
                       name = "weight",
@@ -16092,9 +15404,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "angle",
@@ -16128,66 +15440,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node should be rotated around its rotation axis."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of 0 will not change the node's orientation at all, whereas 1 will fully blend to the target orientation.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "orientation",
-                      type = "Quat",
-                      description = "The orientation."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of 0 will not change the node's orientation at all, whereas 1 will fully blend to the target orientation.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "orientation",
@@ -16226,9 +15481,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "x",
@@ -16277,86 +15532,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the position."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the position."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the position."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node should be rotated around its rotation axis."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will not change the node's pose at all, whereas 1 will fully blend to the target pose.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "position",
-                      type = "Vec3",
-                      description = "The target position.  Can also be provided as 3 numbers."
-                    },
-                    {
-                      name = "orientation",
-                      type = "Quat",
-                      description = "The target orientation.  Can also be provided as 4 numbers in angle-axis form."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will not change the node's pose at all, whereas 1 will fully blend to the target pose.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "position",
@@ -16400,9 +15578,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "x",
@@ -16431,61 +15609,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the new position."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the new position."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate of the new position."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "position",
-                      type = "Vec3",
-                      description = "The new position."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "position",
@@ -16525,9 +15651,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "sx",
@@ -16556,61 +15682,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x scale."
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y scale."
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z scale."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The new scale."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "scale",
@@ -16650,9 +15724,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "x",
@@ -16716,75 +15790,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the position."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the position."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the position."
-                    },
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x component of the scale."
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y component of the scale."
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z component of the scale."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node should be rotated around its rotation axis."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "position",
@@ -16813,61 +15821,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
-                    },
-                    {
-                      name = "position",
-                      type = "Vec3",
-                      description = "The position."
-                    },
-                    {
-                      name = "scale",
-                      type = "Vec3",
-                      description = "The scale."
-                    },
-                    {
-                      name = "orientation",
-                      type = "Quat",
-                      description = "The orientation."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    },
-                    {
-                      name = "transform",
-                      type = "Mat4",
-                      description = "The transform."
-                    },
-                    {
-                      name = "blend",
-                      type = "number",
-                      description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     },
                     {
                       name = "transform",

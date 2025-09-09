@@ -5,13 +5,9 @@ return {
     node, relative to its parent.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of a node.'
     },
     x = {
       type = 'number',
@@ -82,27 +78,15 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'index', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az', 'blend' },
+      arguments = { 'node', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az', 'blend' },
       returns = {}
     },
     {
-      arguments = { 'name', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az', 'blend' },
+      arguments = { 'node', 'position', 'scale', 'orientation', 'blend' },
       returns = {}
     },
     {
-      arguments = { 'index', 'position', 'scale', 'orientation', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'name', 'position', 'scale', 'orientation', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'index', 'transform', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'name', 'transform', 'blend' },
+      arguments = { 'node', 'transform', 'blend' },
       returns = {}
     }
   },

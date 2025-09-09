@@ -7,17 +7,13 @@ return {
     which will create an empty texture.
   ]],
   arguments = {
-    filename = {
-      type = 'string',
-      description = 'The filename of an image to load.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing an image file to load.'
     },
     image = {
       type = 'string',
       description = 'An Image object holding pixel data to load into the Texture.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob object holding pixel data to load into the Texture.'
     },
     width = {
       type = 'number',
@@ -32,7 +28,7 @@ return {
       description = 'The number of layers in the Texture.'
     },
     images = {
-      type = 'table',
+      type = '{string | Blob | Image}',
       description = 'A table of filenames or Images to load into the Texture.'
     },
     options = {
@@ -70,7 +66,7 @@ return {
         },
         {
           name = 'mipmaps',
-          type = '*',
+          type = 'boolean | number',
           default = 'true',
           description = [[
             The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain
@@ -79,7 +75,7 @@ return {
         },
         {
           name = 'usage',
-          type = 'table',
+          type = '{TextureUsage}',
           description = 'A list of `TextureUsage` indicating how the texture will be used.'
         },
         {
@@ -98,7 +94,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'filename', 'options' },
+      arguments = { 'file', 'options' },
       returns = { 'texture' }
     },
     {
@@ -115,10 +111,6 @@ return {
     },
     {
       arguments = { 'images', 'options' },
-      returns = { 'texture' }
-    },
-    {
-      arguments = { 'blob', 'options' },
       returns = { 'texture' }
     }
   },

@@ -4,7 +4,7 @@ return {
   arguments = {},
   returns = {
     t = {
-      type = 'table',
+      type = '{number}',
       description = 'A table of numbers with the 1-based vertex indices.'
     }
   },

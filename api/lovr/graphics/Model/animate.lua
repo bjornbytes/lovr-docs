@@ -10,13 +10,9 @@ return {
     remain unchanged.
   ]],
   arguments = {
-    name = {
+    animation = {
       type = 'string',
-      description = 'The name of an animation in the model file.'
-    },
-    index = {
-      type = 'number',
-      description = 'The index of an animation in the model file.'
+      description = 'The name or index of an animation in the model file.'
     },
     time = {
       type = 'number',
@@ -31,11 +27,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'name', 'time', 'blend' },
-      returns = {}
-    },
-    {
-      arguments = { 'index', 'time', 'blend' },
+      arguments = { 'animation', 'time', 'blend' },
       returns = {}
     }
   },
