@@ -2,13 +2,9 @@ return {
   summary = 'Get the number of keyframes in a channel of an animation.',
   description = 'Returns the number of keyframes in a channel of an animation.',
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of an animation.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of an animation.'
+    animation = {
+      type = 'string | number',
+      description = 'The name or index of an animation.'
     },
     channel = {
       type = 'number',
@@ -23,11 +19,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'channel' },
-      returns = { 'count' }
-    },
-    {
-      arguments = { 'name', 'channel' },
+      arguments = { 'animation', 'channel' },
       returns = { 'count' }
     }
   },

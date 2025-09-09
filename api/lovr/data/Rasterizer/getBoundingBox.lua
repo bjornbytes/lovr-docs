@@ -5,13 +5,9 @@ return {
     coordinates use a cartesian "y up" coordinate system.
   ]],
   arguments = {
-    character = {
-      type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+    glyph = {
+      type = 'string | number',
+      description = 'A character or codepoint.'
     }
   },
   returns = {
@@ -34,14 +30,12 @@ return {
   },
   variants = {
     {
-      arguments = { 'character' },
+      description = 'Get the bounding box of a single glyph.',
+      arguments = { 'glyph' },
       returns = { 'x1', 'y1', 'x2', 'y2' }
     },
     {
-      arguments = { 'codepoint' },
-      returns = { 'x1', 'y1', 'x2', 'y2' }
-    },
-    {
+      description = 'Get the bounding box around all glyphs in the font.',
       arguments = {},
       returns = { 'x1', 'y1', 'x2', 'y2' }
     }

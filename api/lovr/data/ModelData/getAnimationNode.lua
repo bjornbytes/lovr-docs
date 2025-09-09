@@ -1,14 +1,10 @@
 return {
   summary = 'Get the node targeted by the channel of an animation.',
-  description = 'Returns the index of a node targeted by an animation\'s channel.',
+  description = 'Returns the index of the node targeted by an animation\'s channel.',
   arguments = {
-    index = {
+    animation = {
       type = 'number',
-      description = 'The index of an animation.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of an animation.'
+      description = 'The index or name of an animation.'
     },
     channel = {
       type = 'number',
@@ -23,11 +19,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'channel' },
-      returns = { 'node' }
-    },
-    {
-      arguments = { 'name', 'channel' },
+      arguments = { 'animation', 'channel' },
       returns = { 'node' }
     }
   },

@@ -5,13 +5,9 @@ return {
     advance the cursor after rendering the glyph.
   ]],
   arguments = {
-    character = {
-      type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+    glyph = {
+      type = 'string | number',
+      description = 'A character or codepoint.'
     }
   },
   returns = {
@@ -22,12 +18,14 @@ return {
   },
   variants = {
     {
-      arguments = { 'character' },
-      returns = { 'advance' }
-    },
-    {
-      arguments = { 'codepoint' },
+      arguments = { 'glyph' },
       returns = { 'advance' }
     }
-  }
+  },
+  example = [[
+    local rasterizer = lovr.data.newRasterizer()
+    local advance1 = rasterizer:getAdvance('H') + rasterizer:getAdvance('i')
+    local advance2 = rasterizer:getAdvance(72) + rasterizer:getAdvance(105)
+    assert(advance1 == advance2)
+  ]]
 }

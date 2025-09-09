@@ -5,13 +5,9 @@ return {
     the cursor to the edge of the glyph.
   ]],
   arguments = {
-    character = {
-      type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+    glyph = {
+      type = 'string | number',
+      description = 'A character or codepoint.'
     }
   },
   returns = {
@@ -22,12 +18,14 @@ return {
   },
   variants = {
     {
-      arguments = { 'character' },
-      returns = { 'bearing' }
-    },
-    {
-      arguments = { 'codepoint' },
+      arguments = { 'glyph' },
       returns = { 'bearing' }
     }
-  }
+  },
+  example = [[
+    local rasterizer = lovr.data.newRasterizer()
+
+    -- In the default font, H is wider than i
+    assert(rasterizer:getBearing('H') > rasterizer:getBearing('i'))
+  ]]
 }

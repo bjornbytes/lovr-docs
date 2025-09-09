@@ -13,6 +13,7 @@ return {
       description = 'The joints in the skin.'
     }
   },
+  notes = 'There is currently a maximum of 256 joints per skin.',
   variants = {
     {
       arguments = { 'skin' },

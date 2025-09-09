@@ -4,13 +4,13 @@ return {
   arguments = {
     index = {
       type = 'number',
-      description = 'The index of the animation.'
+      description = 'The index of an animation.'
     }
   },
   returns = {
     name = {
-      type = 'string',
-      description = 'The name of the animation.'
+      type = 'string | nil',
+      description = 'The name of the animation, or `nil` if the animation doesn\'t have a name.'
     }
   },
   variants = {
@@ -19,7 +19,6 @@ return {
       returns = { 'name' }
     }
   },
-  notes = 'If the animation does not have a name, this function returns `nil`.',
   related = {
     'Model:getAnimationName'
   }

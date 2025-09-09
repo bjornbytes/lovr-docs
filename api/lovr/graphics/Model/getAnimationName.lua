@@ -9,8 +9,8 @@ return {
   },
   returns = {
     name = {
-      type = 'string',
-      description = 'The name of the animation.'
+      type = 'string | nil',
+      description = 'The name of the animation, or `nil` if the animation doesn\'t have a name.'
     }
   },
   variants = {

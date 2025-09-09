@@ -3,12 +3,8 @@ return {
   description = 'Returns the smooth mode of a channel in an animation.',
   arguments = {
     index = {
-      type = 'number',
-      description = 'The index of an animation.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of an animation.'
+      type = 'string | number',
+      description = 'The name or index of an animation.'
     },
     channel = {
       type = 'number',
@@ -23,11 +19,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index', 'channel' },
-      returns = { 'smooth' }
-    },
-    {
-      arguments = { 'name', 'channel' },
+      arguments = { 'animation', 'channel' },
       returns = { 'smooth' }
     }
   },

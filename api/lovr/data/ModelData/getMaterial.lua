@@ -2,13 +2,9 @@ return {
   summary = 'Get the material properties for a material in the model.',
   description = 'Returns a table with all of the properties of a material.',
   arguments = {
-    index = {
+    material = {
       type = 'number',
-      description = 'The index of a material.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of a material.'
+      description = 'The name or index of a material.'
     }
   },
   returns = {
@@ -18,7 +14,7 @@ return {
       table = {
         {
           name = 'color',
-          type = 'table',
+          type = '{number}',
           description = [[
             The color of the material.  The table contains the `r`, `g`, `b`, and `a` components of the color,
             from 0 to 1.
@@ -26,7 +22,7 @@ return {
         },
         {
           name = 'glow',
-          type = 'table',
+          type = '{number}',
           description = [[
             The glow color of the material (sometimes called emissive).  The table contains the `r`,
             `g`, and `b` components of the color from 0 to 1, and a fourth number indicating the
@@ -35,12 +31,12 @@ return {
         },
         {
           name = 'uvShift',
-          type = 'table',
+          type = '{number}',
           description = 'A table with 2 numbers indicating an offset to apply to UVs.'
         },
         {
           name = 'uvScale',
-          type = 'table',
+          type = '{number}',
           description = [[
             A table with 2 numbers indicating a scale to apply to UVs.  By default, shaders apply
             the UV scale before the UV offset.
@@ -101,17 +97,17 @@ return {
         },
         {
           name = 'texture',
-          type = 'number',
+          type = 'number | nil',
           description = 'The index of the Image used for the color texture.',
         },
         {
           name = 'glowTexture',
-          type = 'number',
+          type = 'number | nil',
           description = 'The index of the Image used for the glow texture.',
         },
         {
           name = 'occlusionTexture',
-          type = 'number',
+          type = 'number | nil',
           description = [[
             The index of the Image used for the ambient occlusion texture.  The red channel of the
             texture is used for ambient occlusion, allowing multiple parameters to use the same
@@ -120,7 +116,7 @@ return {
         },
         {
           name = 'metalnessTexture',
-          type = 'number',
+          type = 'number | nil',
           description = [[
             The index of the Image used for the metalness texture.  The blue channel of the texture
             is used for metalness, allowing multiple parameters to use the same texture.
@@ -128,7 +124,7 @@ return {
         },
         {
           name = 'roughnessTexture',
-          type = 'number',
+          type = 'number | nil',
           description = [[
             The index of the Image to use for the roughness texture.  The green channel of the
             texture is used for roughness, allowing multiple parameters to use the same texture.
@@ -136,7 +132,7 @@ return {
         },
         {
           name = 'clearcoatTexture',
-          type = 'number',
+          type = 'number | nil',
           description = [[
             The index of the Image to use for the clearcoat texture.  The red channel of the texture
             is used for the clearcoat parameter, allowing multiple parameters to use the same
@@ -145,7 +141,7 @@ return {
         },
         {
           name = 'normalTexture',
-          type = 'number',
+          type = 'number | nil',
           description = 'The index of the Image to use for the normal map.'
         }
       }
@@ -153,15 +149,10 @@ return {
   },
   variants = {
     {
-      arguments = { 'index' },
-      returns = { 'properties' }
-    },
-    {
-      arguments = { 'name' },
+      arguments = { 'material' },
       returns = { 'properties' }
     }
   },
-  notes = 'All images are optional and may be `nil`.',
   related = {
     'ModelData:getMaterialCount',
     'ModelData:getMeshMaterial',

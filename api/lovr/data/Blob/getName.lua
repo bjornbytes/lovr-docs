@@ -16,5 +16,6 @@ return {
       arguments = {},
       returns = { 'name' }
     }
-  }
+  },
+  notes = 'If a Blob was created without a name, its name will default to the empty string.'
 }

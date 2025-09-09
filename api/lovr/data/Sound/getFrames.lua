@@ -41,7 +41,7 @@ return {
   },
   returns = {
     t = {
-      type = 'table',
+      type = '{number}',
       description = 'A table containing audio frames.'
     },
     count = {

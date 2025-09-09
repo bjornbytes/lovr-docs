@@ -2,13 +2,9 @@ return {
   summary = 'Get an Image of a rasterized glyph.',
   description = 'Returns an `Image` containing a rasterized glyph.',
   arguments = {
-    character = {
-      type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+    glyph = {
+      type = 'string | number',
+      description = 'A character or codepoint to rasterize.'
     },
     spread = {
       type = 'number',
@@ -29,11 +25,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'character', 'spread', 'padding' },
-      returns = { 'image' }
-    },
-    {
-      arguments = { 'codepoint', 'spread', 'padding' },
+      arguments = { 'glyph', 'spread', 'padding' },
       returns = { 'image' }
     }
   },

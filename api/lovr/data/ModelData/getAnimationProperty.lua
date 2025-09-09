@@ -1,14 +1,10 @@
 return {
-  summary = 'Get the property targeted by the channel of an animation.',
+  summary = 'Get the property targeted by a channel of an animation.',
   description = 'Returns the property targeted by an animation\'s channel.',
   arguments = {
     index = {
-      type = 'number',
-      description = 'The index of an animation.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of an animation.'
+      type = 'string | number',
+      description = 'The name or index of an animation.'
     },
     channel = {
       type = 'number',
@@ -19,17 +15,13 @@ return {
     property = {
       type = 'AnimationProperty',
       description = [[
-        The property (translation, rotation, scale, weights) affected by the keyframes.
+        The property (translation, rotation, scale, or weights) affected by the keyframes.
       ]]
     }
   },
   variants = {
     {
-      arguments = { 'index', 'channel' },
-      returns = { 'property' }
-    },
-    {
-      arguments = { 'name', 'channel' },
+      arguments = { 'animation', 'channel' },
       returns = { 'property' }
     }
   },

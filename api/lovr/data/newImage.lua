@@ -1,8 +1,8 @@
 return {
   summary = 'Create a new Image.',
   description = [[
-    Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of
-    pixels with a specified width, height, and format can be created.
+    Creates a new Image.  Image data can be loaded and decoded from an image file.  Alternatively, a
+    blank image can be created with a given width, height, and format.
   ]],
   arguments = {
     width = {
@@ -18,13 +18,9 @@ return {
       default = 'rgba8',
       description = 'The format of the texture\'s pixels.'
     },
-    filename = {
-      type = 'string',
-      description = 'The filename of the image to load.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'The Blob containing image data to decode.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing an image file to load.'
     },
     data = {
       type = 'Blob',
@@ -45,7 +41,7 @@ return {
   variants = {
     {
       description = 'Load image data from a file.',
-      arguments = { 'filename' },
+      arguments = { 'file' },
       returns = { 'image' }
     },
     {
@@ -56,11 +52,6 @@ return {
     {
       description = 'Clone an existing Image.',
       arguments = { 'source' },
-      returns = { 'image' }
-    },
-    {
-      description = 'Decode image data from a Blob.',
-      arguments = { 'blob' },
       returns = { 'image' }
     }
   },

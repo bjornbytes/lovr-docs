@@ -4,13 +4,9 @@ return {
     Returns local transform (position, orientation, and scale) of a node, relative to its parent.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of the node.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of the node.'
+    node = {
+      type = 'string | number',
+      description = 'The name or index of a node.'
     }
   },
   returns = {
@@ -57,11 +53,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index' },
-      returns = { 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' }
-    },
-    {
-      arguments = { 'name' },
+      arguments = { 'node' },
       returns = { 'x', 'y', 'z', 'sx', 'sy', 'sz', 'angle', 'ax', 'ay', 'az' }
     }
   },

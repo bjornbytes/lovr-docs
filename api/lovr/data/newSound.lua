@@ -33,23 +33,20 @@ return {
       description = 'The sample rate, in Hz.'
     },
     contents = {
-      type = '*',
+      type = [[Blob | 'stream' | nil]],
       default = 'nil',
       description = [[
         A Blob containing raw audio samples to use as the initial contents, 'stream' to create an
         audio stream, or `nil` to leave the data initialized to zero.
       ]]
     },
-    filename = {
-      type = 'string',
-      description = 'The filename of a sound to load.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'The Blob containing audio file data to load.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing a sound file to load.'
     },
     decode = {
       type = 'boolean',
+      default = 'false',
       description = 'Whether compressed audio files should be immediately decoded.'
     }
   },
@@ -67,20 +64,13 @@ return {
     },
     {
       description = [[
-        Load a sound from a file.  Compressed audio formats (OGG, MP3) can optionally be decoded
-        into raw sounds.
-      ]],
-      arguments = { 'filename', 'decode' },
-      returns = { 'sound' }
-    },
-    {
-      description = [[
-        Load a sound from a Blob containing the data of an audio file.  Compressed audio formats
-        (OGG, MP3) can optionally be decoded into raw sounds.
+        Load a sound from a filename or Blob containing the data of an audio file.  Compressed audio
+        formats (OGG, MP3) can optionally be decoded into raw sounds.
 
-        If the Blob contains raw audio samples, use the first variant instead of this one.
+        If you want to load a Blob containing raw audio samples, use the first variant of this
+        function and pass the Blob as the `contents`.
       ]],
-      arguments = { 'blob', 'decode' },
+      arguments = { 'file', 'decode' },
       returns = { 'sound' }
     }
   },

@@ -2,13 +2,9 @@ return {
   summary = 'Create a new Rasterizer.',
   description = 'Creates a new Rasterizer from a TTF or BMFont file.',
   arguments = {
-    filename = {
-      type = 'string',
-      description = 'The filename of the font file to load.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'The Blob containing font data.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing the font file to load.'
     },
     size = {
       type = 'number',
@@ -28,16 +24,12 @@ return {
   },
   variants = {
     {
+      arguments = { 'file', 'size' },
+      returns = { 'rasterizer' }
+    },
+    {
       description = 'Create a Rasterizer for the default font included with LÖVR (Varela Round).',
       arguments = { 'size' },
-      returns = { 'rasterizer' }
-    },
-    {
-      arguments = { 'filename', 'size' },
-      returns = { 'rasterizer' }
-    },
-    {
-      arguments = { 'blob', 'size' },
       returns = { 'rasterizer' }
     }
   }

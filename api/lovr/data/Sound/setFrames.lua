@@ -2,17 +2,9 @@ return {
   summary = 'Write frames to the Sound.',
   description = 'Writes frames to the Sound.',
   arguments = {
-    t = {
-      type = 'table',
-      description = 'A table containing frames to write.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'A Blob containing frames to write.'
-    },
-    sound = {
-      type = 'Sound',
-      description = 'Another Sound to copy frames from.'
+    source = {
+      type = 'table | Blob | Sound',
+      description = 'A table, Blob, or Sound containing audio frames to write.'
     },
     count = {
       type = 'number',
@@ -38,15 +30,7 @@ return {
   },
   variants = {
     {
-      arguments = { 't', 'count', 'dstOffset', 'srcOffset' },
-      returns = { 'count' }
-    },
-    {
-      arguments = { 'blob', 'count', 'dstOffset', 'srcOffset' },
-      returns = { 'count' }
-    },
-    {
-      arguments = { 'sound', 'count', 'dstOffset', 'srcOffset' },
+      arguments = { 'source', 'count', 'dstOffset', 'srcOffset' },
       returns = { 'count' }
     }
   },

@@ -1,6 +1,8 @@
 return {
   summary = 'Encode the Image as png.',
-  description = 'Encodes the Image to an uncompressed png.  This intended mainly for debugging.',
+  description = [[
+    Encodes the Image to an **uncompressed** png.  This intended mainly for debugging.
+  ]],
   arguments = {},
   returns = {
     blob = {

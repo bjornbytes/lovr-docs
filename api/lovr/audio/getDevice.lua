@@ -11,12 +11,12 @@ return {
   },
   returns = {
     name = {
-      type = 'string',
-      description = 'The name of the device.'
+      type = 'string | nil',
+      description = 'The name of the device, or `nil` if no device is set.'
     },
     id = {
-      type = 'userdata',
-      description = 'The opaque id of the device.'
+      type = 'userdata | nil',
+      description = 'The opaque id of the device, or `nil` if no device is set.'
     }
   },
   variants = {

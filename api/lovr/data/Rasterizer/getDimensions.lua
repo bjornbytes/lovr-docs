@@ -1,14 +1,12 @@
 return {
   summary = 'Get the dimensions of a glyph, or the font.',
-  description = 'Returns the dimensions of a glyph, or the dimensions of any glyph.',
+  description = [[
+    Returns the dimensions of a glyph, or the largest dimensions of any glyph in the font.
+  ]],
   arguments = {
-    character = {
+    glyph = {
       type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+      description = 'A character or codepoint.'
     }
   },
   returns = {
@@ -23,11 +21,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'character' },
-      returns = { 'width', 'height' }
-    },
-    {
-      arguments = { 'codepoint' },
+      arguments = { 'glyph' },
       returns = { 'width', 'height' }
     },
     {

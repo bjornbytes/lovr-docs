@@ -1,14 +1,10 @@
 return {
   summary = 'Get the width of a glyph, or the font.',
-  description = 'Returns the width of a glyph, or the maximum width of any glyph.',
+  description = 'Returns the width of a glyph, or the maximum width of any glyph in the font.',
   arguments = {
-    character = {
-      type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+    glyph = {
+      type = 'string | number',
+      description = 'A character or codepoint.'
     }
   },
   returns = {
@@ -19,11 +15,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'character' },
-      returns = { 'width' }
-    },
-    {
-      arguments = { 'codepoint' },
+      arguments = { 'glyph' },
       returns = { 'width' }
     },
     {

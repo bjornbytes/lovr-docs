@@ -3,16 +3,12 @@ return {
   description = [[
     Returns the number of channels in an animation.
 
-    A channel is a set of keyframes for a single property of a node.
+    A channel is a set of keyframes targeting a single property of a node.
   ]],
   arguments = {
-    index = {
-      type = 'number',
-      description = 'The index of an animation.'
-    },
-    name = {
-      type = 'string',
-      description = 'The name of an animation.'
+    animation = {
+      type = 'number | string',
+      description = 'The name or index of an animation.'
     }
   },
   returns = {
@@ -23,11 +19,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index' },
-      returns = { 'count' }
-    },
-    {
-      arguments = { 'name' },
+      arguments = { 'animation' },
       returns = { 'count' }
     }
   },

@@ -1428,13 +1428,13 @@ return {
               returns = {
                 {
                   name = "name",
-                  type = "string",
-                  description = "The name of the device."
+                  type = "string | nil",
+                  description = "The name of the device, or `nil` if no device is set."
                 },
                 {
                   name = "id",
-                  type = "userdata",
-                  description = "The opaque id of the device."
+                  type = "userdata | nil",
+                  description = "The opaque id of the device, or `nil` if no device is set."
                 }
               }
             }
@@ -1739,11 +1739,7 @@ return {
           variants = {
             {
               arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the sound to load."
-                },
+                nil,
                 {
                   name = "options",
                   type = "table",
@@ -1753,25 +1749,25 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
+                      description = "            Whether to immediately decode compressed sounds, instead of progressively decoding as\n            the Source plays.  Enabling this will use more memory but reduce CPU overhead during\n            playback.  Recommended for short sound effects.\n          ",
                       default = "false"
                     },
                     {
                       name = "pitchable",
                       type = "boolean",
-                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
+                      description = "            Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to\n            false will improve performance slightly.\n          ",
                       default = "true"
                     },
                     {
                       name = "spatial",
                       type = "boolean",
-                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
+                      description = "            Whether the Source should use spatial effects.  Non-spatial sources will get routed\n            directly to the speakers without further processing.  Enabling an effect on a\n            non-spatial source will raise an error.\n          ",
                       default = "true"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
+                      description = "            A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect\n            name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects\n            can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be\n            enabled.  Ignored if the `spatial` flag is false.\n          ",
                       default = "nil"
                     }
                   }
@@ -1787,11 +1783,7 @@ return {
             },
             {
               arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing the Source data."
-                },
+                nil,
                 {
                   name = "options",
                   type = "table",
@@ -1801,25 +1793,25 @@ return {
                     {
                       name = "decode",
                       type = "boolean",
-                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
+                      description = "            Whether to immediately decode compressed sounds, instead of progressively decoding as\n            the Source plays.  Enabling this will use more memory but reduce CPU overhead during\n            playback.  Recommended for short sound effects.\n          ",
                       default = "false"
                     },
                     {
                       name = "pitchable",
                       type = "boolean",
-                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
+                      description = "            Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to\n            false will improve performance slightly.\n          ",
                       default = "true"
                     },
                     {
                       name = "spatial",
                       type = "boolean",
-                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
+                      description = "            Whether the Source should use spatial effects.  Non-spatial sources will get routed\n            directly to the speakers without further processing.  Enabling an effect on a\n            non-spatial source will raise an error.\n          ",
                       default = "true"
                     },
                     {
                       name = "effects",
                       type = "table",
-                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
+                      description = "            A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect\n            name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects\n            can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be\n            enabled.  Ignored if the `spatial` flag is false.\n          ",
                       default = "nil"
                     }
                   }
@@ -3660,7 +3652,7 @@ return {
         {
           name = "newImage",
           summary = "Create a new Image.",
-          description = "Creates a new Image.  Image data can be loaded and decoded from an image file, or a raw block of pixels with a specified width, height, and format can be created.",
+          description = "Creates a new Image.  Image data can be loaded and decoded from an image file.  Alternatively, a blank image can be created with a given width, height, and format.",
           key = "lovr.data.newImage",
           module = "lovr.data",
           notes = "The supported image file formats are png, jpg, hdr, dds, ktx1, ktx2, and astc.\n\nDDS and KTX files can contain cubemaps and array textures, in any of the texture formats LÖVR supports.",
@@ -3669,9 +3661,9 @@ return {
               description = "Load image data from a file.",
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the image to load."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing an image file to load."
                 }
               },
               returns = {
@@ -3732,23 +3724,6 @@ return {
                   description = "The new Image."
                 }
               }
-            },
-            {
-              description = "Decode image data from a Blob.",
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing image data to decode."
-                }
-              },
-              returns = {
-                {
-                  name = "image",
-                  type = "Image",
-                  description = "The new Image."
-                }
-              }
             }
           }
         },
@@ -3762,25 +3737,9 @@ return {
             {
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the model to load."
-                }
-              },
-              returns = {
-                {
-                  name = "modelData",
-                  type = "ModelData",
-                  description = "The new ModelData."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing data for a model to decode."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing the model data to import."
                 }
               },
               returns = {
@@ -3801,52 +3760,30 @@ return {
           module = "lovr.data",
           variants = {
             {
+              arguments = {
+                {
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing the font file to load."
+                },
+                {
+                  name = "size",
+                  type = "number",
+                  description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
+                  default = "32"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            },
+            {
               description = "Create a Rasterizer for the default font included with LÖVR (Varela Round).",
               arguments = {
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
-                  default = "32"
-                }
-              },
-              returns = {
-                {
-                  name = "rasterizer",
-                  type = "Rasterizer",
-                  description = "The new Rasterizer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of the font file to load."
-                },
-                {
-                  name = "size",
-                  type = "number",
-                  description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
-                  default = "32"
-                }
-              },
-              returns = {
-                {
-                  name = "rasterizer",
-                  type = "Rasterizer",
-                  description = "The new Rasterizer."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing font data."
-                },
                 {
                   name = "size",
                   type = "number",
@@ -3900,7 +3837,7 @@ return {
                 },
                 {
                   name = "contents",
-                  type = "*",
+                  type = "Blob | 'stream' | nil",
                   description = "A Blob containing raw audio samples to use as the initial contents, 'stream' to create an audio stream, or `nil` to leave the data initialized to zero.",
                   default = "nil"
                 }
@@ -3914,39 +3851,18 @@ return {
               }
             },
             {
-              description = "Load a sound from a file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.",
+              description = "Load a sound from a filename or Blob containing the data of an audio file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.\n\nIf you want to load a Blob containing raw audio samples, use the first variant of this function and pass the Blob as the `contents`.",
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "The filename of a sound to load."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing a sound file to load."
                 },
                 {
                   name = "decode",
                   type = "boolean",
-                  description = "Whether compressed audio files should be immediately decoded."
-                }
-              },
-              returns = {
-                {
-                  name = "sound",
-                  type = "Sound",
-                  description = "Sounds good."
-                }
-              }
-            },
-            {
-              description = "Load a sound from a Blob containing the data of an audio file.  Compressed audio formats (OGG, MP3) can optionally be decoded into raw sounds.\n\nIf the Blob contains raw audio samples, use the first variant instead of this one.",
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The Blob containing audio file data to load."
-                },
-                {
-                  name = "decode",
-                  type = "boolean",
-                  description = "Whether compressed audio files should be immediately decoded."
+                  description = "Whether compressed audio files should be immediately decoded.",
+                  default = "false"
                 }
               },
               returns = {
@@ -3998,6 +3914,7 @@ return {
               description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
               key = "Blob:getName",
               module = "lovr.data",
+              notes = "If a Blob was created without a name, its name will default to the empty string.",
               variants = {
                 {
                   arguments = {},
@@ -4813,7 +4730,7 @@ return {
             {
               name = "encode",
               summary = "Encode the Image as png.",
-              description = "Encodes the Image to an uncompressed png.  This intended mainly for debugging.",
+              description = "Encodes the Image to an **uncompressed** png.  This intended mainly for debugging.",
               key = "Image:encode",
               module = "lovr.data",
               related = {
@@ -5236,7 +5153,7 @@ return {
             {
               name = "getAnimationChannelCount",
               summary = "Get the number of channels in an animation.",
-              description = "Returns the number of channels in an animation.\n\nA channel is a set of keyframes for a single property of a node.",
+              description = "Returns the number of channels in an animation.\n\nA channel is a set of keyframes targeting a single property of a node.",
               key = "ModelData:getAnimationChannelCount",
               module = "lovr.data",
               related = {
@@ -5247,25 +5164,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of an animation."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of channels in the animation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of an animation."
+                      name = "animation",
+                      type = "number | string",
+                      description = "The name or index of an animation."
                     }
                   },
                   returns = {
@@ -5314,25 +5215,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the animation."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "duration",
-                      type = "number",
-                      description = "The duration of the animation, in seconds."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the animation."
+                      name = "animation",
+                      type = "string | number",
+                      description = "The name or index of an animation."
                     }
                   },
                   returns = {
@@ -5351,6 +5236,7 @@ return {
               description = "Returns a single keyframe in a channel of an animation.",
               key = "ModelData:getAnimationKeyframe",
               module = "lovr.data",
+              notes = "The number of values returned after `time` depends on the `AnimationProperty` targeted by the channel:\n\n- `translation`: 3 numbers\n- `rotation`: 4 numbers (returned as raw quaternion components)\n- `scale`: 3 numbers\n- `weights`: variable, contains 1 number for each blend shape in the node",
               related = {
                 "ModelData:getAnimationSmoothMode",
                 "ModelData:getAnimationKeyframeCount"
@@ -5359,9 +5245,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "animation",
                       type = "number",
-                      description = "The index of an animation."
+                      description = "The name or index of an animation."
                     },
                     {
                       name = "channel",
@@ -5383,38 +5269,7 @@ return {
                     {
                       name = "...",
                       type = "number",
-                      description = "The data for the keyframe (either 3 or 4 numbers depending on the property)."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of an animation."
-                    },
-                    {
-                      name = "channel",
-                      type = "number",
-                      description = "The index of a channel in the animation."
-                    },
-                    {
-                      name = "keyframe",
-                      type = "number",
-                      description = "The index of a keyframe in the channel."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "time",
-                      type = "number",
-                      description = "The timestamp of the keyframe."
-                    },
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "The data for the keyframe (either 3 or 4 numbers depending on the property)."
+                      description = "The data for the keyframe (3 or more numbers, depending on the property)."
                     }
                   }
                 }
@@ -5434,30 +5289,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of an animation."
-                    },
-                    {
-                      name = "channel",
-                      type = "number",
-                      description = "The index of a channel in the animation."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of keyframes in the channel."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of an animation."
+                      name = "animation",
+                      type = "string | number",
+                      description = "The name or index of an animation."
                     },
                     {
                       name = "channel",
@@ -5481,7 +5315,6 @@ return {
               description = "Returns the name of an animation.",
               key = "ModelData:getAnimationName",
               module = "lovr.data",
-              notes = "If the animation does not have a name, this function returns `nil`.",
               related = {
                 "Model:getAnimationName"
               },
@@ -5491,14 +5324,14 @@ return {
                     {
                       name = "index",
                       type = "number",
-                      description = "The index of the animation."
+                      description = "The index of an animation."
                     }
                   },
                   returns = {
                     {
                       name = "name",
-                      type = "string",
-                      description = "The name of the animation."
+                      type = "string | nil",
+                      description = "The name of the animation, or `nil` if the animation doesn't have a name."
                     }
                   }
                 }
@@ -5507,7 +5340,7 @@ return {
             {
               name = "getAnimationNode",
               summary = "Get the node targeted by the channel of an animation.",
-              description = "Returns the index of a node targeted by an animation's channel.",
+              description = "Returns the index of the node targeted by an animation's channel.",
               key = "ModelData:getAnimationNode",
               module = "lovr.data",
               related = {
@@ -5518,30 +5351,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "animation",
                       type = "number",
-                      description = "The index of an animation."
-                    },
-                    {
-                      name = "channel",
-                      type = "number",
-                      description = "The index of a channel in the animation."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "node",
-                      type = "number",
-                      description = "The index of the node targeted by the channel."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of an animation."
+                      description = "The index or name of an animation."
                     },
                     {
                       name = "channel",
@@ -5561,7 +5373,7 @@ return {
             },
             {
               name = "getAnimationProperty",
-              summary = "Get the property targeted by the channel of an animation.",
+              summary = "Get the property targeted by a channel of an animation.",
               description = "Returns the property targeted by an animation's channel.",
               key = "ModelData:getAnimationProperty",
               module = "lovr.data",
@@ -5572,11 +5384,7 @@ return {
               variants = {
                 {
                   arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of an animation."
-                    },
+                    nil,
                     {
                       name = "channel",
                       type = "number",
@@ -5587,28 +5395,7 @@ return {
                     {
                       name = "property",
                       type = "AnimationProperty",
-                      description = "The property (translation, rotation, scale, weights) affected by the keyframes."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of an animation."
-                    },
-                    {
-                      name = "channel",
-                      type = "number",
-                      description = "The index of a channel in the animation."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "property",
-                      type = "AnimationProperty",
-                      description = "The property (translation, rotation, scale, weights) affected by the keyframes."
+                      description = "The property (translation, rotation, scale, or weights) affected by the keyframes."
                     }
                   }
                 }
@@ -5627,32 +5414,7 @@ return {
               variants = {
                 {
                   arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of an animation."
-                    },
-                    {
-                      name = "channel",
-                      type = "number",
-                      description = "The index of a channel in the animation."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "smooth",
-                      type = "SmoothMode",
-                      description = "The smooth mode of the keyframes."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of an animation."
-                    },
+                    nil,
                     {
                       name = "channel",
                       type = "number",
@@ -6056,7 +5818,6 @@ return {
               description = "Returns a table with all of the properties of a material.",
               key = "ModelData:getMaterial",
               module = "lovr.data",
-              notes = "All images are optional and may be `nil`.",
               related = {
                 "ModelData:getMaterialCount",
                 "ModelData:getMeshMaterial",
@@ -6067,9 +5828,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "material",
                       type = "number",
-                      description = "The index of a material."
+                      description = "The name or index of a material."
                     }
                   },
                   returns = {
@@ -6080,22 +5841,22 @@ return {
                       table = {
                         {
                           name = "color",
-                          type = "table",
+                          type = "{number}",
                           description = "The color of the material.  The table contains the `r`, `g`, `b`, and `a` components of the color, from 0 to 1."
                         },
                         {
                           name = "glow",
-                          type = "table",
+                          type = "{number}",
                           description = "The glow color of the material (sometimes called emissive).  The table contains the `r`, `g`, and `b` components of the color from 0 to 1, and a fourth number indicating the strength of the glow."
                         },
                         {
                           name = "uvShift",
-                          type = "table",
+                          type = "{number}",
                           description = "A table with 2 numbers indicating an offset to apply to UVs."
                         },
                         {
                           name = "uvScale",
-                          type = "table",
+                          type = "{number}",
                           description = "A table with 2 numbers indicating a scale to apply to UVs.  By default, shaders apply the UV scale before the UV offset."
                         },
                         {
@@ -6135,145 +5896,37 @@ return {
                         },
                         {
                           name = "texture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image used for the color texture."
                         },
                         {
                           name = "glowTexture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image used for the glow texture."
                         },
                         {
                           name = "occlusionTexture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image used for the ambient occlusion texture.  The red channel of the texture is used for ambient occlusion, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "metalnessTexture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image used for the metalness texture.  The blue channel of the texture is used for metalness, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "roughnessTexture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image to use for the roughness texture.  The green channel of the texture is used for roughness, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "clearcoatTexture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image to use for the clearcoat texture.  The red channel of the texture is used for the clearcoat parameter, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "normalTexture",
-                          type = "number",
-                          description = "The index of the Image to use for the normal map."
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of a material."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "properties",
-                      type = "table",
-                      description = "The material properties.",
-                      table = {
-                        {
-                          name = "color",
-                          type = "table",
-                          description = "The color of the material.  The table contains the `r`, `g`, `b`, and `a` components of the color, from 0 to 1."
-                        },
-                        {
-                          name = "glow",
-                          type = "table",
-                          description = "The glow color of the material (sometimes called emissive).  The table contains the `r`, `g`, and `b` components of the color from 0 to 1, and a fourth number indicating the strength of the glow."
-                        },
-                        {
-                          name = "uvShift",
-                          type = "table",
-                          description = "A table with 2 numbers indicating an offset to apply to UVs."
-                        },
-                        {
-                          name = "uvScale",
-                          type = "table",
-                          description = "A table with 2 numbers indicating a scale to apply to UVs.  By default, shaders apply the UV scale before the UV offset."
-                        },
-                        {
-                          name = "metalness",
-                          type = "number",
-                          description = "The metalness parameter of the material.  This is typically 0 or 1.  By default, shaders multiply this property with the value from the metalness texture (when present) to get the final metalness used for shading."
-                        },
-                        {
-                          name = "roughness",
-                          type = "number",
-                          description = "The roughness parameter of the material.  By default, shaders multiply this property with the value from the roughness texture (when present) to get the final roughness used for shading."
-                        },
-                        {
-                          name = "clearcoat",
-                          type = "number",
-                          description = "The clearcoat parameter of the material."
-                        },
-                        {
-                          name = "clearcoatRoughness",
-                          type = "number",
-                          description = "The roughness of the clearcoat layer."
-                        },
-                        {
-                          name = "occlusionStrength",
-                          type = "number",
-                          description = "A number multiplied by the value from the ambient occlusion texture to control how strong the occlusion effect is."
-                        },
-                        {
-                          name = "normalScale",
-                          type = "number",
-                          description = "A number multiplied by the value from the normal texture to control how strong the normal mapping effect is."
-                        },
-                        {
-                          name = "alphaCutoff",
-                          type = "number",
-                          description = "If a pixel has an alpha value less than the alpha cutoff, it will be discarded, which prevents it from occluding things behind it.  This is sometimes called \"holepunch\" or \"cutout\" alpha.  It's useful for textures with transparency."
-                        },
-                        {
-                          name = "texture",
-                          type = "number",
-                          description = "The index of the Image used for the color texture."
-                        },
-                        {
-                          name = "glowTexture",
-                          type = "number",
-                          description = "The index of the Image used for the glow texture."
-                        },
-                        {
-                          name = "occlusionTexture",
-                          type = "number",
-                          description = "The index of the Image used for the ambient occlusion texture.  The red channel of the texture is used for ambient occlusion, allowing multiple parameters to use the same texture."
-                        },
-                        {
-                          name = "metalnessTexture",
-                          type = "number",
-                          description = "The index of the Image used for the metalness texture.  The blue channel of the texture is used for metalness, allowing multiple parameters to use the same texture."
-                        },
-                        {
-                          name = "roughnessTexture",
-                          type = "number",
-                          description = "The index of the Image to use for the roughness texture.  The green channel of the texture is used for roughness, allowing multiple parameters to use the same texture."
-                        },
-                        {
-                          name = "clearcoatTexture",
-                          type = "number",
-                          description = "The index of the Image to use for the clearcoat texture.  The red channel of the texture is used for the clearcoat parameter, allowing multiple parameters to use the same texture."
-                        },
-                        {
-                          name = "normalTexture",
-                          type = "number",
+                          type = "number | nil",
                           description = "The index of the Image to use for the normal map."
                         }
                       }
@@ -6636,7 +6289,6 @@ return {
               description = "Given a parent node, this function returns a table with the indices of its children.",
               key = "ModelData:getNodeChildren",
               module = "lovr.data",
-              notes = "If the node does not have any children, this function returns an empty table.",
               related = {
                 "ModelData:getNodeParent",
                 "ModelData:getRootNode",
@@ -6646,32 +6298,16 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the parent node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of the parent node."
                     }
                   },
                   returns = {
                     {
                       name = "children",
-                      type = "table",
-                      description = "A table containing a node index for each child of the node."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the parent node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "children",
-                      type = "table",
-                      description = "A table containing a node index for each child of the node."
+                      type = "{number}",
+                      description = "A table containing the node index of each child of the parent node."
                     }
                   }
                 }
@@ -6712,25 +6348,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "meshes",
-                      type = "table",
-                      description = "A table with the node's mesh indices."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -6788,40 +6408,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -6864,32 +6453,16 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the child node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of the child node."
                     }
                   },
                   returns = {
                     {
                       name = "parent",
                       type = "number",
-                      description = "The index of the parent."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the child node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "parent",
-                      type = "number",
-                      description = "The index of the parent."
+                      description = "The index of the parent node."
                     }
                   }
                 }
@@ -6911,55 +6484,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -7018,35 +6545,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -7085,35 +6586,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x scale."
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y scale."
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z scale."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -7149,25 +6624,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "skin",
-                      type = "number",
-                      description = "The index of the node's skin, or nil if the node isn't skeletally animated."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -7197,70 +6656,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the node."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate."
-                    },
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x scale."
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y scale."
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z scale."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the node is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the node."
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
                     }
                   },
                   returns = {
@@ -7348,7 +6746,6 @@ return {
               description = "Returns the number of skins in the model.  A skin is a collection of joints targeted by an animation.",
               key = "ModelData:getSkinCount",
               module = "lovr.data",
-              notes = "There is currently a maximum of 256 skins.",
               related = {
                 "Model:hasJoints"
               },
@@ -7401,6 +6798,7 @@ return {
               description = "Returns a table with the node indices of the joints in a skin.",
               key = "ModelData:getSkinJoints",
               module = "lovr.data",
+              notes = "There is currently a maximum of 256 joints per skin.",
               variants = {
                 {
                   arguments = {
@@ -7544,29 +6942,18 @@ return {
               description = "Returns the advance metric for a glyph, in pixels.  The advance is the horizontal distance to advance the cursor after rendering the glyph.",
               key = "Rasterizer:getAdvance",
               module = "lovr.data",
+              examples = {
+                {
+                  code = "local rasterizer = lovr.data.newRasterizer()\nlocal advance1 = rasterizer:getAdvance('H') + rasterizer:getAdvance('i')\nlocal advance2 = rasterizer:getAdvance(72) + rasterizer:getAdvance(105)\nassert(advance1 == advance2)"
+                }
+              },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "advance",
-                      type = "number",
-                      description = "The advance of the glyph, in pixels."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint."
                     }
                   },
                   returns = {
@@ -7608,29 +6995,18 @@ return {
               description = "Returns the bearing metric for a glyph, in pixels.  The bearing is the horizontal distance from the cursor to the edge of the glyph.",
               key = "Rasterizer:getBearing",
               module = "lovr.data",
+              examples = {
+                {
+                  code = "local rasterizer = lovr.data.newRasterizer()\n\n-- In the default font, H is wider than i\nassert(rasterizer:getBearing('H') > rasterizer:getBearing('i'))"
+                }
+              },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "bearing",
-                      type = "number",
-                      description = "The bearing of the glyph, in pixels."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint."
                     }
                   },
                   returns = {
@@ -7656,11 +7032,12 @@ return {
               },
               variants = {
                 {
+                  description = "Get the bounding box of a single glyph.",
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint."
                     }
                   },
                   returns = {
@@ -7687,37 +7064,7 @@ return {
                   }
                 },
                 {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "x1",
-                      type = "number",
-                      description = "The left edge of the bounding box, in pixels."
-                    },
-                    {
-                      name = "y1",
-                      type = "number",
-                      description = "The bottom edge of the bounding box, in pixels."
-                    },
-                    {
-                      name = "x2",
-                      type = "number",
-                      description = "The right edge of the bounding box, in pixels."
-                    },
-                    {
-                      name = "y2",
-                      type = "number",
-                      description = "The top edge of the bounding box, in pixels."
-                    }
-                  }
-                },
-                {
+                  description = "Get the bounding box around all glyphs in the font.",
                   arguments = {},
                   returns = {
                     {
@@ -7758,30 +7105,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
-                    },
-                    {
-                      name = "three",
-                      type = "boolean",
-                      description = "Whether the control points should be 3D or 2D."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "curves",
-                      type = "table",
-                      description = "A table of curves.  Each curve is a table of numbers representing the control points (2 for a line, 3 for a quadratic curve, etc.)."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint."
                     },
                     {
                       name = "three",
@@ -7825,7 +7151,7 @@ return {
             {
               name = "getDimensions",
               summary = "Get the dimensions of a glyph, or the font.",
-              description = "Returns the dimensions of a glyph, or the dimensions of any glyph.",
+              description = "Returns the dimensions of a glyph, or the largest dimensions of any glyph in the font.",
               key = "Rasterizer:getDimensions",
               module = "lovr.data",
               related = {
@@ -7837,30 +7163,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "character",
+                      name = "glyph",
                       type = "string",
-                      description = "A character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width, in pixels."
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height, in pixels."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      description = "A character or codepoint."
                     }
                   },
                   returns = {
@@ -7896,7 +7201,7 @@ return {
             {
               name = "getFontSize",
               summary = "Get the size of the font.",
-              description = "Returns the size of the font, in pixels.  This is the size the rasterizer was created with, and defines the size of images it rasterizes.",
+              description = "Returns the size of the font, in pixels.  This is the size the rasterizer was created with, and determines the size of images it rasterizes.",
               key = "Rasterizer:getFontSize",
               module = "lovr.data",
               related = {
@@ -7940,7 +7245,7 @@ return {
             {
               name = "getHeight",
               summary = "Get the height of a glyph, or the font.",
-              description = "Returns the height of a glyph, or the maximum height of any glyph.",
+              description = "Returns the height of a glyph, or the maximum height of any glyph in the font.",
               key = "Rasterizer:getHeight",
               module = "lovr.data",
               related = {
@@ -7952,25 +7257,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height, in pixels."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint."
                     }
                   },
                   returns = {
@@ -8007,76 +7296,13 @@ return {
                   arguments = {
                     {
                       name = "first",
-                      type = "string",
-                      description = "The first character."
+                      type = "string | number",
+                      description = "The character or codepoint representing the first glyph."
                     },
                     {
                       name = "second",
-                      type = "string",
-                      description = "The second character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "keming",
-                      type = "number",
-                      description = "The kerning between the two glyphs."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "firstCodepoint",
-                      type = "number",
-                      description = "The first codepoint."
-                    },
-                    {
-                      name = "second",
-                      type = "string",
-                      description = "The second character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "keming",
-                      type = "number",
-                      description = "The kerning between the two glyphs."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "first",
-                      type = "string",
-                      description = "The first character."
-                    },
-                    {
-                      name = "secondCodepoint",
-                      type = "number",
-                      description = "The second codepoint."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "keming",
-                      type = "number",
-                      description = "The kerning between the two glyphs."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "firstCodepoint",
-                      type = "number",
-                      description = "The first codepoint."
-                    },
-                    {
-                      name = "secondCodepoint",
-                      type = "number",
-                      description = "The second codepoint."
+                      type = "string | number",
+                      description = "The character or codepoint representing the second glyph."
                     }
                   },
                   returns = {
@@ -8115,7 +7341,7 @@ return {
             {
               name = "getWidth",
               summary = "Get the width of a glyph, or the font.",
-              description = "Returns the width of a glyph, or the maximum width of any glyph.",
+              description = "Returns the width of a glyph, or the maximum width of any glyph in the font.",
               key = "Rasterizer:getWidth",
               module = "lovr.data",
               related = {
@@ -8127,25 +7353,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width, in pixels."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint."
                     }
                   },
                   returns = {
@@ -8174,6 +7384,11 @@ return {
               description = "Returns whether the Rasterizer can rasterize a set of glyphs.",
               key = "Rasterizer:hasGlyphs",
               module = "lovr.data",
+              examples = {
+                {
+                  code = "rasterizer = lovr.data.newRasterizer()\n\nfunction lovr.draw(pass)\n  if rasterizer:hasGlyphs('Ö') then\n    pass:text('LÖVR!!!', 0, 2, -3)\n  else\n    pass:text('>:(', 0, 2, -3)\n  end\nend"
+                }
+              },
               related = {
                 "Rasterizer:getGlyphCount"
               },
@@ -8182,8 +7397,8 @@ return {
                   arguments = {
                     {
                       name = "...",
-                      type = "*",
-                      description = "Strings (sets of characters) or numbers (character codes) to check for."
+                      type = "string | number",
+                      description = "Strings (characters) or numbers (codepoints) to check for."
                     }
                   },
                   returns = {
@@ -8209,37 +7424,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "character",
-                      type = "string",
-                      description = "A character."
-                    },
-                    {
-                      name = "spread",
-                      type = "number",
-                      description = "The width of the distance field, for signed distance field rasterization.",
-                      default = "4.0"
-                    },
-                    {
-                      name = "padding",
-                      type = "number",
-                      description = "The number of pixels of padding to add at the edges of the image.",
-                      default = "spread / 2"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "image",
-                      type = "Image",
-                      description = "The glyph image.  It will be in the `rgba32f` format."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "codepoint",
-                      type = "number",
-                      description = "A codepoint."
+                      name = "glyph",
+                      type = "string | number",
+                      description = "A character or codepoint to rasterize."
                     },
                     {
                       name = "spread",
@@ -8494,7 +7681,7 @@ return {
                   returns = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A table containing audio frames."
                     },
                     {
@@ -8533,7 +7720,7 @@ return {
                   returns = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A table containing audio frames."
                     },
                     {
@@ -8719,77 +7906,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "t",
-                      type = "table",
-                      description = "A table containing frames to write."
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "How many frames to write.  If nil, writes as many as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "dstOffset",
-                      type = "number",
-                      description = "A frame offset to apply when writing the frames.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcOffset",
-                      type = "number",
-                      description = "A frame, byte, or index offset to apply when reading frames from the source.",
-                      default = "0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of frames written."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "blob",
-                      type = "Blob",
-                      description = "A Blob containing frames to write."
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "How many frames to write.  If nil, writes as many as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "dstOffset",
-                      type = "number",
-                      description = "A frame offset to apply when writing the frames.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcOffset",
-                      type = "number",
-                      description = "A frame, byte, or index offset to apply when reading frames from the source.",
-                      default = "0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of frames written."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "sound",
-                      type = "Sound",
-                      description = "Another Sound to copy frames from."
+                      name = "source",
+                      type = "table | Blob | Sound",
+                      description = "A table, Blob, or Sound containing audio frames to write."
                     },
                     {
                       name = "count",
@@ -15455,8 +14574,8 @@ return {
                   returns = {
                     {
                       name = "name",
-                      type = "string",
-                      description = "The name of the animation."
+                      type = "string | nil",
+                      description = "The name of the animation, or `nil` if the animation doesn't have a name."
                     }
                   }
                 }

@@ -3,13 +3,9 @@ return {
   summary = 'Create a new Source.',
   description = 'Creates a new Source from an ogg, wav, or mp3 file.',
   arguments = {
-    filename = {
-      type = 'string',
-      description = 'The filename of the sound to load.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'The Blob containing the Source data.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing audio data to load.'
     },
     sound = {
       type = 'Sound',

@@ -2,13 +2,9 @@ return {
   summary = 'Get the bezier curves defining a glyph.',
   description = 'Returns the bezier curve control points defining the shape of a glyph.',
   arguments = {
-    character = {
-      type = 'string',
-      description = 'A character.'
-    },
-    codepoint = {
-      type = 'number',
-      description = 'A codepoint.'
+    glyph = {
+      type = 'string | number',
+      description = 'A character or codepoint.'
     },
     three = {
       type = 'boolean',
@@ -26,11 +22,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'character', 'three' },
-      returns = { 'curves' }
-    },
-    {
-      arguments = { 'codepoint', 'three' },
+      arguments = { 'glyph', 'three' },
       returns = { 'curves' }
     }
   },
