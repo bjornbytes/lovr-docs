@@ -8,23 +8,16 @@ return {
   ]],
   arguments = {
     sampler = {
-      type = 'Sampler',
-      description = 'The default sampler shaders will use when reading from textures.'
-    },
-    filter = {
-      type = 'FilterMode',
+      type = 'Sampler | FilterMode',
       default = [['linear']],
       description = [[
-        The default filter mode to use when sampling textures (the `repeat` wrap mode will be used).
-      ]]
+        The Sampler shaders will use when reading from textures.  It can also be a `FilterMode`, for
+        convenience (other sampler settings will use their defaults).
+      ]],
     }
   },
   returns = {},
   variants = {
-    {
-      arguments = { 'filter' },
-      returns = {}
-    },
     {
       arguments = { 'sampler' },
       returns = {}
@@ -36,6 +29,9 @@ return {
     When a Pass is reset, its sampler will be reset to `linear`.
 
     The sampler applies to all draws in the pass on submit, regardless of when the sampler is set.
+
+    If you need different samplers for each draw, currently you have to send a `Sampler` object to a
+    Shader (this is not ideal).
   ]],
   example = [[
     function lovr.draw(pass)

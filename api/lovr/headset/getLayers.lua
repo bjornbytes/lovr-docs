@@ -8,7 +8,7 @@ return {
   arguments = {},
   returns = {
     layers = {
-      type = 'table',
+      type = '{Layer}',
       description = 'The list of layers.'
     }
   },

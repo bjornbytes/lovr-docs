@@ -29,7 +29,7 @@ return {
       description = 'The alpha component of the clear color.'
     },
     t = {
-      type = 'table',
+      type = '{number}',
       description = 'A table with color components.'
     },
     v3 = {

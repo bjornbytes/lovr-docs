@@ -71,6 +71,7 @@ return {
     },
     callback = {
       type = 'function',
+      default = 'nil',
       description = 'The callback to call for each intersection detected.'
     }
   },

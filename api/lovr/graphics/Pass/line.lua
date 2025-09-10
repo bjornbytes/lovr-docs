@@ -31,7 +31,7 @@ return {
       description = 'The z coordinate of the next point.'
     },
     t = {
-      type = 'table',
+      type = '{number | Vec3}',
       description = [[
         A table of numbers or `Vec3` objects (not a mix) representing points of the line.
       ]]

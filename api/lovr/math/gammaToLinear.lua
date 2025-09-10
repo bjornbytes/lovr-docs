@@ -16,7 +16,7 @@ return {
       description = 'The blue component of the gamma-space color.'
     },
     color = {
-      type = 'table',
+      type = '{number}',
       description = 'A table containing the components of a gamma-space color.'
     },
     x = {

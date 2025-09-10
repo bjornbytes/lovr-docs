@@ -7,14 +7,11 @@ return {
   ]],
   arguments = {
     action = {
-      type = 'StencilAction',
-      description = 'How pixels drawn will update the stencil buffer.'
-    },
-    actions = {
-      type = 'table',
+      type = 'StencilAction | {StencilAction}',
       description = [[
-        A list of 3 stencil actions, used when a pixel fails the stencil test, fails
-        the depth test, or passes the stencil test, respectively.
+        How pixels should update the stencil buffer when they are drawn.  Can also be a list of 3
+        stencil actions, used when a pixel fails the stencil test, fails the depth test, or passes
+        the stencil test, respectively.
       ]]
     },
     value = {
@@ -32,10 +29,6 @@ return {
   variants = {
     {
       arguments = { 'action', 'value', 'mask' },
-      returns = {}
-    },
-    {
-      arguments = { 'actions', 'value', 'mask' },
       returns = {}
     },
     {

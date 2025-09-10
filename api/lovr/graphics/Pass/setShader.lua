@@ -2,28 +2,19 @@ return {
   tag = 'shaders',
   summary = 'Set the active Shader.',
   description = [[
-    Sets the active shader.  In a render pass, the Shader will affect all drawing operations until
-    it is changed again.  In a compute pass, the Shader will be run when `Pass:compute` is called.
+    Sets the active shader.  The Shader will affect all drawing operations until it is changed
+    again.
   ]],
   arguments = {
     shader = {
-      type = 'Shader',
+      type = 'Shader | DefaultShader',
       description = 'The shader to use.'
-    },
-    defaultshader = {
-      type = 'DefaultShader',
-      description = 'One of the default shaders to use.'
     }
   },
   returns = {},
   variants = {
     {
       arguments = { 'shader' },
-      returns = {}
-    },
-    {
-      description = 'Use one of the default shaders for drawing.',
-      arguments = { 'defaultshader' },
       returns = {}
     },
     {

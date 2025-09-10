@@ -24,7 +24,7 @@ return {
       description = 'The alpha component of the color.'
     },
     t = {
-      type = 'table',
+      type = '{number}',
       description = 'A table of 3 or 4 color components.'
     },
     hex = {

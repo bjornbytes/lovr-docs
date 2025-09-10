@@ -6,7 +6,7 @@ return {
   arguments = {},
   returns = {
     colliders = {
-      type = 'table',
+      type = '{Collider}',
       description = 'The list of `Collider` objects in the World.'
     }
   },

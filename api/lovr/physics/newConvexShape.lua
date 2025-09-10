@@ -9,17 +9,9 @@ return {
         numbers) or a table of numbers (every 3 numbers form a 3D point).
       ]]
     },
-    modelData = {
-      type = 'ModelData',
-      description = 'The ModelData to compute a convex hull from.'
-    },
-    model = {
-      type = 'Model',
-      description = 'The Model to compute a convex hull from.'
-    },
-    mesh = {
-      type = 'Mesh',
-      description = 'The Mesh to compute a convex hull from.  It must use the `cpu` storage mode.'
+    object = {
+      type = 'ModelData | Model | Mesh',
+      description = 'An object to use for the points of the convex hull.'
     },
     template = {
       type = 'ConvexShape',
@@ -43,15 +35,7 @@ return {
       returns = { 'shape' }
     },
     {
-      arguments = { 'modelData', 'scale' },
-      returns = { 'shape' }
-    },
-    {
-      arguments = { 'model', 'scale' },
-      returns = { 'shape' }
-    },
-    {
-      arguments = { 'mesh', 'scale' },
+      arguments = { 'object', 'scale' },
       returns = { 'shape' }
     },
     {

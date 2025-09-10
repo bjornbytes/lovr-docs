@@ -6,9 +6,9 @@ return {
     another `Texture` object to copy from.
   ]],
   arguments = {
-    image = {
-      type = 'Image',
-      description = 'The image to copy to the texture.'
+    source = {
+      type = 'Texture | Image',
+      description = 'The source texture or image to copy to this texture.'
     },
     texture = {
       type = 'Texture',
@@ -107,11 +107,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'image', 'dstx', 'dsty', 'dstlayer', 'dstmipmap', 'srcx', 'srcy', 'srclayer', 'srcmipmap', 'width', 'height', 'layers' },
-      returns = {}
-    },
-    {
-      arguments = { 'texture', 'dstx', 'dsty', 'dstlayer', 'dstmipmap', 'srcx', 'srcy', 'srclayer', 'srcmipmap', 'width', 'height', 'layers', 'srcwidth', 'srcheight', 'srcdepth', 'filter' },
+      arguments = { 'source', 'dstx', 'dsty', 'dstlayer', 'dstmipmap', 'srcx', 'srcy', 'srclayer', 'srcmipmap', 'width', 'height', 'layers' },
       returns = {}
     }
   },

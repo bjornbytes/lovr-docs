@@ -12,20 +12,9 @@ return {
         A table of triangle indices representing how the vertices are connected in the Mesh.
       ]]
     },
-    modelData = {
-      type = 'ModelData',
-      description = 'The ModelData to use the vertices from.'
-    },
-    model = {
-      type = 'Model',
-      description = [[
-        A Model to use for the mesh data.  Similar to calling `Model:getTriangles` and passing it to
-        this function, but has better performance.
-      ]]
-    },
-    mesh = {
-      type = 'Mesh',
-      description = 'The Mesh to use the vertices from.  It must use the `cpu` storage mode.'
+    object = {
+      type = 'ModelData | Model | Mesh',
+      description = 'An object to use the triangles from.  Meshes must use the `cpu` storage mode.'
     },
     template = {
       type = 'MeshShape',
@@ -49,15 +38,7 @@ return {
       returns = { 'mesh' }
     },
     {
-      arguments = { 'modelData', 'scale' },
-      returns = { 'mesh' }
-    },
-    {
-      arguments = { 'model', 'scale' },
-      returns = { 'mesh' }
-    },
-    {
-      arguments = { 'mesh', 'scale' },
+      arguments = { 'object', 'scale' },
       returns = { 'mesh' }
     },
     {

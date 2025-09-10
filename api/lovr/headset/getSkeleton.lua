@@ -17,7 +17,7 @@ return {
   },
   returns = {
     transforms = {
-      type = 'table',
+      type = '{{number}} | nil',
       description = [[
         A list of joint transforms for the device.  Each transform is a table with 3 numbers for the
         position of the joint, 1 number for the joint radius (in meters), and 4 numbers for the

@@ -17,6 +17,5 @@ return {
       arguments = {},
       returns = { 'name' }
     }
-  },
-  notes = 'When headset simulator is used this function returns `nil`.'
+  }
 }

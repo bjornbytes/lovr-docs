@@ -16,7 +16,7 @@ return {
       description = 'The z coordinate of the first point.'
     },
     t = {
-      type = 'table',
+      type = '{number | Vec3}',
       description = 'A table of numbers or Vec3 objects (not both) representing point positions.'
     },
     v = {

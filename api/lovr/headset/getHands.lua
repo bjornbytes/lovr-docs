@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     hands = {
-      type = 'table',
+      type = '{Device}',
       arguments = {},
       returns = {},
       description = 'The currently tracked hand devices.'

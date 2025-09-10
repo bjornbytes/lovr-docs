@@ -11,44 +11,21 @@ return {
     tracked smoothly even if LÖVR is struggling to render at a high frame rate.
   ]],
   arguments = {
-    texture = {
-      type = 'Texture',
+    background = {
+      type = 'Image | {Image} | Texture',
       description = [[
-        The Texture to use for the background.  It can be a `cube` texture which will be rendered as
-        a cubemap, or a `2d` texture interpreted as equirectangular (sometimes called panoramic or
-        spherical) coordinates.
+        The image(s) or texture to use for the background.  Backgrounds can either be cubemaps (6
+        images) or equirectangular (a single panoramic 2D image).
 
-        The texture can have any color format, but it will be converted to `rgba8` before getting
-        copied to the VR runtime.
-      ]]
-    },
-    image = {
-      type = 'Image',
-      description = [[
-        The Image to use for the background.  It can have 1 layer for an equirectangular background,
-        or 6 layers for a cubemap.  Currently, it must have a format of `rgba8`.
-      ]]
-    },
-    images = {
-      type = 'table',
-      description = [[
-        A table of 1 or 6 images to use for the background.  They must be the same size and they
-        currently must use the `rgba8` format.
+        Textures can have any color format, but it will be converted to `rgba8` before getting
+        copied to the VR runtime.  Images currently have to be `rgba8`.
       ]]
     }
   },
   returns = {},
   variants = {
     {
-      arguments = { 'texture' },
-      returns = {}
-    },
-    {
-      arguments = { 'image' },
-      returns = {}
-    },
-    {
-      arguments = { 'images' },
+      arguments = { 'background' },
       returns = {}
     },
     {

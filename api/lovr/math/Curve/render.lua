@@ -23,7 +23,7 @@ return {
   },
   returns = {
     t = {
-      type = 'table',
+      type = '{number}',
       description = 'A (flat) table of 3D points along the curve.'
     }
   },

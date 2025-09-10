@@ -16,19 +16,19 @@ return {
   },
   returns = {
     left = {
-      type = 'number',
+      type = 'number | nil',
       description = 'The left view angle, in radians.'
     },
     right = {
-      type = 'number',
+      type = 'number | nil',
       description = 'The right view angle, in radians.'
     },
     top = {
-      type = 'number',
+      type = 'number | nil',
       description = 'The top view angle, in radians.'
     },
     bottom = {
-      type = 'number',
+      type = 'number | nil',
       description = 'The bottom view angle, in radians.'
     }
   },

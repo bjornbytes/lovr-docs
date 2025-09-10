@@ -14,7 +14,7 @@ return {
   },
   returns = {
     touched = {
-      type = 'boolean',
+      type = 'boolean | nil',
       description = [[
         Whether the button on the device is currently touched, or `nil` if the device does not have
         the button or it isn't touch-sensitive.

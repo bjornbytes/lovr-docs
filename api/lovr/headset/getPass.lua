@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     pass = {
-      type = 'Pass',
+      type = 'Pass | nil',
       description = 'The pass.'
     }
   },

@@ -10,8 +10,11 @@ return {
   arguments = {},
   returns = {
     shape = {
-      type = 'Shape',
-      description = 'One of the `Shape` objects attached to the Collider.'
+      type = 'Shape | nil',
+      description = [[
+        One of the `Shape` objects attached to the Collider, or `nil` if the Collider doesn't have
+        any shapes attached to it.
+      ]]
     }
   },
   variants = {
@@ -20,7 +23,6 @@ return {
       returns = { 'shape' }
     }
   },
-  notes = 'This may return `nil` if the Collider doesn\'t have any shapes attached to it.',
   example = [[
     function drawBoxCollider(pass, collider)
       local position = vec3(collider:getPosition())

@@ -14,7 +14,10 @@ return {
       returns = {}
     }
   },
-  notes = 'The arguments can be nil, booleans, numbers, strings, or LÖVR objects.',
+  notes = [[
+    The arguments can be nil, booleans, numbers, strings, lightuserdata, tables, vectors, or LÖVR
+    objects.
+  ]],
   example = [=[
     function lovr.load()
       lovr.thread.newThread([[

@@ -24,12 +24,7 @@ return {
       returns = { 'pressed' }
     }
   },
-  notes = [[
-    Some headset backends are not able to return pressed/released information.  These drivers will
-    always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.
-
-    Typically the internal `lovr.headset.update` function will update pressed/released status.
-  ]],
+  notes = 'The internal `lovr.headset.update` function updates pressed/released status.',
   related = {
     'DeviceButton',
     'lovr.headset.isDown',

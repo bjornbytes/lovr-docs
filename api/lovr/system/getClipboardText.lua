@@ -5,8 +5,8 @@ return {
   arguments = {},
   returns = {
     text = {
-      type = 'string',
-      description = 'The clipboard text (may be nil).'
+      type = 'string | nil',
+      description = 'The clipboard text.'
     }
   },
   variants = {

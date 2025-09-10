@@ -33,7 +33,7 @@ return {
   arguments = {
     callbacks = {
       type = 'table',
-      description = 'The World collision callbacks.',
+      description = 'The World collision callbacks.  All of them are optional.',
       table = {
         {
           name = 'filter',

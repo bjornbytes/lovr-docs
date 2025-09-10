@@ -48,6 +48,7 @@ return {
     },
     callback = {
       type = 'function',
+      default = 'nil',
       arguments = {
         {
           name = 'collider',
@@ -134,7 +135,7 @@ return {
       description = 'The z component of the normal vector.'
     },
     triangle = {
-      type = 'number',
+      type = 'number | nil',
       description = 'The index of the triangle that was hit, or nil if a MeshShape was not hit.'
     }
   },

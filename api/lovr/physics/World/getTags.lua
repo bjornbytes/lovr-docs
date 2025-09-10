@@ -8,7 +8,7 @@ return {
   arguments = {},
   returns = {
     tags = {
-      type = 'table',
+      type = '{string}',
       description = 'A table of collision tags (strings).'
     }
   },

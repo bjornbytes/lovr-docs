@@ -4,6 +4,7 @@ return {
   arguments = {
     translation = {
       type = 'string',
+      default = [['']],
       description = [[
         A string containing the world-space axes the Collider is allowed to move on.  The string
         should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty
@@ -12,6 +13,7 @@ return {
     },
     rotation = {
       type = 'string',
+      default = [['']],
       description = [[
         A string containing the world-space axes the Collider is allowed to rotate on.  The string
         should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty

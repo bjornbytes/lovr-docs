@@ -14,7 +14,7 @@ return {
   },
   returns = {
     down = {
-      type = 'boolean',
+      type = 'boolean | nil',
       description = [[
         Whether the button on the device is currently pressed, or `nil` if the device does not have
         the specified button.

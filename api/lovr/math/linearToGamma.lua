@@ -16,7 +16,7 @@ return {
       description = 'The blue component of the linear-space color.'
     },
     color = {
-      type = 'table',
+      type = '{number}',
       description = 'A table containing the components of a linear-space color.'
     },
     x = {

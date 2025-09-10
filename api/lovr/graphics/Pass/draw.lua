@@ -4,8 +4,8 @@ return {
   description = 'Draws a `Model`, `Mesh`, or `Texture`.',
   arguments = {
     object = {
-      type = '*',
-      description = 'The Model, Mesh, or Texture to draw.'
+      type = 'Model | Mesh | Texture',
+      description = 'The object to draw.'
     },
     x = {
       type = 'number',

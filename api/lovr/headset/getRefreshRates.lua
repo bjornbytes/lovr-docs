@@ -7,7 +7,7 @@ return {
   arguments = {},
   returns = {
     rates = {
-      type = 'table',
+      type = 'table | nil',
       description = [[
         A flat table of the refresh rates supported by the headset display, or nil if not supported.
       ]]

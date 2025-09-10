@@ -16914,8 +16914,8 @@ return {
                   arguments = {
                     {
                       name = "object",
-                      type = "*",
-                      description = "The Model, Mesh, or Texture to draw."
+                      type = "Model | Mesh | Texture",
+                      description = "The object to draw."
                     },
                     {
                       name = "x",
@@ -16978,8 +16978,8 @@ return {
                   arguments = {
                     {
                       name = "object",
-                      type = "*",
-                      description = "The Model, Mesh, or Texture to draw."
+                      type = "Model | Mesh | Texture",
+                      description = "The object to draw."
                     },
                     {
                       name = "position",
@@ -17009,8 +17009,8 @@ return {
                   arguments = {
                     {
                       name = "object",
-                      type = "*",
-                      description = "The Model, Mesh, or Texture to draw."
+                      type = "Model | Mesh | Texture",
+                      description = "The object to draw."
                     },
                     {
                       name = "transform",
@@ -17600,7 +17600,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number | Vec3}",
                       description = "A table of numbers or `Vec3` objects (not a mix) representing points of the line."
                     }
                   },
@@ -18249,7 +18249,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number | Vec3}",
                       description = "A table of numbers or Vec3 objects (not both) representing point positions."
                     }
                   },
@@ -18330,7 +18330,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number | Vec3}",
                       description = "A table of numbers or `Vec3` objects (not a mix) representing vertices of the polygon."
                     }
                   },
@@ -19017,7 +19017,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A table of 3 or 4 color components."
                     }
                   },
@@ -19351,18 +19351,8 @@ return {
                   arguments = {
                     {
                       name = "material",
-                      type = "Material",
-                      description = "The material to use for drawing."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The texture to use as the material."
+                      type = "Texture | Material",
+                      description = "The texture or material to apply to surfaces."
                     }
                   },
                   returns = {}
@@ -19481,25 +19471,15 @@ return {
                   code = "function lovr.draw(pass)\n  pass:setSampler('nearest') -- activate minecraft mode\n  pass:setMaterial(rock)\n  pass:cube(x, y, z)\nend"
                 }
               },
-              notes = "The `getPixel` shader helper function will use this sampler.\n\nWhen a Pass is reset, its sampler will be reset to `linear`.\n\nThe sampler applies to all draws in the pass on submit, regardless of when the sampler is set.",
+              notes = "The `getPixel` shader helper function will use this sampler.\n\nWhen a Pass is reset, its sampler will be reset to `linear`.\n\nThe sampler applies to all draws in the pass on submit, regardless of when the sampler is set.\n\nIf you need different samplers for each draw, currently you have to send a `Sampler` object to a Shader (this is not ideal).",
               variants = {
                 {
                   arguments = {
                     {
-                      name = "filter",
-                      type = "FilterMode",
-                      description = "The default filter mode to use when sampling textures (the `repeat` wrap mode will be used).",
-                      default = "'linear'"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
                       name = "sampler",
-                      type = "Sampler",
-                      description = "The default sampler shaders will use when reading from textures."
+                      type = "Sampler | FilterMode",
+                      description = "The Sampler shaders will use when reading from textures.  It can also be a `FilterMode`, for convenience (other sampler settings will use their defaults).",
+                      default = "'linear'"
                     }
                   },
                   returns = {}
@@ -19554,7 +19534,7 @@ return {
               name = "setShader",
               tag = "shaders",
               summary = "Set the active Shader.",
-              description = "Sets the active shader.  In a render pass, the Shader will affect all drawing operations until it is changed again.  In a compute pass, the Shader will be run when `Pass:compute` is called.",
+              description = "Sets the active shader.  The Shader will affect all drawing operations until it is changed again.",
               key = "Pass:setShader",
               module = "lovr.graphics",
               notes = "Changing the shader will preserve variable values (the ones set using `Pass:send`) **unless** the new shader declares a variable with the same as one in the old shader, but a different type. The variable \"type\" means one of the following:\n\n- Uniform buffer (`uniform`).\n- Storage buffer (`buffer`).\n- Sampled texture, (`uniform texture<type>`).\n- Storage texture, (`uniform image<type>`).\n- Sampler (`uniform sampler`).\n\nIf there's a clash in types, the variable will be reset to use a default resource:\n\n- Buffer variables do not have well-defined behavior when they are reset like this, and may\n  return random data or even crash the GPU.\n- Texture variable will use a default texture with a single white pixel.\n- Sampler variables will use a default sampler with a `linear` filter mode and `repeat` wrap\n  mode.\n\nUniform variables with basic types like `float`, `vec3`, `mat4`, etc. will have their data preserved as long as both shaders declare the variable with the same name and type.",
@@ -19567,19 +19547,8 @@ return {
                   arguments = {
                     {
                       name = "shader",
-                      type = "Shader",
+                      type = "Shader | DefaultShader",
                       description = "The shader to use."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Use one of the default shaders for drawing.",
-                  arguments = {
-                    {
-                      name = "defaultshader",
-                      type = "DefaultShader",
-                      description = "One of the default shaders to use."
                     }
                   },
                   returns = {}
@@ -19649,30 +19618,8 @@ return {
                   arguments = {
                     {
                       name = "action",
-                      type = "StencilAction",
-                      description = "How pixels drawn will update the stencil buffer."
-                    },
-                    {
-                      name = "value",
-                      type = "number",
-                      description = "When using the 'replace' action, this is the value to replace with.",
-                      default = "1"
-                    },
-                    {
-                      name = "mask",
-                      type = "number",
-                      description = "An optional mask to apply to stencil values before writing.",
-                      default = "0xff"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "actions",
-                      type = "table",
-                      description = "A list of 3 stencil actions, used when a pixel fails the stencil test, fails the depth test, or passes the stencil test, respectively."
+                      type = "StencilAction | {StencilAction}",
+                      description = "How pixels should update the stencil buffer when they are drawn.  Can also be a list of 3 stencil actions, used when a pixel fails the stencil test, fails the depth test, or passes the stencil test, respectively."
                     },
                     {
                       name = "value",
@@ -21472,7 +21419,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A table with color components."
                     },
                     {
@@ -22028,9 +21975,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "image",
-                      type = "Image",
-                      description = "The image to copy to the texture."
+                      name = "source",
+                      type = "Texture | Image",
+                      description = "The source texture or image to copy to this texture."
                     },
                     {
                       name = "dstx",
@@ -22097,106 +22044,6 @@ return {
                       type = "number",
                       description = "The number of layers to copy.  If nil, copies as many layers as possible.",
                       default = "nil"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "texture",
-                      type = "Texture",
-                      description = "The texture to copy from."
-                    },
-                    {
-                      name = "dstx",
-                      type = "number",
-                      description = "The x offset to copy to.",
-                      default = "0"
-                    },
-                    {
-                      name = "dsty",
-                      type = "number",
-                      description = "The y offset to copy to.",
-                      default = "0"
-                    },
-                    {
-                      name = "dstlayer",
-                      type = "number",
-                      description = "The index of the layer to copy to.",
-                      default = "1"
-                    },
-                    {
-                      name = "dstmipmap",
-                      type = "number",
-                      description = "The index of the mipmap level to copy to.",
-                      default = "1"
-                    },
-                    {
-                      name = "srcx",
-                      type = "number",
-                      description = "The x offset to copy from.",
-                      default = "0"
-                    },
-                    {
-                      name = "srcy",
-                      type = "number",
-                      description = "The y offset to copy from.",
-                      default = "0"
-                    },
-                    {
-                      name = "srclayer",
-                      type = "number",
-                      description = "The index of the layer to copy from.",
-                      default = "1"
-                    },
-                    {
-                      name = "srcmipmap",
-                      type = "number",
-                      description = "The index of the mipmap level to copy from.",
-                      default = "1"
-                    },
-                    {
-                      name = "width",
-                      type = "number",
-                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters.",
-                      default = "nil"
-                    },
-                    {
-                      name = "height",
-                      type = "number",
-                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters.",
-                      default = "nil"
-                    },
-                    {
-                      name = "layers",
-                      type = "number",
-                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
-                      default = "nil"
-                    },
-                    {
-                      name = "srcwidth",
-                      type = "number",
-                      description = "The width of the region in the source texture to copy.  If it doesn't match `width`, the copy will be scaled up or down to fit.",
-                      default = "width"
-                    },
-                    {
-                      name = "srcheight",
-                      type = "number",
-                      description = "The height of the region in the source texture to copy.  If it doesn't match `height`, the copy will be scaled up or down to fit.",
-                      default = "width"
-                    },
-                    {
-                      name = "srcdepth",
-                      type = "number",
-                      description = "The depth of the region in the source texture to copy (`3d` textures only).",
-                      default = "layers"
-                    },
-                    {
-                      name = "filter",
-                      type = "FilterMode",
-                      description = "The filtering mode used to scale the copy when the source and destination sizes don't match.",
-                      default = "'linear'"
                     }
                   },
                   returns = {}
@@ -22735,7 +22582,7 @@ return {
               returns = {
                 {
                   name = "...",
-                  type = "number",
+                  type = "number | nil",
                   description = "The current state of the components of the axis, or `nil` if the device does not have any information about the axis."
                 }
               }
@@ -22749,6 +22596,7 @@ return {
           description = "Returns the depth of the play area, in meters.",
           key = "lovr.headset.getBoundsDepth",
           module = "lovr.headset",
+          notes = "If the VR system is not roomscale, this will return zero.",
           related = {
             "lovr.headset.getBoundsWidth",
             "lovr.headset.getBoundsDimensions"
@@ -22773,6 +22621,7 @@ return {
           description = "Returns the size of the play area, in meters.",
           key = "lovr.headset.getBoundsDimensions",
           module = "lovr.headset",
+          notes = "If the VR system is not roomscale, this will return zero.",
           related = {
             "lovr.headset.getBoundsWidth",
             "lovr.headset.getBoundsDepth",
@@ -22833,6 +22682,7 @@ return {
           description = "Returns the width of the play area, in meters.",
           key = "lovr.headset.getBoundsWidth",
           module = "lovr.headset",
+          notes = "If the VR system is not roomscale, this will return zero.",
           related = {
             "lovr.headset.getBoundsDepth",
             "lovr.headset.getBoundsDimensions"
@@ -23242,7 +23092,7 @@ return {
               returns = {
                 {
                   name = "hands",
-                  type = "table",
+                  type = "{Device}",
                   description = "The currently tracked hand devices.",
                   arguments = {},
                   returns = {}
@@ -23269,7 +23119,7 @@ return {
               returns = {
                 {
                   name = "layers",
-                  type = "table",
+                  type = "{Layer}",
                   description = "The list of layers."
                 }
               }
@@ -23283,7 +23133,6 @@ return {
           description = "Returns the name of the headset as a string.  The exact string that is returned depends on the hardware and VR SDK that is currently in use.",
           key = "lovr.headset.getName",
           module = "lovr.headset",
-          notes = "When headset simulator is used this function returns `nil`.",
           variants = {
             {
               arguments = {},
@@ -23368,7 +23217,7 @@ return {
               returns = {
                 {
                   name = "pass",
-                  type = "Pass",
+                  type = "Pass | nil",
                   description = "The pass."
                 }
               }
@@ -23551,7 +23400,7 @@ return {
               returns = {
                 {
                   name = "rate",
-                  type = "number",
+                  type = "number | nil",
                   description = "The refresh rate of the display, or `nil` if I have no idea what it is."
                 }
               }
@@ -23575,7 +23424,7 @@ return {
               returns = {
                 {
                   name = "rates",
-                  type = "table",
+                  type = "table | nil",
                   description = "A flat table of the refresh rates supported by the headset display, or nil if not supported."
                 }
               }
@@ -23611,7 +23460,7 @@ return {
               returns = {
                 {
                   name = "transforms",
-                  type = "table",
+                  type = "{{number}} | nil",
                   description = "A list of joint transforms for the device.  Each transform is a table with 3 numbers for the position of the joint, 1 number for the joint radius (in meters), and 4 numbers for the angle/axis orientation of the joint.  There is also a `radius` key with the radius of the joint as well."
                 }
               }
@@ -23632,7 +23481,7 @@ return {
               returns = {
                 {
                   name = "transforms",
-                  type = "table",
+                  type = "{{number}} | nil",
                   description = "A list of joint transforms for the device.  Each transform is a table with 3 numbers for the position of the joint, 1 number for the joint radius (in meters), and 4 numbers for the angle/axis orientation of the joint.  There is also a `radius` key with the radius of the joint as well."
                 }
               }
@@ -23657,7 +23506,7 @@ return {
               returns = {
                 {
                   name = "texture",
-                  type = "Texture",
+                  type = "Texture | nil",
                   description = "The headset texture."
                 }
               }
@@ -23756,22 +23605,22 @@ return {
               returns = {
                 {
                   name = "left",
-                  type = "number",
+                  type = "number | nil",
                   description = "The left view angle, in radians."
                 },
                 {
                   name = "right",
-                  type = "number",
+                  type = "number | nil",
                   description = "The right view angle, in radians."
                 },
                 {
                   name = "top",
-                  type = "number",
+                  type = "number | nil",
                   description = "The top view angle, in radians."
                 },
                 {
                   name = "bottom",
-                  type = "number",
+                  type = "number | nil",
                   description = "The bottom view angle, in radians."
                 }
               }
@@ -23825,37 +23674,37 @@ return {
               returns = {
                 {
                   name = "x",
-                  type = "number",
+                  type = "number | nil",
                   description = "The x coordinate of the view position, in meters."
                 },
                 {
                   name = "y",
-                  type = "number",
+                  type = "number | nil",
                   description = "The y coordinate of the view position, in meters."
                 },
                 {
                   name = "z",
-                  type = "number",
+                  type = "number | nil",
                   description = "The z coordinate of the view position, in meters."
                 },
                 {
                   name = "angle",
-                  type = "number",
+                  type = "number | nil",
                   description = "The amount of rotation around the rotation axis, in radians."
                 },
                 {
                   name = "ax",
-                  type = "number",
+                  type = "number | nil",
                   description = "The x component of the axis of rotation."
                 },
                 {
                   name = "ay",
-                  type = "number",
+                  type = "number | nil",
                   description = "The y component of the axis of rotation."
                 },
                 {
                   name = "az",
-                  type = "number",
+                  type = "number | nil",
                   description = "The z component of the axis of rotation."
                 }
               }
@@ -23918,7 +23767,7 @@ return {
               returns = {
                 {
                   name = "down",
-                  type = "boolean",
+                  type = "boolean | nil",
                   description = "Whether the button on the device is currently pressed, or `nil` if the device does not have the specified button."
                 }
               }
@@ -24026,7 +23875,7 @@ return {
               returns = {
                 {
                   name = "touched",
-                  type = "boolean",
+                  type = "boolean | nil",
                   description = "Whether the button on the device is currently touched, or `nil` if the device does not have the button or it isn't touch-sensitive."
                 }
               }
@@ -24193,29 +24042,9 @@ return {
             {
               arguments = {
                 {
-                  name = "texture",
-                  type = "Texture",
-                  description = "The Texture to use for the background.  It can be a `cube` texture which will be rendered as a cubemap, or a `2d` texture interpreted as equirectangular (sometimes called panoramic or spherical) coordinates.\n\nThe texture can have any color format, but it will be converted to `rgba8` before getting copied to the VR runtime."
-                }
-              },
-              returns = {}
-            },
-            {
-              arguments = {
-                {
-                  name = "image",
-                  type = "Image",
-                  description = "The Image to use for the background.  It can have 1 layer for an equirectangular background, or 6 layers for a cubemap.  Currently, it must have a format of `rgba8`."
-                }
-              },
-              returns = {}
-            },
-            {
-              arguments = {
-                {
-                  name = "images",
-                  type = "table",
-                  description = "A table of 1 or 6 images to use for the background.  They must be the same size and they currently must use the `rgba8` format."
+                  name = "background",
+                  type = "Image | {Image} | Texture",
+                  description = "The image(s) or texture to use for the background.  Backgrounds can either be cubemaps (6 images) or equirectangular (a single panoramic 2D image).\n\nTextures can have any color format, but it will be converted to `rgba8` before getting copied to the VR runtime.  Images currently have to be `rgba8`."
                 }
               },
               returns = {}
@@ -24571,7 +24400,7 @@ return {
           description = "Returns whether a button on a device was pressed this frame.",
           key = "lovr.headset.wasPressed",
           module = "lovr.headset",
-          notes = "Some headset backends are not able to return pressed/released information.  These drivers will always return false for `lovr.headset.wasPressed` and `lovr.headset.wasReleased`.\n\nTypically the internal `lovr.headset.update` function will update pressed/released status.",
+          notes = "The internal `lovr.headset.update` function updates pressed/released status.",
           related = {
             "DeviceButton",
             "lovr.headset.isDown",
@@ -24984,7 +24813,7 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A table of 3 or 4 color components."
                     }
                   },
@@ -25353,7 +25182,7 @@ return {
               arguments = {
                 {
                   name = "color",
-                  type = "table",
+                  type = "{number}",
                   description = "A table containing the components of a gamma-space color."
                 }
               },
@@ -25466,7 +25295,7 @@ return {
               arguments = {
                 {
                   name = "color",
-                  type = "table",
+                  type = "{number}",
                   description = "A table containing the components of a linear-space color."
                 }
               },
@@ -27119,7 +26948,7 @@ return {
                   returns = {
                     {
                       name = "t",
-                      type = "table",
+                      type = "{number}",
                       description = "A (flat) table of 3D points along the curve."
                     }
                   }
@@ -31804,53 +31633,9 @@ return {
             {
               arguments = {
                 {
-                  name = "modelData",
-                  type = "ModelData",
-                  description = "The ModelData to compute a convex hull from."
-                },
-                {
-                  name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the points.",
-                  default = "1.0"
-                }
-              },
-              returns = {
-                {
-                  name = "shape",
-                  type = "ConvexShape",
-                  description = "The new ConvexShape."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "The Model to compute a convex hull from."
-                },
-                {
-                  name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the points.",
-                  default = "1.0"
-                }
-              },
-              returns = {
-                {
-                  name = "shape",
-                  type = "ConvexShape",
-                  description = "The new ConvexShape."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "mesh",
-                  type = "Mesh",
-                  description = "The Mesh to compute a convex hull from.  It must use the `cpu` storage mode."
+                  name = "object",
+                  type = "ModelData | Model | Mesh",
+                  description = "An object to use for the points of the convex hull."
                 },
                 {
                   name = "scale",
@@ -32179,53 +31964,9 @@ return {
             {
               arguments = {
                 {
-                  name = "modelData",
-                  type = "ModelData",
-                  description = "The ModelData to use the vertices from."
-                },
-                {
-                  name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the mesh vertices.",
-                  default = "1.0"
-                }
-              },
-              returns = {
-                {
-                  name = "mesh",
-                  type = "MeshShape",
-                  description = "The new MeshShape."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "A Model to use for the mesh data.  Similar to calling `Model:getTriangles` and passing it to this function, but has better performance."
-                },
-                {
-                  name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the mesh vertices.",
-                  default = "1.0"
-                }
-              },
-              returns = {
-                {
-                  name = "mesh",
-                  type = "MeshShape",
-                  description = "The new MeshShape."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "mesh",
-                  type = "Mesh",
-                  description = "The Mesh to use the vertices from.  It must use the `cpu` storage mode."
+                  name = "object",
+                  type = "ModelData | Model | Mesh",
+                  description = "An object to use the triangles from.  Meshes must use the `cpu` storage mode."
                 },
                 {
                   name = "scale",
@@ -34083,7 +33824,6 @@ return {
                   code = "function drawBoxCollider(pass, collider)\n  local position = vec3(collider:getPosition())\n  local size = vec3(collider:getShape():getDimensions())\n  local orientation = quat(collider:getOrientation())\n  pass:box(position, size, orientation)\nend"
                 }
               },
-              notes = "This may return `nil` if the Collider doesn't have any shapes attached to it.",
               related = {
                 "Collider:getShapes",
                 "Collider:addShape",
@@ -34096,8 +33836,8 @@ return {
                   returns = {
                     {
                       name = "shape",
-                      type = "Shape",
-                      description = "One of the `Shape` objects attached to the Collider."
+                      type = "Shape | nil",
+                      description = "One of the `Shape` objects attached to the Collider, or `nil` if the Collider doesn't have any shapes attached to it."
                     }
                   }
                 }
@@ -34147,7 +33887,7 @@ return {
                   returns = {
                     {
                       name = "tag",
-                      type = "string",
+                      type = "string | nil",
                       description = "The Collider's tag."
                     }
                   }
@@ -34816,12 +34556,14 @@ return {
                     {
                       name = "translation",
                       type = "string",
-                      description = "A string containing the world-space axes the Collider is allowed to move on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all translation."
+                      description = "A string containing the world-space axes the Collider is allowed to move on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all translation.",
+                      default = "''"
                     },
                     {
                       name = "rotation",
                       type = "string",
-                      description = "A string containing the world-space axes the Collider is allowed to rotate on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all rotation."
+                      description = "A string containing the world-space axes the Collider is allowed to rotate on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all rotation.",
+                      default = "''"
                     }
                   },
                   returns = {}
@@ -37884,7 +37626,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number",
+                      type = "number | nil",
                       description = "The index of the triangle that was hit, or `nil` if this is not a MeshShape."
                     }
                   }
@@ -37935,7 +37677,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number",
+                      type = "number | nil",
                       description = "The index of the triangle that was hit, or `nil` if this is not a MeshShape."
                     }
                   }
@@ -38796,22 +38538,22 @@ return {
                       table = {
                         {
                           name = "filter",
-                          type = "function",
+                          type = "function | nil",
                           description = "The function used to filter collisions."
                         },
                         {
                           name = "enter",
-                          type = "function",
+                          type = "function | nil",
                           description = "The function called when 2 colliders start touching."
                         },
                         {
                           name = "exit",
-                          type = "function",
+                          type = "function | nil",
                           description = "The function called when 2 colliders stop touching."
                         },
                         {
                           name = "contact",
-                          type = "function",
+                          type = "function | nil",
                           description = "The function called every frame while 2 colliders are in contact."
                         }
                       }
@@ -38860,7 +38602,7 @@ return {
                   returns = {
                     {
                       name = "colliders",
-                      type = "table",
+                      type = "{Collider}",
                       description = "The list of `Collider` objects in the World."
                     }
                   }
@@ -38942,7 +38684,7 @@ return {
                   returns = {
                     {
                       name = "joints",
-                      type = "table",
+                      type = "{Joint}",
                       description = "The list of `Joint` objects in the World."
                     }
                   }
@@ -39042,7 +38784,7 @@ return {
                   returns = {
                     {
                       name = "tags",
-                      type = "table",
+                      type = "{string}",
                       description = "A table of collision tags (strings)."
                     }
                   }
@@ -40243,7 +39985,8 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "The callback to call for each intersection detected."
+                      description = "The callback to call for each intersection detected.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40280,7 +40023,8 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "The callback to call for each intersection detected."
+                      description = "The callback to call for each intersection detected.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40513,7 +40257,8 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument."
+                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40539,7 +40284,8 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument."
+                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40664,7 +40410,8 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument."
+                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40690,7 +40437,8 @@ return {
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument."
+                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument.",
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40866,7 +40614,8 @@ return {
                           type = "number",
                           default = "1.0"
                         }
-                      }
+                      },
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -40941,7 +40690,8 @@ return {
                           type = "number",
                           default = "1.0"
                         }
-                      }
+                      },
+                      default = "nil"
                     }
                   },
                   returns = {}
@@ -41028,7 +40778,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number",
+                      type = "number | nil",
                       description = "The index of the triangle that was hit, or nil if a MeshShape was not hit."
                     }
                   }
@@ -41095,7 +40845,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number",
+                      type = "number | nil",
                       description = "The index of the triangle that was hit, or nil if a MeshShape was not hit."
                     }
                   }
@@ -41155,7 +40905,7 @@ return {
                     {
                       name = "callbacks",
                       type = "table",
-                      description = "The World collision callbacks.",
+                      description = "The World collision callbacks.  All of them are optional.",
                       table = {
                         {
                           name = "filter",
@@ -41947,8 +41697,8 @@ return {
               returns = {
                 {
                   name = "text",
-                  type = "string",
-                  description = "The clipboard text (may be nil)."
+                  type = "string | nil",
+                  description = "The clipboard text."
                 }
               }
             }
@@ -42738,25 +42488,9 @@ return {
             {
               arguments = {
                 {
-                  name = "filename",
-                  type = "string",
-                  description = "A file containing code to run in the Thread."
-                }
-              },
-              returns = {
-                {
-                  name = "thread",
-                  type = "Thread",
-                  description = "The new Thread."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "blob",
-                  type = "Blob",
-                  description = "The code to run in the Thread."
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing code to run in the Thread."
                 }
               },
               returns = {
@@ -42887,7 +42621,7 @@ return {
                   arguments = {
                     {
                       name = "wait",
-                      type = "number",
+                      type = "number | boolean",
                       description = "How long to wait for a message to be popped, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
                       default = "false"
                     }
@@ -42923,7 +42657,7 @@ return {
                     },
                     {
                       name = "wait",
-                      type = "number",
+                      type = "number | boolean",
                       description = "How long to wait for the message to be popped, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
                       default = "false"
                     }
@@ -42971,7 +42705,7 @@ return {
                   returns = {
                     {
                       name = "error",
-                      type = "string",
+                      type = "string | nil",
                       description = "The error message, or `nil` if no error has occurred on the Thread."
                     }
                   }
@@ -43011,7 +42745,7 @@ return {
                   code = "function lovr.load()\n  lovr.thread.newThread([[\n    print(...)\n  ]]):start(lovr.getVersion())\nend"
                 }
               },
-              notes = "The arguments can be nil, booleans, numbers, strings, or LÖVR objects.",
+              notes = "The arguments can be nil, booleans, numbers, strings, lightuserdata, tables, vectors, or LÖVR objects.",
               variants = {
                 {
                   arguments = {

@@ -32,7 +32,7 @@ return {
       description = 'The z coordinate of the next vertex.'
     },
     t = {
-      type = 'table',
+      type = '{number | Vec3}',
       description = [[
         A table of numbers or `Vec3` objects (not a mix) representing vertices of the polygon.
       ]]

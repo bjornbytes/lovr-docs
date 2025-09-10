@@ -53,6 +53,7 @@ return {
     },
     callback = {
       type = 'function',
+      default = 'nil',
       description = [[
         A function to call when a collider is detected.  The function will be called with a single
         `Collider` argument.

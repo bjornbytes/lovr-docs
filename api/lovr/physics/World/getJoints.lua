@@ -6,7 +6,7 @@ return {
   arguments = {},
   returns = {
     joints = {
-      type = 'table',
+      type = '{Joint}',
       description = 'The list of `Joint` objects in the World.'
     }
   },

@@ -19,6 +19,7 @@ return {
       returns = { 'width', 'depth' }
     }
   },
+  notes = 'If the VR system is not roomscale, this will return zero.',
   related = {
     'lovr.headset.getBoundsWidth',
     'lovr.headset.getBoundsDepth',

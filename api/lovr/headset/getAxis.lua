@@ -19,7 +19,7 @@ return {
   },
   returns = {
     ['...'] = {
-      type = 'number',
+      type = 'number | nil',
       description = [[
         The current state of the components of the axis, or `nil` if the device does not have any
         information about the axis.

@@ -6,13 +6,9 @@ return {
       type = 'string',
       description = 'The code to run in the Thread.'
     },
-    filename = {
-      type = 'string',
-      description = 'A file containing code to run in the Thread.'
-    },
-    blob = {
-      type = 'Blob',
-      description = 'The code to run in the Thread.'
+    file = {
+      type = 'string | Blob',
+      description = 'A filename or Blob containing code to run in the Thread.'
     }
   },
   returns = {
@@ -27,11 +23,7 @@ return {
       returns = { 'thread' }
     },
     {
-      arguments = { 'filename' },
-      returns = { 'thread' }
-    },
-    {
-      arguments = { 'blob' },
+      arguments = { 'file' },
       returns = { 'thread' }
     }
   },
