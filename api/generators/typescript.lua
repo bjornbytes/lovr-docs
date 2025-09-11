@@ -23,7 +23,7 @@
 -- - lovr.graphics.getDevice() more specific return value and documentation
 --   (available in .table field of return value)
 -- - global vector constructors documentation
--- - LuaTable specializations (e.g. arrays)
+-- - LuaTable specializations
 -- - enet
 -- - http
 --
@@ -264,25 +264,55 @@ return function (api)
     lightuserdata = 'any',
     ['function'] = '(this: void, ...args: any[]) => any',
     ['*'] = 'any',
-    ['Object'] = 'LovrObject'
+    ['Object'] = 'LovrObject',
+    ['nil'] = 'undefined'
   }
 
   local convert_type
 
   local function convert_table (table_fields)
     local result = '{ '
-    for _, field in ipairs (table_fields) do
+    for i, field in ipairs (table_fields) do
       local optional = field.default and '?' or ''
-      result = result .. field.name .. optional .. ': ' .. convert_type(field.type, field.table) .. ', '
+      result = result .. field.name .. optional .. ': ' .. convert_type(field.type, field.table)
+      if i < #table_fields then
+        result = result .. ', '
+      end
     end
     return result .. '}'
   end
 
-  function convert_type (t, table_fields)
+  local function make_array_type(t)
+    if t:match '|' then
+      t = '(' .. t .. ')'
+    end
+    return t .. '[]'
+  end
+
+  local function convert_individual_type (t, table_fields)
     if t == 'table' and table_fields then
       return convert_table (table_fields)
     else
       return type_map[t] or t
+    end
+  end
+
+  function convert_type(t, table_fields)
+    t = t:match('^%s*(.-)%s*$')
+    local array_pattern = '^{(.*)}$'
+    if t:match(array_pattern) then
+      local inner = t:match(array_pattern)
+      local converted = convert_type(inner)
+      return make_array_type(converted)
+    elseif t:match('|') then
+      local result
+      for subtype in t:gmatch('[^|]+') do
+        result = result and (result .. ' | ') or ''
+        result = result .. convert_type(subtype)
+      end
+      return result
+    else
+      return convert_individual_type(t, table_fields)
     end
   end
 
@@ -303,7 +333,7 @@ return function (api)
       if name == '...' then
         name = name .. 'rest'
       end
-      t = t .. '[]'
+      t = make_array_type(t)
     end
     return name .. (optional and '?' or '') .. ': ' .. t
   end
@@ -321,7 +351,7 @@ return function (api)
           if name == '...' then
             name = '...rest'
           end
-          t = t .. '[]'
+          t = make_array_type(t)
         end
         ret = ret .. name .. ': ' .. t
         if n < #returns then
