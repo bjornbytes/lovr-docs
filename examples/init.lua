@@ -48,6 +48,7 @@ return {
   'Effects/Billboards',
   'Effects/Blur',
   'Effects/Clipping',
+  'Effects/Fancy_Line',
   'Effects/Stereo_Image',
   'Effects/Cubemap_Generate',
   'Effects/Cubemap_Texturing',
