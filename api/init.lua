@@ -10212,6 +10212,10 @@ return {
             {
               name = "screen",
               description = "The opposite of multiply: the pixel colors are inverted, multiplied, and inverted again, producing a lightening effect."
+            },
+            {
+              name = "none",
+              description = "The incoming colors will replace the existing colors.  This is the same as using a blend mode of `nil`."
             }
           }
         },
