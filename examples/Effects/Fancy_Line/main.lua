@@ -32,11 +32,11 @@ local indices = lovr.graphics.newBuffer('u16', quads)
 local shader = lovr.graphics.newShader([[
 readonly buffer Points { float data[]; };
 
-layout(location = 0) flat out vec3 head;
-layout(location = 1) flat out vec3 tail;
-layout(location = 2) flat out vec4 headColor;
-layout(location = 3) flat out vec4 tailColor;
-layout(location = 4) out float width;
+flat out vec3 head;
+flat out vec3 tail;
+flat out vec4 headColor;
+flat out vec4 tailColor;
+out float width;
 
 vec3 hsv2rgb(vec3 c) {
   vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
@@ -86,11 +86,11 @@ vec4 lovrmain() {
   return ClipFromView * vec4(PositionWorld, 1.);
 }
 ]], [[
-layout(location = 0) flat in vec3 head;
-layout(location = 1) flat in vec3 tail;
-layout(location = 2) flat in vec4 headColor;
-layout(location = 3) flat in vec4 tailColor;
-layout(location = 4) in float width;
+flat in vec3 head;
+flat in vec3 tail;
+flat in vec4 headColor;
+flat in vec4 tailColor;
+in float width;
 
 layout(depth_less) out float FragDepth;
 
