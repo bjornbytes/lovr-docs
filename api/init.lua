@@ -14925,7 +14925,7 @@ return {
                     {
                       name = "node",
                       type = "string | number",
-                      description = "The index of the node."
+                      description = "The name or index of a node."
                     },
                     {
                       name = "space",
@@ -14977,7 +14977,7 @@ return {
                     {
                       name = "node",
                       type = "string | number",
-                      description = "The name or index of the node."
+                      description = "The name or index of a node."
                     },
                     {
                       name = "origin",
@@ -15029,7 +15029,7 @@ return {
                     {
                       name = "node",
                       type = "string | number",
-                      description = "The index of a node."
+                      description = "The name or index of a node."
                     },
                     {
                       name = "origin",

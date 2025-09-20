@@ -4,7 +4,7 @@ return {
   arguments = {
     node = {
       type = 'string | number',
-      description = 'The name or index of the node.'
+      description = 'The name or index of a node.'
     },
     origin = {
       type = 'OriginType',
