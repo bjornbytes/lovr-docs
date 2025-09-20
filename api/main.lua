@@ -301,10 +301,13 @@ end
 local function validateType(type, fields, key, kind)
   if not type then
     warn('Missing %s type in %s', kind, key)
-  elseif type:match('^[A-Z]') then
-    warnIf(not lookup[type], 'Invalid %s type "%s" in %s', kind, type, key)
+  elseif type == 'table' and fields then
+    for i, field in ipairs(fields) do
+      validateType(field.type, field.table, key, kind)
+    end
   else
     local valid = {
+      ['nil'] = true,
       boolean = true,
       number = true,
       table = true,
@@ -315,11 +318,11 @@ local function validateType(type, fields, key, kind)
       ['*'] = true
     }
 
-    warnIf(not valid[type], 'Invalid %s type "%s" in %s', kind, type, key)
-
-    if type == 'table' and fields then
-      for i, field in ipairs(fields) do
-        validateType(field.type, field.table, key, kind)
+    for word in type:gmatch('%w+') do
+      if word:match('^[A-Z]') then
+        warnIf(not lookup[word], 'Invalid %s type "%s" in %s', kind, word, key)
+      else
+        warnIf(not valid[word], 'Invalid %s type "%s" in %s', kind, word, key)
       end
     end
   end

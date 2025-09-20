@@ -3797,7 +3797,7 @@ return {
                 },
                 {
                   name = "contents",
-                  type = "Blob | 'stream' | nil",
+                  type = "Blob | string | nil",
                   description = "A Blob containing raw audio samples to use as the initial contents, 'stream' to create an audio stream, or `nil` to leave the data initialized to zero.",
                   default = "nil"
                 }
@@ -12391,7 +12391,7 @@ return {
               arguments = {
                 {
                   name = "...",
-                  type = "Pass | false | nil",
+                  type = "Pass | boolean | nil",
                   description = "The pass objects to submit.  Falsy values will be skipped."
                 }
               },
@@ -12407,7 +12407,7 @@ return {
               arguments = {
                 {
                   name = "t",
-                  type = "{Pass | false}",
+                  type = "{Pass | boolean}",
                   description = "A table of passes to submit.  Falsy values will be skipped."
                 }
               },
