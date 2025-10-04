@@ -64,12 +64,12 @@ return {
       returns = {}
     },
     {
-      description = 'Copies a single field to a buffer with numbers (buffer length must be 1).',
+      description = 'Copies a single field to a buffer with numbers (buffer length must be 0).',
       arguments = { '...numbers' },
       returns = {}
     },
     {
-      description = 'Copies a single vector to a buffer (buffer length must be 1).',
+      description = 'Copies a single vector to a buffer (buffer length must be 0).',
       arguments = { 'vector' },
       returns = {}
     },
