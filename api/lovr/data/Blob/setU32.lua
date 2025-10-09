@@ -14,7 +14,7 @@ return {
       ]]
     },
     table = {
-      type = 'number',
+      type = '{number}',
       description = [[
         A table of numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes,
         ranging from 0 to 4294967296).

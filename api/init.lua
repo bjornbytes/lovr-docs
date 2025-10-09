@@ -437,7 +437,7 @@ return {
               description = "The id of the key (ignores keyboard layout, may vary between keyboards)."
             },
             {
-              name = "repeat",
+              name = "isrepeat",
               type = "boolean",
               description = "Whether the event is the result of a key repeat instead of an actual press."
             }
@@ -4323,7 +4323,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from -127 to 128)."
                     }
                   },
@@ -4372,7 +4372,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
                     }
                   },
@@ -4421,7 +4421,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from -32768 to 32767)."
                     }
                   },
@@ -4470,7 +4470,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
                     }
                   },
@@ -4519,7 +4519,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from -2147483648 to 2147483647)."
                     }
                   },
@@ -4568,7 +4568,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
                     }
                   },
@@ -4617,7 +4617,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 32-bit floats (each taking up 4 bytes)."
                     }
                   },
@@ -4666,7 +4666,7 @@ return {
                     },
                     {
                       name = "table",
-                      type = "number",
+                      type = "{number}",
                       description = "A table of numbers to write to the blob as 64-bit floating point numbers (each taking up 8 bytes)."
                     }
                   },

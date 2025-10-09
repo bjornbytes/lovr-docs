@@ -13,7 +13,7 @@ return {
       ]]
     },
     table = {
-      type = 'number',
+      type = '{number}',
       description = [[
         A table of numbers to write to the blob as 64-bit floating point numbers (each taking up 8
         bytes).

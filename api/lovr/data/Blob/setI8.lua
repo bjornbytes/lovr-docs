@@ -14,7 +14,7 @@ return {
       ]]
     },
     table = {
-      type = 'number',
+      type = '{number}',
       description = [[
         A table of numbers to write to the blob as 8-bit signed integers (each taking up 1 byte,
         ranging from -127 to 128).

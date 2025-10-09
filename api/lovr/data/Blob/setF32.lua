@@ -11,7 +11,7 @@ return {
       description = 'Numbers to write to the blob as 32-bit floats (each taking up 4 bytes).'
     },
     table = {
-      type = 'number',
+      type = '{number}',
       description = [[
         A table of numbers to write to the blob as 32-bit floats (each taking up 4 bytes).
       ]]

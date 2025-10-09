@@ -11,7 +11,7 @@ return {
       type = 'number',
       description = 'The id of the key (ignores keyboard layout, may vary between keyboards).'
     },
-    ['repeat'] = {
+    isrepeat = {
       type = 'boolean',
       description = 'Whether the event is the result of a key repeat instead of an actual press.'
     }
@@ -19,7 +19,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'key', 'scancode', 'repeat' },
+      arguments = { 'key', 'scancode', 'isrepeat' },
       returns = {}
     }
   },
