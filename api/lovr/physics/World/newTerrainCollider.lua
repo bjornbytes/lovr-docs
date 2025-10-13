@@ -44,8 +44,10 @@ return {
         }
       },
       returns = {
-        name = 'height',
-        type = 'number'
+        {
+          name = 'height',
+          type = 'number'
+        }
       },
       description = [[
         A function that returns terrain height from x and z coordinates.  The x and z inputs will

@@ -297,7 +297,7 @@ return {
           returns = {
             {
               name = "skip",
-              type = "boolean",
+              type = "boolean | nil",
               description = "If truthy, the input Pass will not be submitted to the GPU."
             }
           }
@@ -39894,8 +39894,10 @@ return {
                         }
                       },
                       returns = {
-                        name = "height",
-                        type = "number"
+                        {
+                          name = "height",
+                          type = "number"
+                        }
                       }
                     },
                     {

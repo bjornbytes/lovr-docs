@@ -19,15 +19,27 @@ declare class Joint end
 declare class Shape end
 ]]
 
-local function genType(type, optional)
-  local suffix = optional and '?' or ''
+local genFunctionType
 
-  if type == 'function' then -- TODO
-    return '() -> ()' .. suffix
-  elseif type == '*' then
-    return 'any' .. suffix
+local function genType(info)
+  local types = {}
+
+  for t in info.type:gmatch('[%w{}%*%.]+') do
+    if t == 'function' then -- TODO
+      table.insert(types, genFunctionType(info))
+    elseif t == '*' then
+      table.insert(types, 'any')
+    elseif t == 'table' then
+      table.insert(types, '{}')
+    else
+      table.insert(types, t)
+    end
+  end
+
+  if #types == 1 then
+    return types[1] .. (info.default and '?' or '')
   else
-    return type:gsub('table', '{}') .. suffix
+    return table.concat(types, ' | ') .. (info.default and ' | nil' or '')
   end
 end
 
@@ -35,7 +47,7 @@ local function genArguments(arguments, ismethod)
   local t = {}
 
   for _, arg in ipairs(arguments) do
-    local name, type = arg.name, genType(arg.type, arg.default)
+    local name, type = arg.name, genType(arg)
 
     if name:match('%.%.%.') then
       if ismethod then
@@ -55,17 +67,21 @@ local function genReturns(returns)
   local t = {}
 
   for _, ret in ipairs(returns) do
-    table.insert(t, genType(ret.type))
+    table.insert(t, genType(ret))
   end
 
   return table.concat(t, ', ')
 end
 
-local function genFunctionType(fn, variant)
-  local args = genArguments(variant.arguments)
-  local rets = genReturns(variant.returns)
+genFunctionType = function(fn)
+  if not fn.arguments or not fn.returns then
+    return '() -> ()'
+  end
 
-  if #variant.returns == 1 then
+  local args = genArguments(fn.arguments)
+  local rets = genReturns(fn.returns)
+
+  if #fn.returns == 1 and fn.returns[1].type ~= 'function' then
     return ('(%s) -> %s'):format(args, rets)
   else
     return ('(%s) -> (%s)'):format(args, rets)
@@ -82,7 +98,7 @@ local function genMethod(method, variant)
     args = 'self, ' .. args
   end
 
-  if #variant.returns > 1 then
+  if #variant.returns > 1 or rets:match('%(') then
     rets = (': (%s)'):format(rets)
   elseif #variant.returns == 1 then
     rets = ': ' .. rets
@@ -114,10 +130,10 @@ return function(api)
       write('  %s:\n', fn.name)
 
       for i, variant in ipairs(fn.variants) do
-        write('    & (%s)%s\n', genFunctionType(fn, variant), i == #fn.variants and ',' or '')
+        write('    & (%s)%s\n', genFunctionType(variant), i == #fn.variants and ',' or '')
       end
     else
-      write('  %s: %s,\n', fn.name, genFunctionType(fn, fn.variants[1]))
+      write('  %s: %s,\n', fn.name, genFunctionType(fn.variants[1]))
     end
   end
 
