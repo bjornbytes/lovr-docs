@@ -20,9 +20,7 @@ touchscreens, etc.
 By default, Apple quarantines applications downloaded from the internet and prevents you from
 opening them.  Run this to free LÖVR from the quarantine:
 
-```
-xattr -d com.apple.quarantine /path/to/lovr.app
-```
+    xattr -d com.apple.quarantine /path/to/lovr.app
 
 After typing `xattr -d com.apple.quarantine `, you can drag the app onto the terminal to get the
 path automatically.
