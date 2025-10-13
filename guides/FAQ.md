@@ -15,6 +15,18 @@ design considerations.  This means that LÖVR does not prioritize features commo
 desktop-focused game engines like advanced control over the desktop window, joystick support,
 touchscreens, etc.
 
+> I can't run LÖVR on macOS!  It says the app is damaged.
+
+By default, Apple quarantines applications downloaded from the internet and prevents you from
+opening them.  Run this to free LÖVR from the quarantine:
+
+```
+xattr -d com.apple.quarantine /path/to/lovr.app
+```
+
+After typing `xattr -d com.apple.quarantine `, you can drag the app onto the terminal to get the
+path automatically.
+
 > Is there any way to access keyboard/mouse input?
 
 Yes, `lovr.system` has functions for keyboard and mouse input, and there are input events like
@@ -28,11 +40,10 @@ LÖVR is heavily inspired by LÖVE and has a similar Lua API, but the 2 projects
 
 LÖVR should work on any AR headset that supports OpenXR and Vulkan.  More details:
 
-- HoloLens is not known to work because it doesn't support Vulkan.
-- Magic Leap 2 is supported, but requires compiling an `x86_64` APK, since LÖVR's prebuilt APKs are
-  built for `arm64`.
-- Apple Vision Pro is not known to work because it doesn't support OpenXR or Vulkan.
 - Oculus Quest devices can use camera passthrough.
+- Magic Leap 2 is supported (but make sure you use the `x86_64` APK instead of `arm64`).
+- HoloLens does not work because it doesn't support Vulkan.
+- Apple Vision Pro does not work, because it doesn't support OpenXR or Vulkan.
 - SteamVR devices can use Room View 3D.
 
 See `lovr.headset.getPassthrough` and `lovr.headset.setPassthrough` for managing how virtual content
