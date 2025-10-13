@@ -25,7 +25,7 @@ local function genType(info)
   local types = {}
 
   for t in info.type:gmatch('[%w{}%*%.]+') do
-    if t == 'function' then -- TODO
+    if t == 'function' then
       table.insert(types, genFunctionType(info))
     elseif t == '*' then
       table.insert(types, 'any')
