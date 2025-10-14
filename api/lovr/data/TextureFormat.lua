@@ -32,15 +32,15 @@ return {
     },
     {
       name = 'r16',
-      description = 'One 16-bit channel.  2 bytes per pixel.'
+      description = 'One 16-bit channel.  2 bytes per pixel. Unsigned normalized'
     },
     {
       name = 'rg16',
-      description = 'Two 16-bit channels.  4 bytes per pixel.'
+      description = 'Two 16-bit channels.  4 bytes per pixel. Unsigned normalized'
     },
     {
       name = 'rgba16',
-      description = 'Four 16-bit channels.  8 bytes per pixel.'
+      description = 'Four 16-bit channels.  8 bytes per pixel. Unsigned normalized'
     },
     {
       name = 'r16f',
