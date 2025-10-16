@@ -42961,7 +42961,7 @@ return {
           name = "pack",
           summary = "Pack numbers into a vector.",
           description = "Packs numbers into a vector.",
-          key = "lovr.vector.pack",
+          key = "vector.pack",
           module = "vector",
           examples = {
             {

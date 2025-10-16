@@ -106,7 +106,7 @@ local function processFunction(path, parent)
   local fn = require(path)
 
   fn.name = path:match('[^/]+$')
-  fn.key = parent.name:match('^[A-Z]') and (parent.key .. ':' .. fn.name) or (path:gsub('/', '.'):gsub('callbacks%.', ''))
+  fn.key = parent.name:match('^[A-Z]') and (parent.key .. ':' .. fn.name) or (parent.key .. '.' .. fn.name)
   fn.deprecated = type(fn.deprecated) == 'string' and unwrap(fn.deprecated) or fn.deprecated
   fn.description = unwrap(fn.description)
   fn.module = parent.module or parent.key
