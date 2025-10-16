@@ -42968,7 +42968,7 @@ return {
               code = "local a = vector.pack(1, 2, 3)\nlocal b = vector.pack(5)\nprint(a + b) --> 6, 7, 8\n\n-- put the 3 numbers from lovr.headset.getPosition into a vector!\nlocal position = vector(lovr.headset.getPosition())"
             }
           },
-          notes = "As a shortcut, the `vector` library can be called like a function, which calls this function:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
+          notes = "As a shortcut, the `vector` library can be called like a function, which calls `vector.pack`:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
           variants = {
             {
               arguments = {

@@ -33,7 +33,7 @@ return {
     }
   },
   notes = [[
-    As a shortcut, the `vector` library can be called like a function, which calls this function:
+    As a shortcut, the `vector` library can be called like a function, which calls `vector.pack`:
 
         vector(x, y, z) -- same as vector.pack(x, y, z)
   ]],
