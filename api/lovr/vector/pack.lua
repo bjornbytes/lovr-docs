@@ -16,7 +16,7 @@ return {
     },
     z = {
       type = 'number',
-      default = 'z',
+      default = 'x',
       description = 'The z component of the vector.'
     }
   },

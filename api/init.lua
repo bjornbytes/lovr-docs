@@ -42988,7 +42988,7 @@ return {
                   name = "z",
                   type = "number",
                   description = "The z component of the vector.",
-                  default = "z"
+                  default = "x"
                 }
               },
               returns = {
