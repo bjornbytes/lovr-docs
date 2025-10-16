@@ -42958,6 +42958,32 @@ return {
       external = true,
       functions = {
         {
+          name = "normalize",
+          summary = "Get a normalized vector.",
+          description = "Returns the normalized version of the input vector (a vector that points in the same direction, but has a length of 1).",
+          key = "vector.normalize",
+          module = "vector",
+          notes = "This can be called as a method, e.g. `v:normalize()`.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The vector to normalize."
+                }
+              },
+              returns = {
+                {
+                  name = "normalized",
+                  type = "vector",
+                  description = "The normalized vector."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "pack",
           summary = "Pack numbers into a vector.",
           description = "Packs numbers into a vector.",
