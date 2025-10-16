@@ -31,6 +31,11 @@ return {
       description = 'This function returns the current version of LÖVR.'
     },
     {
+      name = 'Vector Math',
+      tag = 'vectors',
+      description = 'LÖVR has a few extra libraries to make vector math easier.'
+    },
+    {
       name = 'Libraries',
       tag = 'libraries',
       description = 'LÖVR bundles a few third-party modules by default.'

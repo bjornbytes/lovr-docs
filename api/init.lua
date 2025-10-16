@@ -1192,6 +1192,11 @@ return {
           description = "This function returns the current version of LÖVR."
         },
         {
+          name = "Vector Math",
+          tag = "vectors",
+          description = "LÖVR has a few extra libraries to make vector math easier."
+        },
+        {
           name = "Libraries",
           tag = "libraries",
           description = "LÖVR bundles a few third-party modules by default."
@@ -42919,6 +42924,61 @@ return {
                   name = "delta",
                   type = "number",
                   description = "The amount of time since the last call to this function, in seconds."
+                }
+              }
+            }
+          }
+        }
+      },
+      objects = {}
+    },
+    {
+      name = "vector",
+      tag = "vectors",
+      summary = "3D vector type.",
+      description = "TODO",
+      key = "lovr.vector",
+      enums = {},
+      functions = {
+        {
+          name = "pack",
+          summary = "Pack numbers into a vector.",
+          description = "Packs numbers into a vector.",
+          key = "lovr.vector.pack",
+          module = "lovr.vector",
+          examples = {
+            {
+              code = "local a = vector.pack(1, 2, 3)\nlocal b = vector.pack(5)\nprint(a + b) --> 6, 7, 8\n\n-- put the 3 numbers from lovr.headset.getPosition into a vector!\nlocal position = vector(lovr.headset.getPosition())"
+            }
+          },
+          notes = "As a shortcut, the `vector` library can be called like a function, which calls this function:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the vector.",
+                  default = "0"
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the vector.",
+                  default = "x"
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the vector.",
+                  default = "z"
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The new vector."
                 }
               }
             }
