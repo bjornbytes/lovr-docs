@@ -1193,7 +1193,7 @@ return {
         },
         {
           name = "Vector Math",
-          tag = "vectors",
+          tag = "vector-lib",
           description = "LÖVR has a few extra libraries to make vector math easier."
         },
         {
@@ -42950,7 +42950,7 @@ return {
     },
     {
       name = "vector",
-      tag = "vectors",
+      tag = "vector-lib",
       summary = "3D vector type.",
       description = "TODO",
       key = "vector",

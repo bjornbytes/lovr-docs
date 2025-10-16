@@ -32,7 +32,7 @@ return {
     },
     {
       name = 'Vector Math',
-      tag = 'vectors',
+      tag = 'vector-lib',
       description = 'LÖVR has a few extra libraries to make vector math easier.'
     },
     {

@@ -1,5 +1,5 @@
 return {
-  tag = 'vectors',
+  tag = 'vector-lib',
   summary = '3D vector type.',
   description = [[
     TODO
