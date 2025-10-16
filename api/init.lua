@@ -42933,19 +42933,36 @@ return {
       objects = {}
     },
     {
+      name = "utf8",
+      tag = "libraries",
+      summary = "UTF-8 string processing.",
+      description = "LÖVR includes Lua 5.3's `utf8` library, even on Lua versions that don't support it.  Lua's regular strings aren't utf8-aware, so this library makes it easier to work with multi-byte characters that are outside the ASCII range.\n\nSee the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for documentation.",
+      key = "utf8",
+      enums = {},
+      examples = {
+        {
+          code = "local utf8 = require 'utf8'\n\nlocal str = 'LÖVR'\n\nprint(string.len(str)) --> prints 5, because Ö takes up 2 bytes\nprint(utf8.len(str))   --> prints 4"
+        }
+      },
+      external = true,
+      functions = {},
+      objects = {}
+    },
+    {
       name = "vector",
       tag = "vectors",
       summary = "3D vector type.",
       description = "TODO",
-      key = "lovr.vector",
+      key = "vector",
       enums = {},
+      external = true,
       functions = {
         {
           name = "pack",
           summary = "Pack numbers into a vector.",
           description = "Packs numbers into a vector.",
           key = "lovr.vector.pack",
-          module = "lovr.vector",
+          module = "vector",
           examples = {
             {
               code = "local a = vector.pack(1, 2, 3)\nlocal b = vector.pack(5)\nprint(a + b) --> 6, 7, 8\n\n-- put the 3 numbers from lovr.headset.getPosition into a vector!\nlocal position = vector(lovr.headset.getPosition())"
@@ -42985,22 +43002,6 @@ return {
           }
         }
       },
-      objects = {}
-    },
-    {
-      name = "utf8",
-      tag = "libraries",
-      summary = "UTF-8 string processing.",
-      description = "LÖVR includes Lua 5.3's `utf8` library, even on Lua versions that don't support it.  Lua's regular strings aren't utf8-aware, so this library makes it easier to work with multi-byte characters that are outside the ASCII range.\n\nSee the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for documentation.",
-      key = "utf8",
-      enums = {},
-      examples = {
-        {
-          code = "local utf8 = require 'utf8'\n\nlocal str = 'LÖVR'\n\nprint(string.len(str)) --> prints 5, because Ö takes up 2 bytes\nprint(utf8.len(str))   --> prints 4"
-        }
-      },
-      external = true,
-      functions = {},
       objects = {}
     }
   }
