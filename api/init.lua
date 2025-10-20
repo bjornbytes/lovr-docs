@@ -21325,7 +21325,7 @@ return {
               description = "Clears layers and mipmaps in a texture to a given color.\n\nWhen a Texture is being used as a canvas for a `Pass`, the clear color can be set with `Pass:setClear`, which a more efficient way to clear the texture before rendering.",
               key = "Texture:clear",
               module = "lovr.graphics",
-              notes = "The texture must have been created with the `transfer` usage to clear it.\n\nThe clear color will be interpreted as a linear color for sRGB formats.",
+              notes = "The texture must have been created with the `transfer` usage to clear it.\n\nThe clear color will be interpreted as a linear color for sRGB formats.\n\nWhen clearing a 3D texture, the `layer` and `layerCount` arguments are ignored, and all of the layers in a mipmap level will be cleared.",
               related = {
                 "Buffer:clear",
                 "Texture:setPixels",

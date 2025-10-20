@@ -93,6 +93,9 @@ return {
     The texture must have been created with the `transfer` usage to clear it.
 
     The clear color will be interpreted as a linear color for sRGB formats.
+
+    When clearing a 3D texture, the `layer` and `layerCount` arguments are ignored, and all of the
+    layers in a mipmap level will be cleared.
   ]],
   related = {
     'Buffer:clear',
