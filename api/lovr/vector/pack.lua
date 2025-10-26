@@ -1,23 +1,23 @@
 return {
   summary = 'Pack numbers into a vector.',
-  description = [[
-    Packs numbers into a vector.
-  ]],
+  description = 'Packs numbers into a vector.',
   arguments = {
     x = {
       type = 'number',
-      default = '0',
       description = 'The x component of the vector.'
     },
     y = {
       type = 'number',
-      default = 'x',
       description = 'The y component of the vector.'
     },
     z = {
       type = 'number',
-      default = 'x',
+      default = '0',
       description = 'The z component of the vector.'
+    },
+    n = {
+      type = 'number',
+      description = 'A number to assign to the x, y, and z components of the vector.'
     }
   },
   returns = {
@@ -30,10 +30,14 @@ return {
     {
       arguments = { 'x', 'y', 'z' },
       returns = { 'v' }
+    },
+    {
+      arguments = { 'n' },
+      returns = { 'v' }
     }
   },
   notes = [[
-    As a shortcut, the `vector` library can be called like a function, which calls `vector.pack`:
+    The `vector` library can be called like a function, which is shorthand for `vector.pack`:
 
         vector(x, y, z) -- same as vector.pack(x, y, z)
   ]],
@@ -44,5 +48,8 @@ return {
 
     -- put the 3 numbers from lovr.headset.getPosition into a vector!
     local position = vector(lovr.headset.getPosition())
-  ]]
+  ]],
+  related = {
+    'vector.unpack'
+  }
 }

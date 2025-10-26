@@ -42958,12 +42958,113 @@ return {
       external = true,
       functions = {
         {
+          name = "cross",
+          summary = "Get the cross product of two vectors.",
+          description = "Returns the cross product of two vectors.  This is a vector that is perpendicular to both vectors.",
+          key = "vector.cross",
+          module = "vector",
+          examples = {
+            {
+              code = "vector.cross(vector(1, 0, 0), vector(0, 1, 0)) --> vector(0, 0, 1)"
+            }
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "v1",
+                  type = "vector",
+                  description = "The first vector."
+                },
+                {
+                  name = "v2",
+                  type = "vector",
+                  description = "The second vector."
+                }
+              },
+              returns = {
+                {
+                  name = "cross",
+                  type = "vector",
+                  description = "A vector perpendicular to both `v1` and `v2`."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "distance",
+          summary = "Get the distance between two vectors.",
+          description = "Returns the distance between two vectors.",
+          key = "vector.distance",
+          module = "vector",
+          examples = {
+            {
+              code = "vector.distance(vector(0, 0, 0), vector(10, 0, 0)) --> 10"
+            }
+          },
+          notes = "This is short for `vector.length(v1 - v2)",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "v1",
+                  type = "vector",
+                  description = "The first vector."
+                },
+                {
+                  name = "v2",
+                  type = "vector",
+                  description = "The second vector."
+                }
+              },
+              returns = {
+                {
+                  name = "distance",
+                  type = "number",
+                  description = "The distance between the two vectors."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "length",
+          summary = "Get the length of a vector.",
+          description = "Returns the length of the vector.",
+          key = "vector.length",
+          module = "vector",
+          examples = {
+            {
+              code = "vector(0, 5, 0):length() --> 5\nvector(3, 4):length() --> 5"
+            }
+          },
+          notes = "The length of a vector is computed as:\n\n    math.sqrt(x ^ 2 + y ^ 2 + z ^ 2)",
+          related = {
+            "vector.normalize"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "length",
+                  type = "number",
+                  description = "The length of the vector."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "normalize",
           summary = "Get a normalized vector.",
-          description = "Returns the normalized version of the input vector (a vector that points in the same direction, but has a length of 1).",
+          description = "Returns a normalized version of the input vector (a vector that points in the same direction, but has a length of 1).",
           key = "vector.normalize",
           module = "vector",
-          notes = "This can be called as a method, e.g. `v:normalize()`.",
+          related = {
+            "vector.length"
+          },
           variants = {
             {
               arguments = {
@@ -42994,27 +43095,28 @@ return {
               code = "local a = vector.pack(1, 2, 3)\nlocal b = vector.pack(5)\nprint(a + b) --> 6, 7, 8\n\n-- put the 3 numbers from lovr.headset.getPosition into a vector!\nlocal position = vector(lovr.headset.getPosition())"
             }
           },
-          notes = "As a shortcut, the `vector` library can be called like a function, which calls `vector.pack`:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
+          notes = "The `vector` library can be called like a function, which is shorthand for `vector.pack`:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
+          related = {
+            "vector.unpack"
+          },
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x component of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y component of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
                 },
                 {
                   name = "z",
                   type = "number",
                   description = "The z component of the vector.",
-                  default = "x"
+                  default = "0"
                 }
               },
               returns = {
@@ -43022,6 +43124,59 @@ return {
                   name = "v",
                   type = "vector",
                   description = "The new vector."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The new vector."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "unpack",
+          summary = "Get the components of a vector as numbers.",
+          description = "Returns the components of the vector as numbers.",
+          key = "vector.unpack",
+          module = "vector",
+          examples = {
+            {
+              code = "local x, y, z = vector(1, 2, 3):unpack()"
+            }
+          },
+          related = {
+            "vector.pack"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the vector."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the vector."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the vector."
                 }
               }
             }
