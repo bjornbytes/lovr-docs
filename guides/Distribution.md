@@ -42,6 +42,13 @@ To create a .app on macOS, first get the stock LÖVR.app, either by downloading 
 [here](https://lovr.org/download/mac) or by setting the `-DLOVR_BUILD_BUNDLE=ON` flag when building
 with CMake.
 
+:::note
+If you build your own .app bundle, you may need to bundle MoltenVK and Vulkan libraries for
+distribution. Prebuilt binaries include these libraries, but custom builds require them to be added
+manually. The libraries should be placed in `YourApp.app/Contents/Frameworks/` as `libvulkan.1.dylib`
+and `libMoltenVK.dylib`. See the `Compiling` guide for more information about Vulkan installation.
+:::
+
 Then, to get the .app to run a custom project instead of the nogame screen, put a .lovr archive in
 the `LÖVR.app/Contents/Resources` folder (right click and use "Show Package Contents" to get to the
 Contents folder).

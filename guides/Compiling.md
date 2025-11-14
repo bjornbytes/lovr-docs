@@ -61,30 +61,46 @@ via the command line as `lovr.exe path/to/project`.
 macOS
 ---
 
-Build using CMake, as above:
+### Installing Dependencies
+
+LÖVR on MacOS requires MoltenVK 1.3.268 or higher. You can install it using either method:
+
+**Option 1: Homebrew (Recommended)**
+    $ brew install vulkan-loader molten-vk
+
+**Option 2: Vulkan SDK**
+Install the Vulkan SDK from [LunarG](https://vulkan.lunarg.com/). Be sure to leave the "global install" checkbox enabled while installing so LÖVR is able to find the Vulkan library.
+
+Prebuilt binaries include MoltenVK in the .app bundle, so installing the Vulkan SDK is optional when using one of those builds.
+
+### Building
+
+Build using CMake:
 
     $ mkdir build
     $ cd build
     $ cmake ..
     $ cmake --build .
 
-The lovr executable should exist in `lovr/build/bin` now.  It's recommended to set up an alias or
-symlink so that this executable can be found in your PATH environment variable.  Once that's done,
-you can run a project like this:
+The lovr executable should exist in `lovr/build/bin` now.
 
-    $ lovr /path/to/myGame
+### Running
+
+If you installed Vulkan via Homebrew, you may need to set the library path:
+
+    $ export DYLD_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_LIBRARY_PATH
+    $ ./build/bin/lovr /path/to/myGame
+
+It's recommended to set up an alias or symlink so that this executable can be found in your PATH environment variable.
 
 :::note
-You can set the `LOVR_BUILD_BUNDLE` CMake variable to `ON` to build a .app instead of a plain
-executable.
+You can set the `LOVR_BUILD_BUNDLE` CMake variable to `ON` to build a .app instead of a plain executable.
 :::
 
-LÖVR requires MoltenVK 1.3.268 or higher.  The easiest way to get MoltenVK is to install the Vulkan
-SDK from LunarG.  Be sure to leave the "global install" checkbox enabled while installing so LÖVR is
-able to find the Vulkan library.
+### Troubleshooting
 
-Prebuilt binaries include MoltenVK in the .app bundle, so installing the Vulkan SDK is optional when
-using one of those builds.
+- If LÖVR starts but no window appears, check that Vulkan/MoltenVK is properly installed and the library path is set correctly.
+- If you get "Failed to load vulkan library" errors, ensure `DYLD_LIBRARY_PATH` includes the path to your Vulkan libraries (e.g., `/opt/homebrew/lib` for Homebrew installations).
 
 Linux
 ---
