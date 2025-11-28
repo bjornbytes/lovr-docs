@@ -19,7 +19,7 @@ return {
   variants = {
     {
       arguments = {},
-      returns = {}
+      returns = { 'dt' }
     }
   },
   related = {

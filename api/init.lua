@@ -25950,7 +25950,13 @@ return {
           variants = {
             {
               arguments = {},
-              returns = {}
+              returns = {
+                {
+                  name = "dt",
+                  type = "number",
+                  description = "The delta time since the last frame.  This is the same value returned by `lovr.headset.getDeltaTime`, and is used by boot.lua."
+                }
+              }
             }
           }
         },
