@@ -189,6 +189,16 @@ return {
               ]]
             },
             {
+              name = 'mask',
+              type = 'boolean',
+              description = [[
+                Enable or disable the headset mask.  This is an optimization that skips rendering
+                pixels on the edges of the headset texture that can't be seen while in the headset
+                due to lens distortion.  When enabled, at the beginning of the frame, the edges of
+                the headset texture will be filled in with black (and depth = 1).
+              ]]
+            },
+            {
               name = 'antialias',
               type = 'boolean',
               description = 'Whether headset rendering should be antialiased.'
@@ -345,6 +355,7 @@ return {
           t.headset.start = true
           t.headset.supersample = false
           t.headset.seated = false
+          t.headset.mask = true
           t.headset.antialias = true
           t.headset.stencil = false
           t.headset.submitdepth = true
