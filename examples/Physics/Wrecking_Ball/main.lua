@@ -1,6 +1,6 @@
---[[ Wrecking ball suspended from rope. Cyrus-free.
+--[[ Wrecking ball suspended from rope.
 
-Making realtime rope simulation is finicky on any physics engine. At certain weight the force becomes
+Making realtime rope simulation is finicky in any physics engine. At certain weight the force becomes
 too much to be successfully distributed among rope elements.
 
 Some steps that can help solve the issue:
@@ -23,8 +23,9 @@ function lovr.load()
   local hanger = world:newBoxCollider(hangerPosition, vec3(0.3, 0.1, 0.3))
   hanger:setKinematic(true)
   -- ball
-  local ballPosition = vec3(-1, 1, -1)
+  local ballPosition = vec3(-1, 1.5, -1)
   local ball = world:newSphereCollider(ballPosition, 0.2)
+  ball:setMass(10)
   -- rope
   local firstEnd, lastEnd = makeRope(
     hangerPosition + vec3(0, -0.1, 0),
@@ -80,16 +81,11 @@ function makeRope(origin, destination, thickness, elements)
     local position = vec3(origin):lerp(destination, (i - 0.5) / elements)
     local anchor   = vec3(origin):lerp(destination, (i - 1.0) / elements)
     element = world:newBoxCollider(position, vec3(thickness, thickness, elementSize * 0.95))
-    element:setRestitution(0.1)
     element:setGravityIgnored(true)
     element:setOrientation(quat(orientation))
-    element:setLinearDamping(0.01)
-    element:setAngularDamping(0.01)
-    element:setMass(0.001)
+    element:setMass(0.1)
     if prev then
-      local joint = lovr.physics.newBallJoint(prev, element, anchor)
-      joint:setResponseTime(10)
-      joint:setTightness(1)
+      local joint = lovr.physics.newHingeJoint(prev, element)
     else
       first = element
     end
