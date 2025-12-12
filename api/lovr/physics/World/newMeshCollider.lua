@@ -9,7 +9,7 @@ return {
 
     MeshShapes are not treated as solid objects, but instead a collection of triangles.  They do not
     have mass or volume, and there is no concept of being "inside" a mesh.  `ConvexShape` is a good
-    alternative for solid objects with an arbitrary shape.
+    alternative for making solid objects.
   ]],
   arguments = {
     vertices = {

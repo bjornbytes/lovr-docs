@@ -39641,7 +39641,7 @@ return {
             {
               name = "newMeshCollider",
               summary = "Add a Collider with a MeshShape to the World.",
-              description = "Adds a Collider to the world and attaches a `MeshShape`.\n\nColliders with mesh shapes are immobile and can only be used for static environment objects. The collider will be kinematic and forces/velocities will not move it.  Also, these colliders will not detect collisions with other kinematic objects.\n\nMeshShapes are not treated as solid objects, but instead a collection of triangles.  They do not have mass or volume, and there is no concept of being \"inside\" a mesh.  `ConvexShape` is a good alternative for solid objects with an arbitrary shape.",
+              description = "Adds a Collider to the world and attaches a `MeshShape`.\n\nColliders with mesh shapes are immobile and can only be used for static environment objects. The collider will be kinematic and forces/velocities will not move it.  Also, these colliders will not detect collisions with other kinematic objects.\n\nMeshShapes are not treated as solid objects, but instead a collection of triangles.  They do not have mass or volume, and there is no concept of being \"inside\" a mesh.  `ConvexShape` is a good alternative for making solid objects.",
               key = "World:newMeshCollider",
               module = "lovr.physics",
               notes = "The triangles in a MeshShape should use counterclockwise winding.",
