@@ -34298,15 +34298,81 @@ return {
             },
             {
               name = "moveKinematic",
-              summary = "TODO",
-              description = "TODO",
+              summary = "Move the collider towards a destination.",
+              description = "Moves the collider towards a destination pose.  The velocity of the collider is set so that the collider reaches the destination in `dt` seconds.",
               key = "Collider:moveKinematic",
               module = "lovr.physics",
-              notes = "",
-              related = {},
+              notes = "The collider doesn't stop when it reaches the destination, this is just a shorthand for setting its velocity.",
+              related = {
+                "Collider:setLinearVelocity",
+                "Collider:setAngularVelocity",
+                "Collider:applyForce",
+                "Collider:applyTorque"
+              },
               variants = {
                 {
-                  arguments = {},
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the target, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the target, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the target, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The angle of the target orientation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the target axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the target axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the target axis of rotation."
+                    },
+                    {
+                      name = "dt",
+                      type = "number",
+                      description = "How long it should take to reach the destination."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position of the target, in meters."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The target orientation."
+                    },
+                    {
+                      name = "dt",
+                      type = "number",
+                      description = "How long it should take to reach the destination."
+                    }
+                  },
                   returns = {}
                 }
               }
