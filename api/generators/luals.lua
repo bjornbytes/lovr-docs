@@ -57,27 +57,36 @@ end
 
 -- Utility for translating from the pseudo-syntax used for types in Lövr's API
 -- to the syntax used for LuaLS annotations.
-local function handleType(t)
+local function handleType(t, tab)
+    if tab then
+        local entries = {}
+
+        for _, e in ipairs(tab) do
+            local opt = e.default and "?" or ""
+            table.insert(entries, e.name .. ": " .. handleType(e.type, e.table) .. opt)
+        end
+
+        return "{" .. table.concat(entries, ", ") .. "}"
+    end
+
     if t == "*" then -- * -> any
         return "any"
     end
 
-    local a = t:match("{(.*)}")
+    local a = t:match("{(.*)}") -- {type} -> type[]
     if a then
+        return handleType(a) .. "[]"
+    end
+
+    if t:find("|") then -- {A | B} -> (A | B)
         local things = {}
-        for item in a:gmatch("[^|]+") do
+        for item in t:gmatch("[^|]+") do
             -- trim whitespace around each item
             item = item:match("^%s*(.-)%s*$")
             table.insert(things, handleType(item))
         end
 
-        -- {type} -> type[]
-        if #things == 1 then
-            return things[1] .. "[]"
-        end
-
-        -- {A | B} -> (A | B)[]
-        return "(" .. table.concat(things, "|") .. ")[]"
+        return "(" .. table.concat(things, " | ") .. ")"
     end
 
     -- A -> A
@@ -100,7 +109,7 @@ local function writeOperator(func, f)
 
         local params = {}
         for _, arg in ipairs(var.arguments) do
-            table.insert(params, handleType(arg.type))
+            table.insert(params, handleType(arg.type, arg.table))
         end
 
         if (#var.returns > 1) then
@@ -109,7 +118,7 @@ local function writeOperator(func, f)
 
         local returns = {}
         for _, ret in ipairs(var.returns) do
-            table.insert(returns, handleType(ret.type))
+            table.insert(returns, handleType(ret.type, ret.table))
         end
 
         --# ---@operator add(Vec2): Vec2
@@ -156,7 +165,7 @@ local function writeFunction(func, namespace, is_method, f)
     do
         for _, arg in ipairs(first.arguments) do
             local param = handleParam(arg.name)
-            local type = handleType(arg.type) .. (arg.default and "?" or "")
+            local type = handleType(arg.type, arg.table) .. (arg.default and "?" or "")
 
             f:write("---@param ")
             f:write(param)
@@ -175,7 +184,7 @@ local function writeFunction(func, namespace, is_method, f)
 
         for _, ret in ipairs(first.returns) do
             f:write("---@return ")
-            f:write(handleType(ret.type))
+            f:write(handleType(ret.type, ret.table))
             if ret.description then
                 f:write(" # ")
                 writeSingleLine(ret.description, f)
@@ -197,12 +206,12 @@ local function writeFunction(func, namespace, is_method, f)
             if arg.default then
                 param = param .. "?"
             end
-            table.insert(p, param .. ": " .. handleType(arg.type))
+            table.insert(p, param .. ": " .. handleType(arg.type, arg.table))
         end
 
         local returns = {}
         for _, ret in ipairs(var.returns) do
-            table.insert(returns, handleType(ret.type))
+            table.insert(returns, handleType(ret.type, ret.table))
         end
 
         f:write("---@overload fun(")
@@ -236,12 +245,12 @@ local function writeCallback(call, f)
         if arg.default then
             param = param .. "?"
         end
-        table.insert(p, param .. ": " .. handleType(arg.type))
+        table.insert(p, param .. ": " .. handleType(arg.type, arg.table))
     end
 
     local returns = {}
     for _, ret in ipairs(var.returns) do
-        table.insert(returns, handleType(ret.type))
+        table.insert(returns, handleType(ret.type, ret.table))
     end
 
     writeComment(call.description, f)
@@ -259,7 +268,7 @@ local function writeCallback(call, f)
     f:write("\n")
 end
 
-local function writeObject(object, namespace, f)
+local function writeObject(object, f)
     local key = object.key
     local name = object.name
 
@@ -323,7 +332,6 @@ return function(api)
     print("Processing modules")
     for _, module in ipairs(api.modules) do
         local key = module.key
-        local name = key:match("([^.]+)$")
         local is_main_module = key == "lovr"
 
         io.write(("- %-20s"):format(key .. "..."))
@@ -369,7 +377,7 @@ return function(api)
         end
 
         for _, objt in ipairs(module.objects) do
-            writeObject(objt, name, f)
+            writeObject(objt, f)
         end
 
         for _, func in ipairs(module.functions) do
