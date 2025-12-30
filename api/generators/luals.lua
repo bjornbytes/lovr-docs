@@ -99,9 +99,22 @@ local function handleType(t, tab)
     if tab then
         local entries = {}
 
+        local arrayable = {}
         for _, e in ipairs(tab) do
-            local opt = e.default and "?" or ""
-            table.insert(entries, e.name .. ": " .. handleType(e.type, e.table) .. opt)
+            if e.name:sub(1, 3) == "[]." then -- [].name: type -> {[number]: {name: type}}
+                e.name = e.name:sub(4)
+                table.insert(arrayable, e)
+            else -- {name: type} -> {name: type}
+                local opt = e.default and "?" or ""
+                local n = e.name .. ": " .. handleType(e.type, e.table) .. opt
+                table.insert(entries, n)
+            end
+        end
+
+        if #arrayable > 0 then
+            table.insert(entries,
+                "[number]: " .. handleType(nil, arrayable)
+            )
         end
 
         return "{" .. table.concat(entries, ", ") .. "}"
