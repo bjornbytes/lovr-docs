@@ -23,6 +23,8 @@ end
 -- likes.
 -- CONSIDER: Maybe break them even further at periods? Not sure.
 local function writeComment(cmt, f)
+    cmt = cmt:gsub('^%s*(.-)%s*$', '%1') -- Remove newlines at the beginning and end
+
     for line in cmt:gmatch('[^\r\n]+') do
         f:write("--- ")
         f:write(line)
@@ -33,6 +35,42 @@ end
 --- Turns a multiline string into a single line string.
 local function writeSingleLine(cmt, f)
     f:write((cmt:gsub("\n", "")))
+end
+
+local function writeInfo(data, f)
+    if data.description then
+        writeComment(data.description, f)
+    end
+
+    if data.notes then
+        f:write("---\n")
+        f:write("--- ## NOTES:\n")
+        writeComment(data.notes, f)
+    end
+
+    if data.examples then
+        f:write("---\n")
+        f:write("--- ## EXAMPLES:\n")
+        for i, example in ipairs(data.examples) do
+            f:write("--- ### ")
+            f:write(i)
+            f:write(".\n")
+
+            if example.description then
+                writeComment(example.description, f)
+            end
+
+            if example.code then
+                f:write("--- ```lua\n")
+                writeComment(example.code, f)
+                f:write("--- ```\n")
+            end
+        end
+    end
+
+    if data.key then
+        writeLink(data.key, f)
+    end
 end
 
 local function writeEnum(enum, f)
@@ -148,8 +186,7 @@ local function writeFunction(func, namespace, is_method, f)
     local key = func.key
     local name = func.name
 
-    writeComment(func.description, f)
-    writeLink(key, f)
+    writeInfo(func, f)
 
     if func.related then
         --# ---@see Robot.destroy
@@ -253,8 +290,7 @@ local function writeCallback(call, f)
         table.insert(returns, handleType(ret.type, ret.table))
     end
 
-    writeComment(call.description, f)
-    writeLink("lovr." .. name, f)
+    writeInfo(call, f)
 
     f:write("---@field ")
     f:write(name)
@@ -332,6 +368,7 @@ return function(api)
     print("Processing modules")
     for _, module in ipairs(api.modules) do
         local key = module.key
+        local name = module.name
         local is_main_module = key == "lovr"
 
         io.write(("- %-20s"):format(key .. "..."))
@@ -343,7 +380,7 @@ return function(api)
             goto continue
         end
 
-        local f = io.open(API_OUTPUT .. key .. ".lua", "w+")
+        local f = io.open(API_OUTPUT .. name .. ".lua", "w+")
         assert(f, "Could not open file, make sure you got permissions!")
 
         --# ---@meta lovr.audio
@@ -351,8 +388,7 @@ return function(api)
         f:write(key)
         f:write("\n\n")
 
-        writeComment(module.description, f)
-        writeLink(key, f)
+        writeInfo(module, f)
 
         --# ---@class lovr.audio
         f:write("---@class ")
@@ -384,27 +420,32 @@ return function(api)
             writeFunction(func, key, false, f)
         end
 
-        -- We write all the darn globals in the world.
-        if is_main_module then
-            f:write("vec2 = lovr.math.vec2\n")
-            f:write("Vec2 = lovr.math.newVec2\n")
-            f:write("vec3 = lovr.math.vec3\n")
-            f:write("Vec3 = lovr.math.newVec3\n")
-            f:write("vec4 = lovr.math.vec4\n")
-            f:write("Vec4 = lovr.math.newVec4\n")
-            f:write("mat4 = lovr.math.mat4\n")
-            f:write("Mat4 = lovr.math.newMat4\n")
-            f:write("quat = lovr.math.quat\n")
-            f:write("Quat = lovr.math.newQuat\n")
-        else
-            f:write("return ")
-            f:write(key)
-        end
+        f:write("return ")
+        f:write(key)
         f:close()
 
         print("OK")
 
         ::continue::
+    end
+
+    -- Write our globals
+    do
+        local f = assert(io.open(API_OUTPUT .. "globals.lua", "w+"))
+
+        f:write("---@meta\n\n")
+        f:write("vec2 = lovr.math.vec2\n")
+        f:write("Vec2 = lovr.math.newVec2\n")
+        f:write("vec3 = lovr.math.vec3\n")
+        f:write("Vec3 = lovr.math.newVec3\n")
+        f:write("vec4 = lovr.math.vec4\n")
+        f:write("Vec4 = lovr.math.newVec4\n")
+        f:write("mat4 = lovr.math.mat4\n")
+        f:write("Mat4 = lovr.math.newMat4\n")
+        f:write("quat = lovr.math.quat\n")
+        f:write("Quat = lovr.math.newQuat\n")
+
+        f:close()
     end
 
     -- Write our manifest :)
