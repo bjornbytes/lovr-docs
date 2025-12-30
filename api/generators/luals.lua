@@ -272,7 +272,7 @@ local function writeFunction(func, namespace, is_method, f)
     f:write("\n\n")
 end
 
-local function writeCallback(call, f)
+local function writeCallbackType(call, f)
     local name = call.name
     local var = call.variants[1]
 
@@ -292,8 +292,9 @@ local function writeCallback(call, f)
 
     writeInfo(call, f)
 
-    f:write("---@field ")
+    f:write("---@alias ")
     f:write(name)
+    f:write("_callback")
     f:write(" fun(")
     f:write(table.concat(p, ", "))
     f:write(")")
@@ -301,7 +302,7 @@ local function writeCallback(call, f)
         f:write(": ")
         f:write(table.concat(returns, ", "))
     end
-    f:write("\n")
+    f:write("\n\n")
 end
 
 local function writeObject(object, f)
@@ -393,21 +394,23 @@ return function(api)
         --# ---@class lovr.audio
         f:write("---@class ")
         f:write(key)
+        f:write(is_main_module and ":table\n" or "\n")
+
         if is_main_module then
-            f:write(": table\n")
             for _, call in ipairs(api.callbacks) do
-                writeCallback(call, f)
+                f:write("---@field ")
+                f:write(call.name)
+                f:write(" ")
+                f:write(call.name)
+                f:write("_callback")
+                f:write("\n")
             end
-        else
-            f:write("\n")
         end
 
         --# lovr.audio = {}
         f:write(key)
         f:write(" = {}\n\n")
 
-        -- We do this order just because LuaLS might act up when
-        -- types and functions are declared out of order.
         for _, enum in ipairs(module.enums) do
             writeEnum(enum, f)
         end
@@ -427,6 +430,18 @@ return function(api)
         print("OK")
 
         ::continue::
+    end
+
+    do
+        local f = assert(io.open(API_OUTPUT .. "callbacks.lua", "w+"))
+
+        f:write("---@meta\n\n")
+
+        for _, call in ipairs(api.callbacks) do
+            local c = writeCallbackType(call, f)
+        end
+
+        f:close()
     end
 
     -- Write our globals
