@@ -25,7 +25,19 @@ end
 local function writeComment(cmt, f)
     cmt = cmt:gsub('^%s*(.-)%s*$', '%1') -- Remove newlines at the beginning and end
 
+    local code_mode
     for line in cmt:gmatch('[^\r\n]+') do
+        -- WORKAROUND: LuaLS should be able to turn these into code blocks on its own,
+        --             sadly, LuaLS is stupid! so we got to do this manually.
+
+        if not line:match("%S") then
+            local indented = line:sub(1, 1) == " "
+            if indented ~= code_mode then
+                f:write("--- ```lua\n")
+            end
+            code_mode = indented
+        end
+
         f:write("--- ")
         f:write(line)
         f:write("\n")
@@ -101,8 +113,11 @@ local function handleType(t, tab)
 
         local arrayable = {}
         for _, e in ipairs(tab) do
-            if e.name:sub(1, 3) == "[]." then -- [].name: type -> {[number]: {name: type}}
-                e.name = e.name:sub(4)
+            local from_array = e.name:sub(1, 2) == "[]"
+            local has_dot = e.name:sub(3, 3) == "."
+
+            if from_array then
+                e.name = e.name:sub(has_dot and 4 or 3)
                 table.insert(arrayable, e)
             else -- {name: type} -> {name: type}
                 local opt = e.default and "?" or ""
