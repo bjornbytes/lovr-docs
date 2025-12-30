@@ -1,29 +1,5 @@
 local DOCS_URL = "https://lovr.org/docs/"
 
-local KEYWORD_LOOKUP = {
-    ["and"] = true,
-    ["break"] = true,
-    ["do"] = true,
-    ["else"] = true,
-    ["elseif"] = true,
-    ["end"] = true,
-    ["false"] = true,
-    ["for"] = true,
-    ["function"] = true,
-    ["if"] = true,
-    ["in"] = true,
-    ["local"] = true,
-    ["nil"] = true,
-    ["not"] = true,
-    ["or"] = true,
-    ["repeat"] = true,
-    ["return"] = true,
-    ["then"] = true,
-    ["true"] = true,
-    ["until"] = true,
-    ["while"] = true,
-}
-
 local OPERATOR_LOOKUP = {
     ["add"] = "add",
     ["sub"] = "sub",
@@ -153,10 +129,8 @@ local function writeOperator(func, f)
 end
 
 local function handleParam(name)
-    if name:sub(1, 3) == "..." then  -- ...something -> ...
+    if name:sub(1, 3) == "..." then -- ...something -> ...
         return "..."
-    elseif KEYWORD_LOOKUP[name] then -- return -> return_
-        return name .. "_"
     end
     return name -- a -> a
 end
