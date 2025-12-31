@@ -33,8 +33,6 @@ local function writeComment(cmt, f)
       code_mode = indented
     end
 
-    line = line:gsub(' +', ' ') -- Removes extra spaces
-
     f:write('--- ')
     f:write(line)
     f:write('\n')
