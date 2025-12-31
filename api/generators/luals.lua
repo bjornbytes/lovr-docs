@@ -33,6 +33,8 @@ local function writeComment(cmt, f)
       code_mode = indented
     end
 
+    line = line:gsub(' +', ' ') -- Removes extra spaces
+
     f:write('--- ')
     f:write(line)
     f:write('\n')
@@ -40,8 +42,12 @@ local function writeComment(cmt, f)
 end
 
 --- Turns a multiline string into a single line string.
+--- Removes extra space.
 local function writeSingleLine(cmt, f)
-  f:write((cmt:gsub('\n', '')))
+  cmt = cmt:gsub('\n', '')  -- Removes newlines
+  cmt = cmt:gsub(' +', ' ') -- Removes extra space.
+
+  f:write(cmt)
 end
 
 --- Writes information related to an Object, Function, Enum, etc.
@@ -88,11 +94,15 @@ local function writeInfo(data, f)
   if data.related then
     f:write('---\n')
     for _, rel in ipairs(data.related) do
+      rel = rel:gsub(':', '.') -- Replace ":" with ".", as per LuaLS convention.
       f:write('---@see ')
-      f:write((rel:gsub(':', '.')))
+      f:write(rel)
       f:write('\n')
     end
   end
+
+  -- Add some space!
+  f:write('---\n')
 end
 
 --- Generates an '@alias' directive for fake enums.
@@ -111,11 +121,18 @@ local function writeEnum(enum, f)
     ['\''] = '\\\'',
   }
 
+  local size = 0
+  for _, value in ipairs(enum.values) do
+    size = math.max(size, #value.name)
+  end
+
+  local fmt = '---| %-' .. (size + 5) .. 's # '
+
   --# --| 'Cool' # Denotes a particular coolness.
   for _, value in ipairs(enum.values) do
-    f:write('---| \'')
-    f:write(special[value.name] or value.name)
-    f:write('\' # ')
+    local n = special[value.name] or value.name
+    f:write(fmt:format('\'' .. n .. '\''))
+
     writeSingleLine(value.description, f)
     f:write('\n')
   end
@@ -251,9 +268,9 @@ local function writeFunction(func, namespace, is_method, f)
       f:write(' # ')
       writeSingleLine(arg.description, f)
       if arg.default then
-        f:write(' (default: ')
+        f:write(' (default: `')
         f:write(arg.default)
-        f:write(')')
+        f:write('`)')
       end
       f:write('\n')
       table.insert(params, param)
