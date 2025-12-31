@@ -53,7 +53,7 @@ local function writeInfo(data, f)
 
   if data.notes then
     f:write('---\n')
-        f:write('--- ## NOTES:\n')
+    f:write('--- ## NOTES:\n')
     writeComment(data.notes, f)
   end
 
@@ -333,14 +333,6 @@ local function writeObject(object, f)
       f:write(' number\n')
     end
   end
-
-  --if object.constructors then
-  --  for _, const in ipairs(object.constructors) do
-  --    f:write('---@see ')
-  --    f:write(const)
-  --    f:write(' # (Constructor)\n')
-  --  end
-  --end
 
   for _, func in ipairs(object.methods) do
     writeOperator(func, f)
