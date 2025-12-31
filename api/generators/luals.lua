@@ -316,15 +316,18 @@ local function writeObject(object, f)
   object.related = nil
   writeInfo(object, f)
 
+  -- if object.constructors then
+  --  for _, const in ipairs(object.constructors) do
+  --    f:write('---@see ')
+  --    f:write(const)
+  --    f:write(' # (Constructor)\n')
+  --  end
+  -- end
+
   --# ---@class Blob
   f:write('---@class ')
   f:write(name)
-  if name == 'Mat4' then
-    f:write(': number[]')
-  elseif name ~= 'Object' then
-    f:write(': Object')
-  end
-  f:write('\n')
+  f:write(': Object\n')
 
   local vec_n = tonumber(name:sub(4))
   if vec_n and name:sub(1, 3) == 'Vec' then
@@ -334,6 +337,10 @@ local function writeObject(object, f)
       f:write(c:sub(i, i))
       f:write(' number\n')
     end
+  end
+
+  if name == 'Mat4' then
+    f:write('---@field [number] number\n')
   end
 
   for _, func in ipairs(object.methods) do
