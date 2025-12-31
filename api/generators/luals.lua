@@ -105,10 +105,16 @@ local function writeEnum(enum, f)
   f:write(enum.name)
   f:write('\n')
 
+  -- We want to escape some stuff here
+  local special = {
+    ['\\'] = '\\\\',
+    ['\''] = '\\\'',
+  }
+
   --# --| 'Cool' # Denotes a particular coolness.
   for _, value in ipairs(enum.values) do
     f:write('---| \'')
-    f:write(value.name)
+    f:write(special[value.name] or value.name)
     f:write('\' # ')
     writeSingleLine(value.description, f)
     f:write('\n')
@@ -316,18 +322,18 @@ local function writeObject(object, f)
   object.related = nil
   writeInfo(object, f)
 
-  -- if object.constructors then
-  --  for _, const in ipairs(object.constructors) do
-  --    f:write('---@see ')
-  --    f:write(const)
-  --    f:write(' # (Constructor)\n')
-  --  end
-  -- end
+  if object.constructors then
+    for _, const in ipairs(object.constructors) do
+      f:write('---@see ')
+      f:write(const)
+      f:write(' # (Constructor)\n')
+    end
+  end
 
   --# ---@class Blob
   f:write('---@class ')
   f:write(name)
-  f:write(name == 'Object' and '\n' or ': Object\n')
+  f:write(': Object\n')
 
   local vec_n = tonumber(name:sub(4))
   if vec_n and name:sub(1, 3) == 'Vec' then
