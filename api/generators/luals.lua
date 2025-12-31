@@ -9,19 +9,9 @@ local OPERATOR_LOOKUP = {
     --["length"] = "len",
 }
 
--- this link usually assumes that anything with a proper API definition has to have
--- a documentation page. (it usually is the case.)
-local function writeLink(key, f)
-    f:write("---\n")
-    f:write("--- [Open in browser](")
-    f:write(DOCS_URL)
-    f:write(key)
-    f:write(")\n")
-end
-
--- Breaks a multi-line string (such as a description) into a bunch of commented
--- likes.
--- CONSIDER: Maybe break them even further at periods? Not sure.
+--- Breaks a multi-line string (such as a description) into a bunch of commented
+--- lines, takes care of code blocks, input should be valid markdown.
+--- CONSIDER: Maybe break them even further at periods? Not sure.
 local function writeComment(cmt, f)
     cmt = cmt:gsub('^%s*(.-)%s*$', '%1') -- Remove newlines at the beginning and end
 
@@ -30,6 +20,7 @@ local function writeComment(cmt, f)
         -- WORKAROUND: LuaLS should be able to turn these into code blocks on its own,
         --             sadly, LuaLS is stupid! so we got to do this manually.
 
+        -- Ignore empty lines
         if not line:match("%S") then
             local indented = line:sub(1, 1) == " "
             if indented ~= code_mode then
@@ -49,6 +40,8 @@ local function writeSingleLine(cmt, f)
     f:write((cmt:gsub("\n", "")))
 end
 
+--- Writes information related to an Object, Function, Enum, etc.
+--- such as description, notes, examples, documentation links, and related things.
 local function writeInfo(data, f)
     if data.description then
         writeComment(data.description, f)
@@ -81,11 +74,26 @@ local function writeInfo(data, f)
     end
 
     if data.key then
-        writeLink(data.key, f)
+        f:write("---\n")
+        f:write("--- [Open in browser](")
+        f:write(DOCS_URL)
+        f:write(data.key)
+        f:write(")\n")
+    end
+
+    if data.related then
+        f:write("---\n")
+        for _, rel in ipairs(data.related) do
+            f:write("---@see ")
+            f:write((rel:gsub(":", ".")))
+            f:write("\n")
+        end
     end
 end
 
+--- Generates an "@alias" directive for fake enums.
 local function writeEnum(enum, f)
+    -- We don't write full info here, because, sadly, LuaLS will ignore it.
     writeComment(enum.description, f)
 
     --# ---@alias MyEnum
@@ -116,6 +124,8 @@ local function handleType(t, tab)
             local from_array = e.name:sub(1, 2) == "[]"
             local has_dot = e.name:sub(3, 3) == "."
 
+            -- {[].name: type} -> {[number]: {name: type}}
+            -- {[][1].name: type} -> {[number]: {[1]: {name: type}}}
             if from_array then
                 e.name = e.name:sub(has_dot and 4 or 3)
                 table.insert(arrayable, e)
@@ -210,20 +220,12 @@ local function handleParam(name)
     return name -- a -> a
 end
 
+--- Writes a function definition with all of its possible variants as
+--- overloads.
 local function writeFunction(func, namespace, is_method, f)
-    local key = func.key
     local name = func.name
 
     writeInfo(func, f)
-
-    if func.related then
-        --# ---@see Robot.destroy
-        for _, rel in ipairs(func.related) do
-            f:write("---@see ")
-            f:write((rel:gsub(":", ".")))
-            f:write("\n")
-        end
-    end
 
     local params = {}
     local first = func.variants[1]
@@ -262,6 +264,7 @@ local function writeFunction(func, namespace, is_method, f)
         local var = func.variants[i]
 
         local p = {}
+        -- Apparently overloads don't include "self" by default.
         if is_method then
             table.insert(p, "self: " .. namespace)
         end
@@ -300,45 +303,14 @@ local function writeFunction(func, namespace, is_method, f)
     f:write("\n\n")
 end
 
-local function writeCallbackType(call, f)
-    local name = call.name
-    local var = call.variants[1]
-
-    local p = {}
-    for _, arg in ipairs(var.arguments) do
-        local param = handleParam(arg.name)
-        if arg.default then
-            param = param .. "?"
-        end
-        table.insert(p, param .. ": " .. handleType(arg.type, arg.table))
-    end
-
-    local returns = {}
-    for _, ret in ipairs(var.returns) do
-        table.insert(returns, handleType(ret.type, ret.table))
-    end
-
-    writeInfo(call, f)
-
-    f:write("---@alias ")
-    f:write(name)
-    f:write("_callback")
-    f:write(" fun(")
-    f:write(table.concat(p, ", "))
-    f:write(")")
-    if #returns > 0 then
-        f:write(": ")
-        f:write(table.concat(returns, ", "))
-    end
-    f:write("\n\n")
-end
-
+--- Writes an object type by treating it like a @class, handles vector and matrix types.
+--- Only does x/y/z/w. No swizzles, no r/g/b/a.
 local function writeObject(object, f)
-    local key = object.key
     local name = object.name
 
-    writeComment(object.description, f)
-    writeLink(key, f)
+    -- We remove the related field because it is not supported for classes :(
+    object.related = nil
+    writeInfo(object, f)
 
     --# ---@class Blob
     f:write("---@class ")
@@ -388,6 +360,7 @@ return function(api)
     local OUTPUT = root .. "/luals/"
     local API_OUTPUT = OUTPUT .. "library/"
 
+    -- Make sure the output folders exist.
     if lovr.system.getOS() == "Windows" then
         os.execute("mkdir " .. API_OUTPUT:gsub("/", "\\"))
     else
@@ -425,13 +398,13 @@ return function(api)
         f:write(is_main_module and ":table\n" or "\n")
 
         if is_main_module then
+            --# ---@field draw draw_callback
             for _, call in ipairs(api.callbacks) do
                 f:write("---@field ")
                 f:write(call.name)
                 f:write(" ")
                 f:write(call.name)
-                f:write("_callback")
-                f:write("\n")
+                f:write("_callback\n")
             end
         end
 
@@ -451,8 +424,10 @@ return function(api)
             writeFunction(func, key, false, f)
         end
 
+        --# return lovr.audio
         f:write("return ")
         f:write(key)
+
         f:close()
 
         print("OK")
@@ -460,13 +435,44 @@ return function(api)
         ::continue::
     end
 
+    -- Write our callback types
     do
         local f = assert(io.open(API_OUTPUT .. "callbacks.lua", "w+"))
 
         f:write("---@meta\n\n")
 
         for _, call in ipairs(api.callbacks) do
-            local c = writeCallbackType(call, f)
+            local name = call.name
+            local var = call.variants[1]
+
+            local p = {}
+            for _, arg in ipairs(var.arguments) do
+                local param = handleParam(arg.name)
+                if arg.default then
+                    param = param .. "?"
+                end
+                table.insert(p, param .. ": " .. handleType(arg.type, arg.table))
+            end
+
+            local returns = {}
+            for _, ret in ipairs(var.returns) do
+                table.insert(returns, handleType(ret.type, ret.table))
+            end
+
+            writeInfo(call, f)
+
+            --# ---@alias draw_callback fun(pass: Pass)
+            f:write("---@alias ")
+            f:write(name)
+            f:write("_callback")
+            f:write(" fun(")
+            f:write(table.concat(p, ", "))
+            f:write(")")
+            if #returns > 0 then
+                f:write(": ")
+                f:write(table.concat(returns, ", "))
+            end
+            f:write("\n\n")
         end
 
         f:close()
