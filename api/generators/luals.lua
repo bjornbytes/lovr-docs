@@ -321,6 +321,8 @@ local function writeObject(object, f)
   f:write(name)
   if name == 'Mat4' then
     f:write(': number[]')
+  elseif name ~= 'Object' then
+    f:write(': Object')
   end
   f:write('\n')
 
