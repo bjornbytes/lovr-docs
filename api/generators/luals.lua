@@ -78,8 +78,8 @@ local function writeInfo(data, f)
   end
 
   if data.key then
-      f:write('---\n')
-          f:write('--- [Open in browser](')
+    f:write('---\n')
+    f:write('--- [Open in browser](')
     f:write(DOCS_URL)
     f:write(data.key)
     f:write(')\n')
