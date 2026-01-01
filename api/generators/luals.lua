@@ -348,7 +348,11 @@ local function writeObject(object, f)
   --# ---@class Blob
   f:write('---@class ')
   f:write(name)
-  f:write(name == 'Object' and '\n' or ': Object\n')
+  if object.extends then
+    f:write(": ")
+    f:write(object.extends)
+  end
+  f:write("\n")
 
   local vec_n = tonumber(name:sub(4))
   if vec_n and name:sub(1, 3) == 'Vec' then
