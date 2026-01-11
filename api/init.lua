@@ -22422,6 +22422,26 @@ return {
               description = "The Y button."
             },
             {
+              name = "dpup",
+              description = "The up button on a dpad."
+            },
+            {
+              name = "dpdown",
+              description = "The down button on a dpad."
+            },
+            {
+              name = "dpleft",
+              description = "The left button on a dpad."
+            },
+            {
+              name = "dpright",
+              description = "The right button on a dpad."
+            },
+            {
+              name = "bumper",
+              description = "The bumper or shoulder button (usually located above a trigger)."
+            },
+            {
               name = "nib",
               description = "The nib (tip) of the `stylus` device.  Also available on `hand/left` and `hand/right` devices for the stylus tips on touch pro controllers."
             }
