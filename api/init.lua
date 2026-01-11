@@ -422,6 +422,7 @@ return {
       description = "This callback is called when a key is pressed.",
       key = "lovr.keypressed",
       module = "lovr",
+      notes = "By default this will be fired only once while a key is held down. This can be changed to fire multiple times by setting `lovr.system.setKeyRepeat` to true. In that case `isrepeat` will become true whenever the event is the result of a key repeat and false on a single press.",
       related = {
         "lovr.system.wasKeyPressed",
         "lovr.keyreleased",
@@ -10821,6 +10822,50 @@ return {
           }
         },
         {
+          name = "getStats",
+          summary = "Get graphics metrics and statistics.",
+          description = "Returns various statistics about GPU usage.",
+          key = "lovr.graphics.getStats",
+          module = "lovr.graphics",
+          related = {
+            "Pass:getStats"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "stats",
+                  type = "table",
+                  description = "A table with statistics.",
+                  table = {
+                    {
+                      name = "bufferMemory",
+                      type = "number",
+                      description = "The amount of VRAM used by `Buffer`, `Mesh`, `Model`, etc. in bytes."
+                    },
+                    {
+                      name = "textureMemory",
+                      type = "number",
+                      description = "The amount of VRAM used by `Texture` objects, in bytes."
+                    },
+                    {
+                      name = "memoryBudget",
+                      type = "number",
+                      description = "An estimate of the total amount of VRAM available for use by LÖVR, in bytes.  This takes into account VRAM being used by other programs.  Can be `nil` if the current GPU does not support querying this statistic."
+                    },
+                    {
+                      name = "memoryUsage",
+                      type = "number",
+                      description = "An estimate of the total amount of VRAM currently being used by LÖVR, in bytes.  This will often be larger than `bufferMemory + textureMemory`, since it includes other internal memory allocations made by LÖVR or the GPU driver (example: reserved memory, memory for shader variables, internal canvas textures).  If this value approaches `memoryBudget`, the GPU driver may start paging allocations out to CPU RAM, or allocating more VRAM may start to fail.  Can be `nil` if the current GPU does not support querying this statistic."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getWindowPass",
           tag = "graphics-objects",
           summary = "Get the window pass.",
@@ -17377,6 +17422,7 @@ return {
                 }
               },
               related = {
+                "lovr.graphics.getStats",
                 "lovr.graphics.isTimingEnabled",
                 "lovr.graphics.setTimingEnabled",
                 "Pass:setViewCull"

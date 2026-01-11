@@ -76,6 +76,7 @@ return {
     ]]
   },
   related = {
+    'lovr.graphics.getStats',
     'lovr.graphics.isTimingEnabled',
     'lovr.graphics.setTimingEnabled',
     'Pass:setViewCull'
