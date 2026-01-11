@@ -269,6 +269,11 @@ return {
               description = 'The height of the window (or 0 to use the monitor height) .'
             },
             {
+              name = 'centered',
+              type = 'boolean',
+              description = 'Whether the window is centered.'
+            },
+            {
               name = 'fullscreen',
               type = 'boolean',
               description = 'Whether the window is fullscreen.'
@@ -370,6 +375,7 @@ return {
           -- Configure the desktop window
           t.window.width = 1080
           t.window.height = 600
+          t.window.centered = true
           t.window.fullscreen = false
           t.window.resizable = false
           t.window.title = 'LÖVR'
