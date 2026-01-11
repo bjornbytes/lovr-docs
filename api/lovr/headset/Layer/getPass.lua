@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   summary = 'Get the render pass for the layer.',
   description = 'Returns the render pass for the layer.  This can be used to render to the layer.',
   arguments = {},

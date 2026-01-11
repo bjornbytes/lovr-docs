@@ -24767,7 +24767,9 @@ return {
                 "Layer:getPosition",
                 "Layer:setPosition",
                 "Layer:getPose",
-                "Layer:setPose"
+                "Layer:setPose",
+                "Layer:getOrigin",
+                "Layer:setOrigin"
               },
               variants = {
                 {
@@ -24798,11 +24800,40 @@ return {
               }
             },
             {
+              name = "getOrigin",
+              summary = "Get the Device the layer is attached to.",
+              description = "Returns the Device the layer is attached to.\n\nNormally, layer poses are in \"world space\", relative to the default coordinate space origin. When a layer is attached to a device, its pose is relative to the device instead.  This is useful for creating layers that are attached to a controller, or HUD elements that track the head, without having to reposition them every frame.",
+              key = "Layer:getOrigin",
+              module = "lovr.headset",
+              notes = "Since layers are rendered by the system instead of by LÖVR, using a device for the layer will ensure it tracks the device smoothly even if LÖVR is rendering at a low frame rate, or if LÖVR pauses rendering temporarily.  Head-locked layers can be useful for displaying a loading icon early, while other assets are loading.",
+              related = {
+                "Layer:getPosition",
+                "Layer:setPosition",
+                "Layer:getOrientation",
+                "Layer:setOrientation",
+                "Layer:getPose",
+                "Layer:setPose"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "device",
+                      type = "Device",
+                      description = "The device the layer is attached to, or `nil` if it isn't attached to a device."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getPass",
               summary = "Get the render pass for the layer.",
               description = "Returns the render pass for the layer.  This can be used to render to the layer.",
               key = "Layer:getPass",
               module = "lovr.headset",
+              deprecated = true,
               notes = "This function will reset the Layer's render pass when it is called, as though `Pass:reset` was called.\n\nThe Pass will have its background color cleared to the background color, set using `lovr.graphics.setBackgroundColor`.\n\nThe Pass will have its view matrix set to the origin, and its projection will be set to an orthographic matrix where the top left of the texture is at the origin and the bottom right of the texture will be at `(width, height)` in pixels.",
               related = {
                 "Layer:getTexture"
@@ -24831,7 +24862,9 @@ return {
                 "Layer:getPosition",
                 "Layer:setPosition",
                 "Layer:getOrientation",
-                "Layer:setOrientation"
+                "Layer:setOrientation",
+                "Layer:getOrigin",
+                "Layer:setOrigin"
               },
               variants = {
                 {
@@ -24886,7 +24919,9 @@ return {
                 "Layer:getOrientation",
                 "Layer:setOrientation",
                 "Layer:getPose",
-                "Layer:setPose"
+                "Layer:setPose",
+                "Layer:getOrigin",
+                "Layer:setOrigin"
               },
               variants = {
                 {
@@ -25086,7 +25121,9 @@ return {
                 "Layer:getPosition",
                 "Layer:setPosition",
                 "Layer:getPose",
-                "Layer:setPose"
+                "Layer:setPose",
+                "Layer:getOrigin",
+                "Layer:setOrigin"
               },
               variants = {
                 {
@@ -25127,6 +25164,35 @@ return {
               }
             },
             {
+              name = "setOrigin",
+              summary = "Attach the layer to a Device.",
+              description = "Sets the Device the layer is attached to.\n\nNormally, layer poses are in \"world space\", relative to the default coordinate space origin. When a layer is attached to a device, its pose is relative to the device instead.  This is useful for creating layers that are attached to a controller, or HUD elements that track the head, without having to reposition them every frame.",
+              key = "Layer:setOrigin",
+              module = "lovr.headset",
+              notes = "Since layers are rendered by the system instead of by LÖVR, using a device for the layer will ensure it tracks the device smoothly even if LÖVR is rendering at a low frame rate, or if LÖVR pauses rendering temporarily.  Head-locked layers can be useful for displaying a loading icon early, while other assets are loading.",
+              related = {
+                "Layer:getPosition",
+                "Layer:setPosition",
+                "Layer:getOrientation",
+                "Layer:setOrientation",
+                "Layer:getPose",
+                "Layer:setPose"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "device",
+                      type = "Device",
+                      description = "The device the layer is attached to, or `nil` to make the layer world space.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setPose",
               summary = "Set the pose of the layer.",
               description = "Sets the position and orientation of the layer.",
@@ -25137,7 +25203,9 @@ return {
                 "Layer:getPosition",
                 "Layer:setPosition",
                 "Layer:getOrientation",
-                "Layer:setOrientation"
+                "Layer:setOrientation",
+                "Layer:getOrigin",
+                "Layer:setOrigin"
               },
               variants = {
                 {
@@ -25207,7 +25275,9 @@ return {
                 "Layer:getOrientation",
                 "Layer:setOrientation",
                 "Layer:getPose",
-                "Layer:setPose"
+                "Layer:setPose",
+                "Layer:getOrigin",
+                "Layer:setOrigin"
               },
               variants = {
                 {

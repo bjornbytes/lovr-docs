@@ -26,6 +26,8 @@ return {
     'Layer:getOrientation',
     'Layer:setOrientation',
     'Layer:getPose',
-    'Layer:setPose'
+    'Layer:setPose',
+    'Layer:getOrigin',
+    'Layer:setOrigin'
   }
 }

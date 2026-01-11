@@ -43,6 +43,8 @@ return {
     'Layer:getPosition',
     'Layer:setPosition',
     'Layer:getOrientation',
-    'Layer:setOrientation'
+    'Layer:setOrientation',
+    'Layer:getOrigin',
+    'Layer:setOrigin'
   }
 }

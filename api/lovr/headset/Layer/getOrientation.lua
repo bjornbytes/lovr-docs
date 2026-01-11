@@ -30,6 +30,8 @@ return {
     'Layer:getPosition',
     'Layer:setPosition',
     'Layer:getPose',
-    'Layer:setPose'
+    'Layer:setPose',
+    'Layer:getOrigin',
+    'Layer:setOrigin'
   }
 }
