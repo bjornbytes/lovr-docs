@@ -15330,6 +15330,31 @@ return {
               }
             },
             {
+              name = "isNodeVisible",
+              summary = "Check if a node is visible.",
+              description = "Returns whether a node is visible.  Invisible nodes don't render their mesh, or any of their children.",
+              key = "Model:isNodeVisible",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "visible",
+                      type = "boolean",
+                      description = "Whether the node is visible."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "resetBlendShapes",
               summary = "Reset blend shape weights.",
               description = "Resets blend shape weights to the original ones defined in the model file.",
@@ -15845,6 +15870,30 @@ return {
                       type = "number",
                       description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setNodeVisible",
+              summary = "Set the visibility of a node.",
+              description = "Set the visibility of a node.  Invisible nodes don't render their mesh, or any of their children.",
+              key = "Model:setNodeVisible",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
+                    },
+                    {
+                      name = "visible",
+                      type = "boolean",
+                      description = "Whether the node should be visible."
                     }
                   },
                   returns = {}
