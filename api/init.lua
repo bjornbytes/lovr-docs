@@ -25564,7 +25564,6 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -25575,7 +25574,7 @@ return {
                     {
                       name = "static",
                       type = "boolean",
-                      description = "Whether the Layer is static.  Static layers can only be changed once. `Layer:getTexture` can be when the layer is created to copy/render to the Layer, but calling it on subsequent frames will error.  The default is false, unless images/textures are used to create the layer; then the default will be true.",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
                       default = "nil"
                     },
                     {
@@ -25612,7 +25611,6 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -25623,7 +25621,7 @@ return {
                     {
                       name = "static",
                       type = "boolean",
-                      description = "Whether the Layer is static.  Static layers can only be changed once. `Layer:getTexture` can be when the layer is created to copy/render to the Layer, but calling it on subsequent frames will error.  The default is false, unless images/textures are used to create the layer; then the default will be true.",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
                       default = "nil"
                     },
                     {
@@ -25660,7 +25658,6 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -25671,7 +25668,7 @@ return {
                     {
                       name = "static",
                       type = "boolean",
-                      description = "Whether the Layer is static.  Static layers can only be changed once. `Layer:getTexture` can be when the layer is created to copy/render to the Layer, but calling it on subsequent frames will error.  The default is false, unless images/textures are used to create the layer; then the default will be true.",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
                       default = "nil"
                     },
                     {
@@ -25708,7 +25705,6 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -25719,7 +25715,7 @@ return {
                     {
                       name = "static",
                       type = "boolean",
-                      description = "Whether the Layer is static.  Static layers can only be changed once. `Layer:getTexture` can be when the layer is created to copy/render to the Layer, but calling it on subsequent frames will error.  The default is false, unless images/textures are used to create the layer; then the default will be true.",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
                       default = "nil"
                     },
                     {
