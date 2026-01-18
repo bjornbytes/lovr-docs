@@ -16,24 +16,71 @@ can be used:
     $ zip -9qr project.lovr .
 
 By convention, zip files containing LÖVR projects use the `.lovr` extension.  A zip archive can be
-run with LÖVR but isn't a standalone executable yet.
+run with LÖVR by running `lovr project.lovr`, but isn't a standalone executable yet.
 
-Creating an Executable
+The next step is to **fuse** the zip onto the main LÖVR executable, which creates an executable that
+runs the project instead of LÖVR's no game screen.  See platform-specific instructions below.
+
+Windows
 ---
 
-Once you have a project archive, it can be appended to the LÖVR program to create a standalone
-executable.  On Windows, this can be done using the command prompt:
+To create a Windows executable, append a zip archive of your project onto the LÖVR executable using
+the following command:
 
     $ copy /b lovr.exe+MyProject.zip MyProject.exe
 
-On Unix systems, the `cat` utility can be used to concatenate the two files:
-
-    $ cat /path/to/lovr MyProject.zip > MyProject
+Then, distribute `MyProject.exe` along with all the `.dll` files that came with the original LÖVR
+download.
 
 :::note
-Once you have an executable, be sure to distribute it with all the libraries (`.dll` or `.so` files)
-that came with the original LÖVR download.
+Users will need to have a MSVC C++ runtime library installed to run the executable.
 :::
+
+:::note
+Resource Hacker can be used to change the exe icon.
+:::
+
+Linux
+---
+
+Use `cat` to create a fused executable on Unix systems:
+
+    $ cat /path/to/lovr MyProject.zip > MyProject
+    $ chmod +x MyProject
+
+Then, distribute `MyProject` along with all the `.so` files that came with the original LÖVR
+download.
+
+### AppImage
+
+AppImage is a popular format for packaging programs in a single file, and is the method LÖVR uses to
+distribute its precompiled binaries for Linux.
+
+To create an AppImage for a custom project, first make sure you have
+[`appimagetool`](https://github.com/AppImage/appimagetool) installed.
+
+To start, download one of LÖVR's prebuilt AppImages and extract it to a folder:
+
+    $ chmod +x LÖVR-x86_64.AppImage
+    $ ./LÖVR-x86_64.AppImage --appimage-extract
+
+This should create a folder named `squashfs-root` with a `lovr` executable and other libraries in
+it.
+
+Next, fuse the project zip archive onto the executable:
+
+    $ cat lovr MyProject.zip > MyProject
+    $ chmod +x MyProject
+
+Then, edit the `AppRun` script and replace `lovr` with `MyProject`, or whatever you named your
+executable.
+
+You can edit `lovr.desktop` and `logo.svg` to customize the metadata and icon for the app.
+
+Finally, run `appimagetool` to bundle everything into an AppImage.  From the `squashfs-root`
+directory, run:
+
+    $ appimagetool .
 
 macOS
 ---
