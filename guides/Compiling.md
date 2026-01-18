@@ -61,12 +61,10 @@ via the command line as `lovr.exe path/to/project`.
 macOS
 ---
 
-Build using CMake, as above:
+Build using CMake:
 
-    $ mkdir build
-    $ cd build
-    $ cmake ..
-    $ cmake --build .
+    $ cmake -B build
+    $ cmake --build build
 
 The lovr executable should exist in `lovr/build/bin` now.  It's recommended to set up an alias or
 symlink so that this executable can be found in your PATH environment variable.  Once that's done,
@@ -79,12 +77,10 @@ You can set the `LOVR_BUILD_BUNDLE` CMake variable to `ON` to build a .app inste
 executable.
 :::
 
-LÖVR requires MoltenVK 1.3.268 or higher.  The easiest way to get MoltenVK is to install the Vulkan
-SDK from LunarG.  Be sure to leave the "global install" checkbox enabled while installing so LÖVR is
-able to find the Vulkan library.
-
-Prebuilt binaries include MoltenVK in the .app bundle, so installing the Vulkan SDK is optional when
-using one of those builds.
+LÖVR requires MoltenVK.  The easiest way to get MoltenVK is to install the Vulkan SDK from LunarG.
+Be sure to leave the "System Global Installation" checkbox enabled while installing so LÖVR is able
+to find the Vulkan library.  Note that if you plan to distribute a .app, you will also want to
+bundle MoltenVK into the .app.  This is documented in more detail on the `Distribution` page.
 
 Linux
 ---

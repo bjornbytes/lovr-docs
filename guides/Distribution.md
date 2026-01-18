@@ -53,6 +53,13 @@ as well.
 
 Finally, `LÖVR.app` can be renamed to `Awesome VR Project.app` and distributed as a zip.
 
+:::note
+If you build your own .app with CMake, you'll need to bundle MoltenVK into the app bundle, otherwise
+users will need to install MoltenVK to run the app.  See the [GitHub Actions workflow](https://github.com/bjornbytes/lovr/blob/652d6c80defba554d785c9747e2f5e023fd3f60e/.github/workflows/build.yml#L145-L149)
+for the commands used to bundle MoltenVK.  If you use a precompiled macOS build from the website,
+this is already taken care of for you.
+:::
+
 Android
 ---
 
