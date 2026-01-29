@@ -24,7 +24,9 @@ Basics
 There are 2 types of shaders, given by `ShaderType`:
 
 - `graphics` shaders are used for rendering.  They compute vertex positions and pixel colors.
-- `compute` shaders run in compute passes.  They can perform arbitrary GPU computation.
+- `compute` shaders run outside of the normal rendering flow.  They can do arbitrary computation on
+  the GPU and write to `Buffer` and `Texture` objects.  Think of it like calling a function on the
+  GPU.
 
 Shaders have one or more "stages", which are basically functions, given by `ShaderStage`:
 
@@ -33,8 +35,7 @@ Shaders have one or more "stages", which are basically functions, given by `Shad
       transformations to get the final "on-screen" position for triangles.
     - The `fragment` stage computes pixel colors.  It uses material data to compute lighting and other
       effects, returning the final color of the pixel.
-- `compute` shaders have a single `compute` stage.  It doesn't have any semantic meaning, instead
-  performing arbitrary computation by writing to `Buffer` and `Texture` objects.
+- `compute` shaders just have a single `compute` stage.
 
 Each `Pass` has an **active shader** it uses to process draws.  `Pass:setShader` changes the active
 shader.  The active shader will affect all draws until the shader is changed again. When the active
