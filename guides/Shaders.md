@@ -24,7 +24,7 @@ Basics
 There are 2 types of shaders, given by `ShaderType`:
 
 - `graphics` shaders are used for rendering.  They compute vertex positions and pixel colors.
-- `compute` shaders run outside of the normal rendering flow.  They can do arbitrary computation on
+- `compute` shaders run outside of the normal rendering flow.  They can do arbitrary computation
   and write to `Buffer` and `Texture` objects.  Think of it like calling a function on the GPU.
 
 Shaders have one or more "stages", which are basically functions, given by `ShaderStage`:
