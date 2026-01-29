@@ -435,60 +435,6 @@ Shader Inputs
 It's also possible to send values or objects from Lua to a Shader.  There are a few different ways
 to do this, each with their own tradeoffs (speed, size, ease of use, etc.).
 
-### Flags
-
-Shaders can declare "flags" (also called specialization constants), which are values that are
-constant in the shader, but can be overridden when creating the Shader object in Lua.
-
-Shaders can be "cloned" using `Shader:clone`, which creates a copy of the shader with the option of
-specifying different values for its flags.
-
-There are 2 advantages to using shader flags, instead of using `string.gsub` to replace `#define`
-macros or other parts of the shader code:
-
-- The shader code for a clone does not need to be recompiled.  This makes it **much** faster to
-  create lots of different shaders with slightly different constants or behavior.
-- The shader code can be precompiled ahead of time using `lovr.graphics.compileShader` and packaged
-  with a game.  Flags can then be used at runtime to specialize shaders based on information that
-  can only be known at runtime, like something specific about the current GPU).  This also reduces
-  load times further, because GLSL code does not need to be compiled at all.
-
-Flags are declared using the `constant_id` qualifier, and can be overridden in
-`lovr.graphics.newShader` and `Shader:clone`:
-
-    shader = lovr.graphics.newShader('unlit', [[
-      layout(constant_id = 0) const bool flag_forceColor = false;
-      layout(constant_id = 1) const float flag_r = 1;
-      layout(constant_id = 2) const float flag_g = 1;
-      layout(constant_id = 3) const float flag_b = 1;
-      layout(constant_id = 4) const float flag_a = 1;
-
-      vec4 lovrmain() {
-        if (flag_forceColor) {
-          return vec4(flag_r, flag_g, flag_b, flag_a);
-        } else {
-          return Color;
-        }
-      }
-    ]], {
-      flags = {
-        forceColor = true,
-        g = 0,
-        b = 0.5
-      }
-    })
-
-    clone = shader:clone({
-      forceColor = true,
-      r = 1.0,
-      g = 0.0,
-      b = 0.8
-    })
-
-LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
-separate them from other GLSL variables.  The `flag_` prefix will be stripped when matching against
-flag table keys in `lovr.graphics.newShader`.
-
 ### Uniforms
 
 Shaders can declare uniforms, which can be booleans, numbers, vectors, or matrices.  These have a
@@ -651,3 +597,57 @@ It's also possible to declare a custom sampler variable and use it to sample tex
     // texture(sampler2D(myTexture, mySampler), UV)
 
 A `Sampler` object can be sent to the shader using `Pass:send`, similar to buffers and textures.
+
+### Flags
+
+Shaders can declare "flags" (also called specialization constants), which are values that are
+constant in the shader, but can be overridden when creating the Shader object in Lua.
+
+Shaders can be "cloned" using `Shader:clone`, which creates a copy of the shader with the option of
+specifying different values for its flags.
+
+There are 2 advantages to using shader flags, compared to using string manipulation to replace
+variables:
+
+- The shader code for a clone does not need to be recompiled.  This makes it **much** faster to
+  create lots of different shaders with slightly different constants or behavior.
+- The shader code can be precompiled ahead of time using `lovr.graphics.compileShader` and packaged
+  with a game.  Flags can then be used at runtime to specialize shaders based on information that
+  can only be known at runtime, like something specific about the current GPU.  This also reduces
+  load times further, because GLSL does not need to be compiled at all.
+
+Flags are declared using the `constant_id` qualifier, and can be overridden in
+`lovr.graphics.newShader` and `Shader:clone`:
+
+    shader = lovr.graphics.newShader('unlit', [[
+      layout(constant_id = 0) const bool flag_forceColor = false;
+      layout(constant_id = 1) const float flag_r = 1;
+      layout(constant_id = 2) const float flag_g = 1;
+      layout(constant_id = 3) const float flag_b = 1;
+      layout(constant_id = 4) const float flag_a = 1;
+
+      vec4 lovrmain() {
+        if (flag_forceColor) {
+          return vec4(flag_r, flag_g, flag_b, flag_a);
+        } else {
+          return Color;
+        }
+      }
+    ]], {
+      flags = {
+        forceColor = true,
+        g = 0,
+        b = 0.5
+      }
+    })
+
+    clone = shader:clone({
+      forceColor = true,
+      r = 1.0,
+      g = 0.0,
+      b = 0.8
+    })
+
+LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
+separate them from other GLSL variables.  The `flag_` prefix will be stripped when matching against
+flag table keys in `lovr.graphics.newShader`.
