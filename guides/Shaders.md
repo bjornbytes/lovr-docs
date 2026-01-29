@@ -437,11 +437,24 @@ to do this, each with their own tradeoffs (speed, size, ease of use, etc.).
 
 ### Flags
 
-Shaders can have specialization constant flags, which are constant values that are set when creating
-a shader.
+Shaders can declare "flags" (also called specialization constants), which are values that are
+constant in the shader, but can be overridden when creating the Shader object in Lua.
+
+Shaders can be "cloned" using `Shader:clone`, which creates a copy of the shader with the option of
+specifying different values for its flags.
+
+There are 2 advantages to using shader flags, instead of using `string.gsub` to replace `#define`
+macros or other parts of the shader code:
+
+- The shader code for a clone does not need to be recompiled.  This makes it **much** faster to
+  create lots of different shaders with slightly different constants or behavior.
+- The shader code can be precompiled ahead of time using `lovr.graphics.compileShader` and packaged
+  with a game.  Flags can then be used at runtime to specialize shaders based on information that
+  can only be known at runtime, like something specific about the current GPU).  This also reduces
+  load times further, because GLSL code does not need to be compiled at all.
 
 Flags are declared using the `constant_id` qualifier, and can be overridden in
-`lovr.graphics.newShader`:
+`lovr.graphics.newShader` and `Shader:clone`:
 
     shader = lovr.graphics.newShader('unlit', [[
       layout(constant_id = 0) const bool flag_forceColor = false;
@@ -465,27 +478,16 @@ Flags are declared using the `constant_id` qualifier, and can be overridden in
       }
     })
 
-LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
-separate them from other GLSL variables, the `flag_` prefix will be stripped when matching against
-flag table keys in `lovr.graphics.newShader`.
-
-It is also possible to use `Shader:clone` to create a copy of a shader with different flag values:
-
     clone = shader:clone({
       forceColor = true,
       r = 1.0,
-      g = 0.0
+      g = 0.0,
       b = 0.8
     })
 
-The advantage of cloning a shader (rather than using `:gsub` to change the shader code) is that the
-shader code for a clone doesn't need to be recompiled!  This can make it much faster to create lots
-of different shaders with slightly different constants or behaviors (sometimes called ubershaders).
-
-Another advantage is that you can compile shaders ahead of time with `lovr.graphics.compileShader`
-and package the compiled shaders with the game.  Flags can then be used at runtime to specialize
-shaders with values based on information that can only be known at runtime (perhaps something unique
-to the current GPU).
+LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
+separate them from other GLSL variables.  The `flag_` prefix will be stripped when matching against
+flag table keys in `lovr.graphics.newShader`.
 
 ### Uniforms
 
