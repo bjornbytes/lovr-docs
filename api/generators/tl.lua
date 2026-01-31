@@ -63,6 +63,18 @@ local function capitalize(part)
   return part:sub(1, 1):upper() .. part:sub(2)
 end
 
+local function normalizeContextPart(part)
+  local name = ''
+  local s = tostring(part or '')
+  for word in s:gmatch('%w+') do
+    name = name .. capitalize(word)
+  end
+  if name == '' then
+    name = 'Value'
+  end
+  return name
+end
+
 local function makeTypeName(base, used)
   local parts = {}
   for part in base:gmatch('[%w]+') do
@@ -89,6 +101,8 @@ return function(api)
   local objectDefs = {}
   local moduleDefs = {}
   local lovrDefs = {}
+  local lovrNestedDefs = {}
+  local moduleNestedDefs = {}
   local tableTypeDefs = {}
   local enums = {}
   local objects = {}
@@ -119,6 +133,118 @@ return function(api)
   for _, object in ipairs(objects) do
     objectByName[object.name] = object
   end
+
+  local function collectObjectMethods(object)
+    local list = {}
+    local indexByName = {}
+    local visited = {}
+
+    local function visit(obj)
+      if not obj or visited[obj.name] then
+        return
+      end
+      visited[obj.name] = true
+      if obj.extends then
+        visit(objectByName[obj.extends])
+      end
+      for _, method in ipairs(obj.methods or {}) do
+        local idx = indexByName[method.name]
+        if idx then
+          list[idx] = method
+        else
+          indexByName[method.name] = #list + 1
+          list[#list + 1] = method
+        end
+      end
+    end
+
+    visit(object)
+    return list
+  end
+
+  local function addLovrNestedRecord(name, fields)
+    lovrNestedDefs[#lovrNestedDefs + 1] = '  record ' .. name
+    for _, field in ipairs(fields) do
+      lovrNestedDefs[#lovrNestedDefs + 1] = '    ' .. field
+    end
+    lovrNestedDefs[#lovrNestedDefs + 1] = '  end\n'
+  end
+
+  local function makeLovrNestedName(base)
+    local baseName = capitalize(base or '')
+    if baseName == '' then baseName = 'Type' end
+    local qualified = 'lovr.' .. baseName
+    local unique = qualified
+    local suffix = 2
+    while usedTypeNames[unique] do
+      baseName = capitalize(base or '') .. suffix
+      unique = 'lovr.' .. baseName
+      suffix = suffix + 1
+    end
+    usedTypeNames[unique] = true
+    return unique, baseName
+  end
+
+  local function addModuleNestedRecord(moduleType, name, fields)
+    local list = moduleNestedDefs[moduleType]
+    if not list then
+      list = {}
+      moduleNestedDefs[moduleType] = list
+    end
+    list[#list + 1] = '  record ' .. name
+    for _, field in ipairs(fields) do
+      list[#list + 1] = '    ' .. field
+    end
+    list[#list + 1] = '  end\n'
+  end
+
+  local function makeModuleNestedName(moduleType, base)
+    local root = normalizeContextPart(base)
+    local baseName = root ~= '' and root or 'Type'
+    local qualified = moduleType .. '.' .. baseName
+    local suffix = 2
+    while usedTypeNames[qualified] do
+      baseName = root .. suffix
+      qualified = moduleType .. '.' .. baseName
+      suffix = suffix + 1
+    end
+    usedTypeNames[qualified] = true
+    return qualified, baseName
+  end
+
+  local function makeModuleContext(moduleType, functionName)
+    return {
+      nested = 'module',
+      module = moduleType,
+      base = normalizeContextPart(functionName or '')
+    }
+  end
+
+  local function extendContext(context, fieldName)
+    if type(context) == 'table' and context.base then
+      local suffix = normalizeContextPart(fieldName)
+      if context.nested == 'lovr' then
+        return {
+          base = context.base .. suffix,
+          nested = 'lovr'
+        }
+      elseif context.nested == 'module' then
+        return {
+          base = context.base .. suffix,
+          module = context.module,
+          nested = 'module'
+        }
+      end
+    end
+    if type(context) == 'string' then
+      if not fieldName or fieldName == '' then
+        return context
+      end
+      return context .. '_' .. tostring(fieldName)
+    end
+    return fieldName or context
+  end
+
 
   local needsWhere = {}
   local function collectUnionObjects(typeStr)
@@ -200,6 +326,22 @@ return function(api)
     end
   end
 
+  local hasTypeMethod = {}
+  for _, object in ipairs(objects) do
+    if object.name ~= 'Object' then
+      for _, method in ipairs(collectObjectMethods(object)) do
+        if method.name == 'type' then
+          hasTypeMethod[object.name] = true
+          break
+        end
+      end
+    end
+  end
+
+  for name in pairs(hasTypeMethod) do
+    needsWhere[name] = true
+  end
+
   local tableTypes = {}
   local tableTypeForwards = {}
 
@@ -216,6 +358,7 @@ return function(api)
     table.sort(parts)
     return table.concat(parts, ',')
   end
+
 
   local function isFunctionType(typeStr)
     local s = stripOuterParens(typeStr)
@@ -360,6 +503,7 @@ return function(api)
     end
 
     local args = {}
+    local baseContext = contextPrefix or 'InlineFunction'
     local function wrapFunctionType(typeStr)
       if typeStr:match('^function') then
         return '(' .. typeStr .. ')'
@@ -369,10 +513,11 @@ return function(api)
 
     for _, arg in ipairs(info.arguments) do
       local argType
+      local argContext = extendContext(baseContext, arg.name or 'Arg')
       if arg.type == 'table' and arg.table then
-        argType = tableType(arg.table, (contextPrefix or 'InlineFunction') .. (arg.name or 'Arg'))
+        argType = tableType(arg.table, argContext)
       elseif arg.type == 'function' then
-        argType = wrapFunctionType(genInlineFunctionType(arg, (contextPrefix or 'InlineFunction') .. (arg.name or 'Arg')))
+        argType = wrapFunctionType(genInlineFunctionType(arg, argContext))
       else
         argType = convertTypeString(arg.type)
       end
@@ -389,10 +534,11 @@ return function(api)
     local rets = {}
     for _, ret in ipairs(info.returns) do
       local retType
+      local retContext = extendContext(baseContext, ret.name or 'Return')
       if ret.type == 'table' and ret.table then
-        retType = tableType(ret.table, (contextPrefix or 'InlineFunction') .. (ret.name or 'Return'))
+        retType = tableType(ret.table, retContext)
       elseif ret.type == 'function' then
-        retType = wrapFunctionType(genInlineFunctionType(ret, (contextPrefix or 'InlineFunction') .. (ret.name or 'Return')))
+        retType = wrapFunctionType(genInlineFunctionType(ret, retContext))
       else
         retType = convertTypeString(ret.type)
       end
@@ -416,12 +562,84 @@ return function(api)
     return ('function(%s): %s'):format(table.concat(args, ', '), retlist)
   end
 
-  tableType = function(tbl, context)
-    context = context or 'Table'
-    local key = tableShapeKey(tbl)
+  local function emitLovrConf(tbl)
+    local key = 'lovr.Conf:' .. tableShapeKey(tbl)
     if tableTypes[key] then
       return tableTypes[key]
     end
+
+    local typeName = 'lovr.Conf'
+    tableTypes[key] = typeName
+    recordNames[typeName] = true
+    usedTypeNames[typeName] = true
+
+    lovrNestedDefs[#lovrNestedDefs + 1] = '  record Conf'
+
+    -- nested records inside conf
+    for _, field in ipairs(tbl) do
+      if field.type == 'table' and field.table then
+        local nestedName = capitalize(field.name)
+        local nestedType = typeName .. '.' .. nestedName
+        recordNames[nestedType] = true
+        usedTypeNames[nestedType] = true
+
+        lovrNestedDefs[#lovrNestedDefs + 1] = '    record ' .. nestedName
+        for _, subfield in ipairs(field.table) do
+          local subType
+          if subfield.type == 'table' and subfield.table then
+            subType = 'table'
+          elseif subfield.type == 'function' then
+            subType = genInlineFunctionType(subfield, 'Lovrconf' .. field.name .. (subfield.name or 'Field'))
+          else
+            subType = convertTypeString(subfield.type)
+          end
+          if subfield.default ~= nil and not subType:match('nil') then
+            subType = subType .. ' | nil'
+          end
+          lovrNestedDefs[#lovrNestedDefs + 1] = ('      %s: %s'):format(subfield.name, subType)
+        end
+        lovrNestedDefs[#lovrNestedDefs + 1] = '    end\n'
+      end
+    end
+
+    -- fields of conf
+    for _, field in ipairs(tbl) do
+      local fieldType
+      if field.type == 'table' and field.table then
+        fieldType = typeName .. '.' .. capitalize(field.name)
+      elseif field.type == 'function' then
+        fieldType = genInlineFunctionType(field, 'Lovrconf' .. (field.name or 'Field'))
+      else
+        fieldType = convertTypeString(field.type)
+      end
+      if field.default ~= nil and not fieldType:match('nil') then
+        fieldType = fieldType .. ' | nil'
+      end
+      lovrNestedDefs[#lovrNestedDefs + 1] = ('    %s: %s'):format(field.name, fieldType)
+    end
+
+    lovrNestedDefs[#lovrNestedDefs + 1] = '  end\n'
+    return typeName
+  end
+
+  tableType = function(tbl, context)
+    context = context or 'Table'
+    local key = tableShapeKey(tbl)
+    local isLovrNested = type(context) == 'table' and context.nested == 'lovr'
+    local isModuleNested = type(context) == 'table' and context.nested == 'module' and context.module
+    if isLovrNested then
+      if context.base == 'Conf' then
+        return emitLovrConf(tbl)
+      end
+      key = 'lovr:' .. key
+    elseif isModuleNested then
+      key = ('module:%s:%s:%s'):format(context.module, context.base or '', key)
+    end
+    if tableTypes[key] then
+      return tableTypes[key]
+    end
+
+    local contextBase = (isLovrNested or isModuleNested) and context.base or context
 
     local isArrayStruct = true
     local isTuple = true
@@ -448,9 +666,10 @@ return function(api)
       for _, field in ipairs(tbl) do
         local itemType
         if field.type == 'table' and field.table then
-          itemType = tableType(field.table, context .. field.name)
+          local child = extendContext(context, field.name)
+          itemType = tableType(field.table, child)
         elseif field.type == 'function' then
-          itemType = genInlineFunctionType(field, context .. field.name)
+          itemType = genInlineFunctionType(field, extendContext(context, field.name))
         else
           itemType = convertTypeString(field.type)
         end
@@ -468,9 +687,10 @@ return function(api)
         local name = field.name:sub(4)
         local fieldType
         if field.type == 'table' and field.table then
-          fieldType = tableType(field.table, context .. name)
+          local child = extendContext(context, name)
+          fieldType = tableType(field.table, child)
         elseif field.type == 'function' then
-          fieldType = genInlineFunctionType(field, context .. name)
+          fieldType = genInlineFunctionType(field, extendContext(context, name))
         else
           fieldType = convertTypeString(field.type)
         end
@@ -480,16 +700,38 @@ return function(api)
         fields[#fields + 1] = { name = name, type = fieldType }
       end
 
-      local itemName = makeTypeName(context .. 'Item', usedTypeNames)
-      recordNames[itemName] = true
-      tableTypeForwards[itemName] = true
-      tableTypes[key] = '{' .. itemName .. '}'
-      tableTypeDefs[#tableTypeDefs + 1] = 'global record ' .. itemName
-      for _, field in ipairs(fields) do
-        tableTypeDefs[#tableTypeDefs + 1] = ('  %s: %s'):format(field.name, field.type)
+      if isLovrNested then
+        local qualified, baseName = makeLovrNestedName(contextBase .. 'Item')
+        recordNames[qualified] = true
+        tableTypes[key] = '{' .. qualified .. '}'
+        local fieldLines = {}
+        for _, field in ipairs(fields) do
+          fieldLines[#fieldLines + 1] = ('%s: %s'):format(field.name, field.type)
+        end
+        addLovrNestedRecord(baseName, fieldLines)
+        return tableTypes[key]
+      elseif isModuleNested then
+        local qualified, baseName = makeModuleNestedName(context.module, contextBase .. 'Item')
+        recordNames[qualified] = true
+        tableTypes[key] = '{' .. qualified .. '}'
+        local fieldLines = {}
+        for _, field in ipairs(fields) do
+          fieldLines[#fieldLines + 1] = ('%s: %s'):format(field.name, field.type)
+        end
+        addModuleNestedRecord(context.module, baseName, fieldLines)
+        return tableTypes[key]
+      else
+        local itemName = makeTypeName(contextBase .. 'Item', usedTypeNames)
+        recordNames[itemName] = true
+        tableTypeForwards[itemName] = true
+        tableTypes[key] = '{' .. itemName .. '}'
+        tableTypeDefs[#tableTypeDefs + 1] = 'global record ' .. itemName
+        for _, field in ipairs(fields) do
+          tableTypeDefs[#tableTypeDefs + 1] = ('  %s: %s'):format(field.name, field.type)
+        end
+        tableTypeDefs[#tableTypeDefs + 1] = 'end\n'
+        return tableTypes[key]
       end
-      tableTypeDefs[#tableTypeDefs + 1] = 'end\n'
-      return tableTypes[key]
     end
 
     if isTuple then
@@ -502,9 +744,10 @@ return function(api)
       for _, field in ipairs(tbl) do
         local itemType
         if field.type == 'table' and field.table then
-          itemType = tableType(field.table, context .. field.name)
+          local child = extendContext(context, field.name)
+          itemType = tableType(field.table, child)
         elseif field.type == 'function' then
-          itemType = genInlineFunctionType(field, context .. field.name)
+          itemType = genInlineFunctionType(field, extendContext(context, field.name))
         else
           itemType = convertTypeString(field.type)
         end
@@ -519,9 +762,10 @@ return function(api)
     for _, field in ipairs(tbl) do
       local fieldType
       if field.type == 'table' and field.table then
-        fieldType = tableType(field.table, context .. field.name)
+        local child = extendContext(context, field.name)
+        fieldType = tableType(field.table, child)
       elseif field.type == 'function' then
-        fieldType = genInlineFunctionType(field, context .. field.name)
+        fieldType = genInlineFunctionType(field, extendContext(context, field.name))
       else
         fieldType = convertTypeString(field.type)
       end
@@ -531,16 +775,38 @@ return function(api)
       fields[#fields + 1] = { name = field.name, type = fieldType }
     end
 
-    local typeName = makeTypeName(context, usedTypeNames)
-    recordNames[typeName] = true
-    tableTypeForwards[typeName] = true
-    tableTypes[key] = typeName
-    tableTypeDefs[#tableTypeDefs + 1] = 'global record ' .. typeName
-    for _, field in ipairs(fields) do
-      tableTypeDefs[#tableTypeDefs + 1] = ('  %s: %s'):format(field.name, field.type)
+    if isLovrNested then
+      local qualified, baseName = makeLovrNestedName(contextBase)
+      recordNames[qualified] = true
+      tableTypes[key] = qualified
+      local fieldLines = {}
+      for _, field in ipairs(fields) do
+        fieldLines[#fieldLines + 1] = ('%s: %s'):format(field.name, field.type)
+      end
+      addLovrNestedRecord(baseName, fieldLines)
+      return qualified
+    elseif isModuleNested then
+      local qualified, baseName = makeModuleNestedName(context.module, contextBase)
+      recordNames[qualified] = true
+      tableTypes[key] = qualified
+      local fieldLines = {}
+      for _, field in ipairs(fields) do
+        fieldLines[#fieldLines + 1] = ('%s: %s'):format(field.name, field.type)
+      end
+      addModuleNestedRecord(context.module, baseName, fieldLines)
+      return qualified
+    else
+      local typeName = makeTypeName(contextBase, usedTypeNames)
+      recordNames[typeName] = true
+      tableTypeForwards[typeName] = true
+      tableTypes[key] = typeName
+      tableTypeDefs[#tableTypeDefs + 1] = 'global record ' .. typeName
+      for _, field in ipairs(fields) do
+        tableTypeDefs[#tableTypeDefs + 1] = ('  %s: %s'):format(field.name, field.type)
+      end
+      tableTypeDefs[#tableTypeDefs + 1] = 'end\n'
+      return typeName
     end
-    tableTypeDefs[#tableTypeDefs + 1] = 'end\n'
-    return typeName
   end
 
   local function wrapFunctionType(typeStr)
@@ -552,6 +818,9 @@ return function(api)
 
   local function resolveInfoType(info, contextPrefix)
     if info.type == 'table' and info.table then
+      if info.name == 't' and type(contextPrefix) == 'string' and contextPrefix:match('^Lovr_?conf') then
+        return tableType(info.table, { base = 'Conf', nested = 'lovr' })
+      end
       return tableType(info.table, contextPrefix)
     elseif info.type == 'function' then
       return genInlineFunctionType(info, contextPrefix)
@@ -569,7 +838,8 @@ return function(api)
     end
 
     for _, arg in ipairs(variant.arguments or {}) do
-      local argType = resolveInfoType(arg, prefix .. (arg.name or 'Arg'))
+      local argContext = extendContext(prefix, arg.name or 'Arg')
+      local argType = resolveInfoType(arg, argContext)
       argType = wrapFunctionType(argType)
 
       if arg.name and arg.name:sub(1, 3) == '...' then
@@ -583,7 +853,8 @@ return function(api)
 
     local rets = {}
     for _, ret in ipairs(variant.returns or {}) do
-      local retType = resolveInfoType(ret, prefix .. (ret.name or 'Return'))
+      local retContext = extendContext(prefix, ret.name or 'Return')
+      local retType = resolveInfoType(ret, retContext)
       retType = wrapFunctionType(retType)
 
       if ret.name and ret.name:sub(1, 3) == '...' then
@@ -603,34 +874,6 @@ return function(api)
     end
 
     return ('function(%s): %s'):format(table.concat(args, ', '), retlist)
-  end
-
-  local function collectObjectMethods(object)
-    local list = {}
-    local indexByName = {}
-    local visited = {}
-
-    local function visit(obj)
-      if not obj or visited[obj.name] then
-        return
-      end
-      visited[obj.name] = true
-      if obj.extends then
-        visit(objectByName[obj.extends])
-      end
-      for _, method in ipairs(obj.methods or {}) do
-        local idx = indexByName[method.name]
-        if idx then
-          list[idx] = method
-        else
-          indexByName[method.name] = #list + 1
-          list[#list + 1] = method
-        end
-      end
-    end
-
-    visit(object)
-    return list
   end
 
   -- Preamble
@@ -656,11 +899,11 @@ return function(api)
         objectDefs[#objectDefs + 1] = ('  where self:type() == %q'):format(object.name)
       end
 
-      for _, method in ipairs(collectObjectMethods(object)) do
-        for _, variant in ipairs(method.variants or {}) do
-          objectDefs[#objectDefs + 1] = ('  %s: %s'):format(method.name, genFunctionType(variant, object.name, object.name .. method.name))
-        end
+    for _, method in ipairs(collectObjectMethods(object)) do
+      for _, variant in ipairs(method.variants or {}) do
+          objectDefs[#objectDefs + 1] = ('  %s: %s'):format(method.name, genFunctionType(variant, object.name, extendContext(object.name, method.name)))
       end
+    end
 
       objectDefs[#objectDefs + 1] = 'end\n'
     end
@@ -687,7 +930,7 @@ return function(api)
           moduleDefs[#moduleDefs + 1] = 'global record ' .. typeName
           for _, fn in ipairs(module.functions) do
             for _, variant in ipairs(fn.variants or {}) do
-              moduleDefs[#moduleDefs + 1] = ('  %s: %s'):format(fn.name, genFunctionType(variant, nil, typeName .. fn.name))
+              moduleDefs[#moduleDefs + 1] = ('  %s: %s'):format(fn.name, genFunctionType(variant, nil, makeModuleContext(typeName, fn.name)))
             end
           end
           moduleDefs[#moduleDefs + 1] = 'end\n'
@@ -701,14 +944,14 @@ return function(api)
       if module.key == 'lovr' then
         for _, fn in ipairs(module.functions) do
           for _, variant in ipairs(fn.variants or {}) do
-            lovrDefs[#lovrDefs + 1] = ('  %s: %s'):format(fn.name, genFunctionType(variant, nil, 'Lovr' .. fn.name))
+            lovrDefs[#lovrDefs + 1] = ('  %s: %s'):format(fn.name, genFunctionType(variant, nil, extendContext('Lovr', fn.name)))
           end
         end
       end
     end
     for _, cb in ipairs(callbacks) do
       for _, variant in ipairs(cb.variants or {}) do
-        lovrDefs[#lovrDefs + 1] = ('  %s: %s'):format(cb.name, genFunctionType(variant, nil, 'Lovr' .. cb.name))
+        lovrDefs[#lovrDefs + 1] = ('  %s: %s'):format(cb.name, genFunctionType(variant, nil, extendContext('Lovr', cb.name)))
       end
     end
     for _, module in ipairs(modules) do
@@ -743,7 +986,35 @@ return function(api)
   end
   append(enumDefs)
   append(objectDefs)
+  if next(moduleNestedDefs) then
+    local injected = {}
+    for _, line in ipairs(moduleDefs) do
+      injected[#injected + 1] = line
+      local name = line:match('^global record%s+([%w_]+)$')
+      local nested = name and moduleNestedDefs[name]
+      if nested then
+        for _, nestedLine in ipairs(nested) do
+          injected[#injected + 1] = nestedLine
+        end
+      end
+    end
+    moduleDefs = injected
+  end
   append(moduleDefs)
+  if #lovrNestedDefs > 0 then
+    local injected = {}
+    local inserted = false
+    for _, line in ipairs(lovrDefs) do
+      injected[#injected + 1] = line
+      if not inserted and line:match('^global record lovr') then
+        for _, nested in ipairs(lovrNestedDefs) do
+          injected[#injected + 1] = nested
+        end
+        inserted = true
+      end
+    end
+    lovrDefs = injected
+  end
   append(lovrDefs)
   if #tableTypeDefs > 0 then
     out[#out + 1] = ''
