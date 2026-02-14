@@ -19603,7 +19603,7 @@ return {
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "`x` and `y` can not be negative.  `w` and `h` must be positive.\n\nBy default, the scissor covers the entire canvas.",
+              notes = "`x` and `y` can not be negative.  `w` and `h` must be positive.\n\nIf the scissor rectangle extends past the size of the canvas textures, it will be clamped to the right/bottom edges.\n\nBy default, the scissor covers the entire canvas.",
               related = {
                 "Pass:setViewport"
               },
@@ -24095,6 +24095,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
+                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -24142,6 +24143,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
+                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -24189,6 +24191,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
+                  default = "nil",
                   table = {
                     {
                       name = "stereo",
@@ -24236,6 +24239,7 @@ return {
                   name = "options",
                   type = "table",
                   description = "Optional options for the Layer.",
+                  default = "nil",
                   table = {
                     {
                       name = "stereo",
