@@ -429,6 +429,111 @@ fragment shaders.  Textures can be sampled using the `getPixel` helper function.
   </tbody>
 </table>
 
+The following built-in variables are definitions for special GLSL built-in variables.
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Notes</td>
+      <td>Stage</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>BaseInstance</code></td>
+      <td>int</td>
+      <td><code>gl_BaseInstance</code></td>
+      <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>BaseVertex</code></td>
+      <td>int</td>
+      <td><code>gl_BaseVertex</code></td>
+	  <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>DrawIndex</code></td>
+      <td>int</td>
+      <td><code>gl_DrawID</code></td>
+	  <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>InstanceIndex</code></td>
+      <td>int</td>
+      <td><code>gl_InstanceIndex</code></td>
+	  <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>PointSize</code></td>
+      <td>float</td>
+      <td><code>gl_PointSize</code></td>
+	  <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>Position</code></td>
+      <td>vec4</td>
+      <td><code>gl_Position</code></td>
+	  <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>VertexIndex</code></td>
+      <td>int</td>
+      <td><code>gl_VertexIndex</code></td>
+	  <td>Vertex</td>
+    </tr>
+    <tr>
+      <td><code>FragCoord</code></td>
+      <td>vec4</td>
+      <td><code>gl_FragCoord</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>FragDepth</code></td>
+      <td>float</td>
+      <td><code>gl_FragDepth</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>FrontFacing</code></td>
+      <td>bool</td>
+      <td><code>gl_FrontFacing</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>PointCoord</code></td>
+      <td>vec2</td>
+      <td><code>gl_PointCoord</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>SampleID</code></td>
+      <td>int</td>
+      <td><code>gl_SampleID</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>SampleMaskIn</code></td>
+      <td>int[ ]</td>
+      <td><code>gl_SampleMaskIn</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>SampleMask</code></td>
+      <td>int[ ]</td>
+      <td><code>gl_SampleMask</code></td>
+	  <td>Fragment</td>
+    </tr>
+    <tr>
+      <td><code>SamplePosition</code></td>
+      <td>vec2</td>
+      <td><code>gl_SamplePosition</code></td>
+	  <td>Fragment</td>
+    </tr>
+  </tbody>
+</table>
+
 Shader Inputs
 ---
 
