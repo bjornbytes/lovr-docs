@@ -756,3 +756,85 @@ Flags are declared using the `constant_id` qualifier, and can be overridden in
 LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefixed with `flag_` to
 separate them from other GLSL variables.  The `flag_` prefix will be stripped when matching against
 flag table keys in `lovr.graphics.newShader`.
+
+Built-in shader functions
+---
+Shaders can make use of the following built-in helper functions:  
+TODO Add the Surface struct and Surface related functions?
+
+### Texture helpers
+The `getPixel` function can be used to sample pixels from texture resources, using the default sampler set with Pass:setSampler.  
+
+    vec4 getPixel(texture2D t, vec2 uv)
+    vec4 getPixel(texture3D t, vec3 uvw)
+    vec4 getPixel(textureCube t, vec3 dir)
+    vec4 getPixel(texture2DArray t, vec2 uv, float layer)
+    vec4 getPixel(textureCubeArray t, vec4 coord)
+
+	//TODO Add the sampler overloads too?
+
+### Lighting helpers
+The `D_GGX` function is an implementation of the Trowbridge-Reitz GGX Normal Distribution Function (NDF). It can be used to calculate specular highlight intensity.
+
+    float D_GGX(const Surface surface, float NoH)
+The `G_SmithGGXCorrelated` function implements the Heitz's Smith Joint Masking-Shadowing Function. It can be used for TODO...
+
+    float G_SmithGGXCorrelated(const Surface surface, float NoV, float NoL)
+
+The `F_Schlick` function approximates the Fresnel factor.
+
+    vec3 F_Schlick(const Surface surface, float VoH)
+
+The `getLighting` function evaluates a direct light for a given surface.
+
+    vec3 getLighting(const Surface surface, vec3 direction, vec4 color, float visibility)
+
+The `prefilteredBRDF` function TODO...  
+Reference: https://www.unrealengine.com/en-US/blog/physically-based-shading-on-mobile
+
+    vec2 prefilteredBRDF(float NoV, float roughness)
+
+The `evaluateSphericalHarmonics` function can be used for a fast approximation of global illumination.
+
+    vec3 evaluateSphericalHarmonics(vec3 sh[9], vec3 n)
+
+The `getIndirectLighting` function calculates indirect lighting for a surface.
+
+    vec3 getIndirectLighting(const Surface surface, textureCube environment, vec3 sphericalHarmonics[9])
+### Color conversion helpers
+The `tonemap` function transforms HDR color values to [0, 1] range.
+
+    vec3 tonemap(vec3 x)
+
+The `gammaToLinear` function converts a color from sRGB to Linear space.
+
+    vec3 gammaToLinear(vec3 color)
+
+The `linearToGamma` function converts a color from Linear to sRGB space.
+
+    vec3 linearToGamma(vec3 color)
+
+The `pqToLinear` function can be used for TODO...
+
+    vec3 pqToLinear(vec3 color)
+
+The `linearToPQ` function can be used for TODO...
+
+    vec3 linearToPQ(vec3 color)
+
+The `sRGBToRec2020` function converts a color from sRGB to Rec.2020 space.
+
+    vec3 sRGBToRec2020(vec3 color)
+
+The `rec2020ToSRGB` function converts a color from Rec.2020 to sRGB space.
+
+    vec3 rec2020ToSRGB(vec3 color)
+
+### Misc helpers
+The `packSnorm10x3` function can be used for TODO...
+
+    uint packSnorm10x3(vec4 v)
+
+The `unpackSnorm10x3` function can be used for TODO...
+
+    vec4 unpackSnorm10x3(uint n)
