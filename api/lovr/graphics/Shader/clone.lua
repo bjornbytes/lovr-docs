@@ -10,7 +10,7 @@ return {
       description = 'The Shader to clone.'
     },
     flags = {
-      type = 'table',
+      type = '{ShaderFlags}',
       description = 'The flags used by the clone.'
     }
   },
