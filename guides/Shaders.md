@@ -757,6 +757,9 @@ LÖVR reserves `constant_id` values of 1000 and above.  Flag names may be prefix
 separate them from other GLSL variables.  The `flag_` prefix will be stripped when matching against
 flag table keys in `lovr.graphics.newShader`.
 
+See the `ShaderFlag` page for a list of builtin flags, which can be used to control the behavior of
+LÖVR's shader helpers and default shaders.
+
 Built-in shader functions
 ---
 Shaders can make use of the following built-in helper functions:  
