@@ -10177,15 +10177,15 @@ return {
             },
             {
               name = "passColor",
-              description = "Use the pass color defined by `Pass:setColor`."
+              description = "Multiply the pass color (`Pass:setColor`) into the `Color` variable sent to the fragment shader."
             },
             {
               name = "materialColor",
-              description = "Use the base color of the material defined by `Pass:setMaterial`."
+              description = "Multiply the material color (`Pass:setMaterial`) into the `Color` variable sent to the fragment shader."
             },
             {
               name = "vertexColors",
-              description = "Use the color contribution from the `VertexColor` attribute."
+              description = "Multiply the vertex color (from the `VertexColor` attribute) into the `Color` variable sent to the fragment shader."
             },
             {
               name = "uvTransform",
