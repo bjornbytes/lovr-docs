@@ -10,8 +10,13 @@ return {
       description = 'The Shader to clone.'
     },
     flags = {
-      type = '{ShaderFlags}',
-      description = 'The flags used by the clone.'
+      type = 'table',
+      description = [[
+        A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The
+        values can be numbers or booleans, depending on the type of the flag as declared in the
+        shader.  The clones set here will override any set in the parent shader.  See `ShaderFlag`
+        for the set of builtin shader flags.
+      ]]
     }
   },
   returns = {

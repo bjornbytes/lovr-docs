@@ -48,7 +48,7 @@ return {
           description = [[
             A table of shader flags.  The keys of the table should be flag names or flag ID numbers.
             The values can be numbers or booleans, depending on the type of the flag as declared in
-            the shader.
+            the shader.  See `ShaderFlag` for the list of builtin shader flags.
           ]]
         },
         {

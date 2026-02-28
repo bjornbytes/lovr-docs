@@ -10160,6 +10160,84 @@ return {
           }
         },
         {
+          name = "ShaderFlag",
+          summary = "Built-in Shader flags.",
+          description = "Built-in shader flags.  Shaders can use both user-created specialization constants (or simply \"flags\") alongside the following built-in ones.",
+          key = "ShaderFlag",
+          module = "lovr.graphics",
+          notes = "The types and default values for the flags are:\n\n<table>\n  <thead>\n    <tr>\n      <td>Flag</td>\n      <td>Type</td>\n      <td>Default</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><code>pointSize</code></td>\n      <td><code>float</code></td>\n      <td><code>1.0</code></td>\n    </tr>\n    <tr>\n      <td><code>passColor</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>materialColor</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>vertexColors</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>uvTransform</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>alphaCutoff</code></td>\n      <td><code>boolean</code></td>\n      <td><code>false</code></td>\n    </tr>\n    <tr>\n      <td><code>glow</code></td>\n      <td><code>boolean</code></td>\n      <td><code>false</code></td>\n    </tr>\n    <tr>\n      <td><code>normalMap</code></td>\n      <td><code>boolean</code></td>\n      <td><code>false</code></td>\n    </tr>\n    <tr>\n      <td><code>vertexTangents</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>colorTexture</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>glowTexture</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>metalnessTexture</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>roughnessTexture</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>ambientOcclusion</code></td>\n      <td><code>boolean</code></td>\n      <td><code>true</code></td>\n    </tr>\n    <tr>\n      <td><code>clearcoatTexture</code></td>\n      <td><code>boolean</code></td>\n      <td><code>false</code></td>\n    </tr>\n    <tr>\n      <td><code>tonemap</code></td>\n      <td><code>boolean</code></td>\n      <td><code>false</code></td>\n    </tr>\n  </tbody> </table>",
+          related = {
+            "lovr.graphics.newShader",
+            "Shader:clone"
+          },
+          values = {
+            {
+              name = "pointSize",
+              description = "The point size when drawing points with e.g. `Pass:points`, in pixels."
+            },
+            {
+              name = "passColor",
+              description = "Use the pass color defined by `Pass:setColor`."
+            },
+            {
+              name = "materialColor",
+              description = "Use the base color of the material defined by `Pass:setMaterial`."
+            },
+            {
+              name = "vertexColors",
+              description = "Use the color contribution from the `VertexColor` attribute."
+            },
+            {
+              name = "uvTransform",
+              description = "Apply the UV transform from the material to the `VertexUV` attribute."
+            },
+            {
+              name = "alphaCutoff",
+              description = "Enable alpha cutoff.  When enabled, pixels will be discarded if their alpha is less than the `alphaCutoff` value of the material."
+            },
+            {
+              name = "glow",
+              description = "Enable glow.  When enabled, the Material\\'s `glowTexture` and `glow` property will get added to the color of the pixel returned by `lovrmain`.  This is also called an \"emissive\" texture and is used for parts of an object that give off light, like an LED screen or the headlights on a car."
+            },
+            {
+              name = "normalMap",
+              description = "Use the normal map texture in the material to affect the normal direction of surfaces.  This only affects the `normal` variable in the `Surface` struct."
+            },
+            {
+              name = "vertexTangents",
+              description = "Use the vertex tangents of the model for normal mapping.  When this is `false`, tangents will be computed in the fragment shader from the vertex positions, UVs, and normal vector."
+            },
+            {
+              name = "colorTexture",
+              description = "Use the color texture of the material.  If this is `false`, the color will only be derived from the `Color` variable (pass color, material color, vertex color), and the color texture will be ignored."
+            },
+            {
+              name = "glowTexture",
+              description = "Sample the `glowTexture` of the material when applying glow.  Note that glow is only active when the `glow` flag is also enabled.  If this is false, then materials will give off a constant glow using their `glow` property, and the glow texture is ignored."
+            },
+            {
+              name = "metalnessTexture",
+              description = "Sample the blue channel of the material's metalness texture when computing the metalness value of a `Surface`. When false, the surface will have a constant metalness based on the material's `metalness` property, instead of using a texture."
+            },
+            {
+              name = "roughnessTexture",
+              description = "Sample the green channel of the material's roughness texture when computing the roughness value of a `Surface`. When false, the surface will have a constant roughness based on the material's `roughness` property, instead of using a texture."
+            },
+            {
+              name = "ambientOcclusion",
+              description = "Sample the red channel of the `occlusionTexture` of the material to compute the occlusion property of a `Surface`.  When false, the occlusion will be `1.0` (no occlusion)."
+            },
+            {
+              name = "clearcoatTexture",
+              description = "Sample the red channel of the material's `clearcoatTexture` to compute the `clearcoat` property of a `Surface`.  When false, only the `clearcoat` property of the material will be used, and the texture will be ignored."
+            },
+            {
+              name = "tonemap",
+              description = "Apply ACES tonemapping to the final color output.  This will compress color channel values down to the 0-1 range while attempting to preserve detail in highlights and shadows."
+            }
+          }
+        },
+        {
           name = "ShaderStage",
           summary = "Different shader stages.",
           description = "Different shader stages.  Graphics shaders have a `vertex` and `fragment` stage, and compute shaders have a single `compute` stage.",
@@ -10200,82 +10278,6 @@ return {
               name = "compute",
               description = "A compute shader with a single compute stage."
             }
-          }
-        },
-        {
-          name = "ShaderFlags",
-          summary = "Built-in Shader flags.",
-          description = "Built-in shader flags. Shaders can use both user-created specialization constants (or simply "flags") alongside the following built-in ones.",
-          key = "ShaderFlags",
-          module = "lovr.graphics",
-          related = {
-            "lovr.graphics.newShader"
-          },
-          values = {
-            {
-              name = 'pointSize',
-              description = '(flag ID = 1000, default value = 1.f) Defines the point size in pixels when using "pass:points".'
-            },
-            {
-              name = 'passColor',
-              description = '(flag ID = 1002, default value = true) Use the pass color defined by "pass:setColor".'
-            },
-	        {
-              name = 'materialColor',
-              description = '(flag ID = 1003, default value = true) Use the base color of the material.'
-            },
-            {
-              name = 'vertexColors',
-              description = '(flag ID = 1004, default value = true) Use the color contribution from the vertex colors.'
-            },
-            {
-              name = 'uvTransform',
-              description = '(flag ID = 1005, default value = true) TODO.'
-            },
-            {
-              name = 'alphaCutoff',
-              description = '(flag ID = 1006, default value = false) TODO.'
-            },
-            {
-              name = 'glow',
-              description = '(flag ID = 1007, default value = false) TODO.'
-            },
-            {
-              name = 'normalMap',
-              description = '(flag ID = 1008, default value = false) Use the normal map of the material.'
-            },
-            {
-              name = 'vertexTangents',
-              description = '(flag ID = 1009, default value = true) Use the vertex tangents of the model.'
-            },
-            {
-              name = 'colorTexture',
-              description = '(flag ID = 1010, default value = true) Use the color texture of the material.'
-            },
-            {
-              name = 'glowTexture',
-              description = '(flag ID = 1011, default value = true) Use the glow texture of the material.'
-            },
-            {
-              name = 'metalnessTexture',
-              description = '(flag ID = 1012, default value = true) Use the metalness texture of the material.'
-            },
-            {
-              name = 'roughnessTexture',
-              description = '(flag ID = 1013, default value = true) Use the roughness texture of the material.'
-            },
-            {
-              name = 'ambientOcclusion',
-              description = '(flag ID = 1014, default value = true) TODO.'
-            },
-            {
-              name = 'clearcoatTexture',
-              description = '(flag ID = 1015, default value = false) Use the clearcoat texture of the material.'
-            },
-            {
-              name = 'tonemap',
-              description = '(flag ID = 1016, default value = false) Use tonemap.'
-            },
           }
         },
         {
@@ -11879,8 +11881,8 @@ return {
                   table = {
                     {
                       name = "flags",
-                      type = "{ShaderFlags}",
-                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader."
+                      type = "table",
+                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  See `ShaderFlag` for the list of builtin shader flags."
                     },
                     {
                       name = "label",
@@ -11920,7 +11922,7 @@ return {
                     {
                       name = "flags",
                       type = "table",
-                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader."
+                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  See `ShaderFlag` for the list of builtin shader flags."
                     },
                     {
                       name = "label",
@@ -11960,7 +11962,7 @@ return {
                     {
                       name = "flags",
                       type = "table",
-                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader."
+                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  See `ShaderFlag` for the list of builtin shader flags."
                     },
                     {
                       name = "label",
@@ -21242,8 +21244,8 @@ return {
                     },
                     {
                       name = "flags",
-                      type = "{ShaderFlags}",
-                      description = "The flags used by the clone."
+                      type = "table",
+                      description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  The clones set here will override any set in the parent shader.  See `ShaderFlag` for the set of builtin shader flags."
                     }
                   },
                   returns = {
