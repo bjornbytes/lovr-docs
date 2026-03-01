@@ -19582,7 +19582,7 @@ return {
               module = "lovr.graphics",
               examples = {
                 {
-                  code = "function lovr.draw(pass)\n  -- Perspective\n  local fov = math.rad(60)\n  local aspect = pass:getWidth() / pass:getHeight()\n  local near, far = .1, 0\n  pass:setProjection(1, mat4():fov(fov, aspect, near, far))\n\n  -- Asymmetric\n  local fov = math.rad(60) / 2\n  local near, far = .1, 0\n  pass:setProjection(1, fov, fov, fov, fov, near, far)\n\n  -- Orthographic/2D\n  pass:setProjection(1, mat4():orthographic(pass:getDimensions()))\nend"
+                  code = "function lovr.draw(pass)\n  -- Perspective\n  local fov = math.rad(60)\n  local aspect = pass:getWidth() / pass:getHeight()\n  local near, far = .1, 0\n  pass:setProjection(1, mat4():perspective(fov, aspect, near, far))\n\n  -- Asymmetric\n  local fov = math.rad(60) / 2\n  local near, far = .1, 0\n  pass:setProjection(1, fov, fov, fov, fov, near, far)\n\n  -- Orthographic/2D\n  pass:setProjection(1, mat4():orthographic(pass:getDimensions()))\nend"
                 }
               },
               notes = "A far clipping plane of 0.0 can be used for an infinite far plane with reversed Z range.  This is the default because it improves depth precision and reduces Z fighting.  Using a non-infinite far plane requires the depth buffer to be cleared to 1.0 instead of 0.0 and the default depth test to be changed to `lequal` instead of `gequal`.\n\nBy default, the projection is set by the headset.  Each HMD has a specific field of view given by `lovr.headset.getViewAngles`, and the clipping planes can be customized with `lovr.headset.setClipDistance`.",

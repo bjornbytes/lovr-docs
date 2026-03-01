@@ -82,7 +82,7 @@ return {
       local fov = math.rad(60)
       local aspect = pass:getWidth() / pass:getHeight()
       local near, far = .1, 0
-      pass:setProjection(1, mat4():fov(fov, aspect, near, far))
+      pass:setProjection(1, mat4():perspective(fov, aspect, near, far))
 
       -- Asymmetric
       local fov = math.rad(60) / 2
