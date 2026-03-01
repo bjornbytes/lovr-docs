@@ -16,19 +16,29 @@ return {
     },
     left = {
       type = 'number',
-      description = 'The left field of view angle, in radians.'
+      description = [[
+        The left field of view angle, in radians.  Positive values are to the left of the view
+        center.
+      ]]
     },
     right = {
       type = 'number',
-      description = 'The right field of view angle, in radians.'
+      description = [[
+        The right field of view angle, in radians.  Positive values are to the right of the view
+        center.
+      ]]
     },
     up = {
       type = 'number',
-      description = 'The top field of view angle, in radians.'
+      description = [[
+        The top field of view angle, in radians.  Positive values are above the view center.
+      ]]
     },
     down = {
       type = 'number',
-      description = 'The bottom field of view angle, in radians.'
+      description = [[
+        The bottom field of view angle, in radians.  Positive values are below the view center.
+      ]]
     },
     near = {
       type = 'number',
@@ -65,6 +75,23 @@ return {
     By default, the projection is set by the headset.  Each HMD has a specific field of view given
     by `lovr.headset.getViewAngles`, and the clipping planes can be customized with
     `lovr.headset.setClipDistance`.
+  ]],
+  example = [[
+    function lovr.draw(pass)
+      -- Perspective
+      local fov = math.rad(60)
+      local aspect = pass:getWidth() / pass:getHeight()
+      local near, far = .1, 0
+      pass:setProjection(1, mat4():fov(fov, aspect, near, far))
+
+      -- Asymmetric
+      local fov = math.rad(60) / 2
+      local near, far = .1, 0
+      pass:setProjection(1, fov, fov, fov, fov, near, far)
+
+      -- Orthographic/2D
+      pass:setProjection(1, mat4():orthographic(pass:getDimensions()))
+    end
   ]],
   related = {
     'lovr.headset.getViewAngles',
