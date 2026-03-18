@@ -1,6 +1,9 @@
 return {
   summary = 'Different types of audio materials.',
-  description = 'Different types of audio material presets, for use with `lovr.audio.setGeometry`.',
+  description = [[
+    Different types of audio material presets for `AudioMesh` objects.  These materials determine
+    how sound is absorbed and reflected when it hits the mesh.
+  ]],
   values = {
     {
       name = 'generic',

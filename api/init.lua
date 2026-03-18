@@ -1224,7 +1224,7 @@ return {
         {
           name = "AudioMaterial",
           summary = "Different types of audio materials.",
-          description = "Different types of audio material presets, for use with `lovr.audio.setGeometry`.",
+          description = "Different types of audio material presets for `AudioMesh` objects.  These materials determine how sound is absorbed and reflected when it hits the mesh.",
           key = "AudioMaterial",
           module = "lovr.audio",
           values = {
@@ -1738,6 +1738,91 @@ return {
           }
         },
         {
+          name = "newAudioMesh",
+          tag = "listener",
+          summary = "Create a new AudioMesh.",
+          description = "Creates a new `AudioMesh`.",
+          key = "lovr.audio.newAudioMesh",
+          module = "lovr.audio",
+          notes = "The triangles in an AudioMesh should use counterclockwise winding.\n\nThe AudioMesh will start out enabled, and it will be located at the origin.",
+          related = {
+            "AudioMesh:clone"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "vertices",
+                  type = "table",
+                  description = "A table of vertices in the mesh.  Can be a table of tables (each with 3 numbers) or a table of numbers (every 3 numbers form a 3D vertex)."
+                },
+                {
+                  name = "indices",
+                  type = "table",
+                  description = "A table of triangle indices representing how the vertices are connected together into triangles."
+                },
+                {
+                  name = "material",
+                  type = "AudioMaterial | {AudioMaterial}",
+                  description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
+                  default = "'generic'"
+                }
+              },
+              returns = {
+                {
+                  name = "audioMesh",
+                  type = "AudioMesh",
+                  description = "The new AudioMesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "modelData",
+                  type = "ModelData",
+                  description = "A ModelData to use for the mesh data."
+                },
+                {
+                  name = "material",
+                  type = "AudioMaterial | {AudioMaterial}",
+                  description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
+                  default = "'generic'"
+                }
+              },
+              returns = {
+                {
+                  name = "audioMesh",
+                  type = "AudioMesh",
+                  description = "The new AudioMesh."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "mesh",
+                  type = "Mesh",
+                  description = "A Mesh to use for the mesh data.  It must use the `cpu` storage mode."
+                },
+                {
+                  name = "material",
+                  type = "AudioMaterial | {AudioMaterial}",
+                  description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
+                  default = "'generic'"
+                }
+              },
+              returns = {
+                {
+                  name = "audioMesh",
+                  type = "AudioMesh",
+                  description = "The new AudioMesh."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newSource",
           tag = "sources",
           summary = "Create a new Source.",
@@ -1928,70 +2013,6 @@ return {
                   name = "success",
                   type = "boolean",
                   description = "Whether creating the audio device succeeded."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "setGeometry",
-          tag = "listener",
-          summary = "Set the geometry for audio effects.",
-          description = "Sets a mesh of triangles to use for modeling audio effects, using a table of vertices or a Model.  When the appropriate effects are enabled, audio from `Source` objects will correctly be occluded by walls and bounce around to create realistic reverb.\n\nAn optional `AudioMaterial` may be provided to specify the acoustic properties of the geometry.",
-          key = "lovr.audio.setGeometry",
-          module = "lovr.audio",
-          notes = "This is currently only supported/used by the `phonon` spatializer.\n\nThe `Effect`s that use geometry are:\n\n- `occlusion`\n- `reverb`\n- `transmission`\n\nIf an existing geometry has been set, this function will replace it.\n\nThe triangles must use counterclockwise winding.",
-          related = {
-            "lovr.audio.getSpatializer",
-            "Source:setEffectEnabled"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "vertices",
-                  type = "table",
-                  description = "A flat table of vertices.  Each vertex is 3 numbers representing its x, y, and z position. The units used for audio coordinates are up to you, but meters are recommended."
-                },
-                {
-                  name = "indices",
-                  type = "table",
-                  description = "A list of indices, indicating how the vertices are connected into triangles.  Indices are 1-indexed and are 32 bits (they can be bigger than 65535)."
-                },
-                {
-                  name = "material",
-                  type = "AudioMaterial",
-                  description = "The acoustic material to use.",
-                  default = "'generic'"
-                }
-              },
-              returns = {
-                {
-                  name = "success",
-                  type = "boolean",
-                  description = "Whether audio geometry is supported by the current spatializer and the geometry was loaded successfully."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "model",
-                  type = "Model",
-                  description = "A model to use for the audio geometry."
-                },
-                {
-                  name = "material",
-                  type = "AudioMaterial",
-                  description = "The acoustic material to use.",
-                  default = "'generic'"
-                }
-              },
-              returns = {
-                {
-                  name = "success",
-                  type = "boolean",
-                  description = "Whether audio geometry is supported by the current spatializer and the geometry was loaded successfully."
                 }
               }
             }
@@ -2268,6 +2289,636 @@ return {
         }
       },
       objects = {
+        {
+          name = "AudioMesh",
+          summary = "A mesh used for audio simulation.",
+          description = "AudioMeshes are triangle meshes that define geometry for audio simulation.  They are used for two types of audio effects:\n\n- **Reverb**, from sound reflecting off of solid objects in the scene.\n- **Occlusion**, where sounds will be quieter when they're behind walls.\n\nAudio mesh triangles can have an `AudioMaterial`, controlling how it absorbs and reflects sound. For example, carpet will absorb more energy than concrete or metal.\n\nAudio meshes can be translated, rotated, and scaled dynamically.",
+          key = "AudioMesh",
+          module = "lovr.audio",
+          constructors = {
+            "lovr.audio.newAudioMesh",
+            "AudioMesh:clone"
+          },
+          extends = "Object",
+          methods = {
+            {
+              name = "clone",
+              summary = "Create a lightweight copy of the AudioMesh.",
+              description = "Creates a lightweight copy of the AudioMesh.  The clone reuses the mesh data from the parent, but it can be transformed independently.",
+              key = "AudioMesh:clone",
+              module = "lovr.audio",
+              related = {
+                "lovr.audio.newAudioMesh"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "clone",
+                      type = "AudioMesh",
+                      description = "A copy of the parent AudioMesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isEnabled",
+              summary = "Check if the AudioMesh is enabled.",
+              description = "Returns whether the AudioMesh is enabled.  Disabled audio meshes do not affect audio processing.",
+              key = "AudioMesh:isEnabled",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the AudioMesh is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setEnabled",
+              summary = "Enable or disable the AudioMesh.",
+              description = "Enable or disable the AudioMesh.  Disabled audio meshes do not affect audio processing.",
+              key = "AudioMesh:setEnabled",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the AudioMesh should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getPosition",
+              summary = "Get the position of the AudioMesh.",
+              description = "Returns the position of the AudioMesh, in meters.",
+              key = "AudioMesh:getPosition",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getOrientation",
+                "AudioMesh:getPose",
+                "AudioMesh:getScale",
+                "AudioMesh:getTransform"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setPosition",
+              summary = "Set the position of the AudioMesh.",
+              description = "Sets the position of the AudioMesh, in meters.",
+              key = "AudioMesh:setPosition",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:setOrientation",
+                "AudioMesh:setPose",
+                "AudioMesh:setScale",
+                "AudioMesh:setTransform"
+              },
+              variants = {
+                {
+                  description = "Set the position using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The new x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The new y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The new z coordinate."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the position using a vector.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getOrientation",
+              summary = "Get the orientation of the AudioMesh.",
+              description = "Returns the orientation of the AudioMesh, in angle/axis representation.",
+              key = "AudioMesh:getOrientation",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getPosition",
+                "AudioMesh:getPose",
+                "AudioMesh:getScale",
+                "AudioMesh:getTransform"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setOrientation",
+              summary = "Set the orientation of the AudioMesh.",
+              description = "Sets the orientation of the AudioMesh.",
+              key = "AudioMesh:setOrientation",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:setPosition",
+                "AudioMesh:setPose",
+                "AudioMesh:setScale",
+                "AudioMesh:setTransform"
+              },
+              variants = {
+                {
+                  description = "Set the orientation using numbers.",
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the orientation using a vector.",
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The new orientation for the AudioMesh."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getPose",
+              summary = "Get the pose of the AudioMesh.",
+              description = "Returns the position and orientation of the AudioMesh.",
+              key = "AudioMesh:getPose",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getPosition",
+                "AudioMesh:getOrientation",
+                "AudioMesh:getScale",
+                "AudioMesh:getTransform"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the AudioMesh, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the AudioMesh, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the AudioMesh, in meters."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setPose",
+              summary = "Set the pose of the AudioMesh.",
+              description = "Sets the position and orientation of the AudioMesh.",
+              key = "AudioMesh:setPose",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:setPosition",
+                "AudioMesh:setOrientation",
+                "AudioMesh:setScale",
+                "AudioMesh:setTransform"
+              },
+              variants = {
+                {
+                  description = "Set the pose using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position of the AudioMesh."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position of the AudioMesh."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position of the AudioMesh."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the pose using vector types.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getScale",
+              summary = "Get the scale of the AudioMesh.",
+              description = "Returns the scale of the AudioMesh.",
+              key = "AudioMesh:getScale",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getPosition",
+                "AudioMesh:getOrientation",
+                "AudioMesh:getPose",
+                "AudioMesh:getTransform"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x scale factor."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y scale factor."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z scale factor."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setScale",
+              summary = "Set the scale of the AudioMesh.",
+              description = "Sets the scale of the AudioMesh.",
+              key = "AudioMesh:setScale",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:setPosition",
+                "AudioMesh:setOrientation",
+                "AudioMesh:setPose",
+                "AudioMesh:setTransform"
+              },
+              variants = {
+                {
+                  description = "Set the scale using numbers.",
+                  arguments = {
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the scale using a vector.",
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The new scale."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getTransform",
+              summary = "Get the transform of the AudioMesh.",
+              description = "Returns transform (position, scale, and orientation) of the AudioMesh.",
+              key = "AudioMesh:getTransform",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getPosition",
+                "AudioMesh:getOrientation",
+                "AudioMesh:getPose",
+                "AudioMesh:getScale"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position, in meters."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setTransform",
+              summary = "Set the transform of the AudioMesh.",
+              description = "Sets the transform of the AudioMesh.",
+              key = "AudioMesh:setTransform",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:setPosition",
+                "AudioMesh:setOrientation",
+                "AudioMesh:setPose",
+                "AudioMesh:setScale"
+              },
+              variants = {
+                {
+                  description = "Set the transform using numbers.",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the position."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x component of the scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y component of the scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z component of the scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the transform using vectors.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "Vec3",
+                      description = "The position."
+                    },
+                    {
+                      name = "scale",
+                      type = "Vec3",
+                      description = "The scale."
+                    },
+                    {
+                      name = "orientation",
+                      type = "Quat",
+                      description = "The orientation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the transform using a matrix.",
+                  arguments = {
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            }
+          }
+        },
         {
           name = "Source",
           summary = "A playable sound object.",
