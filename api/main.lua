@@ -315,6 +315,8 @@ local function validateType(type, fields, key, kind)
       userdata = true,
       lightuserdata = true,
       ['function'] = true,
+      vector = true,
+      quaternion = true,
       ['*'] = true
     }
 
