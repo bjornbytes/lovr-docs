@@ -1,0 +1,34 @@
+return {
+  summary = 'Get the curve parameter at a given distance along the curve.',
+  description = [[
+    Steps along the curve a given distance and returns the curve parameter there (i.e. what percent
+    of the curve was traversed).  This is the inverse of `Curve:getLength`.
+  ]],
+  arguments = {
+    distance = {
+      type = 'number',
+      description = 'The distance to step along the curve.'
+    },
+    iterations = {
+      type = 'number',
+      default = '16',
+      description = 'How many iterations to use to compute the result.'
+    }
+  },
+  returns = {
+    t = {
+      type = 'number',
+      description = 'The parameter of the curve at the given distance along the curve.'
+    }
+  },
+  variants = {
+    {
+      arguments = { 'distance', 'iterations' },
+      returns = { 't' }
+    }
+  },
+  related = {
+    'Curve:getLength',
+    'Curve:evaluate'
+  }
+}

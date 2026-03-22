@@ -27895,6 +27895,42 @@ return {
               }
             },
             {
+              name = "getLength",
+              summary = "Get the length of a piece of the Curve.",
+              description = "Returns the length of the curve, from the beginning of the curve up to the specified `t` parameter. `t` defaults to `1.0`, so by default this returns the length of the entire curve.",
+              key = "Curve:getLength",
+              module = "lovr.math",
+              related = {
+                "Curve:step",
+                "Curve:evaluate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The t parameter to get the length at.",
+                      default = "1.0"
+                    },
+                    {
+                      name = "iterations",
+                      type = "number",
+                      description = "How many iterations to use to compute the length.",
+                      default = "16"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "length",
+                      type = "number",
+                      description = "The length of the curve."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getPoint",
               summary = "Get a control point of the Curve.",
               description = "Returns a control point of the Curve.",
@@ -28144,6 +28180,41 @@ return {
                       name = "curve",
                       type = "Curve",
                       description = "A new Curve."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "step",
+              summary = "Get the curve parameter at a given distance along the curve.",
+              description = "Steps along the curve a given distance and returns the curve parameter there (i.e. what percent of the curve was traversed).  This is the inverse of `Curve:getLength`.",
+              key = "Curve:step",
+              module = "lovr.math",
+              related = {
+                "Curve:getLength",
+                "Curve:evaluate"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "distance",
+                      type = "number",
+                      description = "The distance to step along the curve."
+                    },
+                    {
+                      name = "iterations",
+                      type = "number",
+                      description = "How many iterations to use to compute the result.",
+                      default = "16"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "t",
+                      type = "number",
+                      description = "The parameter of the curve at the given distance along the curve."
                     }
                   }
                 }
