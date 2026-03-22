@@ -84,14 +84,13 @@ return {
     data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE`
     extension is supported.
 
-    Ambisonic channel layouts are supported for import (but not yet for playback).  Ambisonic data
-    can be loaded from WAV files.  It must be first-order full-sphere ambisonic data with 4
-    channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an `AMBISONIC_B_FORMAT` format
-    GUID, then the data is understood as using the AMB format with Furse-Malham channel ordering and
-    normalization.  *All other* 4-channel files are assumed to be using the AmbiX format with ACN
-    channel ordering and SN3D normalization.  AMB files will get automatically converted to AmbiX on
-    import, so ambisonic Sounds will always be in a consistent format.
-
     OGG and MP3 files will always have the `f32` format when loaded.
+
+    Ambisonic sounds can be imported from WAV files.  They must be full-sphere ambisonic data with
+    4, 9, or 16 channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an
+    `AMBISONIC_B_FORMAT` format GUID, then the data is understood as using the AMB format with
+    Furse-Malham channel ordering and normalization.  *All other* 4-channel files are assumed to be
+    using the AmbiX format with ACN channel ordering and SN3D normalization.  AMB files will get
+    automatically converted to AmbiX on import, so ambisonic Sounds will always be AmbiX.
   ]]
 }

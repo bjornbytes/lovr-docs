@@ -18,9 +18,8 @@ return {
     {
       name = 'ambisonic',
       description = [[
-        4 channels.  Ambisonic channels don't map directly to speakers but instead represent
-        directions in 3D space, sort of like the images of a skybox.  Currently, ambisonic sounds
-        can only be loaded, not played.
+        4, 9, or 16 channels.  Ambisonic channels don't map directly to speakers but instead
+        represent directions in 3D space, sort of like the images of a skybox.
       ]]
     }
   },

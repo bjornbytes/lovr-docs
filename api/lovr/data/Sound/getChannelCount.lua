@@ -2,7 +2,7 @@ return {
   summary = 'Get the number of channels in the Sound.',
   description = [[
     Returns the number of channels in the Sound.  Mono sounds have 1 channel, stereo sounds have 2
-    channels, and ambisonic sounds have 4 channels.
+    channels, and ambisonic sounds will have 4, 9, or 16 channels.
   ]],
   arguments = {},
   returns = {

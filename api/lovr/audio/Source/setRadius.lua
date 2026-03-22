@@ -21,5 +21,8 @@ return {
       arguments = { 'radius' },
       returns = {}
     }
-  }
+  },
+  notes = [[
+    Ambisonic sources don't use their radius for anything, because they do not simulate occlusion.
+  ]]
 }

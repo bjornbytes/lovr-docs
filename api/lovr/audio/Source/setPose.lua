@@ -53,7 +53,11 @@ return {
       returns = {}
     }
   },
-  notes = 'The position doesn\'t have any defined units, but meters are used by convention.',
+  notes = [[
+    The position doesn't have any defined units, but meters are used by convention.
+
+    Ambisonic sources ignore their position, because they are omnidirectional.
+  ]],
   related = {
     'Source:setPosition',
     'Source:setOrientation',

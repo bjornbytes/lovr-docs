@@ -47,10 +47,10 @@ return {
     Ambisonics
     ---
 
-    Ambisonic sounds can be imported from WAVs, but can not yet be played.  Sounds with a
-    `ChannelLayout` of `ambisonic` are stored as first-order full-sphere ambisonics using the AmbiX
-    format (ACN channel ordering and SN3D channel normalization).  The AMB format is supported for
-    import and will automatically get converted to AmbiX.  See `lovr.data.newSound` for more info.
+    Ambisonic sounds represent a sphere of sound coming from all directions.  Ambisonics can be
+    imported from WAV files with 4, 9, or 16 channels.  LÖVR stores ambisonic sounds in the AmbiX
+    format (ACN channel ordering and SN3D channel normalization), automatically converting 4-channel
+    AMB sounds to AmbiX.  Ambisonic sounds can be played using a `Source`, just like other sounds.
   ]],
   extends = 'Object',
   constructor = 'lovr.data.newSound'
