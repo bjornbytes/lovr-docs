@@ -587,6 +587,29 @@ return {
       }
     },
     {
+      name = "modelschanged",
+      tag = "callbacks",
+      summary = "Called when the set of available headset models changes.",
+      description = "The `lovr.modelschanged` callback is called when VR models change, usually when hardware is connected or disconnected.  Use `lovr.headset.getModelKeys` to get the new list of model IDs, create models for any new keys, and destroy/remove any models that are no longer in the list.",
+      key = "lovr.modelschanged",
+      module = "lovr",
+      examples = {
+        {
+          code = "local models = {}\n\nfunction lovr.draw(pass)\n  for k, model in pairs(models) do\n    if lovr.headset.isTracked(model) then\n      lovr.headset.animate(model)\n\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(model)\n      pass:draw(model, x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend\n\nfunction lovr.modelschanged()\n  local newModels = {}\n\n  for i, key in ipairs(lovr.headset.getModelKeys()) do\n    newModels[key] = models[key] or lovr.headset.newModel(key)\n  end\n\n  models = newModels\nend"
+        }
+      },
+      related = {
+        "lovr.headset.getModelKeys",
+        "lovr.headset.newModel"
+      },
+      variants = {
+        {
+          arguments = {},
+          returns = {}
+        }
+      }
+    },
+    {
       name = "mount",
       tag = "callbacks",
       summary = "Called when the headset is put on or taken off.",
@@ -2019,6 +2042,29 @@ return {
           }
         },
         {
+          name = "setHRTF",
+          summary = "Set an HRTF to use for audio spatialization.",
+          description = "Sets an HRTF to use for binaural audio spatialization.  The HRTF should be provided as a SOFA file (Spatially Oriented File Format for Acoustics).\n\nWithout an HRTF, LÖVR will use simple panning for spatialization, which adjusts the volume level of the left/right audio channels based on the source's location.  Binaural audio spatialization with an HRTF sounds more realistic, at a small performance cost.\n\nThis is a slow function, so it should be called during startup or on a thread.",
+          key = "lovr.audio.setHRTF",
+          module = "lovr.audio",
+          notes = "A default HRTF can be found [here](https://github.com/ValveSoftware/steam-audio/blob/master/core/data/hrtf/cipic_124.sofa).",
+          related = {
+            "Source:setSpatialization"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing a SOFA file to load."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setOrientation",
           tag = "listener",
           summary = "Set the orientation of the listener.",
@@ -2956,6 +3002,76 @@ return {
               }
             },
             {
+              name = "getAbsorption",
+              summary = "Get the absorption coefficients of the Source.",
+              description = "Returns the absorption coefficients of the Source.  Absorption allows for simulating the decay of audio as it moves through a medium, with different frequencies decaying at different rates. For example, in air, distant sounds usually sound more muffled because higher frequencies decay faster than lower frequencies.",
+              key = "Source:getAbsorption",
+              module = "lovr.audio",
+              notes = "When a Source is created, its absorption coefficients are all zero (no absorption).\n\nThe formula used for the volume factor of each band is `math.exp(-absorption * distance)`.\n\nThe absorption coefficients of air are `.0002`, `.0017`, and `.0182`.",
+              related = {
+                "Source:getFalloff",
+                "Source:setFalloff",
+                "AudioMaterial"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "low",
+                      type = "number",
+                      description = "The amount of absorption for low frequencies (400Hz)."
+                    },
+                    {
+                      name = "mid",
+                      type = "number",
+                      description = "The amount of absorption for midrange frequencies (2.5KHz)."
+                    },
+                    {
+                      name = "high",
+                      type = "number",
+                      description = "The amount of absorption for high frequencies (15KHz)."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getCone",
+              summary = "Get the volume cone of the Source.",
+              description = "Returns the directional volume cone of the source.  The cone is defined by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is within `innerAngle` of the source's direction, the volume won't be changed.  Otherwise, the volume will start to decrease, reaching a minimum of `outerVolume` once the listener is at `outerAngle` radians from the direction of the source.",
+              key = "Source:getCone",
+              module = "lovr.audio",
+              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `0`.\n\nThe default `outerVolume` for a Source is `1`.",
+              related = {
+                "Source:getFalloff",
+                "Source:setFalloff",
+                "Source:setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "innerAngle",
+                      type = "number",
+                      description = "The inner cone angle, in radians."
+                    },
+                    {
+                      name = "outerAngle",
+                      type = "number",
+                      description = "The outer cone angle, in radians."
+                    },
+                    {
+                      name = "outerVolume",
+                      type = "number",
+                      description = "The outer volume factor."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getDirectivity",
               tag = "sourceEffects",
               summary = "Get the directivity of the Source.",
@@ -3387,6 +3503,95 @@ return {
                       type = "TimeUnit",
                       description = "The units for the seek position.",
                       default = "'seconds'"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setAbsorption",
+              summary = "Set the absorption coefficients of the Source.",
+              description = "Sets the absorption coefficients of the Source.  Absorption allows for simulating the decay of audio as it moves through a medium, with different frequencies decaying at different rates. For example, in air, distant sounds usually sound more muffled because higher frequencies decay faster than lower frequencies.",
+              key = "Source:setAbsorption",
+              module = "lovr.audio",
+              notes = "When a Source is created, its absorption coefficients are all zero (no absorption).\n\nThe formula used for the volume factor of each band is `math.exp(-absorption * distance)`.\n\nThe absorption coefficients of air are `.0002`, `.0017`, and `.0182`.",
+              related = {
+                "Source:getFalloff",
+                "Source:setFalloff"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "low",
+                      type = "number",
+                      description = "The amount of absorption for low frequencies (400Hz)."
+                    },
+                    {
+                      name = "mid",
+                      type = "number",
+                      description = "The amount of absorption for midrange frequencies (2.5KHz)."
+                    },
+                    {
+                      name = "high",
+                      type = "number",
+                      description = "The amount of absorption for high frequencies (15KHz)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether absorption should be enabled.  False will set the coefficients to zero, `true` will use the absorption coefficients of air (see notes)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setCone",
+              summary = "Set the volume cone of the Source.",
+              description = "Sets the directional volume cone of the source.  The cone is defined by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is within `innerAngle` of the source's direction, the volume won't be changed.  Otherwise, the volume will start to decrease, reaching a minimum of `outerVolume` once the listener is at `outerAngle` radians from the direction of the source.",
+              key = "Source:setCone",
+              module = "lovr.audio",
+              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `0`.\n\nThe default `outerVolume` for a Source is `1`.",
+              related = {
+                "Source:getFalloff",
+                "Source:setFalloff",
+                "Source:setOrientation"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "innerAngle",
+                      type = "number",
+                      description = "The inner cone angle, in radians."
+                    },
+                    {
+                      name = "outerAngle",
+                      type = "number",
+                      description = "The outer cone angle, in radians."
+                    },
+                    {
+                      name = "outerVolume",
+                      type = "number",
+                      description = "The outer volume factor."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether the volume cone should be enabled.  `true` is equivalent to `0, `math.pi`, `0`, and falsy values are equivalent to `0`, `0`, `1`."
                     }
                   },
                   returns = {}
@@ -6920,11 +7125,43 @@ return {
               }
             },
             {
+              name = "getNodeChild",
+              summary = "Get the first child of a node.",
+              description = "Given a parent node, this function returns the index of its first child, or `nil` if it doesn't have any children.\n\nThis, together with `ModelData:getNodeSibling`, can be used to iterate the tree of nodes in a model.",
+              key = "ModelData:getNodeChild",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeSibling",
+                "ModelData:getNodeParent",
+                "ModelData:getRootNode",
+                "Model:getNodeChild"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of the parent node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "child",
+                      type = "number | nil",
+                      description = "The index of the node's first child, or `nil` if the node doesn't have any children."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getNodeChildren",
               summary = "Get the children of a node.",
               description = "Given a parent node, this function returns a table with the indices of its children.",
               key = "ModelData:getNodeChildren",
               module = "lovr.data",
+              deprecated = true,
               related = {
                 "ModelData:getNodeParent",
                 "ModelData:getRootNode",
@@ -7242,6 +7479,37 @@ return {
                       name = "sz",
                       type = "number",
                       description = "The z scale."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeSibling",
+              summary = "Get the sibling of a node.",
+              description = "Returns the sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `ModelData:getNodeChild`, can be used to iterate the tree of nodes in a model.",
+              key = "ModelData:getNodeSibling",
+              module = "lovr.data",
+              related = {
+                "ModelData:getNodeChild",
+                "ModelData:getNodeParent",
+                "ModelData:getRootNode",
+                "Model:getNodeSibling"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "sibling",
+                      type = "number | nil",
+                      description = "The index of the node's next sibling, or `nil` if the node doesn't have a sibling."
                     }
                   }
                 }
@@ -15456,11 +15724,43 @@ return {
               }
             },
             {
+              name = "getNodeChild",
+              summary = "Get the first child of a node.",
+              description = "Given a parent node, this function returns the index of its first child, or `nil` if it doesn't have any children.\n\nThis, together with `Model:getNodeSibling`, can be used to iterate the tree of nodes in a model.",
+              key = "Model:getNodeChild",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodeSibling",
+                "Model:getNodeParent",
+                "Model:getRootNode",
+                "ModelData:getNodeChild"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of the parent node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "child",
+                      type = "number | nil",
+                      description = "The index of the node's first child, or `nil` if the node doesn't have any children."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getNodeChildren",
               summary = "Get the children of a node.",
               description = "Given a parent node, this function returns a table with the indices of its children.",
               key = "Model:getNodeChildren",
               module = "lovr.graphics",
+              deprecated = true,
               notes = "If the node does not have any children, this function returns an empty table.",
               related = {
                 "Model:getNodeParent",
@@ -15791,6 +16091,37 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z scale."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeSibling",
+              summary = "Get the sibling of a node.",
+              description = "Returns the sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a model.",
+              key = "Model:getNodeSibling",
+              module = "lovr.graphics",
+              related = {
+                "Model:getNodeChild",
+                "Model:getNodeParent",
+                "Model:getRootNode",
+                "ModelData:getNodeSibling"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "sibling",
+                      type = "number | nil",
+                      description = "The index of the node's next sibling, or `nil` if the node doesn't have a sibling."
                     }
                   }
                 }
