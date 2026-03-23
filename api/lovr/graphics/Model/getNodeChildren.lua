@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   summary = 'Get the children of a node.',
   description = [[
     Given a parent node, this function returns a table with the indices of its children.
