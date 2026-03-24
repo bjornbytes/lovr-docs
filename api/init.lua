@@ -11826,6 +11826,7 @@ return {
         },
         {
           name = "getStats",
+          tag = "graphics-misc",
           summary = "Get graphics metrics and statistics.",
           description = "Returns various statistics about GPU usage.",
           key = "lovr.graphics.getStats",
@@ -43255,6 +43256,28 @@ return {
       key = "lovr.system",
       enums = {
         {
+          name = "MouseMode",
+          summary = "Different mouse modes.",
+          description = "The different mouse modes that can be set with `lovr.system.setMouseMode`.",
+          key = "MouseMode",
+          module = "lovr.system",
+          related = {
+            "lovr.mousemoved",
+            "lovr.system.getMouseMode",
+            "lovr.system.setMouseMode"
+          },
+          values = {
+            {
+              name = "normal",
+              description = "Normal mouse movement."
+            },
+            {
+              name = "relative",
+              description = "Relative mouse movement.  The mouse will be hidden and won't move when the mouse moves, but `lovr.mousemoved` will still be called to report relative motion deltas."
+            }
+          }
+        },
+        {
           name = "Permission",
           summary = "Application permissions.",
           description = "These are the different permissions that need to be requested using `lovr.system.requestPermission` on some platforms.",
@@ -43310,6 +43333,29 @@ return {
                   name = "cores",
                   type = "number",
                   description = "The number of logical cores on the system."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "getMouseMode",
+          tag = "system-mouse",
+          summary = "Get the current mouse mode.",
+          description = "Returns the current mouse mode.",
+          key = "lovr.system.getMouseMode",
+          module = "lovr.system",
+          related = {
+            "lovr.mousemoved"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "mode",
+                  type = "MouseMode",
+                  description = "The current mouse mode."
                 }
               }
             }
@@ -43635,6 +43681,26 @@ return {
           }
         },
         {
+          name = "isWindowFullscreen",
+          tag = "system-window",
+          summary = "Check if the desktop window is fullscreen.",
+          description = "Returns whether the desktop window is fullscreen.",
+          key = "lovr.system.isWindowFullscreen",
+          module = "lovr.system",
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "fullscreen",
+                  type = "boolean",
+                  description = "Whether the desktop window is currently fullscreen."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "isWindowOpen",
           tag = "system-window",
           summary = "Check if the desktop window is open.",
@@ -43823,6 +43889,49 @@ return {
                   name = "enable",
                   type = "boolean",
                   description = "Whether key repeat should be enabled."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setMouseMode",
+          tag = "system-mouse",
+          summary = "Set the mouse mode.",
+          description = "Sets the mouse mode.",
+          key = "lovr.system.setMouseMode",
+          module = "lovr.system",
+          related = {
+            "lovr.mousemoved"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "mode",
+                  type = "MouseMode",
+                  description = "The new mouse mode."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setWindowFullscreen",
+          tag = "system-window",
+          summary = "Enable or disable fullscreen on the desktop window.",
+          description = "Enables or disables fullscreen on the desktop window.\n\nNote that only borderless fullscreen is supported.\n\nTo make the window fullscreen at startup, set `t.window.fullscreen` in `lovr.conf`.",
+          key = "lovr.system.setWindowFullscreen",
+          module = "lovr.system",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "fullscreen",
+                  type = "boolean",
+                  description = "Whether the desktop window should be fullscreen."
                 }
               },
               returns = {}

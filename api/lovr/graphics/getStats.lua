@@ -1,4 +1,5 @@
 return {
+  tag = 'graphics-misc',
   summary = 'Get graphics metrics and statistics.',
   description = 'Returns various statistics about GPU usage.',
   arguments = {},
