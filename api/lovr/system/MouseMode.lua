@@ -9,8 +9,8 @@ return {
     {
       name = 'relative',
       description = [[
-        Relative mouse movement.  The mouse will be hidden and won't move when the mouse moves, but
-        `lovr.mousemoved` will still be called to report relative motion deltas.
+        Relative mouse movement.  The mouse will be hidden and stop moving, but `lovr.mousemoved`
+        will still be called to report relative motion deltas.
       ]]
     }
   },

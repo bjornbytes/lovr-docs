@@ -21,6 +21,11 @@ return {
     {
       arguments = { 'file' },
       returns = {}
+    },
+    {
+      description = 'Clears any active HRTF, disabling binaural spatialization.',
+      arguments = {},
+      returns = {}
     }
   },
   notes = [[

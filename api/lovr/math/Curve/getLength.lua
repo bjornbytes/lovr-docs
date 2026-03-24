@@ -13,7 +13,10 @@ return {
     iterations = {
       type = 'number',
       default = '16',
-      description = 'How many iterations to use to compute the length.'
+      description = [[
+        How many iterations to use to compute the length.  More iterations will give a more accurate
+        result, but will take longer to compute.
+      ]]
     }
   },
   returns = {

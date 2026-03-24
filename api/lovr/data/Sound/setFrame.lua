@@ -2,9 +2,9 @@ return {
   summary = 'Set a single audio frame in the Sound.',
   description = 'Sets a single audio frame in the Sound.',
   arguments = {
-    index = {
+    offset = {
       type = 'number',
-      description = 'The index of the frame to set.'
+      description = 'An offset in the Sound to write to (0 is the first frame).'
     },
     ['...'] = {
       type = 'number',
@@ -14,7 +14,7 @@ return {
   returns = {},
   variants = {
     {
-      arguments = { 'index', '...' },
+      arguments = { 'offset', '...' },
       returns = {}
     }
   },

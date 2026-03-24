@@ -9,15 +9,15 @@ return {
   arguments = {
     low = {
       type = 'number',
-      description = 'The amount of absorption for low frequencies (400Hz).'
+      description = 'The absorption coefficient for low frequencies (400Hz).'
     },
     mid = {
       type = 'number',
-      description = 'The amount of absorption for midrange frequencies (2.5KHz).'
+      description = 'The absorption coefficient for midrange frequencies (2.5KHz).'
     },
     high = {
       type = 'number',
-      description = 'The amount of absorption for high frequencies (15KHz).'
+      description = 'The absorption coefficient for high frequencies (15KHz).'
     },
     enable = {
       type = 'boolean',

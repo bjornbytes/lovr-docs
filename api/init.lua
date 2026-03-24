@@ -595,7 +595,7 @@ return {
       module = "lovr",
       examples = {
         {
-          code = "local models = {}\n\nfunction lovr.draw(pass)\n  for k, model in pairs(models) do\n    if lovr.headset.isTracked(model) then\n      lovr.headset.animate(model)\n\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(model)\n      pass:draw(model, x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend\n\nfunction lovr.modelschanged()\n  local newModels = {}\n\n  for i, key in ipairs(lovr.headset.getModelKeys()) do\n    newModels[key] = models[key] or lovr.headset.newModel(key)\n  end\n\n  models = newModels\nend"
+          code = "local models = {}\n\nfunction lovr.draw(pass)\n  for _, model in pairs(models) do\n    if lovr.headset.isTracked(model) then\n      lovr.headset.animate(model)\n\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(model)\n      pass:draw(model, x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend\n\nfunction lovr.modelschanged()\n  local newModels = {}\n\n  for i, key in ipairs(lovr.headset.getModelKeys()) do\n    newModels[key] = models[key] or lovr.headset.newModel(key)\n  end\n\n  models = newModels\nend"
         }
       },
       related = {
@@ -2061,6 +2061,11 @@ return {
                 }
               },
               returns = {}
+            },
+            {
+              description = "Clears any active HRTF, disabling binaural spatialization.",
+              arguments = {},
+              returns = {}
             }
           }
         },
@@ -3020,17 +3025,17 @@ return {
                     {
                       name = "low",
                       type = "number",
-                      description = "The amount of absorption for low frequencies (400Hz)."
+                      description = "The absorption coefficient for low frequencies (400Hz)."
                     },
                     {
                       name = "mid",
                       type = "number",
-                      description = "The amount of absorption for midrange frequencies (2.5KHz)."
+                      description = "The absorption coefficient for midrange frequencies (2.5KHz)."
                     },
                     {
                       name = "high",
                       type = "number",
-                      description = "The amount of absorption for high frequencies (15KHz)."
+                      description = "The absorption coefficient for high frequencies (15KHz)."
                     }
                   }
                 }
@@ -3526,17 +3531,17 @@ return {
                     {
                       name = "low",
                       type = "number",
-                      description = "The amount of absorption for low frequencies (400Hz)."
+                      description = "The absorption coefficient for low frequencies (400Hz)."
                     },
                     {
                       name = "mid",
                       type = "number",
-                      description = "The amount of absorption for midrange frequencies (2.5KHz)."
+                      description = "The absorption coefficient for midrange frequencies (2.5KHz)."
                     },
                     {
                       name = "high",
                       type = "number",
-                      description = "The amount of absorption for high frequencies (15KHz)."
+                      description = "The absorption coefficient for high frequencies (15KHz)."
                     }
                   },
                   returns = {}
@@ -3591,7 +3596,7 @@ return {
                     {
                       name = "enable",
                       type = "boolean",
-                      description = "Whether the volume cone should be enabled.  `true` is equivalent to `0, `math.pi`, `0`, and falsy values are equivalent to `0`, `0`, `1`."
+                      description = "Whether the volume cone should be enabled.  Passing `true` will set a default cone with an `innerAngle` of `0`, an `outerAngle` of `math.pi`, and an `outerVolume` of `0`.  Falsy values disable the cone completely (equivalent to 0, 0, 1)."
                     }
                   },
                   returns = {}
@@ -7486,8 +7491,8 @@ return {
             },
             {
               name = "getNodeSibling",
-              summary = "Get the sibling of a node.",
-              description = "Returns the sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `ModelData:getNodeChild`, can be used to iterate the tree of nodes in a model.",
+              summary = "Get the next sibling of a node.",
+              description = "Returns the next sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `ModelData:getNodeChild`, can be used to iterate the tree of nodes in a model.",
               key = "ModelData:getNodeSibling",
               module = "lovr.data",
               related = {
@@ -8549,9 +8554,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "offset",
                       type = "number",
-                      description = "The index of the frame to get."
+                      description = "An offset in the sound to read from (0 is the first frame)."
                     }
                   },
                   returns = {
@@ -8842,9 +8847,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "index",
+                      name = "offset",
                       type = "number",
-                      description = "The index of the frame to set."
+                      description = "An offset in the Sound to write to (0 is the first frame)."
                     },
                     {
                       name = "...",
@@ -16165,8 +16170,8 @@ return {
             },
             {
               name = "getNodeSibling",
-              summary = "Get the sibling of a node.",
-              description = "Returns the sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a model.",
+              summary = "Get the next sibling of a node.",
+              description = "Returns the next sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a model.",
               key = "Model:getNodeSibling",
               module = "lovr.graphics",
               related = {
@@ -18775,12 +18780,12 @@ return {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x coordinate of the pixel to get the ray of."
+                      description = "The x coordinate of the pixel."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y coordinate of the pixel to get the ray of."
+                      description = "The y coordinate of the pixel."
                     },
                     {
                       name = "view",
@@ -18808,17 +18813,17 @@ return {
                     {
                       name = "dx",
                       type = "number",
-                      description = "The x coordinate of the direction of the ray."
+                      description = "The x component of the ray's direction."
                     },
                     {
                       name = "dy",
                       type = "number",
-                      description = "The y coordinate of the direction of the ray."
+                      description = "The y component of the ray's direction."
                     },
                     {
                       name = "dz",
                       type = "number",
-                      description = "The z coordinate of the direction of the ray."
+                      description = "The z component of the ray's direction."
                     }
                   }
                 }
@@ -25489,7 +25494,7 @@ return {
           module = "lovr.headset",
           examples = {
             {
-              code = "local models = {}\n\nfunction lovr.draw(pass)\n  for k, model in pairs(models) do\n    if lovr.headset.isTracked(model) then\n      lovr.headset.animate(model)\n\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(model)\n      pass:draw(model, x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend\n\nfunction lovr.modelschanged()\n  local newModels = {}\n\n  for i, key in ipairs(lovr.headset.getModelKeys()) do\n    newModels[key] = models[key] or lovr.headset.newModel(key)\n  end\n\n  models = newModels\nend"
+              code = "local models = {}\n\nfunction lovr.draw(pass)\n  for _, model in pairs(models) do\n    if lovr.headset.isTracked(model) then\n      lovr.headset.animate(model)\n\n      local x, y, z, angle, ax, ay, az = lovr.headset.getPose(model)\n      pass:draw(model, x, y, z, 1, angle, ax, ay, az)\n    end\n  end\nend\n\nfunction lovr.modelschanged()\n  local newModels = {}\n\n  for i, key in ipairs(lovr.headset.getModelKeys()) do\n    newModels[key] = models[key] or lovr.headset.newModel(key)\n  end\n\n  models = newModels\nend"
             }
           },
           related = {
@@ -28383,7 +28388,7 @@ return {
                     {
                       name = "iterations",
                       type = "number",
-                      description = "How many iterations to use to compute the length.",
+                      description = "How many iterations to use to compute the length.  More iterations will give a more accurate result, but will take longer to compute.",
                       default = "16"
                     }
                   },
@@ -28655,7 +28660,7 @@ return {
             {
               name = "step",
               summary = "Get the curve parameter at a given distance along the curve.",
-              description = "Steps along the curve a given distance and returns the curve parameter there (i.e. what percent of the curve was traversed).  This is the inverse of `Curve:getLength`.",
+              description = "Steps along the curve a given distance and returns the curve parameter there (i.e. what fraction of the curve was traversed).  This is the inverse of `Curve:getLength`.",
               key = "Curve:step",
               module = "lovr.math",
               related = {
@@ -28673,7 +28678,7 @@ return {
                     {
                       name = "iterations",
                       type = "number",
-                      description = "How many iterations to use to compute the result.",
+                      description = "How many iterations to use to compute the result.  More iterations will give a more accurate result, but will take longer to compute.",
                       default = "16"
                     }
                   },
@@ -43408,7 +43413,7 @@ return {
             },
             {
               name = "relative",
-              description = "Relative mouse movement.  The mouse will be hidden and won't move when the mouse moves, but `lovr.mousemoved` will still be called to report relative motion deltas."
+              description = "Relative mouse movement.  The mouse will be hidden and stop moving, but `lovr.mousemoved` will still be called to report relative motion deltas."
             }
           }
         },

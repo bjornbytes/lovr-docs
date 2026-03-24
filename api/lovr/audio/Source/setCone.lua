@@ -23,8 +23,9 @@ return {
     enable = {
       type = 'boolean',
       description = [[
-        Whether the volume cone should be enabled.  `true` is equivalent to `0, `math.pi`, `0`, and
-        falsy values are equivalent to `0`, `0`, `1`.
+        Whether the volume cone should be enabled.  Passing `true` will set a default cone with an
+        `innerAngle` of `0`, an `outerAngle` of `math.pi`, and an `outerVolume` of `0`.  Falsy
+        values disable the cone completely (equivalent to 0, 0, 1).
       ]]
     }
   },

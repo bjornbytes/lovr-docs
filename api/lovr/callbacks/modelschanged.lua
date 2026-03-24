@@ -18,7 +18,7 @@ return {
     local models = {}
 
     function lovr.draw(pass)
-      for k, model in pairs(models) do
+      for _, model in pairs(models) do
         if lovr.headset.isTracked(model) then
           lovr.headset.animate(model)
 

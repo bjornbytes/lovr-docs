@@ -9,11 +9,11 @@ return {
   arguments = {
     x = {
       type = 'number',
-      description = 'The x coordinate of the pixel to get the ray of.'
+      description = 'The x coordinate of the pixel.'
     },
     y = {
       type = 'number',
-      description = 'The y coordinate of the pixel to get the ray of.'
+      description = 'The y coordinate of the pixel.'
     },
     view = {
       type = 'number',
@@ -36,15 +36,15 @@ return {
     },
     dx = {
       type = 'number',
-      description = 'The x coordinate of the direction of the ray.'
+      description = 'The x component of the ray\'s direction.'
     },
     dy = {
       type = 'number',
-      description = 'The y coordinate of the direction of the ray.'
+      description = 'The y component of the ray\'s direction.'
     },
     dz = {
       type = 'number',
-      description = 'The z coordinate of the direction of the ray.'
+      description = 'The z component of the ray\'s direction.'
     }
   },
   variants = {

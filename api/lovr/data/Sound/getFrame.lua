@@ -2,9 +2,9 @@ return {
   summary = 'Get a single audio frame in the Sound.',
   description = 'Returns a single audio frame in the Sound.',
   arguments = {
-    index = {
+    offset = {
       type = 'number',
-      description = 'The index of the frame to get.'
+      description = 'An offset in the sound to read from (0 is the first frame).'
     }
   },
   returns = {
@@ -15,7 +15,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'index' },
+      arguments = { 'offset' },
       returns = { '...' }
     }
   },

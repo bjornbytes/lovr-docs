@@ -1,8 +1,8 @@
 return {
-  summary = 'Get the sibling of a node.',
+  summary = 'Get the next sibling of a node.',
   description = [[
-    Returns the sibling of a node (a node with the same parent), or `nil` if the node doesn't have a
-    sibling.
+    Returns the next sibling of a node (a node with the same parent), or `nil` if the node doesn't
+    have a sibling.
 
     This, together with `ModelData:getNodeChild`, can be used to iterate the tree of nodes in a
     model.
