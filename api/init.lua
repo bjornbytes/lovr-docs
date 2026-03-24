@@ -4417,7 +4417,8 @@ return {
           key = "lovr.data.newBlob",
           module = "lovr.data",
           related = {
-            "lovr.filesystem.newBlob"
+            "lovr.filesystem.newBlob",
+            "lovr.data.newBlobView"
           },
           variants = {
             {
@@ -4483,6 +4484,51 @@ return {
                   name = "blob",
                   type = "Blob",
                   description = "The new Blob."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newBlobView",
+          summary = "Create a new Blob referencing a subsection of an existing Blob.",
+          description = "Creates a new Blob that does not allocate any memory of its own, but instead points at a subsection of an existing Blob.",
+          key = "lovr.data.newBlobView",
+          module = "lovr.data",
+          related = {
+            "lovr.data.newBlob"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "parent",
+                  type = "Blob",
+                  description = "The parent Blob."
+                },
+                {
+                  name = "offset",
+                  type = "number",
+                  description = "The offset of the subsection to reference, in bytes."
+                },
+                {
+                  name = "extent",
+                  type = "number",
+                  description = "The size of the subsection, in bytes.  When nil, the subsection will extend to the end of the parent Blob.",
+                  default = "nil"
+                },
+                {
+                  name = "name",
+                  type = "string",
+                  description = "An optional name for the view (used in error messages).",
+                  default = "''"
+                }
+              },
+              returns = {
+                {
+                  name = "view",
+                  type = "Blob",
+                  description = "The new Blob view."
                 }
               }
             }

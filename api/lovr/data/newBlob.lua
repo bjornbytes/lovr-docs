@@ -44,6 +44,7 @@ return {
     }
   },
   related = {
-    'lovr.filesystem.newBlob'
+    'lovr.filesystem.newBlob',
+    'lovr.data.newBlobView'
   }
 }
