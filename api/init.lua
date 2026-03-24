@@ -18757,6 +18757,7 @@ return {
             },
             {
               name = "getViewRay",
+              tag = "camera",
               summary = "Get a world space ray for a pixel in the Pass's canvas.",
               description = "Returns a world space ray for a single pixel in the Pass's canvas.  This is useful for interacting with objects with the mouse.",
               key = "Pass:getViewRay",
