@@ -36,15 +36,15 @@ return {
     },
     dx = {
       type = 'number',
-      description = 'The x component of the ray\'s direction.'
+      description = 'The x component of the ray\'s direction (normalized).'
     },
     dy = {
       type = 'number',
-      description = 'The y component of the ray\'s direction.'
+      description = 'The y component of the ray\'s direction (normalized).'
     },
     dz = {
       type = 'number',
-      description = 'The z component of the ray\'s direction.'
+      description = 'The z component of the ray\'s direction (normalized).'
     }
   },
   variants = {

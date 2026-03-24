@@ -19,6 +19,10 @@ return {
       returns = { '...' }
     }
   },
+  notes = [[
+    Sounds with a sample format of `f32` will have samples between -1 and 1.  For the `i16` format,
+    samples will be between -32768 and 32767.
+  ]],
   related = {
     'Sound:getFrames',
     'Sound:setFrames'

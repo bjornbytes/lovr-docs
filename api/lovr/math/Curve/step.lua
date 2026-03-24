@@ -1,8 +1,8 @@
 return {
   summary = 'Get the curve parameter at a given distance along the curve.',
   description = [[
-    Steps along the curve a given distance and returns the curve parameter there (i.e. what fraction
-    of the curve was traversed).  This is the inverse of `Curve:getLength`.
+    Steps along the curve a given distance and returns the curve parameter at that point.  This is
+    the inverse of `Curve:getLength`.
   ]],
   arguments = {
     distance = {

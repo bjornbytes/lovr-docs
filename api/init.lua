@@ -590,7 +590,7 @@ return {
       name = "modelschanged",
       tag = "callbacks",
       summary = "Called when the set of available headset models changes.",
-      description = "The `lovr.modelschanged` callback is called when VR models change, usually when hardware is connected or disconnected.  Use `lovr.headset.getModelKeys` to get the new list of model IDs, create models for any new keys, and destroy/remove any models that are no longer in the list.",
+      description = "The `lovr.modelschanged` callback is called when VR models change, usually when hardware is connected or disconnected.",
       key = "lovr.modelschanged",
       module = "lovr",
       examples = {
@@ -3025,17 +3025,17 @@ return {
                     {
                       name = "low",
                       type = "number",
-                      description = "The absorption coefficient for low frequencies (400Hz)."
+                      description = "The absorption coefficient for low frequencies (400 Hz)."
                     },
                     {
                       name = "mid",
                       type = "number",
-                      description = "The absorption coefficient for midrange frequencies (2.5KHz)."
+                      description = "The absorption coefficient for midrange frequencies (2.5 kHz)."
                     },
                     {
                       name = "high",
                       type = "number",
-                      description = "The absorption coefficient for high frequencies (15KHz)."
+                      description = "The absorption coefficient for high frequencies (15 kHz)."
                     }
                   }
                 }
@@ -3047,7 +3047,7 @@ return {
               description = "Returns the directional volume cone of the source.  The cone is defined by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is within `innerAngle` of the source's direction, the volume won't be changed.  Otherwise, the volume will start to decrease, reaching a minimum of `outerVolume` once the listener is at `outerAngle` radians from the direction of the source.",
               key = "Source:getCone",
               module = "lovr.audio",
-              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `0`.\n\nThe default `outerVolume` for a Source is `1`.",
+              notes = "When a Source is created, its `innerAngle` is `0`, its `outerAngle` is `0`, and its `outerVolume` is `1` (no cone effect).",
               related = {
                 "Source:getFalloff",
                 "Source:setFalloff",
@@ -3523,7 +3523,8 @@ return {
               notes = "When a Source is created, its absorption coefficients are all zero (no absorption).\n\nThe formula used for the volume factor of each band is `math.exp(-absorption * distance)`.\n\nThe absorption coefficients of air are `.0002`, `.0017`, and `.0182`.",
               related = {
                 "Source:getFalloff",
-                "Source:setFalloff"
+                "Source:setFalloff",
+                "AudioMaterial"
               },
               variants = {
                 {
@@ -3531,17 +3532,17 @@ return {
                     {
                       name = "low",
                       type = "number",
-                      description = "The absorption coefficient for low frequencies (400Hz)."
+                      description = "The absorption coefficient for low frequencies (400 Hz)."
                     },
                     {
                       name = "mid",
                       type = "number",
-                      description = "The absorption coefficient for midrange frequencies (2.5KHz)."
+                      description = "The absorption coefficient for midrange frequencies (2.5 kHz)."
                     },
                     {
                       name = "high",
                       type = "number",
-                      description = "The absorption coefficient for high frequencies (15KHz)."
+                      description = "The absorption coefficient for high frequencies (15 kHz)."
                     }
                   },
                   returns = {}
@@ -3564,7 +3565,7 @@ return {
               description = "Sets the directional volume cone of the source.  The cone is defined by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is within `innerAngle` of the source's direction, the volume won't be changed.  Otherwise, the volume will start to decrease, reaching a minimum of `outerVolume` once the listener is at `outerAngle` radians from the direction of the source.",
               key = "Source:setCone",
               module = "lovr.audio",
-              notes = "The default `innerAngle` for a Source is `0`.\n\nThe default `outerAngle` for a Source is `0`.\n\nThe default `outerVolume` for a Source is `1`.",
+              notes = "When a Source is created, its `innerAngle` is `0`, its `outerAngle` is `0`, and its `outerVolume` is `1` (no cone effect).",
               related = {
                 "Source:getFalloff",
                 "Source:setFalloff",
@@ -8546,6 +8547,7 @@ return {
               description = "Returns a single audio frame in the Sound.",
               key = "Sound:getFrame",
               module = "lovr.data",
+              notes = "Sounds with a sample format of `f32` will have samples between -1 and 1.  For the `i16` format, samples will be between -32768 and 32767.",
               related = {
                 "Sound:getFrames",
                 "Sound:setFrames"
@@ -18813,17 +18815,17 @@ return {
                     {
                       name = "dx",
                       type = "number",
-                      description = "The x component of the ray's direction."
+                      description = "The x component of the ray's direction (normalized)."
                     },
                     {
                       name = "dy",
                       type = "number",
-                      description = "The y component of the ray's direction."
+                      description = "The y component of the ray's direction (normalized)."
                     },
                     {
                       name = "dz",
                       type = "number",
-                      description = "The z component of the ray's direction."
+                      description = "The z component of the ray's direction (normalized)."
                     }
                   }
                 }
@@ -28368,7 +28370,7 @@ return {
             },
             {
               name = "getLength",
-              summary = "Get the length of a piece of the Curve.",
+              summary = "Get the length of the Curve.",
               description = "Returns the length of the curve, from the beginning of the curve up to the specified `t` parameter. `t` defaults to `1.0`, so by default this returns the length of the entire curve.",
               key = "Curve:getLength",
               module = "lovr.math",
@@ -28660,7 +28662,7 @@ return {
             {
               name = "step",
               summary = "Get the curve parameter at a given distance along the curve.",
-              description = "Steps along the curve a given distance and returns the curve parameter there (i.e. what fraction of the curve was traversed).  This is the inverse of `Curve:getLength`.",
+              description = "Steps along the curve a given distance and returns the curve parameter at that point.  This is the inverse of `Curve:getLength`.",
               key = "Curve:step",
               module = "lovr.math",
               related = {

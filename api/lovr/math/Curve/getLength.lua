@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the length of a piece of the Curve.',
+  summary = 'Get the length of the Curve.',
   description = [[
     Returns the length of the curve, from the beginning of the curve up to the specified `t`
     parameter. `t` defaults to `1.0`, so by default this returns the length of the entire curve.

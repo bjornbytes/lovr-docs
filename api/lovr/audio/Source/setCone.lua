@@ -41,11 +41,8 @@ return {
     }
   },
   notes = [[
-    The default `innerAngle` for a Source is `0`.
-
-    The default `outerAngle` for a Source is `0`.
-
-    The default `outerVolume` for a Source is `1`.
+    When a Source is created, its `innerAngle` is `0`, its `outerAngle` is `0`, and its
+    `outerVolume` is `1` (no cone effect).
   ]],
   related = {
     'Source:getFalloff',

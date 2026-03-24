@@ -3,8 +3,7 @@ return {
   summary = 'Called when the set of available headset models changes.',
   description = [[
     The `lovr.modelschanged` callback is called when VR models change, usually when hardware is
-    connected or disconnected.  Use `lovr.headset.getModelKeys` to get the new list of model IDs,
-    create models for any new keys, and destroy/remove any models that are no longer in the list.
+    connected or disconnected.
   ]],
   arguments = {},
   returns = {},

@@ -9,15 +9,15 @@ return {
   arguments = {
     low = {
       type = 'number',
-      description = 'The absorption coefficient for low frequencies (400Hz).'
+      description = 'The absorption coefficient for low frequencies (400 Hz).'
     },
     mid = {
       type = 'number',
-      description = 'The absorption coefficient for midrange frequencies (2.5KHz).'
+      description = 'The absorption coefficient for midrange frequencies (2.5 kHz).'
     },
     high = {
       type = 'number',
-      description = 'The absorption coefficient for high frequencies (15KHz).'
+      description = 'The absorption coefficient for high frequencies (15 kHz).'
     },
     enable = {
       type = 'boolean',
@@ -47,6 +47,7 @@ return {
   ]],
   related = {
     'Source:getFalloff',
-    'Source:setFalloff'
+    'Source:setFalloff',
+    'AudioMaterial'
   }
 }
