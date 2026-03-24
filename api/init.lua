@@ -18759,7 +18759,7 @@ return {
               name = "getViewRay",
               tag = "camera",
               summary = "Get a world space ray for a pixel in the Pass's canvas.",
-              description = "Returns a world space ray for a single pixel in the Pass's canvas.  This is useful for interacting with objects with the mouse.",
+              description = "Returns a world space ray for a pixel in the Pass's canvas.  This is useful for interacting with objects with the mouse.  This uses the current pose and projection of the camera, previously set using `Pass:setViewPose` and `Pass:setProjection`.",
               key = "Pass:getViewRay",
               module = "lovr.graphics",
               notes = "The upper-left of the canvas is located at `(0,0)`.",

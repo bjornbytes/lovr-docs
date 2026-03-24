@@ -2,8 +2,9 @@ return {
   tag = 'camera',
   summary = 'Get a world space ray for a pixel in the Pass\'s canvas.',
   description = [[
-    Returns a world space ray for a single pixel in the Pass's canvas.  This is useful for
-    interacting with objects with the mouse.
+    Returns a world space ray for a pixel in the Pass's canvas.  This is useful for interacting with
+    objects with the mouse.  This uses the current pose and projection of the camera, previously set
+    using `Pass:setViewPose` and `Pass:setProjection`.
   ]],
   arguments = {
     x = {
