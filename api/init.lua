@@ -8536,6 +8536,35 @@ return {
               }
             },
             {
+              name = "getFrame",
+              summary = "Get a single audio frame in the Sound.",
+              description = "Returns a single audio frame in the Sound.",
+              key = "Sound:getFrame",
+              module = "lovr.data",
+              related = {
+                "Sound:getFrames",
+                "Sound:setFrames"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the frame to get."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "The frame of audio, with 1 number for each channel."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getFrameCount",
               summary = "Get the number of frames in the Sound.",
               description = "Returns the number of frames in the Sound.  A frame stores one sample for each channel.",
@@ -8566,6 +8595,10 @@ return {
               description = "Reads frames from the Sound into a table, Blob, or another Sound.",
               key = "Sound:getFrames",
               module = "lovr.data",
+              related = {
+                "Sound:getFrame",
+                "Sound:setFrame"
+              },
               variants = {
                 {
                   arguments = {
@@ -8795,6 +8828,35 @@ return {
               }
             },
             {
+              name = "setFrame",
+              summary = "Set a single audio frame in the Sound.",
+              description = "Sets a single audio frame in the Sound.",
+              key = "Sound:setFrame",
+              module = "lovr.data",
+              notes = "Sounds with a sample format of `f32` should have samples between -1 and 1.  For the `i16` format, samples should be between -32768 and 32767.",
+              related = {
+                "Sound:getFrames",
+                "Sound:setFrames"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the frame to set."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Audio samples."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "setFrames",
               summary = "Write frames to the Sound.",
               description = "Writes frames to the Sound.",
@@ -8805,6 +8867,10 @@ return {
                   description = "Generate a sine wave.",
                   code = "function lovr.load()\n  local length = 1\n  local rate = 48000\n  local frames = length * rate\n  local frequency = 440\n  local volume = 1.0\n\n  sound = lovr.data.newSound(frames, 'f32', 'stereo', rate)\n\n  local data = {}\n  for i = 1, frames do\n    local amplitude = math.sin((i - 1) * frequency / rate * (2 * math.pi)) * volume\n    data[2 * i - 1] = amplitude\n    data[2 * i - 0] = amplitude\n  end\n\n  sound:setFrames(data)\n\n  source = lovr.audio.newSource(sound)\n  source:setLooping(true)\n  source:play()\nend"
                 }
+              },
+              related = {
+                "Sound:getFrame",
+                "Sound:setFrame"
               },
               variants = {
                 {

@@ -66,5 +66,9 @@ return {
       arguments = { 'sound', 'count', 'srcOffset', 'dstOffset' },
       returns = { 'count' }
     }
+  },
+  related = {
+    'Sound:getFrame',
+    'Sound:setFrame'
   }
 }

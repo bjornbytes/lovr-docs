@@ -60,5 +60,9 @@ return {
         source:play()
       end
     ]]
+  },
+  related = {
+    'Sound:getFrame',
+    'Sound:setFrame'
   }
 }
