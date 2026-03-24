@@ -18756,6 +18756,74 @@ return {
               }
             },
             {
+              name = "getViewRay",
+              summary = "Get a world space ray for a pixel in the Pass's canvas.",
+              description = "Returns a world space ray for a single pixel in the Pass's canvas.  This is useful for interacting with objects with the mouse.",
+              key = "Pass:getViewRay",
+              module = "lovr.graphics",
+              notes = "The upper-left of the canvas is located at `(0,0)`.",
+              related = {
+                "Pass:setViewPose",
+                "Pass:setProjection",
+                "lovr.system.getMousePosition",
+                "World:raycast"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the pixel to get the ray of."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the pixel to get the ray of."
+                    },
+                    {
+                      name = "view",
+                      type = "number",
+                      description = "The view (camera) to get the ray for.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the origin of the ray (on the near plane of the camera)."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the origin of the ray (on the near plane of the camera)."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the origin of the ray (on the near plane of the camera)."
+                    },
+                    {
+                      name = "dx",
+                      type = "number",
+                      description = "The x coordinate of the direction of the ray."
+                    },
+                    {
+                      name = "dy",
+                      type = "number",
+                      description = "The y coordinate of the direction of the ray."
+                    },
+                    {
+                      name = "dz",
+                      type = "number",
+                      description = "The z coordinate of the direction of the ray."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getWidth",
               tag = "canvas",
               summary = "Get the width of the Pass's canvas.",
