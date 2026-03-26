@@ -238,4 +238,4 @@ Next Steps
 
 To explore a module or callback in more detail, see the reference page for the `lovr` global.
 
-There are also a number of <a data-key="Libraries">Libraries</a> you can use that may come in handy.
+There are also a number of <a href="Libraries" data-key="Libraries">Libraries</a> you can use that may come in handy.

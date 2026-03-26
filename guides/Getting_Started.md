@@ -77,7 +77,8 @@ Tips
 Next Steps
 ---
 
-The next guide will teach you how to make fancier projects using <a data-key="Callbacks_and_Modules">Callbacks and Modules</a>.
+The next guide will teach you how to make fancier projects using
+<a href="Callbacks_and_Modules" data-key="Callbacks_and_Modules">Callbacks and Modules</a>.
 
 If you want to learn more about Lua, some good resources are:
 
