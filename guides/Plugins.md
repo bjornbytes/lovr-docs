@@ -1,10 +1,11 @@
 Plugins
 ===
 
-LÖVR has a small core.  Extra features can be provided by <a data-key="Libraries">Libraries</a>
-written in Lua, or by plugins.  Plugins are similar to libraries -- they can be `require`d from Lua
-to access their features.  However, instead of Lua files in a project folder, plugins are native
-libraries (`.dll` or `.so` files) that are placed next to the lovr executable.
+LÖVR has a small core.  Extra features can be provided by
+<a href="Libraries" data-key="Libraries">Libraries</a> written in Lua, or by plugins.  Plugins are
+similar to libraries -- they can be `require`d from Lua to access their features.  However, instead
+of Lua files in a project folder, plugins are native libraries (`.dll` or `.so` files) that are
+placed next to the lovr executable.
 
 Using Plugins
 ---
