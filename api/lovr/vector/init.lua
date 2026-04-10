@@ -37,17 +37,15 @@ return {
 
     The following vector constants are available:
 
-    ```
-    vector.zero = vector(0, 0, 0)
-    vector.one = vector(1, 1, 1)
-    vector.left = vector(-1, 0, 0)
-    vector.right = vector(1, 0, 0)
-    vector.up = vector(0, 1, 0)
-    vector.down = vector(0, -1, 0)
-    vector.forward = vector(0, 0, -1)
-    vector.backward = vector(0, 0, 1)
-    vector.back = vector(0, 0, 1)
-    ```
+        vector.zero = vector(0, 0, 0)
+        vector.one = vector(1, 1, 1)
+        vector.left = vector(-1, 0, 0)
+        vector.right = vector(1, 0, 0)
+        vector.up = vector(0, 1, 0)
+        vector.down = vector(0, -1, 0)
+        vector.forward = vector(0, 0, -1)
+        vector.backward = vector(0, 0, 1)
+        vector.back = vector(0, 0, 1)
 
     ### Lua vs. Luau
 
