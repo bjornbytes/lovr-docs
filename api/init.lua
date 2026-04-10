@@ -23975,8 +23975,7 @@ return {
           notes = "If the VR system is not roomscale, this will return zero.",
           related = {
             "lovr.headset.getBoundsWidth",
-            "lovr.headset.getBoundsDepth",
-            "lovr.headset.getBoundsGeometry"
+            "lovr.headset.getBoundsDepth"
           },
           variants = {
             {
@@ -23991,36 +23990,6 @@ return {
                   name = "depth",
                   type = "number",
                   description = "The depth of the play area, in meters."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getBoundsGeometry",
-          tag = "playArea",
-          summary = "Get a list of points that make up the play area boundary.",
-          description = "Returns a list of points representing the boundaries of the play area, or `nil` if the current headset driver does not expose this information.",
-          key = "lovr.headset.getBoundsGeometry",
-          module = "lovr.headset",
-          related = {
-            "lovr.headset.getBoundsDimensions"
-          },
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "t",
-                  type = "table",
-                  description = "A table to fill with the points.  If `nil`, a new table will be created.",
-                  default = "nil"
-                }
-              },
-              returns = {
-                {
-                  name = "points",
-                  type = "table",
-                  description = "A flat table of 3D points representing the play area boundaries."
                 }
               }
             }
@@ -24394,31 +24363,6 @@ return {
                   name = "dynamic",
                   type = "boolean",
                   description = "Whether dynamic foveation is active, allowing the system to reduce foveation based on GPU load."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getHandles",
-          tag = "headset-misc",
-          summary = "Get native pointers to OpenXR objects.",
-          description = "Returns pointers to the OpenXR instance and session objects.\n\nThis can be used with FFI or other native plugins to integrate with other OpenXR code.",
-          key = "lovr.headset.getHandles",
-          module = "lovr.headset",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "instance",
-                  type = "lightuserdata",
-                  description = "The OpenXR instance handle (`XrInstance`)."
-                },
-                {
-                  name = "session",
-                  type = "lightuserdata",
-                  description = "The OpenXR session handle (`XrSession`)."
                 }
               }
             }
