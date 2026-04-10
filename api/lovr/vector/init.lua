@@ -1,19 +1,21 @@
 return {
   tag = 'vector-lib',
+  external = true,
   summary = 'What is your vector victor.',
   description = [[
     The vector module implements a 3D vector type.  Vectors are useful for holding multiple numbers
     using just a single value, and for doing 3D math.
+
+    This module does not need to be required, it is in the global scope as `vector`.
   ]],
-  constructors = {
-    'vector.pack'
-  },
   notes = [[
     ### Methods
 
     Vector objects have `vector` as their metatable, so methods can be called with dots or colons:
 
         vector.distance(a, b) == a:distance(b)
+
+    Custom methods can be added to the `vector` table, if desired.
 
     ### Metamethods
 
@@ -68,8 +70,8 @@ return {
           pass:box(position, size)
         end
 
-    Since vectors are just tables (on LuaJIT), tables can be used for vector arguments as well, as
-    long as they have x/y/z or 1/2/3 keys.  The following are all equivalent:
+    Since vectors are just tables (on Lua and LuaJIT), tables can be used for vector arguments as
+    well, as long as they have x/y/z or 1/2/3 keys.  The following are all equivalent:
 
         pass:sphere(1, 2, 3)
         pass:sphere(vector(1, 2, 3))
@@ -78,5 +80,8 @@ return {
 
     This means LÖVR vectors can be swapped out for any table-based vector library.
   ]],
-  external = true
+  related = {
+    'quaternion',
+    'Mat4'
+  }
 }

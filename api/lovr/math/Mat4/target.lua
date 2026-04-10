@@ -37,6 +37,6 @@ return {
   },
   related = {
     'Mat4:lookAt',
-    'Quat:direction'
+    'quaternion.lookdir'
   }
 }

@@ -19,11 +19,11 @@ return {
     z = {
       type = 'number',
       description = 'The z component of the vector.'
-    },
+    }
   },
   variants = {
     {
-      arguments = {},
+      arguments = { 'v' },
       returns = { 'x', 'y', 'z' }
     }
   },

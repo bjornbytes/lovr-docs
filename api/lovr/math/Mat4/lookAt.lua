@@ -43,6 +43,6 @@ return {
   ]],
   related = {
     'Mat4:target',
-    'Quat:direction'
+    'quaternion.lookdir'
   }
 }

@@ -1,5 +1,6 @@
 return {
   tag = 'libraries',
+  external = true,
   summary = 'UTF-8 string processing.',
   description = [[
     LÖVR includes Lua 5.3's `utf8` library, even on Lua versions that don't support it.  Lua's
@@ -9,7 +10,6 @@ return {
     See the [Lua reference manual](https://www.lua.org/manual/5.3/manual.html#6.5) for
     documentation.
   ]],
-  external = true,
   example = [[
     local utf8 = require 'utf8'
 

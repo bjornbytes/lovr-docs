@@ -1,5 +1,6 @@
 return {
   tag = 'libraries',
+  external = true,
   summary = 'HTTP(S) requests.',
   description = [[
     The [lovr-http](https://github.com/bjornbytes/lovr-http) plugin performs HTTP requests.
@@ -51,7 +52,6 @@ return {
     - `data` is a string with the data sent by the server (HTML, JSON, binary, etc.).
     - `headers` is a table of response headers.
   ]],
-  external = true,
   notes = [[
     On Linux, this module requires the `curl` library to be installed.  Example on Debian-based
     distributions:

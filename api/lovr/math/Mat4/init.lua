@@ -6,8 +6,7 @@ return {
     'lovr.math.mat4'
   },
   related = {
-    'Vec3',
-    'Quat',
-    'Vectors'
+    'vector',
+    'quaternion'
   }
 }

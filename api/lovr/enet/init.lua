@@ -1,5 +1,6 @@
 return {
   tag = 'libraries',
+  external = true,
   summary = 'UDP networking library.',
   description = [[
     ENet is a UDP networking plugin bundled with LÖVR that can be used for networking and
@@ -9,7 +10,6 @@ return {
     The full documentation and examples can be found on the [lua-enet](http://leafo.net/lua-enet/)
     page.  LÖVE also has lua-enet documentation [here](https://love2d.org/wiki/lua-enet).
   ]],
-  external = true,
   example = {
     description = [[
       Here's a simple echo server example. The client sends a message to the server and waits for a

@@ -1228,7 +1228,7 @@ return {
         {
           name = "Vector Math",
           tag = "vector-lib",
-          description = "LÖVR has a few extra libraries to make vector math easier."
+          description = "LÖVR has a few extra modules to make vector math easier."
         },
         {
           name = "Libraries",
@@ -28619,7 +28619,7 @@ return {
               },
               related = {
                 "Mat4:target",
-                "Quat:direction"
+                "quaternion.lookdir"
               },
               variants = {
                 {
@@ -29229,6 +29229,271 @@ return {
               }
             },
             {
+              name = "setOrientation",
+              summary = "Set the orientation of the matrix.",
+              description = "Sets the orientation of the matrix, without changing its position or scale.",
+              key = "Mat4:setOrientation",
+              module = "lovr.math",
+              related = {
+                "Mat4:getOrientation",
+                "Mat4:setPosition",
+                "Mat4:setScale",
+                "Mat4:setPose",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the matrix should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The new orientation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setPose",
+              summary = "Set the position and rotation of the matrix.",
+              description = "Sets the position and rotation of the matrix, without changing its scale.",
+              key = "Mat4:setPose",
+              module = "lovr.math",
+              related = {
+                "Mat4:getPose",
+                "Mat4:setPosition",
+                "Mat4:setOrientation",
+                "Mat4:setScale",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z translation."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the matrix should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The new position."
+                    },
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The new orientation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setPosition",
+              summary = "Set the translation of the matrix.",
+              description = "Sets the translation of the matrix, without changing its rotation or scale.",
+              key = "Mat4:setPosition",
+              module = "lovr.math",
+              related = {
+                "Mat4:getPosition",
+                "Mat4:setOrientation",
+                "Mat4:setScale",
+                "Mat4:setPose",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z translation."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The new position."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setScale",
+              summary = "Set the scale of the matrix.",
+              description = "Sets the scale of the matrix, without changing its position or rotation.",
+              key = "Mat4:setScale",
+              module = "lovr.math",
+              related = {
+                "Mat4:getScale",
+                "Mat4:setPosition",
+                "Mat4:setOrientation",
+                "Mat4:setPose",
+                "Mat4:set"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The new x scale.",
+                      default = "1"
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The new y scale.",
+                      default = "sx"
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The new z scale.",
+                      default = "sx"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "scale",
+                      type = "vector",
+                      description = "The new scale."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "self",
+                      type = "Mat4",
+                      description = "The modified input matrix."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "target",
               summary = "Create a model transform that targets from a position to target position.",
               description = "Sets a model transform matrix that moves to `from` and orients model towards `to` point.\n\nThis is used when rendered model should always point towards a point of interest. The resulting Mat4 object can be used as model pose.\n\nThe target() function produces same result as lookAt() after matrix inversion.",
@@ -29236,7 +29501,7 @@ return {
               module = "lovr.math",
               related = {
                 "Mat4:lookAt",
-                "Quat:direction"
+                "quaternion.lookdir"
               },
               variants = {
                 {
@@ -29378,9 +29643,8 @@ return {
             }
           },
           related = {
-            "Vec3",
-            "Quat",
-            "Vectors"
+            "vector",
+            "quaternion"
           }
         },
         {
@@ -41528,6 +41792,473 @@ return {
       objects = {}
     },
     {
+      name = "quaternion",
+      tag = "vector-lib",
+      summary = "Quaternions, how do they work.",
+      description = "The quaternion module contains...quaternions, which are a useful way of storing 3D rotations.\n\nThis module does not need to be required, it is in the global scope as `quaternion`.",
+      key = "quaternion",
+      enums = {},
+      external = true,
+      functions = {
+        {
+          name = "angleaxis",
+          summary = "Create a quaternion from an angle/axis rotation.",
+          description = "Returns a quaternion that rotates `angle` radians around an axis.",
+          key = "quaternion.angleaxis",
+          module = "quaternion",
+          examples = {
+            {
+              code = "local q = quaternion(lovr.headset.getOrientation())`"
+            }
+          },
+          notes = "The `quaternion` library can be called, which is shorthand for `quaternion.angleaxis`:\n\n    quaternion(angle, ax, ay, az) -- same as quaternion.angleaxis(angle, ax, ay, az)",
+          related = {
+            "quaternion.toangleaxis"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the quaternion will rotate around the axis."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The new quaternion.  It will be normalized."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "between",
+          summary = "Get a quaternion that rotates between two direction vectors.",
+          description = "Returns a quaternion that rotates between two direction vectors.\n\nFor correct results, the direction vectors should be normalized.",
+          key = "quaternion.between",
+          module = "quaternion",
+          related = {
+            "quaternion.lookdir",
+            "vector.angle"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "a",
+                  type = "vector",
+                  description = "The first direction."
+                },
+                {
+                  name = "b",
+                  type = "number",
+                  description = "The second direction."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "A quaternion that rotates from `a` to `b`."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "conjugate",
+          summary = "Get the conjugate of a quaternion.",
+          description = "Returns the conjugate, or inverse, of a quaternion.  This is a quaternion that does the opposite rotation of the original.",
+          key = "quaternion.conjugate",
+          module = "quaternion",
+          notes = "This is shorthand for `quaternion(-q.x, -q.y, -q.z, q.w)`.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The quaternion to invert."
+                }
+              },
+              returns = {
+                {
+                  name = "r",
+                  type = "quaternion",
+                  description = "The conjugate of the quaternion."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "direction",
+          summary = "Get the direction of a quaternion.",
+          description = "Returns the direction of a quaternion.  It can also be thought of as rotating the forward vector by this quaternion.",
+          key = "quaternion.direction",
+          module = "quaternion",
+          examples = {
+            {
+              code = "local dir = quaternion(collider:getOrientation()):direction()"
+            }
+          },
+          related = {
+            "quaternion.lookdir",
+            "lovr.headset.getDirection"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The quaternion to get the direction of."
+                }
+              },
+              returns = {
+                {
+                  name = "direction",
+                  type = "vector",
+                  description = "The direction this quaternion \"faces\".  It will be normalized."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "euler",
+          summary = "Create a quaternion using euler angles.",
+          description = "Creates a quaternion from euler angles.  The rotation order is YXZ.",
+          key = "quaternion.euler",
+          module = "quaternion",
+          related = {
+            "quaternion.toeuler"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "pitch",
+                  type = "number",
+                  description = "The pitch (x axis rotation), in radians."
+                },
+                {
+                  name = "yaw",
+                  type = "number",
+                  description = "The yaw (y axis rotation), in radians."
+                },
+                {
+                  name = "roll",
+                  type = "number",
+                  description = "The roll (z axis rotation), in radians."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The new quaternion.  It will be normalized."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "lookdir",
+          summary = "Get a quaternion looks in a direction.",
+          description = "Returns a quaternion that looks in a direction.  More accurately, it returns a quaternion that rotates from the forward vector (0, 0, -1) to a given direction.\n\nThe `up` vector is used to control the \"roll\" of the orientation, since there are an infinite number of orientations that look in a given direction.",
+          key = "quaternion.lookdir",
+          module = "quaternion",
+          examples = {
+            {
+              description = "This is very useful for rotating an object to face a target.",
+              code = "local origin = vector(x, y, z) -- the position of the object\nlocal target = vector(tx, ty, tz) -- what it should look at\n\nlocal rotation = quaternion.lookdir(target - origin)\n\npass:draw(model, origin, 1, rotation)"
+            }
+          },
+          related = {
+            "quaternion.between",
+            "quaternion.direction",
+            "Mat4:target"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "direction",
+                  type = "vector",
+                  description = "The direction to look towards.  It does not need to be normalized."
+                },
+                {
+                  name = "up",
+                  type = "number",
+                  description = "The up vector.  It does not need to be normalized.",
+                  default = "vector.up"
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "A quaternion that rotates from the forward vector to `direction`."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "pack",
+          summary = "Pack numbers into a quaternion.",
+          description = "Packs numbers into a quaternion.  Note that these are raw quaternion components, not angle/axis.",
+          key = "quaternion.pack",
+          module = "quaternion",
+          related = {
+            "quaternion.angleaxis",
+            "quaternion.unpack",
+            "vector.pack"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the quaternion."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the quaternion."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the quaternion."
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The w component of the quaternion."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The new quaternion."
+                }
+              }
+            },
+            {
+              description = "Returns the identity quaternion.",
+              arguments = {},
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The new quaternion."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "slerp",
+          summary = "Get an interpolated quaternion between two quaternions.",
+          description = "Performs spherical linear interpolation between two quaternions, returning a mix between the two.",
+          key = "quaternion.slerp",
+          module = "quaternion",
+          related = {
+            "vector.lerp"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "a",
+                  type = "quaternion",
+                  description = "The first quaternion."
+                },
+                {
+                  name = "b",
+                  type = "vector",
+                  description = "The second quaternion."
+                },
+                {
+                  name = "t",
+                  type = "number",
+                  description = "The interpolation parameter.  `0.0` returns `a`, `1.0` returns `b`, `0.5` returns a vector halfway between `a` and `b`, etc."
+                }
+              },
+              returns = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The interpolated quaternion."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "toangleaxis",
+          summary = "Convert a quaternion to angle/axis representation.",
+          description = "Returns the angle/axis representation of the quaternion, as 4 numbers.",
+          key = "quaternion.toangleaxis",
+          module = "quaternion",
+          related = {
+            "quaternion.angleaxis"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The quaternion."
+                }
+              },
+              returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the quaternion rotates around the axis of rotation."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "toeuler",
+          summary = "Unpack a quaternion to euler angles.",
+          description = "Returns the euler angles of the quaternion, in YXZ order.",
+          key = "quaternion.toeuler",
+          module = "quaternion",
+          related = {
+            "quaternion.euler"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The quaternion."
+                }
+              },
+              returns = {
+                {
+                  name = "pitch",
+                  type = "number",
+                  description = "The pitch (x axis rotation), in radians."
+                },
+                {
+                  name = "yaw",
+                  type = "number",
+                  description = "The yaw (y axis rotation), in radians."
+                },
+                {
+                  name = "roll",
+                  type = "number",
+                  description = "The roll (z axis rotation), in radians."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "unpack",
+          summary = "Get the components of a quaternion as numbers.",
+          description = "Returns the components of the quaternion as numbers.  Note that these are the raw components, not angle/axis.",
+          key = "quaternion.unpack",
+          module = "quaternion",
+          examples = {
+            {
+              code = "local x, y, z, w = quaternion.pack(1, 2, 3, 4):unpack()"
+            }
+          },
+          related = {
+            "quaternion.pack",
+            "quaternion.toangleaxis",
+            "quaternion.toeuler",
+            "quaternion.direction",
+            "vector.pack"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The quaternion to unpack."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the quaternion."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the quaternion."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the quaternion."
+                },
+                {
+                  name = "w",
+                  type = "number",
+                  description = "The w component of the quaternion."
+                }
+              }
+            }
+          }
+        }
+      },
+      notes = "### Methods\n\nQuaternion objects have `quaternion` as their metatable, so methods can be called with dots or colons:\n\n    quaternion.direction(q) == q:direction()\n\nCustom methods can be added to the `quaternion` table, if desired.\n\n### Metamethods\n\nQuaternions support the following metamethod operators:\n\n    q = quaternion * quaternion --> composes two quaternions together, returns quaternion\n    v = quaternion * vector --> rotates the vector by the quaternion, returning new vector\n\n### Components\n\nUse x, y, z, and w keys to access the components of the quaternion:\n\n    print(quaternion.pack(1, 2, 3, 4).w) --> 4\n\nQuaternions are considered immutable, so the individual components can't be changed.  Instead, create a new quaternion with the changes.\n\n### Constants\n\nThe `quaternion.identity` constant is an alias for `quaternion.pack(0, 0, 0, 1)`.\n\n### Lua vs. Luau\n\nWhen using Luau, LÖVR has extended the language with a builtin `quaternion` datatype, similar to the builtin `vector` type.  This is a compact, garbage-free type that Luau is able to optimize well.\n\n:::note\nCurrently, the Luau `quaternion` type stores components with 16-bit precision.\n:::\n\nOn LuaJIT, `quaternion` is implemented using regular tables with `x`, `y`, `z`, and `w` keys.\n\n### Passing Quaternions to Functions\n\nMost LÖVR functions that take rotations accept both angle/axis numbers and quaternions:\n\n    pass:rotate(angle, ax, ay, az)\n    -- same as:\n    pass:rotate(quaternion(angle, ax, ay, az))\n\nSince quaternions are just tables (on Lua and LuaJIT), tables can be used for quaternion arguments as well, as long as they have x/y/z/w or 1/2/3/4 keys.  The following are all equivalent:\n\n    pass:sphere(quaternion.pack(x, y, z, w))\n    pass:sphere({ x, y, z, w })\n    pass:sphere({ x = x, y = y, z = z, w = w })\n\nThis means LÖVR quaternions can be swapped out for any table-based quaternion library.",
+      objects = {},
+      related = {
+        "vector",
+        "Mat4"
+      }
+    },
+    {
       name = "utf8",
       tag = "libraries",
       summary = "UTF-8 string processing.",
@@ -41547,11 +42278,8 @@ return {
       name = "vector",
       tag = "vector-lib",
       summary = "What is your vector victor.",
-      description = "The vector module implements a 3D vector type.  Vectors are useful for holding multiple numbers using just a single value, and for doing 3D math.",
+      description = "The vector module implements a 3D vector type.  Vectors are useful for holding multiple numbers using just a single value, and for doing 3D math.\n\nThis module does not need to be required, it is in the global scope as `vector`.",
       key = "vector",
-      constructors = {
-        "vector.pack"
-      },
       enums = {},
       external = true,
       functions = {
@@ -41814,7 +42542,7 @@ return {
               code = "local a = vector.pack(1, 2, 3)\nlocal b = vector.pack(5)\nprint(a + b) --> 6, 7, 8\n\n-- put the 3 numbers from lovr.headset.getPosition into a vector!\nlocal position = vector(lovr.headset.getPosition())"
             }
           },
-          notes = "The `vector` library can be called like a function, which is shorthand for `vector.pack`:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
+          notes = "The `vector` library can be called, which is shorthand for `vector.pack`:\n\n    vector(x, y, z) -- same as vector.pack(x, y, z)",
           related = {
             "vector.unpack"
           },
@@ -41880,7 +42608,13 @@ return {
           },
           variants = {
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The vector to unpack."
+                }
+              },
               returns = {
                 {
                   name = "x",
@@ -41902,8 +42636,12 @@ return {
           }
         }
       },
-      notes = "### Methods\n\nVector objects have `vector` as their metatable, so methods can be called with dots or colons:\n\n    vector.distance(a, b) == a:distance(b)\n\n### Metamethods\n\nVectors have metamethods for math operators, like `+`, `-`, `*`, and `/`:\n\n    print(vector(1, 2, 3) * .5 + vector(10, 20, 30))\n\n### Components\n\nUse x, y, and z keys to access the components of the vector:\n\n    print(vector(1, 2, 3).z) --> 3\n\nVectors are considered immutable, so the individual components can't be changed.  To change a single component of a vector, create a new vector with the changes:\n\n    local a = vector(1)\n    local b = vector(a.x, 2, a.z) --> (1, 2, 1)\n\n### Constants\n\nThe following vector constants are available:\n\n    vector.zero = vector(0, 0, 0)\n    vector.one = vector(1, 1, 1)\n    vector.left = vector(-1, 0, 0)\n    vector.right = vector(1, 0, 0)\n    vector.up = vector(0, 1, 0)\n    vector.down = vector(0, -1, 0)\n    vector.forward = vector(0, 0, -1)\n    vector.backward = vector(0, 0, 1)\n    vector.back = vector(0, 0, 1)\n\n### Lua vs. Luau\n\nWhen using Luau, LÖVR uses Luau's builtin `vector` datatype.  This is a compact, garbage-free type that Luau is able to optimize well.\n\nOn LuaJIT, `vector` is implemented using regular tables with `x`, `y`, and `z` keys.\n\n### Passing Vectors to Functions\n\nMost LÖVR functions that take positions, velocities, sizes, etc. accept both vectors and numbers:\n\n    function lovr.draw(pass)\n      pass:box(x, y, z, width, height, depth)\n\n      -- or, with vectors:\n      local position = vector(x, y, z)\n      local size = vector(width, height, depth)\n      pass:box(position, size)\n    end\n\nSince vectors are just tables (on LuaJIT), tables can be used for vector arguments as well, as long as they have x/y/z or 1/2/3 keys.  The following are all equivalent:\n\n    pass:sphere(1, 2, 3)\n    pass:sphere(vector(1, 2, 3))\n    pass:sphere({ 1, 2, 3 })\n    pass:sphere({ x = 1, y = 2, z = 3 })\n\nThis means LÖVR vectors can be swapped out for any table-based vector library.",
-      objects = {}
+      notes = "### Methods\n\nVector objects have `vector` as their metatable, so methods can be called with dots or colons:\n\n    vector.distance(a, b) == a:distance(b)\n\nCustom methods can be added to the `vector` table, if desired.\n\n### Metamethods\n\nVectors have metamethods for math operators, like `+`, `-`, `*`, and `/`:\n\n    print(vector(1, 2, 3) * .5 + vector(10, 20, 30))\n\n### Components\n\nUse x, y, and z keys to access the components of the vector:\n\n    print(vector(1, 2, 3).z) --> 3\n\nVectors are considered immutable, so the individual components can't be changed.  To change a single component of a vector, create a new vector with the changes:\n\n    local a = vector(1)\n    local b = vector(a.x, 2, a.z) --> (1, 2, 1)\n\n### Constants\n\nThe following vector constants are available:\n\n    vector.zero = vector(0, 0, 0)\n    vector.one = vector(1, 1, 1)\n    vector.left = vector(-1, 0, 0)\n    vector.right = vector(1, 0, 0)\n    vector.up = vector(0, 1, 0)\n    vector.down = vector(0, -1, 0)\n    vector.forward = vector(0, 0, -1)\n    vector.backward = vector(0, 0, 1)\n    vector.back = vector(0, 0, 1)\n\n### Lua vs. Luau\n\nWhen using Luau, LÖVR uses Luau's builtin `vector` datatype.  This is a compact, garbage-free type that Luau is able to optimize well.\n\nOn LuaJIT, `vector` is implemented using regular tables with `x`, `y`, and `z` keys.\n\n### Passing Vectors to Functions\n\nMost LÖVR functions that take positions, velocities, sizes, etc. accept both vectors and numbers:\n\n    function lovr.draw(pass)\n      pass:box(x, y, z, width, height, depth)\n\n      -- or, with vectors:\n      local position = vector(x, y, z)\n      local size = vector(width, height, depth)\n      pass:box(position, size)\n    end\n\nSince vectors are just tables (on Lua and LuaJIT), tables can be used for vector arguments as well, as long as they have x/y/z or 1/2/3 keys.  The following are all equivalent:\n\n    pass:sphere(1, 2, 3)\n    pass:sphere(vector(1, 2, 3))\n    pass:sphere({ 1, 2, 3 })\n    pass:sphere({ x = 1, y = 2, z = 3 })\n\nThis means LÖVR vectors can be swapped out for any table-based vector library.",
+      objects = {},
+      related = {
+        "quaternion",
+        "Mat4"
+      }
     }
   }
 }
