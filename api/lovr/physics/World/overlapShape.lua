@@ -33,7 +33,7 @@ return {
       description = 'The z position to place the shape at, in meters.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to place the shape at, in meters.'
     },
     angle = {
@@ -53,7 +53,7 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the shape.'
     },
     maxDistance = {

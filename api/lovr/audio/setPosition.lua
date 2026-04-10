@@ -19,7 +19,7 @@ return {
       description = 'The z position of the listener.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The listener position.'
     }
   },

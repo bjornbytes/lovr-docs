@@ -32,17 +32,17 @@ return {
       description = 'The z coordinate of the next vertex.'
     },
     t = {
-      type = '{number | Vec3}',
+      type = '{number | vector}',
       description = [[
-        A table of numbers or `Vec3` objects (not a mix) representing vertices of the polygon.
+        A table of numbers or vectors (not a mix) representing vertices of the polygon.
       ]]
     },
     v1 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'A vector containing the position of the first vertex of the polygon.'
     },
     v2 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'A vector containing the position of the next vertex on the polygon.'
     },
     ['...'] = {

@@ -19,7 +19,7 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the layer.'
     }
   },

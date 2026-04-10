@@ -38,11 +38,11 @@ return {
       description = 'The z component of the hinge axis direction.'
     },
     anchor = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The anchor point, in world coordinates.'
     },
     axis = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The hinge axis direction.'
     }
   },

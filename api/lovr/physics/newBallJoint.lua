@@ -26,7 +26,7 @@ return {
       description = 'The z position of the joint anchor point, in world coordinates.'
     },
     anchor = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The joint anchor point, in world coordinates.'
     }
   },

@@ -13,7 +13,7 @@ return {
       type = 'table',
       description = [[
         A table of colored strings, each given as a `{ color, string }` pair.  The color can be a
-        `Vec3`, `Vec4`, table, or hexcode.
+        table, vector, or hexcode.
       ]]
     },
   },

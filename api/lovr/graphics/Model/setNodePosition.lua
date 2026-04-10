@@ -26,7 +26,7 @@ return {
       description = 'The z coordinate of the new position.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The new position.'
     },
     blend = {

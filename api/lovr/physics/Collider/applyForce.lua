@@ -27,11 +27,11 @@ return {
       description = 'The z position to apply the force at, in world space.'
     },
     force = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The world-space force vector, in newtons.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to apply the force at, in world space.'
     }
   },

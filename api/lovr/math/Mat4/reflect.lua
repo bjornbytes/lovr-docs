@@ -6,11 +6,11 @@ return {
   ]],
   arguments = {
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the plane.'
     },
     normal = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The normal vector of the plane.'
     }
   },

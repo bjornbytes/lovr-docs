@@ -10,16 +10,16 @@ return {
   ]],
   arguments = {
     from = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the viewer.'
     },
     to = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the target.'
     },
     up = {
-      type = 'Vec3',
-      default = 'Vec3(0, 1, 0)',
+      type = 'vector',
+      default = 'vector(0, 1, 0)',
       description = 'The up vector of the viewer.'
     }
   },

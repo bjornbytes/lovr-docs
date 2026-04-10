@@ -44,11 +44,11 @@ return {
       description = 'The z component of the rotation axis.'
     },
     diagonal = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'A vector containing the 3 elements of a diagonal matrix.'
     },
     rotation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The inertia rotation.'
     }
   },

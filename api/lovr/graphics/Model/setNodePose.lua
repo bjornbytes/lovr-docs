@@ -38,11 +38,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The target position.  Can also be provided as 3 numbers.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The target orientation.  Can also be provided as 4 numbers in angle-axis form.'
     },
     blend = {

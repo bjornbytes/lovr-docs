@@ -76,15 +76,15 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to draw the mesh at.'
     },
     scales = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The scale of the mesh.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the mesh.'
     },
     transform = {

@@ -49,11 +49,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the base of the cone.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the cone.'
     },
     transform = {
@@ -61,11 +61,11 @@ return {
       description = 'The transform of the cone.'
     },
     p1 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the base of the cone.'
     },
     p2 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the tip of the cone.'
     },
     segments = {

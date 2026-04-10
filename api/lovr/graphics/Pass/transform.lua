@@ -44,15 +44,15 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     translation = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The translation to apply.'
     },
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The scale to apply.'
     },
     rotation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'A quaternion containing the rotation to apply.'
     },
     transform = {

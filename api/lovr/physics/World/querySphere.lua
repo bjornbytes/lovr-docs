@@ -28,7 +28,7 @@ return {
       description = 'The radius of the sphere, in meters',
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the sphere.'
     },
     filter = {

@@ -17,7 +17,7 @@ return {
       description = 'The z component of the local point.'
     },
     point = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The local point.'
     }
   },

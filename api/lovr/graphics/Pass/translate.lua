@@ -16,7 +16,7 @@ return {
       description = 'The z component of the translation.'
     },
     translation = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The translation.'
     }
   },

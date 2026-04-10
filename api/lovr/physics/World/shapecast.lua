@@ -52,15 +52,15 @@ return {
       description = 'The z component of the rotation axis.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to start at.'
     },
     destination = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to move the shape to.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the shape.'
     },
     filter = {

@@ -19,7 +19,7 @@ return {
       description = 'The z component of the center of mass.'
     },
     center = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The center of mass.'
     }
   },

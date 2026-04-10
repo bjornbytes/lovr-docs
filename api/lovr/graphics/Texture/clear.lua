@@ -32,13 +32,9 @@ return {
       type = '{number}',
       description = 'A table with color components.'
     },
-    v3 = {
-      type = 'Vec3',
-      description = 'A vec3 with the clear color.'
-    },
-    v4 = {
-      type = 'Vec4',
-      description = 'A vec4 with the clear color.'
+    v = {
+      type = 'vector',
+      description = 'A vector with the clear color (alpha will be 1).'
     },
     layer = {
       type = 'number',
@@ -81,11 +77,7 @@ return {
       returns = {}
     },
     {
-      arguments = { 'v3', 'layer', 'layerCount', 'mipmap', 'mipmapCount' },
-      returns = {}
-    },
-    {
-      arguments = { 'v4', 'layer', 'layerCount', 'mipmap', 'mipmapCount' },
+      arguments = { 'v', 'layer', 'layerCount', 'mipmap', 'mipmapCount' },
       returns = {}
     }
   },

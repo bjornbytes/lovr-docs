@@ -15,7 +15,7 @@ return {
       description = 'The z component of the world vector.'
     },
     vector = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The world vector.'
     }
   },

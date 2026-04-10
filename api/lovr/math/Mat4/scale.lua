@@ -3,7 +3,7 @@ return {
   description = 'Scales the matrix.',
   arguments = {
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The 3D scale to apply.'
     },
     sx = {

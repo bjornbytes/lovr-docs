@@ -38,11 +38,11 @@ return {
       description = 'The z position of the second anchor point, in world coordinates.'
     },
     first = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The first anchor point, in world coordinates.'
     },
     second = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The second anchor point, in world coordinates.'
     }
   },

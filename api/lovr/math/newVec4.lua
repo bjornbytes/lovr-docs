@@ -1,52 +1,41 @@
 return {
   tag = 'vectors',
-  summary = 'Create a new Vec4.',
-  description = 'Creates a new 4D vector.  This function takes the same arguments as `Vec4:set`.',
+  deprecated = true,
+  summary = 'Create a vector.',
+  description = 'This is a deprecated alias for `vector.pack`.',
   arguments = {
     x = {
       type = 'number',
-      default = '0',
-      description = 'The x value of the vector.'
+      description = 'The x component of the vector.'
     },
     y = {
       type = 'number',
-      default = 'x',
-      description = 'The y value of the vector.'
+      description = 'The y component of the vector.'
     },
     z = {
       type = 'number',
-      default = 'x',
-      description = 'The z value of the vector.'
+      default = '0',
+      description = 'The z component of the vector.'
     },
-    w = {
+    n = {
       type = 'number',
-      default = 'x',
-      description = 'The w value of the vector.'
-    },
-    u = {
-      type = 'Vec4',
-      description = 'A vector to copy the values from.'
+      description = 'A number to assign to the x, y, and z components of the vector.'
     }
   },
   returns = {
     v = {
-      type = 'Vec4',
+      type = 'vector',
       description = 'The new vector.'
     }
   },
   variants = {
     {
-      arguments = { 'x', 'y', 'z', 'w' },
+      arguments = { 'x', 'y', 'z' },
       returns = { 'v' }
     },
     {
-      arguments = { 'u' },
+      arguments = { 'n' },
       returns = { 'v' }
     }
-  },
-  related = {
-    'lovr.math.vec4',
-    'Vec4',
-    'Vectors'
   }
 }

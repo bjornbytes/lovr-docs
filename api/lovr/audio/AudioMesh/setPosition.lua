@@ -15,7 +15,7 @@ return {
       description = 'The new z coordinate.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position.'
     }
   },

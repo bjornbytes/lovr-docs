@@ -19,7 +19,7 @@ return {
       description = 'The z coordinate of the position.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position.'
     }
   },

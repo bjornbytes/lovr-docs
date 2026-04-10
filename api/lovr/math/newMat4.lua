@@ -12,17 +12,17 @@ return {
       description = 'An existing matrix to copy the values from.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       default = '0, 0, 0',
       description = 'The translation of the matrix.'
     },
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       default = '1, 1, 1',
       description = 'The scale of the matrix.'
     },
     rotation = {
-      type = 'Quat',
+      type = 'quaternion',
       default = '0, 0, 0, 1',
       description = 'The rotation of the matrix.'
     },
@@ -68,7 +68,6 @@ return {
   },
   related = {
     'lovr.math.mat4',
-    'Mat4',
-    'Vectors'
+    'Mat4'
   }
 }

@@ -18,7 +18,7 @@ return {
       description = 'The z component of the surface velocity.'
     },
     velocity = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The surface velocity.'
     }
   },

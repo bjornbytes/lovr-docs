@@ -20,7 +20,7 @@ return {
       description = 'The z component of the gravity force.'
     },
     gravity = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The gravity force.'
     }
   },

@@ -31,11 +31,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the Collider, in meters.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the Collider.'
     }
   },

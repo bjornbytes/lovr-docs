@@ -49,11 +49,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the cylinder.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the cylinder.'
     },
     transform = {
@@ -61,11 +61,11 @@ return {
       description = 'The transform of the cylinder.'
     },
     p1 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The starting point of the cylinder.'
     },
     p2 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The ending point of the cylinder.'
     },
     capped = {

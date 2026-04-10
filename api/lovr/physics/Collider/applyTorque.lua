@@ -15,7 +15,7 @@ return {
       description = 'The z component of the world-space torque vector, in newton meters.'
     },
     torque = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The world-space torque vector, in newton meters.'
     }
   },

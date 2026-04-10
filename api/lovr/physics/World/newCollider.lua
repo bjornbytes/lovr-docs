@@ -18,7 +18,7 @@ return {
       description = 'The z position of the Collider.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the Collider.'
     }
   },

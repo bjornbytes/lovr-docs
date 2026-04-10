@@ -51,11 +51,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the capsule.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the capsule.'
     },
     transform = {
@@ -63,11 +63,11 @@ return {
       description = 'The transform of the capsule.'
     },
     p1 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The starting point of the capsule.'
     },
     p2 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The ending point of the capsule.'
     },
     radius = {

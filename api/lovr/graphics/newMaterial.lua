@@ -13,47 +13,47 @@ return {
       table = {
         {
           name = 'color',
-          type = 'Vec4',
+          type = '{number}',
           default = '{ 1, 1, 1, 1 }',
           description = [[
-            The base color of the surface.  Can be a `Vec3`, `Vec4`, table of numbers, or hexcode.
-            Can be toggled in shaders using the `materialColor` flag, which defaults to `true`.
+            The base color of the surface.  Can be a table of numbers, a vector, or a hexcode. Can
+            be toggled in shaders using the `materialColor` flag, which defaults to `true`.
           ]]
         },
         {
           name = 'glow',
-          type = 'Vec4',
+          type = '{number}',
           default = '{ 0, 0, 0, 0 }',
           description = [[
             The glow color of the surface, sometimes called "emissive".  The glow is not affected by
             lighting, so it's a good fit for e.g. headlights on a car or LED lights on a panel.  The
-            alpha of the glow color is used as the glow strength.  Can be a `Vec3`, `Vec4`, table of
-            numbers, or hexcode.  Can be toggled in shaders using the `glow` flag, which defaults to
-            `false`.
+            alpha of the glow color is used as the glow strength.  Can be a table of numbers, a
+            vector, or a hexcode.  Can be toggled in shaders using the `glow` flag, which defaults
+            to `false`.
           ]]
         },
         {
           name = 'uvShift',
-          type = 'Vec2',
+          type = '{number}',
           default = '{ 0, 0 }',
           description = [[
             An offset to apply to the UV coordinates used to sample textures.  The offset is not
             affected by `uvScale`.  This can be used to map UV coordinates to a sub-rectangle of a
-            texture atlas.  Can be a `Vec2`, table of numbers, or a single number which gets
+            texture atlas.  Can be a table of numbers, a vector, or a single number which gets
             assigned to both axes.  Can be toggled in shaders using the `uvTransform` flag, which
             defaults to `true`.
           ]]
         },
         {
           name = 'uvScale',
-          type = 'Vec2',
+          type = '{number}',
           default = '{ 1, 1 }',
           description = [[
             A scale factor to apply to the UV coordinates used to sample textures.  The scale is not
             affected by `uvOffset`.  This can be used to map UV coordinates to a sub-rectangle of a
-            texture atlas, or repeat a texture multiple times across a surface.  Can be a `Vec2`,
-            table of numbers, or a single number which gets assigned to both axes. Can be toggled in
-            shaders using the `uvTransform` flag, which defaults to `true`.
+            texture atlas, or repeat a texture multiple times across a surface.  Can be a table of
+            numbers, a vector, or a single number which gets assigned to both axes. Can be toggled
+            in shaders using the `uvTransform` flag, which defaults to `true`.
           ]]
         },
         {

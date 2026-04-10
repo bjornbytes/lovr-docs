@@ -1,44 +1,41 @@
 return {
   tag = 'vectors',
-  summary = 'Create a temporary Vec2.',
-  description = [[
-    Creates a temporary 2D vector.  This function takes the same arguments as `Vec2:set`.
-  ]],
+  deprecated = true,
+  summary = 'Create a vector.',
+  description = 'This is a deprecated alias for `vector.pack`.',
   arguments = {
     x = {
       type = 'number',
-      default = '0',
-      description = 'The x value of the vector.'
+      description = 'The x component of the vector.'
     },
     y = {
       type = 'number',
-      default = 'x',
-      description = 'The y value of the vector.'
+      description = 'The y component of the vector.'
     },
-    u = {
-      type = 'Vec2',
-      description = 'A vector to copy the values from.'
+    z = {
+      type = 'number',
+      default = '0',
+      description = 'The z component of the vector.'
+    },
+    n = {
+      type = 'number',
+      description = 'A number to assign to the x, y, and z components of the vector.'
     }
   },
   returns = {
     v = {
-      type = 'Vec2',
+      type = 'vector',
       description = 'The new vector.'
     }
   },
   variants = {
     {
-      arguments = { 'x', 'y' },
+      arguments = { 'x', 'y', 'z' },
       returns = { 'v' }
     },
     {
-      arguments = { 'u' },
+      arguments = { 'n' },
       returns = { 'v' }
     }
-  },
-  related = {
-    'lovr.math.newVec2',
-    'Vec2',
-    'Vectors'
   }
 }

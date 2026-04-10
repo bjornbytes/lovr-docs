@@ -20,7 +20,7 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     rotation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'A quaternion containing the rotation to apply.'
     }
   },

@@ -54,15 +54,15 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the rectangle.'
     },
     size = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The size of the rectangle (width, height, thickness).'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the rectangle.'
     },
     transform = {

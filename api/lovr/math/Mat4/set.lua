@@ -54,15 +54,15 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The translation of the matrix.'
     },
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The scale of the matrix.'
     },
     rotation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The rotation of the matrix.'
     },
     ['...'] = {

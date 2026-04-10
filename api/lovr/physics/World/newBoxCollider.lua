@@ -33,11 +33,11 @@ return {
       description = 'The depth of the box, in meters.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the box, in meters.'
     },
     size = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The size of the box, in meters.'
     }
   },

@@ -22,7 +22,7 @@ return {
       description = 'The z scale.'
     },
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The new scale.'
     },
     blend = {

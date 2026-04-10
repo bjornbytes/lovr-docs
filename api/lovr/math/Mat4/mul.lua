@@ -11,7 +11,7 @@ return {
       description = 'The matrix.'
     },
     v3 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'A 3D vector, treated as a point.'
     },
     v4 = {
@@ -25,7 +25,7 @@ return {
       description = 'The modified matrix.'
     },
     v3 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The transformed vector.'
     },
     v4 = {

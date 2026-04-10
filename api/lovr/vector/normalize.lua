@@ -1,8 +1,8 @@
 return {
   summary = 'Get a normalized vector.',
   description = [[
-    Returns a normalized version of the input vector (a vector that points in the same direction,
-    but has a length of 1).
+    Returns a normalized version of the input vector.  This is a vector that points in the same
+    direction as the original, but has a length of 1.
   ]],
   arguments = {
     v = {
@@ -22,6 +22,7 @@ return {
       returns = { 'normalized' }
     }
   },
+  notes = 'When given a zero-length vector, the input vector is returned unchanged.',
   related = {
     'vector.length'
   }

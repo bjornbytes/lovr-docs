@@ -31,17 +31,17 @@ return {
       description = 'The z coordinate of the next point.'
     },
     t = {
-      type = '{number | Vec3}',
+      type = '{number | vector}',
       description = [[
-        A table of numbers or `Vec3` objects (not a mix) representing points of the line.
+        A table of numbers or vectors (not a mix) representing points of the line.
       ]]
     },
     v1 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'A vector containing the position of the first point of the line.'
     },
     v2 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'A vector containing the position of the next point on the line.'
     },
     ['...numbers'] = {
@@ -49,7 +49,7 @@ return {
       description = 'More points to add to the line.'
     },
     ['...vectors'] = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'More points to add to the line.'
     }
   },

@@ -33,11 +33,11 @@ return {
       description = 'The z position to apply the impulse at, in world space.'
     },
     impulse = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The world-space impulse vector, in newton seconds.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to apply the impulse at, in world space.'
     }
   },

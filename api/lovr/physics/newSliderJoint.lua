@@ -26,7 +26,7 @@ return {
       description = 'The z component of the slider axis.'
     },
     axis = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The slider axis direction.'
     }
   },

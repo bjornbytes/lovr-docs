@@ -18,7 +18,7 @@ return {
       description = 'The z position of the target, in meters.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the target, in meters.'
     },
     angle = {
@@ -38,7 +38,7 @@ return {
       description = 'The z component of the target axis of rotation.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The target orientation.'
     },
     dt = {

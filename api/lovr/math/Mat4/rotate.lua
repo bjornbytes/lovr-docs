@@ -3,7 +3,7 @@ return {
   description = 'Rotates the matrix using a quaternion or an angle/axis rotation.',
   arguments = {
     q = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The rotation to apply to the matrix.'
     },
     angle = {

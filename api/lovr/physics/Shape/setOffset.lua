@@ -34,11 +34,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The local offset of the Shape, in meters.'
     },
     rotation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The local rotation of the Shape, in meters.'
     }
   },

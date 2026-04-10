@@ -5,11 +5,11 @@ return {
     vectors.
   ]],
   arguments = {
-    v1 = {
+    a = {
       type = 'vector',
       description = 'The first vector.'
     },
-    v2 = {
+    b = {
       type = 'vector',
       description = 'The second vector.'
     }
@@ -17,16 +17,18 @@ return {
   returns = {
     cross = {
       type = 'vector',
-      description = 'A vector perpendicular to both `v1` and `v2`.'
+      description = 'A vector perpendicular to both `a` and `b`.'
     }
   },
   variants = {
     {
-      arguments = { 'v1', 'v2' },
+      arguments = { 'a', 'b' },
       returns = { 'cross' }
     }
   },
-  example = [[
-    vector.cross(vector(1, 0, 0), vector(0, 1, 0)) --> vector(0, 0, 1)
-  ]]
+  notes = 'If the two input vectors are normalized, the cross product will be normalized as well.',
+  example = 'vector.cross(vector(1, 0, 0), vector(0, 1, 0)) --> vector(0, 0, 1)',
+  related = {
+    'vector.dot'
+  }
 }

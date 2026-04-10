@@ -13,8 +13,7 @@ return {
       type = 'table',
       description = [[
         A table of strings with colors to render, in the form
-        `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table
-        of numbers.
+        `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode.
       ]]
     },
     x = {
@@ -58,11 +57,11 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the text.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the text.'
     },
     transform = {

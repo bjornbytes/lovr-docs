@@ -2113,7 +2113,7 @@ return {
               arguments = {
                 {
                   name = "orientation",
-                  type = "Quat",
+                  type = "quaternion",
                   description = "The orientation of the listener."
                 }
               },
@@ -2181,12 +2181,12 @@ return {
               arguments = {
                 {
                   name = "position",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The position of the listener."
                 },
                 {
                   name = "orientation",
-                  type = "Quat",
+                  type = "quaternion",
                   description = "The orientation of the listener."
                 }
               },
@@ -2233,7 +2233,7 @@ return {
               arguments = {
                 {
                   name = "position",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The listener position."
                 }
               },
@@ -2486,7 +2486,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position."
                     }
                   },
@@ -2578,7 +2578,7 @@ return {
                   arguments = {
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The new orientation for the AudioMesh."
                     }
                   },
@@ -2700,12 +2700,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation."
                     }
                   },
@@ -2787,7 +2787,7 @@ return {
                   arguments = {
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The new scale."
                     }
                   },
@@ -2939,17 +2939,17 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position."
                     },
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation."
                     }
                   },
@@ -3723,7 +3723,7 @@ return {
                   arguments = {
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation."
                     }
                   },
@@ -3812,12 +3812,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation."
                     }
                   },
@@ -3864,7 +3864,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position."
                     }
                   },
@@ -12324,26 +12324,26 @@ return {
                   table = {
                     {
                       name = "color",
-                      type = "Vec4",
-                      description = "The base color of the surface.  Can be a `Vec3`, `Vec4`, table of numbers, or hexcode. Can be toggled in shaders using the `materialColor` flag, which defaults to `true`.",
+                      type = "{number}",
+                      description = "The base color of the surface.  Can be a table of numbers, a vector, or a hexcode. Can be toggled in shaders using the `materialColor` flag, which defaults to `true`.",
                       default = "{ 1, 1, 1, 1 }"
                     },
                     {
                       name = "glow",
-                      type = "Vec4",
-                      description = "The glow color of the surface, sometimes called \"emissive\".  The glow is not affected by lighting, so it's a good fit for e.g. headlights on a car or LED lights on a panel.  The alpha of the glow color is used as the glow strength.  Can be a `Vec3`, `Vec4`, table of numbers, or hexcode.  Can be toggled in shaders using the `glow` flag, which defaults to `false`.",
+                      type = "{number}",
+                      description = "The glow color of the surface, sometimes called \"emissive\".  The glow is not affected by lighting, so it's a good fit for e.g. headlights on a car or LED lights on a panel.  The alpha of the glow color is used as the glow strength.  Can be a table of numbers, a vector, or a hexcode.  Can be toggled in shaders using the `glow` flag, which defaults to `false`.",
                       default = "{ 0, 0, 0, 0 }"
                     },
                     {
                       name = "uvShift",
-                      type = "Vec2",
-                      description = "An offset to apply to the UV coordinates used to sample textures.  The offset is not affected by `uvScale`.  This can be used to map UV coordinates to a sub-rectangle of a texture atlas.  Can be a `Vec2`, table of numbers, or a single number which gets assigned to both axes.  Can be toggled in shaders using the `uvTransform` flag, which defaults to `true`.",
+                      type = "{number}",
+                      description = "An offset to apply to the UV coordinates used to sample textures.  The offset is not affected by `uvScale`.  This can be used to map UV coordinates to a sub-rectangle of a texture atlas.  Can be a table of numbers, a vector, or a single number which gets assigned to both axes.  Can be toggled in shaders using the `uvTransform` flag, which defaults to `true`.",
                       default = "{ 0, 0 }"
                     },
                     {
                       name = "uvScale",
-                      type = "Vec2",
-                      description = "A scale factor to apply to the UV coordinates used to sample textures.  The scale is not affected by `uvOffset`.  This can be used to map UV coordinates to a sub-rectangle of a texture atlas, or repeat a texture multiple times across a surface.  Can be a `Vec2`, table of numbers, or a single number which gets assigned to both axes. Can be toggled in shaders using the `uvTransform` flag, which defaults to `true`.",
+                      type = "{number}",
+                      description = "A scale factor to apply to the UV coordinates used to sample textures.  The scale is not affected by `uvOffset`.  This can be used to map UV coordinates to a sub-rectangle of a texture atlas, or repeat a texture multiple times across a surface.  Can be a table of numbers, a vector, or a single number which gets assigned to both axes. Can be toggled in shaders using the `uvTransform` flag, which defaults to `true`.",
                       default = "{ 1, 1 }"
                     },
                     {
@@ -14235,7 +14235,7 @@ return {
                     {
                       name = "strings",
                       type = "table",
-                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a `Vec3`, `Vec4`, table, or hexcode."
+                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a table, vector, or hexcode."
                     },
                     {
                       name = "wrap",
@@ -14345,7 +14345,7 @@ return {
                     {
                       name = "strings",
                       type = "table",
-                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a `Vec3`, `Vec4`, table, or hexcode."
+                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a table, vector, or hexcode."
                     },
                     {
                       name = "wrap",
@@ -14414,7 +14414,7 @@ return {
                     {
                       name = "strings",
                       type = "table",
-                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a `Vec3`, `Vec4`, table, or hexcode."
+                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a table, vector, or hexcode."
                     }
                   },
                   returns = {
@@ -16712,7 +16712,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation."
                     },
                     {
@@ -16804,12 +16804,12 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The target position.  Can also be provided as 3 numbers."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The target orientation.  Can also be provided as 4 numbers in angle-axis form."
                     },
                     {
@@ -16881,7 +16881,7 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The new position."
                     },
                     {
@@ -16954,7 +16954,7 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The new scale."
                     },
                     {
@@ -17062,17 +17062,17 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position."
                     },
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation."
                     },
                     {
@@ -17279,17 +17279,17 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the box."
                     },
                     {
                       name = "size",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The size of the box."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the box."
                     },
                     {
@@ -17397,7 +17397,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule."
                     },
                     {
@@ -17414,7 +17414,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the capsule."
                     },
                     {
@@ -17447,12 +17447,12 @@ return {
                   arguments = {
                     {
                       name = "p1",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The starting point of the capsule."
                     },
                     {
                       name = "p2",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The ending point of the capsule."
                     },
                     {
@@ -17562,7 +17562,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the circle."
                     },
                     {
@@ -17573,7 +17573,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the circle."
                     },
                     {
@@ -17780,7 +17780,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the base of the cone."
                     },
                     {
@@ -17797,7 +17797,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the cone."
                     },
                     {
@@ -17829,12 +17829,12 @@ return {
                   arguments = {
                     {
                       name = "p1",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the base of the cone."
                     },
                     {
                       name = "p2",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the tip of the cone."
                     },
                     {
@@ -17926,7 +17926,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the cube."
                     },
                     {
@@ -17937,7 +17937,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the cube."
                     },
                     {
@@ -18063,7 +18063,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the cylinder."
                     },
                     {
@@ -18080,7 +18080,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the cylinder."
                     },
                     {
@@ -18148,12 +18148,12 @@ return {
                   arguments = {
                     {
                       name = "p1",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The starting point of the cylinder."
                     },
                     {
                       name = "p2",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The ending point of the cylinder."
                     },
                     {
@@ -18273,17 +18273,17 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to draw the object at."
                     },
                     {
                       name = "scale3",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale of the object, as a vector."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the object."
                     },
                     {
@@ -18960,8 +18960,8 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "{number | Vec3}",
-                      description = "A table of numbers or `Vec3` objects (not a mix) representing points of the line."
+                      type = "{number | vector}",
+                      description = "A table of numbers or vectors (not a mix) representing points of the line."
                     }
                   },
                   returns = {}
@@ -18970,17 +18970,17 @@ return {
                   arguments = {
                     {
                       name = "v1",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A vector containing the position of the first point of the line."
                     },
                     {
                       name = "v2",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A vector containing the position of the next point on the line."
                     },
                     {
                       name = "...vectors",
-                      type = "Vec3",
+                      type = "vector",
                       description = "More points to add to the line."
                     }
                   },
@@ -19094,17 +19094,17 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to draw the mesh at."
                     },
                     {
                       name = "scales",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale of the mesh."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the mesh."
                     },
                     {
@@ -19268,17 +19268,17 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to draw the mesh at."
                     },
                     {
                       name = "scales",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale of the mesh."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the mesh."
                     },
                     {
@@ -19507,17 +19507,17 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the plane."
                     },
                     {
                       name = "size",
-                      type = "Vec2",
+                      type = "vector",
                       description = "The size of the plane."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the plane."
                     },
                     {
@@ -19609,8 +19609,8 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "{number | Vec3}",
-                      description = "A table of numbers or Vec3 objects (not both) representing point positions."
+                      type = "{number | vector}",
+                      description = "A table of numbers or vectors (not both) representing point positions."
                     }
                   },
                   returns = {}
@@ -19619,7 +19619,7 @@ return {
                   arguments = {
                     {
                       name = "v",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A vector containing the position of the first point to draw."
                     },
                     {
@@ -19690,8 +19690,8 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "{number | Vec3}",
-                      description = "A table of numbers or `Vec3` objects (not a mix) representing vertices of the polygon."
+                      type = "{number | vector}",
+                      description = "A table of numbers or vectors (not a mix) representing vertices of the polygon."
                     }
                   },
                   returns = {}
@@ -19700,12 +19700,12 @@ return {
                   arguments = {
                     {
                       name = "v1",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A vector containing the position of the first vertex of the polygon."
                     },
                     {
                       name = "v2",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A vector containing the position of the next vertex on the polygon."
                     },
                     {
@@ -19832,7 +19832,7 @@ return {
                   arguments = {
                     {
                       name = "rotation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "A quaternion containing the rotation to apply."
                     }
                   },
@@ -19929,17 +19929,17 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the rectangle."
                     },
                     {
                       name = "size",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The size of the rectangle (width, height, thickness)."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the rectangle."
                     },
                     {
@@ -20025,7 +20025,7 @@ return {
                   arguments = {
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale to apply."
                     }
                   },
@@ -21141,12 +21141,12 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the viewer, in meters."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the viewer."
                     }
                   },
@@ -21383,7 +21383,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the sphere."
                     },
                     {
@@ -21394,7 +21394,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the sphere."
                     },
                     {
@@ -21540,7 +21540,7 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the text."
                     },
                     {
@@ -21551,7 +21551,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the text."
                     },
                     {
@@ -21614,7 +21614,7 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers."
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode."
                     },
                     {
                       name = "x",
@@ -21691,11 +21691,11 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers."
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode."
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the text."
                     },
                     {
@@ -21706,7 +21706,7 @@ return {
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the text."
                     },
                     {
@@ -21736,7 +21736,7 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a `Vec3`, `Vec4`, hexcode, or table of numbers."
+                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode."
                     },
                     {
                       name = "transform",
@@ -21850,17 +21850,17 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the torus."
                     },
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The size of the torus (x and y scale the radius, z is the thickness)."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the torus."
                     },
                     {
@@ -21979,17 +21979,17 @@ return {
                   arguments = {
                     {
                       name = "translation",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The translation to apply."
                     },
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale to apply."
                     },
                     {
                       name = "rotation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "A quaternion containing the rotation to apply."
                     }
                   },
@@ -22051,7 +22051,7 @@ return {
                   arguments = {
                     {
                       name = "translation",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The translation."
                     }
                   },
@@ -22817,43 +22817,9 @@ return {
                 {
                   arguments = {
                     {
-                      name = "v3",
-                      type = "Vec3",
-                      description = "A vec3 with the clear color."
-                    },
-                    {
-                      name = "layer",
-                      type = "number",
-                      description = "The index of the first layer to clear.",
-                      default = "1"
-                    },
-                    {
-                      name = "layerCount",
-                      type = "number",
-                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
-                      default = "nil"
-                    },
-                    {
-                      name = "mipmap",
-                      type = "number",
-                      description = "The index of the first mipmap to clear.",
-                      default = "1"
-                    },
-                    {
-                      name = "mipmapCount",
-                      type = "number",
-                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v4",
-                      type = "Vec4",
-                      description = "A vec4 with the clear color."
+                      name = "v",
+                      type = "vector",
+                      description = "A vector with the clear color (alpha will be 1)."
                     },
                     {
                       name = "layer",
@@ -26530,7 +26496,7 @@ return {
                   arguments = {
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the layer."
                     }
                   },
@@ -26627,12 +26593,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the layer."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the layer."
                     }
                   },
@@ -26983,8 +26949,7 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.newMat4",
-            "Mat4",
-            "Vectors"
+            "Mat4"
           },
           variants = {
             {
@@ -27019,19 +26984,19 @@ return {
               arguments = {
                 {
                   name = "position",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The translation of the matrix.",
                   default = "0, 0, 0"
                 },
                 {
                   name = "scale",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The scale of the matrix.",
                   default = "1, 1, 1"
                 },
                 {
                   name = "rotation",
-                  type = "Quat",
+                  type = "quaternion",
                   description = "The rotation of the matrix.",
                   default = "0, 0, 0, 1"
                 }
@@ -27048,13 +27013,13 @@ return {
               arguments = {
                 {
                   name = "position",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The translation of the matrix.",
                   default = "0, 0, 0"
                 },
                 {
                   name = "rotation",
-                  type = "Quat",
+                  type = "quaternion",
                   description = "The rotation of the matrix.",
                   default = "0, 0, 0, 1"
                 }
@@ -27147,7 +27112,7 @@ return {
               arguments = {
                 {
                   name = "v",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The first control point."
                 },
                 {
@@ -27165,12 +27130,12 @@ return {
               }
             },
             {
-              description = "Create a Curve from control points in a table.  The table values can be numbers or `Vec3` objects.",
+              description = "Create a Curve from control points in a table.  The table values can be numbers or vectors.",
               arguments = {
                 {
                   name = "points",
                   type = "table",
-                  description = "A table of control points, formatted as numbers or `Vec3` objects."
+                  description = "A table of control points (numbers or vectors)."
                 }
               },
               returns = {
@@ -27209,8 +27174,7 @@ return {
           module = "lovr.math",
           related = {
             "lovr.math.mat4",
-            "Mat4",
-            "Vectors"
+            "Mat4"
           },
           variants = {
             {
@@ -27245,19 +27209,19 @@ return {
               arguments = {
                 {
                   name = "position",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The translation of the matrix.",
                   default = "0, 0, 0"
                 },
                 {
                   name = "scale",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The scale of the matrix.",
                   default = "1, 1, 1"
                 },
                 {
                   name = "rotation",
-                  type = "Quat",
+                  type = "quaternion",
                   description = "The rotation of the matrix.",
                   default = "0, 0, 0, 1"
                 }
@@ -27274,13 +27238,13 @@ return {
               arguments = {
                 {
                   name = "position",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The translation of the matrix.",
                   default = "0, 0, 0"
                 },
                 {
                   name = "rotation",
-                  type = "Quat",
+                  type = "quaternion",
                   description = "The rotation of the matrix.",
                   default = "0, 0, 0, 1"
                 }
@@ -27331,138 +27295,15 @@ return {
         {
           name = "newQuat",
           tag = "vectors",
-          summary = "Create a new Quat.",
-          description = "Creates a new quaternion.  This function takes the same arguments as `Quat:set`.",
+          summary = "Create a quaternion.",
+          description = "This is a deprecated alias for `quaternion.angleaxis`.",
           key = "lovr.math.newQuat",
           module = "lovr.math",
-          related = {
-            "lovr.math.quat",
-            "Quat",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
-              arguments = {
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "An angle to use for the rotation, in radians.",
-                  default = "0"
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "raw",
-                  type = "boolean",
-                  description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
-                  default = "false"
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "r",
-                  type = "Quat",
-                  description = "An existing quaternion to copy the values from."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Uses the direction of a vector.",
-              arguments = {
-                {
-                  name = "v",
-                  type = "Vec3",
-                  description = "A normalized direction vector."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Sets the rotation to represent the rotation between two vectors.",
-              arguments = {
-                {
-                  name = "v",
-                  type = "Vec3",
-                  description = "A normalized direction vector."
-                },
-                {
-                  name = "u",
-                  type = "Vec3",
-                  description = "Another normalized direction vector."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "m",
-                  type = "Mat4",
-                  description = "A matrix to use the rotation from."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Set the quaternion to the identity (0, 0, 0, 1).",
               arguments = {},
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
+              returns = {}
             }
           }
         },
@@ -27528,35 +27369,35 @@ return {
         {
           name = "newVec2",
           tag = "vectors",
-          summary = "Create a new Vec2.",
-          description = "Creates a new 2D vector.  This function takes the same arguments as `Vec2:set`.",
+          summary = "Create a vector.",
+          description = "This is a deprecated alias for `vector.pack`.",
           key = "lovr.math.newVec2",
           module = "lovr.math",
-          related = {
-            "lovr.math.vec2",
-            "Vec2",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the vector.",
+                  default = "0"
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec2",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -27564,15 +27405,15 @@ return {
             {
               arguments = {
                 {
-                  name = "u",
-                  type = "Vec2",
-                  description = "A vector to copy the values from."
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec2",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -27582,41 +27423,35 @@ return {
         {
           name = "newVec3",
           tag = "vectors",
-          summary = "Create a new Vec3.",
-          description = "Creates a new 3D vector.  This function takes the same arguments as `Vec3:set`.",
+          summary = "Create a vector.",
+          description = "This is a deprecated alias for `vector.pack`.",
           key = "lovr.math.newVec3",
           module = "lovr.math",
-          related = {
-            "lovr.math.vec3",
-            "Vec3",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z value of the vector.",
-                  default = "x"
+                  description = "The z component of the vector.",
+                  default = "0"
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -27624,47 +27459,15 @@ return {
             {
               arguments = {
                 {
-                  name = "u",
-                  type = "Vec3",
-                  description = "A vector to copy the values from."
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec3",
-                  description = "The new vector."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "m",
-                  type = "Mat4",
-                  description = "A matrix to use the position of."
-                }
-              },
-              returns = {
-                {
-                  name = "v",
-                  type = "Vec3",
-                  description = "The new vector."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "A quat to use the direction of."
-                }
-              },
-              returns = {
-                {
-                  name = "v",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -27674,47 +27477,35 @@ return {
         {
           name = "newVec4",
           tag = "vectors",
-          summary = "Create a new Vec4.",
-          description = "Creates a new 4D vector.  This function takes the same arguments as `Vec4:set`.",
+          summary = "Create a vector.",
+          description = "This is a deprecated alias for `vector.pack`.",
           key = "lovr.math.newVec4",
           module = "lovr.math",
-          related = {
-            "lovr.math.vec4",
-            "Vec4",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z value of the vector.",
-                  default = "x"
-                },
-                {
-                  name = "w",
-                  type = "number",
-                  description = "The w value of the vector.",
-                  default = "x"
+                  description = "The z component of the vector.",
+                  default = "0"
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec4",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -27722,15 +27513,15 @@ return {
             {
               arguments = {
                 {
-                  name = "u",
-                  type = "Vec4",
-                  description = "A vector to copy the values from."
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec4",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -27847,138 +27638,15 @@ return {
         {
           name = "quat",
           tag = "vectors",
-          summary = "Create a temporary Quat.",
-          description = "Creates a temporary quaternion.  This function takes the same arguments as `Quat:set`.",
+          summary = "Create a quaternion.",
+          description = "This is a deprecated alias for `quaternion.angleaxis`.",
           key = "lovr.math.quat",
           module = "lovr.math",
-          related = {
-            "lovr.math.newQuat",
-            "Quat",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
-              arguments = {
-                {
-                  name = "angle",
-                  type = "number",
-                  description = "An angle to use for the rotation, in radians.",
-                  default = "0"
-                },
-                {
-                  name = "ax",
-                  type = "number",
-                  description = "The x component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "ay",
-                  type = "number",
-                  description = "The y component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "az",
-                  type = "number",
-                  description = "The z component of the axis of rotation.",
-                  default = "0"
-                },
-                {
-                  name = "raw",
-                  type = "boolean",
-                  description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
-                  default = "false"
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "r",
-                  type = "Quat",
-                  description = "An existing quaternion to copy the values from."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Uses the direction of a vector.",
-              arguments = {
-                {
-                  name = "v",
-                  type = "Vec3",
-                  description = "A normalized direction vector."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Sets the rotation to represent the rotation between two vectors.",
-              arguments = {
-                {
-                  name = "v",
-                  type = "Vec3",
-                  description = "A normalized direction vector."
-                },
-                {
-                  name = "u",
-                  type = "Vec3",
-                  description = "Another normalized direction vector."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "m",
-                  type = "Mat4",
-                  description = "A matrix to use the rotation from."
-                }
-              },
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
-            },
-            {
-              description = "Set the quaternion to the identity (0, 0, 0, 1).",
               arguments = {},
-              returns = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "The new quaternion."
-                }
-              }
+              returns = {}
             }
           }
         },
@@ -28108,35 +27776,35 @@ return {
         {
           name = "vec2",
           tag = "vectors",
-          summary = "Create a temporary Vec2.",
-          description = "Creates a temporary 2D vector.  This function takes the same arguments as `Vec2:set`.",
+          summary = "Create a vector.",
+          description = "This is a deprecated alias for `vector.pack`.",
           key = "lovr.math.vec2",
           module = "lovr.math",
-          related = {
-            "lovr.math.newVec2",
-            "Vec2",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the vector.",
+                  default = "0"
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec2",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -28144,15 +27812,15 @@ return {
             {
               arguments = {
                 {
-                  name = "u",
-                  type = "Vec2",
-                  description = "A vector to copy the values from."
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec2",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -28162,41 +27830,35 @@ return {
         {
           name = "vec3",
           tag = "vectors",
-          summary = "Create a temporary Vec3.",
-          description = "Creates a temporary 3D vector.  This function takes the same arguments as `Vec3:set`.",
+          summary = "Create a vector.",
+          description = "This is a deprecated alias for `vector.pack`.",
           key = "lovr.math.vec3",
           module = "lovr.math",
-          related = {
-            "lovr.math.newVec3",
-            "Vec3",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z value of the vector.",
-                  default = "x"
+                  description = "The z component of the vector.",
+                  default = "0"
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -28204,47 +27866,15 @@ return {
             {
               arguments = {
                 {
-                  name = "u",
-                  type = "Vec3",
-                  description = "A vector to copy the values from."
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec3",
-                  description = "The new vector."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "m",
-                  type = "Mat4",
-                  description = "A matrix to use the position of."
-                }
-              },
-              returns = {
-                {
-                  name = "v",
-                  type = "Vec3",
-                  description = "The new vector."
-                }
-              }
-            },
-            {
-              arguments = {
-                {
-                  name = "q",
-                  type = "Quat",
-                  description = "A quat to use the direction of."
-                }
-              },
-              returns = {
-                {
-                  name = "v",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -28254,47 +27884,35 @@ return {
         {
           name = "vec4",
           tag = "vectors",
-          summary = "Create a temporary Vec4.",
-          description = "Creates a temporary 4D vector.  This function takes the same arguments as `Vec4:set`.",
+          summary = "Create a vector.",
+          description = "This is a deprecated alias for `vector.pack`.",
           key = "lovr.math.vec4",
           module = "lovr.math",
-          related = {
-            "lovr.math.newVec4",
-            "Vec4",
-            "Vectors"
-          },
+          deprecated = true,
           variants = {
             {
               arguments = {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x value of the vector.",
-                  default = "0"
+                  description = "The x component of the vector."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y value of the vector.",
-                  default = "x"
+                  description = "The y component of the vector."
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z value of the vector.",
-                  default = "x"
-                },
-                {
-                  name = "w",
-                  type = "number",
-                  description = "The w value of the vector.",
-                  default = "x"
+                  description = "The z component of the vector.",
+                  default = "0"
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec4",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -28302,15 +27920,15 @@ return {
             {
               arguments = {
                 {
-                  name = "u",
-                  type = "Vec4",
-                  description = "A vector to copy the values from."
+                  name = "n",
+                  type = "number",
+                  description = "A number to assign to the x, y, and z components of the vector."
                 }
               },
               returns = {
                 {
                   name = "v",
-                  type = "Vec4",
+                  type = "vector",
                   description = "The new vector."
                 }
               }
@@ -28759,12 +28377,6 @@ return {
               description = "Returns whether a matrix is approximately equal to another matrix.",
               key = "Mat4:equals",
               module = "lovr.math",
-              related = {
-                "Vec2:equals",
-                "Vec3:equals",
-                "Vec4:equals",
-                "Quat:equals"
-              },
               variants = {
                 {
                   arguments = {
@@ -29070,19 +28682,19 @@ return {
                   arguments = {
                     {
                       name = "from",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the viewer."
                     },
                     {
                       name = "to",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the target."
                     },
                     {
                       name = "up",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The up vector of the viewer.",
-                      default = "Vec3(0, 1, 0)"
+                      default = "vector(0, 1, 0)"
                     }
                   },
                   returns = {
@@ -29128,14 +28740,14 @@ return {
                   arguments = {
                     {
                       name = "v3",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A 3D vector, treated as a point."
                     }
                   },
                   returns = {
                     {
                       name = "v3",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The transformed vector."
                     }
                   }
@@ -29301,12 +28913,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the plane."
                     },
                     {
                       name = "normal",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The normal vector of the plane."
                     }
                   },
@@ -29336,7 +28948,7 @@ return {
                   arguments = {
                     {
                       name = "q",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The rotation to apply to the matrix."
                     }
                   },
@@ -29400,7 +29012,7 @@ return {
                   arguments = {
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The 3D scale to apply."
                     }
                   },
@@ -29593,17 +29205,17 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The translation of the matrix."
                     },
                     {
                       name = "scale",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The scale of the matrix."
                     },
                     {
                       name = "rotation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The rotation of the matrix."
                     }
                   },
@@ -29619,12 +29231,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The translation of the matrix."
                     },
                     {
                       name = "rotation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The rotation of the matrix."
                     }
                   },
@@ -29687,19 +29299,19 @@ return {
                   arguments = {
                     {
                       name = "from",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the viewer."
                     },
                     {
                       name = "to",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the target."
                     },
                     {
                       name = "up",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The up vector of the viewer.",
-                      default = "Vec3(0, 1, 0)"
+                      default = "vector(0, 1, 0)"
                     }
                   },
                   returns = {
@@ -29728,7 +29340,7 @@ return {
                   arguments = {
                     {
                       name = "v",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The translation vector."
                     }
                   },
@@ -29824,458 +29436,6 @@ return {
           related = {
             "Vec3",
             "Quat",
-            "Vectors"
-          }
-        },
-        {
-          name = "Quat",
-          summary = "A quaternion.",
-          description = "A `quat` is a math type that represents a 3D rotation, stored as four numbers.",
-          key = "Quat",
-          module = "lovr.math",
-          constructors = {
-            "lovr.math.newQuat",
-            "lovr.math.quat"
-          },
-          methods = {
-            {
-              name = "conjugate",
-              summary = "Conjugate (invert) the quaternion.",
-              description = "Conjugates the input quaternion in place, returning the input.  If the quaternion is normalized, this is the same as inverting it.  It negates the (x, y, z) components of the quaternion.",
-              key = "Quat:conjugate",
-              module = "lovr.math",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The inverted quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "direction",
-              summary = "Get the direction of the quaternion.",
-              description = "Creates a new temporary vec3 facing the forward direction, rotates it by this quaternion, and returns the vector.",
-              key = "Quat:direction",
-              module = "lovr.math",
-              related = {
-                "Mat4:lookAt"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "The direction vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "equals",
-              summary = "Check if a quaternion equals another quaternion.",
-              description = "Returns whether a quaternion is approximately equal to another quaternion.",
-              key = "Quat:equals",
-              module = "lovr.math",
-              related = {
-                "Vec2:equals",
-                "Vec3:equals",
-                "Vec4:equals",
-                "Mat4:equals"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "Quat",
-                      description = "The other quaternion."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 quaternions approximately equal each other."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getEuler",
-              summary = "Get the euler angles of the quaternion.",
-              description = "Returns the euler angles of the quaternion, in YXZ order.",
-              key = "Quat:getEuler",
-              module = "lovr.math",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "pitch",
-                      type = "number",
-                      description = "The pitch (x axis rotation)."
-                    },
-                    {
-                      name = "yaw",
-                      type = "number",
-                      description = "The yaw (y axis rotation)."
-                    },
-                    {
-                      name = "roll",
-                      type = "number",
-                      description = "The roll (z axis rotation)."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "length",
-              summary = "Get the length of the quaternion.",
-              description = "Returns the length of the quaternion.",
-              key = "Quat:length",
-              module = "lovr.math",
-              related = {
-                "Quat:normalize"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "length",
-                      type = "number",
-                      description = "The length of the quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "mul",
-              summary = "Multiply a quaternion by another quaternion or a vector.",
-              description = "Multiplies this quaternion by another value.  If the value is a quaternion, the rotations in the two quaternions are applied sequentially and the result is stored in the first quaternion.  If the value is a vector, then the input vector is rotated by the quaternion and returned.",
-              key = "Quat:mul",
-              module = "lovr.math",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "Quat",
-                      description = "A quaternion to combine with the original."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "v3",
-                      type = "Vec3",
-                      description = "A vector to rotate."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v3",
-                      type = "Vec3",
-                      description = "The rotated vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "normalize",
-              summary = "Normalize the length of the quaternion to 1.",
-              description = "Adjusts the values in the quaternion so that its length becomes 1.",
-              key = "Quat:normalize",
-              module = "lovr.math",
-              notes = "A common source of bugs with quaternions is to forget to normalize them after performing a series of operations on them.  Try normalizing a quaternion if some of the calculations aren't working quite right!",
-              related = {
-                "Quat:length"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The normalized quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "set",
-              summary = "Set the components of the quaternion.",
-              description = "Sets the components of the quaternion.  There are lots of different ways to specify the new components, the summary is:\n\n- Four numbers can be used to specify an angle/axis rotation, similar to other LÖVR functions.\n- Four numbers plus the fifth `raw` flag can be used to set the raw values of the quaternion.\n- An existing quaternion can be passed in to copy its values.\n- A single direction vector can be specified to turn its direction (relative to the default\n  forward direction of \"negative z\") into a rotation.\n- Two direction vectors can be specified to set the quaternion equal to the rotation between the\n  two vectors.\n- A matrix can be passed in to extract the rotation of the matrix into a quaternion.",
-              key = "Quat:set",
-              module = "lovr.math",
-              related = {
-                "Quat:unpack"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to use for the rotation, in radians.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "raw",
-                      type = "boolean",
-                      description = "Whether the components should be interpreted as raw `(x, y, z, w)` components.",
-                      default = "false"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "Quat",
-                      description = "An existing quaternion to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Sets the values from a direction vector.",
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "A normalized direction vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Sets the values to represent the rotation between two vectors.",
-                  arguments = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "A normalized direction vector."
-                    },
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "Another normalized direction vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "Mat4",
-                      description = "A matrix to use the rotation from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                },
-                {
-                  description = "Reset the quaternion to the identity (0, 0, 0, 1).",
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "setEuler",
-              summary = "Set the value of the quaternion using euler angles.",
-              description = "Sets the value of the quaternion using euler angles.  The rotation order is YXZ.",
-              key = "Quat:setEuler",
-              module = "lovr.math",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "pitch",
-                      type = "number",
-                      description = "The pitch (x axis rotation)."
-                    },
-                    {
-                      name = "yaw",
-                      type = "number",
-                      description = "The yaw (y axis rotation)."
-                    },
-                    {
-                      name = "roll",
-                      type = "number",
-                      description = "The roll (z axis rotation)."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "slerp",
-              summary = "Moves this quaternion some amount towards another one.",
-              description = "Performs a spherical linear interpolation between this quaternion and another one, which can be used for smoothly animating between two rotations.\n\nThe amount of interpolation is controlled by a parameter `t`.  A `t` value of zero leaves the original quaternion unchanged, whereas a `t` of one sets the original quaternion exactly equal to the target.  A value between `0` and `1` returns a rotation between the two based on the value.",
-              key = "Quat:slerp",
-              module = "lovr.math",
-              related = {
-                "Vec3:lerp"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "r",
-                      type = "Quat",
-                      description = "The quaternion to slerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Quat",
-                      description = "The modified quaternion, containing the new lerped values."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "unpack",
-              summary = "Get the components of the quaternion.",
-              description = "Returns the components of the quaternion as numbers, either in an angle/axis representation or as raw quaternion values.",
-              key = "Quat:unpack",
-              module = "lovr.math",
-              related = {
-                "Quat:set"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "raw",
-                      type = "boolean",
-                      description = "Whether the values should be returned as raw values instead of angle/axis.",
-                      default = "false"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "a",
-                      type = "number",
-                      description = "The angle in radians, or the x value."
-                    },
-                    {
-                      name = "b",
-                      type = "number",
-                      description = "The x component of the rotation axis or the y value."
-                    },
-                    {
-                      name = "c",
-                      type = "number",
-                      description = "The y component of the rotation axis or the z value."
-                    },
-                    {
-                      name = "d",
-                      type = "number",
-                      description = "The z component of the rotation axis or the w value."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          related = {
-            "Vec3",
-            "Mat4",
             "Vectors"
           }
         },
@@ -30493,2417 +29653,6 @@ return {
               }
             }
           }
-        },
-        {
-          name = "Vec2",
-          summary = "A 2D vector.",
-          description = "A vector object that holds two numbers.",
-          key = "Vec2",
-          module = "lovr.math",
-          constructors = {
-            "lovr.math.newVec2",
-            "lovr.math.vec2"
-          },
-          methods = {
-            {
-              name = "add",
-              summary = "Add a vector or a number to the vector.",
-              description = "Adds a vector or a number to the vector.",
-              key = "Vec2:add",
-              module = "lovr.math",
-              related = {
-                "Vec2:sub",
-                "Vec2:mul",
-                "Vec2:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to add to x component."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to add to y component.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "angle",
-              summary = "Get the angle to another vector.",
-              description = "Returns the angle between vectors.",
-              key = "Vec2:angle",
-              module = "lovr.math",
-              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`.",
-              related = {
-                "Vec2:distance",
-                "Vec2:length"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to the other vector, in radians."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the other vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to the other vector, in radians."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "distance",
-              summary = "Get the distance to another vector.",
-              description = "Returns the distance to another vector.",
-              key = "Vec2:distance",
-              module = "lovr.math",
-              related = {
-                "Vec2:angle",
-                "Vec2:length"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The vector to measure the distance to."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "distance",
-                      type = "number",
-                      description = "The distance to `u`."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to measure distance to."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to measure distance to."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "distance",
-                      type = "number",
-                      description = "The distance to `u`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "div",
-              summary = "Divides the vector by a vector or a number.",
-              description = "Divides the vector by a vector or a number.",
-              key = "Vec2:div",
-              module = "lovr.math",
-              related = {
-                "Vec2:add",
-                "Vec2:sub",
-                "Vec2:mul"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The other vector to divide the components by."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to divide x component by."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to divide y component by.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "dot",
-              summary = "Get the dot product with another vector.",
-              description = "Returns the dot product between this vector and another one.",
-              key = "Vec2:dot",
-              module = "lovr.math",
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y\n\nThe vectors are not normalized before computing the dot product.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The vector to compute the dot product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "dot",
-                      type = "number",
-                      description = "The dot product between `v` and `u`."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to compute the dot product with."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to compute the dot product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "dot",
-                      type = "number",
-                      description = "The dot product between `v` and `u`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "equals",
-              summary = "Check if a vector equals another vector.",
-              description = "Returns whether a vector is approximately equal to another vector.",
-              key = "Vec2:equals",
-              module = "lovr.math",
-              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`.",
-              related = {
-                "Vec3:equals",
-                "Vec4:equals",
-                "Quat:equals",
-                "Mat4:equals"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 vectors approximately equal each other."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the other vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 vectors approximately equal each other."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "length",
-              summary = "Get the length of the vector.",
-              description = "Returns the length of the vector.",
-              key = "Vec2:length",
-              module = "lovr.math",
-              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y)",
-              related = {
-                "Vec2:normalize",
-                "Vec2:distance"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "length",
-                      type = "number",
-                      description = "The length of the vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "lerp",
-              summary = "Moves this vector some amount towards another one.",
-              description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
-              key = "Vec2:lerp",
-              module = "lovr.math",
-              related = {
-                "Quat:slerp"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The vector to lerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The interpolated vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to lerp towards."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to lerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The interpolated vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "mul",
-              summary = "Multiply the vector by a vector or a number.",
-              description = "Multiplies the vector by a vector or a number.",
-              key = "Vec2:mul",
-              module = "lovr.math",
-              related = {
-                "Vec2:add",
-                "Vec2:sub",
-                "Vec2:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The other vector to multiply the components by."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to multiply x component by."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to multiply y component by.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "normalize",
-              summary = "Normalize the length of the vector to 1.",
-              description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
-              key = "Vec2:normalize",
-              module = "lovr.math",
-              related = {
-                "Vec2:length"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The normalized vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "set",
-              summary = "Set the components of the vector.",
-              description = "Sets the components of the vector, either from numbers or an existing vector.",
-              key = "Vec2:set",
-              module = "lovr.math",
-              related = {
-                "Vec2:unpack"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The new x value of the vector.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The new y value of the vector.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec2",
-                      description = "The input vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The vector to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec2",
-                      description = "The input vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "sub",
-              summary = "Subtract a vector or a number from the vector.",
-              description = "Subtracts a vector or a number from the vector.",
-              key = "Vec2:sub",
-              module = "lovr.math",
-              related = {
-                "Vec2:add",
-                "Vec2:mul",
-                "Vec2:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec2",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to subtract from x component."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to subtract from y component.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec2",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "unpack",
-              summary = "Get the components of the vector.",
-              description = "Returns the 2 components of the vector as numbers.",
-              key = "Vec2:unpack",
-              module = "lovr.math",
-              related = {
-                "Vec2:set"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x value."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y value."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          related = {
-            "Vec3",
-            "Vec4",
-            "Vectors"
-          }
-        },
-        {
-          name = "Vec3",
-          summary = "A 3D vector.",
-          description = "A vector object that holds three numbers.",
-          key = "Vec3",
-          module = "lovr.math",
-          constructors = {
-            "lovr.math.newVec3",
-            "lovr.math.vec3"
-          },
-          methods = {
-            {
-              name = "add",
-              summary = "Add a vector or a number to the vector.",
-              description = "Adds a vector or a number to the vector.",
-              key = "Vec3:add",
-              module = "lovr.math",
-              related = {
-                "Vec3:sub",
-                "Vec3:mul",
-                "Vec3:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to add to x component."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to add to y component.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to add to z component.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "angle",
-              summary = "Get the angle to another vector.",
-              description = "Returns the angle between vectors.",
-              key = "Vec3:angle",
-              module = "lovr.math",
-              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`.",
-              related = {
-                "Vec3:distance",
-                "Vec3:length"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to the other vector, in radians."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the other vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the other vector."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to the other vector, in radians."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "cross",
-              summary = "Get the cross product with another vector.",
-              description = "Sets this vector to be equal to the cross product between this vector and another one.  The new `v` will be perpendicular to both the old `v` and `u`.",
-              key = "Vec3:cross",
-              module = "lovr.math",
-              notes = "The vectors are not normalized before or after computing the cross product.",
-              related = {
-                "Vec3:dot"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The vector to compute the cross product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to compute cross product with."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to compute cross product with."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to compute cross product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "distance",
-              summary = "Get the distance to another vector.",
-              description = "Returns the distance to another vector.",
-              key = "Vec3:distance",
-              module = "lovr.math",
-              related = {
-                "Vec3:angle",
-                "Vec3:length"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The vector to measure the distance to."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "distance",
-                      type = "number",
-                      description = "The distance to `u`."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to measure distance to."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to measure distance to."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to measure distance to."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "distance",
-                      type = "number",
-                      description = "The distance to `u`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "div",
-              summary = "Divides the vector by a vector or a number.",
-              description = "Divides the vector by a vector or a number.",
-              key = "Vec3:div",
-              module = "lovr.math",
-              related = {
-                "Vec3:add",
-                "Vec3:sub",
-                "Vec3:mul"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The other vector to divide the components by."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to divide x component by."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to divide y component by.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to divide z component by.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "dot",
-              summary = "Get the dot product with another vector.",
-              description = "Returns the dot product between this vector and another one.",
-              key = "Vec3:dot",
-              module = "lovr.math",
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z\n\nThe vectors are not normalized before computing the dot product.",
-              related = {
-                "Vec3:cross"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The vector to compute the dot product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "dot",
-                      type = "number",
-                      description = "The dot product between `v` and `u`."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to compute the dot product with."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to compute the dot product with."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to compute the dot product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "dot",
-                      type = "number",
-                      description = "The dot product between `v` and `u`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "equals",
-              summary = "Check if a vector equals another vector.",
-              description = "Returns whether a vector is approximately equal to another vector.",
-              key = "Vec3:equals",
-              module = "lovr.math",
-              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`.",
-              related = {
-                "Vec2:equals",
-                "Vec4:equals",
-                "Quat:equals",
-                "Mat4:equals"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 vectors approximately equal each other."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the other vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the other vector."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 vectors approximately equal each other."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "length",
-              summary = "Get the length of the vector.",
-              description = "Returns the length of the vector.",
-              key = "Vec3:length",
-              module = "lovr.math",
-              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)",
-              related = {
-                "Vec3:normalize",
-                "Vec3:distance"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "length",
-                      type = "number",
-                      description = "The length of the vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "lerp",
-              summary = "Moves this vector some amount towards another one.",
-              description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
-              key = "Vec3:lerp",
-              module = "lovr.math",
-              related = {
-                "Quat:slerp"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The vector to lerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The interpolated vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to lerp towards."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to lerp towards."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to lerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The interpolated vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "mul",
-              summary = "Multiply the vector by a vector or a number.",
-              description = "Multiplies the vector by a vector or a number.",
-              key = "Vec3:mul",
-              module = "lovr.math",
-              related = {
-                "Vec3:add",
-                "Vec3:sub",
-                "Vec3:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The other vector to multiply the components by."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to multiply x component by."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to multiply y component by.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to multiply z component by.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "normalize",
-              summary = "Normalize the length of the vector to 1.",
-              description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
-              key = "Vec3:normalize",
-              module = "lovr.math",
-              related = {
-                "Vec3:length"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The normalized vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "rotate",
-              summary = "Apply a rotation to the vector.",
-              description = "Applies a rotation to the vector, using a `Quat` or an angle/axis rotation.",
-              key = "Vec3:rotate",
-              module = "lovr.math",
-              related = {
-                "Quat:mul"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "q",
-                      type = "Quat",
-                      description = "The quaternion to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians to rotate."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis to rotate around."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis to rotate around."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis to rotate around."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "set",
-              summary = "Set the components of the vector.",
-              description = "Sets the components of the vector, either from numbers or an existing vector.",
-              key = "Vec3:set",
-              module = "lovr.math",
-              related = {
-                "Vec3:unpack"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The new x value of the vector.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The new y value of the vector.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The new z value of the vector.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "The input vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The vector to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "The input vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "q",
-                      type = "Quat",
-                      description = "A quat to use the direction of."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "The input vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "Mat4",
-                      description = "The matrix to use the position of."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec3",
-                      description = "The input vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "sub",
-              summary = "Subtract a vector or a number from the vector.",
-              description = "Subtracts a vector or a number from the vector.",
-              key = "Vec3:sub",
-              module = "lovr.math",
-              related = {
-                "Vec3:add",
-                "Vec3:mul",
-                "Vec3:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec3",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to subtract from x component."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to subtract from y component.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to subtract from z component.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "transform",
-              summary = "Apply a transform to the vector.",
-              description = "Applies a transform (translation, rotation, scale) to the vector using a `Mat4` or numbers. This is the same as multiplying the vector by a matrix.  This treats the vector as a point.",
-              key = "Vec3:transform",
-              module = "lovr.math",
-              related = {
-                "Mat4:mul",
-                "Vec4:transform",
-                "Vec3:rotate"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "Mat4",
-                      description = "The matrix to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The original vector, with transformed components."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians to rotate around the rotation axis.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The original vector, with transformed components."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "translation",
-                      type = "Vec3",
-                      description = "The translation to apply."
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "rotation",
-                      type = "Quat",
-                      description = "The rotation to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec3",
-                      description = "The original vector, with transformed components."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "unpack",
-              summary = "Get the components of the vector.",
-              description = "Returns the 3 components of the vector as numbers.",
-              key = "Vec3:unpack",
-              module = "lovr.math",
-              related = {
-                "Vec3:set"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x value."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y value."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z value."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          related = {
-            "Vec2",
-            "Vec4",
-            "Vectors"
-          }
-        },
-        {
-          name = "Vec4",
-          summary = "A 4D vector.",
-          description = "A vector object that holds four numbers.",
-          key = "Vec4",
-          module = "lovr.math",
-          constructors = {
-            "lovr.math.newVec4",
-            "lovr.math.vec4"
-          },
-          methods = {
-            {
-              name = "add",
-              summary = "Add a vector or a number to the vector.",
-              description = "Adds a vector or a number to the vector.",
-              key = "Vec4:add",
-              module = "lovr.math",
-              related = {
-                "Vec4:sub",
-                "Vec4:mul",
-                "Vec4:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to add to x component."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to add to y component.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to add to z component.",
-                      default = "x"
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value to add to w component.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "angle",
-              summary = "Get the angle to another vector.",
-              description = "Returns the angle between vectors.",
-              key = "Vec4:angle",
-              module = "lovr.math",
-              notes = "If any of the two vectors have a length of zero, the angle between them is not well defined.  In this case the function returns `math.pi / 2`.",
-              related = {
-                "Vec4:distance",
-                "Vec4:length"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to other vector, in radians."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the other vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the other vector."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the other vector."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "The w component of the other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The angle to other vector, in radians."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "distance",
-              summary = "Get the distance to another vector.",
-              description = "Returns the distance to another vector.",
-              key = "Vec4:distance",
-              module = "lovr.math",
-              related = {
-                "Vec4:angle",
-                "Vec4:length"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The vector to measure the distance to."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "distance",
-                      type = "number",
-                      description = "The distance to `u`."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to measure distance to."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to measure distance to."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to measure distance to."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value of w component to measure distance to."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "distance",
-                      type = "number",
-                      description = "The distance to `u`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "div",
-              summary = "Divides the vector by a vector or a number.",
-              description = "Divides the vector by a vector or a number.",
-              key = "Vec4:div",
-              module = "lovr.math",
-              related = {
-                "Vec4:add",
-                "Vec4:sub",
-                "Vec4:mul"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The other vector to divide the components by."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to divide x component by."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to divide y component by.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to divide z component by.",
-                      default = "x"
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value to divide w component by.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "dot",
-              summary = "Get the dot product with another vector.",
-              description = "Returns the dot product between this vector and another one.",
-              key = "Vec4:dot",
-              module = "lovr.math",
-              notes = "This is computed as:\n\n    dot = v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w\n\nThe vectors are not normalized before computing the dot product.",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The vector to compute the dot product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "dot",
-                      type = "number",
-                      description = "The dot product between `v` and `u`."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to compute the dot product with."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to compute the dot product with."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to compute the dot product with."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value of w component to compute the dot product with."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "dot",
-                      type = "number",
-                      description = "The dot product between `v` and `u`."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "equals",
-              summary = "Check if a vector equals another vector.",
-              description = "Returns whether a vector is approximately equal to another vector.",
-              key = "Vec4:equals",
-              module = "lovr.math",
-              notes = "To handle floating point precision issues, this function returns true as long as the squared distance between the vectors is below `1e-10`.",
-              related = {
-                "Vec2:equals",
-                "Vec3:equals",
-                "Quat:equals",
-                "Mat4:equals"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 vectors approximately equal each other."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the other vector."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the other vector."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the other vector."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "The w component of the other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "equal",
-                      type = "boolean",
-                      description = "Whether the 2 vectors approximately equal each other."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "length",
-              summary = "Get the length of the vector.",
-              description = "Returns the length of the vector.",
-              key = "Vec4:length",
-              module = "lovr.math",
-              notes = "The length is equivalent to this:\n\n    math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w)",
-              related = {
-                "Vec4:normalize",
-                "Vec4:distance"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "length",
-                      type = "number",
-                      description = "The length of the vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "lerp",
-              summary = "Moves this vector some amount towards another one.",
-              description = "Performs a linear interpolation between this vector and another one, which can be used to smoothly animate between two vectors, based on a parameter value.  A parameter value of `0` will leave the vector unchanged, a parameter value of `1` will set the vector to be equal to the input vector, and a value of `.5` will set the components to be halfway between the two vectors.",
-              key = "Vec4:lerp",
-              module = "lovr.math",
-              related = {
-                "Quat:slerp"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The vector to lerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The interpolated vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value of x component to lerp towards."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value of y component to lerp towards."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value of z component to lerp towards."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value of w component to lerp towards."
-                    },
-                    {
-                      name = "t",
-                      type = "number",
-                      description = "The lerping parameter."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The interpolated vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "mul",
-              summary = "Multiply the vector by a vector or a number.",
-              description = "Multiplies the vector by a vector or a number.",
-              key = "Vec4:mul",
-              module = "lovr.math",
-              related = {
-                "Vec4:add",
-                "Vec4:sub",
-                "Vec4:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The other vector to multiply the components by."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to multiply x component by."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to multiply y component by.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to multiply z component by.",
-                      default = "x"
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value to multiply w component by.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "normalize",
-              summary = "Normalize the length of the vector to 1.",
-              description = "Adjusts the values in the vector so that its direction stays the same but its length becomes 1.",
-              key = "Vec4:normalize",
-              module = "lovr.math",
-              related = {
-                "Vec4:length"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The normalized vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "set",
-              summary = "Set the components of the vector.",
-              description = "Sets the components of the vector, either from numbers or an existing vector.",
-              key = "Vec4:set",
-              module = "lovr.math",
-              related = {
-                "Vec4:unpack"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The new x value of the vector.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The new y value of the vector.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The new z value of the vector.",
-                      default = "x"
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "The new w value of the vector.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec4",
-                      description = "The input vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The vector to copy the values from."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "v",
-                      type = "Vec4",
-                      description = "The input vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "sub",
-              summary = "Subtract a vector or a number from the vector.",
-              description = "Subtracts a vector or a number from the vector.",
-              key = "Vec4:sub",
-              module = "lovr.math",
-              related = {
-                "Vec4:add",
-                "Vec4:mul",
-                "Vec4:div"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "u",
-                      type = "Vec4",
-                      description = "The other vector."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "A value to subtract from x component."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "A value to subtract from y component.",
-                      default = "x"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "A value to subtract from z component.",
-                      default = "x"
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "A value to subtract from w component.",
-                      default = "x"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The modified vector."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "transform",
-              summary = "Apply a transform to the vector.",
-              description = "Applies a transform (translation, rotation, scale) to the vector using a `Mat4` or numbers. This is the same as multiplying the vector by a matrix.",
-              key = "Vec4:transform",
-              module = "lovr.math",
-              related = {
-                "Mat4:mul",
-                "Vec3:transform"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "m",
-                      type = "Mat4",
-                      description = "The matrix to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The original vector, with transformed components."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z component of the translation.",
-                      default = "0"
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians to rotate around the rotation axis.",
-                      default = "0"
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation.",
-                      default = "0"
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation.",
-                      default = "1"
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation.",
-                      default = "0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The original vector, with transformed components."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "translation",
-                      type = "Vec3",
-                      description = "The translation to apply."
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "The scale factor.",
-                      default = "1"
-                    },
-                    {
-                      name = "rotation",
-                      type = "Quat",
-                      description = "The rotation to apply."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "self",
-                      type = "Vec4",
-                      description = "The original vector, with transformed components."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "unpack",
-              summary = "Get the components of the vector.",
-              description = "Returns the 4 components of the vector as numbers.",
-              key = "Vec4:unpack",
-              module = "lovr.math",
-              related = {
-                "Vec4:set"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x value."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y value."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z value."
-                    },
-                    {
-                      name = "w",
-                      type = "number",
-                      description = "The w value."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          related = {
-            "Vec2",
-            "Vec3",
-            "Vectors"
-          }
-        },
-        {
-          name = "Vectors",
-          summary = "What is your vector victor.",
-          description = "LÖVR has math objects for vectors, matrices, and quaternions, collectively called \"vector objects\".  Vectors are useful because they can represent a multidimensional quantity (like a 3D position) using just a single value.",
-          key = "Vectors",
-          module = "lovr.math",
-          constructors = {
-            "lovr.math.vec2",
-            "lovr.math.vec3",
-            "lovr.math.vec4",
-            "lovr.math.quat",
-            "lovr.math.mat4",
-            "lovr.math.newVec2",
-            "lovr.math.newVec3",
-            "lovr.math.newVec4",
-            "lovr.math.newQuat",
-            "lovr.math.newMat4"
-          },
-          methods = {},
-          notes = "Most LÖVR functions that accept positions, orientations, transforms, velocities, etc. also accept vector objects, so they can be used interchangeably with numbers:\n\n    function lovr.draw(pass)\n      -- position and size are vec3's, rotation is a quat\n      pass:box(position, size, rotation)\n    end\n\n### Temporary vs. Permanent\n\nVectors can be created in two different ways: **permanent** and **temporary**.\n\n**Permanent** vectors behave like normal Lua values.  They are individual objects that are garbage collected when no longer needed.  They're created using the usual `lovr.math.new<Type>` syntax:\n\n    self.position = lovr.math.newVec3(x, y, z)\n\n**Temporary** vectors are created from a shared pool of vector objects.  This makes them faster because they use temporary memory and do not need to be garbage collected.  To make a temporary vector, leave off the `new` prefix:\n\n    local position = lovr.math.vec3(x, y, z)\n\nAs a shortcut, vector constructors are placed on the global scope.  The uppercase name of the vector is a function that will create a permanent vector, and the lowercase name will create a temporary vector.  This can be disabled using the `t.math.globals` option in `lovr.conf`.\n\n    local position = vec3(x1, y1, z1) + vec3(x2, y2, z2)\n    local transform = Mat4()\n\nTemporary vectors, with all their speed, come with an important restriction: they can only be used during the frame in which they were created.  Saving them into variables and using them later on will throw an error:\n\n    local position = vec3(1, 2, 3)\n\n    function lovr.update(dt)\n      -- Reusing the temporary 'position' vector across frames will error:\n      position:add(vec3(dt))\n    end\n\nIt's possible to overflow the temporary vector pool.  If that happens, `lovr.math.drain` can be used to periodically drain the pool, invalidating any existing temporary vectors.\n\n### Metamethods\n\nVectors have metamethods, allowing them to be used using the normal math operators like `+`, `-`, `*`, `/`, etc.\n\n    print(vec3(2, 4, 6) * .5 + vec3(10, 20, 30))\n\nThese metamethods will create new temporary vectors.\n\n### Components and Swizzles\n\nThe raw components of a vector can be accessed like normal fields:\n\n    print(vec3(1, 2, 3).z) --> 3\n    print(mat4()[16]) --> 1\n\nAlso, multiple fields can be accessed and combined into a new (temporary) vector, called swizzling:\n\n    local position = vec3(10, 5, 1)\n    print(position.xy) --> vec2(10, 5)\n    print(position.xyy) --> vec3(10, 5, 5)\n    print(position.zyxz) --> vec4(1, 5, 10, 1)\n\nThe following fields are supported for vectors:\n\n- `x`, `y`, `z`, `w`\n- `r`, `g`, `b`, `a`\n- `s`, `t`, `p`, `q`\n\nQuaternions support `x`, `y`, `z`, and `w`.\n\nMatrices use numbers for accessing individual components in \"column-major\" order.\n\nAll fields can also be assigned to.\n\n    -- Swap the components of a 2D vector\n    v.xy = v.yx\n\nThe `unpack` function can be used (on any vector type) to access all of the individual components of a vector object.  For quaternions you can choose whether you want to unpack the angle/axis representation or the raw quaternion components.  Similarly, matrices support raw unpacking as well as decomposition into translation/scale/rotation values.\n\n### Vector Constants\n\nThe following vector constants are available.  They return new temporary vectors each time they are used:\n\n- `vec2.zero` (0, 0)\n- `vec2.one` (1, 1)\n- `vec3.zero` (0, 0, 0)\n- `vec3.one` (1, 1, 1)\n- `vec3.left` (-1, 0, 0)\n- `vec3.right` (1, 0, 0)\n- `vec3.up` (0, 1, 0)\n- `vec3.down` (0, -1, 0)\n- `vec3.back` (0, 0, 1)\n- `vec3.forward` (0, 0, -1)\n- `vec4.zero` (0, 0, 0, 0)\n- `vec4.one` (1, 1, 1, 1)\n- `quat.identity` (0, 0, 0, 1)"
         }
       },
       sections = {
@@ -33098,7 +29847,7 @@ return {
                 },
                 {
                   name = "anchor",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The joint anchor point, in world coordinates."
                 }
               },
@@ -33282,12 +30031,12 @@ return {
                 },
                 {
                   name = "anchor",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The joint anchor point, in world space."
                 },
                 {
                   name = "axis",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The cone axis, in world space."
                 }
               },
@@ -33508,12 +30257,12 @@ return {
                 },
                 {
                   name = "first",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The first anchor point, in world coordinates."
                 },
                 {
                   name = "second",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The second anchor point, in world coordinates."
                 }
               },
@@ -33607,12 +30356,12 @@ return {
                 },
                 {
                   name = "anchor",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The anchor point, in world coordinates."
                 },
                 {
                   name = "axis",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The hinge axis direction."
                 }
               },
@@ -33782,7 +30531,7 @@ return {
                 },
                 {
                   name = "axis",
-                  type = "Vec3",
+                  type = "vector",
                   description = "The slider axis direction."
                 }
               },
@@ -34347,7 +31096,7 @@ return {
                   arguments = {
                     {
                       name = "impulse",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space impulse vector, in newton meter seconds."
                     }
                   },
@@ -34430,7 +31179,7 @@ return {
                   arguments = {
                     {
                       name = "force",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space force vector, in newtons."
                     }
                   },
@@ -34441,12 +31190,12 @@ return {
                   arguments = {
                     {
                       name = "force",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space force vector, in newtons."
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to apply the force at, in world space."
                     }
                   },
@@ -34529,7 +31278,7 @@ return {
                   arguments = {
                     {
                       name = "impulse",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space impulse vector, in newton seconds."
                     }
                   },
@@ -34540,12 +31289,12 @@ return {
                   arguments = {
                     {
                       name = "impulse",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space impulse vector, in newton seconds."
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to apply the impulse at, in world space."
                     }
                   },
@@ -34590,7 +31339,7 @@ return {
                   arguments = {
                     {
                       name = "torque",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space torque vector, in newton meters."
                     }
                   },
@@ -35075,7 +31824,7 @@ return {
                   arguments = {
                     {
                       name = "point",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The local-space point."
                     }
                   },
@@ -35150,7 +31899,7 @@ return {
                   arguments = {
                     {
                       name = "point",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world-space point."
                     }
                   },
@@ -35226,7 +31975,7 @@ return {
                   arguments = {
                     {
                       name = "point",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world point."
                     }
                   },
@@ -35302,7 +32051,7 @@ return {
                   arguments = {
                     {
                       name = "vector",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The world vector."
                     }
                   },
@@ -35701,7 +32450,7 @@ return {
                   arguments = {
                     {
                       name = "point",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The local point."
                     }
                   },
@@ -35777,7 +32526,7 @@ return {
                   arguments = {
                     {
                       name = "vector",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The local vector."
                     }
                   },
@@ -36052,12 +32801,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the target, in meters."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The target orientation."
                     },
                     {
@@ -36186,7 +32935,7 @@ return {
                   arguments = {
                     {
                       name = "velocity",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The angular velocity of the Collider."
                     }
                   },
@@ -36290,7 +33039,7 @@ return {
                   arguments = {
                     {
                       name = "center",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The center of mass."
                     }
                   },
@@ -36500,12 +33249,12 @@ return {
                   arguments = {
                     {
                       name = "diagonal",
-                      type = "Vec3",
+                      type = "vector",
                       description = "A vector containing the 3 elements of a diagonal matrix."
                     },
                     {
                       name = "rotation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The inertia rotation."
                     }
                   },
@@ -36603,7 +33352,7 @@ return {
                   arguments = {
                     {
                       name = "velocity",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The new velocity, in meters per second."
                     }
                   },
@@ -36691,7 +33440,7 @@ return {
                   arguments = {
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the Collider."
                     }
                   },
@@ -36756,12 +33505,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the Collider, in meters."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the Collider."
                     }
                   },
@@ -36811,7 +33560,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the Collider, in meters."
                     }
                   },
@@ -37464,7 +34213,7 @@ return {
                   arguments = {
                     {
                       name = "velocity",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The surface velocity."
                     }
                   },
@@ -38790,7 +35539,7 @@ return {
                   arguments = {
                     {
                       name = "point",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The point, as a vector."
                     }
                   },
@@ -39410,12 +36159,12 @@ return {
                   arguments = {
                     {
                       name = "origin",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The origin of the ray."
                     },
                     {
                       name = "endpoint",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The endpoint of the ray."
                     }
                   },
@@ -39539,12 +36288,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The local offset of the Shape, in meters."
                     },
                     {
                       name = "rotation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The local rotation of the Shape, in meters."
                     }
                   },
@@ -40771,12 +37520,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the box, in meters."
                     },
                     {
                       name = "size",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The size of the box, in meters."
                     }
                   },
@@ -40854,7 +37603,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -40935,7 +37684,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the Collider."
                     }
                   },
@@ -41012,7 +37761,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41079,7 +37828,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41146,7 +37895,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41213,7 +37962,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41282,7 +38031,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41371,7 +38120,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the cylinder, in meters."
                     },
                     {
@@ -41563,7 +38312,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the sphere, in meters."
                     },
                     {
@@ -41777,12 +38526,12 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to place the shape at, in meters."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the shape."
                     },
                     {
@@ -41913,12 +38662,12 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to place the shape at, in meters."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the shape."
                     },
                     {
@@ -42044,12 +38793,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the box, in meters."
                     },
                     {
                       name = "size",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The size of the box, in meters."
                     },
                     {
@@ -42118,12 +38867,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the box, in meters."
                     },
                     {
                       name = "size",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The size of the box, in meters."
                     },
                     {
@@ -42197,7 +38946,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the sphere."
                     },
                     {
@@ -42261,7 +39010,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position of the center of the sphere."
                     },
                     {
@@ -42401,12 +39150,12 @@ return {
                   arguments = {
                     {
                       name = "origin",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The origin of the ray."
                     },
                     {
                       name = "endpoint",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The endpoint of the ray."
                     },
                     {
@@ -42564,12 +39313,12 @@ return {
                   arguments = {
                     {
                       name = "origin",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The origin of the ray."
                     },
                     {
                       name = "endpoint",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The endpoint of the ray."
                     },
                     {
@@ -42749,7 +39498,7 @@ return {
                   arguments = {
                     {
                       name = "gravity",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The gravity force."
                     }
                   },
@@ -43021,17 +39770,17 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to start at."
                     },
                     {
                       name = "destination",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to move the shape to."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the shape."
                     },
                     {
@@ -43223,17 +39972,17 @@ return {
                     },
                     {
                       name = "position",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to start at."
                     },
                     {
                       name = "destination",
-                      type = "Vec3",
+                      type = "vector",
                       description = "The position to move the shape to."
                     },
                     {
                       name = "orientation",
-                      type = "Quat",
+                      type = "quaternion",
                       description = "The orientation of the shape."
                     },
                     {
@@ -44829,12 +41578,54 @@ return {
     {
       name = "vector",
       tag = "vector-lib",
-      summary = "3D vector type.",
-      description = "TODO",
+      summary = "What is your vector victor.",
+      description = "The vector module implements a 3D vector type.  Vectors are useful for holding multiple numbers using just a single value, and for doing 3D math.",
       key = "vector",
+      constructors = {
+        "vector.pack"
+      },
       enums = {},
       external = true,
       functions = {
+        {
+          name = "angle",
+          summary = "Get the angle between two vectors.",
+          description = "Returns the angle between two vectors.",
+          key = "vector.angle",
+          module = "vector",
+          related = {
+            "vector.cross",
+            "vector.distance"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "a",
+                  type = "vector",
+                  description = "The first vector."
+                },
+                {
+                  name = "b",
+                  type = "vector",
+                  description = "The second vector."
+                },
+                {
+                  name = "axis",
+                  type = "vector",
+                  description = "An axis used to determine the sign of the angle."
+                }
+              },
+              returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The angle between the two vectors."
+                }
+              }
+            }
+          }
+        },
         {
           name = "cross",
           summary = "Get the cross product of two vectors.",
@@ -44846,16 +41637,20 @@ return {
               code = "vector.cross(vector(1, 0, 0), vector(0, 1, 0)) --> vector(0, 0, 1)"
             }
           },
+          notes = "If the two input vectors are normalized, the cross product will be normalized as well.",
+          related = {
+            "vector.dot"
+          },
           variants = {
             {
               arguments = {
                 {
-                  name = "v1",
+                  name = "a",
                   type = "vector",
                   description = "The first vector."
                 },
                 {
-                  name = "v2",
+                  name = "b",
                   type = "vector",
                   description = "The second vector."
                 }
@@ -44864,7 +41659,7 @@ return {
                 {
                   name = "cross",
                   type = "vector",
-                  description = "A vector perpendicular to both `v1` and `v2`."
+                  description = "A vector perpendicular to both `a` and `b`."
                 }
               }
             }
@@ -44881,17 +41676,17 @@ return {
               code = "vector.distance(vector(0, 0, 0), vector(10, 0, 0)) --> 10"
             }
           },
-          notes = "This is short for `vector.length(v1 - v2)",
+          notes = "This is short for `vector.length(v1 - v2)`.",
           variants = {
             {
               arguments = {
                 {
-                  name = "v1",
+                  name = "a",
                   type = "vector",
                   description = "The first vector."
                 },
                 {
-                  name = "v2",
+                  name = "b",
                   type = "vector",
                   description = "The second vector."
                 }
@@ -44901,6 +41696,45 @@ return {
                   name = "distance",
                   type = "number",
                   description = "The distance between the two vectors."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "dot",
+          summary = "Get the dot product of two vectors.",
+          description = "Returns the dot product of two vectors.",
+          key = "vector.dot",
+          module = "vector",
+          examples = {
+            {
+              code = "vector.dot(vector(1, 2, 3), vector(3, 2, 1)) --> 10"
+            }
+          },
+          notes = "This is computed as `a.x * b.x + a.y * b.y + a.z * b.z`.",
+          related = {
+            "vector.cross"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "a",
+                  type = "vector",
+                  description = "The first vector."
+                },
+                {
+                  name = "b",
+                  type = "vector",
+                  description = "The second vector."
+                }
+              },
+              returns = {
+                {
+                  name = "dot",
+                  type = "number",
+                  description = "The dot product of the two vectors."
                 }
               }
             }
@@ -44935,11 +41769,50 @@ return {
           }
         },
         {
+          name = "lerp",
+          summary = "Get an interpolated vector between two vectors.",
+          description = "Returns an interpolated vector between two vectors.",
+          key = "vector.lerp",
+          module = "vector",
+          related = {
+            "quaternion.slerp"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "a",
+                  type = "vector",
+                  description = "The first vector."
+                },
+                {
+                  name = "b",
+                  type = "vector",
+                  description = "The second vector."
+                },
+                {
+                  name = "t",
+                  type = "number",
+                  description = "The interpolation parameter.  `0.0` returns `a`, `1.0` returns `b`, `0.5` returns a vector halfway between `a` and `b`, etc."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The interpolated vector."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "normalize",
           summary = "Get a normalized vector.",
-          description = "Returns a normalized version of the input vector (a vector that points in the same direction, but has a length of 1).",
+          description = "Returns a normalized version of the input vector.  This is a vector that points in the same direction as the original, but has a length of 1.",
           key = "vector.normalize",
           module = "vector",
+          notes = "When given a zero-length vector, the input vector is returned unchanged.",
           related = {
             "vector.length"
           },
@@ -45061,6 +41934,7 @@ return {
           }
         }
       },
+      notes = "### Methods\n\nVector objects have `vector` as their metatable, so methods can be called with dots or colons:\n\n    vector.distance(a, b) == a:distance(b)\n\n### Metamethods\n\nVectors have metamethods for math operators, like `+`, `-`, `*`, and `/`:\n\n    print(vector(1, 2, 3) * .5 + vector(10, 20, 30))\n\n### Components\n\nUse x, y, and z keys to access the components of the vector:\n\n    print(vector(1, 2, 3).z) --> 3\n\nVectors are considered immutable, so the individual components can't be changed.  To change a single component of a vector, create a new vector with the changes:\n\n    local a = vector(1)\n    local b = vector(a.x, 2, a.z) --> (1, 2, 1)\n\n### Constants\n\nThe following vector constants are available:\n\n``` vector.zero = vector(0, 0, 0) vector.one = vector(1, 1, 1) vector.left = vector(-1, 0, 0) vector.right = vector(1, 0, 0) vector.up = vector(0, 1, 0) vector.down = vector(0, -1, 0) vector.forward = vector(0, 0, -1) vector.backward = vector(0, 0, 1) vector.back = vector(0, 0, 1) ```\n\n### Lua vs. Luau\n\nWhen using Luau, LÖVR uses Luau's builtin `vector` datatype.  This is a compact, garbage-free type that Luau is able to optimize well.\n\nOn LuaJIT, `vector` is implemented using regular tables with `x`, `y`, and `z` keys.\n\n### Passing Vectors to Functions\n\nMost LÖVR functions that take positions, velocities, sizes, etc. accept both vectors and numbers:\n\n    function lovr.draw(pass)\n      pass:box(x, y, z, width, height, depth)\n\n      -- or, with vectors:\n      local position = vector(x, y, z)\n      local size = vector(width, height, depth)\n      pass:box(position, size)\n    end\n\nSince vectors are just tables (on LuaJIT), tables can be used for vector arguments as well, as long as they have x/y/z or 1/2/3 keys.  The following are all equivalent:\n\n    pass:sphere(1, 2, 3)\n    pass:sphere(vector(1, 2, 3))\n    pass:sphere({ 1, 2, 3 })\n    pass:sphere({ x = 1, y = 2, z = 3 })\n\nThis means LÖVR vectors can be swapped out for any table-based vector library.",
       objects = {}
     }
   }

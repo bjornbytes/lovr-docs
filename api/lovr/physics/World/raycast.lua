@@ -31,11 +31,11 @@ return {
       description = 'The z coordinate of the endpoint of the ray.',
     },
     origin = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The origin of the ray.'
     },
     endpoint = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The endpoint of the ray.'
     },
     filter = {

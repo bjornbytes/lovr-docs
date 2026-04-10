@@ -49,15 +49,15 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the torus.'
     },
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The size of the torus (x and y scale the radius, z is the thickness).'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the torus.'
     },
     transform = {

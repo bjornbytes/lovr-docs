@@ -28,7 +28,7 @@ return {
       description = 'The length of the capsule, not including the caps, in meters.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position of the center of the capsule, in meters.'
     }
   },

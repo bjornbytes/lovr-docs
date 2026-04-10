@@ -18,11 +18,5 @@ return {
       arguments = { 'n' },
       returns = { 'equal' }
     }
-  },
-  related = {
-    'Vec2:equals',
-    'Vec3:equals',
-    'Vec4:equals',
-    'Quat:equals'
   }
 }

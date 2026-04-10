@@ -21,7 +21,7 @@ return {
       description = 'The z component of the world-space impulse vector, in newton meter seconds.'
     },
     impulse = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The world-space impulse vector, in newton meter seconds.'
     }
   },

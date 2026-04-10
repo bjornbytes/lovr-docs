@@ -48,15 +48,15 @@ return {
       description = 'The z component of the axis of rotation.'
     },
     position = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The position to draw the object at.'
     },
     scale3 = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The scale of the object, as a vector.'
     },
     orientation = {
-      type = 'Quat',
+      type = 'quaternion',
       description = 'The orientation of the object.'
     },
     transform = {

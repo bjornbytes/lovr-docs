@@ -18,7 +18,7 @@ return {
       description = 'The z component of the scale.'
     },
     scale = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The scale to apply.'
     }
   },

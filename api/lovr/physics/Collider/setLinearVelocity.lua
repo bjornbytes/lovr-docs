@@ -15,7 +15,7 @@ return {
       description = 'The z component of the new velocity, in meters per second.'
     },
     velocity = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The new velocity, in meters per second.'
     }
   },

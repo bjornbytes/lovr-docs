@@ -15,7 +15,7 @@ return {
       description = 'The z component of the angular velocity.'
     },
     velocity = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The angular velocity of the Collider.'
     }
   },

@@ -3,7 +3,7 @@ return {
   description = 'Translates the matrix.',
   arguments = {
     v = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The translation vector.'
     },
     x = {

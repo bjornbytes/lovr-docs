@@ -18,7 +18,7 @@ return {
       description = 'The z position in world space.'
     },
     point = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The world-space point.'
     }
   },

@@ -38,11 +38,11 @@ return {
       description = 'The z component of the cone axis, in world space.'
     },
     anchor = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The joint anchor point, in world space.'
     },
     axis = {
-      type = 'Vec3',
+      type = 'vector',
       description = 'The cone axis, in world space.'
     }
   },
