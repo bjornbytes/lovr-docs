@@ -465,7 +465,7 @@ local function validateModule(module)
 
   for name in pairs(t or {}) do
     local key = ('%s.%s'):format(module.key, name)
-    warnIf(not ignore[name] and not lookup[key], 'Missing docs for %s', key)
+    warnIf(not ignore[name] and not lookup[key] and not key:match('%._'), 'Missing docs for %s', key)
   end
 
   for _, fn in ipairs(module.enums) do
