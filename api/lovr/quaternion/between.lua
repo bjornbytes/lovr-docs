@@ -11,7 +11,7 @@ return {
       description = 'The first direction.'
     },
     b = {
-      type = 'number',
+      type = 'vector',
       description = 'The second direction.'
     }
   },

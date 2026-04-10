@@ -41869,7 +41869,7 @@ return {
                 },
                 {
                   name = "b",
-                  type = "number",
+                  type = "vector",
                   description = "The second direction."
                 }
               },
