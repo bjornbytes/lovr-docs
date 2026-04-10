@@ -41070,6 +41070,30 @@ return {
           }
         },
         {
+          name = "getWorkerCount",
+          summary = "Get the number of worker threads.",
+          description = "Returns the number of worker threads.  This is controlled by the `t.thread.workers` setting in `lovr.conf`.  By default, the number of workers is set to the number of CPU cores minus one (the main thread is considered a worker too).",
+          key = "lovr.thread.getWorkerCount",
+          module = "lovr.thread",
+          notes = "LÖVR uses worker threads internally to parallelize some work, including physics, asset loading, and graphics.  Additionally, custom Lua code can be offloaded to worker threads using `lovr.thread.call`, and any asynchronous function called in a task will run on a worker thread.",
+          related = {
+            "lovr.conf",
+            "lovr.system.getCoreCount"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "workers",
+                  type = "number",
+                  description = "The number of workers."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newChannel",
           summary = "Create a new, unnamed Channel.",
           description = "Creates a new unnamed `Channel` object.  Usually it's more convenient to use `lovr.thread.getChannel`, since other threads can use that function to query the channel by name.  Unnamed channels don't require a unique name, but they need to be sent to other threads somehow (e.g. on a different Channel or as an argument to `Thread:start`).",
