@@ -1726,7 +1726,7 @@ return {
           name = "getStream",
           tag = "devices",
           summary = "Get an audio stream for an audio device.",
-          description = "Returns an audio stream for an audio device.  The stream needs to be set up when configuring the device using `lovr.audio.setDevice`.\n\nFor playback devices, the stream will contain all audio sent to the speakers.  For capture devices, the stream will contain audio captured by the microphone.",
+          description = "Returns an audio stream for an audio device.  The stream needs to be set up when configuring the device using `lovr.audio.setDevice`.\n\nFor playback devices, the stream will contain all audio sent to the speakers by LÖVR.  For capture devices, the stream will contain audio captured by the microphone.",
           key = "lovr.audio.getStream",
           module = "lovr.audio",
           examples = {

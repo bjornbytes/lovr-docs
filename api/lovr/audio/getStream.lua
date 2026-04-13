@@ -5,8 +5,8 @@ return {
     Returns an audio stream for an audio device.  The stream needs to be set up when configuring the
     device using `lovr.audio.setDevice`.
 
-    For playback devices, the stream will contain all audio sent to the speakers.  For capture
-    devices, the stream will contain audio captured by the microphone.
+    For playback devices, the stream will contain all audio sent to the speakers by LÖVR.  For
+    capture devices, the stream will contain audio captured by the microphone.
   ]],
   arguments = {},
   returns = {
