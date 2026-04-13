@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Get the volume cone of the Source.',
   description = [[
     Returns the directional volume cone of the source.  The cone is defined by three values:

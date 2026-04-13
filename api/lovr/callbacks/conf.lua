@@ -96,12 +96,9 @@ return {
           description = 'Configuration for the audio module.',
           table = {
             {
-              name = 'spatializer',
-              type = 'string',
-              description = [[
-                An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of
-                them are attempted.
-              ]]
+              name = 'debug',
+              type = 'boolean',
+              description = 'Enables extra log messages from the audio engine.'
             },
             {
               name = 'samplerate',
@@ -111,7 +108,54 @@ return {
             {
               name = 'start',
               type = 'boolean',
-              description = 'Whether the playback device should be automatically started.'
+              description = [[
+                Whether the default playback device should start automatically when a source is
+                first played.
+              ]]
+            },
+            {
+              name = 'reverb',
+              type = 'table',
+              description = 'Reverb settings.',
+              table = {
+                {
+                  name = 'type',
+                  type = 'ReverbType',
+                  description = 'Which type of reverb to use.'
+                },
+                {
+                  name = 'rays',
+                  type = 'number',
+                  description = [[
+                    The number of rays used to simulate reverb.  More rays will make the reverb more
+                    realistic, but increase CPU usage.
+                  ]]
+                },
+                {
+                  name = 'bounces',
+                  type = 'number',
+                  description = [[
+                    The number of times each ray can bounce during reverb simulation.  More bounces
+                    will make the reverb more realistic, but increase CPU usage.
+                  ]]
+                },
+                {
+                  name = 'duration',
+                  type = 'number',
+                  description = [[
+                    The max reverb duration, in seconds.  Longer reverb times increase CPU cost, but
+                    may be necessary for large, echoey spaces.
+                  ]]
+                },
+                {
+                  name = 'rate',
+                  type = 'number',
+                  description = [[
+                    How often reverb is simulated, in seconds.  Shorter rates will make the reverb
+                    more responsive, but increase CPU usage.
+                  ]]
+                }
+              }
             }
           }
         },
@@ -344,9 +388,14 @@ return {
           t.modules.timer = true
 
           -- Audio
-          t.audio.spatializer = nil
+          t.audio.debug = false
           t.audio.samplerate = 48000
           t.audio.start = true
+          t.audio.reverb.type = 'convolution'
+          t.audio.reverb.rays = 4096
+          t.audio.reverb.bounces = 4
+          t.audio.reverb.duration = 2
+          t.audio.reverb.rate = .1
 
           -- Graphics
           t.graphics.debug = false

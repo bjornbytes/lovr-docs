@@ -1,4 +1,5 @@
 return {
+  tag = 'listener',
   summary = 'Set an HRTF to use for audio spatialization.',
   description = [[
     Sets an HRTF to use for binaural audio spatialization.  The HRTF should be provided as a SOFA

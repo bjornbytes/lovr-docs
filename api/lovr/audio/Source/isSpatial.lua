@@ -17,9 +17,5 @@ return {
       arguments = {},
       returns = { 'spatial' }
     }
-  },
-  related = {
-    'Source:isEffectEnabled',
-    'Source:setEffectEnabled'
   }
 }

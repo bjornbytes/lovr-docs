@@ -10,7 +10,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.18.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.spatializer = nil\n  t.audio.samplerate = 48000\n  t.audio.start = true\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'simulator' }\n  t.headset.start = true\n  t.headset.supersample = false\n  t.headset.seated = false\n  t.headset.mask = true\n  t.headset.antialias = true\n  t.headset.stencil = false\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Thread settings\n  t.thread.workers = -1\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.centered = true\n  t.window.fullscreen = false\n  t.window.resizable = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.18.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.debug = false\n  t.audio.samplerate = 48000\n  t.audio.start = true\n  t.audio.reverb.type = 'convolution'\n  t.audio.reverb.rays = 4096\n  t.audio.reverb.bounces = 4\n  t.audio.reverb.duration = 2\n  t.audio.reverb.rate = .1\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'simulator' }\n  t.headset.start = true\n  t.headset.supersample = false\n  t.headset.seated = false\n  t.headset.mask = true\n  t.headset.antialias = true\n  t.headset.stencil = false\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Thread settings\n  t.thread.workers = -1\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.centered = true\n  t.window.fullscreen = false\n  t.window.resizable = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.  It will also cause `lovr.graphics.newShader` to embed debugging information in shaders which allows inspecting variables and stepping through shaders line-by-line in tools like RenderDoc.\n\n`t.graphics.debug` can also be enabled using the `--graphics-debug` command line option.",
@@ -103,9 +103,9 @@ return {
                   description = "Configuration for the audio module.",
                   table = {
                     {
-                      name = "spatializer",
-                      type = "string",
-                      description = "An audio spatializer to use (`simple`, `oculus`, or `phonon`).  If `nil`, all of them are attempted."
+                      name = "debug",
+                      type = "boolean",
+                      description = "Enables extra log messages from the audio engine."
                     },
                     {
                       name = "samplerate",
@@ -115,7 +115,39 @@ return {
                     {
                       name = "start",
                       type = "boolean",
-                      description = "Whether the playback device should be automatically started."
+                      description = "Whether the default playback device should start automatically when a source is first played."
+                    },
+                    {
+                      name = "reverb",
+                      type = "table",
+                      description = "Reverb settings.",
+                      table = {
+                        {
+                          name = "type",
+                          type = "ReverbType",
+                          description = "Which type of reverb to use."
+                        },
+                        {
+                          name = "rays",
+                          type = "number",
+                          description = "The number of rays used to simulate reverb.  More rays will make the reverb more realistic, but increase CPU usage."
+                        },
+                        {
+                          name = "bounces",
+                          type = "number",
+                          description = "The number of times each ray can bounce during reverb simulation.  More bounces will make the reverb more realistic, but increase CPU usage."
+                        },
+                        {
+                          name = "duration",
+                          type = "number",
+                          description = "The max reverb duration, in seconds.  Longer reverb times increase CPU cost, but may be necessary for large, echoey spaces."
+                        },
+                        {
+                          name = "rate",
+                          type = "number",
+                          description = "How often reverb is simulated, in seconds.  Shorter rates will make the reverb more responsive, but increase CPU usage."
+                        }
+                      }
                     }
                   }
                 },
@@ -1376,6 +1408,50 @@ return {
           }
         },
         {
+          name = "ReverbMode",
+          summary = "Different ways of simulating reverb.",
+          description = "This controls the method used to simulate reverb on a `Source`.\n\nNote that there is also `ReverbType` set in `lovr.conf`, which can be changed independently of the reverb mode used by a source.",
+          key = "ReverbMode",
+          module = "lovr.audio",
+          related = {
+            "ReverbType",
+            "Source:setReverb",
+            "lovr.conf"
+          },
+          values = {
+            {
+              name = "listener",
+              description = "The listener will cast rays outwards to compute the reverb characteristics of the room, and use this to apply reverb to all sources using the `listener` reverb mode.  This is less expensive than per-source reverb because the reverb only needs to be simulated once, but it can be lower quality."
+            },
+            {
+              name = "source",
+              description = "When a Source has this reverb mode, it will compute its own reverb independently.  This will give higher quality results, but it can quickly become very expensive to compute reverb for large numbers of sources.  Consider enabling this only for a small number of important sounds."
+            }
+          }
+        },
+        {
+          name = "ReverbType",
+          summary = "Different ways of simulating reverb.",
+          description = "Reverb can be modeled in two different ways.  This is a global setting set in `lovr.conf`.\n\nIn addition to the global reverb type, there is `ReverbMode`, which controls whether reverb is simulated once from the listener, or from individual sources.  This can be set on a per-source basis using `Source:setReverb`.",
+          key = "ReverbType",
+          module = "lovr.audio",
+          related = {
+            "ReverbMode",
+            "Source:setReverb",
+            "lovr.conf"
+          },
+          values = {
+            {
+              name = "convolution",
+              description = "Convolution reverb.  This sounds more realistic than parametric reverb, especially for outdoor spaces, but is more expensive to simulate."
+            },
+            {
+              name = "parametric",
+              description = "Parametric reverb.  Cheaper than convolution reverb, but lower quality."
+            }
+          }
+        },
+        {
           name = "TimeUnit",
           summary = "Time units for sound samples.",
           description = "When figuring out how long a Source is or seeking to a specific position in the sound file, units can be expressed in terms of seconds or in terms of frames.  A frame is one set of samples for each channel (one sample for mono, two samples for stereo).",
@@ -1411,37 +1487,6 @@ return {
         }
       },
       functions = {
-        {
-          name = "getAbsorption",
-          tag = "listener",
-          summary = "Get the absorption coefficients.",
-          description = "Returns the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and the attenuation effect is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones. This can be used to apply \"underwater\" effects and stuff.",
-          key = "lovr.audio.getAbsorption",
-          module = "lovr.audio",
-          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high.",
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "low",
-                  type = "number",
-                  description = "The absorption coefficient for the low frequency band."
-                },
-                {
-                  name = "mid",
-                  type = "number",
-                  description = "The absorption coefficient for the mid frequency band."
-                },
-                {
-                  name = "high",
-                  type = "number",
-                  description = "The absorption coefficient for the high frequency band."
-                }
-              }
-            }
-          }
-        },
         {
           name = "getDevice",
           tag = "devices",
@@ -1672,30 +1717,6 @@ return {
                   name = "rate",
                   type = "number",
                   description = "The sample rate of the playback device, in Hz."
-                }
-              }
-            }
-          }
-        },
-        {
-          name = "getSpatializer",
-          tag = "listener",
-          summary = "Get the name of the active spatializer",
-          description = "Returns the name of the active spatializer (`simple`, `oculus`, or `phonon`).\n\nThe `t.audio.spatializer` setting in `lovr.conf` can be used to express a preference for a particular spatializer.  If it's `nil`, all spatializers will be tried in the following order: `phonon`, `oculus`, `simple`.",
-          key = "lovr.audio.getSpatializer",
-          module = "lovr.audio",
-          notes = "Using a feature or effect that is not supported by the current spatializer will not error, it just won't do anything.\n\n<table>\n  <thead>\n    <tr>\n      <td>Feature</td>\n      <td>simple</td>\n      <td>phonon</td>\n      <td>oculus</td>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Effect: Spatialization</td>\n      <td>x</td>\n      <td>x</td>\n      <td>x</td>\n    </tr>\n    <tr>\n      <td>Effect: Attenuation</td>\n      <td>x</td>\n      <td>x</td>\n      <td>x</td>\n    </tr>\n    <tr>\n      <td>Effect: Absorption</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Occlusion</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Transmission</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Effect: Reverb</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>lovr.audio.setGeometry</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Source:setDirectivity</td>\n      <td>x</td>\n      <td>x</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>Source:setRadius</td>\n      <td></td>\n      <td>x</td>\n      <td></td>\n    </tr>\n  </tbody> </table>",
-          related = {
-            "lovr.conf"
-          },
-          variants = {
-            {
-              arguments = {},
-              returns = {
-                {
-                  name = "spatializer",
-                  type = "string",
-                  description = "The name of the active spatializer."
                 }
               }
             }
@@ -1960,37 +1981,6 @@ return {
           }
         },
         {
-          name = "setAbsorption",
-          tag = "listener",
-          summary = "Set the absorption coefficients.",
-          description = "Sets the global air absorption coefficients for the medium.  This affects Sources that have the `absorption` effect enabled, causing audio volume to drop off with distance as it is absorbed by the medium it's traveling through (air, water, etc.).  The difference between absorption and the attenuation effect is that absorption is more subtle and is frequency-dependent, so higher-frequency bands can get absorbed more quickly than lower ones.  This can be used to apply \"underwater\" effects and stuff.",
-          key = "lovr.audio.setAbsorption",
-          module = "lovr.audio",
-          notes = "Absorption is currently only supported by the phonon spatializer.\n\nThe frequency bands correspond to `400Hz`, `2.5KHz`, and `15KHz`.\n\nThe default coefficients are `.0002`, `.0017`, and `.0182` for low, mid, and high.",
-          variants = {
-            {
-              arguments = {
-                {
-                  name = "low",
-                  type = "number",
-                  description = "The absorption coefficient for the low frequency band."
-                },
-                {
-                  name = "mid",
-                  type = "number",
-                  description = "The absorption coefficient for the mid frequency band."
-                },
-                {
-                  name = "high",
-                  type = "number",
-                  description = "The absorption coefficient for the high frequency band."
-                }
-              },
-              returns = {}
-            }
-          }
-        },
-        {
           name = "setDevice",
           tag = "devices",
           summary = "Switch audio devices.",
@@ -2043,6 +2033,7 @@ return {
         },
         {
           name = "setHRTF",
+          tag = "listener",
           summary = "Set an HRTF to use for audio spatialization.",
           description = "Sets an HRTF to use for binaural audio spatialization.  The HRTF should be provided as a SOFA file (Spatially Oriented File Format for Acoustics).\n\nWithout an HRTF, LÖVR will use simple panning for spatialization, which adjusts the volume level of the left/right audio channels based on the source's location.  Binaural audio spatialization with an HRTF sounds more realistic, at a small performance cost.\n\nThis is a slow function, so it should be called during startup or on a thread.",
           key = "lovr.audio.setHRTF",
@@ -3008,6 +2999,7 @@ return {
             },
             {
               name = "getAbsorption",
+              tag = "sourceEffects",
               summary = "Get the absorption coefficients of the Source.",
               description = "Returns the absorption coefficients of the Source.  Absorption allows for simulating the decay of audio as it moves through a medium, with different frequencies decaying at different rates. For example, in air, distant sounds usually sound more muffled because higher frequencies decay faster than lower frequencies.",
               key = "Source:getAbsorption",
@@ -3043,6 +3035,7 @@ return {
             },
             {
               name = "getCone",
+              tag = "sourceEffects",
               summary = "Get the volume cone of the Source.",
               description = "Returns the directional volume cone of the source.  The cone is defined by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is within `innerAngle` of the source's direction, the volume won't be changed.  Otherwise, the volume will start to decrease, reaching a minimum of `outerVolume` once the listener is at `outerAngle` radians from the direction of the source.",
               key = "Source:getCone",
@@ -3077,31 +3070,6 @@ return {
               }
             },
             {
-              name = "getDirectivity",
-              tag = "sourceEffects",
-              summary = "Get the directivity of the Source.",
-              description = "Returns the directivity settings for the Source.\n\nThe directivity is controlled by two parameters: the weight and the power.\n\nThe weight is a number between 0 and 1 controlling the general \"shape\" of the sound emitted. 0.0 results in a completely omnidirectional sound that can be heard from all directions.  1.0 results in a full dipole shape that can be heard only from the front and back.  0.5 results in a cardioid shape that can only be heard from one direction.  Numbers in between will smoothly transition between these.\n\nThe power is a number that controls how \"focused\" or sharp the shape is.  Lower power values can be heard from a wider set of angles.  It is an exponent, so it can get arbitrarily large.  Note that a power of zero will still result in an omnidirectional source, regardless of the weight.",
-              key = "Source:getDirectivity",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The dipole weight.  0.0 is omnidirectional, 1.0 is a dipole, 0.5 is cardioid."
-                    },
-                    {
-                      name = "power",
-                      type = "number",
-                      description = "The dipole power, controlling how focused the directivity shape is."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getDuration",
               tag = "sourcePlayback",
               summary = "Get the duration of the Source.",
@@ -3126,6 +3094,67 @@ return {
                       name = "duration",
                       type = "number",
                       description = "The duration of the Source."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFalloff",
+              tag = "sourceEffects",
+              summary = "Get the volume falloff of the Source.",
+              description = "Returns the volume falloff of the Source, which causes it to get quieter as it gets further away from the listener.",
+              key = "Source:getFalloff",
+              module = "lovr.audio",
+              notes = "The formula for falloff is:\n\n    if distance > minDistance then\n      volume = volume * math.max(minVolume, 1 / (1 + distance - minDistance))\n    end",
+              related = {
+                "Source:getCone",
+                "Source:setCone",
+                "Source:setPosition"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "minDistance",
+                      type = "number",
+                      description = "The distance at which the volume starts to decrease."
+                    },
+                    {
+                      name = "minVolume",
+                      type = "number",
+                      description = "The minimum volume for the falloff.  For example, .25 clamps the falloff to 25% of the source's volume.  Note that other effects like cone and occlusion can still decrease the volume further.  The falloff volume factor gets combined (multiplied) with other volume factors."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getOcclusion",
+              tag = "sourceEffects",
+              summary = "Get the occlusion settings for the Source.",
+              description = "Returns the occlusion settings for the Source.  Occlusion makes sources quieter when there is an `AudioMesh` blocking the path between the source and the listener.",
+              key = "Source:getOcclusion",
+              module = "lovr.audio",
+              notes = "Occlusion is disabled by default.",
+              related = {
+                "Source:getRadius",
+                "Source:setRadius"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "rays",
+                      type = "number",
+                      description = "The number of rays used to trace the path between the source and the listener.  0 means occlusion is disabled, 1 will result in basic occlusion, and more rays can be used to support partial occlusion for large objects.  Typical values would be between 0 and 16."
+                    },
+                    {
+                      name = "transmissionRays",
+                      type = "number",
+                      description = "The number of rays used to compute transmission.  Transmission allows *some* audio to pass through walls, based on the `AudioMaterial` of the objects between the source and the listener.  This is usually between 0 and 4."
                     }
                   }
                 }
@@ -3303,6 +3332,36 @@ return {
               }
             },
             {
+              name = "getReverb",
+              tag = "sourceEffects",
+              summary = "Get the reverb settings for the Source.",
+              description = "Returns the reverb settings for the Source.",
+              key = "Source:getReverb",
+              module = "lovr.audio",
+              notes = "Reverb is disabled by default.",
+              related = {
+                "ReverbMode",
+                "ReverbType"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "level",
+                      type = "number",
+                      description = "The reverb volume."
+                    },
+                    {
+                      name = "mode",
+                      type = "ReverbMode",
+                      description = "The reverb mode."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getSound",
               tag = "sourceUtility",
               summary = "Get the Sound object backing the Source.",
@@ -3321,6 +3380,30 @@ return {
                       name = "sound",
                       type = "Sound",
                       description = "The Sound object."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSpatialization",
+              tag = "sourceEffects",
+              summary = "Get the spatialization settings for the Source.",
+              description = "Returns the spatialization settings for the Source.  Spatialization uses the poses of the source and listener to play the sound as if it is located in 3D space.  LÖVR can do 2 kinds of spatialization:\n\n- Simple panning.  When no HRTF is active, the volume of the left/right speaker channels are\n  adjusted, for a simple spatialization effect.\n- Binaural spatialization.  When an HRTF has been set with `lovr.audio.setHRTF`, sources will be\n  spatialized using binaural spatialization, which is higher quality than panning.\n\nSpatialization is a floating point number, so sources can blend between their raw audio and spatialized audio.  This can be useful for objects that are close to the listener.",
+              key = "Source:getSpatialization",
+              module = "lovr.audio",
+              notes = "Spatialization is disabled by default.",
+              related = {
+                "lovr.audio.setHRTF"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "spatialization",
+                      type = "number",
+                      description = "The amount of spatialization applied to the source, from 0 to 1."
                     }
                   }
                 }
@@ -3348,36 +3431,6 @@ return {
                       name = "volume",
                       type = "number",
                       description = "The volume of the Source."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "isEffectEnabled",
-              tag = "sourceEffects",
-              summary = "Check if an effect is enabled.",
-              description = "Returns whether a given `Effect` is enabled for the Source.",
-              key = "Source:isEffectEnabled",
-              module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a non-spatial Source will always return false.",
-              related = {
-                "Source:isSpatial"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "effect",
-                      type = "Effect",
-                      description = "The effect."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "enabled",
-                      type = "boolean",
-                      description = "Whether the effect is enabled."
                     }
                   }
                 }
@@ -3435,10 +3488,6 @@ return {
               description = "Returns whether the Source was created with the `spatial` flag.  Non-spatial sources are routed directly to the speakers without any spatial effects.",
               key = "Source:isSpatial",
               module = "lovr.audio",
-              related = {
-                "Source:isEffectEnabled",
-                "Source:setEffectEnabled"
-              },
               variants = {
                 {
                   arguments = {},
@@ -3516,6 +3565,7 @@ return {
             },
             {
               name = "setAbsorption",
+              tag = "sourceEffects",
               summary = "Set the absorption coefficients of the Source.",
               description = "Sets the absorption coefficients of the Source.  Absorption allows for simulating the decay of audio as it moves through a medium, with different frequencies decaying at different rates. For example, in air, distant sounds usually sound more muffled because higher frequencies decay faster than lower frequencies.",
               key = "Source:setAbsorption",
@@ -3561,6 +3611,7 @@ return {
             },
             {
               name = "setCone",
+              tag = "sourceEffects",
               summary = "Set the volume cone of the Source.",
               description = "Sets the directional volume cone of the source.  The cone is defined by three values: `innerAngle`, `outerAngle`, and `outerVolume`.  If the listener is within `innerAngle` of the source's direction, the volume won't be changed.  Otherwise, the volume will start to decrease, reaching a minimum of `outerVolume` once the listener is at `outerAngle` radians from the direction of the source.",
               key = "Source:setCone",
@@ -3605,53 +3656,40 @@ return {
               }
             },
             {
-              name = "setDirectivity",
+              name = "setFalloff",
               tag = "sourceEffects",
-              summary = "Set the directivity of the Source.",
-              description = "Sets the directivity settings for the Source.\n\nThe directivity is controlled by two parameters: the weight and the power.\n\nThe weight is a number between 0 and 1 controlling the general \"shape\" of the sound emitted. 0.0 results in a completely omnidirectional sound that can be heard from all directions.  1.0 results in a full dipole shape that can be heard only from the front and back.  0.5 results in a cardioid shape that can only be heard from one direction.  Numbers in between will smoothly transition between these.\n\nThe power is a number that controls how \"focused\" or sharp the shape is.  Lower power values can be heard from a wider set of angles.  It is an exponent, so it can get arbitrarily large.  Note that a power of zero will still result in an omnidirectional source, regardless of the weight.",
-              key = "Source:setDirectivity",
+              summary = "Set the volume falloff of the Source.",
+              description = "Sets the volume falloff of the Source, causing it to get quieter as it gets further away from the listener.",
+              key = "Source:setFalloff",
               module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "weight",
-                      type = "number",
-                      description = "The dipole weight.  0.0 is omnidirectional, 1.0 is a dipole, 0.5 is cardioid."
-                    },
-                    {
-                      name = "power",
-                      type = "number",
-                      description = "The dipole power, controlling how focused the directivity shape is."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setEffectEnabled",
-              tag = "sourceEffects",
-              summary = "Enable or disable an effect.",
-              description = "Enables or disables an effect on the Source.",
-              key = "Source:setEffectEnabled",
-              module = "lovr.audio",
-              notes = "The active spatializer will determine which effects are supported.  If an unsupported effect is enabled on a Source, no error will be reported.  Instead, it will be silently ignored.  See `lovr.audio.getSpatializer` for a table showing the effects supported by each spatializer.\n\nCalling this function on a non-spatial Source will throw an error.",
+              notes = "The formula for falloff is:\n\n    if distance > minDistance then\n      volume = volume * math.max(minVolume, 1 / (1 + distance - minDistance))\n    end",
               related = {
-                "Source:isSpatial"
+                "Source:getCone",
+                "Source:setCone",
+                "Source:setPosition"
               },
               variants = {
                 {
                   arguments = {
                     {
-                      name = "effect",
-                      type = "Effect",
-                      description = "The effect."
+                      name = "minDistance",
+                      type = "number",
+                      description = "The distance at which the volume will start to decrease."
                     },
+                    {
+                      name = "minVolume",
+                      type = "number",
+                      description = "The minimum volume for the falloff.  For example, .25 would clamp the falloff to 25% of the source's volume.  Note that other effects like cone and occlusion can still decrease the volume further.  The falloff volume factor gets combined (multiplied) with other volume factors."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
                     {
                       name = "enable",
                       type = "boolean",
-                      description = "Whether the effect should be enabled."
+                      description = "Whether volume falloff should be enabled.  Passing `true` will set a default falloff with a `minDistance` of `0` and a `minVolume` of `0`.  Falsy values disable falloff completely by setting the minVolume to `1`."
                     }
                   },
                   returns = {}
@@ -3673,6 +3711,46 @@ return {
                       name = "loop",
                       type = "boolean",
                       description = "Whether or not the Source will loop."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setOcclusion",
+              tag = "sourceEffects",
+              summary = "Set the occlusion settings for the Source.",
+              description = "Sets the occlusion settings for the Source.  Occlusion makes sources quieter when there is an `AudioMesh` blocking the path between the source and the listener.",
+              key = "Source:setOcclusion",
+              module = "lovr.audio",
+              related = {
+                "Source:getRadius",
+                "Source:setRadius",
+                "AudioMesh"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "rays",
+                      type = "number",
+                      description = "The number of rays used to trace the path between the source and the listener.  0 means occlusion is disabled, 1 will result in basic occlusion, and more rays can be used to support partial occlusion for large objects.  Typical values would be between 0 and 64."
+                    },
+                    {
+                      name = "transmissionRays",
+                      type = "number",
+                      description = "The number of rays used to compute transmission.  Transmission allows *some* audio to pass through walls, based on the `AudioMaterial` of the objects between the source and the listener.  This is usually between 0 and 4."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether occlusion should be enabled.  Passing `true` is shorthand for `64` and `4`, and falsy values will disable occlusion by settings `rays` to `0`."
                     }
                   },
                   returns = {}
@@ -3887,6 +3965,79 @@ return {
                       name = "radius",
                       type = "number",
                       description = "The new radius of the Source, in meters."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setReverb",
+              tag = "sourceEffects",
+              summary = "Set the reverb settings for the Source.",
+              description = "Sets the reverb settings for the Source.",
+              key = "Source:setReverb",
+              module = "lovr.audio",
+              notes = "Reverb is disabled by default.",
+              related = {
+                "ReverbMode",
+                "ReverbType"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "level",
+                      type = "number",
+                      description = "The reverb volume."
+                    },
+                    {
+                      name = "mode",
+                      type = "ReverbMode",
+                      description = "Whether the source should simulate its own reverb or use shared reverb properties simulated at the listener."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      dsecription = "        Whether reverb should be enabled.  Passing `true` is short for setting a level of 1 and a\n        mode of \"listener\", and falsy values will disable reverb.\n      "
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setSpatialization",
+              tag = "sourceEffects",
+              summary = "Set the spatialization settings for the Source.",
+              description = "Sets the spatialization settings for the Source.  Spatialization uses the poses of the source and listener to play the sound as if it is located in 3D space.  LÖVR can do 2 kinds of spatialization:\n\n- Simple panning.  When no HRTF is active, the volume of the left/right speaker channels are\n  adjusted, for a simple spatialization effect.\n- Binaural spatialization.  When an HRTF has been set with `lovr.audio.setHRTF`, sources will be\n  spatialized using binaural spatialization, which is higher quality than panning.\n\nSpatialization is a floating point number, so sources can blend between their raw audio and spatialized audio.  This can be useful for objects that are close to the listener.",
+              key = "Source:setSpatialization",
+              module = "lovr.audio",
+              related = {
+                "lovr.audio.setHRTF"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "spatialization",
+                      type = "number",
+                      description = "The amount of spatialization applied to the source, from 0 to 1."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "enable",
+                      type = "boolean",
+                      description = "Whether spatialization should be enabled.  `true` for 1, `false` for 0."
                     }
                   },
                   returns = {}

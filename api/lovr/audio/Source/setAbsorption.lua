@@ -1,4 +1,5 @@
 return {
+  tag = 'sourceEffects',
   summary = 'Set the absorption coefficients of the Source.',
   description = [[
     Sets the absorption coefficients of the Source.  Absorption allows for simulating the decay of
