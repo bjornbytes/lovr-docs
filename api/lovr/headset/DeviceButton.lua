@@ -15,6 +15,10 @@ return {
       description = 'The thumbrest.'
     },
     {
+      name = 'thumbtap',
+      description = 'The thumbtap button (hand tracking gesture).'
+    },
+    {
       name = 'touchpad',
       description = 'The touchpad.'
     },
@@ -44,19 +48,19 @@ return {
     },
     {
       name = 'dpup',
-      description = 'The up button on a dpad.'
+      description = 'The up button on a dpad, or a hand tracking thumb swipe gesture.'
     },
     {
       name = 'dpdown',
-      description = 'The down button on a dpad.'
+      description = 'The down button on a dpad, or a hand tracking thumb swipe gesture.'
     },
     {
       name = 'dpleft',
-      description = 'The left button on a dpad.'
+      description = 'The left button on a dpad, or a hand tracking thumb swipe gesture.'
     },
     {
       name = 'dpright',
-      description = 'The right button on a dpad.'
+      description = 'The right button on a dpad, or a hand tracking thumb swipe gesture.'
     },
     {
       name = 'bumper',

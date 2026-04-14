@@ -6,11 +6,6 @@ return {
 
     When loading audio from a file, use the `decode` option to control whether compressed audio
     should remain compressed or immediately get decoded to raw samples.
-
-    When creating an empty sound, the `contents` parameter can be set to `'stream'` to create an
-    audio stream.  On streams, `Sound:setFrames` will always write to the end of the stream, and
-    `Sound:getFrames` will always read the oldest samples from the beginning.  The number of frames
-    in the sound is the total capacity of the stream's buffer.
   ]],
   arguments = {
     frames = {
@@ -33,12 +28,9 @@ return {
       description = 'The sample rate, in Hz.'
     },
     contents = {
-      type = [[Blob | string | nil]],
+      type = 'Blob',
       default = 'nil',
-      description = [[
-        A Blob containing raw audio samples to use as the initial contents, 'stream' to create an
-        audio stream, or `nil` to leave the data initialized to zero.
-      ]]
+      description = 'An optional Blob containing raw audio samples to use as the initial contents.'
     },
     file = {
       type = 'string | Blob',
@@ -58,7 +50,7 @@ return {
   },
   variants = {
     {
-      description = 'Create a raw or stream Sound from a frame count and format info:',
+      description = 'Create a Sound from a frame count and format info.',
       arguments = { 'frames', 'format', 'channels', 'sampleRate', 'contents' },
       returns = { 'sound' }
     },
@@ -75,10 +67,10 @@ return {
     }
   },
   notes = [[
-    It is highly recommended to use an audio format that matches the format of the audio module:
-    `f32` sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2
-    channels for unspatialized sources.  This will avoid the need to convert audio during playback,
-    which boosts performance of the audio thread.
+    It is recommended to use an audio format that matches the format of the audio module: `f32`
+    sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2 channels
+    for unspatialized sources.  This will avoid the need to convert audio during playback, which
+    improves performance of the audio thread slightly.
 
     The WAV importer supports 16, 24, and 32 bit integer data and 32 bit floating point data.  The
     data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE`

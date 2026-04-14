@@ -19,7 +19,6 @@ return {
     }
   },
   related = {
-    'Sound:isStream',
     'lovr.data.newSound'
   }
 }

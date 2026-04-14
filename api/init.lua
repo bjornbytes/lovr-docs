@@ -4607,6 +4607,52 @@ return {
       },
       functions = {
         {
+          name = "newAudioStream",
+          summary = "Create a new AudioStream.",
+          description = "Creates a new AudioStream.",
+          key = "lovr.data.newAudioStream",
+          module = "lovr.data",
+          related = {
+            "lovr.data.newSound",
+            "lovr.audio.getStream"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "capacity",
+                  type = "number",
+                  description = "The capacity of the audio stream, in frames."
+                },
+                {
+                  name = "format",
+                  type = "SampleFormat",
+                  description = "The format of the audio stream.",
+                  default = "'f32'"
+                },
+                {
+                  name = "channels",
+                  type = "number",
+                  description = "The number of channels in the audio stream."
+                },
+                {
+                  name = "rate",
+                  type = "number",
+                  description = "The sample rate of the audio stream, in Hz.",
+                  default = "48000"
+                }
+              },
+              returns = {
+                {
+                  name = "stream",
+                  type = "AudioStream",
+                  description = "The new AudioStream."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "newBlob",
           summary = "Create a new Blob.",
           description = "Creates a new Blob.",
@@ -4885,13 +4931,13 @@ return {
         {
           name = "newSound",
           summary = "Create a new Sound.",
-          description = "Creates a new Sound.  A sound can be loaded from an audio file, or it can be created empty with capacity for a certain number of audio frames.\n\nWhen loading audio from a file, use the `decode` option to control whether compressed audio should remain compressed or immediately get decoded to raw samples.\n\nWhen creating an empty sound, the `contents` parameter can be set to `'stream'` to create an audio stream.  On streams, `Sound:setFrames` will always write to the end of the stream, and `Sound:getFrames` will always read the oldest samples from the beginning.  The number of frames in the sound is the total capacity of the stream's buffer.",
+          description = "Creates a new Sound.  A sound can be loaded from an audio file, or it can be created empty with capacity for a certain number of audio frames.\n\nWhen loading audio from a file, use the `decode` option to control whether compressed audio should remain compressed or immediately get decoded to raw samples.",
           key = "lovr.data.newSound",
           module = "lovr.data",
-          notes = "It is highly recommended to use an audio format that matches the format of the audio module: `f32` sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2 channels for unspatialized sources.  This will avoid the need to convert audio during playback, which boosts performance of the audio thread.\n\nThe WAV importer supports 16, 24, and 32 bit integer data and 32 bit floating point data.  The data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE` extension is supported.\n\nOGG and MP3 files will always have the `f32` format when loaded.\n\nAmbisonic sounds can be imported from WAV files.  They must be full-sphere ambisonic data with 4, 9, or 16 channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an `AMBISONIC_B_FORMAT` format GUID, then the data is understood as using the AMB format with Furse-Malham channel ordering and normalization.  *All other* 4-channel files are assumed to be using the AmbiX format with ACN channel ordering and SN3D normalization.  AMB files will get automatically converted to AmbiX on import, so ambisonic Sounds will always be AmbiX.",
+          notes = "It is recommended to use an audio format that matches the format of the audio module: `f32` sample formats at a sample rate of 48000, with 1 channel for spatialized sources or 2 channels for unspatialized sources.  This will avoid the need to convert audio during playback, which improves performance of the audio thread slightly.\n\nThe WAV importer supports 16, 24, and 32 bit integer data and 32 bit floating point data.  The data must be mono, stereo, or 4-channel full-sphere ambisonic.  The `WAVE_FORMAT_EXTENSIBLE` extension is supported.\n\nOGG and MP3 files will always have the `f32` format when loaded.\n\nAmbisonic sounds can be imported from WAV files.  They must be full-sphere ambisonic data with 4, 9, or 16 channels.  If the WAV has a `WAVE_FORMAT_EXTENSIBLE` chunk with an `AMBISONIC_B_FORMAT` format GUID, then the data is understood as using the AMB format with Furse-Malham channel ordering and normalization.  *All other* 4-channel files are assumed to be using the AmbiX format with ACN channel ordering and SN3D normalization.  AMB files will get automatically converted to AmbiX on import, so ambisonic Sounds will always be AmbiX.",
           variants = {
             {
-              description = "Create a raw or stream Sound from a frame count and format info:",
+              description = "Create a Sound from a frame count and format info.",
               arguments = {
                 {
                   name = "frames",
@@ -4918,8 +4964,8 @@ return {
                 },
                 {
                   name = "contents",
-                  type = "Blob | string | nil",
-                  description = "A Blob containing raw audio samples to use as the initial contents, 'stream' to create an audio stream, or `nil` to leave the data initialized to zero.",
+                  type = "Blob",
+                  description = "An optional Blob containing raw audio samples to use as the initial contents.",
                   default = "nil"
                 }
               },
@@ -4958,6 +5004,335 @@ return {
         }
       },
       objects = {
+        {
+          name = "AudioStream",
+          summary = "An object that holds raw audio samples.",
+          description = "An AudioStream is similar to a `Sound`, but stores a continuous stream of audio.  `Source` objects can be created from AudioStreams.\n\nAudio streams are used for microphone input, by capturing samples from an audio device.  See `lovr.audio.setDevice` and `lovr.audio.getStream` for more details.  They are also useful for generating audio dynamically and playing it with a `Source`.\n\nStreams store audio data in a fixed-size ring buffer.  Data is always written to the end of the stream, and reading data will read from the beginning.  Once data is read, it is \"consumed\", making more space available for writing.  Only one thread is allowed to write to the stream at a time, and only one thread is allowed to read.",
+          key = "AudioStream",
+          module = "lovr.data",
+          constructors = {
+            "lovr.data.newAudioStream"
+          },
+          extends = "Object",
+          methods = {
+            {
+              name = "getCapacity",
+              summary = "Get the size of the AudioStream ring buffer.",
+              description = "Returns the size of the AudioStream ring buffer, in frames.",
+              key = "AudioStream:getCapacity",
+              module = "lovr.data",
+              related = {
+                "AudioStream:getReadCapacity",
+                "AudioStream:getWriteCapacity",
+                "Sound:getFrameCount",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "capacity",
+                      type = "number",
+                      description = "The number of audio frames in the audio stream ring buffer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getChannelCount",
+              summary = "Get the number of channels in the AudioStream.",
+              description = "Returns the number of channels in the AudioStream.",
+              key = "AudioStream:getChannelCount",
+              module = "lovr.data",
+              related = {
+                "Sound:getChannelCount",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "channels",
+                      type = "number",
+                      description = "The number of channels."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getChannelLayout",
+              summary = "Get the channel layout of the AudioStream.",
+              description = "Returns the channel layout of the AudioStream.",
+              key = "AudioStream:getChannelLayout",
+              module = "lovr.data",
+              related = {
+                "Sound:getChannelLayout",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "layout",
+                      type = "ChannelLayout",
+                      description = "The channel layout."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getFormat",
+              summary = "Get the sample format of the AudioStream.",
+              description = "Returns the sample format of the AudioStream.",
+              key = "AudioStream:getFormat",
+              module = "lovr.data",
+              related = {
+                "Sound:getFormat",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "format",
+                      type = "SampleFormat",
+                      description = "The sample format."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getReadCapacity",
+              summary = "Get the number of frames available for reading.",
+              description = "Returns the number of frames that are available for reading in the audio stream.",
+              key = "AudioStream:getReadCapacity",
+              module = "lovr.data",
+              related = {
+                "AudioStream:getCapacity",
+                "AudioStream:getWriteCapacity",
+                "Sound:getFrameCount",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frames",
+                      type = "number",
+                      description = "The number of audio frames that can be read."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSampleRate",
+              summary = "Get the sample rate of the AudioStream.",
+              description = "Returns the sample rate of the AudioStream.",
+              key = "AudioStream:getSampleRate",
+              module = "lovr.data",
+              related = {
+                "Sound:getSampleRate",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "rate",
+                      type = "number",
+                      description = "The sample rate, in Hz (samples per second)."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getWriteCapacity",
+              summary = "Get the number of frames available for writing.",
+              description = "Returns the number of frames that are available for writing in the audio stream.",
+              key = "AudioStream:getWriteCapacity",
+              module = "lovr.data",
+              related = {
+                "AudioStream:getCapacity",
+                "AudioStream:getReadCapacity",
+                "Sound:getFrameCount",
+                "lovr.data.newAudioStream"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "frames",
+                      type = "number",
+                      description = "The number of audio frames that can be written."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "read",
+              summary = "Read data from the AudioStream.",
+              description = "Reads data from the AudioStream.",
+              key = "AudioStream:read",
+              module = "lovr.data",
+              notes = "When writing to a Blob or Sound, `count` is clamped, using the size of the destination and the `offset` parameter.\n\nOnly one thread can read from the stream at a time.",
+              related = {
+                "AudioStream:write",
+                "AudioStream:getReadCapacity"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  When nil, reads all of the data in the stream.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of audio samples."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  When nil, reads all of the data in the stream.",
+                      default = "nil"
+                    },
+                    {
+                      name = "sound",
+                      type = "Sound",
+                      description = "A Sound to write the audio to."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset to start writing into the destination (frames for Sounds, bytes for Blobs).",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "n",
+                      type = "number",
+                      description = "The number of audio frames that were actually read."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of frames to read.  When nil, reads all of the data in the stream.",
+                      default = "nil"
+                    },
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob to write the audio to."
+                    },
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset to start writing into the destination (frames for Sounds, bytes for Blobs).",
+                      default = "0"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "n",
+                      type = "number",
+                      description = "The number of audio frames that were actually read."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "write",
+              summary = "Write data to the AudioStream.",
+              description = "Writes data to the AudioStream.",
+              key = "AudioStream:write",
+              module = "lovr.data",
+              notes = "Only one thread can write to the stream at a time.",
+              related = {
+                "AudioStream:read",
+                "AudioStream:getWriteCapacity"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table containing audio samples to write to the stream."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "n",
+                      type = "number",
+                      description = "The number of audio frames that were actually written to the stream."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "sound",
+                      type = "Sound",
+                      description = "A Sound to write to the stream."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "n",
+                      type = "number",
+                      description = "The number of audio frames that were actually written to the stream."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A Blob to write to the stream."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "n",
+                      type = "number",
+                      description = "The number of audio frames that were actually written to the stream."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         {
           name = "Blob",
           summary = "A chunk of binary data.",
@@ -8608,7 +8983,7 @@ return {
         {
           name = "Sound",
           summary = "An object that holds raw audio samples.",
-          description = "A Sound stores the data for a sound.  The supported sound formats are OGG, WAV, and MP3.  Sounds cannot be played directly.  Instead, there are `Source` objects in `lovr.audio` that are used for audio playback.  All Source objects are backed by one of these Sounds, and multiple Sources can share a single Sound to reduce memory usage.\n\nMetadata\n---\n\nSounds hold a fixed number of frames.  Each frame contains one audio sample for each channel. The `SampleFormat` of the Sound is the data type used for each sample (floating point, integer, etc.).  The Sound has a `ChannelLayout`, representing the number of audio channels and how they map to speakers (mono, stereo, etc.).  The sample rate of the Sound indicates how many frames should be played per second.  The duration of the sound (in seconds) is the number of frames divided by the sample rate.\n\nCompression\n---\n\nSounds can be compressed.  Compressed sounds are stored compressed in memory and are decoded as they are played.  This uses a lot less memory but increases CPU usage during playback.  OGG and MP3 are compressed audio formats.  When creating a sound from a compressed format, there is an option to immediately decode it, storing it uncompressed in memory.  It can be a good idea to decode short sound effects, since they won't use very much memory even when uncompressed and it will improve CPU usage.  Compressed sounds can not be written to using `Sound:setFrames`.\n\nStreams\n---\n\nSounds can be created as a stream by passing `'stream'` as their contents when creating them. Audio frames can be written to the end of the stream, and read from the beginning.  This works well for situations where data is being generated in real time or streamed in from some other data source.\n\nSources can be backed by a stream and they'll just play whatever audio is pushed to the stream. The audio module also lets you use a stream as a \"sink\" for an audio device.  For playback devices, this works like loopback, so the mixed audio from all playing Sources will get written to the stream.  For capture devices, all the microphone input will get written to the stream. Conversion between sample formats, channel layouts, and sample rates will happen automatically.\n\nKeep in mind that streams can still only hold a fixed number of frames.  If too much data is written before it is read, older frames will start to get overwritten.  Similary, it's possible to read too much data without writing fast enough.\n\nAmbisonics\n---\n\nAmbisonic sounds represent a sphere of sound coming from all directions.  Ambisonics can be imported from WAV files with 4, 9, or 16 channels.  LÖVR stores ambisonic sounds in the AmbiX format (ACN channel ordering and SN3D channel normalization), automatically converting 4-channel AMB sounds to AmbiX.  Ambisonic sounds can be played using a `Source`, just like other sounds.",
+          description = "A Sound stores the data for a sound.  The supported sound formats are OGG, WAV, and MP3.  Sounds cannot be played directly.  Instead, there are `Source` objects in `lovr.audio` that are used for audio playback.  Source objects are backed by one of these Sounds, and multiple Sources can share a single Sound to reduce memory usage.\n\nMetadata\n---\n\nSounds hold a fixed number of frames.  Each frame contains one audio sample for each channel. The `SampleFormat` of the Sound is the data type used for each sample (floating point, integer, etc.).  The Sound has a `ChannelLayout`, representing the number of audio channels and how they map to speakers (mono, stereo, etc.).  The sample rate of the Sound indicates how many frames should be played per second.  The duration of the sound (in seconds) is the number of frames divided by the sample rate.\n\nCompression\n---\n\nSounds can be compressed.  Compressed sounds are stored compressed in memory and are decoded as they are played.  This uses a lot less memory but increases CPU usage during playback.  OGG and MP3 are compressed audio formats.  When creating a sound from a compressed format, there is an option to immediately decode it, storing it uncompressed in memory.  It can be a good idea to decode short sound effects, since they won't use very much memory even when uncompressed and it will improve CPU usage.  Compressed sounds can not be written to using `Sound:setFrames`.\n\nAmbisonics\n---\n\nAmbisonic sounds represent a sphere of sound coming from all directions.  Ambisonics can be imported from WAV files with 4, 9, or 16 channels.  LÖVR stores ambisonic sounds in the AmbiX format (ACN channel ordering and SN3D channel normalization), automatically converting 4-channel AMB sounds to AmbiX.  Ambisonic sounds can be played using a `Source`, just like other sounds.",
           key = "Sound",
           module = "lovr.data",
           constructors = {
@@ -8658,30 +9033,6 @@ return {
                       name = "stride",
                       type = "number",
                       description = "The size of a frame, in bytes."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getCapacity",
-              summary = "Get the number of frames that can be written to the Sound.",
-              description = "Returns the number of frames that can be written to the Sound.  For stream sounds, this is the number of frames that can currently be written without overwriting existing data.  For normal sounds, this returns the same value as `Sound:getFrameCount`.",
-              key = "Sound:getCapacity",
-              module = "lovr.data",
-              related = {
-                "Sound:getFrameCount",
-                "Sound:getSampleCount",
-                "Source:getDuration"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "capacity",
-                      type = "number",
-                      description = "The number of frames that can be written to the Sound."
                     }
                   }
                 }
@@ -8819,7 +9170,6 @@ return {
               description = "Returns the number of frames in the Sound.  A frame stores one sample for each channel.",
               key = "Sound:getFrameCount",
               module = "lovr.data",
-              notes = "For streams, this returns the number of frames in the stream's buffer.",
               related = {
                 "Sound:getDuration",
                 "Sound:getSampleCount",
@@ -8854,7 +9204,7 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
                       default = "nil"
                     },
                     {
@@ -8887,7 +9237,7 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
                       default = "nil"
                     },
                     {
@@ -8926,7 +9276,7 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
                       default = "nil"
                     },
                     {
@@ -8960,7 +9310,7 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.\n\nReading from a stream will ignore the source offset and read the oldest frames.",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
                       default = "nil"
                     },
                     {
@@ -8992,7 +9342,6 @@ return {
               description = "Returns the total number of samples in the Sound.",
               key = "Sound:getSampleCount",
               module = "lovr.data",
-              notes = "For streams, this returns the number of samples in the stream's buffer.",
               related = {
                 "Sound:getDuration",
                 "Sound:getFrameCount",
@@ -9037,7 +9386,6 @@ return {
               key = "Sound:isCompressed",
               module = "lovr.data",
               related = {
-                "Sound:isStream",
                 "lovr.data.newSound"
               },
               variants = {
@@ -9048,29 +9396,6 @@ return {
                       name = "compressed",
                       type = "boolean",
                       description = "Whether the Sound is compressed."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "isStream",
-              summary = "Check if the Sound is a stream.",
-              description = "Returns whether the Sound is a stream.",
-              key = "Sound:isStream",
-              module = "lovr.data",
-              related = {
-                "Sound:isCompressed",
-                "lovr.data.newSound"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "stream",
-                      type = "boolean",
-                      description = "Whether the Sound is a stream."
                     }
                   }
                 }
@@ -23765,6 +24090,10 @@ return {
             {
               name = "eye/gaze",
               description = "The combined eye gaze pose.  The position is between the eyes.  The orientation aligns the\n-Z axis in the direction the user is looking and the +Y axis to the head's \"up\" vector. This provides more accurate eye tracking information compared to using the individual eye devices."
+            },
+            {
+              name = "body",
+              description = "The `body` device used for full-body tracking with `lovr.headset.getSkeleton`."
             }
           }
         },
@@ -23825,6 +24154,10 @@ return {
               description = "The thumbrest."
             },
             {
+              name = "thumbtap",
+              description = "The thumbtap button (hand tracking gesture)."
+            },
+            {
               name = "touchpad",
               description = "The touchpad."
             },
@@ -23854,19 +24187,19 @@ return {
             },
             {
               name = "dpup",
-              description = "The up button on a dpad."
+              description = "The up button on a dpad, or a hand tracking thumb swipe gesture."
             },
             {
               name = "dpdown",
-              description = "The down button on a dpad."
+              description = "The down button on a dpad, or a hand tracking thumb swipe gesture."
             },
             {
               name = "dpleft",
-              description = "The left button on a dpad."
+              description = "The left button on a dpad, or a hand tracking thumb swipe gesture."
             },
             {
               name = "dpright",
-              description = "The right button on a dpad."
+              description = "The right button on a dpad, or a hand tracking thumb swipe gesture."
             },
             {
               name = "bumper",

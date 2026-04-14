@@ -139,6 +139,10 @@ return {
         This provides more accurate eye tracking information compared to using the individual eye
         devices.
       ]]
+    },
+    {
+      name = 'body',
+      description = 'The `body` device used for full-body tracking with `lovr.headset.getSkeleton`.'
     }
   },
   notes = [[

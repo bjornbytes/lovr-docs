@@ -3,8 +3,8 @@ return {
   description = [[
     A Sound stores the data for a sound.  The supported sound formats are OGG, WAV, and MP3.  Sounds
     cannot be played directly.  Instead, there are `Source` objects in `lovr.audio` that are used
-    for audio playback.  All Source objects are backed by one of these Sounds, and multiple Sources
-    can share a single Sound to reduce memory usage.
+    for audio playback.  Source objects are backed by one of these Sounds, and multiple Sources can
+    share a single Sound to reduce memory usage.
 
     Metadata
     ---
@@ -25,24 +25,6 @@ return {
     option to immediately decode it, storing it uncompressed in memory.  It can be a good idea to
     decode short sound effects, since they won't use very much memory even when uncompressed and it
     will improve CPU usage.  Compressed sounds can not be written to using `Sound:setFrames`.
-
-    Streams
-    ---
-
-    Sounds can be created as a stream by passing `'stream'` as their contents when creating them.
-    Audio frames can be written to the end of the stream, and read from the beginning.  This works
-    well for situations where data is being generated in real time or streamed in from some other
-    data source.
-
-    Sources can be backed by a stream and they'll just play whatever audio is pushed to the stream.
-    The audio module also lets you use a stream as a "sink" for an audio device.  For playback
-    devices, this works like loopback, so the mixed audio from all playing Sources will get written
-    to the stream.  For capture devices, all the microphone input will get written to the stream.
-    Conversion between sample formats, channel layouts, and sample rates will happen automatically.
-
-    Keep in mind that streams can still only hold a fixed number of frames.  If too much data is
-    written before it is read, older frames will start to get overwritten.  Similary, it's possible
-    to read too much data without writing fast enough.
 
     Ambisonics
     ---

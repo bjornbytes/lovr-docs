@@ -16,7 +16,6 @@ return {
       returns = { 'frames' }
     }
   },
-  notes = 'For streams, this returns the number of frames in the stream\'s buffer.',
   related = {
     'Sound:getDuration',
     'Sound:getSampleCount',

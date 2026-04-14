@@ -21,8 +21,6 @@ return {
         The number of frames to read.  If nil, reads as many frames as possible.
 
         Compressed sounds will automatically be decoded.
-
-        Reading from a stream will ignore the source offset and read the oldest frames.
       ]]
     },
     srcOffset = {
