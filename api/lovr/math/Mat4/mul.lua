@@ -3,20 +3,33 @@ return {
   description = [[
     Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms
     together.  Multiplying by a vector applies the transformation from the matrix to the vector and
-    returns the vector.
+    returns a new transformed vector.
   ]],
   arguments = {
     n = {
       type = 'Mat4',
       description = 'The matrix.'
     },
-    v3 = {
-      type = 'vector',
-      description = 'A 3D vector, treated as a point.'
+    x = {
+      type = 'number',
+      description = 'The x component of the vector.'
     },
-    v4 = {
-      type = 'Vec4',
-      description = 'A 4D vector.'
+    y = {
+      type = 'number',
+      description = 'The y component of the vector.'
+    },
+    z = {
+      type = 'number',
+      description = 'The z component of the vector.'
+    },
+    w = {
+      type = 'number',
+      default = '1',
+      description = 'The w component of the vector.'
+    },
+    v = {
+      type = 'vector',
+      description = 'A vector.'
     }
   },
   returns = {
@@ -24,12 +37,24 @@ return {
       type = 'Mat4',
       description = 'The modified matrix.'
     },
-    v3 = {
-      type = 'vector',
-      description = 'The transformed vector.'
+    x = {
+      type = 'number',
+      description = 'The x component of the transformed vector.'
     },
-    v4 = {
-      type = 'Vec4',
+    y = {
+      type = 'number',
+      description = 'The y component of the transformed vector.'
+    },
+    z = {
+      type = 'number',
+      description = 'The z component of the transformed vector.'
+    },
+    w = {
+      type = 'number',
+      description = 'The w component of the transformed vector.'
+    },
+    v = {
+      type = 'vector',
       description = 'The transformed vector.'
     }
   },
@@ -39,17 +64,22 @@ return {
       returns = { 'self' }
     },
     {
-      arguments = { 'v3' },
-      returns = { 'v3' }
+      arguments = { 'x', 'y', 'z', 'w' },
+      returns = { 'x', 'y', 'z', 'w' }
     },
     {
-      arguments = { 'v4' },
-      returns = { 'v4' }
+      arguments = { 'v' },
+      returns = { 'v' }
     }
   },
   notes = [[
-    When multiplying by a vec4, the vector is treated as either a point if its w component is 1, or
-    a direction vector if the w is 0 (the matrix translation won't be applied).
+    When multiplying with a table, the returned table will try to match the input: it will have the
+    same metatable as the input, and it will either use numeric keys for the components or x/y/z
+    keys, based on the table length of the input.
+
+    There are some differences between this function and the `*` operator.  `*` always assumes that
+    the `w` component of the input vector is 1, and performs a w divide at the end.  This function
+    allows specifying the `w` as the last argument, and does not perform a w divide at the end.
   ]],
   related = {
     'Mat4:translate',

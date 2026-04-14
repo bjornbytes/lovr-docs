@@ -29145,10 +29145,10 @@ return {
             {
               name = "mul",
               summary = "Multiply a matrix with another matrix or a vector.",
-              description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns the vector.",
+              description = "Multiplies this matrix by another value.  Multiplying by a matrix combines their two transforms together.  Multiplying by a vector applies the transformation from the matrix to the vector and returns a new transformed vector.",
               key = "Mat4:mul",
               module = "lovr.math",
-              notes = "When multiplying by a vec4, the vector is treated as either a point if its w component is 1, or a direction vector if the w is 0 (the matrix translation won't be applied).",
+              notes = "When multiplying with a table, the returned table will try to match the input: it will have the same metatable as the input, and it will either use numeric keys for the components or x/y/z keys, based on the table length of the input.\n\nThere are some differences between this function and the `*` operator.  `*` always assumes that the `w` component of the input vector is 1, and performs a w divide at the end.  This function allows specifying the `w` as the last argument, and does not perform a w divide at the end.",
               related = {
                 "Mat4:translate",
                 "Mat4:rotate",
@@ -29174,31 +29174,62 @@ return {
                 {
                   arguments = {
                     {
-                      name = "v3",
-                      type = "vector",
-                      description = "A 3D vector, treated as a point."
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the vector."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the vector."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the vector."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The w component of the vector.",
+                      default = "1"
                     }
                   },
                   returns = {
                     {
-                      name = "v3",
-                      type = "vector",
-                      description = "The transformed vector."
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the transformed vector."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the transformed vector."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the transformed vector."
+                    },
+                    {
+                      name = "w",
+                      type = "number",
+                      description = "The w component of the transformed vector."
                     }
                   }
                 },
                 {
                   arguments = {
                     {
-                      name = "v4",
-                      type = "Vec4",
-                      description = "A 4D vector."
+                      name = "v",
+                      type = "vector",
+                      description = "A vector."
                     }
                   },
                   returns = {
                     {
-                      name = "v4",
-                      type = "Vec4",
+                      name = "v",
+                      type = "vector",
                       description = "The transformed vector."
                     }
                   }
