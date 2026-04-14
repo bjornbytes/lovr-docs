@@ -848,7 +848,6 @@ return {
         "lovr.headset.getBoundsWidth",
         "lovr.headset.getBoundsDepth",
         "lovr.headset.getBoundsDimensions",
-        "lovr.headset.getBoundsGeometry",
         "lovr.headset.isSeated"
       },
       variants = {
