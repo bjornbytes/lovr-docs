@@ -4,6 +4,9 @@ return {
   description = [[
     Sets the blend mode.  When a pixel is drawn, the blend mode controls how it is mixed with the
     color and alpha of the pixel underneath it.
+
+    See `Pass:setBlendState` for a lower-level alternative that allows for more control over the
+    blending equation.
   ]],
   arguments = {
     index = {

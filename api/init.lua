@@ -11247,6 +11247,66 @@ return {
           }
         },
         {
+          name = "BlendFactor",
+          summary = "Different blend factors.",
+          description = "Different blend factors used by `Pass:setBlendState` to control the source and destination factors used for blending.",
+          key = "BlendFactor",
+          module = "lovr.graphics",
+          related = {
+            "BlendOp",
+            "Pass:setBlendState",
+            "BlendMode",
+            "BlendAlphaMode",
+            "Pass:setBlendMode"
+          },
+          values = {
+            {
+              name = "zero",
+              description = "Zero."
+            },
+            {
+              name = "one",
+              description = "One."
+            },
+            {
+              name = "srccolor",
+              description = "Source color."
+            },
+            {
+              name = "oneminussrccolor",
+              description = "One minus the source color."
+            },
+            {
+              name = "srcalpha",
+              description = "Source alpha."
+            },
+            {
+              name = "oneminussrcalpha",
+              description = "One minus the source alpha."
+            },
+            {
+              name = "dstcolor",
+              description = "Destination color."
+            },
+            {
+              name = "oneminusdstcolor",
+              description = "One minus the destination color."
+            },
+            {
+              name = "dstalpha",
+              description = "Destination alpha."
+            },
+            {
+              name = "oneminusdstalpha",
+              description = "One minus the destination alpha."
+            },
+            {
+              name = "srcalphasaturated",
+              description = "min(srcalpha, oneminusdstalpha)"
+            }
+          }
+        },
+        {
           name = "BlendMode",
           summary = "Blend modes.",
           description = "Different ways pixels can blend with the pixels behind them.",
@@ -11288,6 +11348,42 @@ return {
             {
               name = "none",
               description = "The incoming colors will replace the existing colors.  This is the same as using a blend mode of `nil`."
+            }
+          }
+        },
+        {
+          name = "BlendOp",
+          summary = "Different blend operations.",
+          description = "Different blend operations used by `Pass:setBlendState` to control how the source and destination factors are combined.",
+          key = "BlendOp",
+          module = "lovr.graphics",
+          related = {
+            "BlendFactor",
+            "Pass:setBlendState",
+            "BlendMode",
+            "BlendAlphaMode",
+            "Pass:setBlendMode"
+          },
+          values = {
+            {
+              name = "add",
+              description = "Adds the two factors together."
+            },
+            {
+              name = "subtract",
+              description = "Subtracts the destination from the source."
+            },
+            {
+              name = "reversesubtract",
+              description = "Subtracts the source from the destination."
+            },
+            {
+              name = "min",
+              description = "Takes the minimum of the two factors."
+            },
+            {
+              name = "max",
+              description = "Takes the maximum of the two factors."
             }
           }
         },
@@ -20628,7 +20724,7 @@ return {
               name = "setBlendMode",
               tag = "pipeline",
               summary = "Set the blend mode.",
-              description = "Sets the blend mode.  When a pixel is drawn, the blend mode controls how it is mixed with the color and alpha of the pixel underneath it.",
+              description = "Sets the blend mode.  When a pixel is drawn, the blend mode controls how it is mixed with the color and alpha of the pixel underneath it.\n\nSee `Pass:setBlendState` for a lower-level alternative that allows for more control over the blending equation.",
               key = "Pass:setBlendMode",
               module = "lovr.graphics",
               notes = "The default blend mode is `alpha` with the `alphamultiply` alpha mode.",
@@ -20682,6 +20778,155 @@ return {
                       name = "index",
                       type = "number",
                       description = "The index of the canvas texture that will use the new blend mode."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setBlendState",
+              tag = "pipeline",
+              summary = "Set the blend state.",
+              description = "Sets the raw blend states.  This is a lower-level alternative to `Pass:setBlendMode`.  When a pixel is drawn, the blend state controls how it is mixed with the color and alpha of the pixel underneath it.",
+              key = "Pass:setBlendState",
+              module = "lovr.graphics",
+              notes = "[This tool](https://www.andersriggelsen.dk/glblendfunc.php) can help visualize blend states.",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "op",
+                      type = "BlendOp",
+                      description = "The blend operation to use for color and alpha."
+                    },
+                    {
+                      name = "src",
+                      type = "BlendFactor",
+                      description = "The source factor to use for color and alpha."
+                    },
+                    {
+                      name = "dst",
+                      type = "BlendFactor",
+                      description = "The destination factor to use for color and alpha."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "opColor",
+                      type = "BlendOp",
+                      description = "The blend operation to use for color."
+                    },
+                    {
+                      name = "opAlpha",
+                      type = "BlendOp",
+                      description = "The blend operation to use for alpha."
+                    },
+                    {
+                      name = "srcColor",
+                      type = "BlendFactor",
+                      description = "The source factor to use for color."
+                    },
+                    {
+                      name = "srcAlpha",
+                      type = "BlendFactor",
+                      description = "The source factor to use for alpha."
+                    },
+                    {
+                      name = "dstColor",
+                      type = "BlendFactor",
+                      description = "The destination factor to use for color."
+                    },
+                    {
+                      name = "dstAlpha",
+                      type = "BlendFactor",
+                      description = "The destination factor to use for alpha."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disables blending.  When something is drawn, its pixel colors will replace any existing color in the target texture.  This can work okay for opaque objects, but won't render text or transparency properly.",
+                  arguments = {},
+                  returns = {}
+                },
+                {
+                  description = "Sets the blend state for a single canvas texture.",
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture that will use the new blend state."
+                    },
+                    {
+                      name = "op",
+                      type = "BlendOp",
+                      description = "The blend operation to use for color and alpha."
+                    },
+                    {
+                      name = "src",
+                      type = "BlendFactor",
+                      description = "The source factor to use for color and alpha."
+                    },
+                    {
+                      name = "dst",
+                      type = "BlendFactor",
+                      description = "The destination factor to use for color and alpha."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Sets the blend state for a single canvas texture.",
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture that will use the new blend state."
+                    },
+                    {
+                      name = "opColor",
+                      type = "BlendOp",
+                      description = "The blend operation to use for color."
+                    },
+                    {
+                      name = "opAlpha",
+                      type = "BlendOp",
+                      description = "The blend operation to use for alpha."
+                    },
+                    {
+                      name = "srcColor",
+                      type = "BlendFactor",
+                      description = "The source factor to use for color."
+                    },
+                    {
+                      name = "srcAlpha",
+                      type = "BlendFactor",
+                      description = "The source factor to use for alpha."
+                    },
+                    {
+                      name = "dstColor",
+                      type = "BlendFactor",
+                      description = "The destination factor to use for color."
+                    },
+                    {
+                      name = "dstAlpha",
+                      type = "BlendFactor",
+                      description = "The destination factor to use for alpha."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Disables blending for a single canvas texture.",
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of the canvas texture that will use the new blend state."
                     }
                   },
                   returns = {}
@@ -41759,6 +42004,19 @@ return {
           name = "Window",
           tag = "system-window"
         }
+      }
+    },
+    {
+      name = "task",
+      tag = "modules",
+      summary = "Coroutine scheduler.",
+      description = "TODO",
+      key = "lovr.task",
+      enums = {},
+      functions = {},
+      objects = {},
+      related = {
+        "lovr.thread"
       }
     },
     {
