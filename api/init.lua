@@ -14194,9 +14194,8 @@ return {
               module = "lovr.graphics",
               notes = "The length of the table will equal the number of items read.  Here are some examples of how the table is formatted:\n\n    buffer = lovr.graphics.newBuffer('int', { 7 })\n    buffer:getData() --> returns { 7 }\n\n    buffer = lovr.graphics.newBuffer('vec3', { 7, 8, 9 })\n    buffer:getData() --> returns {{ 7, 8, 9 }}\n\n    buffer = lovr.graphics.newBuffer('int', { 1, 2, 3 })\n    buffer:getData() --> returns { 1, 2, 3 }\n\n    buffer = lovr.graphics.newBuffer({ 'vec2', 'vec2' }, {\n      vec2(1,2), vec2(3,4),\n      vec2(5,6), vec2(7,8)\n    })\n    buffer:getData() --> returns { { 1, 2, 3, 4 }, { 5, 6, 7, 8 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'a', 'float' },\n      { 'b', 'float' }\n    }, { a = 1, b = 2 })\n    buffer:getData() --> returns { { 1, 2 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'x', 'int', 3 }\n    }, { x = { 1, 2, 3 } })\n    buffer:getData() --> returns { { x = { 1, 2, 3 } } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'lights', {\n        { 'pos', 'vec3' },\n        { 'size', 'float' },\n      }, 10}\n    }, data)\n    buffer:getData() --> returns { { lights = { { pos = ..., size = ... }, ... } } }\n\nIn summary, each individual item is wrapped in a table, except if the format is a single number. If the format has nested types or arrays then the tables will be key-value, otherwise they will use numeric keys.",
               related = {
-                "Buffer:newReadback",
-                "Buffer:mapData",
-                "Readback:getData"
+                "Buffer:newBlob",
+                "Texture:getPixels"
               },
               variants = {
                 {

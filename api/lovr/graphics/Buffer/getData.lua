@@ -74,8 +74,7 @@ return {
     use numeric keys.
   ]],
   related = {
-    'Buffer:newReadback',
-    'Buffer:mapData',
-    'Readback:getData'
+    'Buffer:newBlob',
+    'Texture:getPixels'
   }
 }
