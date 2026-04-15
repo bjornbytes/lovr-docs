@@ -6971,6 +6971,60 @@ return {
               }
             },
             {
+              name = "getBlendShapeCount",
+              summary = "Get the total number of blend shapes in the model.",
+              description = "Returns the total number of blend shapes in the model.",
+              key = "ModelData:getBlendShapeCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getBlendShapeName",
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The total number of blend shapes in the model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBlendShapeName",
+              summary = "Get the name of a blend shape.",
+              description = "Returns the name of a blend shape.",
+              key = "ModelData:getBlendShapeName",
+              module = "lovr.data",
+              related = {
+                "ModelData:getBlendShapeCount",
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of a blend shape."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the blend shape."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getBoundingBox",
               summary = "Get the bounding box of the model.",
               description = "Returns the 6 values of the model's axis-aligned bounding box.",
