@@ -4,10 +4,10 @@ return {
     Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are
     supported.
 
-    A model can be drawn using `Pass:draw`.
+    A model can be drawn using `Pass:draw`.  A specific mesh or part of a mesh can be drawn using
+    `Pass:drawPart`.
 
-    The raw CPU data for a model is held in a `ModelData` object, which can be loaded on threads or
-    reused for multiple Model instances.
+    The raw CPU data for a model is held in a `ModelData` object.
 
     Models have a hierarchy of nodes which can have their transforms modified.  Meshes are attached
     to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn
@@ -17,11 +17,105 @@ return {
     Right now each model can only be drawn with a single animated pose per frame.
 
     Models can have materials, which are collections of properties and textures that define how its
-    surface is affected by lighting.  Each mesh in the model can use a single material.
+    surface is affected by lighting.  Meshes are split up into multiple parts, and each part can
+    have its own material.
+
+    Note: Model inherits several methods from `ModelData`.  The pages here link to the `ModelData`
+    version of the page, but the methods can be called on both `Model` and `ModelData`.
   ]],
   extends = 'Object',
   constructors = {
     'lovr.graphics.newModel',
-    'lovr.headset.newModel'
+    'lovr.headset.newModel',
+    'Model:clone'
+  },
+  sections = {
+    {
+      name = 'Nodes',
+      links = {
+        'ModelData:getRootNode',
+        'ModelData:getNodeCount',
+        'ModelData:getNodeName',
+        'ModelData:getNodeChild',
+        'ModelData:getNodeChildren',
+        'ModelData:getNodeSibling',
+        'ModelData:getNodeParent',
+        'ModelData:getNodeMesh',
+        'Model:isNodeVisible',
+        'Model:setNodeVisible',
+        'Model:getNodePosition',
+        'Model:setNodePosition',
+        'Model:getNodeOrientation',
+        'Model:setNodeOrientation',
+        'Model:getNodeScale',
+        'Model:setNodeScale',
+        'Model:getNodePose',
+        'Model:setNodePose',
+        'Model:getNodeTransform',
+        'Model:setNodeTransform',
+        'Model:resetNodeTransforms'
+      }
+    },
+    {
+      name = 'Animation',
+      links = {
+        'ModelData:getAnimationCount',
+        'ModelData:getAnimationName',
+        'ModelData:getAnimationDuration',
+        'Model:hasJoints',
+        'Model:animate'
+      }
+    },
+    {
+      name = 'Blend Shapes',
+      links = {
+        'ModelData:getBlendShapeCount',
+        'ModelData:getBlendShapeName',
+        'Model:getBlendShapeWeight',
+        'Model:setBlendShapeWeight',
+        'Model:resetBlendShapes'
+      }
+    },
+    {
+      name = 'Bounds',
+      links = {
+        'ModelData:getWidth',
+        'ModelData:getHeight',
+        'ModelData:getDepth',
+        'ModelData:getDimensions',
+        'ModelData:getCenter',
+        'ModelData:getBoundingBox'
+      }
+    },
+    {
+      name = 'Meshes',
+      links = {
+        'ModelData:getMeshCount',
+        'ModelData:getMeshVertexCount',
+        'ModelData:getMeshIndexCount',
+        'ModelData:getMeshPartCount',
+        'ModelData:getMeshDrawMode',
+        'ModelData:getMeshDrawRange',
+        'ModelData:getMeshMaterial'
+      }
+    },
+    {
+      name = 'Textures',
+      links = {
+        'Model:getTextureCount',
+        'Model:getTexture',
+        'ModelData:getMaterialCount',
+        'ModelData:getMaterialName',
+        'Model:getMaterial'
+      }
+    },
+    {
+      name = 'Miscellaneous',
+      links = {
+        'Model:clone',
+        'Model:buildRaytracer',
+        'ModelData:getMetadata'
+      }
+    }
   }
 }

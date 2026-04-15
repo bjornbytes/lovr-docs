@@ -39,7 +39,7 @@ return {
       },
       description = [[
         A function that computes terrain height from x and z coordinates.  The x and z inputs will
-        range from `-scale / 2` to `scale / 2`.
+        range from `-scale / 2` to `scale / 2`.  The callback can return nil to create holes.
       ]]
     },
     samples = {
@@ -74,10 +74,7 @@ return {
       returns = { 'terrain' }
     }
   },
-  notes = [[
-    A Shape can be attached to a Collider using `Collider:addShape`.
-    For immobile terrain use the `Collider:setKinematic`.
-  ]],
+  notes = 'Colliders with terrain shapes are always kinematic.',
   related = {
     'TerrainShape',
     'lovr.physics.newBoxShape',

@@ -40,7 +40,6 @@ return {
     'Model:getDepth',
     'Model:getDimensions',
     'Model:getCenter',
-    'Model:getBoundingSphere',
     'ModelData:getBoundingBox',
     'Collider:getAABB'
   }

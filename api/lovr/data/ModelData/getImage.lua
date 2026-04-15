@@ -20,7 +20,6 @@ return {
     }
   },
   related = {
-    'ModelData:getImageCount',
-    'ModelData:getBlob'
+    'ModelData:getImageCount'
   }
 }

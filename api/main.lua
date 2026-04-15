@@ -460,6 +460,8 @@ local function validateModule(module)
   local ignore = {
     setSource = true,
     getBundlePath = true,
+    initialize = true,
+    isInitialized = true,
     openConsole = true
   }
 
@@ -473,14 +475,19 @@ local function validateModule(module)
   end
 end
 
+function lovr.errhand(message)
+  print(message)
+
+  return function()
+    return 1
+  end
+end
+
 function lovr.load()
   local api = {
     modules = {},
     callbacks = {}
   }
-
-  -- So errhand exits
-  lovr.graphics = nil
 
   -- Modules
   table.insert(api.modules, processModule('lovr'))

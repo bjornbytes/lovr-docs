@@ -15,6 +15,6 @@ return {
     }
   },
   related = {
-    'ModelData:getNodeMeshes'
+    'ModelData:getNodeMesh'
   }
 }

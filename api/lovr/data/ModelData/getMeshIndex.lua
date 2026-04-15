@@ -28,9 +28,7 @@ return {
     }
   },
   related = {
-    'ModelData:getMeshIndexFormat',
     'ModelData:getMeshIndexCount',
-    'ModelData:getMeshVertex',
-    'ModelData:getTriangles'
+    'ModelData:getMeshVertex'
   }
 }

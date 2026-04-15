@@ -6971,111 +6971,6 @@ return {
               }
             },
             {
-              name = "getBlendShapeCount",
-              summary = "Get the number of blend shapes in the model.",
-              description = "Returns the number of blend shapes in the model.",
-              key = "ModelData:getBlendShapeCount",
-              module = "lovr.data",
-              related = {
-                "ModelData:getBlendShapeName",
-                "Model:getBlendShapeCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of blend shapes in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlendShapeName",
-              summary = "Get the name of a blend shape in the model.",
-              description = "Returns the name of a blend shape in the model.",
-              key = "ModelData:getBlendShapeName",
-              module = "lovr.data",
-              notes = "This function will throw an error if the blend shape index is invalid.",
-              related = {
-                "ModelData:getBlendShapeCount",
-                "Model:getBlendShapeName"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the blend shape."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlob",
-              summary = "Get a Blob in the model.",
-              description = "Returns one of the Blobs in the model, by index.",
-              key = "ModelData:getBlob",
-              module = "lovr.data",
-              related = {
-                "ModelData:getBlobCount",
-                "ModelData:getImage"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of the Blob to get."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "blob",
-                      type = "Blob",
-                      description = "The Blob object."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlobCount",
-              summary = "Get the number of Blobs stored in the model.",
-              description = "Returns the number of Blobs in the model.",
-              key = "ModelData:getBlobCount",
-              module = "lovr.data",
-              related = {
-                "ModelData:getBlob",
-                "ModelData:getImageCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of Blobs in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getBoundingBox",
               summary = "Get the bounding box of the model.",
               description = "Returns the 6 values of the model's axis-aligned bounding box.",
@@ -7087,7 +6982,6 @@ return {
                 "ModelData:getDepth",
                 "ModelData:getDimensions",
                 "ModelData:getCenter",
-                "ModelData:getBoundingSphere",
                 "Model:getBoundingBox"
               },
               variants = {
@@ -7123,49 +7017,6 @@ return {
                       name = "maxz",
                       type = "number",
                       description = "The maximum z coordinate of the vertices in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBoundingSphere",
-              summary = "Get the bounding sphere of the model.",
-              description = "Returns a sphere approximately enclosing the vertices in the model.",
-              key = "ModelData:getBoundingSphere",
-              module = "lovr.data",
-              related = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox",
-                "Model:getBoundingSphere"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the position of the sphere."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the position of the sphere."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate of the position of the sphere."
-                    },
-                    {
-                      name = "radius",
-                      type = "number",
-                      description = "The radius of the bounding sphere."
                     }
                   }
                 }
@@ -7306,8 +7157,7 @@ return {
               key = "ModelData:getImage",
               module = "lovr.data",
               related = {
-                "ModelData:getImageCount",
-                "ModelData:getBlob"
+                "ModelData:getImageCount"
               },
               variants = {
                 {
@@ -7335,8 +7185,7 @@ return {
               key = "ModelData:getImageCount",
               module = "lovr.data",
               related = {
-                "ModelData:getImage",
-                "ModelData:getBlobCount"
+                "ModelData:getImage"
               },
               variants = {
                 {
@@ -7531,13 +7380,157 @@ return {
               }
             },
             {
+              name = "getMeshBlendShapeCount",
+              summary = "Get the number of blend shapes in one of the model's meshes.",
+              description = "Returns the number of blend shapes in one of the model's meshes.",
+              key = "ModelData:getMeshBlendShapeCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshBlendShapeName",
+                "ModelData:getMeshBlendVertex"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of blend shapes the mesh has."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshBlendShapeName",
+              summary = "Get the name of a blend shape.",
+              description = "Returns the name of a blend shape.",
+              key = "ModelData:getMeshBlendShapeName",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendVertex"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    },
+                    {
+                      name = "blendshape",
+                      type = "number",
+                      description = "The index of a blend shape in the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the blend shape."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshBlendVertex",
+              summary = "Get the data for a single vertex in a blend shape.",
+              description = "Returns the data for a single vertex in a blend shape.  The data represents a displacement of the vertex position, normal, and tangent.",
+              key = "ModelData:getMeshBlendVertex",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName",
+                "Model:getBlendShapeWeight",
+                "Model:setBlendShapeWeight"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    },
+                    {
+                      name = "blendshape",
+                      type = "number",
+                      description = "The index of a blend shape in the mesh."
+                    },
+                    {
+                      name = "vertex",
+                      type = "number",
+                      description = "The index of a vertex in the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x displacement of the vertex position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y displacement of the vertex position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z displacement of the vertex position."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x displacement of the vertex normal."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y displacement of the vertex normal."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z displacement of the vertex normal."
+                    },
+                    {
+                      name = "tx",
+                      type = "number",
+                      description = "The x displacement of the vertex tangent."
+                    },
+                    {
+                      name = "ty",
+                      type = "number",
+                      description = "The y displacement of the vertex tangent."
+                    },
+                    {
+                      name = "tz",
+                      type = "number",
+                      description = "The z displacement of the vertex tangent."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getMeshCount",
               summary = "Get the number of meshes in the model.",
               description = "Returns the number of meshes in the model.",
               key = "ModelData:getMeshCount",
               module = "lovr.data",
               related = {
-                "ModelData:getNodeMeshes"
+                "ModelData:getNodeMesh"
               },
               variants = {
                 {
@@ -7554,8 +7547,8 @@ return {
             },
             {
               name = "getMeshDrawMode",
-              summary = "Get the draw mode of a mesh.",
-              description = "Returns the draw mode of a mesh.  This controls how its vertices are connected together (points, lines, or triangles).",
+              summary = "Get the draw mode of a mesh part.",
+              description = "Returns the draw mode of a mesh part.  The draw mode controls how mesh vertices are connected together. Meshes can be split into multiple parts, and each part can have its own draw mode.",
               key = "ModelData:getMeshDrawMode",
               module = "lovr.data",
               variants = {
@@ -7571,7 +7564,42 @@ return {
                     {
                       name = "mode",
                       type = "ModelDrawMode",
-                      description = "The draw mode of the mesh."
+                      description = "The draw mode of the part."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshDrawRange",
+              summary = "Get the vertex range of a mesh part.",
+              description = "Returns the vertex range of a part of a mesh.  Meshes can be split into multiple \"parts\", and each part can have its own draw mode and material.",
+              key = "ModelData:getMeshDrawRange",
+              module = "lovr.data",
+              notes = "Parts will always use the full set of vertices/indices in the mesh, in order.\n\nIf the mesh has indices, then the draw range will be in terms of indices, otherwise it will be vertices.  This matches the way `Mesh:setDrawRange` works.",
+              related = {
+                "ModelData:getMeshDrawMode",
+                "ModelData:getMeshMaterial"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the first vertex or index in the part."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices or indices in the part."
                     }
                   }
                 }
@@ -7584,10 +7612,8 @@ return {
               key = "ModelData:getMeshIndex",
               module = "lovr.data",
               related = {
-                "ModelData:getMeshIndexFormat",
                 "ModelData:getMeshIndexCount",
-                "ModelData:getMeshVertex",
-                "ModelData:getTriangles"
+                "ModelData:getMeshVertex"
               },
               variants = {
                 {
@@ -7640,52 +7666,9 @@ return {
               }
             },
             {
-              name = "getMeshIndexFormat",
-              summary = "Get the data format of vertex indices in a mesh.",
-              description = "Returns the data format of vertex indices in a mesh.  If a mesh doesn't use vertex indices, this function returns nil.",
-              key = "ModelData:getMeshIndexFormat",
-              module = "lovr.data",
-              related = {
-                "ModelData:getMeshVertexFormat"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "mesh",
-                      type = "number",
-                      description = "The index of a mesh."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "type",
-                      type = "AttributeType",
-                      description = "The data type of each vertex index (always u16 or u32)."
-                    },
-                    {
-                      name = "blob",
-                      type = "number",
-                      description = "The index of a Blob in the mesh where the binary data is stored."
-                    },
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A byte offset into the Blob's data where the index data starts."
-                    },
-                    {
-                      name = "stride",
-                      type = "number",
-                      description = "The number of bytes between subsequent vertex indices.  Indices are always tightly packed, so this will always be 2 or 4 depending on the data type."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getMeshMaterial",
-              summary = "Get the index of the material applied to a mesh.",
-              description = "Returns the index of the material applied to a mesh.",
+              summary = "Get the index of the material used by a mesh part.",
+              description = "Returns the index of the material used by a mesh part.  Meshes can be split into multiple parts, and each part can have its own material.",
               key = "ModelData:getMeshMaterial",
               module = "lovr.data",
               variants = {
@@ -7695,13 +7678,50 @@ return {
                       name = "mesh",
                       type = "number",
                       description = "The index of a mesh."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of a part.",
+                      default = "1"
                     }
                   },
                   returns = {
                     {
                       name = "material",
+                      type = "number | nil",
+                      description = "The index of the material applied to the part, or nil if the part does not have a material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshPartCount",
+              summary = "Get the number of parts in a mesh.",
+              description = "Returns the number of parts in a mesh.  Meshes can be split into multiple \"parts\".  Each part refers to a subset of the mesh's vertices, and parts can have their own draw mode and material.",
+              key = "ModelData:getMeshPartCount",
+              module = "lovr.data",
+              related = {
+                "ModelData:getMeshDrawRange",
+                "ModelData:getMeshDrawMode",
+                "ModelData:getMeshMaterial",
+                "Pass:drawPart"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
                       type = "number",
-                      description = "The index of the material applied to the mesh, or nil if the mesh does not have a material."
+                      description = "The index of the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "parts",
+                      type = "number",
+                      description = "The number of parts in the mesh."
                     }
                   }
                 }
@@ -7710,14 +7730,13 @@ return {
             {
               name = "getMeshVertex",
               summary = "Get the data for a single vertex in a mesh.",
-              description = "Returns the data for a single vertex in a mesh.  The data returned depends on the vertex format of a mesh, which is given by `ModelData:getMeshVertexFormat`.",
+              description = "Returns the data for a single vertex in a mesh.",
               key = "ModelData:getMeshVertex",
               module = "lovr.data",
               related = {
-                "ModelData:getMeshVertexFormat",
                 "ModelData:getMeshVertexCount",
                 "ModelData:getMeshIndex",
-                "ModelData:getTriangles"
+                "ModelData:getMeshBlendVertex"
               },
               variants = {
                 {
@@ -7735,9 +7754,89 @@ return {
                   },
                   returns = {
                     {
-                      name = "...",
+                      name = "x",
                       type = "number",
-                      description = "The data for all of the attributes of the vertex."
+                      description = "The x component of the position."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the position."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the position."
+                    },
+                    {
+                      name = "nx",
+                      type = "number",
+                      description = "The x component of the normal vector."
+                    },
+                    {
+                      name = "ny",
+                      type = "number",
+                      description = "The y component of the normal vector."
+                    },
+                    {
+                      name = "nz",
+                      type = "number",
+                      description = "The z component of the normal vector."
+                    },
+                    {
+                      name = "u",
+                      type = "number",
+                      description = "The u component of the texture coordinate."
+                    },
+                    {
+                      name = "v",
+                      type = "number",
+                      description = "The v component of the texture coordinate."
+                    },
+                    {
+                      name = "u2",
+                      type = "number",
+                      description = "The u component of the second texture coordinate."
+                    },
+                    {
+                      name = "v2",
+                      type = "number",
+                      description = "The v component of the second texture coordinate."
+                    },
+                    {
+                      name = "r",
+                      type = "number",
+                      description = "The r component of the vertex color (0 to 255)."
+                    },
+                    {
+                      name = "g",
+                      type = "number",
+                      description = "The g component of the vertex color (0 to 255)."
+                    },
+                    {
+                      name = "b",
+                      type = "number",
+                      description = "The b component of the vertex color (0 to 255)."
+                    },
+                    {
+                      name = "a",
+                      type = "number",
+                      description = "The a component of the vertex color (0 to 255)."
+                    },
+                    {
+                      name = "tx",
+                      type = "number",
+                      description = "The x component of the tangent vector."
+                    },
+                    {
+                      name = "ty",
+                      type = "number",
+                      description = "The y component of the tangent vector."
+                    },
+                    {
+                      name = "tz",
+                      type = "number",
+                      description = "The z component of the tangent vector."
                     }
                   }
                 }
@@ -7766,35 +7865,6 @@ return {
                       name = "count",
                       type = "number",
                       description = "The number of vertices in the mesh."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getMeshVertexFormat",
-              summary = "Get the vertex format of a mesh.",
-              description = "Returns the vertex format of a mesh.  The vertex format defines the properties associated with each vertex (position, color, etc.), including their types and binary data layout.",
-              key = "ModelData:getMeshVertexFormat",
-              module = "lovr.data",
-              notes = "The format is given as a table of vertex attributes.  Each attribute is a table containing the following:\n\n    { name, type, components, blob, offset, stride }\n\n- The `name` will be a `DefaultAttribute`.\n- The `type` will be an `AttributeType`.\n- The `component` count will be 1-4.\n- The `blob` is an index of one of the Blobs in the model (see `ModelData:getBlob`).\n- The `offset` is a byte offset from the start of the Blob where the attribute's data starts.\n- The `stride` is the number of bytes between consecutive values.",
-              related = {
-                "ModelData:getMeshIndexFormat"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "mesh",
-                      type = "number",
-                      description = "The index of a mesh."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "format",
-                      type = "table",
-                      description = "The vertex format of the mesh."
                     }
                   }
                 }
@@ -7907,14 +7977,11 @@ return {
               }
             },
             {
-              name = "getNodeMeshes",
-              summary = "Get the indices of meshes attached to a node.",
-              description = "Returns a table of mesh indices attached to a node.  Meshes define the geometry and materials of a model, as opposed to the nodes which define the transforms and hierarchy.  A node can have multiple meshes, and meshes can be reused in multiple nodes.",
-              key = "ModelData:getNodeMeshes",
+              name = "getNodeMesh",
+              summary = "Get the index of the mesh attached to a node.",
+              description = "Returns the index of the mesh attached to a node.  Meshes contain the geometry and material information, whereas the nodes define the hierarchy and transforms.  A single mesh can be attached to multiple nodes.  Not every node has a mesh.",
+              key = "ModelData:getNodeMesh",
               module = "lovr.data",
-              related = {
-                "ModelData:getMeshCount"
-              },
               variants = {
                 {
                   arguments = {
@@ -7926,9 +7993,9 @@ return {
                   },
                   returns = {
                     {
-                      name = "meshes",
-                      type = "table",
-                      description = "A table with the node's mesh indices."
+                      name = "mesh",
+                      type = "number | nil",
+                      description = "The index of the node's mesh, or `nil` if the node does not have a mesh."
                     }
                   }
                 }
@@ -8415,84 +8482,6 @@ return {
                       name = "joints",
                       type = "table",
                       description = "The joints in the skin."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTriangleCount",
-              summary = "Get the total number of triangles in the model.",
-              description = "Returns the total number of triangles in the model.  This count includes meshes that are attached to multiple nodes, and the count corresponds to the triangles returned by `ModelData:getTriangles`.",
-              key = "ModelData:getTriangleCount",
-              module = "lovr.data",
-              related = {
-                "ModelData:getTriangles",
-                "ModelData:getVertexCount",
-                "Model:getTriangleCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The total number of triangles in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTriangles",
-              summary = "Get all the triangles in the model.",
-              description = "Returns the data for all triangles in the model.  There are a few differences between this and the mesh-specific functions like `ModelData:getMeshVertex` and `ModelData:getMeshIndex`:\n\n- Only vertex positions are returned, not other vertex attributes.\n- Positions are relative to the origin of the whole model, instead of local to a node.\n- If a mesh is attached to more than one node, its vertices will be in the table multiple times.\n- Vertex indices will be relative to the whole triangle list instead of a mesh.",
-              key = "ModelData:getTriangles",
-              module = "lovr.data",
-              notes = "After this function is called on a ModelData once, the result is cached.",
-              related = {
-                "ModelData:getTriangleCount",
-                "ModelData:getVertexCount",
-                "Model:getTriangles"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "vertices",
-                      type = "table",
-                      description = "The triangle vertex positions, returned as a flat (non-nested) table of numbers.  The position of each vertex is given as an x, y, and z coordinate."
-                    },
-                    {
-                      name = "indices",
-                      type = "table",
-                      description = "A list of numbers representing how to connect the vertices into triangles.  Each number is a 1-based index into the `vertices` table, and every 3 indices form a triangle."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getVertexCount",
-              summary = "Get the total vertex count of the model.",
-              description = "Returns the total vertex count of a model.  This count includes meshes that are attached to multiple nodes, and the count corresponds to the vertices returned by `ModelData:getTriangles`.",
-              key = "ModelData:getVertexCount",
-              module = "lovr.data",
-              related = {
-                "ModelData:getTriangles",
-                "ModelData:getTriangleCount",
-                "Model:getVertexCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The total number of vertices in the model."
                     }
                   }
                 }
@@ -15871,12 +15860,13 @@ return {
         {
           name = "Model",
           summary = "A 3D model.",
-          description = "Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are supported.\n\nA model can be drawn using `Pass:draw`.\n\nThe raw CPU data for a model is held in a `ModelData` object, which can be loaded on threads or reused for multiple Model instances.\n\nModels have a hierarchy of nodes which can have their transforms modified.  Meshes are attached to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn multiple times while only storing a single copy of its data.\n\nModels can have animations.  Animations have keyframes which affect the transforms of nodes. Right now each model can only be drawn with a single animated pose per frame.\n\nModels can have materials, which are collections of properties and textures that define how its surface is affected by lighting.  Each mesh in the model can use a single material.",
+          description = "Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are supported.\n\nA model can be drawn using `Pass:draw`.  A specific mesh or part of a mesh can be drawn using `Pass:drawPart`.\n\nThe raw CPU data for a model is held in a `ModelData` object.\n\nModels have a hierarchy of nodes which can have their transforms modified.  Meshes are attached to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn multiple times while only storing a single copy of its data.\n\nModels can have animations.  Animations have keyframes which affect the transforms of nodes. Right now each model can only be drawn with a single animated pose per frame.\n\nModels can have materials, which are collections of properties and textures that define how its surface is affected by lighting.  Meshes are split up into multiple parts, and each part can have its own material.\n\nNote: Model inherits several methods from `ModelData`.  The pages here link to the `ModelData` version of the page, but the methods can be called on both `Model` and `ModelData`.",
           key = "Model",
           module = "lovr.graphics",
           constructors = {
             "lovr.graphics.newModel",
-            "lovr.headset.newModel"
+            "lovr.headset.newModel",
+            "Model:clone"
           },
           extends = "Object",
           methods = {
@@ -16128,7 +16118,6 @@ return {
                 "Model:getDepth",
                 "Model:getDimensions",
                 "Model:getCenter",
-                "Model:getBoundingSphere",
                 "ModelData:getBoundingBox",
                 "Collider:getAABB"
               },
@@ -16165,49 +16154,6 @@ return {
                       name = "maxz",
                       type = "number",
                       description = "The maximum z coordinate of the vertices in the Model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBoundingSphere",
-              summary = "Get the bounding sphere of the Model.",
-              description = "Returns a sphere approximately enclosing the vertices in the Model.",
-              key = "Model:getBoundingSphere",
-              module = "lovr.graphics",
-              related = {
-                "Model:getWidth",
-                "Model:getHeight",
-                "Model:getDepth",
-                "Model:getDimensions",
-                "Model:getCenter",
-                "Model:getBoundingBox",
-                "ModelData:getBoundingSphere"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the position of the sphere."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the position of the sphere."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate of the position of the sphere."
-                    },
-                    {
-                      name = "radius",
-                      type = "number",
-                      description = "The radius of the bounding sphere."
                     }
                   }
                 }
@@ -17823,6 +17769,95 @@ return {
                   },
                   returns = {}
                 }
+              }
+            }
+          },
+          sections = {
+            {
+              name = "Nodes",
+              links = {
+                "ModelData:getRootNode",
+                "ModelData:getNodeCount",
+                "ModelData:getNodeName",
+                "ModelData:getNodeChild",
+                "ModelData:getNodeChildren",
+                "ModelData:getNodeSibling",
+                "ModelData:getNodeParent",
+                "ModelData:getNodeMesh",
+                "Model:isNodeVisible",
+                "Model:setNodeVisible",
+                "Model:getNodePosition",
+                "Model:setNodePosition",
+                "Model:getNodeOrientation",
+                "Model:setNodeOrientation",
+                "Model:getNodeScale",
+                "Model:setNodeScale",
+                "Model:getNodePose",
+                "Model:setNodePose",
+                "Model:getNodeTransform",
+                "Model:setNodeTransform",
+                "Model:resetNodeTransforms"
+              }
+            },
+            {
+              name = "Animation",
+              links = {
+                "ModelData:getAnimationCount",
+                "ModelData:getAnimationName",
+                "ModelData:getAnimationDuration",
+                "Model:hasJoints",
+                "Model:animate"
+              }
+            },
+            {
+              name = "Blend Shapes",
+              links = {
+                "ModelData:getBlendShapeCount",
+                "ModelData:getBlendShapeName",
+                "Model:getBlendShapeWeight",
+                "Model:setBlendShapeWeight",
+                "Model:resetBlendShapes"
+              }
+            },
+            {
+              name = "Bounds",
+              links = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              }
+            },
+            {
+              name = "Meshes",
+              links = {
+                "ModelData:getMeshCount",
+                "ModelData:getMeshVertexCount",
+                "ModelData:getMeshIndexCount",
+                "ModelData:getMeshPartCount",
+                "ModelData:getMeshDrawMode",
+                "ModelData:getMeshDrawRange",
+                "ModelData:getMeshMaterial"
+              }
+            },
+            {
+              name = "Textures",
+              links = {
+                "Model:getTextureCount",
+                "Model:getTexture",
+                "ModelData:getMaterialCount",
+                "ModelData:getMaterialName",
+                "Model:getMaterial"
+              }
+            },
+            {
+              name = "Miscellaneous",
+              links = {
+                "Model:clone",
+                "Model:buildRaytracer",
+                "ModelData:getMetadata"
               }
             }
           }
@@ -32181,7 +32216,7 @@ return {
           description = "Creates a new TerrainShape.",
           key = "lovr.physics.newTerrainShape",
           module = "lovr.physics",
-          notes = "A Shape can be attached to a Collider using `Collider:addShape`. For immobile terrain use the `Collider:setKinematic`.",
+          notes = "Colliders with terrain shapes are always kinematic.",
           related = {
             "TerrainShape",
             "lovr.physics.newBoxShape",
@@ -32249,7 +32284,7 @@ return {
                 {
                   name = "callback",
                   type = "function",
-                  description = "A function that computes terrain height from x and z coordinates.  The x and z inputs will range from `-scale / 2` to `scale / 2`.",
+                  description = "A function that computes terrain height from x and z coordinates.  The x and z inputs will range from `-scale / 2` to `scale / 2`.  The callback can return nil to create holes.",
                   arguments = {
                     {
                       name = "x",
