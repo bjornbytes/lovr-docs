@@ -959,6 +959,41 @@ return {
       }
     },
     {
+      name = "simulate",
+      tag = "callbacks",
+      summary = "Called to implement the headset simulator.",
+      description = "When VR isn't available, LÖVR implements a headset simulator that can be controlled with the keyboard and mouse.  This is implemented in the `lovr.simulate` callback, and can be overridden to customize the simulator behavior.\n\nThe default implementation reads the keyboard/mouse state and uses the following functions to assign virtual poses and button states:\n\n- `lovr.headset.setPosition`\n- `lovr.headset.setOrientation`\n- `lovr.headset.setPose`\n- `lovr.headset.setButton`\n\nWhen VR isn't active, the regular headset accessors (e.g. `lovr.headset.getPosition`) will return the virtual poses and buttons.\n\nOverriding the callback could be useful for the following:\n\n- Changing the keyboard/mouse inputs used for the simulator\n- Simulating other devices, or adding support for more buttons\n- Disabling the simulator in certain situations (e.g. disable simulator when menu is open)\n- Recording/replaying VR input events for debugging\n- Synchronizing VR device state over the network",
+      key = "lovr.simulate",
+      module = "lovr",
+      examples = {
+        {
+          description = "The default simulator implementation.",
+          code = "local mouseX, mouseY, handX, handY, distance, pitch, yaw = nil, nil, 0, 0, .5, nil, nil\n\nfunction lovr.simulate(dt)\n  if not lovr.math then return end\n\n  if not pitch or not yaw then\n    pitch, yaw = quaternion(lovr.headset.getOrientation()):toeuler()\n    mouseX, mouseY = lovr.system.getMousePosition()\n  end\n\n  local movespeed = 3\n  local sprintspeed = 15\n  local walkspeed = .5\n  local turnspeed = .005\n  local turnsmooth = 30\n\n  local click = lovr.system.isMouseDown(1)\n\n  lovr.system.setMouseMode(click and 'relative' or 'normal')\n\n  local lastX, lastY = mouseX, mouseY\n  mouseX, mouseY = lovr.system.getMousePosition()\n\n  if click then\n    yaw = yaw - (mouseX - lastX or mouseX) * turnspeed\n    pitch = pitch - (mouseY - lastY or mouseY) * turnspeed\n    pitch = math.min(pitch, math.pi / 2)\n    pitch = math.max(pitch, -math.pi / 2)\n  else\n    handX, handY = mouseX, mouseY\n  end\n\n  local trigger = lovr.system.isMouseDown(2)\n  lovr.headset.setButton('hand/left', 'trigger', trigger)\n  lovr.headset.setButton('hand/left/point', 'trigger', trigger)\n\n  -- Head\n\n  local angle, ax, ay, az = lovr.headset.getOrientation()\n  local target = quaternion(yaw, 0, 1, 0) * quaternion(pitch, 1, 0, 0)\n  local orientation = quaternion(angle, ax, ay, az):slerp(target, 1 - math.exp(-turnsmooth * dt))\n\n  local sprint = lovr.system.isKeyDown('lshift', 'rshift')\n  local walk = lovr.system.isKeyDown('lctrl', 'rctrl')\n  local forward = lovr.system.isKeyDown('w', 'up')\n  local backward = lovr.system.isKeyDown('s', 'down')\n  local left = lovr.system.isKeyDown('a', 'left')\n  local right = lovr.system.isKeyDown('d', 'right')\n  local up = lovr.system.isKeyDown('q')\n  local down = lovr.system.isKeyDown('e')\n\n  local vx = left and -1 or right and 1 or 0\n  local vy = down and -1 or up and 1 or 0\n  local vz = forward and -1 or backward and 1 or 0\n  local speed = sprint and sprintspeed or walk and walkspeed or movespeed\n  local velocity = vector(vx, vy, vz):normalize() * speed * dt\n  local position = vector(lovr.headset.getPosition('head')) + orientation * velocity\n  lovr.headset.setPose('head', position, orientation)\n\n  -- Hand\n\n  local left, right, up, down = lovr.headset.getViewAngles(1)\n  local near, far = lovr.headset.getClipDistance()\n  local inverseProjection = mat4():fov(left, right, up, down, near, far):invert()\n\n  local width, height = lovr.system.getWindowDimensions()\n  local coordinate = vector(handX / width * 2 - 1, handY / height * 2 - 1, 1, 1)\n  local direction = (orientation * (inverseProjection * coordinate)):normalize()\n\n  distance = distance * (1 + lovr.system._getScrollDelta() * .05)\n  distance = math.min(distance, 10)\n  distance = math.max(distance, .05)\n\n  local handPosition = position + direction * distance\n  local handOrientation = quaternion.lookdir(direction, orientation * vector.up)\n\n  lovr.headset.setPose('hand/left', handPosition, handOrientation)\n  lovr.headset.setPose('hand/left/point', handPosition, handOrientation)\nend"
+        }
+      },
+      related = {
+        "lovr.headset.isActive",
+        "lovr.headset.setPosition",
+        "lovr.headset.setOrientation",
+        "lovr.headset.setPose",
+        "lovr.headset.setButton",
+        "lovr.headset.start",
+        "lovr.headset.connect"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "dt",
+              type = "number",
+              description = "The number of seconds elapsed since the last update."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
       name = "textinput",
       tag = "callbacks",
       summary = "Called when text has been entered.",
@@ -26554,6 +26589,25 @@ return {
           }
         },
         {
+          name = "pollEvents",
+          tag = "headset-misc",
+          summary = "Poll for headset events.",
+          description = "Polls for new headset events, adding them to the event queue.  This is called automatically by `lovr.run`.",
+          key = "lovr.headset.pollEvents",
+          module = "lovr.headset",
+          related = {
+            "lovr.system.pollEvents",
+            "lovr.headset.update",
+            "lovr.run"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setBackground",
           tag = "layers",
           summary = "Set the background layer.",
@@ -26579,6 +26633,45 @@ return {
             {
               description = "Disables any previously set background.",
               arguments = {},
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setButton",
+          tag = "headset-simulator",
+          summary = "Set a virtual button state for a device.",
+          description = "Sets the virtual button state of a device.  When no headset sesssion is active, querying the button state will return this value.  This is used to implement the keyboard/mouse headset simulator in the `lovr.simulate` callback.",
+          key = "lovr.headset.setButton",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.setPosition",
+            "lovr.headset.setOrientation",
+            "lovr.headset.setPose",
+            "lovr.headset.isDown",
+            "lovr.headset.wasPressed",
+            "lovr.headset.wasReleased",
+            "lovr.simulate"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "button",
+                  type = "DeviceButton",
+                  description = "The button to change."
+                },
+                {
+                  name = "down",
+                  type = "boolean",
+                  description = "Whether the button is pressed."
+                }
+              },
               returns = {}
             }
           }
@@ -26689,6 +26782,68 @@ return {
           }
         },
         {
+          name = "setOrientation",
+          tag = "headset-simulator",
+          summary = "Set a virtual orientation for a device.",
+          description = "Sets the virtual orientation of a device.  When no headset sesssion is active, getting the orientation of the device will return this orientation.  This is used to implement the keyboard/mouse headset simulator in the `lovr.simulate` callback.",
+          key = "lovr.headset.setOrientation",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.setPosition",
+            "lovr.headset.setPose",
+            "lovr.headset.setButton",
+            "lovr.headset.getOrientation",
+            "lovr.simulate"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the device is rotated around its rotation axis."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "orientation",
+                  type = "quaternion",
+                  description = "The orientation of the device."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
           name = "setPassthrough",
           tag = "headset",
           summary = "Change current passthrough mode.",
@@ -26742,6 +26897,145 @@ return {
                   description = "Whether the passthrough mode was supported and successfully enabled."
                 }
               }
+            }
+          }
+        },
+        {
+          name = "setPose",
+          tag = "headset-simulator",
+          summary = "Set a virtual pose for a device.",
+          description = "Sets the virtual pose of a device.  When no headset sesssion is active, getting the pose of the device will return this pose.  This is used to implement the keyboard/mouse headset simulator in the `lovr.simulate` callback.",
+          key = "lovr.headset.setPose",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.setPosition",
+            "lovr.headset.setOrientation",
+            "lovr.headset.setButton",
+            "lovr.headset.getPose",
+            "lovr.simulate"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the device."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the device."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the device."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The number of radians the device is rotated around its rotation axis."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "position",
+                  type = "vector",
+                  description = "The position of the device."
+                },
+                {
+                  name = "orientation",
+                  type = "quaternion",
+                  description = "The orientation of the device."
+                }
+              },
+              returns = {}
+            }
+          }
+        },
+        {
+          name = "setPosition",
+          tag = "headset-simulator",
+          summary = "Set a virtual position for a device.",
+          description = "Sets the virtual position of a device.  When no headset sesssion is active, getting the position of the device will return this position.  This is used to implement the keyboard/mouse headset simulator in the `lovr.simulate` callback.",
+          key = "lovr.headset.setPosition",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.setOrientation",
+            "lovr.headset.setPose",
+            "lovr.headset.setButton",
+            "lovr.headset.getPosition",
+            "lovr.simulate"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position of the device."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position of the device."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position of the device."
+                }
+              },
+              returns = {}
+            },
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to assign the position to."
+                },
+                {
+                  name = "position",
+                  type = "vector",
+                  description = "The position of the device."
+                }
+              },
+              returns = {}
             }
           }
         },
@@ -27709,6 +28003,11 @@ return {
           name = "Miscellaneous",
           tag = "headset-misc",
           description = "Functions that are internal or return information about the VR session."
+        },
+        {
+          name = "Simulator",
+          tag = "headset-simulator",
+          description = "These are used to set state used by the VR simulator."
         }
       }
     },

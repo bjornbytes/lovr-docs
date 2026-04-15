@@ -45,6 +45,11 @@ return {
       name = 'Miscellaneous',
       tag = 'headset-misc',
       description = 'Functions that are internal or return information about the VR session.'
+    },
+    {
+      name = 'Simulator',
+      tag = 'headset-simulator',
+      description = 'These are used to set state used by the VR simulator.'
     }
   }
 }

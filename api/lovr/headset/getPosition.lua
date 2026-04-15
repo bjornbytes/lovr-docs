@@ -1,9 +1,7 @@
 return {
   tag = 'input',
   summary = 'Get the position of a device or model.',
-  description = [[
-    Returns the current position of a device or model, in meters.
-  ]],
+  description = 'Returns the current position of a device or model, in meters.',
   arguments = {
     device = {
       type = 'Device',
