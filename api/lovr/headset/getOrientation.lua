@@ -1,12 +1,16 @@
 return {
   tag = 'input',
-  summary = 'Get the orientation of a device.',
-  description = 'Returns the current orientation of a device, in angle/axis form.',
+  summary = 'Get the orientation of a device or model.',
+  description = 'Returns the current orientation of a device or model, in angle/axis form.',
   arguments = {
     device = {
       type = 'Device',
       default = [['head']],
       description = 'The device to get the orientation of.'
+    },
+    model = {
+      type = 'Model',
+      description = 'The model to get the orientation of.'
     }
   },
   returns = {
@@ -31,9 +35,13 @@ return {
     {
       arguments = { 'device' },
       returns = { 'angle', 'ax', 'ay', 'az' }
+    },
+    {
+      arguments = { 'model' },
+      returns = { 'angle', 'ax', 'ay', 'az' }
     }
   },
-  notes = ' If the device isn\'t tracked, all zeroes will be returned.',
+  notes = ' If the object isn\'t tracked, this function returns zeroes.',
   related = {
     'lovr.headset.getPose',
     'lovr.headset.getPosition',

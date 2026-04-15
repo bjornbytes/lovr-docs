@@ -21,9 +21,11 @@ return {
       description = 'An existing MeshShape to clone.'
     },
     scale = {
-      type  = 'number',
-      default = '1.0',
-      description = 'A scale to apply to the mesh vertices.'
+      type = 'vector',
+      default = 'nil',
+      description = [[
+        An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.
+      ]]
     }
   },
   returns = {

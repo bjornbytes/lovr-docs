@@ -2,8 +2,9 @@ return {
   tag = 'devices',
   summary = 'Start an audio device.',
   description = [[
-    Starts the active playback or capture device.  By default the playback device is initialized
-    and started, but this can be controlled using the `t.audio.start` flag in `lovr.conf`.
+    Starts the active playback or capture device.  By default, the playback device is automatically
+    initialized and started the first time a `Source` is played, but this can be controlled using
+    the `t.audio.start` flag in `lovr.conf`.
   ]],
   arguments = {
     type = {
@@ -16,12 +17,16 @@ return {
     started = {
       type = 'boolean',
       description = 'Whether the device was successfully started.'
+    },
+    error = {
+      type = 'string | nil',
+      description = 'The error message, if any.'
     }
   },
   variants = {
     {
       arguments = { 'type' },
-      returns = { 'started' }
+      returns = { 'started', 'error' }
     }
   },
   notes = [[

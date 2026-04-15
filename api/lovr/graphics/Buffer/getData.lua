@@ -1,12 +1,8 @@
 return {
   tag = 'buffer-transfer',
+  async = true,
   summary = 'Get the data in the Buffer.',
-  description = [[
-    Downloads the Buffer's data from VRAM and returns it as a table.  This function is very very
-    slow because it stalls the CPU until the data is finished downloading, so it should only be used
-    for debugging or non-interactive scripts.  `Buffer:newReadback` is an alternative that returns a
-    `Readback` object, which will not block the CPU.
-  ]],
+  description = 'Downloads the Buffer\'s data from VRAM and returns it as a table.',
   arguments = {
     index = {
       type = 'number',
@@ -32,6 +28,10 @@ return {
     }
   },
   notes = [[
+    This function is very slow, because it stalls the CPU until the data has finished downloading
+    from the GPU.  The stall can be avoided be calling this function in a task, which will put the
+    task to sleep until the data is ready.  See `lovr.task` for more details.
+
     The length of the table will equal the number of items read.  Here are some examples of how the
     table is formatted:
 

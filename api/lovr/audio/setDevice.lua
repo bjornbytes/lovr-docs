@@ -34,10 +34,17 @@ return {
       default = 'nil',
       description = 'The id of the device to use, or `nil` to use the default device.'
     },
-    sink = {
-      type = 'Sound',
+    stream = {
+      type = 'AudioStream | boolean',
       default = 'nil',
-      description = 'An optional audio stream to use as a sink for the device.'
+      description = [[
+        An optional audio stream to use as a "sink" for the device.  For playback devices, any audio
+        sent to the speakers is also copied to the sink.  For capture devices, audio captured by the
+        device is copied to the sink.  Can be a specific AudioStream, or `true` to create a default
+        audio stream matching the native format of the device.  If nil, this will be `true` for
+        capture devices and `false` for playback devices.  Use `lovr.audio.getStream` to get the
+        stream after the device is created.
+      ]]
     },
     mode = {
       type = 'AudioShareMode',
@@ -53,13 +60,14 @@ return {
   },
   variants = {
     {
-      arguments = { 'type', 'id', 'sink', 'mode' },
+      arguments = { 'type', 'id', 'stream', 'mode' },
       returns = { 'success' }
     }
   },
   related = {
     'lovr.audio.getDevice',
     'lovr.audio.getDevices',
+    'lovr.audio.getStream',
     'lovr.audio.start',
     'lovr.audio.stop'
   }

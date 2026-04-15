@@ -13,8 +13,8 @@ return {
     strings = {
       type = 'table',
       description = [[
-        A table of colored strings, each given as a `{ color, string }` pair.  The color can be a
-        table, vector, or hexcode.
+        A table of multicolor strings.  The colors aren't used for anything, this just exists to
+        match `Pass:text`.
       ]]
     },
     wrap = {

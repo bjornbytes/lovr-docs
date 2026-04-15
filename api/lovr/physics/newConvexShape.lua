@@ -18,9 +18,9 @@ return {
       description = 'An existing ConvexShape to clone.'
     },
     scale = {
-      type  = 'number',
-      default = '1.0',
-      description = 'A scale to apply to the points.'
+      type = 'vector',
+      default = 'nil',
+      description = 'An optional scale to apply to the points.  Can also be provided as 3 numbers.'
     }
   },
   returns = {

@@ -1,11 +1,15 @@
 return {
   tag = 'input',
-  summary = 'Get the pose of a device.',
-  description = 'Returns the current position and orientation of a device.',
+  summary = 'Get the pose of a device or model.',
+  description = 'Returns the current position and orientation of a device or model.',
   arguments = {
     device = {
       type = 'Device',
       default = [['head']],
+      description = 'The device to get the pose of.'
+    },
+    model = {
+      type = 'Model',
       description = 'The device to get the pose of.'
     }
   },
@@ -43,12 +47,16 @@ return {
     {
       arguments = { 'device' },
       returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
+    },
+    {
+      arguments = { 'model' },
+      returns = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' }
     }
   },
   notes = [[
     Units are in meters.
 
-    If the device isn't tracked, all zeroes will be returned.
+    If the object isn't tracked, this function returns zeroes.
   ]],
   related = {
     'lovr.headset.getPosition',

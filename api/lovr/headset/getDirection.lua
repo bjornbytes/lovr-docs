@@ -1,12 +1,18 @@
 return {
   tag = 'input',
-  summary = 'Get the direction a device is pointing.',
-  description = 'Returns the direction a device is pointing.  It will always be normalized.',
+  summary = 'Get the direction a device or model is pointing.',
+  description = [[
+    Returns the direction a device or model is pointing.  It will always be normalized.
+  ]],
   arguments = {
     device = {
       type = 'Device',
       default = [['head']],
       description = 'The device to get the direction of.'
+    },
+    model = {
+      type = 'Model',
+      description = 'The model to get the direction of.'
     }
   },
   returns = {
@@ -27,12 +33,16 @@ return {
     {
       arguments = { 'device' },
       returns = { 'x', 'y', 'z' }
+    },
+    {
+      arguments = { 'model' },
+      returns = { 'x', 'y', 'z' }
     }
   },
   notes = [[
-    If the device isn't tracked, all zeroes will be returned.
+    If the object isn't tracked, this function returns zeroes.
 
-    This is the same as `quat(lovr.headset.getOrientation(device)):direction():unpack()`.
+    This is the same as `quaternion(lovr.headset.getOrientation(device)):direction()`.
   ]],
   related = {
     'lovr.headset.getPose',

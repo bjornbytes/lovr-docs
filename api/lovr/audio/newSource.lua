@@ -1,7 +1,9 @@
 return {
   tag = 'sources',
   summary = 'Create a new Source.',
-  description = 'Creates a new Source from an ogg, wav, or mp3 file.',
+  description = [[
+    Creates a new Source from an ogg, wav, or mp3 file, a `Sound`, or an `AudioStream`.
+  ]],
   arguments = {
     file = {
       type = 'string | Blob',
@@ -9,7 +11,11 @@ return {
     },
     sound = {
       type = 'Sound',
-      description = 'The Sound containing raw audio samples to play.'
+      description = 'The Sound containing audio to play.'
+    },
+    stream = {
+      type = 'Sound',
+      description = 'The AudioStream containing audio to play.'
     },
     options = {
       type = 'table',
@@ -27,33 +33,21 @@ return {
           ]]
         },
         {
+          name = 'spatial',
+          type = 'boolean',
+          default = 'false',
+          description = [[
+            Whether the Source should use spatial effects.  Non-spatial sources will get routed
+            directly to the speakers without further processing.
+          ]]
+        },
+        {
           name = 'pitchable',
           type = 'boolean',
           default = 'true',
           description = [[
             Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to
             false will improve performance slightly.
-          ]]
-        },
-        {
-          name = 'spatial',
-          type = 'boolean',
-          default = 'true',
-          description = [[
-            Whether the Source should use spatial effects.  Non-spatial sources will get routed
-            directly to the speakers without further processing.  Enabling an effect on a
-            non-spatial source will raise an error.
-          ]]
-        },
-        {
-          name = 'effects',
-          type = 'table',
-          default = 'nil',
-          description = [[
-            A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect
-            name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects
-            can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be
-            enabled.  Ignored if the `spatial` flag is false.
           ]]
         }
       }
@@ -73,15 +67,15 @@ return {
     {
       arguments = { 'sound', 'options' },
       returns = { 'source' }
+    },
+    {
+      arguments = { 'stream', 'options' },
+      returns = { 'source' }
     }
   },
   example = [[
     function lovr.load()
-      sandstorm = lovr.audio.newSource('darude.ogg', {
-        decode = false,
-        effects = { 'spatialization', attenuation = false, reverb = true }
-      })
-
+      sandstorm = lovr.audio.newSource('darude.ogg', { decode = false })
       sandstorm:play()
     end
   ]],

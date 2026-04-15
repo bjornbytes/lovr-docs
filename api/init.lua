@@ -1894,12 +1894,12 @@ return {
           name = "newSource",
           tag = "sources",
           summary = "Create a new Source.",
-          description = "Creates a new Source from an ogg, wav, or mp3 file.",
+          description = "Creates a new Source from an ogg, wav, or mp3 file, a `Sound`, or an `AudioStream`.",
           key = "lovr.audio.newSource",
           module = "lovr.audio",
           examples = {
             {
-              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', {\n    decode = false,\n    effects = { 'spatialization', attenuation = false, reverb = true }\n  })\n\n  sandstorm:play()\nend"
+              code = "function lovr.load()\n  sandstorm = lovr.audio.newSource('darude.ogg', { decode = false })\n  sandstorm:play()\nend"
             }
           },
           related = {
@@ -1926,22 +1926,16 @@ return {
                       default = "false"
                     },
                     {
+                      name = "spatial",
+                      type = "boolean",
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.",
+                      default = "false"
+                    },
+                    {
                       name = "pitchable",
                       type = "boolean",
                       description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
                       default = "true"
-                    },
-                    {
-                      name = "spatial",
-                      type = "boolean",
-                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
-                      default = "true"
-                    },
-                    {
-                      name = "effects",
-                      type = "table",
-                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
-                      default = "nil"
                     }
                   }
                 }
@@ -1959,7 +1953,7 @@ return {
                 {
                   name = "sound",
                   type = "Sound",
-                  description = "The Sound containing raw audio samples to play."
+                  description = "The Sound containing audio to play."
                 },
                 {
                   name = "options",
@@ -1974,22 +1968,58 @@ return {
                       default = "false"
                     },
                     {
+                      name = "spatial",
+                      type = "boolean",
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.",
+                      default = "false"
+                    },
+                    {
                       name = "pitchable",
                       type = "boolean",
                       description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
                       default = "true"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "source",
+                  type = "Source",
+                  description = "The new Source."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "stream",
+                  type = "Sound",
+                  description = "The AudioStream containing audio to play."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  default = "nil",
+                  table = {
+                    {
+                      name = "decode",
+                      type = "boolean",
+                      description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
+                      default = "false"
                     },
                     {
                       name = "spatial",
                       type = "boolean",
-                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.  Enabling an effect on a non-spatial source will raise an error.",
-                      default = "true"
+                      description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.",
+                      default = "false"
                     },
                     {
-                      name = "effects",
-                      type = "table",
-                      description = "A table of `Effect`s to enable on the Source.  This can be a list (numeric keys, effect name values) or a map (effect name keys, boolean values) or a mix of the two.  Effects can also be enabled later using `Source:setEffectEnabled`.  If nil, all effects will be enabled.  Ignored if the `spatial` flag is false.",
-                      default = "nil"
+                      name = "pitchable",
+                      type = "boolean",
+                      description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
+                      default = "true"
                     }
                   }
                 }
@@ -2014,6 +2044,7 @@ return {
           related = {
             "lovr.audio.getDevice",
             "lovr.audio.getDevices",
+            "lovr.audio.getStream",
             "lovr.audio.start",
             "lovr.audio.stop"
           },
@@ -2033,9 +2064,9 @@ return {
                   default = "nil"
                 },
                 {
-                  name = "sink",
-                  type = "Sound",
-                  description = "An optional audio stream to use as a sink for the device.",
+                  name = "stream",
+                  type = "AudioStream | boolean",
+                  description = "An optional audio stream to use as a \"sink\" for the device.  For playback devices, any audio sent to the speakers is also copied to the sink.  For capture devices, audio captured by the device is copied to the sink.  Can be a specific AudioStream, or `true` to create a default audio stream matching the native format of the device.  If nil, this will be `true` for capture devices and `false` for playback devices.  Use `lovr.audio.getStream` to get the stream after the device is created.",
                   default = "nil"
                 },
                 {
@@ -2287,7 +2318,7 @@ return {
           name = "start",
           tag = "devices",
           summary = "Start an audio device.",
-          description = "Starts the active playback or capture device.  By default the playback device is initialized and started, but this can be controlled using the `t.audio.start` flag in `lovr.conf`.",
+          description = "Starts the active playback or capture device.  By default, the playback device is automatically initialized and started the first time a `Source` is played, but this can be controlled using the `t.audio.start` flag in `lovr.conf`.",
           key = "lovr.audio.start",
           module = "lovr.audio",
           notes = "Starting an audio device may fail if:\n\n- The device is already started\n- No device was initialized with `lovr.audio.setDevice`\n- Lack of `audiocapture` permission on Android (see `lovr.system.requestPermission`)\n- Some other problem accessing the audio device",
@@ -2314,6 +2345,11 @@ return {
                   name = "started",
                   type = "boolean",
                   description = "Whether the device was successfully started."
+                },
+                {
+                  name = "error",
+                  type = "string | nil",
+                  description = "The error message, if any."
                 }
               }
             }
@@ -2348,6 +2384,11 @@ return {
                   name = "stopped",
                   type = "boolean",
                   description = "Whether the device was successfully stopped."
+                },
+                {
+                  name = "error",
+                  type = "string | nil",
+                  description = "The error message, if any."
                 }
               }
             }
@@ -14285,10 +14326,11 @@ return {
               name = "getData",
               tag = "buffer-transfer",
               summary = "Get the data in the Buffer.",
-              description = "Downloads the Buffer's data from VRAM and returns it as a table.  This function is very very slow because it stalls the CPU until the data is finished downloading, so it should only be used for debugging or non-interactive scripts.  `Buffer:newReadback` is an alternative that returns a `Readback` object, which will not block the CPU.",
+              description = "Downloads the Buffer's data from VRAM and returns it as a table.",
               key = "Buffer:getData",
               module = "lovr.graphics",
-              notes = "The length of the table will equal the number of items read.  Here are some examples of how the table is formatted:\n\n    buffer = lovr.graphics.newBuffer('int', { 7 })\n    buffer:getData() --> returns { 7 }\n\n    buffer = lovr.graphics.newBuffer('vec3', { 7, 8, 9 })\n    buffer:getData() --> returns {{ 7, 8, 9 }}\n\n    buffer = lovr.graphics.newBuffer('int', { 1, 2, 3 })\n    buffer:getData() --> returns { 1, 2, 3 }\n\n    buffer = lovr.graphics.newBuffer({ 'vec2', 'vec2' }, {\n      vec2(1,2), vec2(3,4),\n      vec2(5,6), vec2(7,8)\n    })\n    buffer:getData() --> returns { { 1, 2, 3, 4 }, { 5, 6, 7, 8 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'a', 'float' },\n      { 'b', 'float' }\n    }, { a = 1, b = 2 })\n    buffer:getData() --> returns { { 1, 2 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'x', 'int', 3 }\n    }, { x = { 1, 2, 3 } })\n    buffer:getData() --> returns { { x = { 1, 2, 3 } } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'lights', {\n        { 'pos', 'vec3' },\n        { 'size', 'float' },\n      }, 10}\n    }, data)\n    buffer:getData() --> returns { { lights = { { pos = ..., size = ... }, ... } } }\n\nIn summary, each individual item is wrapped in a table, except if the format is a single number. If the format has nested types or arrays then the tables will be key-value, otherwise they will use numeric keys.",
+              async = true,
+              notes = "This function is very slow, because it stalls the CPU until the data has finished downloading from the GPU.  The stall can be avoided be calling this function in a task, which will put the task to sleep until the data is ready.  See `lovr.task` for more details.\n\nThe length of the table will equal the number of items read.  Here are some examples of how the table is formatted:\n\n    buffer = lovr.graphics.newBuffer('int', { 7 })\n    buffer:getData() --> returns { 7 }\n\n    buffer = lovr.graphics.newBuffer('vec3', { 7, 8, 9 })\n    buffer:getData() --> returns {{ 7, 8, 9 }}\n\n    buffer = lovr.graphics.newBuffer('int', { 1, 2, 3 })\n    buffer:getData() --> returns { 1, 2, 3 }\n\n    buffer = lovr.graphics.newBuffer({ 'vec2', 'vec2' }, {\n      vec2(1,2), vec2(3,4),\n      vec2(5,6), vec2(7,8)\n    })\n    buffer:getData() --> returns { { 1, 2, 3, 4 }, { 5, 6, 7, 8 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'a', 'float' },\n      { 'b', 'float' }\n    }, { a = 1, b = 2 })\n    buffer:getData() --> returns { { 1, 2 } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'x', 'int', 3 }\n    }, { x = { 1, 2, 3 } })\n    buffer:getData() --> returns { { x = { 1, 2, 3 } } }\n\n    buffer = lovr.graphics.newBuffer({\n      { 'lights', {\n        { 'pos', 'vec3' },\n        { 'size', 'float' },\n      }, 10}\n    }, data)\n    buffer:getData() --> returns { { lights = { { pos = ..., size = ... }, ... } } }\n\nIn summary, each individual item is wrapped in a table, except if the format is a single number. If the format has nested types or arrays then the tables will be key-value, otherwise they will use numeric keys.",
               related = {
                 "Buffer:newBlob",
                 "Texture:getPixels"
@@ -14444,6 +14486,45 @@ return {
                       name = "stride",
                       type = "number",
                       description = "The stride of the Buffer, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "newBlob",
+              tag = "buffer-transfer",
+              summary = "Create a new Blob containing the data in the Buffer.",
+              description = "Downloads the Buffer's data from VRAM and returns it as a `Blob`.  This is similar to `Buffer:getData`, but returns a `Blob` instead of a table.",
+              key = "Buffer:newBlob",
+              module = "lovr.graphics",
+              async = true,
+              notes = "This function is very slow, because it stalls the CPU until the data has finished downloading from the GPU.  The stall can be avoided be calling this function in a task, which will put the task to sleep until the data is ready.  See `lovr.task` for more details.",
+              related = {
+                "Buffer:getData",
+                "Texture:getPixels"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset in the Buffer to read from, in bytes.",
+                      default = "0"
+                    },
+                    {
+                      name = "extent",
+                      type = "number",
+                      description = "The number of bytes to read.  If nil, reads the remainder of the buffer.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "blob",
+                      type = "Blob",
+                      description = "A new Blob with the Buffer's data."
                     }
                   }
                 }
@@ -14813,7 +14894,7 @@ return {
                     {
                       name = "strings",
                       type = "table",
-                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a table, vector, or hexcode."
+                      description = "A table of multicolor strings to wrap.  The colors aren't used for anything, this just exists to match `Pass:text`."
                     },
                     {
                       name = "wrap",
@@ -14923,7 +15004,7 @@ return {
                     {
                       name = "strings",
                       type = "table",
-                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a table, vector, or hexcode."
+                      description = "A table of multicolor strings.  The colors aren't used for anything, this just exists to match `Pass:text`."
                     },
                     {
                       name = "wrap",
@@ -14992,7 +15073,7 @@ return {
                     {
                       name = "strings",
                       type = "table",
-                      description = "A table of colored strings, each given as a `{ color, string }` pair.  The color can be a table, vector, or hexcode."
+                      description = "A table of multicolor strings to measure.  The colors aren't used for anything, this just exists to match `Pass:text`."
                     }
                   },
                   returns = {
@@ -22341,7 +22422,7 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode."
+                      description = "A table of multicolor strings to render.  Can be a flat table, like `{ color, string, color, string }`, or as nested pairs, like `{ { color, string }, { color, string } }`.  Colors can be given as tables, vectors, or hexcodes."
                     },
                     {
                       name = "x",
@@ -22418,7 +22499,7 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode."
+                      description = "A table of multicolor strings to render.  Can be a flat table, like `{ color, string, color, string }`, or as nested pairs, like `{ { color, string }, { color, string } }`.  Colors can be given as tables, vectors, or hexcodes."
                     },
                     {
                       name = "position",
@@ -22463,7 +22544,7 @@ return {
                     {
                       name = "colortext",
                       type = "table",
-                      description = "A table of strings with colors to render, in the form `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode."
+                      description = "A table of multicolor strings to render.  Can be a flat table, like `{ color, string, color, string }`, or as nested pairs, like `{ { color, string }, { color, string } }`.  Colors can be given as tables, vectors, or hexcodes."
                     },
                     {
                       name = "transform",
@@ -22677,6 +22758,47 @@ return {
                       name = "sz",
                       type = "number",
                       description = "The z component of the scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The amount to rotate the coordinate system by, in radians."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Transform the coordinate system using 7 numbers (no scale).",
+                  arguments = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x component of the translation."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y component of the translation."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z component of the translation."
                     },
                     {
                       name = "angle",
@@ -24809,11 +24931,11 @@ return {
         {
           name = "getDirection",
           tag = "input",
-          summary = "Get the direction a device is pointing.",
-          description = "Returns the direction a device is pointing.  It will always be normalized.",
+          summary = "Get the direction a device or model is pointing.",
+          description = "Returns the direction a device or model is pointing.  It will always be normalized.",
           key = "lovr.headset.getDirection",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.\n\nThis is the same as `quat(lovr.headset.getOrientation(device)):direction():unpack()`.",
+          notes = "If the object isn't tracked, this function returns zeroes.\n\nThis is the same as `quaternion(lovr.headset.getOrientation(device)):direction()`.",
           related = {
             "lovr.headset.getPose",
             "lovr.headset.getOrientation",
@@ -24830,6 +24952,32 @@ return {
                   type = "Device",
                   description = "The device to get the direction of.",
                   default = "'head'"
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x component of the direction."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y component of the direction."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z component of the direction."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The model to get the direction of."
                 }
               },
               returns = {
@@ -25157,6 +25305,30 @@ return {
           }
         },
         {
+          name = "getModelKeys",
+          tag = "controller-models",
+          summary = "Get a list of model keys.",
+          description = "Returns a list of model keys.  Use model keys to create models with `lovr.headset.newModel`. There is no correspondence between a model key and a particular `Device`.\n\nThe `lovr.modelschanged` event will be called when the list of model keys changes, providing the opportunity to create models for any new keys that appear and destroy models for keys that are no longer present.",
+          key = "lovr.headset.getModelKeys",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.newModel",
+            "lovr.modelschanged"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "keys",
+                  type = "{lightuserdata}",
+                  description = "A list of model keys."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getName",
           tag = "headset-misc",
           summary = "Get the name of the connected headset display.",
@@ -25179,11 +25351,11 @@ return {
         {
           name = "getOrientation",
           tag = "input",
-          summary = "Get the orientation of a device.",
-          description = "Returns the current orientation of a device, in angle/axis form.",
+          summary = "Get the orientation of a device or model.",
+          description = "Returns the current orientation of a device or model, in angle/axis form.",
           key = "lovr.headset.getOrientation",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.",
+          notes = "If the object isn't tracked, this function returns zeroes.",
           related = {
             "lovr.headset.getPose",
             "lovr.headset.getPosition",
@@ -25201,6 +25373,37 @@ return {
                   type = "Device",
                   description = "The device to get the orientation of.",
                   default = "'head'"
+                }
+              },
+              returns = {
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount of rotation around the axis of rotation, in radians."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The model to get the orientation of."
                 }
               },
               returns = {
@@ -25304,11 +25507,11 @@ return {
         {
           name = "getPose",
           tag = "input",
-          summary = "Get the pose of a device.",
-          description = "Returns the current position and orientation of a device.",
+          summary = "Get the pose of a device or model.",
+          description = "Returns the current position and orientation of a device or model.",
           key = "lovr.headset.getPose",
           module = "lovr.headset",
-          notes = "Units are in meters.\n\nIf the device isn't tracked, all zeroes will be returned.",
+          notes = "Units are in meters.\n\nIf the object isn't tracked, this function returns zeroes.",
           related = {
             "lovr.headset.getPosition",
             "lovr.headset.getOrientation",
@@ -25365,17 +25568,63 @@ return {
                   description = "The z component of the axis of rotation."
                 }
               }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The device to get the pose of."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position."
+                },
+                {
+                  name = "angle",
+                  type = "number",
+                  description = "The amount of rotation around the axis of rotation, in radians."
+                },
+                {
+                  name = "ax",
+                  type = "number",
+                  description = "The x component of the axis of rotation."
+                },
+                {
+                  name = "ay",
+                  type = "number",
+                  description = "The y component of the axis of rotation."
+                },
+                {
+                  name = "az",
+                  type = "number",
+                  description = "The z component of the axis of rotation."
+                }
+              }
             }
           }
         },
         {
           name = "getPosition",
           tag = "input",
-          summary = "Get the position of a device.",
-          description = "Returns the current position of a device, in meters, relative to the play area.",
+          summary = "Get the position of a device or model.",
+          description = "Returns the current position of a device or model, in meters.",
           key = "lovr.headset.getPosition",
           module = "lovr.headset",
-          notes = "If the device isn't tracked, all zeroes will be returned.",
+          notes = "If the object isn't tracked, this function returns zeroes.",
           related = {
             "lovr.headset.getPose",
             "lovr.headset.getOrientation",
@@ -25390,7 +25639,7 @@ return {
                 {
                   name = "device",
                   type = "Device",
-                  description = "The device to get the position of.",
+                  description = "The device to locate.",
                   default = "'head'"
                 }
               },
@@ -25398,17 +25647,43 @@ return {
                 {
                   name = "x",
                   type = "number",
-                  description = "The x position of the device."
+                  description = "The x position."
                 },
                 {
                   name = "y",
                   type = "number",
-                  description = "The y position of the device."
+                  description = "The y position."
                 },
                 {
                   name = "z",
                   type = "number",
-                  description = "The z position of the device."
+                  description = "The z position."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The model to locate."
+                }
+              },
+              returns = {
+                {
+                  name = "x",
+                  type = "number",
+                  description = "The x position."
+                },
+                {
+                  name = "y",
+                  type = "number",
+                  description = "The y position."
+                },
+                {
+                  name = "z",
+                  type = "number",
+                  description = "The z position."
                 }
               }
             }
@@ -25661,7 +25936,7 @@ return {
           name = "getViewCount",
           tag = "headset",
           summary = "Get the number of views used for rendering.",
-          description = "Returns the number of views used for rendering.  Each view consists of a pose in space and a set of angle values that determine the field of view.\n\nThis is usually 2 for stereo rendering configurations, but it can also be different.  For example, one way of doing foveated rendering uses 2 views for each eye -- one low quality view with a wider field of view, and a high quality view with a narrower field of view.  On those systems, this function will return 4.",
+          description = "Returns the number of views used for rendering.  Each view consists of a pose in space and a set of angle values that determine the field of view.\n\nThis is usually 2 for stereo rendering configurations, but it can also return 1 or 4.  For example, one way of doing foveated rendering uses 2 views for each eye -- one low quality view with a wider field of view, and a high quality view with a narrower field of view.  On those systems, this function will return 4.",
           key = "lovr.headset.getViewCount",
           module = "lovr.headset",
           related = {
@@ -25916,7 +26191,7 @@ return {
           name = "isTracked",
           tag = "input",
           summary = "Check if a device is currently tracked.",
-          description = "Returns whether any active headset driver is currently returning pose information for a device.",
+          description = "Returns whether a `Device` or `Model` has an actively tracked pose.",
           key = "lovr.headset.isTracked",
           module = "lovr.headset",
           notes = "If a device is tracked, it is guaranteed to return a valid pose until the next call to `lovr.headset.update`.",
@@ -25926,7 +26201,7 @@ return {
                 {
                   name = "device",
                   type = "Device",
-                  description = "The device to get the pose of.",
+                  description = "The device to check.",
                   default = "'head'"
                 }
               },
@@ -25934,7 +26209,23 @@ return {
                 {
                   name = "tracked",
                   type = "boolean",
-                  description = "Whether the device is currently tracked."
+                  description = "Whether the device or model is currently tracked."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "model",
+                  type = "Model",
+                  description = "The model to check.  Should have been created with `lovr.headset.newModel`."
+                }
+              },
+              returns = {
+                {
+                  name = "tracked",
+                  type = "boolean",
+                  description = "Whether the device or model is currently tracked."
                 }
               }
             }
@@ -29042,7 +29333,7 @@ return {
         {
           name = "Mat4",
           summary = "A 4x4 matrix.",
-          description = "A `mat4` is a math type that holds 16 values in a 4x4 grid.",
+          description = "A `Mat4` is a math type that holds 16 values in a 4x4 grid.",
           key = "Mat4",
           module = "lovr.math",
           constructors = {
@@ -31049,9 +31340,9 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the points.",
-                  default = "1.0"
+                  type = "vector",
+                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -31071,9 +31362,9 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the points.",
-                  default = "1.0"
+                  type = "vector",
+                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -31094,9 +31385,9 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the points.",
-                  default = "1.0"
+                  type = "vector",
+                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -31380,9 +31671,9 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the mesh vertices.",
-                  default = "1.0"
+                  type = "vector",
+                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -31402,9 +31693,9 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the mesh vertices.",
-                  default = "1.0"
+                  type = "vector",
+                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.",
+                  default = "nil"
                 }
               },
               returns = {
@@ -31425,9 +31716,9 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "number",
-                  description = "A scale to apply to the mesh vertices.",
-                  default = "1.0"
+                  type = "vector",
+                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.",
+                  default = "nil"
                 }
               },
               returns = {

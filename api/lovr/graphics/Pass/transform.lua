@@ -68,6 +68,11 @@ return {
       returns = {}
     },
     {
+      description = 'Transform the coordinate system using 7 numbers (no scale).',
+      arguments = { 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az' },
+      returns = {}
+    },
+    {
       description = 'Transform the coordinate system using vector types.',
       arguments = { 'translation', 'scale', 'rotation' },
       returns = {}

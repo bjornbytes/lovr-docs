@@ -18,12 +18,16 @@ return {
     stopped = {
       type = 'boolean',
       description = 'Whether the device was successfully stopped.'
+    },
+    error = {
+      type = 'string | nil',
+      description = 'The error message, if any.'
     }
   },
   variants = {
     {
       arguments = { 'type' },
-      returns = { 'stopped' }
+      returns = { 'stopped', 'error' }
     }
   },
   notes = 'Switching devices with `lovr.audio.setDevice` will stop the existing one.',

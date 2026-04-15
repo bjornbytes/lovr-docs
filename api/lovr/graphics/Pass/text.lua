@@ -1,9 +1,7 @@
 return {
   tag = 'drawing',
   summary = 'Draw text.',
-  description = [[
-    Draws text.  The font can be changed using `Pass:setFont`.
-  ]],
+  description = 'Draws text.  The font can be changed using `Pass:setFont`.',
   arguments = {
     text = {
       type = 'string',
@@ -12,8 +10,10 @@ return {
     colortext = {
       type = 'table',
       description = [[
-        A table of strings with colors to render, in the form
-        `{ color1, string1, color2, string2 }`, where color is a table, vector, or hexcode.
+        A table of multicolor strings to render.  Can be a flat table, like
+        `{ color, string, color, string }`, or as nested pairs, like
+        `{ { color, string }, { color, string } }`.  Colors can be given as tables, vectors, or
+        hexcodes.
       ]]
     },
     x = {
