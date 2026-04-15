@@ -16,6 +16,7 @@ return {
   },
   related = {
     'lovr.headset.stop',
-    'lovr.headset.isActive'
+    'lovr.headset.isActive',
+    'lovr.headset.connect'
   }
 }

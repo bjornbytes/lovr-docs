@@ -205,9 +205,9 @@ return {
           description = 'Configuration for the headset.',
           table = {
             {
-              name = 'drivers',
-              type = 'table',
-              description = 'An ordered list of preferred headset drivers.'
+              name = 'connect',
+              type = 'boolean',
+              description = 'Whether LÖVR should try to connect to VR hardware at startup.'
             },
             {
               name = 'start',
@@ -405,7 +405,7 @@ return {
           t.graphics.shadercache = true
 
           -- Headset settings
-          t.headset.drivers = { 'openxr', 'simulator' }
+          t.headset.connect = true
           t.headset.start = true
           t.headset.supersample = false
           t.headset.seated = false

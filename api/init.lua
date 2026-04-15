@@ -10,7 +10,7 @@ return {
       examples = {
         {
           description = "A noop conf.lua that sets all configuration settings to their defaults:",
-          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.18.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.debug = false\n  t.audio.samplerate = 48000\n  t.audio.start = true\n  t.audio.reverb.type = 'convolution'\n  t.audio.reverb.rays = 4096\n  t.audio.reverb.bounces = 4\n  t.audio.reverb.duration = 2\n  t.audio.reverb.rate = .1\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.drivers = { 'openxr', 'simulator' }\n  t.headset.start = true\n  t.headset.supersample = false\n  t.headset.seated = false\n  t.headset.mask = true\n  t.headset.antialias = true\n  t.headset.stencil = false\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Thread settings\n  t.thread.workers = -1\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.centered = true\n  t.window.fullscreen = false\n  t.window.resizable = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
+          code = "function lovr.conf(t)\n\n  -- Set the project version and identity\n  t.version = '0.18.0'\n  t.identity = 'default'\n\n  -- Set save directory precedence\n  t.saveprecedence = true\n\n  -- Enable or disable different modules\n  t.modules.audio = true\n  t.modules.data = true\n  t.modules.event = true\n  t.modules.graphics = true\n  t.modules.headset = true\n  t.modules.math = true\n  t.modules.physics = true\n  t.modules.system = true\n  t.modules.thread = true\n  t.modules.timer = true\n\n  -- Audio\n  t.audio.debug = false\n  t.audio.samplerate = 48000\n  t.audio.start = true\n  t.audio.reverb.type = 'convolution'\n  t.audio.reverb.rays = 4096\n  t.audio.reverb.bounces = 4\n  t.audio.reverb.duration = 2\n  t.audio.reverb.rate = .1\n\n  -- Graphics\n  t.graphics.debug = false\n  t.graphics.vsync = true\n  t.graphics.stencil = false\n  t.graphics.antialias = true\n  t.graphics.shadercache = true\n\n  -- Headset settings\n  t.headset.connect = true\n  t.headset.start = true\n  t.headset.supersample = false\n  t.headset.seated = false\n  t.headset.mask = true\n  t.headset.antialias = true\n  t.headset.stencil = false\n  t.headset.submitdepth = true\n  t.headset.overlay = false\n\n  -- Math settings\n  t.math.globals = true\n\n  -- Thread settings\n  t.thread.workers = -1\n\n  -- Configure the desktop window\n  t.window.width = 1080\n  t.window.height = 600\n  t.window.centered = true\n  t.window.fullscreen = false\n  t.window.resizable = false\n  t.window.title = 'LÖVR'\n  t.window.icon = nil\nend"
         }
       },
       notes = "Disabling unused modules can improve startup time.\n\n`t.window` can be set to nil to avoid creating the window.  The window can later be opened manually using `lovr.system.openWindow`.\n\nEnabling the `t.graphics.debug` flag will add additional error checks and will send messages from the GPU driver to the `lovr.log` callback.  This will decrease performance but can help provide information on performance problems or other bugs.  It will also cause `lovr.graphics.newShader` to embed debugging information in shaders which allows inspecting variables and stepping through shaders line-by-line in tools like RenderDoc.\n\n`t.graphics.debug` can also be enabled using the `--graphics-debug` command line option.",
@@ -194,9 +194,9 @@ return {
                   description = "Configuration for the headset.",
                   table = {
                     {
-                      name = "drivers",
-                      type = "table",
-                      description = "An ordered list of preferred headset drivers."
+                      name = "connect",
+                      type = "boolean",
+                      description = "Whether LÖVR should try to connect to VR hardware at startup."
                     },
                     {
                       name = "start",
@@ -24719,6 +24719,35 @@ return {
           }
         },
         {
+          name = "connect",
+          tag = "headset-misc",
+          summary = "Tries to connect to VR hardware.",
+          description = "Tries to connect to headset hardware.  This will initialize OpenXR and query the system for any connected VR hardware.  It must be called before other functions like `lovr.headset.start` can be called.  It may be desirable to avoid calling this function until later, because it will e.g. cause the SteamVR window to pop up, and may delay the rest of LÖVR's startup.\n\nUsually this is called automatically by boot.lua, but you can disable this behavior by setting `t.headset.connect` to false in `lovr.conf`.",
+          key = "lovr.headset.connect",
+          module = "lovr.headset",
+          related = {
+            "lovr.headset.start",
+            "lovr.headset.stop"
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the headset was successfully connected."
+                },
+                {
+                  name = "error",
+                  type = "string | nil",
+                  description = "The error message, on failure."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getAngularVelocity",
           tag = "input",
           summary = "Get the angular velocity of a device.",
@@ -26755,7 +26784,8 @@ return {
           module = "lovr.headset",
           related = {
             "lovr.headset.stop",
-            "lovr.headset.isActive"
+            "lovr.headset.isActive",
+            "lovr.headset.connect"
           },
           variants = {
             {
