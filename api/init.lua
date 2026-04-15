@@ -16023,59 +16023,6 @@ return {
               }
             },
             {
-              name = "getBlendShapeCount",
-              summary = "Get the number of blend shapes in the model.",
-              description = "Returns the number of blend shapes in the model.",
-              key = "Model:getBlendShapeCount",
-              module = "lovr.graphics",
-              related = {
-                "Model:getBlendShapeName",
-                "ModelData:getBlendShapeCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of blend shapes in the model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getBlendShapeName",
-              summary = "Get the name of a blend shape in the model.",
-              description = "Returns the name of a blend shape in the model.",
-              key = "Model:getBlendShapeName",
-              module = "lovr.graphics",
-              notes = "This function will throw an error if the blend shape index is invalid.",
-              related = {
-                "Model:getBlendShapeCount",
-                "ModelData:getBlendShapeName"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "index",
-                      type = "number",
-                      description = "The index of a blend shape."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the blend shape."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getBlendShapeWeight",
               summary = "Get the weight of a blend shape.",
               description = "Returns the weight of a blend shape.  A blend shape contains offset values for the vertices of one of the meshes in a Model.  Whenever the Model is drawn, the offsets are multiplied by the weight of the blend shape, allowing for smooth blending between different meshes.  A weight of zero won't apply any displacement and will skip processing of the blend shape.",
@@ -16083,8 +16030,8 @@ return {
               module = "lovr.graphics",
               notes = "The initial weights are declared in the model file.\n\nWeights can be any number, but usually they're kept between 0 and 1.\n\nThis function will throw an error if the blend shape name or index doesn't exist.",
               related = {
-                "Model:getBlendShapeCount",
-                "Model:getBlendShapeName",
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName",
                 "Model:resetBlendShapes"
               },
               variants = {
@@ -16191,28 +16138,6 @@ return {
                       name = "z",
                       type = "number",
                       description = "The z offset of the center of the bounding box."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getData",
-              summary = "Get the ModelData backing the Model.",
-              description = "Returns the ModelData this Model was created from.",
-              key = "Model:getData",
-              module = "lovr.graphics",
-              related = {
-                "lovr.data.newModelData"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "data",
-                      type = "ModelData",
-                      description = "The ModelData."
                     }
                   }
                 }
@@ -17049,63 +16974,6 @@ return {
               }
             },
             {
-              name = "getTriangleCount",
-              summary = "Get the total number of triangles in the Model.",
-              description = "Returns the total number of triangles in the Model.",
-              key = "Model:getTriangleCount",
-              module = "lovr.graphics",
-              notes = "This isn't always related to the length of the vertex buffer, since a mesh in the Model could be drawn by multiple nodes.",
-              related = {
-                "Model:getTriangles",
-                "Model:getVertexCount",
-                "ModelData:getTriangleCount",
-                "Model:getMesh"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The total number of triangles in the Model."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getTriangles",
-              summary = "Get all the triangles in the Model.",
-              description = "Returns 2 tables containing mesh data for the Model.\n\nThe first table is a list of vertex positions and contains 3 numbers for the x, y, and z coordinate of each vertex.  The second table is a list of triangles and contains 1-based indices into the first table representing the first, second, and third vertices that make up each triangle.\n\nThe vertex positions will be affected by node transforms.",
-              key = "Model:getTriangles",
-              module = "lovr.graphics",
-              notes = "After this function is called on a Model once, the result is cached (in its ModelData).",
-              related = {
-                "Model:getTriangleCount",
-                "Model:getVertexCount",
-                "Model:getMesh",
-                "ModelData:getTriangles"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "vertices",
-                      type = "{number}",
-                      description = "The triangle vertex positions, returned as a flat (non-nested) table of numbers.  The position of each vertex is given as an x, y, and z coordinate."
-                    },
-                    {
-                      name = "indices",
-                      type = "{number}",
-                      description = "A list of numbers representing how to connect the vertices into triangles.  Each number is a 1-based index into the `vertices` table, and every 3 indices form a triangle."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getVertexBuffer",
               summary = "Get a Buffer containing the vertices in the Model.",
               description = "Returns a `Buffer` that holds the vertices of all of the meshes in the Model.",
@@ -17123,31 +16991,6 @@ return {
                       name = "buffer",
                       type = "Buffer",
                       description = "The vertex buffer."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getVertexCount",
-              summary = "Get the total vertex count of the Model.",
-              description = "Returns the total vertex count of the Model.",
-              key = "Model:getVertexCount",
-              module = "lovr.graphics",
-              notes = "This isn't always the same as the length of the vertex buffer, since a mesh in the Model could be drawn by multiple nodes.",
-              related = {
-                "Model:getTriangles",
-                "Model:getTriangleCount",
-                "ModelData:getVertexCount"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The total number of vertices."
                     }
                   }
                 }
@@ -17267,8 +17110,8 @@ return {
               module = "lovr.graphics",
               notes = "The initial weights are declared in the model file.\n\nWeights can be any number, but usually they're kept between 0 and 1.\n\nThis function will throw an error if the blend shape name or index doesn't exist.",
               related = {
-                "Model:getBlendShapeCount",
-                "Model:getBlendShapeName",
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName",
                 "Model:resetBlendShapes"
               },
               variants = {
@@ -32017,8 +31860,7 @@ return {
             "lovr.physics.newCapsuleShape",
             "lovr.physics.newCylinderShape",
             "lovr.physics.newConvexShape",
-            "lovr.physics.newTerrainShape",
-            "Model:getTriangles"
+            "lovr.physics.newTerrainShape"
           },
           variants = {
             {
@@ -32052,7 +31894,7 @@ return {
               arguments = {
                 {
                   name = "object",
-                  type = "ModelData | Model | Mesh",
+                  type = "ModelData | Mesh",
                   description = "An object to use the triangles from.  Meshes must use the `cpu` storage mode."
                 },
                 {
@@ -39791,8 +39633,7 @@ return {
                 "World:newCapsuleCollider",
                 "World:newCylinderCollider",
                 "World:newConvexCollider",
-                "World:newTerrainCollider",
-                "Model:getTriangles"
+                "World:newTerrainCollider"
               },
               variants = {
                 {
@@ -39822,22 +39663,6 @@ return {
                       name = "modelData",
                       type = "ModelData",
                       description = "A ModelData to use for the mesh data."
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "collider",
-                      type = "Collider",
-                      description = "The new Collider."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "model",
-                      type = "Model",
-                      description = "A Model to use for the mesh data.  Similar to calling `Model:getTriangles` and passing it to this function, but has better performance."
                     }
                   },
                   returns = {

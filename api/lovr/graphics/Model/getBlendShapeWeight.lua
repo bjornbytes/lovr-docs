@@ -32,8 +32,8 @@ return {
     This function will throw an error if the blend shape name or index doesn't exist.
   ]],
   related = {
-    'Model:getBlendShapeCount',
-    'Model:getBlendShapeName',
+    'ModelData:getMeshBlendShapeCount',
+    'ModelData:getMeshBlendShapeName',
     'Model:resetBlendShapes'
   }
 }

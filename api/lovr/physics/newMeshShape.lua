@@ -13,7 +13,7 @@ return {
       ]]
     },
     object = {
-      type = 'ModelData | Model | Mesh',
+      type = 'ModelData | Mesh',
       description = 'An object to use the triangles from.  Meshes must use the `cpu` storage mode.'
     },
     template = {
@@ -60,7 +60,6 @@ return {
     'lovr.physics.newCapsuleShape',
     'lovr.physics.newCylinderShape',
     'lovr.physics.newConvexShape',
-    'lovr.physics.newTerrainShape',
-    'Model:getTriangles'
+    'lovr.physics.newTerrainShape'
   }
 }

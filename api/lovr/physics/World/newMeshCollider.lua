@@ -30,13 +30,6 @@ return {
       type = 'ModelData',
       description = 'A ModelData to use for the mesh data.'
     },
-    model = {
-      type = 'Model',
-      description = [[
-        A Model to use for the mesh data.  Similar to calling `Model:getTriangles` and passing it to
-        this function, but has better performance.
-      ]]
-    },
     mesh = {
       type = 'Mesh',
       description = 'A Mesh to use for the mesh data.  It must use the `cpu` storage mode.'
@@ -59,10 +52,6 @@ return {
     },
     {
       arguments = { 'modelData' },
-      returns = { 'collider' }
-    },
-    {
-      arguments = { 'model' },
       returns = { 'collider' }
     },
     {
@@ -89,7 +78,6 @@ return {
     'World:newCapsuleCollider',
     'World:newCylinderCollider',
     'World:newConvexCollider',
-    'World:newTerrainCollider',
-    'Model:getTriangles'
+    'World:newTerrainCollider'
   }
 }
