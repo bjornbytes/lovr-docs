@@ -32442,7 +32442,7 @@ return {
               arguments = {
                 {
                   name = "object",
-                  type = "ModelData | Model | Mesh",
+                  type = "ModelData | Mesh",
                   description = "An object to use for the points of the convex hull."
                 },
                 {
@@ -36575,7 +36575,7 @@ return {
         {
           name = "ConvexShape",
           summary = "A convex hull shape.",
-          description = "A type of `Shape` that is a convex hull of a collection of points, allowing for custom collision shapes.  It is similar to a `MeshShape`, but it is not required to be kinematic, and it will use the convex hull of the mesh instead of using the exact triangles of the object.\n\nConvex shapes can be created from a `Model`, `ModelData`, `Mesh`, or a table of point positions, similar to `MeshShape`.\n\nConvex shapes can be cloned by passing in an existing ConvexShape to clone:\n\n    model = lovr.data.newModelData('rock.glb')\n    parent = lovr.physics.newConvexShape(model)\n    clone = lovr.physics.newConvexShape(parent, scale)\n\nThe clone will reuse all of the data from the parent, which speeds things up a lot.\n\nConvex shapes can have a custom scale applied to their points, and clones can have their own scale.",
+          description = "A type of `Shape` that is a convex hull of a collection of points, allowing for custom collision shapes.  It is similar to a `MeshShape`, but it is not required to be kinematic, and it will use the convex hull of the mesh instead of using the exact triangles of the object.\n\nConvex shapes can be created from a `ModelData`, `Mesh`, or a table of point positions, similar to `MeshShape`.\n\nConvex shapes can be cloned by passing in an existing ConvexShape to clone:\n\n    model = lovr.data.newModelData('rock.glb')\n    parent = lovr.physics.newConvexShape(model)\n    clone = lovr.physics.newConvexShape(parent, scale)\n\nThe clone will reuse all of the data from the parent, which speeds things up a lot.\n\nConvex shapes can have a custom scale applied to their points, and clones can have their own scale.",
           key = "ConvexShape",
           module = "lovr.physics",
           constructors = {
@@ -36585,7 +36585,7 @@ return {
           examples = {
             {
               description = "Drawing a convex hull.",
-              code = "function lovr.load()\n  model = lovr.graphics.newModel('eggplant.glb')\n  hull = lovr.physics.newConvexShape(model)\n\n  -- Each face will be a list of points to draw a line through\n  faces = {}\n\n  for f = 1, hull:getFaceCount() do\n    local face = {}\n\n    for _, pointindex in ipairs(hull:getFace(f)) do\n      local x, y, z = hull:getPoint(pointindex)\n      table.insert(face, x)\n      table.insert(face, y)\n      table.insert(face, z)\n    end\n\n    -- Connect the last point back to the first point\n    table.insert(face, face[1])\n    table.insert(face, face[2])\n    table.insert(face, face[3])\n\n    table.insert(faces, face)\n  end\nend\n\nfunction lovr.draw(pass)\n  pass:push()\n  pass:translate(0, 0, -5)\n  pass:draw(model)\n\n  pass:setColor(1, 0, 0)\n  for i, points in pairs(faces) do\n    pass:line(points)\n  end\n  pass:pop()\nend"
+              code = "function lovr.load()\n  modelData = lovr.data.newModelData('eggplant.glb')\n  model = lovr.graphics.newModel(modelData)\n  hull = lovr.physics.newConvexShape(modelData)\n\n  -- Each face will be a list of points to draw a line through\n  faces = {}\n\n  for f = 1, hull:getFaceCount() do\n    local face = {}\n\n    for _, pointindex in ipairs(hull:getFace(f)) do\n      local x, y, z = hull:getPoint(pointindex)\n      table.insert(face, x)\n      table.insert(face, y)\n      table.insert(face, z)\n    end\n\n    -- Connect the last point back to the first point\n    table.insert(face, face[1])\n    table.insert(face, face[2])\n    table.insert(face, face[3])\n\n    table.insert(faces, face)\n  end\nend\n\nfunction lovr.draw(pass)\n  pass:push()\n  pass:translate(0, 0, -5)\n  pass:draw(model)\n\n  pass:setColor(1, 0, 0)\n  for i, points in pairs(faces) do\n    pass:line(points)\n  end\n  pass:pop()\nend"
             }
           },
           extends = "Shape",
@@ -40184,73 +40184,6 @@ return {
                       name = "modelData",
                       type = "ModelData",
                       description = "The ModelData to compute a convex hull from."
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "collider",
-                      type = "Collider",
-                      description = "The new Collider."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate of the collider, in meters.",
-                      default = "0"
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate of the collider, in meters.",
-                      default = "0"
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate of the collider, in meters.",
-                      default = "0"
-                    },
-                    {
-                      name = "model",
-                      type = "Model",
-                      description = "The Model to compute a convex hull from."
-                    },
-                    {
-                      name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "collider",
-                      type = "Collider",
-                      description = "The new Collider."
-                    }
-                  }
-                },
-                {
-                  arguments = {
-                    {
-                      name = "position",
-                      type = "vector",
-                      description = "The position of the center of the capsule, in meters."
-                    },
-                    {
-                      name = "model",
-                      type = "Model",
-                      description = "The Model to compute a convex hull from."
                     },
                     {
                       name = "scale",

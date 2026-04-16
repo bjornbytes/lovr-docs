@@ -10,7 +10,7 @@ return {
       ]]
     },
     object = {
-      type = 'ModelData | Model | Mesh',
+      type = 'ModelData | Mesh',
       description = 'An object to use for the points of the convex hull.'
     },
     template = {

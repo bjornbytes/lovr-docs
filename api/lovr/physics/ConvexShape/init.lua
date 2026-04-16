@@ -5,8 +5,8 @@ return {
     shapes.  It is similar to a `MeshShape`, but it is not required to be kinematic, and it will use
     the convex hull of the mesh instead of using the exact triangles of the object.
 
-    Convex shapes can be created from a `Model`, `ModelData`, `Mesh`, or a table of point positions,
-    similar to `MeshShape`.
+    Convex shapes can be created from a `ModelData`, `Mesh`, or a table of point positions, similar
+    to `MeshShape`.
 
     Convex shapes can be cloned by passing in an existing ConvexShape to clone:
 
@@ -28,8 +28,9 @@ return {
     description = 'Drawing a convex hull.',
     code = [[
       function lovr.load()
-        model = lovr.graphics.newModel('eggplant.glb')
-        hull = lovr.physics.newConvexShape(model)
+        modelData = lovr.data.newModelData('eggplant.glb')
+        model = lovr.graphics.newModel(modelData)
+        hull = lovr.physics.newConvexShape(modelData)
 
         -- Each face will be a list of points to draw a line through
         faces = {}

@@ -35,10 +35,6 @@ return {
       type = 'ModelData',
       description = 'The ModelData to compute a convex hull from.'
     },
-    model = {
-      type = 'Model',
-      description = 'The Model to compute a convex hull from.'
-    },
     mesh = {
       type = 'Mesh',
       description = 'The Mesh to compute a convex hull from.  It must use the `cpu` storage mode.'
@@ -74,14 +70,6 @@ return {
     },
     {
       arguments = { 'position', 'modelData', 'scale' },
-      returns = { 'collider' }
-    },
-    {
-      arguments = { 'x', 'y', 'z', 'model', 'scale' },
-      returns = { 'collider' }
-    },
-    {
-      arguments = { 'position', 'model', 'scale' },
       returns = { 'collider' }
     },
     {
