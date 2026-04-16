@@ -272,12 +272,12 @@ return {
                     {
                       name = "width",
                       type = "number",
-                      description = "The width of the window (or 0 to use the monitor width)."
+                      description = "The width of the window."
                     },
                     {
                       name = "height",
                       type = "number",
-                      description = "The height of the window (or 0 to use the monitor height) ."
+                      description = "The height of the window."
                     },
                     {
                       name = "centered",
@@ -5027,9 +5027,9 @@ return {
                 },
                 {
                   name = "channels",
-                  type = "ChannelLayout",
-                  description = "The channel layout.",
-                  default = "'stereo'"
+                  type = "number",
+                  description = "The number of channels.",
+                  default = "2"
                 },
                 {
                   name = "sampleRate",
@@ -7049,7 +7049,97 @@ return {
               },
               variants = {
                 {
+                  description = "Get the bounding box of the whole model.",
                   arguments = {},
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the vertices in the model."
+                    }
+                  }
+                },
+                {
+                  description = "Get the bounding box of a single mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the bounding box of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the vertices in the model."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the vertices in the model."
+                    }
+                  }
+                },
+                {
+                  description = "Get the bounding box of a single part of a mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the bounding box of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the bounding box of."
+                    }
+                  },
                   returns = {
                     {
                       name = "minx",
@@ -7101,22 +7191,82 @@ return {
               },
               variants = {
                 {
+                  description = "Get the center of the whole model.",
                   arguments = {},
                   returns = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x offset of the center of the bounding box."
+                      description = "The x coordinate of the center of the bounding box."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y offset of the center of the bounding box."
+                      description = "The y coordinate of the center of the bounding box."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z offset of the center of the bounding box."
+                      description = "The z coordinate of the center of the bounding box."
+                    }
+                  }
+                },
+                {
+                  description = "Get the center of a single mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the center of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the bounding box."
+                    }
+                  }
+                },
+                {
+                  description = "Get the center of a single part of a mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the center of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the center of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the bounding box."
                     }
                   }
                 }
@@ -7138,12 +7288,52 @@ return {
               },
               variants = {
                 {
+                  description = "Get the depth of the whole model.",
                   arguments = {},
                   returns = {
                     {
                       name = "depth",
                       type = "number",
-                      description = "The depth of the model."
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the depth of a single mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the depth of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the depth of a single part of a mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the depth of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the depth of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
                     }
                   }
                 }
@@ -7165,22 +7355,82 @@ return {
               },
               variants = {
                 {
+                  description = "Get the dimensions of the whole model.",
                   arguments = {},
                   returns = {
                     {
                       name = "width",
                       type = "number",
-                      description = "The width of the model."
+                      description = "The width."
                     },
                     {
                       name = "height",
                       type = "number",
-                      description = "The height of the model."
+                      description = "The height."
                     },
                     {
                       name = "depth",
                       type = "number",
-                      description = "The depth of the model."
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the dimensions of a single mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the dimensions of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the dimensions of a single part of a mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the dimensions of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the dimensions of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
                     }
                   }
                 }
@@ -7202,12 +7452,52 @@ return {
               },
               variants = {
                 {
+                  description = "Get the height of the whole model.",
                   arguments = {},
                   returns = {
                     {
                       name = "height",
                       type = "number",
-                      description = "The height of the model."
+                      description = "The height."
+                    }
+                  }
+                },
+                {
+                  description = "Get the height of a single mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the height of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
+                    }
+                  }
+                },
+                {
+                  description = "Get the height of a single part of a mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the height of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the height of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
                     }
                   }
                 }
@@ -8587,12 +8877,52 @@ return {
               },
               variants = {
                 {
+                  description = "Get the width of the whole model.",
                   arguments = {},
                   returns = {
                     {
                       name = "width",
                       type = "number",
-                      description = "The width of the model."
+                      description = "The width."
+                    }
+                  }
+                },
+                {
+                  description = "Get the width of a single mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the width of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
+                    }
+                  }
+                },
+                {
+                  description = "Get the width of a single part of a mesh in the model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the width of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the width of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
                     }
                   }
                 }
@@ -15474,7 +15804,7 @@ return {
               description = "Returns a table with the Mesh's vertex indices.",
               key = "Mesh:getIndices",
               module = "lovr.graphics",
-              notes = "This function will be very very slow if the Mesh's storage is `gpu`, because the data needs to be downloaded from the GPU.",
+              notes = "This function returns `nil` if the mesh was created with `gpu` storage.",
               related = {
                 "Mesh:getIndexBuffer",
                 "Mesh:setIndexBuffer"
@@ -15637,7 +15967,7 @@ return {
               description = "Returns the vertices in the Mesh.",
               key = "Mesh:getVertices",
               module = "lovr.graphics",
-              notes = "> **This function will be very very slow if the storage mode of the Mesh is `gpu`, because the\n> data will be downloaded from VRAM.  A better option is to call `Buffer:newReadback` on the\n> Mesh's underlying vertex buffer (`Mesh:getVertexBuffer`), which will download in the\n> background instead of waiting for it to complete.**",
+              notes = "This function returns `nil` if the mesh was created with `gpu` storage.",
               related = {
                 "Mesh:getVertexBuffer",
                 "Mesh:getVertexFormat",
@@ -15791,6 +16121,22 @@ return {
                       name = "count",
                       type = "number",
                       description = "The number of vertices that will be drawn (or indices, if the Mesh has vertex indices)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "This variant has been replaced by `Mesh:setBaseVertex`.",
+                  arguments = {
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the first vertex that will be drawn (or the first index, if the Mesh has vertex indices)."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices that will be drawn (or indices, if the Mesh has vertex indices)."
                     },
                     {
                       name = "offset",
@@ -15798,7 +16144,8 @@ return {
                       description = "When the Mesh has vertex indices, an offset that will be added to the index values before fetching the corresponding vertex.  This is ignored if the Mesh does not have vertex indices."
                     }
                   },
-                  returns = {}
+                  returns = {},
+                  deprecated = true
                 },
                 {
                   description = "Disable the draw range.  The Mesh will draw all of its vertices.",
@@ -16266,7 +16613,97 @@ return {
               },
               variants = {
                 {
+                  description = "Get the bounding box of the whole Model.",
                   arguments = {},
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the vertices in the Model."
+                    }
+                  }
+                },
+                {
+                  description = "Get the bounding box of a single mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the bounding box of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "minx",
+                      type = "number",
+                      description = "The minimum x coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "maxx",
+                      type = "number",
+                      description = "The maximum x coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "miny",
+                      type = "number",
+                      description = "The minimum y coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "maxy",
+                      type = "number",
+                      description = "The maximum y coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "minz",
+                      type = "number",
+                      description = "The minimum z coordinate of the vertices in the Model."
+                    },
+                    {
+                      name = "maxz",
+                      type = "number",
+                      description = "The maximum z coordinate of the vertices in the Model."
+                    }
+                  }
+                },
+                {
+                  description = "Get the bounding box of a single part of a mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the bounding box of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the bounding box of."
+                    }
+                  },
                   returns = {
                     {
                       name = "minx",
@@ -16318,22 +16755,82 @@ return {
               },
               variants = {
                 {
+                  description = "Get the center of the whole Model.",
                   arguments = {},
                   returns = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x offset of the center of the bounding box."
+                      description = "The x coordinate of the center of the bounding box."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y offset of the center of the bounding box."
+                      description = "The y coordinate of the center of the bounding box."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z offset of the center of the bounding box."
+                      description = "The z coordinate of the center of the bounding box."
+                    }
+                  }
+                },
+                {
+                  description = "Get the center of a single mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the dimensions of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the bounding box."
+                    }
+                  }
+                },
+                {
+                  description = "Get the center of a single part of a mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the dimensions of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the dimensions of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate of the center of the bounding box."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate of the center of the bounding box."
                     }
                   }
                 }
@@ -16355,12 +16852,52 @@ return {
               },
               variants = {
                 {
+                  description = "Get the depth of the whole Model.",
                   arguments = {},
                   returns = {
                     {
                       name = "depth",
                       type = "number",
-                      description = "The depth of the Model."
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the depth of a single mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the depth of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the depth of a single part of a mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the depth of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the depth of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
                     }
                   }
                 }
@@ -16382,22 +16919,82 @@ return {
               },
               variants = {
                 {
+                  description = "Get the dimensions of the whole Model.",
                   arguments = {},
                   returns = {
                     {
                       name = "width",
                       type = "number",
-                      description = "The width of the Model."
+                      description = "The width."
                     },
                     {
                       name = "height",
                       type = "number",
-                      description = "The height of the Model."
+                      description = "The height."
                     },
                     {
                       name = "depth",
                       type = "number",
-                      description = "The depth of the Model."
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the dimensions of a single mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the dimensions of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
+                    }
+                  }
+                },
+                {
+                  description = "Get the dimensions of a single part of a mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the dimensions of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the dimensions of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
+                    },
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
+                    },
+                    {
+                      name = "depth",
+                      type = "number",
+                      description = "The depth."
                     }
                   }
                 }
@@ -16419,12 +17016,52 @@ return {
               },
               variants = {
                 {
+                  description = "Get the height of the whole Model.",
                   arguments = {},
                   returns = {
                     {
                       name = "height",
                       type = "number",
-                      description = "The height of the Model."
+                      description = "The height."
+                    }
+                  }
+                },
+                {
+                  description = "Get the height of a single mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the height of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
+                    }
+                  }
+                },
+                {
+                  description = "Get the height of a single part of a mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the height of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the height of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "height",
+                      type = "number",
+                      description = "The height."
                     }
                   }
                 }
@@ -16436,6 +17073,7 @@ return {
               description = "Returns the index buffer used by the Model.  The index buffer describes the order used to draw the vertices in each mesh.",
               key = "Model:getIndexBuffer",
               module = "lovr.graphics",
+              deprecated = true,
               related = {
                 "Model:getVertexBuffer",
                 "Model:getMesh"
@@ -16544,6 +17182,7 @@ return {
               description = "Returns a `Mesh` from the Model.",
               key = "Model:getMesh",
               module = "lovr.graphics",
+              deprecated = true,
               related = {
                 "Model:getMeshCount",
                 "lovr.graphics.newMesh"
@@ -17469,6 +18108,7 @@ return {
               description = "Returns a `Buffer` that holds the vertices of all of the meshes in the Model.",
               key = "Model:getVertexBuffer",
               module = "lovr.graphics",
+              deprecated = true,
               related = {
                 "Model:getIndexBuffer",
                 "Model:getMesh"
@@ -17502,12 +18142,52 @@ return {
               },
               variants = {
                 {
+                  description = "Get the width of the whole Model.",
                   arguments = {},
                   returns = {
                     {
                       name = "width",
                       type = "number",
-                      description = "The width of the Model."
+                      description = "The width."
+                    }
+                  }
+                },
+                {
+                  description = "Get the width of a single mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the width of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
+                    }
+                  }
+                },
+                {
+                  description = "Get the width of a single part of a mesh in the Model.",
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The mesh to get the width of."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The part to get the width of."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "width",
+                      type = "number",
+                      description = "The width."
                     }
                   }
                 }
@@ -28782,6 +29462,7 @@ return {
           description = "Drains the temporary vector pool, invalidating existing temporary vectors.\n\nThis is called automatically at the end of each frame.",
           key = "lovr.math.drain",
           module = "lovr.math",
+          deprecated = "This function is deprecated.  It is no longer necessary, and calling it does nothing.",
           variants = {
             {
               arguments = {},
@@ -29002,6 +29683,7 @@ return {
           description = "Creates a temporary 4D matrix.  This function takes the same arguments as `Mat4:set`.",
           key = "lovr.math.mat4",
           module = "lovr.math",
+          deprecated = "This function has been replaced by `lovr.math.newMat4`.",
           related = {
             "lovr.math.newMat4",
             "Mat4"
@@ -29425,10 +30107,10 @@ return {
           name = "newVec2",
           tag = "vectors",
           summary = "Create a vector.",
-          description = "This is a deprecated alias for `vector.pack`.",
+          description = "Creates a vector.",
           key = "lovr.math.newVec2",
           module = "lovr.math",
-          deprecated = true,
+          deprecated = "This function has been replaced by `vector.pack`.",
           variants = {
             {
               arguments = {
@@ -29479,10 +30161,10 @@ return {
           name = "newVec3",
           tag = "vectors",
           summary = "Create a vector.",
-          description = "This is a deprecated alias for `vector.pack`.",
+          description = "Creates a vector.",
           key = "lovr.math.newVec3",
           module = "lovr.math",
-          deprecated = true,
+          deprecated = "This function has been replaced by `vector.pack`.",
           variants = {
             {
               arguments = {
@@ -29533,10 +30215,10 @@ return {
           name = "newVec4",
           tag = "vectors",
           summary = "Create a vector.",
-          description = "This is a deprecated alias for `vector.pack`.",
+          description = "Creates a vector.",
           key = "lovr.math.newVec4",
           module = "lovr.math",
-          deprecated = true,
+          deprecated = "This function has been replaced by `vector.pack`.",
           variants = {
             {
               arguments = {
@@ -29832,10 +30514,10 @@ return {
           name = "vec2",
           tag = "vectors",
           summary = "Create a vector.",
-          description = "This is a deprecated alias for `vector.pack`.",
+          description = "Creates a vector.",
           key = "lovr.math.vec2",
           module = "lovr.math",
-          deprecated = true,
+          deprecated = "This function has been replaced by `vector.pack`.",
           variants = {
             {
               arguments = {
@@ -29886,10 +30568,10 @@ return {
           name = "vec3",
           tag = "vectors",
           summary = "Create a vector.",
-          description = "This is a deprecated alias for `vector.pack`.",
+          description = "Creates a vector.",
           key = "lovr.math.vec3",
           module = "lovr.math",
-          deprecated = true,
+          deprecated = "This function has been replaced by `vector.pack`.",
           variants = {
             {
               arguments = {
@@ -29940,10 +30622,10 @@ return {
           name = "vec4",
           tag = "vectors",
           summary = "Create a vector.",
-          description = "This is a deprecated alias for `vector.pack`.",
+          description = "Creates a vector.",
           key = "lovr.math.vec4",
           module = "lovr.math",
-          deprecated = true,
+          deprecated = "This function has been replaced by `vector.pack`.",
           variants = {
             {
               arguments = {

@@ -30,6 +30,12 @@ return {
   returns = {},
   variants = {
     {
+      arguments = { 'start', 'count' },
+      returns = {}
+    },
+    {
+      deprecated = true,
+      description = 'This variant has been replaced by `Mesh:setBaseVertex`.',
       arguments = { 'start', 'count', 'offset' },
       returns = {}
     },

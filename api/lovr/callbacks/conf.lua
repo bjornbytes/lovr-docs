@@ -305,12 +305,12 @@ return {
             {
               name = 'width',
               type = 'number',
-              description = 'The width of the window (or 0 to use the monitor width).'
+              description = 'The width of the window.'
             },
             {
               name = 'height',
               type = 'number',
-              description = 'The height of the window (or 0 to use the monitor height) .'
+              description = 'The height of the window.'
             },
             {
               name = 'centered',

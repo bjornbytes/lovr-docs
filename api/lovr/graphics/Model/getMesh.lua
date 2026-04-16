@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   summary = 'Get a Mesh from the Model.',
   description = 'Returns a `Mesh` from the Model.',
   arguments = {

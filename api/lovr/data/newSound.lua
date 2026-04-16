@@ -18,9 +18,9 @@ return {
       description = 'The sample data type.'
     },
     channels = {
-      type = 'ChannelLayout',
-      default = [['stereo']],
-      description = 'The channel layout.'
+      type = 'number',
+      default = '2',
+      description = 'The number of channels.'
     },
     sampleRate = {
       type = 'number',

@@ -1,4 +1,5 @@
 return {
+  deprecated = true,
   summary = 'Get a Buffer containing the triangle indices in the Model.',
   description = [[
     Returns the index buffer used by the Model.  The index buffer describes the order used to draw

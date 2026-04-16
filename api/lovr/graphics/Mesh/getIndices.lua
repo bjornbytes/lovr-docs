@@ -14,10 +14,7 @@ return {
       returns = { 't' }
     }
   },
-  notes = [[
-    This function will be very very slow if the Mesh's storage is `gpu`, because the data needs to
-    be downloaded from the GPU.
-  ]],
+  notes = 'This function returns `nil` if the mesh was created with `gpu` storage.',
   related = {
     'Mesh:getIndexBuffer',
     'Mesh:setIndexBuffer'

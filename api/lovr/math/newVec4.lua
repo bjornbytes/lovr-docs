@@ -1,8 +1,8 @@
 return {
   tag = 'vectors',
-  deprecated = true,
+  deprecated = 'This function has been replaced by `vector.pack`.',
   summary = 'Create a vector.',
-  description = 'This is a deprecated alias for `vector.pack`.',
+  description = 'Creates a vector.',
   arguments = {
     x = {
       type = 'number',

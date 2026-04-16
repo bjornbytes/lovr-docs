@@ -1,5 +1,6 @@
 return {
   tag = 'vectors',
+  deprecated = 'This function has been replaced by `lovr.math.newMat4`.',
   summary = 'Create a temporary Mat4.',
   description = [[
     Creates a temporary 4D matrix.  This function takes the same arguments as `Mat4:set`.

@@ -31,12 +31,7 @@ return {
       returns = { 'vertices' }
     }
   },
-  notes = [[
-    > **This function will be very very slow if the storage mode of the Mesh is `gpu`, because the
-    > data will be downloaded from VRAM.  A better option is to call `Buffer:newReadback` on the
-    > Mesh's underlying vertex buffer (`Mesh:getVertexBuffer`), which will download in the
-    > background instead of waiting for it to complete.**
-  ]],
+  notes = 'This function returns `nil` if the mesh was created with `gpu` storage.',
   related = {
     'Mesh:getVertexBuffer',
     'Mesh:getVertexFormat',
