@@ -19266,6 +19266,10 @@ return {
               key = "Pass:draw",
               module = "lovr.graphics",
               notes = "`Model:getMesh` can be used to draw individual meshes of a model.\n\nTextures ignore the `instances` parameter.\n\nWhen drawing a Texture, the plane will be 1 meter wide at 1.0 scale and the height will be adjusted based on the Texture's aspect ratio.",
+              related = {
+                "Pass:mesh",
+                "Pass:drawPart"
+              },
               variants = {
                 {
                   arguments = {
@@ -19373,6 +19377,308 @@ return {
                       name = "transform",
                       type = "Mat4",
                       description = "The transform of the object."
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "drawPart",
+              tag = "drawing",
+              summary = "Draw a part of a Model.",
+              description = "Draws a single mesh or part of a mesh in a Model.\n\nMeshes in models can be split into multiple \"parts\", where each part has its own draw mode and material.  This function can draw a single one of these parts, or all of the parts in a single mesh.\n\nDrawing individual meshes or parts is useful because it allows for materials, graphics states, and shader uniforms to be changed in between each draw.",
+              key = "Pass:drawPart",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  code = "function lovr.draw(pass)\n  for node, mesh in model:meshes() do\n    local x, y, z, scale, _, _, angle, ax, ay, az = model:getNodeTransform(node)\n\n    for part = 1, model:getMeshPartCount(mesh) do\n      pass:drawPart(model, mesh, part, x, y, z, scale, angle, ax, ay, az)\n    end\n  end\nend"
+                }
+              },
+              related = {
+                "Pass:draw",
+                "Model:meshes"
+              },
+              variants = {
+                {
+                  description = "Draw all of the parts of a mesh.",
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to draw."
+                    },
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh to draw."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to draw at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to draw at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to draw at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation around the rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw all of the parts of a mesh.",
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to draw."
+                    },
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh to draw."
+                    },
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The position to draw at."
+                    },
+                    {
+                      name = "scale3",
+                      type = "vector",
+                      description = "The scale, as a vector."
+                    },
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The orientation."
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw all of the parts of a mesh.",
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to draw."
+                    },
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform."
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a single part of a mesh.",
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to draw."
+                    },
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh to draw."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of one of the parts in the mesh to draw."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to draw at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to draw at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to draw at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation around the rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a single part of a mesh.",
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to draw."
+                    },
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh to draw."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of one of the parts in the mesh to draw."
+                    },
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The position to draw at."
+                    },
+                    {
+                      name = "scale3",
+                      type = "vector",
+                      description = "The scale, as a vector."
+                    },
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The orientation."
+                    },
+                    {
+                      name = "instances",
+                      type = "number",
+                      description = "The number of instances to draw.",
+                      default = "1"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Draw a single part of a mesh.",
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to draw."
+                    },
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh to draw."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of one of the parts in the mesh to draw."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform."
                     },
                     {
                       name = "instances",

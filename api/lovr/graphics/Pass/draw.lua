@@ -91,5 +91,9 @@ return {
 
     When drawing a Texture, the plane will be 1 meter wide at 1.0 scale and the height will be
     adjusted based on the Texture's aspect ratio.
-  ]]
+  ]],
+  related = {
+    'Pass:mesh',
+    'Pass:drawPart'
+  }
 }
