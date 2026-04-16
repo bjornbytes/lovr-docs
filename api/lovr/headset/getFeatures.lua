@@ -9,6 +9,13 @@ return {
       description = '',
       table = {
         {
+          name = 'battery',
+          type = 'boolean',
+          description = [[
+            Whether the VR runtime is able to return battery status from `lovr.headset.getBattery`.
+          ]]
+        },
+        {
           name = 'overlay',
           type = 'boolean',
           description = [[

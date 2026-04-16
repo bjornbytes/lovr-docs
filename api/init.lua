@@ -25235,6 +25235,39 @@ return {
           }
         },
         {
+          name = "getBattery",
+          tag = "input",
+          summary = "Get the battery status of a device.",
+          description = "Returns the battery status of a device.",
+          key = "lovr.headset.getBattery",
+          module = "lovr.headset",
+          notes = "This function will return `nil` if the device doesn't have a battery, or if the `battery` feature in `lovr.headset.getFeatures` is not supported.\n\nThis function is not currently able to measure the battery of the headset, only controllers and other devices.\n\nThe battery info is intended to only be used for display purposes, not to drive logic.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "device",
+                  type = "Device",
+                  description = "The device to check.",
+                  default = "'head'"
+                }
+              },
+              returns = {
+                {
+                  name = "level",
+                  type = "number",
+                  description = "The level of the battery, from 0 to 1."
+                },
+                {
+                  name = "charging",
+                  type = "boolean",
+                  description = "Whether the battery is currently charging."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getBoundsDepth",
           tag = "playArea",
           summary = "Get the depth of the play area.",
@@ -25561,6 +25594,11 @@ return {
                   type = "table",
                   description = "",
                   table = {
+                    {
+                      name = "battery",
+                      type = "boolean",
+                      description = "Whether the VR runtime is able to return battery status from `lovr.headset.getBattery`."
+                    },
                     {
                       name = "overlay",
                       type = "boolean",
