@@ -15315,6 +15315,25 @@ return {
               }
             },
             {
+              name = "getBaseVertex",
+              summary = "Get the base vertex of the Mesh.",
+              description = "Returns the base vertex of the Mesh.  This is an offset added to index buffer values before reading the vertex from the vertex buffer.\n\nAdjusting the base vertex is useful for storing multiple indexed meshes in a single Mesh object. Rather than manually offsetting all of the index buffer values to account for the offset where each sub-mesh is stored, the base vertex can be changed instead.",
+              key = "Mesh:getBaseVertex",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "The offset applied to values in the index buffer during drawing."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getBoundingBox",
               summary = "Get the bounding box of the Mesh.",
               description = "Returns the axis-aligned bounding box of the Mesh, or `nil` if the Mesh doesn't have a bounding box.\n\nMeshes with the `cpu` storage mode can compute their bounding box automatically using `Mesh:computeBoundingBox`.  The bounding box can also be set manually using `Mesh:setBoundingBox`.\n\nPasses will use the bounding box of a Mesh to cull it against the cameras when `Pass:setViewCull` is enabled, which avoids rendering it when it's out of view.",
@@ -15648,6 +15667,26 @@ return {
                       description = "A table of vertices.  Each vertex is a table of numbers for each vertex attribute, given by the vertex format of the Mesh."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "setBaseVertex",
+              summary = "Set the base vertex of the Mesh.",
+              description = "Sets the base vertex of the Mesh.  This is an offset added to index buffer values before reading the vertex from the vertex buffer.\n\nAdjusting the base vertex is useful for storing multiple indexed meshes in a single Mesh object. Rather than manually offsetting all of the index buffer values to account for the offset where each sub-mesh is stored, the base vertex can be changed instead.",
+              key = "Mesh:setBaseVertex",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "An offset applied to values in the index buffer during drawing.",
+                      default = "0"
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
