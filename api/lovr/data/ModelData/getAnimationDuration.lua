@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the duration of an animation.',
-  description = 'Returns the duration of an animation.',
+  summary = 'Get the duration of an animation, in seconds.',
+  description = 'Returns the duration of an animation in the model, in seconds.',
   arguments = {
     animation = {
       type = 'string | number',
@@ -20,9 +20,12 @@ return {
     }
   },
   notes = [[
-    The duration of the animation is calculated as the latest timestamp of all of its channels.
+    The duration of an animation is calculated as the largest timestamp of all of its keyframes.
   ]],
   related = {
+    'ModelData:getAnimationCount',
+    'ModelData:getAnimationName',
+    'Model:animate',
     'Model:getAnimationDuration'
   }
 }

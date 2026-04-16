@@ -38,8 +38,8 @@ return {
     vertices.  This matches the way `Mesh:setDrawRange` works.
   ]],
   related = {
-    'ModelData:getMeshDrawMode',
-    'ModelData:getMeshMaterial',
-    'Model:getMeshDrawRange'
+    'Model:getMeshDrawMode',
+    'Model:getMeshMaterial',
+    'ModelData:getMeshDrawRange'
   }
 }

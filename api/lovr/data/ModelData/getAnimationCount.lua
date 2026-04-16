@@ -15,6 +15,8 @@ return {
     }
   },
   related = {
+    'ModelData:getAnimationName',
+    'ModelData:getAnimationDuration',
     'Model:getAnimationCount'
   }
 }

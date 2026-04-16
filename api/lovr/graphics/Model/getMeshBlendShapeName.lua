@@ -24,9 +24,8 @@ return {
     }
   },
   related = {
-    'ModelData:getBlendShapeName',
-    'ModelData:getMeshBlendShapeCount',
-    'ModelData:getMeshBlendVertex',
-    'Model:getMeshBlendShapeName'
+    'Model:getBlendShapeName',
+    'Model:getMeshBlendShapeCount',
+    'ModelData:getMeshBlendShapeName'
   }
 }

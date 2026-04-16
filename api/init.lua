@@ -2486,126 +2486,6 @@ return {
               }
             },
             {
-              name = "isEnabled",
-              summary = "Check if the AudioMesh is enabled.",
-              description = "Returns whether the AudioMesh is enabled.  Disabled audio meshes do not affect audio processing.",
-              key = "AudioMesh:isEnabled",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "enabled",
-                      type = "boolean",
-                      description = "Whether the AudioMesh is enabled."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "setEnabled",
-              summary = "Enable or disable the AudioMesh.",
-              description = "Enable or disable the AudioMesh.  Disabled audio meshes do not affect audio processing.",
-              key = "AudioMesh:setEnabled",
-              module = "lovr.audio",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "enabled",
-                      type = "boolean",
-                      description = "Whether the AudioMesh should be enabled."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "getPosition",
-              summary = "Get the position of the AudioMesh.",
-              description = "Returns the position of the AudioMesh, in meters.",
-              key = "AudioMesh:getPosition",
-              module = "lovr.audio",
-              related = {
-                "AudioMesh:getOrientation",
-                "AudioMesh:getPose",
-                "AudioMesh:getScale",
-                "AudioMesh:getTransform"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x coordinate."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y coordinate."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z coordinate."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "setPosition",
-              summary = "Set the position of the AudioMesh.",
-              description = "Sets the position of the AudioMesh, in meters.",
-              key = "AudioMesh:setPosition",
-              module = "lovr.audio",
-              related = {
-                "AudioMesh:setOrientation",
-                "AudioMesh:setPose",
-                "AudioMesh:setScale",
-                "AudioMesh:setTransform"
-              },
-              variants = {
-                {
-                  description = "Set the position using numbers.",
-                  arguments = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The new x coordinate."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The new y coordinate."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The new z coordinate."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Set the position using a vector.",
-                  arguments = {
-                    {
-                      name = "position",
-                      type = "vector",
-                      description = "The position."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
               name = "getOrientation",
               summary = "Get the orientation of the AudioMesh.",
               description = "Returns the orientation of the AudioMesh, in angle/axis representation.",
@@ -2642,58 +2522,6 @@ return {
                       description = "The z component of the axis of rotation."
                     }
                   }
-                }
-              }
-            },
-            {
-              name = "setOrientation",
-              summary = "Set the orientation of the AudioMesh.",
-              description = "Sets the orientation of the AudioMesh.",
-              key = "AudioMesh:setOrientation",
-              module = "lovr.audio",
-              related = {
-                "AudioMesh:setPosition",
-                "AudioMesh:setPose",
-                "AudioMesh:setScale",
-                "AudioMesh:setTransform"
-              },
-              variants = {
-                {
-                  description = "Set the orientation using numbers.",
-                  arguments = {
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the AudioMesh should be rotated around its rotation axis."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  description = "Set the orientation using a vector.",
-                  arguments = {
-                    {
-                      name = "orientation",
-                      type = "quaternion",
-                      description = "The new orientation for the AudioMesh."
-                    }
-                  },
-                  returns = {}
                 }
               }
             },
@@ -2749,6 +2577,236 @@ return {
                       description = "The z component of the axis of rotation."
                     }
                   }
+                }
+              }
+            },
+            {
+              name = "getPosition",
+              summary = "Get the position of the AudioMesh.",
+              description = "Returns the position of the AudioMesh, in meters.",
+              key = "AudioMesh:getPosition",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getOrientation",
+                "AudioMesh:getPose",
+                "AudioMesh:getScale",
+                "AudioMesh:getTransform"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getScale",
+              summary = "Get the scale of the AudioMesh.",
+              description = "Returns the scale of the AudioMesh.",
+              key = "AudioMesh:getScale",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getPosition",
+                "AudioMesh:getOrientation",
+                "AudioMesh:getPose",
+                "AudioMesh:getTransform"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x scale factor."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y scale factor."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z scale factor."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getTransform",
+              summary = "Get the transform of the AudioMesh.",
+              description = "Returns transform (position, scale, and orientation) of the AudioMesh.",
+              key = "AudioMesh:getTransform",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:getPosition",
+                "AudioMesh:getOrientation",
+                "AudioMesh:getPose",
+                "AudioMesh:getScale"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x position, in meters."
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y position, in meters."
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z position, in meters."
+                    },
+                    {
+                      name = "sx",
+                      type = "number",
+                      description = "The x scale."
+                    },
+                    {
+                      name = "sy",
+                      type = "number",
+                      description = "The y scale."
+                    },
+                    {
+                      name = "sz",
+                      type = "number",
+                      description = "The z scale."
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh is rotated around its axis of rotation."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isEnabled",
+              summary = "Check if the AudioMesh is enabled.",
+              description = "Returns whether the AudioMesh is enabled.  Disabled audio meshes do not affect audio processing.",
+              key = "AudioMesh:isEnabled",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the AudioMesh is enabled."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "setEnabled",
+              summary = "Enable or disable the AudioMesh.",
+              description = "Enable or disable the AudioMesh.  Disabled audio meshes do not affect audio processing.",
+              key = "AudioMesh:setEnabled",
+              module = "lovr.audio",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "enabled",
+                      type = "boolean",
+                      description = "Whether the AudioMesh should be enabled."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setOrientation",
+              summary = "Set the orientation of the AudioMesh.",
+              description = "Sets the orientation of the AudioMesh.",
+              key = "AudioMesh:setOrientation",
+              module = "lovr.audio",
+              related = {
+                "AudioMesh:setPosition",
+                "AudioMesh:setPose",
+                "AudioMesh:setScale",
+                "AudioMesh:setTransform"
+              },
+              variants = {
+                {
+                  description = "Set the orientation using numbers.",
+                  arguments = {
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The number of radians the AudioMesh should be rotated around its rotation axis."
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation."
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation."
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the orientation using a vector.",
+                  arguments = {
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The new orientation for the AudioMesh."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -2825,37 +2883,49 @@ return {
               }
             },
             {
-              name = "getScale",
-              summary = "Get the scale of the AudioMesh.",
-              description = "Returns the scale of the AudioMesh.",
-              key = "AudioMesh:getScale",
+              name = "setPosition",
+              summary = "Set the position of the AudioMesh.",
+              description = "Sets the position of the AudioMesh, in meters.",
+              key = "AudioMesh:setPosition",
               module = "lovr.audio",
               related = {
-                "AudioMesh:getPosition",
-                "AudioMesh:getOrientation",
-                "AudioMesh:getPose",
-                "AudioMesh:getTransform"
+                "AudioMesh:setOrientation",
+                "AudioMesh:setPose",
+                "AudioMesh:setScale",
+                "AudioMesh:setTransform"
               },
               variants = {
                 {
-                  arguments = {},
-                  returns = {
+                  description = "Set the position using numbers.",
+                  arguments = {
                     {
                       name = "x",
                       type = "number",
-                      description = "The x scale factor."
+                      description = "The new x coordinate."
                     },
                     {
                       name = "y",
                       type = "number",
-                      description = "The y scale factor."
+                      description = "The new y coordinate."
                     },
                     {
                       name = "z",
                       type = "number",
-                      description = "The z scale factor."
+                      description = "The new z coordinate."
                     }
-                  }
+                  },
+                  returns = {}
+                },
+                {
+                  description = "Set the position using a vector.",
+                  arguments = {
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The position."
+                    }
+                  },
+                  returns = {}
                 }
               }
             },
@@ -2903,76 +2973,6 @@ return {
                     }
                   },
                   returns = {}
-                }
-              }
-            },
-            {
-              name = "getTransform",
-              summary = "Get the transform of the AudioMesh.",
-              description = "Returns transform (position, scale, and orientation) of the AudioMesh.",
-              key = "AudioMesh:getTransform",
-              module = "lovr.audio",
-              related = {
-                "AudioMesh:getPosition",
-                "AudioMesh:getOrientation",
-                "AudioMesh:getPose",
-                "AudioMesh:getScale"
-              },
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "x",
-                      type = "number",
-                      description = "The x position, in meters."
-                    },
-                    {
-                      name = "y",
-                      type = "number",
-                      description = "The y position, in meters."
-                    },
-                    {
-                      name = "z",
-                      type = "number",
-                      description = "The z position, in meters."
-                    },
-                    {
-                      name = "sx",
-                      type = "number",
-                      description = "The x scale."
-                    },
-                    {
-                      name = "sy",
-                      type = "number",
-                      description = "The y scale."
-                    },
-                    {
-                      name = "sz",
-                      type = "number",
-                      description = "The z scale."
-                    },
-                    {
-                      name = "angle",
-                      type = "number",
-                      description = "The number of radians the AudioMesh is rotated around its axis of rotation."
-                    },
-                    {
-                      name = "ax",
-                      type = "number",
-                      description = "The x component of the axis of rotation."
-                    },
-                    {
-                      name = "ay",
-                      type = "number",
-                      description = "The y component of the axis of rotation."
-                    },
-                    {
-                      name = "az",
-                      type = "number",
-                      description = "The z component of the axis of rotation."
-                    }
-                  }
                 }
               }
             },
@@ -5421,355 +5421,6 @@ return {
           extends = "Object",
           methods = {
             {
-              name = "getSize",
-              summary = "Get the size of the Blob, in bytes.",
-              description = "Returns the size of the Blob's contents, in bytes.",
-              key = "Blob:getSize",
-              module = "lovr.data",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "bytes",
-                      type = "number",
-                      description = "The size of the Blob, in bytes."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getName",
-              summary = "Get the label of the Blob.",
-              description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
-              key = "Blob:getName",
-              module = "lovr.data",
-              notes = "If a Blob was created without a name, its name will default to the empty string.",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "name",
-                      type = "string",
-                      description = "The name of the Blob."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getPointer",
-              summary = "Get a raw pointer to the Blob's data.",
-              description = "Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries using the LuaJIT FFI.  Use this only if you know what you're doing!",
-              key = "Blob:getPointer",
-              module = "lovr.data",
-              variants = {
-                {
-                  arguments = {},
-                  returns = {
-                    {
-                      name = "pointer",
-                      type = "userdata",
-                      description = "A pointer to the data."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getString",
-              summary = "Get the Blob's contents as a string.",
-              description = "Returns a binary string containing the Blob's data.",
-              key = "Blob:getString",
-              module = "lovr.data",
-              examples = {
-                {
-                  description = "Print each byte of the main.lua file:",
-                  code = "blob = lovr.filesystem.newBlob('main.lua')\nstr = blob:getString()\n\nfor i = 1, #str do\n  print(string.byte(str, i))\nend"
-                }
-              },
-              notes = "This effectively allocates a new copy of the Blob as a Lua string, so this should be avoided for really big Blobs!",
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A byte offset into the Blob where the string will start.",
-                      default = "0"
-                    },
-                    {
-                      name = "size",
-                      type = "number",
-                      description = "The number of bytes the string will contain.  If nil, the rest of the data in the Blob will be used, based on the `offset` parameter.",
-                      default = "nil"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "data",
-                      type = "string",
-                      description = "The Blob's data."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getI8",
-              summary = "Unpack signed 8-bit integers from the Blob.",
-              description = "Returns signed 8-bit integers from the data in the Blob.",
-              key = "Blob:getI8",
-              module = "lovr.data",
-              related = {
-                "Blob:setI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` signed 8-bit integers, from -128 to 127."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getU8",
-              summary = "Unpack unsigned 8-bit integers from the Blob.",
-              description = "Returns unsigned 8-bit integers from the data in the Blob.",
-              key = "Blob:getU8",
-              module = "lovr.data",
-              related = {
-                "Blob:setU8",
-                "Blob:getI8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` unsigned 8-bit integers, from 0 to 255."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getI16",
-              summary = "Unpack signed 16-bit integers from the Blob.",
-              description = "Returns signed 16-bit integers from the data in the Blob.",
-              key = "Blob:getI16",
-              module = "lovr.data",
-              related = {
-                "Blob:setI16",
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` signed 16-bit integers, from -32768 to 32767."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getU16",
-              summary = "Unpack unsigned 16-bit integers from the Blob.",
-              description = "Returns unsigned 16-bit integers from the data in the Blob.",
-              key = "Blob:getU16",
-              module = "lovr.data",
-              related = {
-                "Blob:setU16",
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getI32",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` unsigned 16-bit integers, from 0 to 65535."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getI32",
-              summary = "Unpack signed 32-bit integers from the Blob.",
-              description = "Returns signed 32-bit integers from the data in the Blob.",
-              key = "Blob:getI32",
-              module = "lovr.data",
-              related = {
-                "Blob:setI32",
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getU32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` signed 32-bit integers, from -2147483648 to 2147483647."
-                    }
-                  }
-                }
-              }
-            },
-            {
-              name = "getU32",
-              summary = "Unpack unsigned 32-bit integers from the Blob.",
-              description = "Returns unsigned 32-bit integers from the data in the Blob.",
-              key = "Blob:getU32",
-              module = "lovr.data",
-              related = {
-                "Blob:setU32",
-                "Blob:getI8",
-                "Blob:getU8",
-                "Blob:getI16",
-                "Blob:getU16",
-                "Blob:getI32",
-                "Blob:getF32",
-                "Blob:getF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to read from.",
-                      default = "0"
-                    },
-                    {
-                      name = "count",
-                      type = "number",
-                      description = "The number of integers to read.",
-                      default = "1"
-                    }
-                  },
-                  returns = {
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "`count` unsigned 32-bit integers, from 0 to 4294967296."
-                    }
-                  }
-                }
-              }
-            },
-            {
               name = "getF32",
               summary = "Unpack 32-bit floating point numbers from the Blob.",
               description = "Returns 32-bit floating point numbers from the data in the Blob.",
@@ -5854,216 +5505,20 @@ return {
               }
             },
             {
-              name = "setI8",
-              summary = "Write 8-bit signed integers to the Blob.",
-              description = "Writes 8-bit signed integers to the Blob.",
-              key = "Blob:setI8",
+              name = "getI16",
+              summary = "Unpack signed 16-bit integers from the Blob.",
+              description = "Returns signed 16-bit integers from the data in the Blob.",
+              key = "Blob:getI16",
               module = "lovr.data",
               related = {
+                "Blob:setI16",
                 "Blob:getI8",
-                "Blob:setU8",
-                "Blob:setI16",
-                "Blob:setU16",
-                "Blob:setI32",
-                "Blob:setU32",
-                "Blob:setF32",
-                "Blob:setF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "Numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from\n-127 to 128)."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "table",
-                      type = "{number}",
-                      description = "A table of numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from -127 to 128)."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setU8",
-              summary = "Write 8-bit unsigned integers to the Blob.",
-              description = "Writes 8-bit unsigned integers to the Blob.",
-              key = "Blob:setU8",
-              module = "lovr.data",
-              related = {
                 "Blob:getU8",
-                "Blob:setI8",
-                "Blob:setI16",
-                "Blob:setU16",
-                "Blob:setI32",
-                "Blob:setU32",
-                "Blob:setF32",
-                "Blob:setF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "Numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "table",
-                      type = "{number}",
-                      description = "A table of numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setI16",
-              summary = "Write 16-bit signed integers to the Blob.",
-              description = "Writes 16-bit signed integers to the Blob.",
-              key = "Blob:setI16",
-              module = "lovr.data",
-              related = {
-                "Blob:getI16",
-                "Blob:setI8",
-                "Blob:setU8",
-                "Blob:setU16",
-                "Blob:setI32",
-                "Blob:setU32",
-                "Blob:setF32",
-                "Blob:setF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "Numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from\n-32768 to 32767)."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "table",
-                      type = "{number}",
-                      description = "A table of numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from -32768 to 32767)."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setU16",
-              summary = "Write 16-bit unsigned integers to the Blob.",
-              description = "Writes 16-bit unsigned integers to the Blob.",
-              key = "Blob:setU16",
-              module = "lovr.data",
-              related = {
                 "Blob:getU16",
-                "Blob:setI8",
-                "Blob:setU8",
-                "Blob:setI16",
-                "Blob:setI32",
-                "Blob:setU32",
-                "Blob:setF32",
-                "Blob:setF64"
-              },
-              variants = {
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "...",
-                      type = "number",
-                      description = "Numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
-                    }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "table",
-                      type = "{number}",
-                      description = "A table of numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
-                    }
-                  },
-                  returns = {}
-                }
-              }
-            },
-            {
-              name = "setI32",
-              summary = "Write 32-bit signed integers to the Blob.",
-              description = "Writes 32-bit signed integers to the Blob.",
-              key = "Blob:setI32",
-              module = "lovr.data",
-              related = {
                 "Blob:getI32",
-                "Blob:setI8",
-                "Blob:setU8",
-                "Blob:setI16",
-                "Blob:setU16",
-                "Blob:setU32",
-                "Blob:setF32",
-                "Blob:setF64"
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
               },
               variants = {
                 {
@@ -6071,48 +5526,41 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at."
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
                     },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
                     {
                       name = "...",
                       type = "number",
-                      description = "Numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from\n-2147483648 to 2147483647)."
+                      description = "`count` signed 16-bit integers, from -32768 to 32767."
                     }
-                  },
-                  returns = {}
-                },
-                {
-                  arguments = {
-                    {
-                      name = "offset",
-                      type = "number",
-                      description = "A non-negative byte offset to start writing at."
-                    },
-                    {
-                      name = "table",
-                      type = "{number}",
-                      description = "A table of numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from -2147483648 to 2147483647)."
-                    }
-                  },
-                  returns = {}
+                  }
                 }
               }
             },
             {
-              name = "setU32",
-              summary = "Write 32-bit unsigned integers to the Blob.",
-              description = "Writes 32-bit unsigned integers to the Blob.",
-              key = "Blob:setU32",
+              name = "getI32",
+              summary = "Unpack signed 32-bit integers from the Blob.",
+              description = "Returns signed 32-bit integers from the data in the Blob.",
+              key = "Blob:getI32",
               module = "lovr.data",
               related = {
-                "Blob:getU32",
-                "Blob:setI8",
-                "Blob:setU8",
-                "Blob:setI16",
-                "Blob:setU16",
                 "Blob:setI32",
-                "Blob:setF32",
-                "Blob:setF64"
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
               },
               variants = {
                 {
@@ -6120,30 +5568,288 @@ return {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at."
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
                     },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
                     {
                       name = "...",
                       type = "number",
-                      description = "Numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
+                      description = "`count` signed 32-bit integers, from -2147483648 to 2147483647."
                     }
-                  },
-                  returns = {}
-                },
+                  }
+                }
+              }
+            },
+            {
+              name = "getI8",
+              summary = "Unpack signed 8-bit integers from the Blob.",
+              description = "Returns signed 8-bit integers from the data in the Blob.",
+              key = "Blob:getI8",
+              module = "lovr.data",
+              related = {
+                "Blob:setI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
                 {
                   arguments = {
                     {
                       name = "offset",
                       type = "number",
-                      description = "A non-negative byte offset to start writing at."
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
                     },
                     {
-                      name = "table",
-                      type = "{number}",
-                      description = "A table of numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
                     }
                   },
-                  returns = {}
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` signed 8-bit integers, from -128 to 127."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getName",
+              summary = "Get the label of the Blob.",
+              description = "Returns the filename the Blob was loaded from, or the custom name given to it when it was created.  This label is also used in error messages.",
+              key = "Blob:getName",
+              module = "lovr.data",
+              notes = "If a Blob was created without a name, its name will default to the empty string.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the Blob."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getPointer",
+              summary = "Get a raw pointer to the Blob's data.",
+              description = "Returns a raw pointer to the Blob's data.  This can be used to interface with other C libraries using the LuaJIT FFI.  Use this only if you know what you're doing!",
+              key = "Blob:getPointer",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "pointer",
+                      type = "userdata",
+                      description = "A pointer to the data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getSize",
+              summary = "Get the size of the Blob, in bytes.",
+              description = "Returns the size of the Blob's contents, in bytes.",
+              key = "Blob:getSize",
+              module = "lovr.data",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "bytes",
+                      type = "number",
+                      description = "The size of the Blob, in bytes."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getString",
+              summary = "Get the Blob's contents as a string.",
+              description = "Returns a binary string containing the Blob's data.",
+              key = "Blob:getString",
+              module = "lovr.data",
+              examples = {
+                {
+                  description = "Print each byte of the main.lua file:",
+                  code = "blob = lovr.filesystem.newBlob('main.lua')\nstr = blob:getString()\n\nfor i = 1, #str do\n  print(string.byte(str, i))\nend"
+                }
+              },
+              notes = "This effectively allocates a new copy of the Blob as a Lua string, so this should be avoided for really big Blobs!",
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A byte offset into the Blob where the string will start.",
+                      default = "0"
+                    },
+                    {
+                      name = "size",
+                      type = "number",
+                      description = "The number of bytes the string will contain.  If nil, the rest of the data in the Blob will be used, based on the `offset` parameter.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "data",
+                      type = "string",
+                      description = "The Blob's data."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU16",
+              summary = "Unpack unsigned 16-bit integers from the Blob.",
+              description = "Returns unsigned 16-bit integers from the data in the Blob.",
+              key = "Blob:getU16",
+              module = "lovr.data",
+              related = {
+                "Blob:setU16",
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 16-bit integers, from 0 to 65535."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU32",
+              summary = "Unpack unsigned 32-bit integers from the Blob.",
+              description = "Returns unsigned 32-bit integers from the data in the Blob.",
+              key = "Blob:getU32",
+              module = "lovr.data",
+              related = {
+                "Blob:setU32",
+                "Blob:getI8",
+                "Blob:getU8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 32-bit integers, from 0 to 4294967296."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getU8",
+              summary = "Unpack unsigned 8-bit integers from the Blob.",
+              description = "Returns unsigned 8-bit integers from the data in the Blob.",
+              key = "Blob:getU8",
+              module = "lovr.data",
+              related = {
+                "Blob:setU8",
+                "Blob:getI8",
+                "Blob:getI16",
+                "Blob:getU16",
+                "Blob:getI32",
+                "Blob:getU32",
+                "Blob:getF32",
+                "Blob:getF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to read from.",
+                      default = "0"
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of integers to read.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "`count` unsigned 8-bit integers, from 0 to 255."
+                    }
+                  }
                 }
               }
             },
@@ -6239,6 +5945,300 @@ return {
                       name = "table",
                       type = "{number}",
                       description = "A table of numbers to write to the blob as 64-bit floating point numbers (each taking up 8 bytes)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setI16",
+              summary = "Write 16-bit signed integers to the Blob.",
+              description = "Writes 16-bit signed integers to the Blob.",
+              key = "Blob:setI16",
+              module = "lovr.data",
+              related = {
+                "Blob:getI16",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from\n-32768 to 32767)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of numbers to write to the blob as 16-bit signed integers (each taking up 2 bytes, ranging from -32768 to 32767)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setI32",
+              summary = "Write 32-bit signed integers to the Blob.",
+              description = "Writes 32-bit signed integers to the Blob.",
+              key = "Blob:setI32",
+              module = "lovr.data",
+              related = {
+                "Blob:getI32",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from\n-2147483648 to 2147483647)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of numbers to write to the blob as 32-bit signed integers (each taking up 4 bytes, ranging from -2147483648 to 2147483647)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setI8",
+              summary = "Write 8-bit signed integers to the Blob.",
+              description = "Writes 8-bit signed integers to the Blob.",
+              key = "Blob:setI8",
+              module = "lovr.data",
+              related = {
+                "Blob:getI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from\n-127 to 128)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of numbers to write to the blob as 8-bit signed integers (each taking up 1 byte, ranging from -127 to 128)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setU16",
+              summary = "Write 16-bit unsigned integers to the Blob.",
+              description = "Writes 16-bit unsigned integers to the Blob.",
+              key = "Blob:setU16",
+              module = "lovr.data",
+              related = {
+                "Blob:getU16",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of numbers to write to the blob as 16-bit unsigned integers (each taking up 2 bytes, ranging from 0 to 65535)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setU32",
+              summary = "Write 32-bit unsigned integers to the Blob.",
+              description = "Writes 32-bit unsigned integers to the Blob.",
+              key = "Blob:setU32",
+              module = "lovr.data",
+              related = {
+                "Blob:getU32",
+                "Blob:setI8",
+                "Blob:setU8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of numbers to write to the blob as 32-bit unsigned integers (each taking up 4 bytes, ranging from 0 to 4294967296)."
+                    }
+                  },
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "setU8",
+              summary = "Write 8-bit unsigned integers to the Blob.",
+              description = "Writes 8-bit unsigned integers to the Blob.",
+              key = "Blob:setU8",
+              module = "lovr.data",
+              related = {
+                "Blob:getU8",
+                "Blob:setI8",
+                "Blob:setI16",
+                "Blob:setU16",
+                "Blob:setI32",
+                "Blob:setU32",
+                "Blob:setF32",
+                "Blob:setF64"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "...",
+                      type = "number",
+                      description = "Numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "offset",
+                      type = "number",
+                      description = "A non-negative byte offset to start writing at."
+                    },
+                    {
+                      name = "table",
+                      type = "{number}",
+                      description = "A table of numbers to write to the blob as 8-bit unsigned integers (each taking up 1 byte, ranging from 0 to 255)."
                     }
                   },
                   returns = {}
@@ -6717,6 +6717,8 @@ return {
               key = "ModelData:getAnimationCount",
               module = "lovr.data",
               related = {
+                "ModelData:getAnimationName",
+                "ModelData:getAnimationDuration",
                 "Model:getAnimationCount"
               },
               variants = {
@@ -6734,12 +6736,15 @@ return {
             },
             {
               name = "getAnimationDuration",
-              summary = "Get the duration of an animation.",
-              description = "Returns the duration of an animation.",
+              summary = "Get the duration of an animation, in seconds.",
+              description = "Returns the duration of an animation in the model, in seconds.",
               key = "ModelData:getAnimationDuration",
               module = "lovr.data",
-              notes = "The duration of the animation is calculated as the latest timestamp of all of its channels.",
+              notes = "The duration of an animation is calculated as the largest timestamp of all of its keyframes.",
               related = {
+                "ModelData:getAnimationCount",
+                "ModelData:getAnimationName",
+                "Model:animate",
                 "Model:getAnimationDuration"
               },
               variants = {
@@ -6843,10 +6848,12 @@ return {
             {
               name = "getAnimationName",
               summary = "Get the name of an animation.",
-              description = "Returns the name of an animation.",
+              description = "Returns the name of an animation in the model.",
               key = "ModelData:getAnimationName",
               module = "lovr.data",
               related = {
+                "ModelData:getAnimationCount",
+                "ModelData:getAnimationDuration",
                 "Model:getAnimationName"
               },
               variants = {
@@ -6973,13 +6980,14 @@ return {
             {
               name = "getBlendShapeCount",
               summary = "Get the total number of blend shapes in the model.",
-              description = "Returns the total number of blend shapes in the model.",
+              description = "Returns the total number of blend shapes in the model.\n\nThis is a combined list from all the meshes.  It is also possible to query the blend shapes for a single mesh, using `ModelData:getMeshBlendShapeCount`.",
               key = "ModelData:getBlendShapeCount",
               module = "lovr.data",
               related = {
                 "ModelData:getBlendShapeName",
                 "ModelData:getMeshBlendShapeCount",
-                "ModelData:getMeshBlendShapeName"
+                "ModelData:getMeshBlendShapeName",
+                "Model:getBlendShapeCount"
               },
               variants = {
                 {
@@ -7003,7 +7011,8 @@ return {
               related = {
                 "ModelData:getBlendShapeCount",
                 "ModelData:getMeshBlendShapeCount",
-                "ModelData:getMeshBlendShapeName"
+                "ModelData:getMeshBlendShapeName",
+                "Model:getBlendShapeName"
               },
               variants = {
                 {
@@ -7271,7 +7280,7 @@ return {
                   arguments = {
                     {
                       name = "material",
-                      type = "number",
+                      type = "string | number",
                       description = "The name or index of a material."
                     }
                   },
@@ -7440,8 +7449,10 @@ return {
               key = "ModelData:getMeshBlendShapeCount",
               module = "lovr.data",
               related = {
+                "ModelData:getBlendShapeCount",
                 "ModelData:getMeshBlendShapeName",
-                "ModelData:getMeshBlendVertex"
+                "ModelData:getMeshBlendVertex",
+                "Model:getMeshBlendShapeCount"
               },
               variants = {
                 {
@@ -7469,8 +7480,10 @@ return {
               key = "ModelData:getMeshBlendShapeName",
               module = "lovr.data",
               related = {
+                "ModelData:getBlendShapeName",
                 "ModelData:getMeshBlendShapeCount",
-                "ModelData:getMeshBlendVertex"
+                "ModelData:getMeshBlendVertex",
+                "Model:getMeshBlendShapeName"
               },
               variants = {
                 {
@@ -7605,6 +7618,9 @@ return {
               description = "Returns the draw mode of a mesh part.  The draw mode controls how mesh vertices are connected together. Meshes can be split into multiple parts, and each part can have its own draw mode.",
               key = "ModelData:getMeshDrawMode",
               module = "lovr.data",
+              related = {
+                "Model:getMeshDrawMode"
+              },
               variants = {
                 {
                   arguments = {
@@ -7633,7 +7649,8 @@ return {
               notes = "Parts will always use the full set of vertices/indices in the mesh, in order.\n\nIf the mesh has indices, then the draw range will be in terms of indices, otherwise it will be vertices.  This matches the way `Mesh:setDrawRange` works.",
               related = {
                 "ModelData:getMeshDrawMode",
-                "ModelData:getMeshMaterial"
+                "ModelData:getMeshMaterial",
+                "Model:getMeshDrawRange"
               },
               variants = {
                 {
@@ -7700,6 +7717,10 @@ return {
               key = "ModelData:getMeshIndexCount",
               module = "lovr.data",
               notes = "This may return zero if the mesh does not use indices.",
+              related = {
+                "ModelData:getMeshVertexCount",
+                "Model:getMeshIndexCount"
+              },
               variants = {
                 {
                   arguments = {
@@ -7725,6 +7746,9 @@ return {
               description = "Returns the index of the material used by a mesh part.  Meshes can be split into multiple parts, and each part can have its own material.",
               key = "ModelData:getMeshMaterial",
               module = "lovr.data",
+              related = {
+                "Model:getMeshMaterial"
+              },
               variants = {
                 {
                   arguments = {
@@ -7760,7 +7784,8 @@ return {
                 "ModelData:getMeshDrawRange",
                 "ModelData:getMeshDrawMode",
                 "ModelData:getMeshMaterial",
-                "Pass:drawPart"
+                "Pass:drawPart",
+                "Model:getMeshPartCount"
               },
               variants = {
                 {
@@ -7903,7 +7928,8 @@ return {
               key = "ModelData:getMeshVertexCount",
               module = "lovr.data",
               related = {
-                "ModelData:getMeshIndexCount"
+                "ModelData:getMeshIndexCount",
+                "Model:getMeshVertexCount"
               },
               variants = {
                 {
@@ -8036,6 +8062,9 @@ return {
               description = "Returns the index of the mesh attached to a node.  Meshes contain the geometry and material information, whereas the nodes define the hierarchy and transforms.  A single mesh can be attached to multiple nodes.  Not every node has a mesh.",
               key = "ModelData:getNodeMesh",
               module = "lovr.data",
+              related = {
+                "Model:getNodeMesh"
+              },
               variants = {
                 {
                   arguments = {
@@ -8448,6 +8477,7 @@ return {
               related = {
                 "ModelData:getNodeCount",
                 "ModelData:getNodeParent",
+                "ModelData:getNodeChild",
                 "Model:getRootNode"
               },
               variants = {
@@ -15914,7 +15944,7 @@ return {
         {
           name = "Model",
           summary = "A 3D model.",
-          description = "Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are supported.\n\nA model can be drawn using `Pass:draw`.  A specific mesh or part of a mesh can be drawn using `Pass:drawPart`.\n\nThe raw CPU data for a model is held in a `ModelData` object.\n\nModels have a hierarchy of nodes which can have their transforms modified.  Meshes are attached to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn multiple times while only storing a single copy of its data.\n\nModels can have animations.  Animations have keyframes which affect the transforms of nodes. Right now each model can only be drawn with a single animated pose per frame.\n\nModels can have materials, which are collections of properties and textures that define how its surface is affected by lighting.  Meshes are split up into multiple parts, and each part can have its own material.\n\nNote: Model inherits several methods from `ModelData`.  The pages here link to the `ModelData` version of the page, but the methods can be called on both `Model` and `ModelData`.",
+          description = "Models are 3D model assets loaded from files.  Currently, OBJ, glTF, and binary STL files are supported.\n\nA model can be drawn using `Pass:draw`.  A specific mesh or part of a mesh can be drawn using `Pass:drawPart`.\n\nThe raw CPU data for a model is held in a `ModelData` object.\n\nModels have a hierarchy of nodes which can have their transforms modified.  Meshes are attached to these nodes.  The same mesh can be attached to multiple nodes, allowing it to be drawn multiple times while only storing a single copy of its data.\n\nModels can have animations.  Animations have keyframes which affect the transforms of nodes. Right now each model can only be drawn with a single animated pose per frame.\n\nModels can have materials, which are collections of properties and textures that define how its surface is affected by lighting.  Meshes are split up into multiple parts, and each part can have its own material.",
           key = "Model",
           module = "lovr.graphics",
           constructors = {
@@ -16014,7 +16044,8 @@ return {
               related = {
                 "Model:getAnimationName",
                 "Model:getAnimationDuration",
-                "Model:animate"
+                "Model:animate",
+                "ModelData:getAnimationCount"
               },
               variants = {
                 {
@@ -16031,7 +16062,7 @@ return {
             },
             {
               name = "getAnimationDuration",
-              summary = "Get the duration of an animation in the Model.",
+              summary = "Get the duration of an animation, in seconds.",
               description = "Returns the duration of an animation in the Model, in seconds.",
               key = "Model:getAnimationDuration",
               module = "lovr.graphics",
@@ -16039,7 +16070,8 @@ return {
               related = {
                 "Model:getAnimationCount",
                 "Model:getAnimationName",
-                "Model:animate"
+                "Model:animate",
+                "ModelData:getAnimationDuration"
               },
               variants = {
                 {
@@ -16062,13 +16094,14 @@ return {
             },
             {
               name = "getAnimationName",
-              summary = "Get the name of an animation in the Model.",
+              summary = "Get the name of an animation.",
               description = "Returns the name of an animation in the Model.",
               key = "Model:getAnimationName",
               module = "lovr.graphics",
               related = {
                 "Model:getAnimationCount",
-                "Model:getAnimationDuration"
+                "Model:getAnimationDuration",
+                "ModelData:getAnimationName"
               },
               variants = {
                 {
@@ -16084,6 +16117,62 @@ return {
                       name = "name",
                       type = "string | nil",
                       description = "The name of the animation, or `nil` if the animation doesn't have a name."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBlendShapeCount",
+              summary = "Get the total number of blend shapes in the Model.",
+              description = "Returns the total number of blend shapes in the Model.\n\nThis is a combined list from all the meshes.  It is also possible to query the blend shapes for a single mesh, using `Model:getMeshBlendShapeCount`.",
+              key = "Model:getBlendShapeCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getBlendShapeName",
+                "Model:getMeshBlendShapeCount",
+                "Model:getMeshBlendShapeName",
+                "ModelData:getBlendShapeCount"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The total number of blend shapes in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getBlendShapeName",
+              summary = "Get the name of a blend shape.",
+              description = "Returns the name of a blend shape.",
+              key = "Model:getBlendShapeName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getBlendShapeCount",
+                "Model:getMeshBlendShapeCount",
+                "Model:getMeshBlendShapeName",
+                "ModelData:getBlendShapeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "index",
+                      type = "number",
+                      description = "The index of a blend shape."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the blend shape."
                     }
                   }
                 }
@@ -16133,6 +16222,7 @@ return {
                 "Model:getDimensions",
                 "Model:getCenter",
                 "ModelData:getBoundingBox",
+                "Mesh:getBoundingBox",
                 "Collider:getAABB"
               },
               variants = {
@@ -16361,7 +16451,9 @@ return {
               module = "lovr.graphics",
               related = {
                 "Model:getMaterialName",
-                "Model:getMaterial"
+                "Model:getMeshMaterial",
+                "Model:getMaterial",
+                "ModelData:getMaterialCount"
               },
               variants = {
                 {
@@ -16384,7 +16476,9 @@ return {
               module = "lovr.graphics",
               related = {
                 "Model:getMaterialCount",
-                "Model:getMaterial"
+                "Model:getMeshMaterial",
+                "Model:getMaterial",
+                "ModelData:getMaterialName"
               },
               variants = {
                 {
@@ -16399,7 +16493,7 @@ return {
                     {
                       name = "name",
                       type = "string",
-                      description = "The name of the material."
+                      description = "The name of the material, or nil if the material does not have a name."
                     }
                   }
                 }
@@ -16435,12 +16529,77 @@ return {
               }
             },
             {
+              name = "getMeshBlendShapeCount",
+              summary = "Get the number of blend shapes in one of the Model's meshes.",
+              description = "Returns the number of blend shapes in one of the Model's meshes.",
+              key = "Model:getMeshBlendShapeCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getBlendShapeCount",
+                "ModelData:getMeshBlendShapeCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of blend shapes the mesh has."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshBlendShapeName",
+              summary = "Get the name of a blend shape.",
+              description = "Returns the name of a blend shape.",
+              key = "Model:getMeshBlendShapeName",
+              module = "lovr.graphics",
+              related = {
+                "Model:getBlendShapeName",
+                "Model:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    },
+                    {
+                      name = "blendshape",
+                      type = "number",
+                      description = "The index of a blend shape in the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "name",
+                      type = "string",
+                      description = "The name of the blend shape."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getMeshCount",
               summary = "Get the number of meshes in the Model.",
               description = "Returns the number of meshes in the Model.",
               key = "Model:getMeshCount",
               module = "lovr.graphics",
               related = {
+                "Model:getNodeMesh",
                 "Model:getMesh"
               },
               variants = {
@@ -16457,11 +16616,203 @@ return {
               }
             },
             {
+              name = "getMeshDrawMode",
+              summary = "Get the draw mode of a mesh part.",
+              description = "Returns the draw mode of a mesh part.  The draw mode controls how mesh vertices are connected together. Meshes can be split into multiple parts, and each part can have its own draw mode.",
+              key = "Model:getMeshDrawMode",
+              module = "lovr.graphics",
+              related = {
+                "ModelData:getMeshDrawMode"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "mode",
+                      type = "ModelDrawMode",
+                      description = "The draw mode of the part."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshDrawRange",
+              summary = "Get the vertex range of a mesh part.",
+              description = "Returns the vertex range of a part of a mesh.  Meshes can be split into multiple \"parts\", and each part can have its own draw mode and material.",
+              key = "Model:getMeshDrawRange",
+              module = "lovr.graphics",
+              notes = "Parts will always use the full set of vertices/indices in the mesh, in order.\n\nIf the mesh has indices, then the draw range will be in terms of indices, otherwise it will be vertices.  This matches the way `Mesh:setDrawRange` works.",
+              related = {
+                "Model:getMeshDrawMode",
+                "Model:getMeshMaterial",
+                "ModelData:getMeshDrawRange"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "start",
+                      type = "number",
+                      description = "The index of the first vertex or index in the part."
+                    },
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices or indices in the part."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshIndexCount",
+              summary = "Get the number of vertex indices in a mesh.",
+              description = "Returns the number of vertex indices in a mesh.  Vertex indices allow for vertices to be reused when defining triangles.",
+              key = "Model:getMeshIndexCount",
+              module = "lovr.graphics",
+              notes = "This may return zero if the mesh does not use indices.",
+              related = {
+                "Model:getMeshVertexCount",
+                "ModelData:getMeshIndexCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertex indices in the mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshMaterial",
+              summary = "Get the index of the material used by a mesh part.",
+              description = "Returns the index of the material used by a mesh part.  Meshes can be split into multiple parts, and each part can have its own material.",
+              key = "Model:getMeshMaterial",
+              module = "lovr.graphics",
+              related = {
+                "ModelData:getMeshMaterial"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of a part.",
+                      default = "1"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "material",
+                      type = "number | nil",
+                      description = "The index of the material applied to the part, or nil if the part does not have a material."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshPartCount",
+              summary = "Get the number of parts in a mesh.",
+              description = "Returns the number of parts in a mesh.  Meshes can be split into multiple \"parts\".  Each part refers to a subset of the mesh's vertices, and parts can have their own draw mode and material.",
+              key = "Model:getMeshPartCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMeshDrawRange",
+                "Model:getMeshDrawMode",
+                "Model:getMeshMaterial",
+                "Pass:drawPart",
+                "ModelData:getMeshPartCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of the mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "parts",
+                      type = "number",
+                      description = "The number of parts in the mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getMeshVertexCount",
+              summary = "Get the number of vertices in a mesh.",
+              description = "Returns the number of vertices in a mesh.",
+              key = "Model:getMeshVertexCount",
+              module = "lovr.graphics",
+              related = {
+                "Model:getMeshIndexCount",
+                "ModelData:getMeshVertexCount"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "number",
+                      description = "The index of a mesh."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of vertices in the mesh."
+                    }
+                  }
+                }
+              }
+            },
+            {
               name = "getMetadata",
               summary = "Get extra information from the model file.",
               description = "Returns extra information stored in the model file.  Currently this is only implemented for glTF models and returns the JSON string from the glTF or glb file.  The metadata can be used to get application-specific data or add support for glTF extensions not supported by LÖVR.",
               key = "Model:getMetadata",
               module = "lovr.graphics",
+              related = {
+                "ModelData:getMetadata"
+              },
               variants = {
                 {
                   arguments = {},
@@ -16539,10 +16890,13 @@ return {
             },
             {
               name = "getNodeCount",
-              summary = "Get the number of nodes in the model.",
-              description = "Returns the number of nodes in the model.",
+              summary = "Get the number of nodes in the Model.",
+              description = "Returns the number of nodes in the Model.",
               key = "Model:getNodeCount",
               module = "lovr.graphics",
+              related = {
+                "ModelData:getNodeCount"
+              },
               variants = {
                 {
                   arguments = {},
@@ -16550,7 +16904,35 @@ return {
                     {
                       name = "count",
                       type = "number",
-                      description = "The number of nodes in the model."
+                      description = "The number of nodes in the Model."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getNodeMesh",
+              summary = "Get the index of the mesh attached to a node.",
+              description = "Returns the index of the mesh attached to a node.  Meshes contain the geometry and material information, whereas the nodes define the hierarchy and transforms.  A single mesh can be attached to multiple nodes.  Not every node has a mesh.",
+              key = "Model:getNodeMesh",
+              module = "lovr.graphics",
+              related = {
+                "ModelData:getNodeMesh"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "node",
+                      type = "string | number",
+                      description = "The name or index of a node."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "mesh",
+                      type = "number | nil",
+                      description = "The index of the node's mesh, or `nil` if the node does not have a mesh."
                     }
                   }
                 }
@@ -16559,13 +16941,12 @@ return {
             {
               name = "getNodeName",
               summary = "Get the name of a node in the Model.",
-              description = "Returns the name of a node.",
+              description = "Returns the name of a node in the Model.",
               key = "Model:getNodeName",
               module = "lovr.graphics",
+              notes = "If the node does not have a name, this function returns `nil`.",
               related = {
-                "Model:getNodeCount",
-                "Model:getAnimationName",
-                "Model:getMaterialName"
+                "ModelData:getNodeName"
               },
               variants = {
                 {
@@ -16651,14 +17032,15 @@ return {
               module = "lovr.graphics",
               related = {
                 "Model:getNodeChildren",
-                "Model:getRootNode"
+                "Model:getRootNode",
+                "ModelData:getNodeParent"
               },
               variants = {
                 {
                   arguments = {
                     {
                       name = "node",
-                      type = "number",
+                      type = "string | number",
                       description = "The name or index of the child node."
                     }
                   },
@@ -16666,7 +17048,7 @@ return {
                     {
                       name = "parent",
                       type = "number",
-                      description = "The index of the parent."
+                      description = "The index of the parent node."
                     }
                   }
                 }
@@ -16851,7 +17233,7 @@ return {
             {
               name = "getNodeSibling",
               summary = "Get the next sibling of a node.",
-              description = "Returns the next sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a model.",
+              description = "Returns the next sibling of a node (a node with the same parent), or `nil` if the node doesn't have a sibling.\n\nThis, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a Model.",
               key = "Model:getNodeSibling",
               module = "lovr.graphics",
               related = {
@@ -16969,12 +17351,14 @@ return {
             {
               name = "getRootNode",
               summary = "Get the index of the root node.",
-              description = "Returns the index of the model's root node.",
+              description = "Returns the index of the Model's root node.",
               key = "Model:getRootNode",
               module = "lovr.graphics",
               related = {
                 "Model:getNodeCount",
-                "Model:getNodeParent"
+                "Model:getNodeParent",
+                "Model:getNodeChild",
+                "ModelData:getRootNode"
               },
               variants = {
                 {
@@ -17130,6 +17514,44 @@ return {
                       name = "visible",
                       type = "boolean",
                       description = "Whether the node is visible."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "meshes",
+              summary = "Iterate over the nodes with meshes in the Model.",
+              description = "Returns an iterator that iterates over the nodes with meshes in the Model.\n\nThis is convenient when drawing individual meshes in the Model using `Pass:drawPart`.",
+              key = "Model:meshes",
+              module = "lovr.graphics",
+              examples = {
+                {
+                  code = "function lovr.draw(pass)\n  for node, mesh in model:meshes() do\n    pass:push()\n    pass:transform(model:getNodeTransform(node))\n    -- Instead of drawing the whole mesh like this,\n    -- you could also draw individual parts of the mesh\n    pass:drawPart(model, mesh)\n    pass:pop()\n  end\nend"
+                }
+              },
+              related = {
+                "Model:getNodeMesh",
+                "Pass:drawPart"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "iterator",
+                      type = "function",
+                      description = "The iterator function.  The iterator function returns the index of the next node, and the index of its mesh."
+                    },
+                    {
+                      name = "state",
+                      type = "Model",
+                      description = "The Model."
+                    },
+                    {
+                      name = "initial",
+                      type = "nil",
+                      description = "The initial value."
                     }
                   }
                 }
@@ -17686,14 +18108,14 @@ return {
             {
               name = "Nodes",
               links = {
-                "ModelData:getRootNode",
-                "ModelData:getNodeCount",
-                "ModelData:getNodeName",
-                "ModelData:getNodeChild",
-                "ModelData:getNodeChildren",
-                "ModelData:getNodeSibling",
-                "ModelData:getNodeParent",
-                "ModelData:getNodeMesh",
+                "Model:getRootNode",
+                "Model:getNodeCount",
+                "Model:getNodeName",
+                "Model:getNodeChild",
+                "Model:getNodeChildren",
+                "Model:getNodeSibling",
+                "Model:getNodeParent",
+                "Model:getNodeMesh",
                 "Model:isNodeVisible",
                 "Model:setNodeVisible",
                 "Model:getNodePosition",
@@ -17712,9 +18134,9 @@ return {
             {
               name = "Animation",
               links = {
-                "ModelData:getAnimationCount",
-                "ModelData:getAnimationName",
-                "ModelData:getAnimationDuration",
+                "Model:getAnimationCount",
+                "Model:getAnimationName",
+                "Model:getAnimationDuration",
                 "Model:hasJoints",
                 "Model:animate"
               }
@@ -17722,34 +18144,37 @@ return {
             {
               name = "Blend Shapes",
               links = {
-                "ModelData:getBlendShapeCount",
-                "ModelData:getBlendShapeName",
+                "Model:resetBlendShapes",
                 "Model:getBlendShapeWeight",
                 "Model:setBlendShapeWeight",
-                "Model:resetBlendShapes"
+                "Model:getBlendShapeCount",
+                "Model:getBlendShapeName",
+                "Model:getMeshBlendShapeCount",
+                "Model:getMeshBlendShapeName"
               }
             },
             {
               name = "Bounds",
               links = {
-                "ModelData:getWidth",
-                "ModelData:getHeight",
-                "ModelData:getDepth",
-                "ModelData:getDimensions",
-                "ModelData:getCenter",
-                "ModelData:getBoundingBox"
+                "Model:getWidth",
+                "Model:getHeight",
+                "Model:getDepth",
+                "Model:getDimensions",
+                "Model:getCenter",
+                "Model:getBoundingBox"
               }
             },
             {
               name = "Meshes",
               links = {
-                "ModelData:getMeshCount",
-                "ModelData:getMeshVertexCount",
-                "ModelData:getMeshIndexCount",
-                "ModelData:getMeshPartCount",
-                "ModelData:getMeshDrawMode",
-                "ModelData:getMeshDrawRange",
-                "ModelData:getMeshMaterial"
+                "Model:meshes",
+                "Model:getMeshCount",
+                "Model:getMeshVertexCount",
+                "Model:getMeshIndexCount",
+                "Model:getMeshPartCount",
+                "Model:getMeshDrawMode",
+                "Model:getMeshDrawRange",
+                "Model:getMeshMaterial"
               }
             },
             {
@@ -17757,8 +18182,8 @@ return {
               links = {
                 "Model:getTextureCount",
                 "Model:getTexture",
-                "ModelData:getMaterialCount",
-                "ModelData:getMaterialName",
+                "Model:getMaterialCount",
+                "Model:getMaterialName",
                 "Model:getMaterial"
               }
             },
@@ -17767,7 +18192,10 @@ return {
               links = {
                 "Model:clone",
                 "Model:buildRaytracer",
-                "ModelData:getMetadata"
+                "Model:getMetadata",
+                "Model:getVertexBuffer",
+                "Model:getIndexBuffer",
+                "Model:getMesh"
               }
             }
           }

@@ -1,6 +1,6 @@
 return {
-  summary = 'Get the number of blend shapes in one of the model\'s meshes.',
-  description = 'Returns the number of blend shapes in one of the model\'s meshes.',
+  summary = 'Get the number of blend shapes in one of the Model\'s meshes.',
+  description = 'Returns the number of blend shapes in one of the Model\'s meshes.',
   arguments = {
     mesh = {
       type = 'number',
@@ -20,9 +20,7 @@ return {
     }
   },
   related = {
-    'ModelData:getBlendShapeCount',
-    'ModelData:getMeshBlendShapeName',
-    'ModelData:getMeshBlendVertex',
-    'Model:getMeshBlendShapeCount'
+    'Model:getBlendShapeCount',
+    'ModelData:getMeshBlendShapeCount'
   }
 }

@@ -41,6 +41,7 @@ return {
     'Model:getDimensions',
     'Model:getCenter',
     'ModelData:getBoundingBox',
+    'Mesh:getBoundingBox',
     'Collider:getAABB'
   }
 }

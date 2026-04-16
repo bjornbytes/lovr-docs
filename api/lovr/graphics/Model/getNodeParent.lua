@@ -3,14 +3,14 @@ return {
   description = 'Given a child node, this function returns the index of its parent.',
   arguments = {
     node = {
-      type = 'number',
+      type = 'string | number',
       description = 'The name or index of the child node.'
     }
   },
   returns = {
     parent = {
       type = 'number',
-      description = 'The index of the parent.'
+      description = 'The index of the parent node.'
     }
   },
   variants = {
@@ -21,6 +21,7 @@ return {
   },
   related = {
     'Model:getNodeChildren',
-    'Model:getRootNode'
+    'Model:getRootNode',
+    'ModelData:getNodeParent'
   }
 }

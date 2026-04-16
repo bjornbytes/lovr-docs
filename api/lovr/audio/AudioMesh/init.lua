@@ -16,20 +16,5 @@ return {
   constructors = {
     'lovr.audio.newAudioMesh',
     'AudioMesh:clone'
-  },
-  methods = {
-    'AudioMesh:clone',
-    'AudioMesh:isEnabled',
-    'AudioMesh:setEnabled',
-    'AudioMesh:getPosition',
-    'AudioMesh:setPosition',
-    'AudioMesh:getOrientation',
-    'AudioMesh:setOrientation',
-    'AudioMesh:getPose',
-    'AudioMesh:setPose',
-    'AudioMesh:getScale',
-    'AudioMesh:setScale',
-    'AudioMesh:getTransform',
-    'AudioMesh:setTransform'
   }
 }

@@ -20,9 +20,9 @@ return {
     }
   },
   related = {
-    'ModelData:getBlendShapeCount',
-    'ModelData:getMeshBlendShapeCount',
-    'ModelData:getMeshBlendShapeName',
-    'Model:getBlendShapeName'
+    'Model:getBlendShapeCount',
+    'Model:getMeshBlendShapeCount',
+    'Model:getMeshBlendShapeName',
+    'ModelData:getBlendShapeName'
   }
 }

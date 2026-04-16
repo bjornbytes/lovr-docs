@@ -3,7 +3,7 @@ return {
   description = 'Returns a table with all of the properties of a material.',
   arguments = {
     material = {
-      type = 'number',
+      type = 'string | number',
       description = 'The name or index of a material.'
     }
   },

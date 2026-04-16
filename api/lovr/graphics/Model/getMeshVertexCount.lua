@@ -20,7 +20,7 @@ return {
     }
   },
   related = {
-    'ModelData:getMeshIndexCount',
-    'Model:getMeshVertexCount'
+    'Model:getMeshIndexCount',
+    'ModelData:getMeshVertexCount'
   }
 }

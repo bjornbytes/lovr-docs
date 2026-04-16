@@ -19,9 +19,6 @@ return {
     Models can have materials, which are collections of properties and textures that define how its
     surface is affected by lighting.  Meshes are split up into multiple parts, and each part can
     have its own material.
-
-    Note: Model inherits several methods from `ModelData`.  The pages here link to the `ModelData`
-    version of the page, but the methods can be called on both `Model` and `ModelData`.
   ]],
   extends = 'Object',
   constructors = {
@@ -33,14 +30,14 @@ return {
     {
       name = 'Nodes',
       links = {
-        'ModelData:getRootNode',
-        'ModelData:getNodeCount',
-        'ModelData:getNodeName',
-        'ModelData:getNodeChild',
-        'ModelData:getNodeChildren',
-        'ModelData:getNodeSibling',
-        'ModelData:getNodeParent',
-        'ModelData:getNodeMesh',
+        'Model:getRootNode',
+        'Model:getNodeCount',
+        'Model:getNodeName',
+        'Model:getNodeChild',
+        'Model:getNodeChildren',
+        'Model:getNodeSibling',
+        'Model:getNodeParent',
+        'Model:getNodeMesh',
         'Model:isNodeVisible',
         'Model:setNodeVisible',
         'Model:getNodePosition',
@@ -59,9 +56,9 @@ return {
     {
       name = 'Animation',
       links = {
-        'ModelData:getAnimationCount',
-        'ModelData:getAnimationName',
-        'ModelData:getAnimationDuration',
+        'Model:getAnimationCount',
+        'Model:getAnimationName',
+        'Model:getAnimationDuration',
         'Model:hasJoints',
         'Model:animate'
       }
@@ -69,34 +66,37 @@ return {
     {
       name = 'Blend Shapes',
       links = {
-        'ModelData:getBlendShapeCount',
-        'ModelData:getBlendShapeName',
+        'Model:resetBlendShapes',
         'Model:getBlendShapeWeight',
         'Model:setBlendShapeWeight',
-        'Model:resetBlendShapes'
+        'Model:getBlendShapeCount',
+        'Model:getBlendShapeName',
+        'Model:getMeshBlendShapeCount',
+        'Model:getMeshBlendShapeName'
       }
     },
     {
       name = 'Bounds',
       links = {
-        'ModelData:getWidth',
-        'ModelData:getHeight',
-        'ModelData:getDepth',
-        'ModelData:getDimensions',
-        'ModelData:getCenter',
-        'ModelData:getBoundingBox'
+        'Model:getWidth',
+        'Model:getHeight',
+        'Model:getDepth',
+        'Model:getDimensions',
+        'Model:getCenter',
+        'Model:getBoundingBox'
       }
     },
     {
       name = 'Meshes',
       links = {
-        'ModelData:getMeshCount',
-        'ModelData:getMeshVertexCount',
-        'ModelData:getMeshIndexCount',
-        'ModelData:getMeshPartCount',
-        'ModelData:getMeshDrawMode',
-        'ModelData:getMeshDrawRange',
-        'ModelData:getMeshMaterial'
+        'Model:meshes',
+        'Model:getMeshCount',
+        'Model:getMeshVertexCount',
+        'Model:getMeshIndexCount',
+        'Model:getMeshPartCount',
+        'Model:getMeshDrawMode',
+        'Model:getMeshDrawRange',
+        'Model:getMeshMaterial'
       }
     },
     {
@@ -104,8 +104,8 @@ return {
       links = {
         'Model:getTextureCount',
         'Model:getTexture',
-        'ModelData:getMaterialCount',
-        'ModelData:getMaterialName',
+        'Model:getMaterialCount',
+        'Model:getMaterialName',
         'Model:getMaterial'
       }
     },
@@ -114,7 +114,10 @@ return {
       links = {
         'Model:clone',
         'Model:buildRaytracer',
-        'ModelData:getMetadata'
+        'Model:getMetadata',
+        'Model:getVertexBuffer',
+        'Model:getIndexBuffer',
+        'Model:getMesh'
       }
     }
   }

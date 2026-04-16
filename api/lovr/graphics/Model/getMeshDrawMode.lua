@@ -28,6 +28,6 @@ return {
     }
   },
   related = {
-    'Model:getMeshDrawMode'
+    'ModelData:getMeshDrawMode'
   }
 }

@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the duration of an animation in the Model.',
+  summary = 'Get the duration of an animation, in seconds.',
   description = 'Returns the duration of an animation in the Model, in seconds.',
   arguments = {
     animation = {
@@ -25,6 +25,7 @@ return {
   related = {
     'Model:getAnimationCount',
     'Model:getAnimationName',
-    'Model:animate'
+    'Model:animate',
+    'ModelData:getAnimationDuration'
   }
 }

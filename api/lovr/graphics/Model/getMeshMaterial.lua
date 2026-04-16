@@ -30,6 +30,6 @@ return {
     }
   },
   related = {
-    'Model:getMeshMaterial'
+    'ModelData:getMeshMaterial'
   }
 }

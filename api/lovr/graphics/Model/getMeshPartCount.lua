@@ -23,10 +23,10 @@ return {
     }
   },
   related = {
-    'ModelData:getMeshDrawRange',
-    'ModelData:getMeshDrawMode',
-    'ModelData:getMeshMaterial',
+    'Model:getMeshDrawRange',
+    'Model:getMeshDrawMode',
+    'Model:getMeshMaterial',
     'Pass:drawPart',
-    'Model:getMeshPartCount'
+    'ModelData:getMeshPartCount'
   }
 }

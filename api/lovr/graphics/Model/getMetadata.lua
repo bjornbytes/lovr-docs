@@ -17,5 +17,8 @@ return {
       arguments = {},
       returns = { 'metadata' }
     }
+  },
+  related = {
+    'ModelData:getMetadata'
   }
 }

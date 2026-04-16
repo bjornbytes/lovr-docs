@@ -4,7 +4,7 @@ return {
     Returns the next sibling of a node (a node with the same parent), or `nil` if the node doesn't
     have a sibling.
 
-    This, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a model.
+    This, together with `Model:getNodeChild`, can be used to iterate the tree of nodes in a Model.
   ]],
   arguments = {
     node = {

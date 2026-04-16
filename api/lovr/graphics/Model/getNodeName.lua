@@ -1,6 +1,6 @@
 return {
   summary = 'Get the name of a node in the Model.',
-  description = 'Returns the name of a node.',
+  description = 'Returns the name of a node in the Model.',
   arguments = {
     index = {
       type = 'number',
@@ -19,9 +19,8 @@ return {
       returns = { 'name' }
     }
   },
+  notes = 'If the node does not have a name, this function returns `nil`.',
   related = {
-    'Model:getNodeCount',
-    'Model:getAnimationName',
-    'Model:getMaterialName'
+    'ModelData:getNodeName'
   }
 }

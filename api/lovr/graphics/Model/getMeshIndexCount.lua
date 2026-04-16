@@ -24,7 +24,7 @@ return {
   },
   notes = 'This may return zero if the mesh does not use indices.',
   related = {
-    'ModelData:getMeshVertexCount',
-    'Model:getMeshIndexCount'
+    'Model:getMeshVertexCount',
+    'ModelData:getMeshIndexCount'
   }
 }

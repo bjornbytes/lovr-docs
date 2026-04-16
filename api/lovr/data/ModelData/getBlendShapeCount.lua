@@ -1,6 +1,11 @@
 return {
   summary = 'Get the total number of blend shapes in the model.',
-  description = 'Returns the total number of blend shapes in the model.',
+  description = [[
+    Returns the total number of blend shapes in the model.
+
+    This is a combined list from all the meshes.  It is also possible to query the blend shapes for
+    a single mesh, using `ModelData:getMeshBlendShapeCount`.
+  ]],
   arguments = {},
   returns = {
     count = {
@@ -17,6 +22,7 @@ return {
   related = {
     'ModelData:getBlendShapeName',
     'ModelData:getMeshBlendShapeCount',
-    'ModelData:getMeshBlendShapeName'
+    'ModelData:getMeshBlendShapeName',
+    'Model:getBlendShapeCount'
   }
 }

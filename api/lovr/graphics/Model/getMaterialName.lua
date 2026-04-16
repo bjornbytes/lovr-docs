@@ -10,7 +10,7 @@ return {
   returns = {
     name = {
       type = 'string',
-      description = 'The name of the material.'
+      description = 'The name of the material, or nil if the material does not have a name.'
     }
   },
   variants = {
@@ -21,6 +21,8 @@ return {
   },
   related = {
     'Model:getMaterialCount',
-    'Model:getMaterial'
+    'Model:getMeshMaterial',
+    'Model:getMaterial',
+    'ModelData:getMaterialName'
   }
 }

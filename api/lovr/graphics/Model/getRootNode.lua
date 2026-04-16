@@ -1,6 +1,6 @@
 return {
   summary = 'Get the index of the root node.',
-  description = 'Returns the index of the model\'s root node.',
+  description = 'Returns the index of the Model\'s root node.',
   arguments = {},
   returns = {
     root = {
@@ -16,6 +16,8 @@ return {
   },
   related = {
     'Model:getNodeCount',
-    'Model:getNodeParent'
+    'Model:getNodeParent',
+    'Model:getNodeChild',
+    'ModelData:getRootNode'
   }
 }

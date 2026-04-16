@@ -195,35 +195,17 @@ local function processObject(path, parent)
     end
   end
 
-  local methods = {}
+  object.methods = {}
 
   for _, file in ipairs(getVisibleDirectoryItems(path)) do
     if file ~= 'init.lua' then
       local method = file:gsub('%..+$', '')
       local key = ('%s:%s'):format(object.name, method)
-      methods[key] = processFunction(path .. '/' .. method, object)
+      table.insert(object.methods, processFunction(path .. '/' .. method, object))
     end
   end
 
-  if object.methods then
-    for i, key in ipairs(object.methods) do
-      object.methods[i] = methods[key]
-      warnIf(not methods[key], '%s links to unknown method %q', object.key, key)
-      methods[key] = nil
-    end
-
-    for method in pairs(methods) do
-      warn('%s is missing link to %q', object.key, method)
-    end
-  else
-    object.methods = {}
-
-    for key, method in pairs(methods) do
-      table.insert(object.methods, method)
-    end
-
-    table.sort(object.methods, function(a, b) return a.key < b.key end)
-  end
+  table.sort(object.methods, function(a, b) return a.key < b.key end)
 
   for k, example in ipairs(object.examples or {}) do
     object.examples[k] = processExample(example, object.key)

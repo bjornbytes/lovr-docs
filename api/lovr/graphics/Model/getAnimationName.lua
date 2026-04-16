@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the name of an animation in the Model.',
+  summary = 'Get the name of an animation.',
   description = 'Returns the name of an animation in the Model.',
   arguments = {
     index = {
@@ -21,6 +21,7 @@ return {
   },
   related = {
     'Model:getAnimationCount',
-    'Model:getAnimationDuration'
+    'Model:getAnimationDuration',
+    'ModelData:getAnimationName'
   }
 }

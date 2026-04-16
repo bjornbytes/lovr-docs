@@ -14,27 +14,5 @@ return {
     A Blob's size cannot be changed once it is created.
   ]],
   extends = 'Object',
-  constructors = { 'lovr.data.newBlob', 'lovr.filesystem.newBlob' },
-  methods = {
-    'Blob:getSize',
-    'Blob:getName',
-    'Blob:getPointer',
-    'Blob:getString',
-    'Blob:getI8',
-    'Blob:getU8',
-    'Blob:getI16',
-    'Blob:getU16',
-    'Blob:getI32',
-    'Blob:getU32',
-    'Blob:getF32',
-    'Blob:getF64',
-    'Blob:setI8',
-    'Blob:setU8',
-    'Blob:setI16',
-    'Blob:setU16',
-    'Blob:setI32',
-    'Blob:setU32',
-    'Blob:setF32',
-    'Blob:setF64'
-  }
+  constructors = { 'lovr.data.newBlob', 'lovr.filesystem.newBlob' }
 }
