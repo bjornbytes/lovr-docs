@@ -12835,6 +12835,11 @@ return {
                       description = "When supported, multisampled render passes can use a non-multisampled depth texture. Otherwise, the depth texture sample count needs to match the render pass sample count."
                     },
                     {
+                      name = "raytracing",
+                      type = "boolean",
+                      description = "Whether `Raytracer` is supported."
+                    },
+                    {
                       name = "indirectDrawFirstInstance",
                       type = "boolean",
                       description = "Whether indirect draws can set the firstInstance property of buffer memory to something other than zero."
@@ -13883,6 +13888,63 @@ return {
                   name = "pass",
                   type = "Pass",
                   description = "The new Pass."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "newRaytracer",
+          tag = "graphics-objects",
+          summary = "Create a new Raytracer.",
+          description = "Creates a new Raytracer, which holds objects for raytracing in shaders.  The capacity of the raytracer, the number of objects it can hold, must be declared upfront and can not be changed afterwards.",
+          key = "lovr.graphics.newRaytracer",
+          module = "lovr.graphics",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "capacity",
+                  type = "number",
+                  description = "The capacity of the Raytracer."
+                },
+                {
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "dynamic",
+                      type = "boolean",
+                      description = "An optimization hint indicating that the Raytracer will be frequently rebuilt with new objects or transform changes.  Set this to `false` for raytracers that have static content.",
+                      default = "false"
+                    },
+                    {
+                      name = "fasttrace",
+                      type = "boolean",
+                      description = "An optimization hint indicating that the Raytracer should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                      default = "true"
+                    },
+                    {
+                      name = "fastbuild",
+                      type = "boolean",
+                      description = "An optimization hint indicating that the Raytracer should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                      default = "false"
+                    },
+                    {
+                      name = "compress",
+                      type = "boolean",
+                      description = "An optimization hint indicating that the Raytracer should use less VRAM, possibly at the cost of performance.",
+                      default = "false"
+                    }
+                  }
+                }
+              },
+              returns = {
+                {
+                  name = "raytracer",
+                  type = "Raytracer",
+                  description = "The new Raytracer."
                 }
               }
             }
@@ -24383,6 +24445,561 @@ return {
             {
               name = "Miscellaneous",
               tag = "pass-misc"
+            }
+          }
+        },
+        {
+          name = "Raytracer",
+          summary = "Traces rays.",
+          description = "Raytracers store the information needed to trace rays in shaders.  They are sometimes also called \"acceleration structures\".  Raytracing is useful for implementing lighting effects in shaders, like shadows and ambient occlusion.\n\n### Usage\n\nAfter creating a Raytracer with `lovr.graphics.newRaytracer`, add `Mesh` and `Model` objects to it with `Raytracer:add`.  After adding everything, call `Raytracer:build` to finalize everything.  Finally, send the Raytracer to a `Shader` with `Pass:send`.  The shader code can use the Raytracer to trace rays.\n\nNot all GPUs support raytracing.  Use `lovr.graphics.getFeatures` to check for the `raytracing` feature.\n\n### Objects\n\nTo move objects after adding them, use the ID returned from `Raytracer:add` along with `Raytracer:set` to set a new transform for the object.  To remove an object, either set its scale to zero, set its layer mask to zero, or call `Raytracer:clear` to remove everything and rebuild the raytracer from scratch.\n\nObjects can be placed on up to 8 different layers when they are added to the raytracer.  When tracing rays in shaders, rays have a mask that controls which layers they can hit.\n\nRaytracers have a fixed capacity that must be declared upfront.  `Raytracer:add` will return `nil` instead of an ID if this capacity is exceeded.\n\n`Mesh` and `Model` have their own internal \"mini raytracer\".  The first time an object is added to a raytracer, LÖVR will create the mini raytracer and build it automatically.  However, if the vertices change after the object has been added to the raytracer, the raytracer needs to be rebuilt with `Mesh:buildRaytracer` or `Model:buildRaytracer` for the changes to take affect. Additionally, any `Raytracer` objects using those meshes/models need to be rebuilt as well.",
+          key = "Raytracer",
+          module = "lovr.graphics",
+          examples = {
+            {
+              description = "This example demonstrates raytraced shadows for an animated model.",
+              code = "function lovr.load()\n  model = lovr.graphics.newModel('model.glb')\n  lovr.graphics.setBackgroundColor(.2, .2, .22)\n\n  shader = lovr.graphics.newShader('unlit', [[\n    uniform raytracer tracer;\n    uniform vec3 lightPosition;\n\n    vec4 lovrmain() {\n      vec4 color = DefaultColor;\n      vec3 L = lightPosition - PositionWorld;\n      vec3 rayPos = PositionWorld + normalize(Normal) * .01;\n      vec3 rayDir = L;\n\n      rayQueryEXT ray;\n      float tmin = .001, tmax = 1.0;\n      uint flags = gl_RayFlagsTerminateOnFirstHitEXT;\n      rayQueryInitializeEXT(ray, scene, flags, 0xff, rayPos, tmin, rayDir, tmax);\n      rayQueryProceedEXT(ray);\n\n      if (rayQueryGetIntersectionTypeEXT(ray, true) == gl_RayQueryCommittedIntersectionNoneEXT) {\n        return vec4(color.rgb, 1.);\n      } else {\n        return vec4(color.rgb * .05, color.a);\n      }\n    }\n  ]])\n\n  raytracer = lovr.graphics.newRaytracer(1)\n  raytracer:add(model, 0, 0, 0, .01)\nend\n\nfunction lovr.update(dt)\n  model:resetNodeTransforms()\n  model:animate(1, lovr.timer.getTime())\n  model:buildRaytracer()\n  raytracer:build()\nend\n\nfunction lovr.draw(pass)\n  pass:setShader(shader)\n  pass:send('tracer', raytracer)\n  pass:send('lightPosition', 5, 5, 5)\n\n  pass:setColor(0x664455)\n  pass:plane(0, 0, 0, 10, 10, math.pi / 2, 1, 0, 0)\n\n  pass:setColor(0xffffff)\n  pass:draw(model, 0, 0, 0, .01)\nend"
+            }
+          },
+          methods = {
+            {
+              name = "add",
+              summary = "Add an object to the Raytracer.",
+              description = "Adds a `Mesh` or `Model` to the Raytracer.\n\nThe object has a custom transform, and exists on up to 8 layers, given as a bitmask.\n\nAfter adding all objects to the Raytracer, call `Raytracer:build` to finalize the raytracer.",
+              key = "Raytracer:add",
+              module = "lovr.graphics",
+              related = {
+                "Raytracer:set",
+                "Raytracer:build",
+                "Raytracer:clear"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to add to the Raytracer."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the object.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the object around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "An ID for the object.  Use it to move the object layer using `Raytracer:set`.  If the Raytracer is full, the object is not added and this ID will be nil."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to add to the Raytracer."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the object.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the object around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "An ID for the object.  Use it to move the object layer using `Raytracer:set`.  If the Raytracer is full, the object is not added and this ID will be nil."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to add to the Raytracer."
+                    },
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The position to place the object at."
+                    },
+                    {
+                      name = "scale3",
+                      type = "vector",
+                      description = "The scale of the object."
+                    },
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The orientation of the object."
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "An ID for the object.  Use it to move the object layer using `Raytracer:set`.  If the Raytracer is full, the object is not added and this ID will be nil."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to add to the Raytracer."
+                    },
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The position to place the object at."
+                    },
+                    {
+                      name = "scale3",
+                      type = "vector",
+                      description = "The scale of the object."
+                    },
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The orientation of the object."
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "An ID for the object.  Use it to move the object layer using `Raytracer:set`.  If the Raytracer is full, the object is not added and this ID will be nil."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "mesh",
+                      type = "Mesh",
+                      description = "The Mesh to add to the Raytracer."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform of the object."
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "An ID for the object.  Use it to move the object layer using `Raytracer:set`.  If the Raytracer is full, the object is not added and this ID will be nil."
+                    }
+                  }
+                },
+                {
+                  arguments = {
+                    {
+                      name = "model",
+                      type = "Model",
+                      description = "The Model to add to the Raytracer."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform of the object."
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "An ID for the object.  Use it to move the object layer using `Raytracer:set`.  If the Raytracer is full, the object is not added and this ID will be nil."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "build",
+              summary = "Build the Raytracer.",
+              description = "Builds the Raytracer, finalizing all the changes made by `Raytracer:add` and `Raytracer:set`.",
+              key = "Raytracer:build",
+              module = "lovr.graphics",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "clear",
+              summary = "Remove everything from the Raytracer.",
+              description = "Removes everything from the Raytracer, setting its count back to zero",
+              key = "Raytracer:clear",
+              module = "lovr.graphics",
+              notes = "This does not rebuild the raytracer.",
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
+              name = "getCapacity",
+              summary = "Get the capacity of the Raytracer.",
+              description = "Returns the capacity of the Raytracer, or the number of objects it can hold.  The capacity is declared when the raytracer is created, and can not be changed afterwards.",
+              key = "Raytracer:getCapacity",
+              module = "lovr.graphics",
+              notes = "`Raytracer:add` returns nil if the Raytracer is full.",
+              related = {
+                "Raytracer:getCount",
+                "lovr.graphics.newRaytracer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "capacity",
+                      type = "number",
+                      description = "The capacity of the raytracer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "getCount",
+              summary = "Get the number of objects in the Raytracer.",
+              description = "Returns the number of objects in the Raytracer.",
+              key = "Raytracer:getCount",
+              module = "lovr.graphics",
+              notes = "`Raytracer:add` returns nil if the Raytracer is full.",
+              related = {
+                "Raytracer:getCapacity",
+                "Raytracer:clear"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {
+                    {
+                      name = "count",
+                      type = "number",
+                      description = "The number of objects in the Raytracer."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "set",
+              summary = "Move an object in the Raytracer.",
+              description = "Moves a `Mesh` or `Model` to the Raytracer, using an ID previously returned by `Raytracer:add`. This function can also change the layer mask and tag of the object.\n\nAfter adding and moving objects, call `Raytracer:build` to finalize the raytracer.",
+              key = "Raytracer:set",
+              module = "lovr.graphics",
+              related = {
+                "Raytracer:add",
+                "Raytracer:build"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "The ID of the object to change."
+                    },
+                    {
+                      name = "x",
+                      type = "number",
+                      description = "The x coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "y",
+                      type = "number",
+                      description = "The y coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "z",
+                      type = "number",
+                      description = "The z coordinate to place the object at.",
+                      default = "0"
+                    },
+                    {
+                      name = "scale",
+                      type = "number",
+                      description = "The scale of the object.",
+                      default = "1"
+                    },
+                    {
+                      name = "angle",
+                      type = "number",
+                      description = "The rotation of the object around its rotation axis, in radians.",
+                      default = "0"
+                    },
+                    {
+                      name = "ax",
+                      type = "number",
+                      description = "The x component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "ay",
+                      type = "number",
+                      description = "The y component of the axis of rotation.",
+                      default = "1"
+                    },
+                    {
+                      name = "az",
+                      type = "number",
+                      description = "The z component of the axis of rotation.",
+                      default = "0"
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "The ID of the object to change."
+                    },
+                    {
+                      name = "position",
+                      type = "vector",
+                      description = "The position to place the object at."
+                    },
+                    {
+                      name = "scale3",
+                      type = "vector",
+                      description = "The scale of the object."
+                    },
+                    {
+                      name = "orientation",
+                      type = "quaternion",
+                      description = "The orientation of the object."
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "id",
+                      type = "number",
+                      description = "The ID of the object to change."
+                    },
+                    {
+                      name = "transform",
+                      type = "Mat4",
+                      description = "The transform of the object."
+                    },
+                    {
+                      name = "layers",
+                      type = "number",
+                      description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
+                      default = "0xff"
+                    },
+                    {
+                      name = "tag",
+                      type = "number",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
+                      default = "nil"
+                    }
+                  },
+                  returns = {}
+                }
+              }
             }
           }
         },

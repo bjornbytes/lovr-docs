@@ -48,6 +48,11 @@ return {
           ]]
         },
         {
+          name = 'raytracing',
+          type = 'boolean',
+          description = 'Whether `Raytracer` is supported.'
+        },
+        {
           name = 'indirectDrawFirstInstance',
           type = 'boolean',
           description = [[
