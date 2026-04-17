@@ -15679,6 +15679,25 @@ return {
           extends = "Object",
           methods = {
             {
+              name = "buildRaytracer",
+              summary = "Rebuild raytracing data for the Mesh.",
+              description = "Rebuilds raytracing data for the Mesh.\n\nThe first time a Mesh is added to a Raytracer with `Raytracer:add`, it computes raytracing data for its vertices automatically.  However, if the Mesh vertices change later, this raytracing data will be out of date.  This function is used to rebuild the raytracing data.  Afterwards, `Raytracer:build` also needs to be called on any `Raytracer` objects holding the Mesh.",
+              key = "Mesh:buildRaytracer",
+              module = "lovr.graphics",
+              related = {
+                "Model:buildRaytracer",
+                "Raytracer:build",
+                "Raytracer:add",
+                "Raytracer"
+              },
+              variants = {
+                {
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            },
+            {
               name = "computeBoundingBox",
               summary = "Compute the bounding box of the Mesh.",
               description = "Computes the axis-aligned bounding box of the Mesh from its vertices.\n\nIf the Mesh was created with the `gpu` storage mode, this function will do nothing and return `false`.\n\nIf the Mesh does not have an attribute named `VertexPosition` with the `f32x3` (aka `vec3`) type, this function will do nothing and return `false`.\n\nOtherwise, the bounding box will be set and the return value will be `true`.\n\nThe bounding box can also be assigned manually using `Mesh:setBoundingBox`, which can be used to set the bounding box on a `gpu` mesh or for cases where the bounding box is already known.\n\nPasses will use the bounding box of a Mesh to cull it against the cameras when `Pass:setViewCull` is enabled, which avoids rendering it when it's out of view.",
@@ -16449,10 +16468,16 @@ return {
             },
             {
               name = "buildRaytracer",
-              summary = "Update the raytracer data for the Model.",
-              description = "TODO",
+              summary = "Rebuild raytracing data for the Model.",
+              description = "Rebuilds raytracing data for the Model.\n\nThe first time a Model is added to a Raytracer with `Raytracer:add`, it computes raytracing data for its meshes automatically.  However, if the Model is animated or its node transforms change later, this raytracing data will be out of date.  This function is used to rebuild the raytracing data.  Afterwards, `Raytracer:build` also needs to be called on any `Raytracer` objects holding the Model.",
               key = "Model:buildRaytracer",
               module = "lovr.graphics",
+              related = {
+                "Mesh:buildRaytracer",
+                "Raytracer:build",
+                "Raytracer:add",
+                "Raytracer"
+              },
               variants = {
                 {
                   arguments = {},
