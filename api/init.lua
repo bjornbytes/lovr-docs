@@ -23468,6 +23468,49 @@ return {
                     }
                   },
                   returns = {}
+                },
+                {
+                  arguments = {
+                    {
+                      name = "view",
+                      type = "number",
+                      description = "The index of the view to update."
+                    },
+                    {
+                      name = "left",
+                      type = "number",
+                      description = "The left field of view angle, in radians.  Positive values are to the left of the view center."
+                    },
+                    {
+                      name = "right",
+                      type = "number",
+                      description = "The right field of view angle, in radians.  Positive values are to the right of the view center."
+                    },
+                    {
+                      name = "up",
+                      type = "number",
+                      description = "The top field of view angle, in radians.  Positive values are above the view center."
+                    },
+                    {
+                      name = "down",
+                      type = "number",
+                      description = "The bottom field of view angle, in radians.  Positive values are below the view center."
+                    },
+                    {
+                      name = "near",
+                      type = "number",
+                      description = "The near clipping plane distance, in meters.",
+                      default = ".01"
+                    },
+                    {
+                      name = "far",
+                      type = "number",
+                      description = "The far clipping plane distance, in meters.",
+                      default = "0.0"
+                    }
+                  },
+                  returns = {},
+                  deprecated = true
                 }
               }
             },

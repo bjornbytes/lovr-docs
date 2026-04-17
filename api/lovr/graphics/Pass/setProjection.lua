@@ -25,6 +25,42 @@ return {
     ['...'] = {
       type = 'number',
       description = 'Parameters for the projection.'
+    },
+    left = {
+      type = 'number',
+      description = [[
+        The left field of view angle, in radians.  Positive values are to the left of the view
+        center.
+      ]]
+    },
+    right = {
+      type = 'number',
+      description = [[
+        The right field of view angle, in radians.  Positive values are to the right of the view
+        center.
+      ]]
+    },
+    up = {
+      type = 'number',
+      description = [[
+        The top field of view angle, in radians.  Positive values are above the view center.
+      ]]
+    },
+    down = {
+      type = 'number',
+      description = [[
+        The bottom field of view angle, in radians.  Positive values are below the view center.
+      ]]
+    },
+    near = {
+      type = 'number',
+      default = '.01',
+      description = 'The near clipping plane distance, in meters.'
+    },
+    far = {
+      type = 'number',
+      default = '0.0',
+      description = 'The far clipping plane distance, in meters.'
     }
   },
   returns = {},
@@ -43,6 +79,11 @@ return {
     },
     {
       arguments = { 'view', 'matrix' },
+      returns = {}
+    },
+    {
+      deprecated = true,
+      arguments = { 'view', 'left', 'right', 'up', 'down', 'near', 'far' },
       returns = {}
     }
   },
