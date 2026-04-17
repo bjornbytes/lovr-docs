@@ -54,7 +54,7 @@ return {
             rayQueryEXT ray;
             float tmin = .001, tmax = 1.0;
             uint flags = gl_RayFlagsTerminateOnFirstHitEXT;
-            rayQueryInitializeEXT(ray, scene, flags, 0xff, rayPos, tmin, rayDir, tmax);
+            rayQueryInitializeEXT(ray, tracer, flags, 0xff, rayPos, tmin, rayDir, tmax);
             rayQueryProceedEXT(ray);
 
             if (rayQueryGetIntersectionTypeEXT(ray, true) == gl_RayQueryCommittedIntersectionNoneEXT) {
