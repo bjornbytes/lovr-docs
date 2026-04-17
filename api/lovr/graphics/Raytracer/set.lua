@@ -69,21 +69,13 @@ return {
     },
     layers = {
       type = 'number',
-      default = '0xff',
-      description = [[
-        A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by
-        default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on
-        the second layer, 0x3 for the first two layers, etc.
-      ]]
+      default = 'nil',
+      description = 'The new layer mask for the object, or nil to leave it unchanged.'
     },
     tag = {
       type = 'number',
       default = 'nil',
-      description = [[
-        A custom tag for the object, provided in the shader when the object is hit.  Shaders can use
-        this tag for whatever they want.  If nil, the tag will be set to the same ID as the one
-        returned by this function. The tag can be between 0 and 16,777,215.
-      ]]
+      description = 'The new tag for the object, or nil to leave it unchanged.'
     }
   },
   returns = {},
