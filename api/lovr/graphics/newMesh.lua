@@ -51,11 +51,62 @@ return {
         format will be used as the vertex format.
       ]]
     },
-    storage = {
-      type = 'MeshStorage',
-      default = [['cpu']],
-      description = 'The storage mode of the Mesh.'
-    }
+    options = {
+      type = 'table',
+      description = 'Optional options.',
+      table = {
+        {
+          name = 'storage',
+          type = 'MeshStorage',
+          default = [['cpu']],
+          description = 'The storage mode of the Mesh.'
+        },
+        {
+          name = 'raytracer',
+          type = 'table',
+          description = 'Optional raytracing options.',
+          table = {
+            {
+              name = 'dynamic',
+              type = 'boolean',
+              default = 'false',
+              description = [[
+                An optimization hint indicating that raytracing data will be frequently rebuilt.
+                Set this to `false` for meshes that have static geometry.
+              ]]
+            },
+            {
+              name = 'fasttrace',
+              type = 'boolean',
+              default = 'true',
+              description = [[
+                An optimization hint indicating that raytracing data should be optimized for fast
+                tracing in shaders instead of fast rebuilds.
+              ]]
+            },
+            {
+              name = 'fastbuild',
+              type = 'boolean',
+              default = 'false',
+              description = [[
+                An optimization hint indicating that raytracing data should be optimized for fast
+                rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set,
+                `fasttrace` wins.
+              ]]
+            },
+            {
+              name = 'compress',
+              type = 'boolean',
+              default = 'false',
+              description = [[
+                An optimization hint indicating that raytracing data should use less VRAM, possibly
+                at the cost of performance.
+              ]]
+            }
+          }
+        }
+      }
+    },
   },
   returns = {
     mesh = {
@@ -65,27 +116,27 @@ return {
   },
   variants = {
     {
-      arguments = { 'count', 'storage' },
+      arguments = { 'count', 'options' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'vertices', 'storage' },
+      arguments = { 'vertices', 'options' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'blob', 'storage' },
+      arguments = { 'blob', 'options' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'format', 'count', 'storage' },
+      arguments = { 'format', 'count', 'options' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'format', 'vertices', 'storage' },
+      arguments = { 'format', 'vertices', 'options' },
       returns = { 'mesh' }
     },
     {
-      arguments = { 'format', 'blob', 'storage' },
+      arguments = { 'format', 'blob', 'options' },
       returns = { 'mesh' }
     },
     {

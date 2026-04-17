@@ -13562,10 +13562,48 @@ return {
                   description = "The number of vertices in the Mesh."
                 },
                 {
-                  name = "storage",
-                  type = "MeshStorage",
-                  description = "The storage mode of the Mesh.",
-                  default = "'cpu'"
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "storage",
+                      type = "MeshStorage",
+                      description = "The storage mode of the Mesh.",
+                      default = "'cpu'"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
+                    }
+                  }
                 }
               },
               returns = {
@@ -13584,10 +13622,48 @@ return {
                   description = "A table of vertices, formatted according to the vertex format.  The length of the table will be used to set the vertex count of the Mesh."
                 },
                 {
-                  name = "storage",
-                  type = "MeshStorage",
-                  description = "The storage mode of the Mesh.",
-                  default = "'cpu'"
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "storage",
+                      type = "MeshStorage",
+                      description = "The storage mode of the Mesh.",
+                      default = "'cpu'"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
+                    }
+                  }
                 }
               },
               returns = {
@@ -13606,10 +13682,48 @@ return {
                   description = "A Blob containing vertex data, formatted according to the vertex format.  The size of the Blob will be used to set the vertex count of the Mesh, and must be a multiple of the vertex size."
                 },
                 {
-                  name = "storage",
-                  type = "MeshStorage",
-                  description = "The storage mode of the Mesh.",
-                  default = "'cpu'"
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "storage",
+                      type = "MeshStorage",
+                      description = "The storage mode of the Mesh.",
+                      default = "'cpu'"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
+                    }
+                  }
                 }
               },
               returns = {
@@ -13633,10 +13747,48 @@ return {
                   description = "The number of vertices in the Mesh."
                 },
                 {
-                  name = "storage",
-                  type = "MeshStorage",
-                  description = "The storage mode of the Mesh.",
-                  default = "'cpu'"
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "storage",
+                      type = "MeshStorage",
+                      description = "The storage mode of the Mesh.",
+                      default = "'cpu'"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
+                    }
+                  }
                 }
               },
               returns = {
@@ -13660,10 +13812,48 @@ return {
                   description = "A table of vertices, formatted according to the vertex format.  The length of the table will be used to set the vertex count of the Mesh."
                 },
                 {
-                  name = "storage",
-                  type = "MeshStorage",
-                  description = "The storage mode of the Mesh.",
-                  default = "'cpu'"
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "storage",
+                      type = "MeshStorage",
+                      description = "The storage mode of the Mesh.",
+                      default = "'cpu'"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
+                    }
+                  }
                 }
               },
               returns = {
@@ -13687,10 +13877,48 @@ return {
                   description = "A Blob containing vertex data, formatted according to the vertex format.  The size of the Blob will be used to set the vertex count of the Mesh, and must be a multiple of the vertex size."
                 },
                 {
-                  name = "storage",
-                  type = "MeshStorage",
-                  description = "The storage mode of the Mesh.",
-                  default = "'cpu'"
+                  name = "options",
+                  type = "table",
+                  description = "Optional options.",
+                  table = {
+                    {
+                      name = "storage",
+                      type = "MeshStorage",
+                      description = "The storage mode of the Mesh.",
+                      default = "'cpu'"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
+                    }
+                  }
                 }
               },
               returns = {
@@ -13756,6 +13984,37 @@ return {
                       type = "boolean",
                       description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
                       default = "true"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for models that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
                     }
                   }
                 }
@@ -13792,6 +14051,37 @@ return {
                       type = "boolean",
                       description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
                       default = "true"
+                    },
+                    {
+                      name = "raytracer",
+                      type = "table",
+                      description = "Optional raytracing options.",
+                      table = {
+                        {
+                          name = "dynamic",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for models that have static geometry.",
+                          default = "false"
+                        },
+                        {
+                          name = "fasttrace",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
+                          default = "true"
+                        },
+                        {
+                          name = "fastbuild",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
+                          default = "false"
+                        },
+                        {
+                          name = "compress",
+                          type = "boolean",
+                          description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
+                          default = "false"
+                        }
+                      }
                     }
                   }
                 }

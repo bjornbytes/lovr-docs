@@ -33,6 +33,50 @@ return {
             model will use the material set with `Pass:setMaterial`, although it will apply to all
             nodes.
           ]]
+        },
+        {
+          name = 'raytracer',
+          type = 'table',
+          description = 'Optional raytracing options.',
+          table = {
+            {
+              name = 'dynamic',
+              type = 'boolean',
+              default = 'false',
+              description = [[
+                An optimization hint indicating that raytracing data will be frequently rebuilt.
+                Set this to `false` for models that have static geometry.
+              ]]
+            },
+            {
+              name = 'fasttrace',
+              type = 'boolean',
+              default = 'true',
+              description = [[
+                An optimization hint indicating that raytracing data should be optimized for fast
+                tracing in shaders instead of fast rebuilds.
+              ]]
+            },
+            {
+              name = 'fastbuild',
+              type = 'boolean',
+              default = 'false',
+              description = [[
+                An optimization hint indicating that raytracing data should be optimized for fast
+                rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set,
+                `fasttrace` wins.
+              ]]
+            },
+            {
+              name = 'compress',
+              type = 'boolean',
+              default = 'false',
+              description = [[
+                An optimization hint indicating that raytracing data should use less VRAM, possibly
+                at the cost of performance.
+              ]]
+            }
+          }
         }
       }
     }
