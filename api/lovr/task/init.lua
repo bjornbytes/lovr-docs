@@ -18,6 +18,7 @@ return {
 
         function lovr.load()
           task = lovr.task.start(function()
+            -- Note: lovr.graphics.newTexture is async
             texture = lovr.graphics.newTexture('file.png')
           end)
         end

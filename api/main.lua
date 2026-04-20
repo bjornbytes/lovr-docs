@@ -297,6 +297,7 @@ local function validateType(type, fields, key, kind)
       userdata = true,
       lightuserdata = true,
       ['function'] = true,
+      thread = true,
       vector = true,
       quaternion = true,
       ['*'] = true

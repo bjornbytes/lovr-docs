@@ -994,6 +994,37 @@ return {
       }
     },
     {
+      name = "taskready",
+      tag = "callbacks",
+      summary = "Called when a task is ready to run.",
+      description = "The `lovr.taskready` callback is called when a task is ready to run after making an async call.\n\nThe default implementation is to resume it, but this can be overidden to customize the task scheduling behavior.",
+      key = "lovr.taskready",
+      module = "lovr",
+      examples = {
+        {
+          code = "function lovr.taskready(task)\n  assert(lovr.task.resume(task))\nend"
+        }
+      },
+      related = {
+        "lovr.task.poll",
+        "lovr.task.resume",
+        "lovr.task.wait",
+        "lovr.task.getStatus"
+      },
+      variants = {
+        {
+          arguments = {
+            {
+              name = "task",
+              type = "thread",
+              description = "The task."
+            }
+          },
+          returns = {}
+        }
+      }
+    },
+    {
       name = "textinput",
       tag = "callbacks",
       summary = "Called when text has been entered.",
@@ -44987,10 +45018,185 @@ return {
       name = "task",
       tag = "modules",
       summary = "Coroutine scheduler.",
-      description = "The task module implements a task scheduler.  Tasks are Lua coroutines that can be yielded and resumed independently from each other, allowing multiple independent pieces of Lua code to run cooperatively.\n\nLÖVR also has a set of \"asynchronous functions\".  When one of these async functions is called in a task, the task will yield, and the scheduler will keep track of when the task is ready to resume again.  Then, while the original task is yielded and waiting for its result, other tasks can run, instead of blocking the CPU thread.  Work performed by async functions is also spread across multiple CPU cores automatically.  This allows a large number of expensive functions to all run at the same time, without using `Thread` or `Channel` objects.\n\nAs a simple example, this code uses a task to load a texture on a background thread, then continues to render a loading message until the texture is ready.\n\n    function lovr.load()\n      task = lovr.task.start(function()\n        texture = lovr.graphics.newTexture('file.png')\n      end)\n    end\n\n    function lovr.draw(pass)\n      if not texture then\n        pass:text('Loading texture...', 0, 1.7, -1)\n      else\n        pass:draw(texture, 0, 1.7, -1)\n      end\n    end",
+      description = "The task module implements a task scheduler.  Tasks are Lua coroutines that can be yielded and resumed independently from each other, allowing multiple independent pieces of Lua code to run cooperatively.\n\nLÖVR also has a set of \"asynchronous functions\".  When one of these async functions is called in a task, the task will yield, and the scheduler will keep track of when the task is ready to resume again.  Then, while the original task is yielded and waiting for its result, other tasks can run, instead of blocking the CPU thread.  Work performed by async functions is also spread across multiple CPU cores automatically.  This allows a large number of expensive functions to all run at the same time, without using `Thread` or `Channel` objects.\n\nAs a simple example, this code uses a task to load a texture on a background thread, then continues to render a loading message until the texture is ready.\n\n    function lovr.load()\n      task = lovr.task.start(function()\n        -- Note: lovr.graphics.newTexture is async\n        texture = lovr.graphics.newTexture('file.png')\n      end)\n    end\n\n    function lovr.draw(pass)\n      if not texture then\n        pass:text('Loading texture...', 0, 1.7, -1)\n      else\n        pass:draw(texture, 0, 1.7, -1)\n      end\n    end",
       key = "lovr.task",
       enums = {},
-      functions = {},
+      functions = {
+        {
+          name = "getStatus",
+          summary = "Get the status of a task.",
+          description = "Returns the status of a task.",
+          key = "lovr.task.getStatus",
+          module = "lovr.task",
+          notes = "Status will be one of:\n\n- `running` - The current running task.\n- `complete` - The task function returned without error.\n- `failed` - The task threw an error.\n- `waiting` - The task is waiting on an async call.\n- `ready` - The task is ready to resume.\n- nil - The task is not tracked by the task scheduler.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "task",
+                  type = "thread",
+                  description = "The task to check."
+                }
+              },
+              returns = {
+                {
+                  name = "status",
+                  type = "string | nil",
+                  description = "The status of the task."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "poll",
+          summary = "Iterate over tasks that are ready to run.",
+          description = "This function returns a Lua iterator for all of the tasks that areready to run.  This function is called in the default implementation of `lovr.run`, so it's normally not necessary to call it manually.",
+          key = "lovr.task.poll",
+          module = "lovr.task",
+          examples = {
+            {
+              code = "for task in lovr.task.poll() do\n  assert(lovr.task.resume(task))\nend"
+            }
+          },
+          variants = {
+            {
+              arguments = {},
+              returns = {
+                {
+                  name = "iterator",
+                  type = "function",
+                  description = "The iterator function, usable in a for loop.",
+                  arguments = {},
+                  returns = {}
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "resume",
+          summary = "Resume a task.",
+          description = "Resumes a task.  This is similar to `coroutine.resume`, but integrates with the task scheduler:\n\n- If the task was waiting on a result from an asynchronous function call, it passes the results\n  from that call back to the task.\n- The task scheduler will track any async calls the task makes, yielding the task and tracking\n  the progress of the async call.\n- If the task is still waiting on a pending async call, the task scheduler will refuse to resume\n  the task.\n\nThis function returns once the task yields, either because it called an async function, called `coroutine.yield`, finished running, or errored.",
+          key = "lovr.task.resume",
+          module = "lovr.task",
+          notes = "If the task is waiting on an async call, this function returns `false, 'not ready'`.",
+          related = {
+            "lovr.task.start",
+            "lovr.task.wait",
+            "lovr.task.getStatus",
+            "lovr.taskready"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "...",
+                  type = "*",
+                  description = "Arguments to pass to the task, as the return values from `coroutine.yield`.  These are ignored if the task was waiting on an async call."
+                }
+              },
+              returns = {
+                {
+                  name = "success",
+                  type = "boolean",
+                  description = "Whether the task resumed and ran successfully."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "An error message, or the results from `coroutine.yield`."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "start",
+          summary = "Start a task.",
+          description = "Starts a new task.  This creates a new coroutine and resumes it with `lovr.task.resume`:\n\n    local task = coroutine.create(f)\n    task:resume(...)\n    return task",
+          key = "lovr.task.start",
+          module = "lovr.task",
+          related = {
+            "lovr.task.resume"
+          },
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "f",
+                  type = "function",
+                  description = "The function used for the coroutine body."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "Arguments to pass to the task."
+                }
+              },
+              returns = {
+                {
+                  name = "task",
+                  type = "thread",
+                  description = "The new task."
+                }
+              }
+            }
+          }
+        },
+        {
+          name = "wait",
+          summary = "Wait for tasks to complete.",
+          description = "Waits for one or more tasks to complete, returning any values they return.\n\nNote that this is an async function.  Waiting on a task while inside another task will yield the waiter until the waitee is done.",
+          key = "lovr.task.wait",
+          module = "lovr.task",
+          examples = {
+            {
+              description = "Loading multiple images in parallel.",
+              code = "local tasks = {}\n\nfor i, file in ipairs(files) do\n  tasks[i] = lovr.task.start(function()\n    return lovr.graphics.newTexture(file)\n  end)\nend\n\nlocal textures = lovr.task.wait(tasks)"
+            },
+            {
+              description = "Multiple return values",
+              code = "local a = lovr.task.start(function()\n  return 1, 2, 3\nend)\n\nlocal b = lovr.task.start(function()\n  return 4, 5, 6\nend)\n\nlocal c = lovr.task.start(function()\n  return 7, 8, 9\nend)\n\nprint(lovr.task.wait(a, b, c)) --> 1, 4, 7, 8, 9"
+            }
+          },
+          notes = "After waiting on a task, it will not show up in `lovr.taskready`, since it will never be ready to run again.\n\nWaiting on a task requires that it was resumed with `lovr.task.resume`.\n\nIf some of the tasks aren't finished yet when this function is called, LÖVR will try to find something useful to do, including resuming tasks that are ready to run and running some of the work that tasks are waiting for.",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "...task",
+                  type = "thread",
+                  description = "Tasks to wait for."
+                }
+              },
+              returns = {
+                {
+                  name = "...",
+                  type = "*",
+                  description = "The values the tasks returned.  This follows the same rules as Lua for collapsing multiple return values: the first return value of each function is used, except for the last function, which gets to return all of its results."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "t",
+                  type = "{thread}",
+                  description = "A table of tasks to wait for."
+                }
+              },
+              returns = {
+                {
+                  name = "...",
+                  type = "*",
+                  description = "The values the tasks returned.  This follows the same rules as Lua for collapsing multiple return values: the first return value of each function is used, except for the last function, which gets to return all of its results."
+                }
+              }
+            }
+          }
+        }
+      },
       objects = {},
       related = {
         "lovr.thread"
