@@ -62,7 +62,7 @@ return {
       ]]
     },
     {
-      description = 'Multiple return values',
+      description = 'Multiple return values.',
       code = [[
         local a = lovr.task.start(function()
           return 1, 2, 3
@@ -76,7 +76,7 @@ return {
           return 7, 8, 9
         end)
 
-        print(lovr.task.wait(a, b, c)) --> 1, 4, 7, 8, 9
+        print(lovr.task.wait(a, b, c)) --> true, 1, 4, 7, 8, 9
       ]]
     }
   }

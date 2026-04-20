@@ -45156,8 +45156,8 @@ return {
               code = "local tasks = {}\n\nfor i, file in ipairs(files) do\n  tasks[i] = lovr.task.start(function()\n    return lovr.graphics.newTexture(file)\n  end)\nend\n\nlocal textures = lovr.task.wait(tasks)"
             },
             {
-              description = "Multiple return values",
-              code = "local a = lovr.task.start(function()\n  return 1, 2, 3\nend)\n\nlocal b = lovr.task.start(function()\n  return 4, 5, 6\nend)\n\nlocal c = lovr.task.start(function()\n  return 7, 8, 9\nend)\n\nprint(lovr.task.wait(a, b, c)) --> 1, 4, 7, 8, 9"
+              description = "Multiple return values.",
+              code = "local a = lovr.task.start(function()\n  return 1, 2, 3\nend)\n\nlocal b = lovr.task.start(function()\n  return 4, 5, 6\nend)\n\nlocal c = lovr.task.start(function()\n  return 7, 8, 9\nend)\n\nprint(lovr.task.wait(a, b, c)) --> true, 1, 4, 7, 8, 9"
             }
           },
           notes = "After waiting on a task, it will not show up in `lovr.taskready`, since it will never be ready to run again.\n\nWaiting on a task requires that it was resumed with `lovr.task.resume`.\n\nIf some of the tasks aren't finished yet when this function is called, LÖVR will try to find something useful to do, including resuming tasks that are ready to run and running some of the work that tasks are waiting for.",
