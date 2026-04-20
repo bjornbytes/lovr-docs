@@ -44987,7 +44987,7 @@ return {
       name = "task",
       tag = "modules",
       summary = "Coroutine scheduler.",
-      description = "TODO",
+      description = "The task module implements a task scheduler.  Tasks are Lua coroutines that can be yielded and resumed independently from each other, allowing multiple independent pieces of Lua code to run cooperatively.\n\nLÖVR also has a set of \"asynchronous functions\".  When one of these async functions is called in a task, the task will yield, and the scheduler will keep track of when the task is ready to resume again.  Then, while the original task is yielded and waiting for its result, other tasks can run, instead of blocking the CPU thread.  Work performed by async functions is also spread across multiple CPU cores automatically.  This allows a large number of expensive functions to all run at the same time, without using `Thread` or `Channel` objects.\n\nAs a simple example, this code uses a task to load a texture on a background thread, then continues to render a loading message until the texture is ready.\n\n    function lovr.load()\n      task = lovr.task.start(function()\n        texture = lovr.graphics.newTexture('file.png')\n      end)\n    end\n\n    function lovr.draw(pass)\n      if not texture then\n        pass:text('Loading texture...', 0, 1.7, -1)\n      else\n        pass:draw(texture, 0, 1.7, -1)\n      end\n    end",
       key = "lovr.task",
       enums = {},
       functions = {},
