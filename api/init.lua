@@ -45211,6 +45211,37 @@ return {
       enums = {},
       functions = {
         {
+          name = "call",
+          summary = "Call a Lua function on a worker thread.",
+          description = "Calls a Lua function on a worker thread.  The arguments and returns are sent to and from the thread using an internal Channel.  The function is serialized to bytecode, so it can not access any variables in the parent Lua scope.\n\nThis is an asynchronous function.  Calling it in a task will yield the task and resume once the call is complete.",
+          key = "lovr.thread.call",
+          module = "lovr.thread",
+          notes = "C methods can be called this way:\n\n    world = lovr.physics.newWorld()\n\n    -- Do the physics update on a thread\n    lovr.thread.call(world.update, world, dt)",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "f",
+                  type = "function",
+                  description = "The function to call."
+                },
+                {
+                  name = "...",
+                  type = "*",
+                  description = "Arguments to pass to the function."
+                }
+              },
+              returns = {
+                {
+                  name = "...",
+                  type = "*",
+                  description = "Values returned by the function."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "getChannel",
           summary = "Get a Channel for communicating between threads.",
           description = "Returns a named Channel for communicating between threads.",
