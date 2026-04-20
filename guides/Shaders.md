@@ -863,7 +863,7 @@ The high level lighting helpers use several low-level helpers.
 Direct lighting:
 
     float D_GGX(const Surface surface, float NoH); // Specular
-    float G_SmithGGXCorrelated(const Surface surface, float NoV, float NoL); // Diffsue
+    float G_SmithGGXCorrelated(const Surface surface, float NoV, float NoL); // Diffuse
     vec3 F_Schlick(const Surface surface, float VoH); // Fresnel
 
 Indirect lighting:
@@ -878,28 +878,28 @@ The following helper functions implement tone mapping and color space conversion
 ACES tonemapping is provided by the `tonemap` function.  It squishes floating point light
 intensities down into the 0-1 range, to avoid clipping.
 
-    vec3 tonemap(vec3 x)
+    vec3 tonemap(vec3 x);
 
 To convert between linear and sRGB encoded colors, use `gammaToLinear` and `linearToGamma`, which
 are similar to `lovr.math.linearToGamma` and `lovr.math.gammaToLinear`.
 
-    vec3 gammaToLinear(vec3 color)
-    vec3 linearToGamma(vec3 color)
+    vec3 gammaToLinear(vec3 color);
+    vec3 linearToGamma(vec3 color);
 
 For HDR10, `pqToLinear` and `linearToPQ` can convert between linear colors and PQ-encoded colors.
 
-    vec3 pqToLinear(vec3 color)
-    vec3 linearToPQ(vec3 color)
+    vec3 pqToLinear(vec3 color);
+    vec3 linearToPQ(vec3 color);
 
 Finally, there are helpers for converting between the sRGB (BT.709) and Rec2020 (BT.2020) color
 spaces.
 
-    vec3 sRGBToRec2020(vec3 color)
-    vec3 rec2020ToSRGB(vec3 color)
+    vec3 sRGBToRec2020(vec3 color);
+    vec3 rec2020ToSRGB(vec3 color);
 
 ### Miscellaneous
 
 These two functions are used for packing and unpacking data stored using the `sn10x3` `DataType`:
 
-    uint packSnorm10x3(vec4 v)
-    vec4 unpackSnorm10x3(uint n)
+    uint packSnorm10x3(vec4 v);
+    vec4 unpackSnorm10x3(uint n);
