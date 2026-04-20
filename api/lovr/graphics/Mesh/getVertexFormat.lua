@@ -68,6 +68,10 @@ return {
           <td>The texture coordinate of the vertex.</td>
         </tr>
         <tr>
+          <td><code>VertexUV2</code></td>
+          <td>The second texture coordinate of the vertex (often used for lightmapping).</td>
+        </tr>
+        <tr>
           <td><code>VertexColor</code></td>
           <td>The color of the vertex (linear color space).</td>
         </tr>

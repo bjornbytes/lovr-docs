@@ -187,6 +187,11 @@ The following built-in variables are available only in vertex shaders:
       <td>The texture coordinate of the current vertex.</td>
     </tr>
     <tr>
+      <td><code>VertexUV2</code></td>
+      <td>vec2</td>
+      <td>The second texture coordinate of the current vertex.</td>
+    </tr>
+    <tr>
       <td><code>VertexColor</code></td>
       <td>vec4</td>
       <td>The color of the current vertex.</td>
@@ -762,11 +767,12 @@ LÖVR's shader helpers and default shaders.
 
 Built-in shader functions
 ---
-Shaders can make use of the following built-in helper functions:  
-TODO Add the Surface struct and Surface related functions?
 
-### Texture helpers
-The `getPixel` function can be used to sample pixels from texture resources, using the default sampler set with Pass:setSampler.  
+Shaders can make use of the following built-in helper functions:
+
+### Texture Sampling
+
+The `getPixel` function can be used to sample pixels from textures.
 
     vec4 getPixel(texture2D t, vec2 uv)
     vec4 getPixel(texture3D t, vec3 uvw)
@@ -774,70 +780,127 @@ The `getPixel` function can be used to sample pixels from texture resources, usi
     vec4 getPixel(texture2DArray t, vec2 uv, float layer)
     vec4 getPixel(textureCubeArray t, vec4 coord)
 
-	//TODO Add the sampler overloads too?
+These will use the default sampler set with `Pass:setSampler`.  However, it is also possible to use
+use a custom sampler to create a `sampler` variable instead of a `texture` variable and pass it to
+the helpers:
 
-### Lighting helpers
-The `D_GGX` function is an implementation of the Trowbridge-Reitz GGX Normal Distribution Function (NDF). It can be used to calculate specular highlight intensity.
+    vec4 color = getPixel(sampler2D(mytexture, mysampler), UV);
 
-    float D_GGX(const Surface surface, float NoH)
-The `G_SmithGGXCorrelated` function implements the Heitz's Smith Joint Masking-Shadowing Function. It can be used for TODO...
+### Lighting
 
-    float G_SmithGGXCorrelated(const Surface surface, float NoV, float NoL)
+LÖVR has some helpers that implement PBR shading.
 
-The `F_Schlick` function approximates the Fresnel factor.
+#### Surface
 
-    vec3 F_Schlick(const Surface surface, float VoH)
+Many of the lighting helpers take a `Surface` struct, which holds several light-independent data
+needed for shading.  The `Surface` can be created once for a pixel and reused to compute shading for
+multiple lights.
 
-The `getLighting` function evaluates a direct light for a given surface.
+    // Note: positions and directions are in world space
+    struct Surface {
+      vec3 position; // Position of fragment
+      vec3 normal; // Includes normal mapping
+      vec3 geometricNormal; // Raw normal from vertex shader
+      vec3 view; // The direction from the fragment to the camera
+      vec3 reflection; // The view vector reflected about the normal
 
-    vec3 getLighting(const Surface surface, vec3 direction, vec4 color, float visibility)
+      vec3 f0;
+      vec3 diffuse;
+      vec3 emissive;
+      vec4 baseColor;
+      float metalness;
+      float roughness;
+      float roughness2;
+      float occlusion;
+      float clearcoat;
+      float clearcoatRoughness;
+    };
 
-The `prefilteredBRDF` function TODO...  
-Reference: https://www.unrealengine.com/en-US/blog/physically-based-shading-on-mobile
+Surfaces can be created with `getDefaultSurface`, which creates a surface using LÖVR's builtin
+vertex shader inputs and parameters from the active `Material`.  However, it is also possible to
+create a `Surface` manually using `newSurface`, `applyMaterial`, and `finalizeSurface`.
 
-    vec2 prefilteredBRDF(float NoV, float roughness)
+    Surface surface = getDefaultSurface();
 
-The `evaluateSphericalHarmonics` function can be used for a fast approximation of global illumination.
+    // or, split into 3 steps, allowing each to be customized.
 
-    vec3 evaluateSphericalHarmonics(vec3 sh[9], vec3 n)
+    // newSurface creates a blank surface, filling in the pixel
+    // position and normal vector and leaving the material properties
+    // set to default values.
+    Surface surface = newSurface();
 
-The `getIndirectLighting` function calculates indirect lighting for a surface.
+    // applyMaterial fills in properties using the Material: base color,
+    // metalness, roughness, occlusion, emissive, clearcoat, and normal map.
+    applyMaterial(surface);
 
-    vec3 getIndirectLighting(const Surface surface, textureCube environment, vec3 sphericalHarmonics[9])
-### Color conversion helpers
-The `tonemap` function transforms HDR color values to [0, 1] range.
+    // finalizeSurface fills in some derived surface properties: f0,
+    // reflection vector, roughness2, etc.  It also clamps and flips other
+    // properties if needed.
+    finalizeSurface(surface);
+
+#### High Level
+
+Once a `Surface` exists, it can be used with lighting helpers.  The `getLighting` helper takes a
+`Surface`, and information about a light, and returns the color of that pixel.  It can be called for
+multiple lights, with the contribution of each light adding to result in the final color of the
+pixel:
+
+    vec3 getLighting(const Surface surface, vec3 direction, vec4 color, float visibility);
+
+The `getIndirectLighting` helper returns indirect lighting coming from the environment (sky).  It
+takes an environment cubemap and a set of spherical harmonics coefficients:
+
+    vec3 getIndirectLighting(const Surface surface, textureCube environmentMap, vec3 sphericalHarmonics[9]);
+
+Both the environment map and the spherical harmonics can be created from a skybox using the `cmgen`
+tool from [Filament](https://github.com/google/filament).
+
+    $ ./bin/cmgen --type=cubemap --format=png -x out env.hdr
+
+#### Low Level
+
+The high level lighting helpers use several low-level helpers.
+
+Direct lighting:
+
+    float D_GGX(const Surface surface, float NoH); // Specular
+    float G_SmithGGXCorrelated(const Surface surface, float NoV, float NoL); // Diffsue
+    vec3 F_Schlick(const Surface surface, float VoH); // Fresnel
+
+Indirect lighting:
+
+    vec2 prefilteredBRDF(float NoV, float roughness);
+    vec3 evaluateSphericalHarmonics(vec3 sh[9], vec3 n);
+
+### Color Conversion
+
+The following helper functions implement tone mapping and color space conversion.
+
+ACES tonemapping is provided by the `tonemap` function.  It squishes floating point light
+intensities down into the 0-1 range, to avoid clipping.
 
     vec3 tonemap(vec3 x)
 
-The `gammaToLinear` function converts a color from sRGB to Linear space.
+To convert between linear and sRGB encoded colors, use `gammaToLinear` and `linearToGamma`, which
+are similar to `lovr.math.linearToGamma` and `lovr.math.gammaToLinear`.
 
     vec3 gammaToLinear(vec3 color)
-
-The `linearToGamma` function converts a color from Linear to sRGB space.
-
     vec3 linearToGamma(vec3 color)
 
-The `pqToLinear` function can be used for TODO...
+For HDR10, `pqToLinear` and `linearToPQ` can convert between linear colors and PQ-encoded colors.
 
     vec3 pqToLinear(vec3 color)
-
-The `linearToPQ` function can be used for TODO...
-
     vec3 linearToPQ(vec3 color)
 
-The `sRGBToRec2020` function converts a color from sRGB to Rec.2020 space.
+Finally, there are helpers for converting between the sRGB (BT.709) and Rec2020 (BT.2020) color
+spaces.
 
     vec3 sRGBToRec2020(vec3 color)
-
-The `rec2020ToSRGB` function converts a color from Rec.2020 to sRGB space.
-
     vec3 rec2020ToSRGB(vec3 color)
 
-### Misc helpers
-The `packSnorm10x3` function can be used for TODO...
+### Miscellaneous
+
+These two functions are used for packing and unpacking data stored using the `sn10x3` `DataType`:
 
     uint packSnorm10x3(vec4 v)
-
-The `unpackSnorm10x3` function can be used for TODO...
-
     vec4 unpackSnorm10x3(uint n)
