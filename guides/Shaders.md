@@ -772,7 +772,7 @@ Shaders can make use of the following built-in helper functions:
 
 ### Texture Sampling
 
-The `getPixel` function can be used to sample pixels from textures.
+The `getPixel` function samples pixels from textures.
 
     vec4 getPixel(texture2D t, vec2 uv)
     vec4 getPixel(texture3D t, vec3 uvw)
@@ -780,9 +780,8 @@ The `getPixel` function can be used to sample pixels from textures.
     vec4 getPixel(texture2DArray t, vec2 uv, float layer)
     vec4 getPixel(textureCubeArray t, vec4 coord)
 
-These will use the default sampler set with `Pass:setSampler`.  However, it is also possible to use
-use a custom sampler to create a `sampler` variable instead of a `texture` variable and pass it to
-the helpers:
+These use the default sampler set with `Pass:setSampler`.  However, `getPixel` can also take a
+`sampler` variable instead of a `texture` variable, allowing a different sampler to be used instead:
 
     vec4 color = getPixel(sampler2D(mytexture, mysampler), UV);
 
