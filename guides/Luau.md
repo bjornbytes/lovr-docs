@@ -31,9 +31,8 @@ See Luau's own [Compatibility with Lua](https://luau.org/compatibility) page for
 File Extensions
 ---
 
-When Luau is enabled, the `lovr.filesystem` require path will be
-`?.luau;?/init.luau;?.lua;?/init.lua`, causing `require` to prioritize .luau files and fall back to
-.lua files.
+When Luau is enabled, the default require path is `?.luau;?/init.luau;?.lua;?/init.lua`, so
+`require` will prioritize .luau files and fall back to .lua files.
 
 Vectors
 ---
@@ -77,7 +76,7 @@ Luau LSP
 
 [Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR, and `lovr-docs` is able to
 generate Luau type definitions.  However, Luau LSP does not currently understand LÖVR's `require`
-function, which makes it difficult to use Luau LSP for multi-file LÖVR projects.
+function, which means it doesn't work for multi-file projects.
 
 TODO: see if [source code transformation](https://github.com/JohnnyMorganz/luau-lsp/pull/1088) can
 be used to fix this.
