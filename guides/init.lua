@@ -10,6 +10,7 @@ return {
   'Contributing',
   'VS_Code_Setup',
   'Compiling',
+  'Luau',
   'FAQ',
   'v0.17.0',
   'v0.18.0',
