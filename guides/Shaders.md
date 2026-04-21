@@ -316,6 +316,11 @@ The following built-in variables and macros are available only in fragment shade
       <td>The texture coordinate of the current pixel.</td>
     </tr>
     <tr>
+      <td><code>UV2</code></td>
+      <td>vec2</td>
+      <td>The second texture coordinate of the current pixel.</td>
+    </tr>
+    <tr>
       <td><code>Tangent</code></td>
       <td>vec4</td>
       <td>The tangent vector of the current pixel, in world space.</td>
