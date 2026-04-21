@@ -3,7 +3,7 @@ Luau
 
 LÖVR supports [Luau](https://luau.org) in addition to PUC Lua and LuaJIT.  Compared to Lua, Luau
 supports gradual typing, a builtin vector type, native code generation, and several convenient
-syntax improvements.
+[syntax improvements](https://luau.org/syntax).
 
 LÖVR's Luau support is still early and should be considered experimental.  With that said, Luau can
 run most LÖVR projects without any modifications.
