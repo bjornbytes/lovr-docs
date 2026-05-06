@@ -129,12 +129,12 @@ Next, install the Android SDK (29) and NDK (26.3.11579264).  The [Android comman
 tools](https://developer.android.com/studio#command-line-tools-only) contain an `sdkmanager` tool
 that can be used to install the Android SDK, NDK, and other build tools:
 
-    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk "build-tools;34.0.0" "cmake;3.22.1" "ndk;26.3.11579264" "platform-tools" "platforms;android-29"
+    $ ./sdkmanager --sdk_root=/path/to/android/sdk "build-tools;37.0.0" "cmake;4.1.2" "ndk;29.0.14206865" "platform-tools" "platforms;android-32"
 
 The SDK will be installed to the chosen `sdk_root` path.  To reduce the SDK size, the `emulator`
 package can be safely uninstalled:
 
-    $ cmdline-tools/bin/sdkmanager --sdk_root=/path/to/android/sdk --uninstall emulator
+    $ ./sdkmanager --sdk_root=/path/to/android/sdk --uninstall emulator
 
 Finally, compiling a LÖVR APK requires a copy of the `glslangValidator` tool installed on the
 system. Most package managers will offer this as part of a `glslang` or `glslang-tools` package.
