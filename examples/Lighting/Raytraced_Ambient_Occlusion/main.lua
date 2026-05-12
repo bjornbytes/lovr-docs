@@ -209,7 +209,7 @@ end
 
 function lovr.draw(pass)
   -- First: record a depth prepass for the ambient occlusion pass.  Pre-filling the depth buffer
-  -- ensures that at most one ray is traced per pixel during the ambinet occlusion pass
+  -- ensures that at most one ray is traced per pixel during the ambient occlusion pass
   occlusionPrepass:reset()
   setCameras(occlusionPrepass)
   drawScene(occlusionPrepass)
