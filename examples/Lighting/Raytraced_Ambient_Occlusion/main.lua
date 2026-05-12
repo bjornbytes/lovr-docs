@@ -1,4 +1,4 @@
--- Ray-traced Ambient Occlusion
+-- Raytraced Ambient Occlusion
 --
 -- Each frame, every pixel shoots a ray in a random direction.  Over time, with
 -- enough samples, this approximates the ambient occlusion for the scene

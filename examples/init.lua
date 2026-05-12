@@ -30,7 +30,7 @@ return {
   'Lighting/Cel_Shading',
   'Lighting/Circular_Shadows',
   'Lighting/PBR_Materials',
-  'Lighting/Ray-Traced_Ambient_Occlusion',
+  'Lighting/Raytraced_Ambient_Occlusion',
   'Lighting/Shadows',
   'Animation/Playback',
   'Animation/2_Bone_IK',
