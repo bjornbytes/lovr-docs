@@ -61,26 +61,34 @@ via the command line as `lovr.exe path/to/project`.
 macOS
 ---
 
-Build using CMake:
+If using [Homebrew](https://brew.sh) to install, install CMake and a Vulkan loader (needed at runtime, not to compile):
+
+    $ brew install cmake molten-vk vulkan-loader
+
+Or install the [Vulkan SDK](https://vulkan.lunarg.com/) from LunarG with "System Global Installation"
+enabled (installs to `/usr/local/lib`, which LÖVR checks automatically).
+
+From the root of the lovr repository, build with CMake:
 
     $ cmake -B build
     $ cmake --build build
 
-The lovr executable should exist in `lovr/build/bin` now.  It's recommended to set up an alias or
-symlink so that this executable can be found in your PATH environment variable.  Once that's done,
-you can run a project like this:
+The executable will be at `build/bin/lovr`.  Symlink or alias it into your `PATH` if you like.
+
+Run a project like this:
 
     $ lovr /path/to/myGame
 
+If you get "Failed to load vulkan library" after installing via Homebrew, either copy the loader
+next to the executable or set `DYLD_LIBRARY_PATH`:
+
+    $ cp $(brew --prefix)/lib/libvulkan.dylib build/bin/
+    $ DYLD_LIBRARY_PATH=$(brew --prefix)/lib lovr /path/to/myGame
+
 :::note
 You can set the `LOVR_BUILD_BUNDLE` CMake variable to `ON` to build a .app instead of a plain
-executable.
+executable.  If you distribute a .app, bundle MoltenVK into it (see the `Distribution` page).
 :::
-
-LÖVR requires MoltenVK.  The easiest way to get MoltenVK is to install the Vulkan SDK from LunarG.
-Be sure to leave the "System Global Installation" checkbox enabled while installing so LÖVR is able
-to find the Vulkan library.  Note that if you plan to distribute a .app, you will also want to
-bundle MoltenVK into the .app.  This is documented in more detail on the `Distribution` page.
 
 Linux
 ---
