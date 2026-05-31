@@ -5,10 +5,6 @@ return {
     to create several variants of a shader with different behavior.
   ]],
   arguments = {
-    source = {
-      type = 'Shader',
-      description = 'The Shader to clone.'
-    },
     flags = {
       type = 'table',
       description = [[
@@ -27,7 +23,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'source', 'flags' },
+      arguments = { 'flags' },
       returns = { 'shader' }
     }
   }
