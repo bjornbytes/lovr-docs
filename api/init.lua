@@ -25732,11 +25732,6 @@ return {
                 {
                   arguments = {
                     {
-                      name = "source",
-                      type = "Shader",
-                      description = "The Shader to clone."
-                    },
-                    {
                       name = "flags",
                       type = "table",
                       description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  The clones set here will override any set in the parent shader.  See `ShaderFlag` for the set of builtin shader flags."
@@ -44742,7 +44737,14 @@ return {
           },
           variants = {
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "timeout",
+                  type = "number",
+                  description = "How long to wait for an event to arrive, in seconds.  Use a negative value or `math.huge` for an infinite timeout, sleeping until an event arrives.  This is useful for an interface that only needs to re-render after a user input event occurs.",
+                  default = "0"
+                }
+              },
               returns = {}
             }
           }

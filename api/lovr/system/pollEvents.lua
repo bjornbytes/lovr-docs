@@ -7,11 +7,21 @@ return {
     This function is called in the default implementation of `lovr.run`, and the events are later
     processed by `lovr.event.poll`.
   ]],
-  arguments = {},
+  arguments = {
+    timeout = {
+      type = 'number',
+      default = '0',
+      description = [[
+        How long to wait for an event to arrive, in seconds.  Use a negative value or `math.huge`
+        for an infinite timeout, sleeping until an event arrives.  This is useful for an interface
+        that only needs to re-render after a user input event occurs.
+      ]]
+    }
+  },
   returns = {},
   variants = {
     {
-      arguments = {},
+      arguments = { 'timeout' },
       returns = {}
     }
   },
