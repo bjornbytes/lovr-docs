@@ -109,7 +109,7 @@ end
 
 local function render_shadow_map(draw)
   local near_plane = 2
-  local projection
+  local projection = lovr.math.newMat4()
   if light_orthographic then
     local radius = 3
     local far_plane = 15

@@ -31,7 +31,7 @@ function lovr.load()
   for i = 1, 100 do
     table.insert(bluePuffs, {
       position = vector(
-        lovr.math.random() - .5, 
+        lovr.math.random() - .5,
         lovr.math.random() - .5 + 1.7,
         lovr.math.random() - .5
       )
@@ -40,9 +40,7 @@ function lovr.load()
 
   -- red puff billboard shader
   redPuffVertex = [[
-    Constants {
-      vec3 headPosition;
-    };
+    uniform vec3 headPosition;
 
     mat4 target(vec3 from, vec3 to, vec3 up) {
       mat4 m;

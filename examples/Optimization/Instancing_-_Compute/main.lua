@@ -18,7 +18,7 @@ function lovr.load()
   -- More random transforms-- this will correspond to the transform applied to each monkey per frame
   local offsets = {}
   for i = 1, MONKEYS do
-    local position = vector(randomNormal(1), randomNormal(8), randomNormal(8)):mul(ASSUME_FRAMERATE)
+    local position = vector(randomNormal(1), randomNormal(8), randomNormal(8)) * ASSUME_FRAMERATE
     local radianSwing = ASSUME_FRAMERATE * math.pi / 2
     local orientation = quaternion(random(-radianSwing, radianSwing), random(), random(), random())
     local scale = vector(1)
@@ -47,7 +47,7 @@ function lovr.load()
 
   -- Create the display shader, injecting the shader code for the block
   shader = lovr.graphics.newShader([[
-    buffer TransformBuffer { mat4 Transforms[]; };
+    readonly buffer TransformBuffer { mat4 Transforms[]; };
 
     vec4 lovrmain() {
       return Projection * View * Transforms[InstanceIndex] * Transform * VertexPosition;

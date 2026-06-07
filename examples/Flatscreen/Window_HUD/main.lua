@@ -99,7 +99,7 @@ local function drawGrid(pass)
 end
 
 -- Draw HUD overlay
-local function mirror(pass) 
+local function mirror(pass)
   pass:origin()
   pass:setViewPose(1, mat4())
   pass:setProjection(1, matrix) -- Switch to screen space coordinates

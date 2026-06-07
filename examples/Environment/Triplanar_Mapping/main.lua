@@ -21,7 +21,7 @@ function lovr.load()
       vec3 normal = abs(normalize(Normal));
       vec3 weight = normal / (normal.x + normal.y + normal.z);
       vec3 color = colorX * weight.x + colorY * weight.y + colorZ * weight.z;
-      
+
       return Color * vec4(color, 1.);
     }
   ]])

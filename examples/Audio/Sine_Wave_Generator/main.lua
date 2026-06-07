@@ -5,7 +5,7 @@ function lovr.load()
   local frequency = 440
   local volume = 1.0
 
-  sound = lovr.data.newSound(frames, 'f32', 'stereo', rate)
+  sound = lovr.data.newSound(frames, 'f32', 2, rate)
 
   local data = {}
   for i = 1, frames do

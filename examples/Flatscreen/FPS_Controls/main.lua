@@ -31,7 +31,7 @@ function lovr.update(dt)
 
   if velocity:length() > 0 then
     velocity = velocity:normalize() * camera.movespeed * dt
-    camera.position = camera.position + camera.transform:mul(velocity, 0) -- Just apply transform's rotation to velocity
+    camera.position = camera.position + camera.transform:mul(velocity, 0)
   end
 
   camera.transform:identity()

@@ -2,16 +2,12 @@
 local font = lovr.graphics.getDefaultFont()
 font:setPixelDensity(1)
 
--- Set up a 2D orthographic projection, where (0, 0) is the upper
--- left of the window and the units are in pixels
-local width, height = lovr.system.getWindowDimensions()
-local projection = Mat4():orthographic(0, width, 0, height, -10, 10)
-
 function lovr.draw(pass)
   pass:setViewPose(1, mat4():identity())
-  pass:setProjection(1, projection)
+  pass:setProjection('orthographic')
   pass:setDepthTest()
 
+  local width, height = pass:getDimensions()
   local button = { x = width / 2, y = height / 2, w = 180, h = 60 }
 
   local mx, my = lovr.system.getMousePosition()

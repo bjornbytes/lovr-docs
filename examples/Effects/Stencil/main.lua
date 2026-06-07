@@ -110,7 +110,7 @@ end
 
 function scene.draw(pass)
   -- Drawing without culling can make stencils or transparency look weird. We'll be using both...
-  pass:setCullMode('back')
+  pass:setFaceCull('back')
 
   -- First, draw the skybox
   pass:setSampler(scene.sampler)
