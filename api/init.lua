@@ -46588,6 +46588,37 @@ return {
           }
         },
         {
+          name = "rotate",
+          summary = "Rotate the vector by a quaternion.",
+          description = "Rotates the vector by a quaternion, returning a new rotated vector.",
+          key = "vector.rotate",
+          module = "vector",
+          deprecated = "Instead of using this function, use the multiplication operator (`quaternion * vector`).",
+          variants = {
+            {
+              arguments = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The vector to rotate."
+                },
+                {
+                  name = "q",
+                  type = "quaternion",
+                  description = "The rotation."
+                }
+              },
+              returns = {
+                {
+                  name = "v",
+                  type = "number",
+                  description = "The rotated vector."
+                }
+              }
+            }
+          }
+        },
+        {
           name = "unpack",
           summary = "Get the components of a vector as numbers.",
           description = "Returns the components of the vector as numbers.",
