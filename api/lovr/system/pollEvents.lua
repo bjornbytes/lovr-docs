@@ -25,6 +25,10 @@ return {
       returns = {}
     }
   },
+  notes = [[
+    When using a timeout, this function will only return upon receiving a *window* event.  Other
+    events like `filechanged`, `threaderror`, or events from `lovr.headset` will **not** wake up!
+  ]],
   related = {
     'lovr.event.poll'
   }
