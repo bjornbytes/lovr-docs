@@ -15,8 +15,7 @@ function lovr.load()
     uniform sphericalHarmonics { vec3 sh[9]; };
 
     vec4 lovrmain() {
-      Surface surface;
-      initSurface(surface);
+      Surface surface = getDefaultSurface();
 
       vec3 color = vec3(0);
       vec3 lightDirection = vec3(-1, -1, -1);
