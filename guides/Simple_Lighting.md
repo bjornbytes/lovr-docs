@@ -184,7 +184,7 @@ And that's it! With any luck, you'll have a properly-lit model like so:
 
 There's lots of playing around you can do - experiment with multiple lights, new shaders that are variants on the theme, and explore GLSL.
 
->Special Note 3: For factorization purposes, you can keep the vertex and fragment shader code in seperate files (default extension for them is .vs and .fs). You can pass the filenames to lovr.graphics.newShader. The advantage of this is using syntax highlighting or linting when coding your shaders i.e. in VS Code.
+>Special Note 3: For factorization purposes, you can keep the vertex and fragment shader code in separate files (default extension for them is .vs and .fs). You can pass the filenames to lovr.graphics.newShader. The advantage of this is using syntax highlighting or linting when coding your shaders i.e. in VS Code.
 
 >Final Note: If you are having issues with some faces on your models not being lit properly, there are a few things to check on your model.
 >First, make sure it is built with a uniform scale. This can easily be done in Blender by selecting a properly scaled piece, then A to select the entire model, then Cmd+A (Apply) -> Scale. There is also the uniformScale shader flag, which gives a small speed boost - you should be developing everything in uniform scale in VR anyway!
