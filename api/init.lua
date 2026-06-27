@@ -6292,9 +6292,10 @@ return {
             {
               name = "encode",
               summary = "Encode the Image as png.",
-              description = "Encodes the Image to an **uncompressed** png.  This intended mainly for debugging.",
+              description = "Encodes the Image to an **uncompressed** png.  This intended to be used mainly for debugging or tooling.",
               key = "Image:encode",
               module = "lovr.data",
+              notes = "The following texture formats are supported:\n\n- `r8`\n- `rg8`\n- `rgba8`\n- `r16`\n- `rg16`\n- `rgba16`\n- `rgb565`\n- `rgb5a1`\n- `rgb10a2`\n\nThe PNG will be 16-bit for `r16`, `rg16`, `rgba16`, and `rgb10a2`, otherwise it will be 8-bit.\n\nThe PNG will always have 4 channels (RGBA).",
               related = {
                 "lovr.filesystem.write"
               },
@@ -6416,7 +6417,7 @@ return {
               description = "Returns the value of a pixel of the Image.",
               key = "Image:getPixel",
               module = "lovr.data",
-              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              notes = "The following texture formats are supported:\n\n- `r8`\n- `rg8`\n- `rgba8`\n- `r16`\n- `rg16`\n- `rgba16`\n- `r16f`\n- `rg16f`\n- `rgba16f`\n- `r32f`\n- `rg32f`\n- `rgba32f`\n- `rgb565`\n- `rgb5a1`\n- `rgb10a2`\n\nFormats that don't have an alpha component will return 1.0 for alpha.",
               related = {
                 "Image:setPixel",
                 "Image:mapPixel",
@@ -6542,7 +6543,7 @@ return {
                   code = "local ffi = require 'ffi'\n\nfunction lovr.load()\n  local w, h = 256, 256\n\n  image = lovr.data.newImage(w, h)\n\n  local pointer = ffi.cast('uint8_t*', image:getPointer())\n\n  for y = 0, h - 1 do\n    for x = 0, w - 1 do\n      pointer[(y * w + x) * 4 + 0] = (x / w) * 255\n      pointer[(y * w + x) * 4 + 1] = (y / h) * 255\n      pointer[(y * w + x) * 4 + 2] = 255\n      pointer[(y * w + x) * 4 + 3] = 255\n    end\n  end\n\n  texture = lovr.graphics.newTexture(image)\nend\n\nfunction lovr.draw(pass)\n  pass:fill(texture)\nend"
                 }
               },
-              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              notes = "The following texture formats are supported:\n\n- `r8`\n- `rg8`\n- `rgba8`\n- `r16`\n- `rg16`\n- `rgba16`\n- `r16f`\n- `rg16f`\n- `rgba16f`\n- `r32f`\n- `rg32f`\n- `rgba32f`\n- `rgb565`\n- `rgb5a1`\n- `rgb10a2`",
               related = {
                 "Image:setPixel",
                 "Image:getPixel",
@@ -6653,7 +6654,7 @@ return {
               description = "Sets the value of a single pixel of the Image.\n\nIf you need to change a bunch of pixels, consider using `Image:mapPixel`.",
               key = "Image:setPixel",
               module = "lovr.data",
-              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              notes = "The following texture formats are supported:\n\n- `r8`\n- `rg8`\n- `rgba8`\n- `r16`\n- `rg16`\n- `rgba16`\n- `r16f`\n- `rg16f`\n- `rgba16f`\n- `r32f`\n- `rg32f`\n- `rgba32f`\n- `rgb565`\n- `rgb5a1`\n- `rgb10a2`",
               related = {
                 "Image:mapPixel",
                 "Image:getPixel",

@@ -36,8 +36,25 @@ return {
     }
   },
   notes = [[
-    The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`,
-    `r32f`, `rg32f`, `rgba32f`.
+    The following texture formats are supported:
+
+    - `r8`
+    - `rg8`
+    - `rgba8`
+    - `r16`
+    - `rg16`
+    - `rgba16`
+    - `r16f`
+    - `rg16f`
+    - `rgba16f`
+    - `r32f`
+    - `rg32f`
+    - `rgba32f`
+    - `rgb565`
+    - `rgb5a1`
+    - `rgb10a2`
+
+    Formats that don't have an alpha component will return 1.0 for alpha.
   ]],
   related = {
     'Image:setPixel',
