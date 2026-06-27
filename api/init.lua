@@ -4527,7 +4527,7 @@ return {
               description = "Returns the value of a pixel of the Image.",
               key = "Image:getPixel",
               module = "lovr.data",
-              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r16f`, `rg16f`, `rgba16f`, `r32f`, `rg32f`, `rgba32f`.",
               related = {
                 "Image:setPixel",
                 "Image:mapPixel",
@@ -4653,7 +4653,7 @@ return {
                   code = "local ffi = require 'ffi'\n\nfunction lovr.load()\n  local w, h = 256, 256\n\n  image = lovr.data.newImage(w, h)\n\n  local pointer = ffi.cast('uint8_t*', image:getPointer())\n\n  for y = 0, h - 1 do\n    for x = 0, w - 1 do\n      pointer[(y * w + x) * 4 + 0] = (x / w) * 255\n      pointer[(y * w + x) * 4 + 1] = (y / h) * 255\n      pointer[(y * w + x) * 4 + 2] = 255\n      pointer[(y * w + x) * 4 + 3] = 255\n    end\n  end\n\n  texture = lovr.graphics.newTexture(image)\nend\n\nfunction lovr.draw(pass)\n  pass:fill(texture)\nend"
                 }
               },
-              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r16f`, `rg16f`, `rgba16f`, `r32f`, `rg32f`, `rgba32f`.",
               related = {
                 "Image:setPixel",
                 "Image:getPixel",
@@ -4764,7 +4764,7 @@ return {
               description = "Sets the value of a single pixel of the Image.\n\nIf you need to change a bunch of pixels, consider using `Image:mapPixel`.",
               key = "Image:setPixel",
               module = "lovr.data",
-              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r32f`, `rg32f`, `rgba32f`.",
+              notes = "The following texture formats are supported: `r8`, `rg8`, `rgba8`, `r16`, `rg16`, `rgba16`, `r16f`, `rg16f`, `rgba16f`, `r32f`, `rg32f`, `rgba32f`.",
               related = {
                 "Image:mapPixel",
                 "Image:getPixel",
