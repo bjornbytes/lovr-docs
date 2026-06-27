@@ -41,6 +41,7 @@ return {
     - `r8`
     - `rg8`
     - `rgba8`
+    - `bgra8`
     - `r16`
     - `rg16`
     - `rgba16`
