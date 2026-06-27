@@ -19,6 +19,11 @@ return {
         more memory, but have better quality.
       ]]
     },
+    atlas = {
+      type = 'Image',
+      default = 'nil',
+      description = 'An Image to use for the BMFont atlas, instead of the one in the BMFont file.'
+    },
     spread = {
       type = 'number',
       default = '4',
@@ -40,6 +45,11 @@ return {
     {
       description = 'Creates a new Font from a font file.',
       arguments = { 'file', 'size', 'spread' },
+      returns = { 'font' }
+    },
+    {
+      description = 'Creates a new Font from a font file.',
+      arguments = { 'file', 'atlas', 'spread' },
       returns = { 'font' }
     },
     {

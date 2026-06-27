@@ -14,6 +14,11 @@ return {
         memory and processing power but may provide better quality results for some
         fonts/situations.
       ]]
+    },
+    atlas = {
+      type = 'Image',
+      default = 'nil',
+      description = 'An Image to use for the BMFont atlas, instead of the one in the BMFont file.'
     }
   },
   returns = {
@@ -25,6 +30,10 @@ return {
   variants = {
     {
       arguments = { 'file', 'size' },
+      returns = { 'rasterizer' }
+    },
+    {
+      arguments = { 'file', 'atlas' },
       returns = { 'rasterizer' }
     },
     {

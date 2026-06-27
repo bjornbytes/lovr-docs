@@ -5015,6 +5015,28 @@ return {
               }
             },
             {
+              arguments = {
+                {
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing the font file to load."
+                },
+                {
+                  name = "atlas",
+                  type = "Image",
+                  description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file.",
+                  default = "nil"
+                }
+              },
+              returns = {
+                {
+                  name = "rasterizer",
+                  type = "Rasterizer",
+                  description = "The new Rasterizer."
+                }
+              }
+            },
+            {
               description = "Create a Rasterizer for the default font included with LÖVR (Varela Round).",
               arguments = {
                 {
@@ -13399,6 +13421,35 @@ return {
                   type = "number",
                   description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
+                },
+                {
+                  name = "spread",
+                  type = "number",
+                  description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
+                  default = "4"
+                }
+              },
+              returns = {
+                {
+                  name = "font",
+                  type = "Font",
+                  description = "The new Font."
+                }
+              }
+            },
+            {
+              description = "Creates a new Font from a font file.",
+              arguments = {
+                {
+                  name = "file",
+                  type = "string | Blob",
+                  description = "A filename or Blob containing a TTF or BMFont file."
+                },
+                {
+                  name = "atlas",
+                  type = "Image",
+                  description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file.",
+                  default = "nil"
                 },
                 {
                   name = "spread",
