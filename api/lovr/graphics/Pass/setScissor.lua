@@ -35,10 +35,8 @@ return {
     }
   },
   notes = [[
-    `x` and `y` can not be negative.  `w` and `h` must be positive.
-
-    If the scissor rectangle extends past the size of the canvas textures, it will be clamped to the
-    right/bottom edges.
+    Negative `x` and `y` will be clamped to zero.  `w` and `h` must be positive, and will be clamped
+    to the size of the canvas.
 
     By default, the scissor covers the entire canvas.
   ]],

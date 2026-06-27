@@ -23580,7 +23580,7 @@ return {
               description = "Sets the scissor rectangle.  Any pixels outside the scissor rectangle will not be drawn.",
               key = "Pass:setScissor",
               module = "lovr.graphics",
-              notes = "`x` and `y` can not be negative.  `w` and `h` must be positive.\n\nIf the scissor rectangle extends past the size of the canvas textures, it will be clamped to the right/bottom edges.\n\nBy default, the scissor covers the entire canvas.",
+              notes = "Negative `x` and `y` will be clamped to zero.  `w` and `h` must be positive, and will be clamped to the size of the canvas.\n\nBy default, the scissor covers the entire canvas.",
               related = {
                 "Pass:setViewport"
               },
