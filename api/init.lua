@@ -30528,6 +30528,11 @@ return {
                   name = "gb",
                   type = "number",
                   description = "The blue component of the gamma-space color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "An optional alpha component (returned unchanged)."
                 }
               },
               returns = {
@@ -30545,6 +30550,11 @@ return {
                   name = "lb",
                   type = "number",
                   description = "The blue component of the resulting linear-space color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "An optional alpha component (returned unchanged)."
                 }
               }
             },
@@ -30572,6 +30582,11 @@ return {
                   name = "lb",
                   type = "number",
                   description = "The blue component of the resulting linear-space color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "An optional alpha component (returned unchanged)."
                 }
               }
             },
@@ -30641,6 +30656,11 @@ return {
                   name = "lb",
                   type = "number",
                   description = "The blue component of the linear-space color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "An optional alpha component (returned unchanged)."
                 }
               },
               returns = {
@@ -30658,6 +30678,11 @@ return {
                   name = "gb",
                   type = "number",
                   description = "The blue component of the resulting gamma-space color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "An optional alpha component (returned unchanged)."
                 }
               }
             },
@@ -30685,6 +30710,11 @@ return {
                   name = "gb",
                   type = "number",
                   description = "The blue component of the resulting gamma-space color."
+                },
+                {
+                  name = "a",
+                  type = "number",
+                  description = "An optional alpha component (returned unchanged)."
                 }
               }
             },

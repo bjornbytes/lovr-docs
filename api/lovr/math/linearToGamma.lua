@@ -15,6 +15,10 @@ return {
       type = 'number',
       description = 'The blue component of the linear-space color.'
     },
+    a = {
+      type = 'number',
+      description = 'An optional alpha component (returned unchanged).'
+    },
     color = {
       type = '{number}',
       description = 'A table containing the components of a linear-space color.'
@@ -37,6 +41,10 @@ return {
       type = 'number',
       description = 'The blue component of the resulting gamma-space color.'
     },
+    a = {
+      type = 'number',
+      description = 'An optional alpha component (returned unchanged).'
+    },
     y = {
       type = 'number',
       description = 'The converted color channel.'
@@ -44,13 +52,13 @@ return {
   },
   variants = {
     {
-      arguments = { 'lr', 'lg', 'lb' },
-      returns = { 'gr', 'gg', 'gb' }
+      arguments = { 'lr', 'lg', 'lb', 'a' },
+      returns = { 'gr', 'gg', 'gb', 'a' }
     },
     {
       description = 'A table can also be used.',
       arguments = { 'color' },
-      returns = { 'gr', 'gg', 'gb' }
+      returns = { 'gr', 'gg', 'gb', 'a' }
     },
     {
       description = 'Convert a single color channel.',
