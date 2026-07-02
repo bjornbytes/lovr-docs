@@ -20,6 +20,9 @@ return {
     }
   },
   notes = [[
+    Each time this function is called, the window pass is reset, as though `Pass:setCanvas` or
+    `Pass:reset` was called on it.
+
     `lovr.conf` may be used to change the settings for the pass:  `t.graphics.antialias` enables
     antialiasing, and `t.graphics.stencil` enables the stencil buffer.
 

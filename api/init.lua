@@ -13175,7 +13175,7 @@ return {
           description = "Returns the window pass.  This is a builtin render `Pass` object that renders to the desktop window texture.  If the desktop window was not open when the graphics module was initialized, this function will return `nil`.",
           key = "lovr.graphics.getWindowPass",
           module = "lovr.graphics",
-          notes = "`lovr.conf` may be used to change the settings for the pass:  `t.graphics.antialias` enables antialiasing, and `t.graphics.stencil` enables the stencil buffer.\n\nThis pass clears the window texture to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.",
+          notes = "Each time this function is called, the window pass is reset, as though `Pass:setCanvas` or `Pass:reset` was called on it.\n\n`lovr.conf` may be used to change the settings for the pass:  `t.graphics.antialias` enables antialiasing, and `t.graphics.stencil` enables the stencil buffer.\n\nThis pass clears the window texture to the background color, which can be changed using `lovr.graphics.setBackgroundColor`.",
           variants = {
             {
               arguments = {},
