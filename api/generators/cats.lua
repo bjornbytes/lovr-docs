@@ -3,10 +3,6 @@
 -- all objects from `lovr.math.*`.
 local ENABLE_SEE_TAGS = false
 
--- Whether to generate an extra file with the globals
--- from the `lovr.math` module.
-local INCLUDE_GLOBALS = true
-
 local root = lovr.filesystem.getSource()
 
 local function getPath(filename, sep)
@@ -198,6 +194,10 @@ local function renderFunctionVariant(out, func, variant)
     end
   end
 
+  if func.deprecated or variant.deprecated then
+    add(out, doc("@deprecated"))
+  end
+
   -- Build function signature
   local signature = join(map(variant.arguments, function(arg)
     return argumentName(arg)
@@ -222,38 +222,6 @@ local function renderEnum(out, enum)
   end
 end
 
-local function generateSwizzlePermutations(fields, length)
-  local permutations = {}
-
-  local function go(swizzle)
-    swizzle = swizzle or ""
-
-    if #swizzle == length then
-      add(permutations, swizzle)
-    else
-      for _, field in ipairs(fields) do
-        go(swizzle .. field)
-      end
-    end
-  end
-
-  go()
-
-  return permutations
-end
-
-local function renderSwizzleFields(out, fields)
-  for i = 1, 4 do
-    local type = i == 1 and "number" or "Vec" .. i
-    local comp = i == 1 and "component" or "components"
-
-    for _, swizzle in ipairs(generateSwizzlePermutations(fields, i)) do
-      local desc = ("The %s %s of the vector."):format(swizzle, comp)
-      add(out, doc(("@field %s %s %s"):format(swizzle, type, desc)))
-    end
-  end
-end
-
 --- Renders a module's information to CATS format.
 local function renderModule(mod)
   local out = {}
@@ -267,6 +235,19 @@ local function renderModule(mod)
   end
 
   add(out, doc(("@class %s"):format(mod.key)))
+
+  -- Special case vector/quaternion fields
+  if mod.key == "vector" then
+    add(out, doc("@field x number"))
+    add(out, doc("@field y number"))
+    add(out, doc("@field z number"))
+  elseif mod.key == "quaternion" then
+    add(out, doc("@field x number"))
+    add(out, doc("@field y number"))
+    add(out, doc("@field z number"))
+    add(out, doc("@field w number"))
+  end
+
   add(out, ("%s = {}"):format(mod.key))
 
   -- Render functions
@@ -279,20 +260,6 @@ local function renderModule(mod)
     add(out, "")
     add(out, doc(obj.description))
     add(out, doc("@class %s"):format(obj.key))
-
-    -- fields
-    if obj.fields then
-      for _, field in ipairs(obj.fields) do
-        add(out, doc(("@field %s %s %s"):format(field.name, field.type, field.description)))
-      end
-    end
-
-    -- swizzles
-    if obj.swizzles then
-      for _, swizzle in ipairs(obj.swizzles.components) do
-        renderSwizzleFields(out, swizzle)
-      end
-    end
 
     -- see tags
     seeTags(out, obj)
@@ -310,7 +277,6 @@ local function renderModule(mod)
   for _, enum in ipairs(mod.enums) do
     renderEnum(out, enum)
   end
-
 
   return join(out, "\n")
 end
@@ -358,23 +324,6 @@ local function generateAddonConfig()
   writeFile("config.json", join(out, "\n"))
 end
 
-local function generateGlobalsDocumentation()
-  local out = {}
-  add(out, doc("@meta"))
-  add(out, "vec2 = lovr.math.vec2")
-  add(out, "Vec2 = lovr.math.newVec2")
-  add(out, "vec3 = lovr.math.vec3")
-  add(out, "Vec3 = lovr.math.newVec3")
-  add(out, "vec4 = lovr.math.vec4")
-  add(out, "Vec4 = lovr.math.newVec4")
-  add(out, "mat4 = lovr.math.mat4")
-  add(out, "Mat4 = lovr.math.newMat4")
-  add(out, "quat = lovr.math.quat")
-  add(out, "Quat = lovr.math.newQuat")
-
-  writeFile("library/globals.lua", join(out, "\n"))
-end
-
 return function(api)
   local library = root .. "/cats/library"
 
@@ -387,8 +336,4 @@ return function(api)
   generateModuleDocumentation(api)
   generateCallbackDocumentation(api)
   generateAddonConfig()
-
-  if INCLUDE_GLOBALS then
-    generateGlobalsDocumentation()
-  end
 end
