@@ -313,12 +313,12 @@ local function generateAddonConfig()
   local out = {}
 
   add(out, '{')
-  add(out, '  "name": "LÖVR",')
-  add(out, '  "words": ["lovr%.%w+"],')
-  add(out, '  "settings": {')
-  add(out, '    "Lua.runtime.version": "LuaJIT",')
-  add(out, '    "Lua.diagnostics.globals": ["lovr"]')
-  add(out, '  }')
+  add(out, '    "name": "LÖVR",')
+  add(out, '    "words": ["lovr%.%w+"],')
+  add(out, '    "settings": {')
+  add(out, '        "Lua.runtime.version": "LuaJIT",')
+  add(out, '        "Lua.diagnostics.globals": ["lovr"]')
+  add(out, '    }')
   add(out, '}')
 
   writeFile("config.json", join(out, "\n"))
