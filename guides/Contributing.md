@@ -23,7 +23,7 @@ Contributing Code
 ---
 
 To contribute patches to the C code, you can fork LÖVR, commit to a branch, and submit a pull
-request.  The target branch for the patch should be `master` for patch-level fixes, and `dev` for
+request.  The target branch for the patch should be `stable` for patch-level fixes, and `dev` for
 new functionality or API changes.  Note that contributions to the repository will be released under
 the terms in the LICENSE.  For larger changes, it is a good idea to engage in initial discussion via
 issues or Matrix/Discord before submitting.  Try to stick to the existing coding style:
