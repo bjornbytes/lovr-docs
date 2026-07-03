@@ -122,13 +122,12 @@ return {
     Images can't be copied to multisample textures.  Multisample textures can be copied between each
     other as long as there isn't any scaling.
 
-    Copying between textures requires them to have the same format.
+    If either texture has a depth format, then both textures must have the same format.
 
     When using different region sizes in a texture-to-texture copy:
 
     - It is not possible to mix 3D with non-3D textures.
     - Not every texture format is supported, use `lovr.graphics.isFormatSupported` to check.
-    - The formats do not need to match, unless they're depth formats.
   ]],
   related = {
     'Texture:newReadback',
