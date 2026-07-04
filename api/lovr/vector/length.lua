@@ -15,7 +15,7 @@ return {
   },
   variants = {
     {
-      arguments = {},
+      arguments = { 'v' },
       returns = { 'length' }
     }
   },

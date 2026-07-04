@@ -46449,7 +46449,13 @@ return {
           },
           variants = {
             {
-              arguments = {},
+              arguments = {
+                {
+                  name = "v",
+                  type = "vector",
+                  description = "The vector to get the length of."
+                }
+              },
               returns = {
                 {
                   name = "length",
