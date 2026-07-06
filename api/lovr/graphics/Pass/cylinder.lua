@@ -81,7 +81,7 @@ return {
     angle2 = {
       type = 'number',
       default = '2 * math.pi',
-      description = 'angle of the end of the arc.'
+      description = 'The angle of the end of the arc.'
     },
     segments = {
       type = 'number',
