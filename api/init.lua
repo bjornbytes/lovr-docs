@@ -20267,7 +20267,7 @@ return {
                     {
                       name = "angle2",
                       type = "number",
-                      description = "angle of the end of the arc.",
+                      description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
@@ -20318,7 +20318,7 @@ return {
                     {
                       name = "angle2",
                       type = "number",
-                      description = "angle of the end of the arc.",
+                      description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
@@ -20352,7 +20352,7 @@ return {
                     {
                       name = "angle2",
                       type = "number",
-                      description = "angle of the end of the arc.",
+                      description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
@@ -20397,7 +20397,7 @@ return {
                     {
                       name = "angle2",
                       type = "number",
-                      description = "angle of the end of the arc.",
+                      description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
