@@ -45979,7 +45979,7 @@ return {
         },
         {
           name = "lookdir",
-          summary = "Get a quaternion looks in a direction.",
+          summary = "Get a quaternion that looks in a direction.",
           description = "Returns a quaternion that looks in a direction.  More accurately, it returns a quaternion that rotates from the forward vector (0, 0, -1) to a given direction.\n\nThe `up` vector is used to control the \"roll\" of the orientation, since there are an infinite number of orientations that look in a given direction.",
           key = "quaternion.lookdir",
           module = "quaternion",
