@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the smooth mode of a channel in an animation.',
+  summary = 'Get the smooth mode of an animation channel.',
   description = 'Returns the smooth mode of a channel in an animation.',
   arguments = {
     animation = {

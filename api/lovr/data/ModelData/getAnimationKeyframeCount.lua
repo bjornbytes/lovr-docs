@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the number of keyframes in a channel of an animation.',
+  summary = 'Get the number of keyframes in an animation channel.',
   description = 'Returns the number of keyframes in a channel of an animation.',
   arguments = {
     animation = {
