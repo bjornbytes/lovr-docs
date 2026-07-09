@@ -4,18 +4,18 @@ return {
   description = 'Returns the battery status of a device.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to check.'
     }
   },
   returns = {
     level = {
-      type = 'number',
+      type = 'number?',
       description = 'The level of the battery, from 0 to 1.'
     },
     charging = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the battery is currently charging.'
     }
   },

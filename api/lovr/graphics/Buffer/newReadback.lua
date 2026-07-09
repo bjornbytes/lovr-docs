@@ -8,13 +8,12 @@ return {
   ]],
   arguments = {
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'A byte offset to read from.'
     },
     extent = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = 'The number of bytes to read.  If nil, reads the rest of the buffer.'
     }
   },

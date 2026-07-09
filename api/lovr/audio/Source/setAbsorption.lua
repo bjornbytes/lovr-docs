@@ -21,10 +21,10 @@ return {
       description = 'The absorption coefficient for high frequencies (15 kHz).'
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = [[
-        Whether absorption should be enabled.  False will set the coefficients to zero, `true`
-        will use the absorption coefficients of air (see notes).
+        Whether absorption should be enabled.  Falsy values will set the coefficients to zero,
+        `true` will use the absorption coefficients of air (see notes).
       ]]
     }
   },

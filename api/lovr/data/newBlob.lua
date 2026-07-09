@@ -18,9 +18,9 @@ return {
       description = 'A Blob to copy the contents from.'
     },
     name = {
-      type = 'string',
+      type = 'string?',
       default = [['']],
-      description = 'A name for the Blob (used in error messages)',
+      description = 'A name for the Blob to use in error messages.',
     }
   },
   returns = {

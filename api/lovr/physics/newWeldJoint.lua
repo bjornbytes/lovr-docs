@@ -3,7 +3,7 @@ return {
   description = 'Creates a new WeldJoint.',
   arguments = {
     colliderA = {
-      type = 'Collider',
+      type = 'Collider?',
       description = [[
         The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position
         in the World.

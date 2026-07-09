@@ -4,11 +4,11 @@ return {
   arguments = {},
   returns = {
     size = {
-      type = 'number',
+      type = 'number?',
       description = 'The size of the file, in bytes, or nil if an error occurred.'
     },
     error = {
-      type = 'string',
+      type = 'string?',
       description = 'The error message, if an error occurred.'
     }
   },

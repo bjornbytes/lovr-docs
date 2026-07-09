@@ -6,12 +6,12 @@ return {
   ]],
   arguments = {
     t = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = 'The t parameter to get the length at.'
     },
     iterations = {
-      type = 'number',
+      type = 'number?',
       default = '16',
       description = [[
         How many iterations to use to compute the length.  More iterations will give a more accurate

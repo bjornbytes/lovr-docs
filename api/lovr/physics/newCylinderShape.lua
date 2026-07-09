@@ -3,12 +3,12 @@ return {
   description = 'Creates a new CylinderShape.',
   arguments = {
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The radius of the cylinder, in meters.'
     },
     length = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The length of the cylinder, in meters.'
     }

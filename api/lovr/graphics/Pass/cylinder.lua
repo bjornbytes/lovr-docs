@@ -69,22 +69,22 @@ return {
       description = 'The ending point of the cylinder.'
     },
     capped = {
-      type = 'boolean',
+      type = 'boolean?',
       default = 'true',
       description = 'Whether the tops and bottoms of the cylinder should be rendered.'
     },
     angle1 = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The angle of the beginning of the arc.'
     },
     angle2 = {
-      type = 'number',
+      type = 'number?',
       default = '2 * math.pi',
       description = 'The angle of the end of the arc.'
     },
     segments = {
-      type = 'number',
+      type = 'number?',
       default = '64',
       description = 'The number of circular segments to render.'
     }

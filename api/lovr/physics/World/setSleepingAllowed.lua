@@ -4,7 +4,7 @@ return {
   description = 'Sets whether colliders can go to sleep in the World.',
   arguments = {
     allowed = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether colliders can sleep.'
     }
   },

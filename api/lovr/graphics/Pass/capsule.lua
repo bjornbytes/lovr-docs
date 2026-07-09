@@ -76,7 +76,7 @@ return {
       description = 'The radius of the capsule.'
     },
     segments = {
-      type = 'number',
+      type = 'number?',
       default = '32',
       description = 'The number of circular segments to render.'
     }

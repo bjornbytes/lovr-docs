@@ -15,8 +15,7 @@ return {
       description = 'Another Sound to copy frames into.'
     },
     count = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         The number of frames to read.  If nil, reads as many frames as possible.
 
@@ -24,12 +23,12 @@ return {
       ]]
     },
     srcOffset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'A frame offset to apply to the sound when reading frames.'
     },
     dstOffset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         An offset to apply to the destination when writing frames (indices for tables, bytes for

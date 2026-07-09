@@ -8,7 +8,7 @@ return {
   arguments = {},
   returns = {
     identity = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The name of the save directory, or `nil` if it isn\'t set.'
     }
   },

@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     sensor = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the Collider should be a sensor.'
     }
   },

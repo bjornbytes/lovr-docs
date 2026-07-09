@@ -14,7 +14,7 @@ return {
       description = 'The height of the texture.'
     },
     format = {
-      type = 'TextureFormat',
+      type = 'TextureFormat?',
       default = 'rgba8',
       description = 'The format of the texture\'s pixels.'
     },
@@ -23,8 +23,7 @@ return {
       description = 'A filename or Blob containing an image file to load.'
     },
     data = {
-      type = 'Blob',
-      default = 'nil',
+      type = 'Blob?',
       description = 'Raw pixel values to use as the contents.  If `nil`, the data will all be zero.'
     },
     source = {

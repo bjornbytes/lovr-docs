@@ -64,7 +64,7 @@ return {
       description = 'The transform of the object.'
     },
     instances = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of instances to draw.'
     }

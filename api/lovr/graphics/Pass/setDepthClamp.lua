@@ -8,7 +8,7 @@ return {
   ]],
   arguments = {
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether depth clamp should be enabled.'
     }
   },

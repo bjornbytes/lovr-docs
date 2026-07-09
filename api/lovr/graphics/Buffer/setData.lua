@@ -8,20 +8,19 @@ return {
       description = 'A flat or nested table of items to copy to the Buffer (see notes for format).'
     },
     destinationIndex = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the first value in the Buffer to update.'
     },
     sourceIndex = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index in the table to copy from.'
     },
     count = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
-        The number of items to copy.  `nil` will copy as many items as possible, based on the
+        The number of items to copy.  Use `nil` to copy as many items as possible, based on the
         lengths of the source and destination.
       ]]
     },

@@ -14,7 +14,7 @@ return {
       ]]
     },
     stretch = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = [[
         A vertical multiplier for height values to obtain terrain height.  When the image format has
@@ -43,7 +43,7 @@ return {
       ]]
     },
     samples = {
-      type = 'number',
+      type = 'number?',
       default = '100',
       description = [[
         The number of samples taken across the x and z dimensions.  More samples will result in

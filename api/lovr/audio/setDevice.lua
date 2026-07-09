@@ -25,17 +25,17 @@ return {
   ]],
   arguments = {
     type = {
-      type = 'AudioType',
+      type = 'AudioType?',
       default = [['playback']],
       description = 'The device to switch.'
     },
     id = {
-      type = 'userdata',
+      type = 'userdata?',
       default = 'nil',
       description = 'The id of the device to use, or `nil` to use the default device.'
     },
     stream = {
-      type = 'AudioStream | boolean',
+      type = 'AudioStream? | boolean?',
       default = 'nil',
       description = [[
         An optional audio stream to use as a "sink" for the device.  For playback devices, any audio
@@ -47,7 +47,7 @@ return {
       ]]
     },
     mode = {
-      type = 'AudioShareMode',
+      type = 'AudioShareMode?',
       default = 'shared',
       description = 'The sharing mode for the device.'
     }

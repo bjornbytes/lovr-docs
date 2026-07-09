@@ -56,22 +56,22 @@ return {
       description = 'The transform of the circle.'
     },
     style = {
-      type = 'DrawStyle',
+      type = 'DrawStyle?',
       default = [['fill']],
       description = 'Whether the circle should be filled or outlined.'
     },
     angle1 = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The angle of the beginning of the arc.'
     },
     angle2 = {
-      type = 'number',
+      type = 'number?',
       default = '2 * math.pi',
       description = 'angle of the end of the arc.'
     },
     segments = {
-      type = 'number',
+      type = 'number?',
       default = '64',
       description = 'The number of segments to render.'
     }

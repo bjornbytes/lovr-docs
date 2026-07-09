@@ -47,7 +47,7 @@ return {
         },
         {
           name = 'samples',
-          type = 'number',
+          type = 'number?',
           default = '4',
           description = [[
             The number of multisamples to use.  Can be 4 for antialiasing, or 1 to disable

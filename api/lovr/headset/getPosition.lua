@@ -4,7 +4,7 @@ return {
   description = 'Returns the current position of a device or model, in meters.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to locate.'
     },

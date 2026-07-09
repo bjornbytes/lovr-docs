@@ -3,41 +3,41 @@ return {
   description = 'Adds a Collider to the world and attaches a `BoxShape`.',
   arguments = {
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate of the center of the box, in meters.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate of the center of the box, in meters.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The z coordinate of the center of the box, in meters.'
     },
     width = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The width of the box, in meters.'
     },
     height = {
-      type = 'number',
+      type = 'number?',
       default = 'width',
       description = 'The height of the box, in meters.'
     },
     depth = {
-      type = 'number',
+      type = 'number?',
       default = 'width',
       description = 'The depth of the box, in meters.'
     },
     position = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The position of the center of the box, in meters.'
     },
     size = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The size of the box, in meters.'
     }
   },

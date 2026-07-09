@@ -4,7 +4,7 @@ return {
   arguments = {},
   returns = {
     blob = {
-      type = 'Blob',
+      type = 'Blob?',
       description = 'The Blob.'
     }
   },

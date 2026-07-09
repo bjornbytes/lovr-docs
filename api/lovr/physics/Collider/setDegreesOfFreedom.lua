@@ -3,7 +3,7 @@ return {
   description = 'Set the degrees of freedom of the Collider.',
   arguments = {
     translation = {
-      type = 'string',
+      type = 'string?',
       default = [['']],
       description = [[
         A string containing the world-space axes the Collider is allowed to move on.  The string
@@ -12,7 +12,7 @@ return {
       ]]
     },
     rotation = {
-      type = 'string',
+      type = 'string?',
       default = [['']],
       description = [[
         A string containing the world-space axes the Collider is allowed to rotate on.  The string

@@ -10,17 +10,17 @@ return {
   ]],
   arguments = {
     x = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of workgroups to dispatch in the x dimension.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of workgroups to dispatch in the y dimension.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of workgroups to dispatch in the z dimension.'
     },
@@ -32,7 +32,7 @@ return {
       ]]
     },
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The byte offset to read the workgroup counts from in the Buffer.'
     }

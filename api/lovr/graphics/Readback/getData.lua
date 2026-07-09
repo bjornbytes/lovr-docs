@@ -7,7 +7,7 @@ return {
   arguments = {},
   returns = {
     data = {
-      type = 'table',
+      type = 'table?',
       description = 'A table containing the data that was read back.'
     }
   },

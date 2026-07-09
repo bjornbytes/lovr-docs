@@ -10,12 +10,12 @@ return {
   ]],
   arguments = {
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0.0',
       description = 'The depth offset.'
     },
     sloped = {
-      type = 'number',
+      type = 'number?',
       default = '0.0',
       description = 'The sloped depth offset.'
     }

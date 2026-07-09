@@ -38,13 +38,12 @@ return {
       description = 'One of the default shaders to use.'
     },
     options = {
-      type = 'table',
-      default = 'nil',
+      type = 'table?',
       description = 'An optional table of Shader options.',
       table = {
         {
           name = 'flags',
-          type = 'table',
+          type = 'table?',
           description = [[
             A table of shader flags.  The keys of the table should be flag names or flag ID numbers.
             The values can be numbers or booleans, depending on the type of the flag as declared in
@@ -53,12 +52,12 @@ return {
         },
         {
           name = 'label',
-          type = 'string',
+          type = 'string?',
           description = 'A label to use for the shader in debugging tools.'
         },
         {
           name = 'raw',
-          type = 'boolean',
+          type = 'boolean?',
           description = [[
             If set to true, the code is treated as a raw shader.  It will be compiled with none of
             the LÖVR helpers.

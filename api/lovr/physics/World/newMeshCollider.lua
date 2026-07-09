@@ -37,6 +37,12 @@ return {
     template = {
       type = 'MeshShape',
       description = 'An existing MeshShape to reuse.'
+    },
+    scale = {
+      type = 'vector?',
+      description = [[
+        An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.
+      ]]
     }
   },
   returns = {
@@ -47,15 +53,15 @@ return {
   },
   variants = {
     {
-      arguments = { 'vertices', 'indices' },
+      arguments = { 'vertices', 'indices', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'modelData' },
+      arguments = { 'modelData', 'scale' },
       returns = { 'collider' }
     },
     {
-      arguments = { 'mesh' },
+      arguments = { 'mesh', 'scale' },
       returns = { 'collider' }
     },
     {
@@ -64,7 +70,7 @@ return {
         Clones can have their own scale.  The clone's scale doesn't get multiplied with the scale of
         the template.
       ]],
-      arguments = { 'template' },
+      arguments = { 'template', 'scale' },
       returns = { 'collider' }
     }
   },

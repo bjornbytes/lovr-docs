@@ -8,7 +8,7 @@ return {
       description = 'The new volume.'
     },
     units = {
-      type = 'VolumeUnit',
+      type = 'VolumeUnit?',
       default = [['linear']],
       description = 'The units of the value.'
     }

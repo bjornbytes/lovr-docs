@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     rate = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The refresh rate of the display, or `nil` if I have no idea what it is.'
     }
   },

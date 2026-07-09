@@ -3,32 +3,32 @@ return {
   description = 'Adds a Collider to the world and attaches a `CylinderShape`.',
   arguments = {
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate of the center of the cylinder, in meters.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate of the center of the cylinder, in meters.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The z coordinate of the center of the cylinder, in meters.'
     },
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The radius of the cylinder, in meters.'
     },
     length = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The length of the cylinder, in meters.'
     },
     position = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The position of the center of the cylinder, in meters.'
     }
   },

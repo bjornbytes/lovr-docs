@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     units = {
-      type = 'VolumeUnit',
+      type = 'VolumeUnit?',
       default = [['linear']],
       description = 'The units to return (linear or db).'
     }

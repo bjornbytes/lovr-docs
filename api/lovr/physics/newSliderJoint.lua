@@ -3,7 +3,7 @@ return {
   description = 'Creates a new SliderJoint.',
   arguments = {
     colliderA = {
-      type = 'Collider',
+      type = 'Collider?',
       description = [[
         The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position
         in the World.
@@ -14,19 +14,19 @@ return {
       description = 'The second collider to attach the Joint to.'
     },
     ax = {
-      type = 'number',
+      type = 'number?',
       description = 'The x component of the slider axis.'
     },
     ay = {
-      type = 'number',
+      type = 'number?',
       description = 'The y component of the slider axis.'
     },
     az = {
-      type = 'number',
+      type = 'number?',
       description = 'The z component of the slider axis.'
     },
     axis = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The slider axis direction.'
     }
   },

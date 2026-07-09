@@ -17,7 +17,7 @@ return {
       description = 'Whether the directory was created.'
     },
     error = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The error message.'
     }
   },

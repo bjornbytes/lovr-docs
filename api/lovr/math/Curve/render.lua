@@ -6,17 +6,17 @@ return {
   ]],
   arguments = {
     n = {
-      type = 'number',
+      type = 'number?',
       default = '32',
       description = 'The number of points to use.'
     },
     t1 = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'How far along the curve to start rendering.'
     },
     t2 = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'How far along the curve to stop rendering.'
     }

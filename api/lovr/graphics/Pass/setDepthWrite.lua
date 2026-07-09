@@ -8,7 +8,7 @@ return {
   ]],
   arguments = {
     write = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the depth buffer should be affected by draws.'
     }
   },

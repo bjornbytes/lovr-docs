@@ -13,7 +13,8 @@ return {
       description = 'The buffer.'
     },
     offset = {
-      type = 'number',
+      type = 'number?',
+      default = '0',
       description = 'A byte offset where results will be written.  Must be a multiple of 4.'
     }
   },

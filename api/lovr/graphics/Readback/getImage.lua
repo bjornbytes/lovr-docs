@@ -4,7 +4,7 @@ return {
   arguments = {},
   returns = {
     image = {
-      type = 'Image',
+      type = 'Image?',
       description = 'The Image.'
     }
   },

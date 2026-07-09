@@ -20,9 +20,7 @@ return {
       returns = { 'cookie' }
     }
   },
-  notes = [[
-    Only nil, booleans, numbers, and strings are supported types for the return value.
-  ]],
+  notes = 'The cookie can be a boolean, number, string, table, or lightuserdata.',
   example = [[
     function lovr.restart()
       return currentLevel:getName()

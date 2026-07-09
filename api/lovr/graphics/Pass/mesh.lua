@@ -17,17 +17,17 @@ return {
       description = 'The buffer containing indirect draw commands.'
     },
     drawcount = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of indirect draws to draw.'
     },
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'A byte offset into the draw buffer.'
     },
     stride = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         The number of bytes between consecutive elements in the draw buffer.  When zero or nil, the
@@ -92,7 +92,7 @@ return {
       description = 'The transform to apply to the mesh.'
     },
     start = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = [[
         The 1-based index of the first vertex to render from the vertex buffer (or the first index,
@@ -100,29 +100,20 @@ return {
       ]]
     },
     count = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         The number of vertices to render (or the number of indices, when using an index buffer).
         When `nil`, as many vertices or indices as possible will be drawn (based on the length of
         the Buffers and `start`).
       ]]
     },
-    vertexcount = {
-      type = 'number',
-      description = 'The number of vertices to draw.'
-    },
-    indexcount = {
-      type = 'number',
-      description = 'The number of indices to draw.'
-    },
     instances = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of copies of the mesh to render.'
     },
     base = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'A base offset to apply to vertex indices.'
     }

@@ -18,13 +18,13 @@ return {
       description = 'The AudioStream containing audio to play.'
     },
     options = {
-      type = 'table',
+      type = 'table?',
       default = 'nil',
       description = 'Optional options.',
       table = {
         {
           name = 'decode',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'false',
           description = [[
             Whether to immediately decode compressed sounds, instead of progressively decoding as
@@ -34,7 +34,7 @@ return {
         },
         {
           name = 'spatial',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'false',
           description = [[
             Whether the Source should use spatial effects.  Non-spatial sources will get routed
@@ -43,7 +43,7 @@ return {
         },
         {
           name = 'pitchable',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = [[
             Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to

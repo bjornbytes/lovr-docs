@@ -11,20 +11,19 @@ return {
       description = 'The path to mount.'
     },
     mountpoint = {
-      type = 'string',
+      type = 'string?',
       default = [['/']],
       description = 'The path in the virtual filesystem to mount to.'
     },
     append = {
-      type = 'boolean',
+      type = 'boolean?',
       default = 'false',
       description = [[
         Whether the archive will be added to the end or the beginning of the search path.
       ]]
     },
     root = {
-      type = 'string',
-      default = 'nil',
+      type = 'string?',
       description = [[
         A subdirectory inside the archive to use as the root.  If `nil`, the actual root of the
         archive is used.
@@ -37,7 +36,7 @@ return {
       description = 'Whether the archive was successfully mounted.'
     },
     error = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The error message, if the archive failed to mount.'
     }
   },

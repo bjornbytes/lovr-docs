@@ -15,31 +15,31 @@ return {
   },
   returns = {
     x = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The x coordinate of the view position, in meters.'
     },
     y = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The y coordinate of the view position, in meters.'
     },
     z = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The z coordinate of the view position, in meters.'
     },
     angle = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The amount of rotation around the rotation axis, in radians.'
     },
     ax = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The x component of the axis of rotation.'
     },
     ay = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The y component of the axis of rotation.'
     },
     az = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The z component of the axis of rotation.'
     }
   },

@@ -13,7 +13,7 @@ return {
       table = {
         {
           name = 'color',
-          type = '{number}',
+          type = '{number}?',
           default = '{ 1, 1, 1, 1 }',
           description = [[
             The base color of the surface.  Can be a table of numbers, a vector, or a hexcode. Can
@@ -22,7 +22,7 @@ return {
         },
         {
           name = 'glow',
-          type = '{number}',
+          type = '{number}?',
           default = '{ 0, 0, 0, 0 }',
           description = [[
             The glow color of the surface, sometimes called "emissive".  The glow is not affected by
@@ -34,7 +34,7 @@ return {
         },
         {
           name = 'uvShift',
-          type = '{number}',
+          type = '{number}?',
           default = '{ 0, 0 }',
           description = [[
             An offset to apply to the UV coordinates used to sample textures.  The offset is not
@@ -46,7 +46,7 @@ return {
         },
         {
           name = 'uvScale',
-          type = '{number}',
+          type = '{number}?',
           default = '{ 1, 1 }',
           description = [[
             A scale factor to apply to the UV coordinates used to sample textures.  The scale is not
@@ -58,7 +58,7 @@ return {
         },
         {
           name = 'metalness',
-          type = 'number',
+          type = 'number?',
           default = '0',
           description = [[
             The metalness the surface, used for physically-based rendering.  1.0 means the surface
@@ -70,7 +70,7 @@ return {
         },
         {
           name = 'roughness',
-          type = 'number',
+          type = 'number?',
           default = '0',
           description = [[
             The roughness of the surface, used for physically-based rendering.  1.0 means the
@@ -80,19 +80,19 @@ return {
         },
         {
           name = 'clearcoat',
-          type = 'number',
+          type = 'number?',
           default = '0',
           description = 'The clearcoat factor.  Not currently used by LÖVR.'
         },
         {
           name = 'clearcoatRoughness',
-          type = 'number',
+          type = 'number?',
           default = '0',
           description = 'The roughness of the clearcoat layer.  Not currently used by LÖVR.'
         },
         {
           name = 'occlusionStrength',
-          type = 'number',
+          type = 'number?',
           default = '1',
           description = [[
             The strength of the ambient occlusion effect.  Ambient occlusion only affects indirect
@@ -103,7 +103,7 @@ return {
         },
         {
           name = 'normalScale',
-          type = 'number',
+          type = 'number?',
           default = '1',
           description = [[
             The strength of the normal map.  Used by the `initSurface` function to bend the surface
@@ -113,7 +113,7 @@ return {
         },
         {
           name = 'alphaCutoff',
-          type = 'number',
+          type = 'number?',
           default = '0',
           description = [[
             The alpha cutoff.  At the end of the fragment shader, if the alpha of the final color is
@@ -125,7 +125,7 @@ return {
         },
         {
           name = 'texture',
-          type = 'Texture',
+          type = 'Texture?',
           description = [[
             The base color texture.  In shaders this gets multiplied with the `color` property to
             get the base color of the pixel.  Can be toggled in shaders using the `colorTexture`
@@ -134,7 +134,7 @@ return {
         },
         {
           name = 'glowTexture',
-          type = 'Texture',
+          type = 'Texture?',
           description = [[
             The glow color texture.  In shaders, samples from this texture get multiplied with the
             `glow` property to get the glow color of the pixel.  Can be toggled in shaders using the
@@ -144,7 +144,7 @@ return {
         },
         {
           name = 'metalnessTexture',
-          type = 'Texture',
+          type = 'Texture?',
           description = [[
             The metalness texture.  In shaders, samples from the blue channel of this texture get
             multiplied with the `metalness` property to get the metalness value of the pixel.  Can
@@ -153,7 +153,7 @@ return {
         },
         {
           name = 'roughnessTexture',
-          type = 'Texture',
+          type = 'Texture?',
           description = [[
             The roughness texture.  In shaders, samples from the green channel of this texture get
             multiplied with the `roughness` property to get the roughness value of the pixel.  Can
@@ -162,12 +162,12 @@ return {
         },
         {
           name = 'clearcoatTexture',
-          type = 'Texture',
+          type = 'Texture?',
           description = 'Not currently used by LÖVR.'
         },
         {
           name = 'occlusionTexture',
-          type = 'Texture',
+          type = 'Texture?',
           description = [[
             The ambient occlusion texture.  In shaders, samples from the red channel of this texture
             get multiplied with the `occlusionStrength` property to get the ambient occlusion value
@@ -178,7 +178,7 @@ return {
         },
         {
           name = 'normalTexture',
-          type = 'Texture',
+          type = 'Texture?',
           description = [[
             The normal map, used to apply details to a surface without adding mesh geometry.  The
             `normalScale` property can be used to control how strong the effect is.  Can be toggled

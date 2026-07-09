@@ -24,14 +24,12 @@ return {
       description = 'A table of Images to upload to the Layer.'
     },
     options = {
-      type = 'table',
-      default = 'nil',
+      type = 'table?',
       description = 'Optional options for the Layer.',
       table = {
         {
           name = 'stereo',
-          type = 'boolean',
-          default = 'nil',
+          type = 'boolean?',
           description = [[
             Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers
             instead of a regular 2D texture, with the first array layer shown in the left eye and
@@ -41,8 +39,7 @@ return {
         },
         {
           name = 'static',
-          type = 'boolean',
-          default = 'nil',
+          type = 'boolean?',
           description = [[
             Whether the Layer is static.  Static layers use less memory, but their contents can only
             be changed on the frame when they're created.  On subsequent frames, calling
@@ -53,8 +50,7 @@ return {
         },
         {
           name = 'transparent',
-          type = 'boolean',
-          default = 'false',
+          type = 'boolean?',
           description = [[
             Whether the Layer is transparent.  Transparent Layers will use their alpha channel to
             blend properly with other content behind them, at a minor performance cost.
@@ -62,7 +58,7 @@ return {
         },
         {
           name = 'filter',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = [[
             Whether the VR runtime is allowed to apply filtering effects to the Layer, such as

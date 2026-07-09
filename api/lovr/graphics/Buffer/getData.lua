@@ -5,13 +5,12 @@ return {
   description = 'Downloads the Buffer\'s data from VRAM and returns it as a table.',
   arguments = {
     index = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the first item to read.'
     },
     count = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = 'The number of items to read.  If nil, reads the remainder of the buffer.'
     }
   },

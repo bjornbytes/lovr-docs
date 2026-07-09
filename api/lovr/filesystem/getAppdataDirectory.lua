@@ -11,7 +11,7 @@ return {
   arguments = {},
   returns = {
     path = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The absolute path to the appdata directory.'
     }
   },

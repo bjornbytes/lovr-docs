@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the Collider should be enabled.'
     }
   },

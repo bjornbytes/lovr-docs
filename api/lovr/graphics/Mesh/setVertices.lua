@@ -14,13 +14,12 @@ return {
       description = 'A Blob containing binary vertex data.'
     },
     index = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the first vertex to set.'
     },
     count = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = 'The number of vertices to set.'
     }
   },

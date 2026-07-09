@@ -3,32 +3,32 @@ return {
   description = 'Adds a Collider to the world and attaches a `CapsuleShape`.',
   arguments = {
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate of the center of the capsule, in meters.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate of the center of the capsule, in meters.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The z coordinate of the center of the capsule, in meters.'
     },
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The radius of the capsule, in meters.'
     },
     length = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The length of the capsule, not including the caps, in meters.'
     },
     position = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The position of the center of the capsule, in meters.'
     }
   },

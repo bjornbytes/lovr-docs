@@ -8,7 +8,7 @@ return {
       description = 'The position to seek to.'
     },
     unit = {
-      type = 'TimeUnit',
+      type = 'TimeUnit?',
       default = [['seconds']],
       description = 'The units for the seek position.'
     }

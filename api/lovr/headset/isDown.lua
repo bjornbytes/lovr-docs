@@ -4,7 +4,8 @@ return {
   description = 'Returns whether a button on a device is pressed.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
+      default = [['head']],
       description = 'The device.'
     },
     button = {
@@ -14,7 +15,7 @@ return {
   },
   returns = {
     down = {
-      type = 'boolean | nil',
+      type = 'boolean?',
       description = [[
         Whether the button on the device is currently pressed, or `nil` if the device does not have
         the specified button.

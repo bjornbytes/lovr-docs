@@ -4,7 +4,7 @@ return {
   description = 'Sets whether the front or back faces of triangles are culled.',
   arguments = {
     mode = {
-      type = 'CullMode',
+      type = 'CullMode?',
       description = 'Whether `front` faces, `back` faces, or `none` of the faces should be culled.'
     }
   },

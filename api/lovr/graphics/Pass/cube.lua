@@ -56,7 +56,7 @@ return {
       description = 'The transform of the cube.'
     },
     style = {
-      type = 'DrawStyle',
+      type = 'DrawStyle?',
       default = [['fill']],
       description = 'Whether the cube should be drawn filled or outlined.'
     }

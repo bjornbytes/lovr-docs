@@ -3,7 +3,7 @@ return {
   description = 'Creates a new HingeJoint.',
   arguments = {
     colliderA = {
-      type = 'Collider',
+      type = 'Collider?',
       description = [[
         The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position
         in the World.
@@ -14,35 +14,35 @@ return {
       description = 'The second collider to attach the Joint to.'
     },
     x = {
-      type = 'number',
+      type = 'number?',
       description = 'The x position of the hinge anchor, in world coordinates.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       description = 'The y position of the hinge anchor, in world coordinates.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       description = 'The z position of the hinge anchor, in world coordinates.'
     },
     ax = {
-      type = 'number',
+      type = 'number?',
       description = 'The x component of the hinge axis direction.'
     },
     ay = {
-      type = 'number',
+      type = 'number?',
       description = 'The y component of the hinge axis direction.'
     },
     az = {
-      type = 'number',
+      type = 'number?',
       description = 'The z component of the hinge axis direction.'
     },
     anchor = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The anchor point, in world coordinates.'
     },
     axis = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The hinge axis direction.'
     }
   },

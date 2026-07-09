@@ -13,7 +13,7 @@ return {
   },
   returns = {
     abort = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether quitting should be aborted.'
     }
   },

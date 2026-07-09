@@ -20,7 +20,7 @@ return {
       description = 'The amount of spatialization applied to the source, from 0 to 1.'
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether spatialization should be enabled.  `true` for 1, `false` for 0.'
     }
   },

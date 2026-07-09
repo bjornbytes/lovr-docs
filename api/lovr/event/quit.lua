@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     code = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The exit code of the program.'
     }

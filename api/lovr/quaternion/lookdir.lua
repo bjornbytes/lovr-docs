@@ -13,7 +13,7 @@ return {
       description = 'The direction to look towards.  It does not need to be normalized.'
     },
     up = {
-      type = 'number',
+      type = 'vector?',
       default = 'vector.up',
       description = 'The up vector.  It does not need to be normalized.'
     }

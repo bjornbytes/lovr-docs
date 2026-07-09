@@ -8,7 +8,7 @@ return {
   arguments = {},
   returns = {
     label = {
-      type = 'string',
+      type = 'string?',
       description = 'The label, or nil if none was set.'
     }
   },

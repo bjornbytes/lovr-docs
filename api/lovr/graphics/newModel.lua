@@ -14,19 +14,18 @@ return {
       description = 'An existing ModelData object to use for the Model.'
     },
     options = {
-      type = 'table',
-      default = 'nil',
+      type = 'table?',
       description = 'An optional table of Model options.',
       table = {
         {
           name = 'mipmaps',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = 'Whether the textures created for the Model should have mipmaps generated.'
         },
         {
           name = 'materials',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = [[
             Whether the textures and materials in the Model should be loaded.  When false, the
@@ -36,12 +35,12 @@ return {
         },
         {
           name = 'raytracer',
-          type = 'table',
+          type = 'table?',
           description = 'Optional raytracing options.',
           table = {
             {
               name = 'dynamic',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'false',
               description = [[
                 An optimization hint indicating that raytracing data will be frequently rebuilt.
@@ -50,7 +49,7 @@ return {
             },
             {
               name = 'fasttrace',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'true',
               description = [[
                 An optimization hint indicating that raytracing data should be optimized for fast
@@ -59,7 +58,7 @@ return {
             },
             {
               name = 'fastbuild',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'false',
               description = [[
                 An optimization hint indicating that raytracing data should be optimized for fast
@@ -69,7 +68,7 @@ return {
             },
             {
               name = 'compress',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'false',
               description = [[
                 An optimization hint indicating that raytracing data should use less VRAM, possibly

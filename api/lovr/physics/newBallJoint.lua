@@ -3,7 +3,7 @@ return {
   description = 'Creates a new BallJoint.',
   arguments = {
     colliderA = {
-      type = 'Collider',
+      type = 'Collider?',
       description = [[
         The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position
         in the World.
@@ -14,19 +14,19 @@ return {
       description = 'The second collider to attach the Joint to.'
     },
     x = {
-      type = 'number',
+      type = 'number?',
       description = 'The x position of the joint anchor point, in world coordinates.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       description = 'The y position of the joint anchor point, in world coordinates.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       description = 'The z position of the joint anchor point, in world coordinates.'
     },
     anchor = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The joint anchor point, in world coordinates.'
     }
   },

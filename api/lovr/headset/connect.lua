@@ -17,7 +17,7 @@ return {
       description = 'Whether the headset was successfully connected.'
     },
     error = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The error message, on failure.'
     }
   },

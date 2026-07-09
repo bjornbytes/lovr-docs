@@ -4,7 +4,7 @@ return {
   description = 'Returns the current orientation of a device or model, in angle/axis form.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to get the orientation of.'
     },

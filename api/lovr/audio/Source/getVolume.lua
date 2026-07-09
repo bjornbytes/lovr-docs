@@ -4,7 +4,7 @@ return {
   description = 'Returns the current volume factor for the Source.',
   arguments = {
     units = {
-      type = 'VolumeUnit',
+      type = 'VolumeUnit?',
       default = [['linear']],
       description = 'The units to return (linear or db).'
     }

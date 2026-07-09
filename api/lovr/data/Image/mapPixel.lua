@@ -17,22 +17,22 @@ return {
       description = 'The function that will be called for each pixel.'
     },
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate of the upper-left corner of the area of the Image to affect.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate of the upper-left corner of the area of the Image to affect.'
     },
     w = {
-      type = 'number',
+      type = 'number?',
       default = 'image:getWidth()',
       description = 'The width of the area to affect.'
     },
     h = {
-      type = 'number',
+      type = 'number?',
       default = 'image:getHeight()',
       description = 'The height of the area to affect.'
     }

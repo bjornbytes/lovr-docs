@@ -4,22 +4,21 @@ return {
   description = 'Clears a range of data in the Buffer to a value.',
   arguments = {
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         The offset of the range of the Buffer to clear, in bytes.  Must be a multiple of 4.
       ]]
     },
     extent = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         The number of bytes to clear.  If `nil`, clears to the end of the Buffer.  Must be a
         multiple of 4.
       ]]
     },
     value = {
-      type = 'number',
+      type = 'number?',
       default = '0x00000000',
       description = [[
         The value to clear to.  This will be interpreted as a 32 bit number, which will be repeated

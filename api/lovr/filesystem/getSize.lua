@@ -10,12 +10,12 @@ return {
   },
   returns = {
     size = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The size of the file, in bytes, or `nil` if there was an error.'
     },
     error = {
-      type = 'string | nil',
-      description = 'The error message, if the operation was not successful.'
+      type = 'string?',
+      description = 'The error message, on failure.'
     }
   },
   variants = {

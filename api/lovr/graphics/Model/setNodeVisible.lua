@@ -10,7 +10,7 @@ return {
       description = 'The name or index of a node.'
     },
     visible = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the node should be visible.'
     }
   },

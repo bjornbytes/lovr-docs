@@ -11,7 +11,7 @@ return {
   arguments = {},
   returns = {
     stream = {
-      type = 'AudioStream',
+      type = 'AudioStream?',
       description = 'The audio stream containing audio played/captured by the device.'
     }
   },

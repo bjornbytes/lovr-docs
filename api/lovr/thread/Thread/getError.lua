@@ -6,7 +6,7 @@ return {
   arguments = {},
   returns = {
     error = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The error message, or `nil` if no error has occurred on the Thread.'
     }
   },

@@ -4,7 +4,7 @@ return {
   description = 'Sets the font used for `Pass:text`.',
   arguments = {
     font = {
-      type = 'Font',
+      type = 'Font?',
       description = 'The Font to use when rendering text.'
     }
   },

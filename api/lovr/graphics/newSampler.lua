@@ -13,7 +13,7 @@ return {
       table = {
         {
           name = 'filter',
-          type = 'table',
+          type = 'FilterMode? | {FilterMode}?',
           default = [['linear']],
           description = [[
             How the sampler smooths texture pixels.  Can be a table of 3 FilterModes, or a single
@@ -45,7 +45,7 @@ return {
         },
         {
           name = 'wrap',
-          type = 'table',
+          type = 'WrapMode? | {WrapMode}?',
           default = [['repeat']],
           description = [[
             How the sampler behaves when wrapping UVs outside the 0-1 range.  Can be a table of 3
@@ -65,25 +65,25 @@ return {
             {
               name = '[3]',
               type = 'WrapMode',
-              description = 'The "z" wrap mode for 3D textures.'
+              description = 'The "z" wrap mode, for 3D textures.'
             }
           }
         },
         {
           name = 'compare',
-          type = 'CompareMode',
+          type = 'CompareMode?',
           default = [['none']],
           description = 'The compare mode of the sampler (for shadow samplers).'
         },
         {
           name = 'anisotropy',
-          type = 'number',
+          type = 'number?',
           default = '1',
           description = 'The maximum amount of anisotropic filtering to use.'
         },
         {
           name = 'mipmaprange',
-          type = 'table',
+          type = 'table?',
           description = 'A table of 2 mipmap levels the sampler will clamp to.'
         }
       }

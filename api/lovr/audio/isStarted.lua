@@ -4,7 +4,7 @@ return {
   description = 'Returns whether an audio device is started.',
   arguments = {
     type = {
-      type = 'AudioType',
+      type = 'AudioType?',
       default = [['playback']],
       description = 'The type of device to check.'
     }

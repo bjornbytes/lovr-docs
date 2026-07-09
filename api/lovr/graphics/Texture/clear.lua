@@ -37,24 +37,22 @@ return {
       description = 'A vector with the clear color (alpha will be 1).'
     },
     layer = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the first layer to clear.'
     },
     layerCount = {
-      type = 'number',
-      default = 'nil',
-      description = 'The number of layers to clear.  If nil, clears the rest of the layers.'
+      type = 'number?',
+      description = 'The number of layers to clear.  By default, clears the rest of the layers.'
     },
     mipmap = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the first mipmap to clear.'
     },
     mipmapCount = {
-      type = 'number',
-      default = 'nil',
-      description = 'The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.'
+      type = 'number?',
+      description = 'The number of mipmaps to clear.  By default, clears the rest of the mipmaps.'
     }
   },
   returns = {},

@@ -10,7 +10,7 @@ return {
       description = 'The distance to step along the curve.'
     },
     iterations = {
-      type = 'number',
+      type = 'number?',
       default = '16',
       description = [[
         How many iterations to use to compute the result.  More iterations will give a more accurate

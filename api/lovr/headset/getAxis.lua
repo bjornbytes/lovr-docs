@@ -9,7 +9,8 @@ return {
   ]],
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
+      default = [['head']],
       description = 'The device.'
     },
     axis = {
@@ -19,7 +20,7 @@ return {
   },
   returns = {
     ['...'] = {
-      type = 'number | nil',
+      type = 'number?',
       description = [[
         The current state of the components of the axis, or `nil` if the device does not have any
         information about the axis.

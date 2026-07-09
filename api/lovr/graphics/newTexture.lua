@@ -32,24 +32,23 @@ return {
       description = 'A table of filenames or Images to load into the Texture.'
     },
     options = {
-      type = 'table',
-      default = 'nil',
+      type = 'table?',
       description = 'Texture options.',
       table = {
         {
           name = 'type',
-          type = 'TextureType',
+          type = 'TextureType?',
           description = 'The type of the texture.'
         },
         {
           name = 'format',
-          type = 'TextureFormat',
+          type = 'TextureFormat?',
           default = [['rgba8']],
           description = 'The format of the texture (ignored when images are provided).'
         },
         {
           name = 'linear',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'false',
           description = [[
             Whether the texture is in linear color space instead of sRGB.  Linear textures should be
@@ -58,7 +57,7 @@ return {
         },
         {
           name = 'samples',
-          type = 'number',
+          type = 'number?',
           default = '1',
           description = [[
             The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.
@@ -66,7 +65,7 @@ return {
         },
         {
           name = 'mipmaps',
-          type = 'boolean | number',
+          type = 'boolean? | number?',
           default = 'true',
           description = [[
             The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain
@@ -75,13 +74,13 @@ return {
         },
         {
           name = 'usage',
-          type = '{TextureUsage}',
+          type = '{TextureUsage}?',
           description = 'A list of `TextureUsage` indicating how the texture will be used.'
         },
         {
           name = 'label',
-          type = 'string',
-          description = 'A label for the Texture that will show up in debugging tools.'
+          type = 'string?',
+          description = 'An optional label for the Texture that will show up in debugging tools.'
         }
       }
     }

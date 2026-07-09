@@ -13,23 +13,21 @@ return {
       description = 'The number of frames the Sound can hold.'
     },
     format = {
-      type = 'SampleFormat',
+      type = 'SampleFormat?',
       default = [['f32']],
       description = 'The sample data type.'
     },
     channels = {
-      type = 'number',
-      default = '2',
+      type = 'number?',
       description = 'The number of channels.'
     },
     sampleRate = {
-      type = 'number',
+      type = 'number?',
       default = '48000',
       description = 'The sample rate, in Hz.'
     },
     contents = {
-      type = 'Blob',
-      default = 'nil',
+      type = 'Blob?',
       description = 'An optional Blob containing raw audio samples to use as the initial contents.'
     },
     file = {
@@ -37,7 +35,7 @@ return {
       description = 'A filename or Blob containing a sound file to load.'
     },
     decode = {
-      type = 'boolean',
+      type = 'boolean?',
       default = 'false',
       description = 'Whether compressed audio files should be immediately decoded.'
     }

@@ -8,36 +8,34 @@ return {
   ]],
   arguments = {
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x offset of the region to download.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y offset of the region to download.'
     },
     layer = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the layer to download.'
     },
     mipmap = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The index of the mipmap level to download.'
     },
     width = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         The width of the pixel rectangle to download.  If nil, the "rest" of the width will be used,
         based on the texture width and x offset.
       ]]
     },
     height = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         The height of the pixel rectangle to download.  If nil, the "rest" of the height will be
         used, based on the texture height and y offset.

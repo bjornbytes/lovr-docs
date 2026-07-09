@@ -4,7 +4,7 @@ return {
       name = "conf",
       tag = "callbacks",
       summary = "Called to read configuration settings at startup.",
-      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.\n\n:::note\nMake sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before the rest of the framework initializes.\n:::",
+      description = "The `lovr.conf` callback lets you configure default settings for LÖVR.  It is called once right before the game starts.\n\n:::note\nMake sure you put `lovr.conf` in a file called `conf.lua` alongside `main.lua`.  `conf.lua` is a special file that is loaded before the rest of the framework initializes.\n:::",
       key = "lovr.conf",
       module = "lovr",
       examples = {
@@ -339,7 +339,7 @@ return {
           returns = {
             {
               name = "skip",
-              type = "boolean | nil",
+              type = "boolean?",
               description = "If truthy, the input Pass will not be submitted to the GPU."
             }
           }
@@ -353,12 +353,6 @@ return {
       description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a parameter containing the error message.  It should return a handler function that will run in a loop to render the error screen.\n\nThis handler function is of the same type as the one returned by `lovr.run` and has the same requirements (such as pumping events).  If an error occurs while this handler is running, the program will terminate immediately -- `lovr.errhand` will not be given a second chance.  Errors which occur in the error handler or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
       key = "lovr.errhand",
       module = "lovr",
-      examples = {
-        {
-          description = "The default error handler.",
-          code = "function lovr.errhand(message)\n  local function formatTraceback(s)\n    return s:gsub('\\n[^\\n]+$', ''):gsub('\\t', ''):gsub('stack traceback:', '\\nStack:\\n')\n  end\n\n  message = 'Error:\\n\\n' .. tostring(message) .. formatTraceback(debug.traceback('', 4))\n\n  print(message)\n\n  if not lovr.graphics or not lovr.graphics.isInitialized() then\n    return function() return 1 end\n  end\n\n  if lovr.audio then lovr.audio.stop() end\n\n  if not lovr.headset or lovr.headset.getPassthrough() == 'opaque' then\n    lovr.graphics.setBackgroundColor(.11, .10, .14)\n  else\n    lovr.graphics.setBackgroundColor(0, 0, 0, 0)\n  end\n\n  local font = lovr.graphics.getDefaultFont()\n\n  return function()\n    lovr.system.pollEvents()\n\n    for name, a in lovr.event.poll() do\n      if name == 'quit' then return a or 1\n      elseif name == 'restart' then return 'restart', lovr.restart and lovr.restart()\n      elseif name == 'keypressed' and a == 'f5' then lovr.event.restart()\n      elseif name == 'keypressed' and a == 'escape' then lovr.event.quit() end\n    end\n\n    if lovr.headset and lovr.headset.getDriver() ~= 'simulator' then\n      lovr.headset.update()\n      local pass = lovr.headset.getPass()\n      if pass then\n        font:setPixelDensity()\n\n        local scale = .35\n        local font = lovr.graphics.getDefaultFont()\n        local wrap = .7 * font:getPixelDensity()\n        local lines = font:getLines(message, wrap)\n        local width = math.min(font:getWidth(message), wrap) * scale\n        local height = .8 + #lines * font:getHeight() * scale\n        local x = -width / 2\n        local y = math.min(height / 2, 10)\n        local z = -10\n\n        pass:setColor(.95, .95, .95)\n        pass:text(message, x, y, z, scale, 0, 0, 0, 0, wrap, 'left', 'top')\n\n        lovr.graphics.submit(pass)\n        lovr.headset.submit()\n      end\n    end\n\n    if lovr.system.isWindowOpen() then\n      local pass = lovr.graphics.getWindowPass()\n      if pass then\n        local w, h = lovr.system.getWindowDimensions()\n        pass:setProjection(1, lovr.math.mat4():orthographic(0, w, 0, h, -1, 1))\n        font:setPixelDensity(1)\n\n        local scale = .6\n        local wrap = w * .8 / scale\n        local width = math.min(font:getWidth(message), wrap) * scale\n        local x = w / 2 - width / 2\n\n        pass:setColor(.95, .95, .95)\n        pass:text(message, x, h / 2, 0, scale, 0, 0, 0, 0, wrap, 'left', 'middle')\n\n        lovr.graphics.submit(pass)\n        lovr.graphics.present()\n      end\n    end\n\n    lovr.math.drain()\n  end\nend"
-        }
-      },
       related = {
         "lovr.quit"
       },
@@ -374,7 +368,7 @@ return {
           returns = {
             {
               name = "handler",
-              type = "function",
+              type = "function?",
               description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
               arguments = {},
               returns = {
@@ -415,7 +409,7 @@ return {
             },
             {
               name = "oldpath",
-              type = "string",
+              type = "string?",
               description = "The old path, for `rename` actions."
             }
           },
@@ -611,7 +605,7 @@ return {
           returns = {
             {
               name = "skip",
-              type = "boolean",
+              type = "boolean?",
               description = "If truthy, the input Pass will not be submitted to the GPU."
             }
           }
@@ -829,7 +823,7 @@ return {
           returns = {
             {
               name = "abort",
-              type = "boolean",
+              type = "boolean?",
               description = "Whether quitting should be aborted."
             }
           }
@@ -901,7 +895,7 @@ return {
           code = "function lovr.restart()\n  return currentLevel:getName()\nend"
         }
       },
-      notes = "Only nil, booleans, numbers, and strings are supported types for the return value.",
+      notes = "The cookie can be a boolean, number, string, table, or lightuserdata.",
       related = {
         "lovr.event.restart",
         "lovr.load",
@@ -1569,7 +1563,7 @@ return {
               arguments = {
                 {
                   name = "type",
-                  type = "AudioType",
+                  type = "AudioType?",
                   description = "The type of device to query.",
                   default = "'playback'"
                 }
@@ -1577,12 +1571,12 @@ return {
               returns = {
                 {
                   name = "name",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The name of the device, or `nil` if no device is set."
                 },
                 {
                   name = "id",
-                  type = "userdata | nil",
+                  type = "userdata?",
                   description = "The opaque id of the device, or `nil` if no device is set."
                 }
               }
@@ -1607,7 +1601,7 @@ return {
               arguments = {
                 {
                   name = "type",
-                  type = "AudioType",
+                  type = "AudioType?",
                   description = "The type of devices to query (playback or capture).",
                   default = "'playback'"
                 }
@@ -1805,7 +1799,7 @@ return {
               returns = {
                 {
                   name = "stream",
-                  type = "AudioStream",
+                  type = "AudioStream?",
                   description = "The audio stream containing audio played/captured by the device."
                 }
               }
@@ -1825,7 +1819,7 @@ return {
               arguments = {
                 {
                   name = "units",
-                  type = "VolumeUnit",
+                  type = "VolumeUnit?",
                   description = "The units to return (linear or db).",
                   default = "'linear'"
                 }
@@ -1856,7 +1850,7 @@ return {
               arguments = {
                 {
                   name = "type",
-                  type = "AudioType",
+                  type = "AudioType?",
                   description = "The type of device to check.",
                   default = "'playback'"
                 }
@@ -1897,7 +1891,7 @@ return {
                 },
                 {
                   name = "material",
-                  type = "AudioMaterial | {AudioMaterial}",
+                  type = "AudioMaterial | {AudioMaterial} | nil",
                   description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
                   default = "'generic'"
                 }
@@ -1919,7 +1913,7 @@ return {
                 },
                 {
                   name = "material",
-                  type = "AudioMaterial | {AudioMaterial}",
+                  type = "AudioMaterial | {AudioMaterial} | nil",
                   description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
                   default = "'generic'"
                 }
@@ -1941,7 +1935,7 @@ return {
                 },
                 {
                   name = "material",
-                  type = "AudioMaterial | {AudioMaterial}",
+                  type = "AudioMaterial | {AudioMaterial} | nil",
                   description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
                   default = "'generic'"
                 }
@@ -1981,25 +1975,25 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   default = "nil",
                   table = {
                     {
                       name = "decode",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
                     },
                     {
                       name = "spatial",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.",
                       default = "false"
                     },
                     {
                       name = "pitchable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
                       default = "true"
                     }
@@ -2023,25 +2017,25 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   default = "nil",
                   table = {
                     {
                       name = "decode",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
                     },
                     {
                       name = "spatial",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.",
                       default = "false"
                     },
                     {
                       name = "pitchable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
                       default = "true"
                     }
@@ -2065,25 +2059,25 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   default = "nil",
                   table = {
                     {
                       name = "decode",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether to immediately decode compressed sounds, instead of progressively decoding as the Source plays.  Enabling this will use more memory but reduce CPU overhead during playback.  Recommended for short sound effects.",
                       default = "false"
                     },
                     {
                       name = "spatial",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Source should use spatial effects.  Non-spatial sources will get routed directly to the speakers without further processing.",
                       default = "false"
                     },
                     {
                       name = "pitchable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the pitch of the Source can be changed with `Source:setPitch`.  Setting this to false will improve performance slightly.",
                       default = "true"
                     }
@@ -2119,25 +2113,25 @@ return {
               arguments = {
                 {
                   name = "type",
-                  type = "AudioType",
+                  type = "AudioType?",
                   description = "The device to switch.",
                   default = "'playback'"
                 },
                 {
                   name = "id",
-                  type = "userdata",
+                  type = "userdata?",
                   description = "The id of the device to use, or `nil` to use the default device.",
                   default = "nil"
                 },
                 {
                   name = "stream",
-                  type = "AudioStream | boolean",
+                  type = "AudioStream? | boolean?",
                   description = "An optional audio stream to use as a \"sink\" for the device.  For playback devices, any audio sent to the speakers is also copied to the sink.  For capture devices, audio captured by the device is copied to the sink.  Can be a specific AudioStream, or `true` to create a default audio stream matching the native format of the device.  If nil, this will be `true` for capture devices and `false` for playback devices.  Use `lovr.audio.getStream` to get the stream after the device is created.",
                   default = "nil"
                 },
                 {
                   name = "mode",
-                  type = "AudioShareMode",
+                  type = "AudioShareMode?",
                   description = "The sharing mode for the device.",
                   default = "shared"
                 }
@@ -2371,7 +2365,7 @@ return {
                 },
                 {
                   name = "units",
-                  type = "VolumeUnit",
+                  type = "VolumeUnit?",
                   description = "The units of the value.",
                   default = "'linear'"
                 }
@@ -2401,7 +2395,7 @@ return {
               arguments = {
                 {
                   name = "type",
-                  type = "AudioType",
+                  type = "AudioType?",
                   description = "The type of device to start.",
                   default = "'playback'"
                 }
@@ -2414,8 +2408,8 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
-                  description = "The error message, if any."
+                  type = "string?",
+                  description = "The error message, on failure."
                 }
               }
             }
@@ -2440,7 +2434,7 @@ return {
               arguments = {
                 {
                   name = "type",
-                  type = "AudioType",
+                  type = "AudioType?",
                   description = "The type of device to stop.",
                   default = "'playback'"
                 }
@@ -2453,8 +2447,8 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
-                  description = "The error message, if any."
+                  type = "string?",
+                  description = "The error message, on failure."
                 }
               }
             }
@@ -3572,7 +3566,7 @@ return {
                   arguments = {
                     {
                       name = "units",
-                      type = "VolumeUnit",
+                      type = "VolumeUnit?",
                       description = "The units to return (linear or db).",
                       default = "'linear'"
                     }
@@ -3705,7 +3699,7 @@ return {
                     },
                     {
                       name = "unit",
-                      type = "TimeUnit",
+                      type = "TimeUnit?",
                       description = "The units for the seek position.",
                       default = "'seconds'"
                     }
@@ -3752,8 +3746,8 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
-                      description = "Whether absorption should be enabled.  False will set the coefficients to zero, `true` will use the absorption coefficients of air (see notes)."
+                      type = "boolean?",
+                      description = "Whether absorption should be enabled.  Falsy values will set the coefficients to zero, `true` will use the absorption coefficients of air (see notes)."
                     }
                   },
                   returns = {}
@@ -3798,7 +3792,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the volume cone should be enabled.  Passing `true` will set a default cone with an `innerAngle` of `0`, an `outerAngle` of `math.pi`, and an `outerVolume` of `0`.  Falsy values disable the cone completely (equivalent to 0, 0, 1)."
                     }
                   },
@@ -3839,7 +3833,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether volume falloff should be enabled.  Passing `true` will set a default falloff with a `minDistance` of `0` and a `minVolume` of `0`.  Falsy values disable falloff completely by setting the minVolume to `1`."
                     }
                   },
@@ -3900,7 +3894,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether occlusion should be enabled.  Passing `true` is shorthand for `64` and `4`, and falsy values will disable occlusion by settings `rays` to `0`."
                     }
                   },
@@ -4154,7 +4148,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       dsecription = "        Whether reverb should be enabled.  Passing `true` is short for setting a level of 1 and a\n        mode of \"listener\", and falsy values will disable reverb.\n      "
                     }
                   },
@@ -4187,7 +4181,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether spatialization should be enabled.  `true` for 1, `false` for 0."
                     }
                   },
@@ -4213,7 +4207,7 @@ return {
                     },
                     {
                       name = "units",
-                      type = "VolumeUnit",
+                      type = "VolumeUnit?",
                       description = "The units of the value.",
                       default = "'linear'"
                     }
@@ -4254,7 +4248,7 @@ return {
                   arguments = {
                     {
                       name = "unit",
-                      type = "TimeUnit",
+                      type = "TimeUnit?",
                       description = "The unit to return.",
                       default = "'seconds'"
                     }
@@ -4732,7 +4726,7 @@ return {
                 },
                 {
                   name = "format",
-                  type = "SampleFormat",
+                  type = "SampleFormat?",
                   description = "The format of the audio stream.",
                   default = "'f32'"
                 },
@@ -4743,7 +4737,7 @@ return {
                 },
                 {
                   name = "rate",
-                  type = "number",
+                  type = "number?",
                   description = "The sample rate of the audio stream, in Hz.",
                   default = "48000"
                 }
@@ -4778,8 +4772,8 @@ return {
                 },
                 {
                   name = "name",
-                  type = "string",
-                  description = "A name for the Blob (used in error messages)",
+                  type = "string?",
+                  description = "A name for the Blob to use in error messages.",
                   default = "''"
                 }
               },
@@ -4800,8 +4794,8 @@ return {
                 },
                 {
                   name = "name",
-                  type = "string",
-                  description = "A name for the Blob (used in error messages)",
+                  type = "string?",
+                  description = "A name for the Blob to use in error messages.",
                   default = "''"
                 }
               },
@@ -4822,8 +4816,8 @@ return {
                 },
                 {
                   name = "name",
-                  type = "string",
-                  description = "A name for the Blob (used in error messages)",
+                  type = "string?",
+                  description = "A name for the Blob to use in error messages.",
                   default = "''"
                 }
               },
@@ -4861,14 +4855,13 @@ return {
                 },
                 {
                   name = "extent",
-                  type = "number",
-                  description = "The size of the subsection, in bytes.  When nil, the subsection will extend to the end of the parent Blob.",
-                  default = "nil"
+                  type = "number?",
+                  description = "The size of the subsection, in bytes.  By default the view will extend to the end of the parent Blob."
                 },
                 {
                   name = "name",
-                  type = "string",
-                  description = "An optional name for the view (used in error messages).",
+                  type = "string?",
+                  description = "An optional name for the view to use in error messages.",
                   default = "''"
                 }
               },
@@ -4922,15 +4915,14 @@ return {
                 },
                 {
                   name = "format",
-                  type = "TextureFormat",
+                  type = "TextureFormat?",
                   description = "The format of the texture's pixels.",
                   default = "rgba8"
                 },
                 {
                   name = "data",
-                  type = "Blob",
-                  description = "Raw pixel values to use as the contents.  If `nil`, the data will all be zero.",
-                  default = "nil"
+                  type = "Blob?",
+                  description = "Raw pixel values to use as the contents.  If `nil`, the data will all be zero."
                 }
               },
               returns = {
@@ -5001,7 +4993,7 @@ return {
                 },
                 {
                   name = "size",
-                  type = "number",
+                  type = "number?",
                   description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
@@ -5023,9 +5015,8 @@ return {
                 },
                 {
                   name = "atlas",
-                  type = "Image",
-                  description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file.",
-                  default = "nil"
+                  type = "Image?",
+                  description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file."
                 }
               },
               returns = {
@@ -5041,7 +5032,7 @@ return {
               arguments = {
                 {
                   name = "size",
-                  type = "number",
+                  type = "number?",
                   description = "The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more memory and processing power but may provide better quality results for some fonts/situations.",
                   default = "32"
                 }
@@ -5074,27 +5065,25 @@ return {
                 },
                 {
                   name = "format",
-                  type = "SampleFormat",
+                  type = "SampleFormat?",
                   description = "The sample data type.",
                   default = "'f32'"
                 },
                 {
                   name = "channels",
-                  type = "number",
-                  description = "The number of channels.",
-                  default = "2"
+                  type = "number?",
+                  description = "The number of channels."
                 },
                 {
                   name = "sampleRate",
-                  type = "number",
+                  type = "number?",
                   description = "The sample rate, in Hz.",
                   default = "48000"
                 },
                 {
                   name = "contents",
-                  type = "Blob",
-                  description = "An optional Blob containing raw audio samples to use as the initial contents.",
-                  default = "nil"
+                  type = "Blob?",
+                  description = "An optional Blob containing raw audio samples to use as the initial contents."
                 }
               },
               returns = {
@@ -5115,7 +5104,7 @@ return {
                 },
                 {
                   name = "decode",
-                  type = "boolean",
+                  type = "boolean?",
                   description = "Whether compressed audio files should be immediately decoded.",
                   default = "false"
                 }
@@ -5326,9 +5315,8 @@ return {
                   arguments = {
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  When nil, reads all of the data in the stream.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  Defaults to all of the data in the stream."
                     }
                   },
                   returns = {
@@ -5343,9 +5331,8 @@ return {
                   arguments = {
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  When nil, reads all of the data in the stream.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  Defaults to all of the data in the stream."
                     },
                     {
                       name = "sound",
@@ -5354,7 +5341,7 @@ return {
                     },
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset to start writing into the destination (frames for Sounds, bytes for Blobs).",
                       default = "0"
                     }
@@ -5371,9 +5358,8 @@ return {
                   arguments = {
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  When nil, reads all of the data in the stream.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  Defaults to all of the data in the stream."
                     },
                     {
                       name = "blob",
@@ -5382,7 +5368,7 @@ return {
                     },
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset to start writing into the destination (frames for Sounds, bytes for Blobs).",
                       default = "0"
                     }
@@ -6582,25 +6568,25 @@ return {
                     },
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the upper-left corner of the area of the Image to affect.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the upper-left corner of the area of the Image to affect.",
                       default = "0"
                     },
                     {
                       name = "w",
-                      type = "number",
+                      type = "number?",
                       description = "The width of the area to affect.",
                       default = "image:getWidth()"
                     },
                     {
                       name = "h",
-                      type = "number",
+                      type = "number?",
                       description = "The height of the area to affect.",
                       default = "image:getHeight()"
                     }
@@ -6631,37 +6617,37 @@ return {
                     },
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate to paste to (0-indexed).",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate to paste to (0-indexed).",
                       default = "0"
                     },
                     {
                       name = "fromX",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate in the source to paste from (0-indexed).",
                       default = "0"
                     },
                     {
                       name = "fromY",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate in the source to paste from (0-indexed).",
                       default = "0"
                     },
                     {
                       name = "width",
-                      type = "number",
+                      type = "number?",
                       description = "The width of the region to copy.",
                       default = "source:getWidth()"
                     },
                     {
                       name = "height",
-                      type = "number",
+                      type = "number?",
                       description = "The height of the region to copy.",
                       default = "source:getHeight()"
                     }
@@ -7109,32 +7095,32 @@ return {
                     {
                       name = "minx",
                       type = "number",
-                      description = "The minimum x coordinate of the vertices in the model."
+                      description = "The minimum x coordinate of the bounding box."
                     },
                     {
                       name = "maxx",
                       type = "number",
-                      description = "The maximum x coordinate of the vertices in the model."
+                      description = "The maximum x coordinate of the bounding box."
                     },
                     {
                       name = "miny",
                       type = "number",
-                      description = "The minimum y coordinate of the vertices in the model."
+                      description = "The minimum y coordinate of the bounding box."
                     },
                     {
                       name = "maxy",
                       type = "number",
-                      description = "The maximum y coordinate of the vertices in the model."
+                      description = "The maximum y coordinate of the bounding box."
                     },
                     {
                       name = "minz",
                       type = "number",
-                      description = "The minimum z coordinate of the vertices in the model."
+                      description = "The minimum z coordinate of the bounding box."
                     },
                     {
                       name = "maxz",
                       type = "number",
-                      description = "The maximum z coordinate of the vertices in the model."
+                      description = "The maximum z coordinate of the bounding box."
                     }
                   }
                 },
@@ -7151,32 +7137,32 @@ return {
                     {
                       name = "minx",
                       type = "number",
-                      description = "The minimum x coordinate of the vertices in the model."
+                      description = "The minimum x coordinate of the bounding box."
                     },
                     {
                       name = "maxx",
                       type = "number",
-                      description = "The maximum x coordinate of the vertices in the model."
+                      description = "The maximum x coordinate of the bounding box."
                     },
                     {
                       name = "miny",
                       type = "number",
-                      description = "The minimum y coordinate of the vertices in the model."
+                      description = "The minimum y coordinate of the bounding box."
                     },
                     {
                       name = "maxy",
                       type = "number",
-                      description = "The maximum y coordinate of the vertices in the model."
+                      description = "The maximum y coordinate of the bounding box."
                     },
                     {
                       name = "minz",
                       type = "number",
-                      description = "The minimum z coordinate of the vertices in the model."
+                      description = "The minimum z coordinate of the bounding box."
                     },
                     {
                       name = "maxz",
                       type = "number",
-                      description = "The maximum z coordinate of the vertices in the model."
+                      description = "The maximum z coordinate of the bounding box."
                     }
                   }
                 },
@@ -7198,32 +7184,32 @@ return {
                     {
                       name = "minx",
                       type = "number",
-                      description = "The minimum x coordinate of the vertices in the model."
+                      description = "The minimum x coordinate of the bounding box."
                     },
                     {
                       name = "maxx",
                       type = "number",
-                      description = "The maximum x coordinate of the vertices in the model."
+                      description = "The maximum x coordinate of the bounding box."
                     },
                     {
                       name = "miny",
                       type = "number",
-                      description = "The minimum y coordinate of the vertices in the model."
+                      description = "The minimum y coordinate of the bounding box."
                     },
                     {
                       name = "maxy",
                       type = "number",
-                      description = "The maximum y coordinate of the vertices in the model."
+                      description = "The maximum y coordinate of the bounding box."
                     },
                     {
                       name = "minz",
                       type = "number",
-                      description = "The minimum z coordinate of the vertices in the model."
+                      description = "The minimum z coordinate of the bounding box."
                     },
                     {
                       name = "maxz",
                       type = "number",
-                      description = "The maximum z coordinate of the vertices in the model."
+                      description = "The maximum z coordinate of the bounding box."
                     }
                   }
                 }
@@ -9489,13 +9475,13 @@ return {
                     },
                     {
                       name = "spread",
-                      type = "number",
+                      type = "number?",
                       description = "The width of the distance field, for signed distance field rasterization.",
                       default = "4.0"
                     },
                     {
                       name = "padding",
-                      type = "number",
+                      type = "number?",
                       description = "The number of pixels of padding to add at the edges of the image.",
                       default = "spread / 2"
                     }
@@ -9735,13 +9721,12 @@ return {
                   arguments = {
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded."
                     },
                     {
                       name = "srcOffset",
-                      type = "number",
+                      type = "number?",
                       description = "A frame offset to apply to the sound when reading frames.",
                       default = "0"
                     }
@@ -9768,19 +9753,18 @@ return {
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded."
                     },
                     {
                       name = "srcOffset",
-                      type = "number",
+                      type = "number?",
                       description = "A frame offset to apply to the sound when reading frames.",
                       default = "0"
                     },
                     {
                       name = "dstOffset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset to apply to the destination when writing frames (indices for tables, bytes for Blobs, frames for Sounds).",
                       default = "0"
                     }
@@ -9807,19 +9791,18 @@ return {
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded."
                     },
                     {
                       name = "srcOffset",
-                      type = "number",
+                      type = "number?",
                       description = "A frame offset to apply to the sound when reading frames.",
                       default = "0"
                     },
                     {
                       name = "dstOffset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset to apply to the destination when writing frames (indices for tables, bytes for Blobs, frames for Sounds).",
                       default = "0"
                     }
@@ -9841,19 +9824,18 @@ return {
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of frames to read.  If nil, reads as many frames as possible.\n\nCompressed sounds will automatically be decoded."
                     },
                     {
                       name = "srcOffset",
-                      type = "number",
+                      type = "number?",
                       description = "A frame offset to apply to the sound when reading frames.",
                       default = "0"
                     },
                     {
                       name = "dstOffset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset to apply to the destination when writing frames (indices for tables, bytes for Blobs, frames for Sounds).",
                       default = "0"
                     }
@@ -9988,19 +9970,18 @@ return {
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "How many frames to write.  If nil, writes as many as possible.",
-                      default = "nil"
+                      type = "number?",
+                      description = "How many frames to write.  Defaults to writing as many frames as possible, based on the size of the source and destination."
                     },
                     {
                       name = "dstOffset",
-                      type = "number",
+                      type = "number?",
                       description = "A frame offset to apply when writing the frames.",
                       default = "0"
                     },
                     {
                       name = "srcOffset",
-                      type = "number",
+                      type = "number?",
                       description = "A frame, byte, or index offset to apply when reading frames from the source.",
                       default = "0"
                     }
@@ -10561,7 +10542,7 @@ return {
               arguments = {
                 {
                   name = "code",
-                  type = "number",
+                  type = "number?",
                   description = "The exit code of the program.",
                   default = "0"
                 }
@@ -10678,7 +10659,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message, or `nil` if there was no error."
                 }
               }
@@ -10709,7 +10690,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message."
                 }
               }
@@ -10729,7 +10710,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The absolute path to the appdata directory."
                 }
               }
@@ -10776,7 +10757,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The absolute path of the LÖVR executable, or `nil` if it is unknown."
                 }
               }
@@ -10797,7 +10778,7 @@ return {
               returns = {
                 {
                   name = "identity",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The name of the save directory, or `nil` if it isn't set."
                 }
               }
@@ -10823,12 +10804,12 @@ return {
               returns = {
                 {
                   name = "time",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The modification time of the file, in seconds, or `nil` if there was an error."
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message, if there was an error."
                 }
               }
@@ -10854,7 +10835,7 @@ return {
               returns = {
                 {
                   name = "realpath",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The absolute path of the mounted archive containing `path`, or `nil` if the file is not in the virtual filesystem."
                 }
               }
@@ -10930,13 +10911,13 @@ return {
               returns = {
                 {
                   name = "size",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The size of the file, in bytes, or `nil` if there was an error."
                 },
                 {
                   name = "error",
-                  type = "string | nil",
-                  description = "The error message, if the operation was not successful."
+                  type = "string?",
+                  description = "The error message, on failure."
                 }
               }
             }
@@ -10955,7 +10936,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The absolute path of the project's source, or `nil` if it's unknown."
                 }
               }
@@ -10975,7 +10956,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The absolute path of the user's home directory."
                 }
               }
@@ -10995,7 +10976,7 @@ return {
               returns = {
                 {
                   name = "path",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The current working directory, or `nil` if it's unknown."
                 }
               }
@@ -11146,21 +11127,20 @@ return {
                 },
                 {
                   name = "mountpoint",
-                  type = "string",
+                  type = "string?",
                   description = "The path in the virtual filesystem to mount to.",
                   default = "'/'"
                 },
                 {
                   name = "append",
-                  type = "boolean",
+                  type = "boolean?",
                   description = "Whether the archive will be added to the end or the beginning of the search path.",
                   default = "false"
                 },
                 {
                   name = "root",
-                  type = "string",
-                  description = "A subdirectory inside the archive to use as the root.  If `nil`, the actual root of the archive is used.",
-                  default = "nil"
+                  type = "string?",
+                  description = "A subdirectory inside the archive to use as the root.  If `nil`, the actual root of the archive is used."
                 }
               },
               returns = {
@@ -11171,7 +11151,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message, if the archive failed to mount."
                 }
               }
@@ -11242,12 +11222,12 @@ return {
               returns = {
                 {
                   name = "file",
-                  type = "File",
+                  type = "File?",
                   description = "A new file object, or nil if an error occurred."
                 },
                 {
                   name = "error",
-                  type = "string",
+                  type = "string?",
                   description = "The error message, if an error occurred."
                 }
               }
@@ -11273,12 +11253,12 @@ return {
               returns = {
                 {
                   name = "contents",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The contents of the file, or nil if the file could not be read."
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message, if any."
                 }
               }
@@ -11310,7 +11290,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message, if any."
                 }
               }
@@ -11464,7 +11444,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string",
+                  type = "string?",
                   description = "The error message, if there was an error."
                 }
               }
@@ -11540,12 +11520,12 @@ return {
                   returns = {
                     {
                       name = "size",
-                      type = "number",
+                      type = "number?",
                       description = "The size of the file, in bytes, or nil if an error occurred."
                     },
                     {
                       name = "error",
-                      type = "string",
+                      type = "string?",
                       description = "The error message, if an error occurred."
                     }
                   }
@@ -11600,12 +11580,12 @@ return {
                   returns = {
                     {
                       name = "data",
-                      type = "string",
+                      type = "string?",
                       description = "The data that was read, or nil if an error occurred."
                     },
                     {
                       name = "size",
-                      type = "number",
+                      type = "number | string",
                       description = "The number of bytes that were read, or the error message if an error occurred."
                     }
                   }
@@ -11679,9 +11659,8 @@ return {
                     },
                     {
                       name = "size",
-                      type = "number",
-                      description = "The number of bytes to write, or nil to write all of the data from the string/Blob.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of bytes to write, or nil to write all of the data from the source."
                     }
                   },
                   returns = {
@@ -11692,7 +11671,7 @@ return {
                     },
                     {
                       name = "message",
-                      type = "string",
+                      type = "string?",
                       description = "The error message."
                     }
                   }
@@ -11706,9 +11685,8 @@ return {
                     },
                     {
                       name = "size",
-                      type = "number",
-                      description = "The number of bytes to write, or nil to write all of the data from the string/Blob.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of bytes to write, or nil to write all of the data from the source."
                     }
                   },
                   returns = {
@@ -11719,7 +11697,7 @@ return {
                     },
                     {
                       name = "message",
-                      type = "string",
+                      type = "string?",
                       description = "The error message."
                     }
                   }
@@ -13182,7 +13160,7 @@ return {
               returns = {
                 {
                   name = "pass",
-                  type = "Pass | nil",
+                  type = "Pass?",
                   description = "The window pass, or `nil` if there is no window."
                 }
               }
@@ -13312,7 +13290,7 @@ return {
               arguments = {
                 {
                   name = "blob",
-                  type = "Blob",
+                  type = "Blob?",
                   description = "A Blob with the initial contents of the Buffer."
                 }
               },
@@ -13332,21 +13310,21 @@ return {
                   description = "A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple arrays.",
                   table = {
                     {
-                      name = "layout",
+                      name = "layout?",
                       type = "DataLayout",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
                     {
                       name = "stride",
-                      type = "number",
+                      type = "number?",
                       description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
                     }
                   }
                 },
                 {
                   name = "length",
-                  type = "number",
+                  type = "number?",
                   description = "The length of the Buffer.",
                   default = "1"
                 }
@@ -13367,21 +13345,21 @@ return {
                   description = "A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple arrays.",
                   table = {
                     {
-                      name = "layout",
+                      name = "layout?",
                       type = "DataLayout",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
                     {
                       name = "stride",
-                      type = "number",
+                      type = "number?",
                       description = "The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically computed based on the fields.  The stride can not be zero or smaller than the max byte occupied by one of the fields.  The layout of the Buffer may adjust the stride."
                     }
                   }
                 },
                 {
                   name = "data",
-                  type = "table | Blob",
+                  type = "table? | Blob?",
                   description = "The initial data to put into the Buffer.  The length of the Buffer will be determined by the length of the table or the size of the Blob, combined with the format information."
                 }
               },
@@ -13418,13 +13396,13 @@ return {
                 },
                 {
                   name = "size",
-                  type = "number",
+                  type = "number?",
                   description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
                   name = "spread",
-                  type = "number",
+                  type = "number?",
                   description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
@@ -13447,13 +13425,12 @@ return {
                 },
                 {
                   name = "atlas",
-                  type = "Image",
-                  description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file.",
-                  default = "nil"
+                  type = "Image?",
+                  description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file."
                 },
                 {
                   name = "spread",
-                  type = "number",
+                  type = "number?",
                   description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
@@ -13471,13 +13448,13 @@ return {
               arguments = {
                 {
                   name = "size",
-                  type = "number",
+                  type = "number?",
                   description = "The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use more memory, but have better quality.",
                   default = "32"
                 },
                 {
                   name = "spread",
-                  type = "number",
+                  type = "number?",
                   description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
@@ -13500,7 +13477,7 @@ return {
                 },
                 {
                   name = "spread",
-                  type = "number",
+                  type = "number?",
                   description = "For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The greater the distance the font is viewed from, the larger this value needs to be for the font to remain properly antialiased.  Increasing this will have a performance penalty similar to increasing the size of the font.",
                   default = "4"
                 }
@@ -13533,103 +13510,103 @@ return {
                   table = {
                     {
                       name = "color",
-                      type = "{number}",
+                      type = "{number}?",
                       description = "The base color of the surface.  Can be a table of numbers, a vector, or a hexcode. Can be toggled in shaders using the `materialColor` flag, which defaults to `true`.",
                       default = "{ 1, 1, 1, 1 }"
                     },
                     {
                       name = "glow",
-                      type = "{number}",
+                      type = "{number}?",
                       description = "The glow color of the surface, sometimes called \"emissive\".  The glow is not affected by lighting, so it's a good fit for e.g. headlights on a car or LED lights on a panel.  The alpha of the glow color is used as the glow strength.  Can be a table of numbers, a vector, or a hexcode.  Can be toggled in shaders using the `glow` flag, which defaults to `false`.",
                       default = "{ 0, 0, 0, 0 }"
                     },
                     {
                       name = "uvShift",
-                      type = "{number}",
+                      type = "{number}?",
                       description = "An offset to apply to the UV coordinates used to sample textures.  The offset is not affected by `uvScale`.  This can be used to map UV coordinates to a sub-rectangle of a texture atlas.  Can be a table of numbers, a vector, or a single number which gets assigned to both axes.  Can be toggled in shaders using the `uvTransform` flag, which defaults to `true`.",
                       default = "{ 0, 0 }"
                     },
                     {
                       name = "uvScale",
-                      type = "{number}",
+                      type = "{number}?",
                       description = "A scale factor to apply to the UV coordinates used to sample textures.  The scale is not affected by `uvOffset`.  This can be used to map UV coordinates to a sub-rectangle of a texture atlas, or repeat a texture multiple times across a surface.  Can be a table of numbers, a vector, or a single number which gets assigned to both axes. Can be toggled in shaders using the `uvTransform` flag, which defaults to `true`.",
                       default = "{ 1, 1 }"
                     },
                     {
                       name = "metalness",
-                      type = "number",
+                      type = "number?",
                       description = "The metalness the surface, used for physically-based rendering.  1.0 means the surface is metallic (conductor), and 0.0 means the surface is non-metallic (dielectric).  Values in between are seldom used and are only used in textures to transition between a metallic and non-metallic surface.  Metals reflect light differently than non-metals. Used by the lighting helper functions `initSurface` and `getLighting`.",
                       default = "0"
                     },
                     {
                       name = "roughness",
-                      type = "number",
+                      type = "number?",
                       description = "The roughness of the surface, used for physically-based rendering.  1.0 means the surface is rough (blurry reflections), and 0.0 means the surface is smooth (sharp reflections).  Used by the lighting helper functions `initSurface` and `getLighting`.",
                       default = "0"
                     },
                     {
                       name = "clearcoat",
-                      type = "number",
+                      type = "number?",
                       description = "The clearcoat factor.  Not currently used by LÖVR.",
                       default = "0"
                     },
                     {
                       name = "clearcoatRoughness",
-                      type = "number",
+                      type = "number?",
                       description = "The roughness of the clearcoat layer.  Not currently used by LÖVR.",
                       default = "0"
                     },
                     {
                       name = "occlusionStrength",
-                      type = "number",
+                      type = "number?",
                       description = "The strength of the ambient occlusion effect.  Ambient occlusion only affects indirect lighting.  Used by the lighting helper functions `initSurface` and `getIndirectLighting`.  Can be toggled in shaders using the `ambientOcclusion` flag, which defaults to `true`.",
                       default = "1"
                     },
                     {
                       name = "normalScale",
-                      type = "number",
+                      type = "number?",
                       description = "The strength of the normal map.  Used by the `initSurface` function to bend the surface normal.  Can be toggled in shaders using the `normalMap` flag, which defaults to `false`.",
                       default = "1"
                     },
                     {
                       name = "alphaCutoff",
-                      type = "number",
+                      type = "number?",
                       description = "The alpha cutoff.  At the end of the fragment shader, if the alpha of the final color is below the alpha cutoff, then the pixel will be \"discarded\" which means that it won't write a depth value.  Often used for transparent textures, especially with the \"alpha to coverage\" state set by `Pass:setAlphaToCoverage`.  Can be toggled in shaders using the `alphaCutoff` flag, which defaults to `false`.",
                       default = "0"
                     },
                     {
                       name = "texture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The base color texture.  In shaders this gets multiplied with the `color` property to get the base color of the pixel.  Can be toggled in shaders using the `colorTexture` flag, which defaults to `true`."
                     },
                     {
                       name = "glowTexture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The glow color texture.  In shaders, samples from this texture get multiplied with the `glow` property to get the glow color of the pixel.  Can be toggled in shaders using the `glowTexture` flag, which defaults to `true` (also requires the `glow` flag to be enabled)."
                     },
                     {
                       name = "metalnessTexture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The metalness texture.  In shaders, samples from the blue channel of this texture get multiplied with the `metalness` property to get the metalness value of the pixel.  Can be toggled in shaders using the `metalnessTexture` flag, which defaults to `true`."
                     },
                     {
                       name = "roughnessTexture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The roughness texture.  In shaders, samples from the green channel of this texture get multiplied with the `roughness` property to get the roughness value of the pixel.  Can be toggled in shaders using the `roughnessTexture` flag, which defaults to `true`."
                     },
                     {
                       name = "clearcoatTexture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "Not currently used by LÖVR."
                     },
                     {
                       name = "occlusionTexture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The ambient occlusion texture.  In shaders, samples from the red channel of this texture get multiplied with the `occlusionStrength` property to get the ambient occlusion value of the pixel. Used by the lighting helper functions `initSurface` and `getIndirectLighting`.  Can be toggled in shaders using the `ambientOcclusion` flag, which defaults to `true`."
                     },
                     {
                       name = "normalTexture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The normal map, used to apply details to a surface without adding mesh geometry.  The `normalScale` property can be used to control how strong the effect is.  Can be toggled in shaders using the `normalMap` flag, which defaults to `false`."
                     }
                   }
@@ -13672,41 +13649,41 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "storage",
-                      type = "MeshStorage",
+                      type = "MeshStorage?",
                       description = "The storage mode of the Mesh.",
                       default = "'cpu'"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -13732,41 +13709,41 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "storage",
-                      type = "MeshStorage",
+                      type = "MeshStorage?",
                       description = "The storage mode of the Mesh.",
                       default = "'cpu'"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -13792,41 +13769,41 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "storage",
-                      type = "MeshStorage",
+                      type = "MeshStorage?",
                       description = "The storage mode of the Mesh.",
                       default = "'cpu'"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -13857,41 +13834,41 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "storage",
-                      type = "MeshStorage",
+                      type = "MeshStorage?",
                       description = "The storage mode of the Mesh.",
                       default = "'cpu'"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -13922,41 +13899,41 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "storage",
-                      type = "MeshStorage",
+                      type = "MeshStorage?",
                       description = "The storage mode of the Mesh.",
                       default = "'cpu'"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -13987,41 +13964,41 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "storage",
-                      type = "MeshStorage",
+                      type = "MeshStorage?",
                       description = "The storage mode of the Mesh.",
                       default = "'cpu'"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for meshes that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -14078,48 +14055,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "An optional table of Model options.",
-                  default = "nil",
                   table = {
                     {
                       name = "mipmaps",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the textures created for the Model should have mipmaps generated.",
                       default = "true"
                     },
                     {
                       name = "materials",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
                       default = "true"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for models that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -14145,48 +14121,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "An optional table of Model options.",
-                  default = "nil",
                   table = {
                     {
                       name = "mipmaps",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the textures created for the Model should have mipmaps generated.",
                       default = "true"
                     },
                     {
                       name = "materials",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the textures and materials in the Model should be loaded.  When false, the model will use the material set with `Pass:setMaterial`, although it will apply to all nodes.",
                       default = "true"
                     },
                     {
                       name = "raytracer",
-                      type = "table",
+                      type = "table?",
                       description = "Optional raytracing options.",
                       table = {
                         {
                           name = "dynamic",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data will be frequently rebuilt. Set this to `false` for models that have static geometry.",
                           default = "false"
                         },
                         {
                           name = "fasttrace",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast tracing in shaders instead of fast rebuilds.",
                           default = "true"
                         },
                         {
                           name = "fastbuild",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                           default = "false"
                         },
                         {
                           name = "compress",
-                          type = "boolean",
+                          type = "boolean?",
                           description = "An optimization hint indicating that raytracing data should use less VRAM, possibly at the cost of performance.",
                           default = "false"
                         }
@@ -14264,7 +14239,7 @@ return {
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of multisamples to use.  Can be 4 for antialiasing, or 1 to disable antialiasing.",
                       default = "4"
                     }
@@ -14309,30 +14284,30 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options.",
                   table = {
                     {
                       name = "dynamic",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "An optimization hint indicating that the Raytracer will be frequently rebuilt with new objects or transform changes.  Set this to `false` for raytracers that have static content.",
                       default = "false"
                     },
                     {
                       name = "fasttrace",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "An optimization hint indicating that the Raytracer should be optimized for fast tracing in shaders instead of fast rebuilds.",
                       default = "true"
                     },
                     {
                       name = "fastbuild",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "An optimization hint indicating that the Raytracer should be optimized for fast rebuilds instead of fast tracing.  If `fasttrace` and `fastbuild` are both set, `fasttrace` wins.",
                       default = "false"
                     },
                     {
                       name = "compress",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "An optimization hint indicating that the Raytracer should use less VRAM, possibly at the cost of performance.",
                       default = "false"
                     }
@@ -14369,7 +14344,7 @@ return {
                   table = {
                     {
                       name = "filter",
-                      type = "table",
+                      type = "FilterMode? | {FilterMode}?",
                       description = "How the sampler smooths texture pixels.  Can be a table of 3 FilterModes, or a single FilterMode to use for all three.",
                       default = "'linear'",
                       table = {
@@ -14392,7 +14367,7 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "table",
+                      type = "WrapMode? | {WrapMode}?",
                       description = "How the sampler behaves when wrapping UVs outside the 0-1 range.  Can be a table of 3 WrapModes, or a single WrapMode to use for all three axes.",
                       default = "'repeat'",
                       table = {
@@ -14409,25 +14384,25 @@ return {
                         {
                           name = "[3]",
                           type = "WrapMode",
-                          description = "The \"z\" wrap mode for 3D textures."
+                          description = "The \"z\" wrap mode, for 3D textures."
                         }
                       }
                     },
                     {
                       name = "compare",
-                      type = "CompareMode",
+                      type = "CompareMode?",
                       description = "The compare mode of the sampler (for shadow samplers).",
                       default = "'none'"
                     },
                     {
                       name = "anisotropy",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum amount of anisotropic filtering to use.",
                       default = "1"
                     },
                     {
                       name = "mipmaprange",
-                      type = "table",
+                      type = "table?",
                       description = "A table of 2 mipmap levels the sampler will clamp to."
                     }
                   }
@@ -14471,23 +14446,22 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "An optional table of Shader options.",
-                  default = "nil",
                   table = {
                     {
                       name = "flags",
-                      type = "table",
+                      type = "table?",
                       description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  See `ShaderFlag` for the list of builtin shader flags."
                     },
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "A label to use for the shader in debugging tools."
                     },
                     {
                       name = "raw",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "If set to true, the code is treated as a raw shader.  It will be compiled with none of the LÖVR helpers."
                     }
                   }
@@ -14511,23 +14485,22 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "An optional table of Shader options.",
-                  default = "nil",
                   table = {
                     {
                       name = "flags",
-                      type = "table",
+                      type = "table?",
                       description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  See `ShaderFlag` for the list of builtin shader flags."
                     },
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "A label to use for the shader in debugging tools."
                     },
                     {
                       name = "raw",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "If set to true, the code is treated as a raw shader.  It will be compiled with none of the LÖVR helpers."
                     }
                   }
@@ -14551,23 +14524,22 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "An optional table of Shader options.",
-                  default = "nil",
                   table = {
                     {
                       name = "flags",
-                      type = "table",
+                      type = "table?",
                       description = "A table of shader flags.  The keys of the table should be flag names or flag ID numbers. The values can be numbers or booleans, depending on the type of the flag as declared in the shader.  See `ShaderFlag` for the list of builtin shader flags."
                     },
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "A label to use for the shader in debugging tools."
                     },
                     {
                       name = "raw",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "If set to true, the code is treated as a raw shader.  It will be compiled with none of the LÖVR helpers."
                     }
                   }
@@ -14604,48 +14576,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Texture options.",
-                  default = "nil",
                   table = {
                     {
                       name = "type",
-                      type = "TextureType",
+                      type = "TextureType?",
                       description = "The type of the texture."
                     },
                     {
                       name = "format",
-                      type = "TextureFormat",
+                      type = "TextureFormat?",
                       description = "The format of the texture (ignored when images are provided).",
                       default = "'rgba8'"
                     },
                     {
                       name = "linear",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
                       default = "false"
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
                       default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "boolean | number",
+                      type = "boolean? | number?",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "{TextureUsage}",
+                      type = "{TextureUsage}?",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
-                      type = "string",
-                      description = "A label for the Texture that will show up in debugging tools."
+                      type = "string?",
+                      description = "An optional label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -14672,48 +14643,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Texture options.",
-                  default = "nil",
                   table = {
                     {
                       name = "type",
-                      type = "TextureType",
+                      type = "TextureType?",
                       description = "The type of the texture."
                     },
                     {
                       name = "format",
-                      type = "TextureFormat",
+                      type = "TextureFormat?",
                       description = "The format of the texture (ignored when images are provided).",
                       default = "'rgba8'"
                     },
                     {
                       name = "linear",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
                       default = "false"
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
                       default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "boolean | number",
+                      type = "boolean? | number?",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "{TextureUsage}",
+                      type = "{TextureUsage}?",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
-                      type = "string",
-                      description = "A label for the Texture that will show up in debugging tools."
+                      type = "string?",
+                      description = "An optional label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -14745,48 +14715,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Texture options.",
-                  default = "nil",
                   table = {
                     {
                       name = "type",
-                      type = "TextureType",
+                      type = "TextureType?",
                       description = "The type of the texture."
                     },
                     {
                       name = "format",
-                      type = "TextureFormat",
+                      type = "TextureFormat?",
                       description = "The format of the texture (ignored when images are provided).",
                       default = "'rgba8'"
                     },
                     {
                       name = "linear",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
                       default = "false"
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
                       default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "boolean | number",
+                      type = "boolean? | number?",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "{TextureUsage}",
+                      type = "{TextureUsage}?",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
-                      type = "string",
-                      description = "A label for the Texture that will show up in debugging tools."
+                      type = "string?",
+                      description = "An optional label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -14808,48 +14777,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Texture options.",
-                  default = "nil",
                   table = {
                     {
                       name = "type",
-                      type = "TextureType",
+                      type = "TextureType?",
                       description = "The type of the texture."
                     },
                     {
                       name = "format",
-                      type = "TextureFormat",
+                      type = "TextureFormat?",
                       description = "The format of the texture (ignored when images are provided).",
                       default = "'rgba8'"
                     },
                     {
                       name = "linear",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
                       default = "false"
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
                       default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "boolean | number",
+                      type = "boolean? | number?",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "{TextureUsage}",
+                      type = "{TextureUsage}?",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
-                      type = "string",
-                      description = "A label for the Texture that will show up in debugging tools."
+                      type = "string?",
+                      description = "An optional label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -14871,48 +14839,47 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Texture options.",
-                  default = "nil",
                   table = {
                     {
                       name = "type",
-                      type = "TextureType",
+                      type = "TextureType?",
                       description = "The type of the texture."
                     },
                     {
                       name = "format",
-                      type = "TextureFormat",
+                      type = "TextureFormat?",
                       description = "The format of the texture (ignored when images are provided).",
                       default = "'rgba8'"
                     },
                     {
                       name = "linear",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the texture is in linear color space instead of sRGB.  Linear textures should be used for non-color data, like normal maps.",
                       default = "false"
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of samples in the texture, used for multisample antialiasing.  Currently must be 1 or 4.  Ignored when images are provided.",
                       default = "1"
                     },
                     {
                       name = "mipmaps",
-                      type = "boolean | number",
+                      type = "boolean? | number?",
                       description = "The number of mipmap levels in the texture, or a boolean.  If true, a full mipmap chain will be created.  If false, the texture will only have a single mipmap.",
                       default = "true"
                     },
                     {
                       name = "usage",
-                      type = "{TextureUsage}",
+                      type = "{TextureUsage}?",
                       description = "A list of `TextureUsage` indicating how the texture will be used."
                     },
                     {
                       name = "label",
-                      type = "string",
-                      description = "A label for the Texture that will show up in debugging tools."
+                      type = "string?",
+                      description = "An optional label for the Texture that will show up in debugging tools."
                     }
                   }
                 }
@@ -14947,42 +14914,39 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Options for the texture view.",
-                  default = "nil",
                   table = {
                     {
                       name = "type",
-                      type = "TextureType",
+                      type = "TextureType?",
                       description = "The texture type of the view.  Defaults to the type of the parent."
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first layer referenced by the view.",
                       default = "1"
                     },
                     {
                       name = "layercount",
-                      type = "number",
-                      description = "The number of layers in the view.  Defaults to 1 if a layer index is provided, otherwise the view will reference all layers.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of layers in the view.  Defaults to 1 if a layer index is provided, otherwise the view will reference all layers."
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first mipmap referenced by the view.",
                       default = "1"
                     },
                     {
                       name = "mipmapcount",
-                      type = "number",
-                      description = "The number of mipmap levels in the view.  Defaults to 1 if a mipmap index is provided, otherwise the view will reference all mipmaps.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of mipmap levels in the view.  Defaults to 1 if a mipmap index is provided, otherwise the view will reference all mipmaps."
                     },
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "An optional label for the view that will show up in debugging tools."
                     }
                   }
@@ -15200,19 +15164,18 @@ return {
                   arguments = {
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "The offset of the range of the Buffer to clear, in bytes.  Must be a multiple of 4.",
                       default = "0"
                     },
                     {
                       name = "extent",
-                      type = "number",
-                      description = "The number of bytes to clear.  If `nil`, clears to the end of the Buffer.  Must be a multiple of 4.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of bytes to clear.  If `nil`, clears to the end of the Buffer.  Must be a multiple of 4."
                     },
                     {
                       name = "value",
-                      type = "number",
+                      type = "number?",
                       description = "The value to clear to.  This will be interpreted as a 32 bit number, which will be repeated across the clear range.",
                       default = "0x00000000"
                     }
@@ -15239,15 +15202,14 @@ return {
                   arguments = {
                     {
                       name = "index",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first item to read.",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of items to read.  If nil, reads the remainder of the buffer.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of items to read.  If nil, reads the remainder of the buffer."
                     }
                   },
                   returns = {
@@ -15408,15 +15370,14 @@ return {
                   arguments = {
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset in the Buffer to read from, in bytes.",
                       default = "0"
                     },
                     {
                       name = "extent",
-                      type = "number",
-                      description = "The number of bytes to read.  If nil, reads the remainder of the buffer.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of bytes to read.  If nil, reads the remainder of the buffer."
                     }
                   },
                   returns = {
@@ -15446,15 +15407,14 @@ return {
                   arguments = {
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "A byte offset to read from.",
                       default = "0"
                     },
                     {
                       name = "extent",
-                      type = "number",
-                      description = "The number of bytes to read.  If nil, reads the rest of the buffer.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of bytes to read.  If nil, reads the rest of the buffer."
                     }
                   },
                   returns = {
@@ -15491,21 +15451,20 @@ return {
                     },
                     {
                       name = "destinationIndex",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first value in the Buffer to update.",
                       default = "1"
                     },
                     {
                       name = "sourceIndex",
-                      type = "number",
+                      type = "number?",
                       description = "The index in the table to copy from.",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of items to copy.  `nil` will copy as many items as possible, based on the lengths of the source and destination.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of items to copy.  Use `nil` to copy as many items as possible, based on the lengths of the source and destination."
                     }
                   },
                   returns = {}
@@ -16491,7 +16450,7 @@ return {
                   arguments = {
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset applied to values in the index buffer during drawing.",
                       default = "0"
                     }
@@ -16768,15 +16727,14 @@ return {
                     },
                     {
                       name = "index",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first vertex to set.",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to set.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to set."
                     }
                   },
                   returns = {}
@@ -16790,15 +16748,14 @@ return {
                     },
                     {
                       name = "index",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first vertex to set.",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to set.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to set."
                     }
                   },
                   returns = {}
@@ -16856,7 +16813,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "How much of the animation's pose to blend into the nodes, from 0 to 1.",
                       default = "1.0"
                     }
@@ -18873,7 +18830,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of 0 will not change the node's orientation at all, whereas 1 will fully blend to the target orientation.",
                       default = "1.0"
                     }
@@ -18894,7 +18851,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of 0 will not change the node's orientation at all, whereas 1 will fully blend to the target orientation.",
                       default = "1.0"
                     }
@@ -18965,7 +18922,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will not change the node's pose at all, whereas 1 will fully blend to the target pose.",
                       default = "1.0"
                     }
@@ -18991,7 +18948,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will not change the node's pose at all, whereas 1 will fully blend to the target pose.",
                       default = "1.0"
                     }
@@ -19042,7 +18999,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
                       default = "1.0"
                     }
@@ -19063,7 +19020,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will not change the node's position at all, whereas 1 will fully blend to the target position.",
                       default = "1.0"
                     }
@@ -19115,7 +19072,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
                       default = "1.0"
                     }
@@ -19136,7 +19093,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the new scale to blend in.  A value of 0 will not change the node's scale at all, whereas 1 will fully blend to the target scale.",
                       default = "1.0"
                     }
@@ -19223,7 +19180,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
@@ -19254,7 +19211,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
@@ -19275,7 +19232,7 @@ return {
                     },
                     {
                       name = "blend",
-                      type = "number",
+                      type = "number?",
                       description = "A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0 will not change the node's transform at all, whereas 1 will fully blend to the target transform.",
                       default = "1.0"
                     }
@@ -19300,7 +19257,7 @@ return {
                     },
                     {
                       name = "visible",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the node should be visible."
                     }
                   },
@@ -19540,7 +19497,7 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the box should be drawn filled or outlined.",
                       default = "'fill'"
                     }
@@ -19566,7 +19523,7 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the box should be drawn filled or outlined.",
                       default = "'fill'"
                     }
@@ -19582,7 +19539,7 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the box should be drawn filled or outlined.",
                       default = "'fill'"
                     }
@@ -19658,7 +19615,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "32"
                     }
@@ -19691,7 +19648,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "32"
                     }
@@ -19707,7 +19664,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "32"
                     }
@@ -19735,7 +19692,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "32"
                     }
@@ -19805,25 +19762,25 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the circle should be filled or outlined.",
                       default = "'fill'"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments to render.",
                       default = "64"
                     }
@@ -19850,25 +19807,25 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the circle should be filled or outlined.",
                       default = "'fill'"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments to render.",
                       default = "64"
                     }
@@ -19884,25 +19841,25 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the circle should be filled or outlined.",
                       default = "'fill'"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments to render.",
                       default = "64"
                     }
@@ -19936,19 +19893,19 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The number of workgroups to dispatch in the x dimension.",
                       default = "1"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The number of workgroups to dispatch in the y dimension.",
                       default = "1"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The number of workgroups to dispatch in the z dimension.",
                       default = "1"
                     }
@@ -19965,7 +19922,7 @@ return {
                     },
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "The byte offset to read the workgroup counts from in the Buffer.",
                       default = "0"
                     }
@@ -20041,7 +19998,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments in the cone.",
                       default = "64"
                     }
@@ -20074,7 +20031,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments in the cone.",
                       default = "64"
                     }
@@ -20090,7 +20047,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments in the cone.",
                       default = "64"
                     }
@@ -20117,7 +20074,7 @@ return {
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of segments in the cone.",
                       default = "64"
                     }
@@ -20187,7 +20144,7 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the cube should be drawn filled or outlined.",
                       default = "'fill'"
                     }
@@ -20214,7 +20171,7 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the cube should be drawn filled or outlined.",
                       default = "'fill'"
                     }
@@ -20230,7 +20187,7 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the cube should be drawn filled or outlined.",
                       default = "'fill'"
                     }
@@ -20306,25 +20263,25 @@ return {
                     },
                     {
                       name = "capped",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the tops and bottoms of the cylinder should be rendered.",
                       default = "true"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "64"
                     }
@@ -20357,25 +20314,25 @@ return {
                     },
                     {
                       name = "capped",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the tops and bottoms of the cylinder should be rendered.",
                       default = "true"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "64"
                     }
@@ -20391,25 +20348,25 @@ return {
                     },
                     {
                       name = "capped",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the tops and bottoms of the cylinder should be rendered.",
                       default = "true"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "64"
                     }
@@ -20436,25 +20393,25 @@ return {
                     },
                     {
                       name = "capped",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the tops and bottoms of the cylinder should be rendered.",
                       default = "true"
                     },
                     {
                       name = "angle1",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the beginning of the arc.",
                       default = "0"
                     },
                     {
                       name = "angle2",
-                      type = "number",
+                      type = "number?",
                       description = "The angle of the end of the arc.",
                       default = "2 * math.pi"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to render.",
                       default = "64"
                     }
@@ -20533,7 +20490,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20564,7 +20521,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20585,7 +20542,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20674,7 +20631,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20711,7 +20668,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20738,7 +20695,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20813,7 +20770,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20855,7 +20812,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20887,7 +20844,7 @@ return {
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of instances to draw.",
                       default = "1"
                     }
@@ -20909,7 +20866,7 @@ return {
                   arguments = {
                     {
                       name = "texture",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The texture to fill.  If nil, the texture from the active material is used."
                     }
                   },
@@ -21097,7 +21054,7 @@ return {
                   returns = {
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "The label, or nil if none was set."
                     }
                   }
@@ -21642,19 +21599,18 @@ return {
                     },
                     {
                       name = "start",
-                      type = "number",
+                      type = "number?",
                       description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`)."
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
                     }
@@ -21687,19 +21643,18 @@ return {
                     },
                     {
                       name = "start",
-                      type = "number",
+                      type = "number?",
                       description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`)."
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
                     }
@@ -21722,19 +21677,18 @@ return {
                     },
                     {
                       name = "start",
-                      type = "number",
+                      type = "number?",
                       description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`)."
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
                     }
@@ -21805,25 +21759,24 @@ return {
                     },
                     {
                       name = "start",
-                      type = "number",
+                      type = "number?",
                       description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`)."
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
                     },
                     {
                       name = "base",
-                      type = "number",
+                      type = "number?",
                       description = "A base offset to apply to vertex indices.",
                       default = "0"
                     }
@@ -21861,25 +21814,24 @@ return {
                     },
                     {
                       name = "start",
-                      type = "number",
+                      type = "number?",
                       description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`)."
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
                     },
                     {
                       name = "base",
-                      type = "number",
+                      type = "number?",
                       description = "A base offset to apply to vertex indices.",
                       default = "0"
                     }
@@ -21907,25 +21859,24 @@ return {
                     },
                     {
                       name = "start",
-                      type = "number",
+                      type = "number?",
                       description = "The 1-based index of the first vertex to render from the vertex buffer (or the first index, when using an index buffer).",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`).",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of vertices to render (or the number of indices, when using an index buffer). When `nil`, as many vertices or indices as possible will be drawn (based on the length of the Buffers and `start`)."
                     },
                     {
                       name = "instances",
-                      type = "number",
+                      type = "number?",
                       description = "The number of copies of the mesh to render.",
                       default = "1"
                     },
                     {
                       name = "base",
-                      type = "number",
+                      type = "number?",
                       description = "A base offset to apply to vertex indices.",
                       default = "0"
                     }
@@ -21953,19 +21904,19 @@ return {
                     },
                     {
                       name = "drawcount",
-                      type = "number",
+                      type = "number?",
                       description = "The number of indirect draws to draw.",
                       default = "1"
                     },
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "A byte offset into the draw buffer.",
                       default = "0"
                     },
                     {
                       name = "stride",
-                      type = "number",
+                      type = "number?",
                       description = "The number of bytes between consecutive elements in the draw buffer.  When zero or nil, the stride is autodetected, and will be 20 bytes when an index buffer is provided and 16 bytes otherwise.",
                       default = "0"
                     }
@@ -22062,19 +22013,19 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the plane should be drawn filled or outlined.",
                       default = "'fill'"
                     },
                     {
                       name = "columns",
-                      type = "number",
+                      type = "number?",
                       description = "The number of horizontal segments in the plane.",
                       default = "1"
                     },
                     {
                       name = "rows",
-                      type = "number",
+                      type = "number?",
                       description = "The number of vertical segments in the plane.",
                       default = "columns"
                     }
@@ -22100,19 +22051,19 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the plane should be drawn filled or outlined.",
                       default = "'fill'"
                     },
                     {
                       name = "columns",
-                      type = "number",
+                      type = "number?",
                       description = "The number of horizontal segments in the plane.",
                       default = "1"
                     },
                     {
                       name = "rows",
-                      type = "number",
+                      type = "number?",
                       description = "The number of vertical segments in the plane.",
                       default = "columns"
                     }
@@ -22128,19 +22079,19 @@ return {
                     },
                     {
                       name = "style",
-                      type = "DrawStyle",
+                      type = "DrawStyle?",
                       description = "Whether the plane should be drawn filled or outlined.",
                       default = "'fill'"
                     },
                     {
                       name = "columns",
-                      type = "number",
+                      type = "number?",
                       description = "The number of horizontal segments in the plane.",
                       default = "1"
                     },
                     {
                       name = "rows",
-                      type = "number",
+                      type = "number?",
                       description = "The number of vertical segments in the plane.",
                       default = "columns"
                     }
@@ -22339,7 +22290,7 @@ return {
                   arguments = {
                     {
                       name = "stack",
-                      type = "StackType",
+                      type = "StackType?",
                       description = "The type of stack to push.",
                       default = "'transform'"
                     }
@@ -22490,13 +22441,13 @@ return {
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will have sharp corners.",
                       default = "0"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to use for each corner.  This increases the smoothness, but increases the number of vertices in the mesh.",
                       default = "8"
                     }
@@ -22522,13 +22473,13 @@ return {
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will have sharp corners.",
                       default = "0"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to use for each corner.  This increases the smoothness, but increases the number of vertices in the mesh.",
                       default = "8"
                     }
@@ -22544,13 +22495,13 @@ return {
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will have sharp corners.",
                       default = "0"
                     },
                     {
                       name = "segments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of circular segments to use for each corner.  This increases the smoothness, but increases the number of vertices in the mesh.",
                       default = "8"
                     }
@@ -22639,13 +22590,13 @@ return {
                     },
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "An offset from the start of the buffer where data will be read, in bytes.",
                       default = "0"
                     },
                     {
                       name = "extent",
-                      type = "number",
+                      type = "number?",
                       description = "The number of bytes that will be available for reading.  If zero, as much data as possible will be bound, depending on the offset, buffer size, and the `uniformBufferRange` or `storageBufferRange` limit.",
                       default = "0"
                     }
@@ -22712,7 +22663,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether alpha to coverage should be enabled."
                     }
                   },
@@ -23145,7 +23096,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether all color components should be affected by draws."
                     }
                   },
@@ -23185,7 +23136,7 @@ return {
                     },
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether all color components should be affected by draws."
                     }
                   },
@@ -23241,7 +23192,7 @@ return {
                   arguments = {
                     {
                       name = "mode",
-                      type = "CullMode",
+                      type = "CullMode?",
                       description = "Whether `front` faces, `back` faces, or `none` of the faces should be culled."
                     }
                   },
@@ -23272,7 +23223,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether depth clamp should be enabled."
                     }
                   },
@@ -23297,13 +23248,13 @@ return {
                   arguments = {
                     {
                       name = "offset",
-                      type = "number",
+                      type = "number?",
                       description = "The depth offset.",
                       default = "0.0"
                     },
                     {
                       name = "sloped",
-                      type = "number",
+                      type = "number?",
                       description = "The sloped depth offset.",
                       default = "0.0"
                     }
@@ -23363,7 +23314,7 @@ return {
                   arguments = {
                     {
                       name = "write",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the depth buffer should be affected by draws."
                     }
                   },
@@ -23388,7 +23339,7 @@ return {
                   arguments = {
                     {
                       name = "mode",
-                      type = "CullMode",
+                      type = "CullMode?",
                       description = "Whether `front` faces, `back` faces, or `none` of the faces should be culled."
                     }
                   },
@@ -23418,7 +23369,7 @@ return {
                   arguments = {
                     {
                       name = "font",
-                      type = "Font",
+                      type = "Font?",
                       description = "The Font to use when rendering text."
                     }
                   },
@@ -23438,7 +23389,7 @@ return {
                   arguments = {
                     {
                       name = "material",
-                      type = "Texture | Material",
+                      type = "Texture | Material | nil",
                       description = "The texture or material to apply to surfaces."
                     }
                   },
@@ -23803,8 +23754,9 @@ return {
                     },
                     {
                       name = "offset",
-                      type = "number",
-                      description = "A byte offset where results will be written.  Must be a multiple of 4."
+                      type = "number?",
+                      description = "A byte offset where results will be written.  Must be a multiple of 4.",
+                      default = "0"
                     }
                   },
                   returns = {}
@@ -23836,7 +23788,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether frustum culling should be enabled."
                     }
                   },
@@ -24045,7 +23997,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether wireframe rendering should be enabled."
                     }
                   },
@@ -24066,7 +24018,7 @@ return {
                   arguments = {
                     {
                       name = "skybox",
-                      type = "Texture",
+                      type = "Texture?",
                       description = "The skybox to render.  Its `TextureType` can be `cube` to render as a cubemap, or `2d` to render as an equirectangular (spherical) 2D image."
                     }
                   },
@@ -24139,13 +24091,13 @@ return {
                     },
                     {
                       name = "longitudes",
-                      type = "number",
+                      type = "number?",
                       description = "The number of \"horizontal\" segments.",
                       default = "48"
                     },
                     {
                       name = "latitudes",
-                      type = "number",
+                      type = "number?",
                       description = "The number of \"vertical\" segments.",
                       default = "longitudes / 2"
                     }
@@ -24172,13 +24124,13 @@ return {
                     },
                     {
                       name = "longitudes",
-                      type = "number",
+                      type = "number?",
                       description = "The number of \"horizontal\" segments.",
                       default = "48"
                     },
                     {
                       name = "latitudes",
-                      type = "number",
+                      type = "number?",
                       description = "The number of \"vertical\" segments.",
                       default = "longitudes / 2"
                     }
@@ -24194,13 +24146,13 @@ return {
                     },
                     {
                       name = "longitudes",
-                      type = "number",
+                      type = "number?",
                       description = "The number of \"horizontal\" segments.",
                       default = "48"
                     },
                     {
                       name = "latitudes",
-                      type = "number",
+                      type = "number?",
                       description = "The number of \"vertical\" segments.",
                       default = "longitudes / 2"
                     }
@@ -24285,19 +24237,19 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                       default = "0"
                     },
                     {
                       name = "halign",
-                      type = "HorizontalAlign",
+                      type = "HorizontalAlign?",
                       description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
-                      type = "VerticalAlign",
+                      type = "VerticalAlign?",
                       description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
@@ -24329,19 +24281,19 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                       default = "0"
                     },
                     {
                       name = "halign",
-                      type = "HorizontalAlign",
+                      type = "HorizontalAlign?",
                       description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
-                      type = "VerticalAlign",
+                      type = "VerticalAlign?",
                       description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
@@ -24362,19 +24314,19 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                       default = "0"
                     },
                     {
                       name = "halign",
-                      type = "HorizontalAlign",
+                      type = "HorizontalAlign?",
                       description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
-                      type = "VerticalAlign",
+                      type = "VerticalAlign?",
                       description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
@@ -24439,19 +24391,19 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                       default = "0"
                     },
                     {
                       name = "halign",
-                      type = "HorizontalAlign",
+                      type = "HorizontalAlign?",
                       description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
-                      type = "VerticalAlign",
+                      type = "VerticalAlign?",
                       description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
@@ -24484,19 +24436,19 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                       default = "0"
                     },
                     {
                       name = "halign",
-                      type = "HorizontalAlign",
+                      type = "HorizontalAlign?",
                       description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
-                      type = "VerticalAlign",
+                      type = "VerticalAlign?",
                       description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
@@ -24518,19 +24470,19 @@ return {
                     },
                     {
                       name = "wrap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum width of each line in meters (before scale is applied).  When zero, the text will not wrap.",
                       default = "0"
                     },
                     {
                       name = "halign",
-                      type = "HorizontalAlign",
+                      type = "HorizontalAlign?",
                       description = "The horizontal alignment relative to the text origin.",
                       default = "'center'"
                     },
                     {
                       name = "valign",
-                      type = "VerticalAlign",
+                      type = "VerticalAlign?",
                       description = "The vertical alignment relative to the text origin.",
                       default = "'middle'"
                     }
@@ -24606,13 +24558,13 @@ return {
                     },
                     {
                       name = "tsegments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of toroidal (circular) segments to render.",
                       default = "64"
                     },
                     {
                       name = "psegments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of poloidal (tubular) segments to render.",
                       default = "32"
                     }
@@ -24638,13 +24590,13 @@ return {
                     },
                     {
                       name = "tsegments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of toroidal (circular) segments to render.",
                       default = "64"
                     },
                     {
                       name = "psegments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of poloidal (tubular) segments to render.",
                       default = "32"
                     }
@@ -24660,13 +24612,13 @@ return {
                     },
                     {
                       name = "tsegments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of toroidal (circular) segments to render.",
                       default = "64"
                     },
                     {
                       name = "psegments",
-                      type = "number",
+                      type = "number?",
                       description = "The number of poloidal (tubular) segments to render.",
                       default = "32"
                     }
@@ -25000,15 +24952,14 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
+                      type = "number?",
                       description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
                       default = "0xff"
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
-                      default = "nil"
+                      type = "number?",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215."
                     }
                   },
                   returns = {
@@ -25076,15 +25027,14 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
+                      type = "number?",
                       description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
                       default = "0xff"
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
-                      default = "nil"
+                      type = "number?",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215."
                     }
                   },
                   returns = {
@@ -25119,15 +25069,14 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
+                      type = "number?",
                       description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
                       default = "0xff"
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
-                      default = "nil"
+                      type = "number?",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215."
                     }
                   },
                   returns = {
@@ -25162,15 +25111,14 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
+                      type = "number?",
                       description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
                       default = "0xff"
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
-                      default = "nil"
+                      type = "number?",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215."
                     }
                   },
                   returns = {
@@ -25195,15 +25143,14 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
+                      type = "number?",
                       description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
                       default = "0xff"
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
-                      default = "nil"
+                      type = "number?",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215."
                     }
                   },
                   returns = {
@@ -25228,15 +25175,14 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
+                      type = "number?",
                       description = "A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by default.  For example, 0x1 will place the object on the first layer, 0x2 will place it on the second layer, 0x3 for the first two layers, etc.",
                       default = "0xff"
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215.",
-                      default = "nil"
+                      type = "number?",
+                      description = "A custom tag for the object, provided in the shader when the object is hit.  Shaders can use this tag for whatever they want.  If nil, the tag will be set to the same ID as the one returned by this function. The tag can be between 0 and 16,777,215."
                     }
                   },
                   returns = {
@@ -25392,15 +25338,13 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
-                      description = "The new layer mask for the object, or nil to leave it unchanged.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The new layer mask for the object, or nil to leave it unchanged."
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "The new tag for the object, or nil to leave it unchanged.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The new tag for the object, or nil to leave it unchanged."
                     }
                   },
                   returns = {}
@@ -25429,15 +25373,13 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
-                      description = "The new layer mask for the object, or nil to leave it unchanged.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The new layer mask for the object, or nil to leave it unchanged."
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "The new tag for the object, or nil to leave it unchanged.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The new tag for the object, or nil to leave it unchanged."
                     }
                   },
                   returns = {}
@@ -25456,15 +25398,13 @@ return {
                     },
                     {
                       name = "layers",
-                      type = "number",
-                      description = "The new layer mask for the object, or nil to leave it unchanged.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The new layer mask for the object, or nil to leave it unchanged."
                     },
                     {
                       name = "tag",
-                      type = "number",
-                      description = "The new tag for the object, or nil to leave it unchanged.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The new tag for the object, or nil to leave it unchanged."
                     }
                   },
                   returns = {}
@@ -25502,7 +25442,7 @@ return {
                   returns = {
                     {
                       name = "blob",
-                      type = "Blob",
+                      type = "Blob?",
                       description = "The Blob."
                     }
                   }
@@ -25526,7 +25466,7 @@ return {
                   returns = {
                     {
                       name = "data",
-                      type = "table",
+                      type = "table?",
                       description = "A table containing the data that was read back."
                     }
                   }
@@ -25550,7 +25490,7 @@ return {
                   returns = {
                     {
                       name = "image",
-                      type = "Image",
+                      type = "Image?",
                       description = "The Image."
                     }
                   }
@@ -25856,7 +25796,7 @@ return {
                   returns = {
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "The label, or nil if none was set."
                     }
                   }
@@ -25892,7 +25832,7 @@ return {
               description = "Returns the workgroup size of a compute shader.  The workgroup size defines how many times a compute shader is invoked for each workgroup dispatched by `Pass:compute`.",
               key = "Shader:getWorkgroupSize",
               module = "lovr.graphics",
-              notes = "For example, if the workgroup size is `8x8x1` and `16x16x16` workgroups are dispatched, then the compute shader will run `16 * 16 * 16 * (8 * 8 * 1) = 262144` times.\n\nThe maximum workgroup size is hardware-specific, and is given by the `workgroupSize` and `totalWorkgroupSize` limit in `lovr.graphics.getLimits`.",
+              notes = "For example, if the workgroup size is `8x8x1` and `16x16x16` workgroups are dispatched, then the compute shader will run `16 * 16 * 16 * (8 * 8 * 1) = 262144` times.\n\nThe maximum workgroup size is hardware-specific, and is given by the `workgroupSize` and `totalWorkgroupSize` limit in `lovr.graphics.getLimits`.\n\nThis will return `nil` if the shader is not a compute shader.",
               related = {
                 "Pass:compute",
                 "lovr.graphics.getLimits"
@@ -25903,17 +25843,17 @@ return {
                   returns = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x size of a workgroup."
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y size of a workgroup."
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z size of a workgroup."
                     }
                   }
@@ -26070,27 +26010,25 @@ return {
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first layer to clear.",
                       default = "1"
                     },
                     {
                       name = "layerCount",
-                      type = "number",
-                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of layers to clear.  By default, clears the rest of the layers."
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first mipmap to clear.",
                       default = "1"
                     },
                     {
                       name = "mipmapCount",
-                      type = "number",
-                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of mipmaps to clear.  By default, clears the rest of the mipmaps."
                     }
                   },
                   returns = {}
@@ -26119,27 +26057,25 @@ return {
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first layer to clear.",
                       default = "1"
                     },
                     {
                       name = "layerCount",
-                      type = "number",
-                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of layers to clear.  By default, clears the rest of the layers."
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first mipmap to clear.",
                       default = "1"
                     },
                     {
                       name = "mipmapCount",
-                      type = "number",
-                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of mipmaps to clear.  By default, clears the rest of the mipmaps."
                     }
                   },
                   returns = {}
@@ -26153,27 +26089,25 @@ return {
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first layer to clear.",
                       default = "1"
                     },
                     {
                       name = "layerCount",
-                      type = "number",
-                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of layers to clear.  By default, clears the rest of the layers."
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first mipmap to clear.",
                       default = "1"
                     },
                     {
                       name = "mipmapCount",
-                      type = "number",
-                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of mipmaps to clear.  By default, clears the rest of the mipmaps."
                     }
                   },
                   returns = {}
@@ -26187,27 +26121,25 @@ return {
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first layer to clear.",
                       default = "1"
                     },
                     {
                       name = "layerCount",
-                      type = "number",
-                      description = "The number of layers to clear.  If nil, clears the rest of the layers.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of layers to clear.  By default, clears the rest of the layers."
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the first mipmap to clear.",
                       default = "1"
                     },
                     {
                       name = "mipmapCount",
-                      type = "number",
-                      description = "The number of mipmaps to clear.  If nil, clears the rest of the mipmaps.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of mipmaps to clear.  By default, clears the rest of the mipmaps."
                     }
                   },
                   returns = {}
@@ -26231,15 +26163,14 @@ return {
                   arguments = {
                     {
                       name = "base",
-                      type = "number",
+                      type = "number?",
                       description = "The base mipmap level which will be used to generate subsequent mipmaps.",
                       default = "1"
                     },
                     {
                       name = "count",
-                      type = "number",
-                      description = "The number of mipmap levels to generate.  If nil, the rest of the mipmaps will be generated.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of mipmap levels to generate, or `nil` to generate the rest of the mipmaps."
                     }
                   },
                   returns = {}
@@ -26349,7 +26280,7 @@ return {
                   returns = {
                     {
                       name = "label",
-                      type = "string",
+                      type = "string?",
                       description = "The label, or nil if none was set."
                     }
                   }
@@ -26422,39 +26353,37 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x offset of the region to download.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y offset of the region to download.",
                       default = "0"
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the layer to download.",
                       default = "1"
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the mipmap level to download.",
                       default = "1"
                     },
                     {
                       name = "width",
-                      type = "number",
-                      description = "The width of the pixel rectangle to download.  If nil, the \"rest\" of the width will be used, based on the texture width and x offset.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The width of the pixel rectangle to download.  If nil, the \"rest\" of the width will be used, based on the texture width and x offset."
                     },
                     {
                       name = "height",
-                      type = "number",
-                      description = "The height of the pixel rectangle to download.  If nil, the \"rest\" of the height will be used, based on the texture height and y offset.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The height of the pixel rectangle to download.  If nil, the \"rest\" of the height will be used, based on the texture height and y offset."
                     }
                   },
                   returns = {
@@ -26608,39 +26537,37 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x offset of the region to download.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y offset of the region to download.",
                       default = "0"
                     },
                     {
                       name = "layer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the layer to download.",
                       default = "1"
                     },
                     {
                       name = "mipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the mipmap level to download.",
                       default = "1"
                     },
                     {
                       name = "width",
-                      type = "number",
-                      description = "The width of the pixel rectangle to download.  If nil, the \"rest\" of the width will be used, based on the texture width and x offset.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The width of the pixel rectangle to download.  If nil, the \"rest\" of the width will be used, based on the texture width and x offset."
                     },
                     {
                       name = "height",
-                      type = "number",
-                      description = "The height of the pixel rectangle to download.  If nil, the \"rest\" of the height will be used, based on the texture height and y offset.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The height of the pixel rectangle to download.  If nil, the \"rest\" of the height will be used, based on the texture height and y offset."
                     }
                   },
                   returns = {
@@ -26676,69 +26603,66 @@ return {
                     },
                     {
                       name = "dstx",
-                      type = "number",
+                      type = "number?",
                       description = "The x offset to copy to.",
                       default = "0"
                     },
                     {
                       name = "dsty",
-                      type = "number",
+                      type = "number?",
                       description = "The y offset to copy to.",
                       default = "0"
                     },
                     {
                       name = "dstlayer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the layer to copy to.",
                       default = "1"
                     },
                     {
                       name = "dstmipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the mipmap level to copy to.",
                       default = "1"
                     },
                     {
                       name = "srcx",
-                      type = "number",
+                      type = "number?",
                       description = "The x offset to copy from.",
                       default = "0"
                     },
                     {
                       name = "srcy",
-                      type = "number",
+                      type = "number?",
                       description = "The y offset to copy from.",
                       default = "0"
                     },
                     {
                       name = "srclayer",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the layer to copy from.",
                       default = "1"
                     },
                     {
                       name = "srcmipmap",
-                      type = "number",
+                      type = "number?",
                       description = "The index of the mipmap level to copy from.",
                       default = "1"
                     },
                     {
                       name = "width",
-                      type = "number",
-                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters."
                     },
                     {
                       name = "height",
-                      type = "number",
-                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters."
                     },
                     {
                       name = "layers",
-                      type = "number",
-                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The number of layers to copy.  If nil, copies as many layers as possible."
                     }
                   },
                   returns = {}
@@ -27212,7 +27136,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to use for the animation data.",
                   default = "'head'"
                 },
@@ -27255,7 +27179,7 @@ return {
                 },
                 {
                   name = "error",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The error message, on failure."
                 }
               }
@@ -27280,7 +27204,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to get the velocity of.",
                   default = "'head'"
                 }
@@ -27322,8 +27246,9 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
-                  description = "The device."
+                  type = "Device?",
+                  description = "The device.",
+                  default = "'head'"
                 },
                 {
                   name = "axis",
@@ -27334,7 +27259,7 @@ return {
               returns = {
                 {
                   name = "...",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The current state of the components of the axis, or `nil` if the device does not have any information about the axis."
                 }
               }
@@ -27354,7 +27279,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to check.",
                   default = "'head'"
                 }
@@ -27362,12 +27287,12 @@ return {
               returns = {
                 {
                   name = "level",
-                  type = "number",
+                  type = "number?",
                   description = "The level of the battery, from 0 to 1."
                 },
                 {
                   name = "charging",
-                  type = "boolean",
+                  type = "boolean?",
                   description = "Whether the battery is currently charging."
                 }
               }
@@ -27526,7 +27451,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to get the direction of.",
                   default = "'head'"
                 }
@@ -27657,10 +27582,11 @@ return {
         {
           name = "getDriver",
           tag = "headset-misc",
-          summary = "Get the VR API currently in use for a device.",
-          description = "Returns the `HeadsetDriver` that is currently in use, plus the name of the VR runtime.  The order of headset drivers can be changed using `lovr.conf`.",
+          summary = "Get the name of the OpenXR runtime.",
+          description = "Returns the name of the OpenXR runtime.",
           key = "lovr.headset.getDriver",
           module = "lovr.headset",
+          notes = "You should probably only use this for informational/logging purposes.  It's brittle to use the runtime name to change behavior, since runtimes can change and new ones might get released in the future.  It's better to use `lovr.headset.getFeatures` to check if individual features are supported.",
           related = {
             "lovr.headset.getName"
           },
@@ -27668,11 +27594,6 @@ return {
             {
               arguments = {},
               returns = {
-                {
-                  name = "driver",
-                  type = "HeadsetDriver",
-                  description = "The current headset backend, e.g. `openxr` or `simulator`."
-                },
                 {
                   name = "runtime",
                   type = "string",
@@ -27913,8 +27834,8 @@ return {
         {
           name = "getName",
           tag = "headset-misc",
-          summary = "Get the name of the connected headset display.",
-          description = "Returns the name of the headset as a string.  The exact string that is returned depends on the hardware and VR SDK that is currently in use.",
+          summary = "Get the name of the connected headset.",
+          description = "Returns the name of the headset.",
           key = "lovr.headset.getName",
           module = "lovr.headset",
           variants = {
@@ -27924,7 +27845,7 @@ return {
                 {
                   name = "name",
                   type = "string",
-                  description = "The name of the headset as a string."
+                  description = "The name of the headset."
                 }
               }
             }
@@ -27952,7 +27873,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to get the orientation of.",
                   default = "'head'"
                 }
@@ -28032,7 +27953,7 @@ return {
               returns = {
                 {
                   name = "pass",
-                  type = "Pass | nil",
+                  type = "Pass?",
                   description = "The pass."
                 }
               }
@@ -28108,7 +28029,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to get the pose of.",
                   default = "'head'"
                 }
@@ -28220,7 +28141,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to locate.",
                   default = "'head'"
                 }
@@ -28287,7 +28208,7 @@ return {
               returns = {
                 {
                   name = "rate",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The refresh rate of the display, or `nil` if I have no idea what it is."
                 }
               }
@@ -28311,8 +28232,8 @@ return {
               returns = {
                 {
                   name = "rates",
-                  type = "table | nil",
-                  description = "A flat table of the refresh rates supported by the headset display, or nil if not supported."
+                  type = "{number}?",
+                  description = "A table of refresh rates supported by the headset display, or nil if the current VR runtime does not support changing the refresh rate."
                 }
               }
             }
@@ -28347,7 +28268,7 @@ return {
               returns = {
                 {
                   name = "transforms",
-                  type = "{{number}} | nil",
+                  type = "{{number}}?",
                   description = "A list of joint transforms for the device.  Each transform is a table with 3 numbers for the position of the joint, 1 number for the joint radius (in meters), and 4 numbers for the angle/axis orientation of the joint.  There is also a `radius` key with the radius of the joint as well."
                 }
               }
@@ -28368,7 +28289,7 @@ return {
               returns = {
                 {
                   name = "transforms",
-                  type = "{{number}} | nil",
+                  type = "{{number}}?",
                   description = "A list of joint transforms for the device.  Each transform is a table with 3 numbers for the position of the joint, 1 number for the joint radius (in meters), and 4 numbers for the angle/axis orientation of the joint.  There is also a `radius` key with the radius of the joint as well."
                 }
               }
@@ -28393,7 +28314,7 @@ return {
               returns = {
                 {
                   name = "texture",
-                  type = "Texture | nil",
+                  type = "Texture?",
                   description = "The headset texture."
                 }
               }
@@ -28444,7 +28365,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to get the velocity of.",
                   default = "'head'"
                 }
@@ -28492,22 +28413,22 @@ return {
               returns = {
                 {
                   name = "left",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The left view angle, in radians."
                 },
                 {
                   name = "right",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The right view angle, in radians."
                 },
                 {
                   name = "top",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The top view angle, in radians."
                 },
                 {
                   name = "bottom",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The bottom view angle, in radians."
                 }
               }
@@ -28561,37 +28482,37 @@ return {
               returns = {
                 {
                   name = "x",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The x coordinate of the view position, in meters."
                 },
                 {
                   name = "y",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The y coordinate of the view position, in meters."
                 },
                 {
                   name = "z",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The z coordinate of the view position, in meters."
                 },
                 {
                   name = "angle",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The amount of rotation around the rotation axis, in radians."
                 },
                 {
                   name = "ax",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The x component of the axis of rotation."
                 },
                 {
                   name = "ay",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The y component of the axis of rotation."
                 },
                 {
                   name = "az",
-                  type = "number | nil",
+                  type = "number?",
                   description = "The z component of the axis of rotation."
                 }
               }
@@ -28642,8 +28563,9 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
-                  description = "The device."
+                  type = "Device?",
+                  description = "The device.",
+                  default = "'head'"
                 },
                 {
                   name = "button",
@@ -28654,7 +28576,7 @@ return {
               returns = {
                 {
                   name = "down",
-                  type = "boolean | nil",
+                  type = "boolean?",
                   description = "Whether the button on the device is currently pressed, or `nil` if the device does not have the specified button."
                 }
               }
@@ -28750,8 +28672,9 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
-                  description = "The device."
+                  type = "Device?",
+                  description = "The device.",
+                  default = "'head'"
                 },
                 {
                   name = "button",
@@ -28762,7 +28685,7 @@ return {
               returns = {
                 {
                   name = "touched",
-                  type = "boolean | nil",
+                  type = "boolean?",
                   description = "Whether the button on the device is currently touched, or `nil` if the device does not have the button or it isn't touch-sensitive."
                 }
               }
@@ -28866,31 +28789,27 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
-                      type = "boolean",
-                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true."
                     },
                     {
                       name = "static",
-                      type = "boolean",
-                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image."
                     },
                     {
                       name = "transparent",
-                      type = "boolean",
-                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost.",
-                      default = "false"
+                      type = "boolean?",
+                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost."
                     },
                     {
                       name = "filter",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the VR runtime is allowed to apply filtering effects to the Layer, such as sharpening and supersampling.  This can improve text legibility and reduces \"shimmering\" artifacts, but may reduce performance.  Currently only Quest will apply this automatic filtering.",
                       default = "true"
                     }
@@ -28914,31 +28833,27 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
-                      type = "boolean",
-                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true."
                     },
                     {
                       name = "static",
-                      type = "boolean",
-                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image."
                     },
                     {
                       name = "transparent",
-                      type = "boolean",
-                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost.",
-                      default = "false"
+                      type = "boolean?",
+                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost."
                     },
                     {
                       name = "filter",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the VR runtime is allowed to apply filtering effects to the Layer, such as sharpening and supersampling.  This can improve text legibility and reduces \"shimmering\" artifacts, but may reduce performance.  Currently only Quest will apply this automatic filtering.",
                       default = "true"
                     }
@@ -28962,31 +28877,27 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
-                      type = "boolean",
-                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true."
                     },
                     {
                       name = "static",
-                      type = "boolean",
-                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image."
                     },
                     {
                       name = "transparent",
-                      type = "boolean",
-                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost.",
-                      default = "false"
+                      type = "boolean?",
+                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost."
                     },
                     {
                       name = "filter",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the VR runtime is allowed to apply filtering effects to the Layer, such as sharpening and supersampling.  This can improve text legibility and reduces \"shimmering\" artifacts, but may reduce performance.  Currently only Quest will apply this automatic filtering.",
                       default = "true"
                     }
@@ -29010,31 +28921,27 @@ return {
                 },
                 {
                   name = "options",
-                  type = "table",
+                  type = "table?",
                   description = "Optional options for the Layer.",
-                  default = "nil",
                   table = {
                     {
                       name = "stereo",
-                      type = "boolean",
-                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer should be stereo.  Stereo Layers use an array texture with 2 layers instead of a regular 2D texture, with the first array layer shown in the left eye and the second array layer shown in the right eye.  The default is false, unless 2 images or an array texture are used to create the layer; then the default will be true."
                     },
                     {
                       name = "static",
-                      type = "boolean",
-                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image.",
-                      default = "nil"
+                      type = "boolean?",
+                      description = "Whether the Layer is static.  Static layers use less memory, but their contents can only be changed on the frame when they're created.  On subsequent frames, calling `Layer:getTexture` will throw an error.  The default is false, unless images/textures are used to create the layer; then the default will be true.  This should be used for layers that only need to display a static image."
                     },
                     {
                       name = "transparent",
-                      type = "boolean",
-                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost.",
-                      default = "false"
+                      type = "boolean?",
+                      description = "Whether the Layer is transparent.  Transparent Layers will use their alpha channel to blend properly with other content behind them, at a minor performance cost."
                     },
                     {
                       name = "filter",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the VR runtime is allowed to apply filtering effects to the Layer, such as sharpening and supersampling.  This can improve text legibility and reduces \"shimmering\" artifacts, but may reduce performance.  Currently only Quest will apply this automatic filtering.",
                       default = "true"
                     }
@@ -29081,7 +28988,7 @@ return {
               returns = {
                 {
                   name = "model",
-                  type = "Model",
+                  type = "Model?",
                   description = "The new Model, or `nil` if a model could not be loaded."
                 }
               }
@@ -29090,7 +28997,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to load a model for.",
                   default = "'head'"
                 }
@@ -29098,7 +29005,7 @@ return {
               returns = {
                 {
                   name = "model",
-                  type = "Model",
+                  type = "Model?",
                   description = "The new Model, or `nil` if a model could not be loaded."
                 }
               },
@@ -29238,7 +29145,7 @@ return {
                 },
                 {
                   name = "dynamic",
-                  type = "boolean",
+                  type = "boolean?",
                   description = "Whether the system is allowed to dynamically adjust the foveation level based on GPU load.",
                   default = "true"
                 }
@@ -29640,7 +29547,7 @@ return {
               arguments = {
                 {
                   name = "device",
-                  type = "Device",
+                  type = "Device?",
                   description = "The device to stop the vibration on.",
                   default = "'head'"
                 }
@@ -30230,7 +30137,7 @@ return {
                   arguments = {
                     {
                       name = "curve",
-                      type = "number",
+                      type = "number?",
                       description = "The curve of the layer.  Negative values or zero means no curve.",
                       default = "0"
                     }
@@ -30336,9 +30243,8 @@ return {
                   arguments = {
                     {
                       name = "device",
-                      type = "Device",
-                      description = "The device the layer is attached to, or `nil` to make the layer world space.",
-                      default = "nil"
+                      type = "Device?",
+                      description = "The device the layer is attached to, or `nil` to make the layer world space."
                     }
                   },
                   returns = {}
@@ -30582,7 +30488,7 @@ return {
                 },
                 {
                   name = "a",
-                  type = "number",
+                  type = "number?",
                   description = "An optional alpha component (returned unchanged)."
                 }
               },
@@ -30604,7 +30510,7 @@ return {
                 },
                 {
                   name = "a",
-                  type = "number",
+                  type = "number?",
                   description = "An optional alpha component (returned unchanged)."
                 }
               }
@@ -30636,7 +30542,7 @@ return {
                 },
                 {
                   name = "a",
-                  type = "number",
+                  type = "number?",
                   description = "An optional alpha component (returned unchanged)."
                 }
               }
@@ -30710,7 +30616,7 @@ return {
                 },
                 {
                   name = "a",
-                  type = "number",
+                  type = "number?",
                   description = "An optional alpha component (returned unchanged)."
                 }
               },
@@ -30732,7 +30638,7 @@ return {
                 },
                 {
                   name = "a",
-                  type = "number",
+                  type = "number?",
                   description = "An optional alpha component (returned unchanged)."
                 }
               }
@@ -30764,7 +30670,7 @@ return {
                 },
                 {
                   name = "a",
-                  type = "number",
+                  type = "number?",
                   description = "An optional alpha component (returned unchanged)."
                 }
               }
@@ -31831,9 +31737,8 @@ return {
                     },
                     {
                       name = "index",
-                      type = "number",
-                      description = "The index to insert the control point at.  If nil, the control point is added to the end of the list of control points.",
-                      default = "nil"
+                      type = "number?",
+                      description = "The index to insert the control point at.  If nil, the control point is added to the end of the list of control points."
                     }
                   },
                   returns = {}
@@ -31896,13 +31801,13 @@ return {
                   arguments = {
                     {
                       name = "t",
-                      type = "number",
+                      type = "number?",
                       description = "The t parameter to get the length at.",
                       default = "1.0"
                     },
                     {
                       name = "iterations",
-                      type = "number",
+                      type = "number?",
                       description = "How many iterations to use to compute the length.  More iterations will give a more accurate result, but will take longer to compute.",
                       default = "16"
                     }
@@ -32069,19 +31974,19 @@ return {
                   arguments = {
                     {
                       name = "n",
-                      type = "number",
+                      type = "number?",
                       description = "The number of points to use.",
                       default = "32"
                     },
                     {
                       name = "t1",
-                      type = "number",
+                      type = "number?",
                       description = "How far along the curve to start rendering.",
                       default = "0"
                     },
                     {
                       name = "t2",
-                      type = "number",
+                      type = "number?",
                       description = "How far along the curve to stop rendering.",
                       default = "1"
                     }
@@ -32192,7 +32097,7 @@ return {
                     },
                     {
                       name = "iterations",
-                      type = "number",
+                      type = "number?",
                       description = "How many iterations to use to compute the result.  More iterations will give a more accurate result, but will take longer to compute.",
                       default = "16"
                     }
@@ -33945,7 +33850,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -33955,17 +33860,17 @@ return {
                 },
                 {
                   name = "x",
-                  type = "number",
+                  type = "number?",
                   description = "The x position of the joint anchor point, in world coordinates."
                 },
                 {
                   name = "y",
-                  type = "number",
+                  type = "number?",
                   description = "The y position of the joint anchor point, in world coordinates."
                 },
                 {
                   name = "z",
-                  type = "number",
+                  type = "number?",
                   description = "The z position of the joint anchor point, in world coordinates."
                 }
               },
@@ -33981,7 +33886,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -33991,7 +33896,7 @@ return {
                 },
                 {
                   name = "anchor",
-                  type = "vector",
+                  type = "vector?",
                   description = "The joint anchor point, in world coordinates."
                 }
               },
@@ -34026,19 +33931,19 @@ return {
               arguments = {
                 {
                   name = "width",
-                  type = "number",
+                  type = "number?",
                   description = "The width of the box, in meters.",
                   default = "1"
                 },
                 {
                   name = "height",
-                  type = "number",
+                  type = "number?",
                   description = "The height of the box, in meters.",
                   default = "width"
                 },
                 {
                   name = "depth",
-                  type = "number",
+                  type = "number?",
                   description = "The depth of the box, in meters.",
                   default = "width"
                 }
@@ -34074,13 +33979,13 @@ return {
               arguments = {
                 {
                   name = "radius",
-                  type = "number",
+                  type = "number?",
                   description = "The radius of the capsule, in meters.",
                   default = "1"
                 },
                 {
                   name = "length",
-                  type = "number",
+                  type = "number?",
                   description = "The length of the capsule, not including the caps, in meters.",
                   default = "1"
                 }
@@ -34114,7 +34019,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34124,32 +34029,32 @@ return {
                 },
                 {
                   name = "x",
-                  type = "number",
+                  type = "number?",
                   description = "The x position of the joint anchor point, in world space."
                 },
                 {
                   name = "y",
-                  type = "number",
+                  type = "number?",
                   description = "The y position of the joint anchor point, in world space."
                 },
                 {
                   name = "z",
-                  type = "number",
+                  type = "number?",
                   description = "The z position of the joint anchor point, in world space."
                 },
                 {
                   name = "ax",
-                  type = "number",
+                  type = "number?",
                   description = "The x component of the cone axis, in world space."
                 },
                 {
                   name = "ay",
-                  type = "number",
+                  type = "number?",
                   description = "The y component of the cone axis, in world space."
                 },
                 {
                   name = "az",
-                  type = "number",
+                  type = "number?",
                   description = "The z component of the cone axis, in world space."
                 }
               },
@@ -34165,7 +34070,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34175,12 +34080,12 @@ return {
                 },
                 {
                   name = "anchor",
-                  type = "vector",
+                  type = "vector?",
                   description = "The joint anchor point, in world space."
                 },
                 {
                   name = "axis",
-                  type = "vector",
+                  type = "vector?",
                   description = "The cone axis, in world space."
                 }
               },
@@ -34219,9 +34124,8 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "vector",
-                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers.",
-                  default = "nil"
+                  type = "vector?",
+                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers."
                 }
               },
               returns = {
@@ -34241,9 +34145,8 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "vector",
-                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers.",
-                  default = "nil"
+                  type = "vector?",
+                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers."
                 }
               },
               returns = {
@@ -34264,9 +34167,8 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "vector",
-                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers.",
-                  default = "nil"
+                  type = "vector?",
+                  description = "An optional scale to apply to the points.  Can also be provided as 3 numbers."
                 }
               },
               returns = {
@@ -34300,13 +34202,13 @@ return {
               arguments = {
                 {
                   name = "radius",
-                  type = "number",
+                  type = "number?",
                   description = "The radius of the cylinder, in meters.",
                   default = "1"
                 },
                 {
                   name = "length",
-                  type = "number",
+                  type = "number?",
                   description = "The length of the cylinder, in meters.",
                   default = "1"
                 }
@@ -34340,7 +34242,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34350,32 +34252,32 @@ return {
                 },
                 {
                   name = "x1",
-                  type = "number",
+                  type = "number?",
                   description = "The x position of the first anchor point, in world coordinates."
                 },
                 {
                   name = "y1",
-                  type = "number",
+                  type = "number?",
                   description = "The y position of the first anchor point, in world coordinates."
                 },
                 {
                   name = "z1",
-                  type = "number",
+                  type = "number?",
                   description = "The z position of the first anchor point, in world coordinates."
                 },
                 {
                   name = "x2",
-                  type = "number",
+                  type = "number?",
                   description = "The x position of the second anchor point, in world coordinates."
                 },
                 {
                   name = "y2",
-                  type = "number",
+                  type = "number?",
                   description = "The y position of the second anchor point, in world coordinates."
                 },
                 {
                   name = "z2",
-                  type = "number",
+                  type = "number?",
                   description = "The z position of the second anchor point, in world coordinates."
                 }
               },
@@ -34391,7 +34293,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34401,12 +34303,12 @@ return {
                 },
                 {
                   name = "first",
-                  type = "vector",
+                  type = "vector?",
                   description = "The first anchor point, in world coordinates."
                 },
                 {
                   name = "second",
-                  type = "vector",
+                  type = "vector?",
                   description = "The second anchor point, in world coordinates."
                 }
               },
@@ -34439,7 +34341,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34449,32 +34351,32 @@ return {
                 },
                 {
                   name = "x",
-                  type = "number",
+                  type = "number?",
                   description = "The x position of the hinge anchor, in world coordinates."
                 },
                 {
                   name = "y",
-                  type = "number",
+                  type = "number?",
                   description = "The y position of the hinge anchor, in world coordinates."
                 },
                 {
                   name = "z",
-                  type = "number",
+                  type = "number?",
                   description = "The z position of the hinge anchor, in world coordinates."
                 },
                 {
                   name = "ax",
-                  type = "number",
+                  type = "number?",
                   description = "The x component of the hinge axis direction."
                 },
                 {
                   name = "ay",
-                  type = "number",
+                  type = "number?",
                   description = "The y component of the hinge axis direction."
                 },
                 {
                   name = "az",
-                  type = "number",
+                  type = "number?",
                   description = "The z component of the hinge axis direction."
                 }
               },
@@ -34490,7 +34392,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34500,12 +34402,12 @@ return {
                 },
                 {
                   name = "anchor",
-                  type = "vector",
+                  type = "vector?",
                   description = "The anchor point, in world coordinates."
                 },
                 {
                   name = "axis",
-                  type = "vector",
+                  type = "vector?",
                   description = "The hinge axis direction."
                 }
               },
@@ -34549,9 +34451,8 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "vector",
-                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.",
-                  default = "nil"
+                  type = "vector?",
+                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                 }
               },
               returns = {
@@ -34571,9 +34472,8 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "vector",
-                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.",
-                  default = "nil"
+                  type = "vector?",
+                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                 }
               },
               returns = {
@@ -34594,9 +34494,8 @@ return {
                 },
                 {
                   name = "scale",
-                  type = "vector",
-                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers.",
-                  default = "nil"
+                  type = "vector?",
+                  description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                 }
               },
               returns = {
@@ -34628,7 +34527,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34638,17 +34537,17 @@ return {
                 },
                 {
                   name = "ax",
-                  type = "number",
+                  type = "number?",
                   description = "The x component of the slider axis."
                 },
                 {
                   name = "ay",
-                  type = "number",
+                  type = "number?",
                   description = "The y component of the slider axis."
                 },
                 {
                   name = "az",
-                  type = "number",
+                  type = "number?",
                   description = "The z component of the slider axis."
                 }
               },
@@ -34664,7 +34563,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34674,7 +34573,7 @@ return {
                 },
                 {
                   name = "axis",
-                  type = "vector",
+                  type = "vector?",
                   description = "The slider axis direction."
                 }
               },
@@ -34709,7 +34608,7 @@ return {
               arguments = {
                 {
                   name = "radius",
-                  type = "number",
+                  type = "number?",
                   description = "The radius of the sphere, in meters.",
                   default = "1"
                 }
@@ -34774,7 +34673,7 @@ return {
                 },
                 {
                   name = "stretch",
-                  type = "number",
+                  type = "number?",
                   description = "A vertical multiplier for height values to obtain terrain height.  When the image format has pixel values only in the 0 to 1 range, this can be used to scale the height to meters.",
                   default = "1.0"
                 }
@@ -34816,7 +34715,7 @@ return {
                 },
                 {
                   name = "samples",
-                  type = "number",
+                  type = "number?",
                   description = "The number of samples taken across the x and z dimensions.  More samples will result in higher terrain fidelity, but use more CPU and memory.",
                   default = "100"
                 }
@@ -34850,7 +34749,7 @@ return {
               arguments = {
                 {
                   name = "colliderA",
-                  type = "Collider",
+                  type = "Collider?",
                   description = "The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position in the World."
                 },
                 {
@@ -34883,67 +34782,66 @@ return {
               arguments = {
                 {
                   name = "settings",
-                  type = "table",
+                  type = "table?",
                   description = "An optional table with settings for the physics simulation.",
-                  default = "nil",
                   table = {
                     {
                       name = "tags",
-                      type = "table",
+                      type = "table?",
                       description = "The list of collision tags (strings).  Colliders can be assigned a tag, and collision can be enabled and disabled between different tags.  There is a maximum of 31 tags.",
                       default = "{}"
                     },
                     {
                       name = "staticTags",
-                      type = "table",
+                      type = "table?",
                       description = "An optional list of collision tags that are \"static\".  Colliders with a static tag will not move, and the physics engine uses this for optimization.",
                       default = "{}"
                     },
                     {
                       name = "maxColliders",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum number of Colliders in the World.  Increasing this will use more memory. This can't be bigger than 2^23 (around 8 million).",
                       default = "16384"
                     },
                     {
                       name = "threadSafe",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the World and the objects it contains can be used from multiple threads.  This will use a set of locks to ensure only one thread can access a Collider at a given time. Disable this to potentially get a small performance boost when only using the World from a single Thread.",
                       default = "true"
                     },
                     {
                       name = "allowSleep",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether colliders should be allowed to go to sleep when they come to rest.  Sleeping colliders don't need to simulate movement until something hits them.  This improves performance a lot for a typical physics scene where many objects are at rest.",
                       default = "true"
                     },
                     {
                       name = "stabilization",
-                      type = "number",
+                      type = "number?",
                       description = "How quickly the physics engine corrects position error from collisions and joints, from 0 to 1.  If the value is too low, objects will be spongy, but if it's too high then physics will explode.  Values between .2 and .8 are recommended.",
                       default = "0.2"
                     },
                     {
                       name = "maxOverlap",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum amount that colliders are allowed to overlap, in meters.",
                       default = ".01"
                     },
                     {
                       name = "restitutionThreshold",
-                      type = "number",
+                      type = "number?",
                       description = "A velocity below which restitution (bounciness) will not be applied, in meters per second.  If this is too low then objects may have trouble coming to rest.",
                       default = "1.0"
                     },
                     {
                       name = "velocitySteps",
-                      type = "number",
+                      type = "number?",
                       description = "The number of solver velocity iterations to run per tick.  This must be at least 2. Larger values will increase accuracy but use more CPU.",
                       default = "10"
                     },
                     {
                       name = "positionSteps",
-                      type = "number",
+                      type = "number?",
                       description = "The number of solver position iterations to run per tick.  Larger values will increase accuracy but use more CPU.",
                       default = "2"
                     }
@@ -37106,7 +37004,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether automatic mass should be enabled."
                     }
                   },
@@ -37130,7 +37028,7 @@ return {
                   arguments = {
                     {
                       name = "awake",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Collider should be awake."
                     }
                   },
@@ -37202,7 +37100,7 @@ return {
                   arguments = {
                     {
                       name = "continuous",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Collider uses continuous collision detection."
                     }
                   },
@@ -37222,13 +37120,13 @@ return {
                   arguments = {
                     {
                       name = "translation",
-                      type = "string",
+                      type = "string?",
                       description = "A string containing the world-space axes the Collider is allowed to move on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all translation.",
                       default = "''"
                     },
                     {
                       name = "rotation",
-                      type = "string",
+                      type = "string?",
                       description = "A string containing the world-space axes the Collider is allowed to rotate on.  The string should have 'x', 'y', and 'z' letters representing the axes to enable.  Use nil or an empty string to disable all rotation.",
                       default = "''"
                     }
@@ -37251,7 +37149,7 @@ return {
                   arguments = {
                     {
                       name = "enable",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Collider should be enabled."
                     }
                   },
@@ -37755,7 +37653,7 @@ return {
                   arguments = {
                     {
                       name = "sensor",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Collider should be a sensor."
                     }
                   },
@@ -37779,7 +37677,7 @@ return {
                   arguments = {
                     {
                       name = "sleepy",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether the Collider can go to sleep."
                     }
                   },
@@ -41205,22 +41103,22 @@ return {
                       table = {
                         {
                           name = "filter",
-                          type = "function | nil",
+                          type = "function?",
                           description = "The function used to filter collisions."
                         },
                         {
                           name = "enter",
-                          type = "function | nil",
+                          type = "function?",
                           description = "The function called when 2 colliders start touching."
                         },
                         {
                           name = "exit",
-                          type = "function | nil",
+                          type = "function?",
                           description = "The function called when 2 colliders stop touching."
                         },
                         {
                           name = "contact",
-                          type = "function | nil",
+                          type = "function?",
                           description = "The function called every frame while 2 colliders are in contact."
                         }
                       }
@@ -41616,37 +41514,37 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the center of the box, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the center of the box, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the center of the box, in meters.",
                       default = "0"
                     },
                     {
                       name = "width",
-                      type = "number",
+                      type = "number?",
                       description = "The width of the box, in meters.",
                       default = "1"
                     },
                     {
                       name = "height",
-                      type = "number",
+                      type = "number?",
                       description = "The height of the box, in meters.",
                       default = "width"
                     },
                     {
                       name = "depth",
-                      type = "number",
+                      type = "number?",
                       description = "The depth of the box, in meters.",
                       default = "width"
                     }
@@ -41663,12 +41561,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the box, in meters."
                     },
                     {
                       name = "size",
-                      type = "vector",
+                      type = "vector?",
                       description = "The size of the box, in meters."
                     }
                   },
@@ -41705,31 +41603,31 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the center of the capsule, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the center of the capsule, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the center of the capsule, in meters.",
                       default = "0"
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the capsule, in meters.",
                       default = "1"
                     },
                     {
                       name = "length",
-                      type = "number",
+                      type = "number?",
                       description = "The length of the capsule, not including the caps, in meters.",
                       default = "1"
                     }
@@ -41746,18 +41644,18 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the capsule, in meters.",
                       default = "1"
                     },
                     {
                       name = "length",
-                      type = "number",
+                      type = "number?",
                       description = "The length of the capsule, not including the caps, in meters.",
                       default = "1"
                     }
@@ -41864,19 +41762,19 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the collider, in meters.",
                       default = "0"
                     },
@@ -41887,9 +41785,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -41904,7 +41801,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41914,9 +41811,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -41931,19 +41827,19 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the collider, in meters.",
                       default = "0"
                     },
@@ -41954,9 +41850,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -41971,7 +41866,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -41981,9 +41876,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -41998,19 +41892,19 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the collider, in meters.",
                       default = "0"
                     },
@@ -42021,9 +41915,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -42038,7 +41931,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -42048,9 +41941,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -42066,19 +41958,19 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the collider, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the collider, in meters.",
                       default = "0"
                     },
@@ -42089,9 +41981,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -42107,7 +41998,7 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the capsule, in meters."
                     },
                     {
@@ -42117,9 +42008,8 @@ return {
                     },
                     {
                       name = "scale",
-                      type = "number",
-                      description = "A scale to apply to the points.",
-                      default = "1.0"
+                      type = "vector?",
+                      description = "A scale to apply to the points."
                     }
                   },
                   returns = {
@@ -42155,31 +42045,31 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the center of the cylinder, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the center of the cylinder, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the center of the cylinder, in meters.",
                       default = "0"
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the cylinder, in meters.",
                       default = "1"
                     },
                     {
                       name = "length",
-                      type = "number",
+                      type = "number?",
                       description = "The length of the cylinder, in meters.",
                       default = "1"
                     }
@@ -42196,18 +42086,18 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the cylinder, in meters."
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the cylinder, in meters.",
                       default = "1"
                     },
                     {
                       name = "length",
-                      type = "number",
+                      type = "number?",
                       description = "The length of the cylinder, in meters.",
                       default = "1"
                     }
@@ -42252,6 +42142,11 @@ return {
                       name = "indices",
                       type = "table",
                       description = "A table of triangle indices representing how the vertices are connected together into triangles."
+                    },
+                    {
+                      name = "scale",
+                      type = "vector?",
+                      description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                     }
                   },
                   returns = {
@@ -42268,6 +42163,11 @@ return {
                       name = "modelData",
                       type = "ModelData",
                       description = "A ModelData to use for the mesh data."
+                    },
+                    {
+                      name = "scale",
+                      type = "vector?",
+                      description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                     }
                   },
                   returns = {
@@ -42284,6 +42184,11 @@ return {
                       name = "mesh",
                       type = "Mesh",
                       description = "A Mesh to use for the mesh data.  It must use the `cpu` storage mode."
+                    },
+                    {
+                      name = "scale",
+                      type = "vector?",
+                      description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                     }
                   },
                   returns = {
@@ -42301,6 +42206,11 @@ return {
                       name = "template",
                       type = "MeshShape",
                       description = "An existing MeshShape to reuse."
+                    },
+                    {
+                      name = "scale",
+                      type = "vector?",
+                      description = "An optional scale to apply to the mesh vertices.  Can also be provided as 3 numbers."
                     }
                   },
                   returns = {
@@ -42336,25 +42246,25 @@ return {
                   arguments = {
                     {
                       name = "x",
-                      type = "number",
+                      type = "number?",
                       description = "The x coordinate of the center of the sphere, in meters.",
                       default = "0"
                     },
                     {
                       name = "y",
-                      type = "number",
+                      type = "number?",
                       description = "The y coordinate of the center of the sphere, in meters.",
                       default = "0"
                     },
                     {
                       name = "z",
-                      type = "number",
+                      type = "number?",
                       description = "The z coordinate of the center of the sphere, in meters.",
                       default = "0"
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the sphere, in meters.",
                       default = "1"
                     }
@@ -42371,12 +42281,12 @@ return {
                   arguments = {
                     {
                       name = "position",
-                      type = "vector",
+                      type = "vector?",
                       description = "The position of the center of the sphere, in meters."
                     },
                     {
                       name = "radius",
-                      type = "number",
+                      type = "number?",
                       description = "The radius of the sphere, in meters.",
                       default = "1"
                     }
@@ -42441,7 +42351,7 @@ return {
                     },
                     {
                       name = "stretch",
-                      type = "number",
+                      type = "number?",
                       description = "A vertical multiplier for height values to obtain terrain height.  When the image format has pixel values only in the 0 to 1 range, this can be used to scale the height to meters.",
                       default = "1.0"
                     }
@@ -42485,7 +42395,7 @@ return {
                     },
                     {
                       name = "samples",
-                      type = "number",
+                      type = "number?",
                       description = "The number of samples taken across the x and z dimensions.  More samples will result in higher terrain fidelity, but use more CPU and memory.",
                       default = "100"
                     }
@@ -42557,21 +42467,19 @@ return {
                     },
                     {
                       name = "maxDistance",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
                       default = "0"
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "Tags to filter by, or nil for no filter.",
-                      default = "nil"
+                      type = "string?",
+                      description = "Tags to filter by, or nil for no filter."
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "The callback to call for each intersection detected.",
-                      default = "nil"
+                      description = "The callback to call for each intersection detected."
                     }
                   },
                   returns = {}
@@ -42595,21 +42503,19 @@ return {
                     },
                     {
                       name = "maxDistance",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
                       default = "0"
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "Tags to filter by, or nil for no filter.",
-                      default = "nil"
+                      type = "string?",
+                      description = "Tags to filter by, or nil for no filter."
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "The callback to call for each intersection detected.",
-                      default = "nil"
+                      description = "The callback to call for each intersection detected."
                     }
                   },
                   returns = {}
@@ -42658,15 +42564,14 @@ return {
                     },
                     {
                       name = "maxDistance",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
                       default = "0"
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "Tags to filter by, or nil for no filter.",
-                      default = "nil"
+                      type = "string?",
+                      description = "Tags to filter by, or nil for no filter."
                     }
                   },
                   returns = {
@@ -42731,15 +42636,14 @@ return {
                     },
                     {
                       name = "maxDistance",
-                      type = "number",
+                      type = "number?",
                       description = "The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes touching the input shape, 1.0 will detect shapes within 1 meter of the input shape, etc.",
                       default = "0"
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "Tags to filter by, or nil for no filter.",
-                      default = "nil"
+                      type = "string?",
+                      description = "Tags to filter by, or nil for no filter."
                     }
                   },
                   returns = {
@@ -42835,15 +42739,13 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument.",
-                      default = "nil"
+                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument."
                     }
                   },
                   returns = {}
@@ -42862,15 +42764,13 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument.",
-                      default = "nil"
+                      description = "A function to call when a collider is detected.  The function will be called with a single `Collider` argument."
                     }
                   },
                   returns = {}
@@ -42909,9 +42809,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -42936,9 +42835,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -42988,15 +42886,13 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument.",
-                      default = "nil"
+                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument."
                     }
                   },
                   returns = {}
@@ -43015,15 +42911,13 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
                       type = "function",
-                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument.",
-                      default = "nil"
+                      description = "A function to call when an intersection is detected.  The function will be called with a single `Collider` argument."
                     }
                   },
                   returns = {}
@@ -43052,9 +42946,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -43079,9 +42972,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -43143,9 +43035,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
@@ -43199,8 +43090,7 @@ return {
                           type = "number",
                           default = "1.0"
                         }
-                      },
-                      default = "nil"
+                      }
                     }
                   },
                   returns = {}
@@ -43219,9 +43109,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
@@ -43275,8 +43164,7 @@ return {
                           type = "number",
                           default = "1.0"
                         }
-                      },
-                      default = "nil"
+                      }
                     }
                   },
                   returns = {}
@@ -43315,9 +43203,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -43382,9 +43269,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -43490,26 +43376,26 @@ return {
                     {
                       name = "callbacks",
                       type = "table",
-                      description = "The World collision callbacks.  All of them are optional.",
+                      description = "The World collision callbacks.",
                       table = {
                         {
                           name = "filter",
-                          type = "function",
+                          type = "function?",
                           description = "The function to use to filter collisions."
                         },
                         {
                           name = "enter",
-                          type = "function",
+                          type = "function?",
                           description = "The function to call when 2 colliders start touching."
                         },
                         {
                           name = "exit",
-                          type = "function",
+                          type = "function?",
                           description = "The function to call when 2 colliders stop touching."
                         },
                         {
                           name = "contact",
-                          type = "function",
+                          type = "function?",
                           description = "The function to call every frame while 2 colliders are in contact."
                         }
                       }
@@ -43635,7 +43521,7 @@ return {
                   arguments = {
                     {
                       name = "allowed",
-                      type = "boolean",
+                      type = "boolean?",
                       description = "Whether colliders can sleep."
                     }
                   },
@@ -43759,9 +43645,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
@@ -43844,9 +43729,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     },
                     {
                       name = "callback",
@@ -43964,9 +43848,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -44046,9 +43929,8 @@ return {
                     },
                     {
                       name = "filter",
-                      type = "string",
-                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.",
-                      default = "nil"
+                      type = "string?",
+                      description = "An optional tag filter.  Pass one or more tags separated by spaces to only return colliders with those tags.  Or, put `~` in front the tags to exclude colliders with those tags."
                     }
                   },
                   returns = {
@@ -44770,35 +44652,39 @@ return {
                   table = {
                     {
                       name = "width",
-                      type = "number",
+                      type = "number?",
                       description = "The width of the window, or 0 to use the width of the monitor.",
                       default = "720"
                     },
                     {
                       name = "height",
-                      type = "number",
+                      type = "number?",
                       description = "The height of the window, or 0 to use the height of the monitor.",
                       default = "800"
                     },
                     {
                       name = "fullscreen",
-                      type = "boolean",
-                      description = "Whether the window should be fullscreen."
+                      type = "boolean?",
+                      description = "Whether the window should be fullscreen.",
+                      default = "false"
                     },
                     {
                       name = "resizable",
-                      type = "boolean",
-                      description = "Whether the window should be resizable."
+                      type = "boolean?",
+                      description = "Whether the window should be resizable.",
+                      default = "false"
                     },
                     {
                       name = "title",
-                      type = "string",
-                      description = "The window title."
+                      type = "string?",
+                      description = "The window title.",
+                      default = "LÖVR"
                     },
                     {
                       name = "icon",
-                      type = "string",
-                      description = "An `Image` or path to an image file to use for the window icon."
+                      type = "string?",
+                      description = "An `Image` or path to an image file to use for the window icon.",
+                      default = "nil"
                     }
                   }
                 }
@@ -45565,7 +45451,7 @@ return {
                   arguments = {
                     {
                       name = "wait",
-                      type = "number | boolean",
+                      type = "number? | boolean?",
                       description = "How long to wait for a message to be popped, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
                       default = "false"
                     }
@@ -45601,7 +45487,7 @@ return {
                     },
                     {
                       name = "wait",
-                      type = "number | boolean",
+                      type = "number? | boolean?",
                       description = "How long to wait for the message to be popped, in seconds.  `true` can be used to wait forever and `false` can be used to avoid waiting.",
                       default = "false"
                     }
@@ -45649,7 +45535,7 @@ return {
                   returns = {
                     {
                       name = "error",
-                      type = "string | nil",
+                      type = "string?",
                       description = "The error message, or `nil` if no error has occurred on the Thread."
                     }
                   }
@@ -46086,7 +45972,7 @@ return {
                 },
                 {
                   name = "up",
-                  type = "number",
+                  type = "vector?",
                   description = "The up vector.  It does not need to be normalized.",
                   default = "vector.up"
                 }
@@ -46386,8 +46272,8 @@ return {
                 },
                 {
                   name = "axis",
-                  type = "vector",
-                  description = "An axis used to determine the sign of the angle."
+                  type = "vector?",
+                  description = "An optional axis used to determine the sign of the angle."
                 }
               },
               returns = {

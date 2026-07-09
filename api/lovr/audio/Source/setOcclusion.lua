@@ -23,7 +23,7 @@ return {
       ]]
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = [[
         Whether occlusion should be enabled.  Passing `true` is shorthand for `64` and `4`, and
         falsy values will disable occlusion by settings `rays` to `0`.

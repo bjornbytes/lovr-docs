@@ -64,7 +64,9 @@ end
 --- Determines if a parameter is optional. If it is, returns a `?` suffix.
 --- If it's not, returns an empty string.
 local function optionalSuffix(param)
-  if param.type ~= 'table' then
+  if param.type:match('%?') then
+    return ''
+  elseif param.type ~= 'table' then
     return (param.default ~= nil) and '?' or ''
   elseif not param.table then
     return ''

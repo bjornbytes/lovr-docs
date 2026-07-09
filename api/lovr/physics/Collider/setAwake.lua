@@ -3,7 +3,7 @@ return {
   description = 'Puts the Collider to sleep or wakes it up manually.',
   arguments = {
     awake = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the Collider should be awake.'
     }
   },

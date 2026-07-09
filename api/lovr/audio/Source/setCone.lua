@@ -22,7 +22,7 @@ return {
       description = 'The outer volume factor.'
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = [[
         Whether the volume cone should be enabled.  Passing `true` will set a default cone with an
         `innerAngle` of `0`, an `outerAngle` of `math.pi`, and an `outerVolume` of `0`.  Falsy

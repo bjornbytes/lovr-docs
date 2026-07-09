@@ -3,17 +3,17 @@ return {
   description = 'Creates a new BoxShape.',
   arguments = {
     width = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The width of the box, in meters.'
     },
     height = {
-      type = 'number',
+      type = 'number?',
       default = 'width',
       description = 'The height of the box, in meters.'
     },
     depth = {
-      type = 'number',
+      type = 'number?',
       default = 'width',
       description = 'The depth of the box, in meters.'
     }

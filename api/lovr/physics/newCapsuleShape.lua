@@ -3,12 +3,12 @@ return {
   description = 'Creates a new CapsuleShape.  Capsules are cylinders with hemispheres on each end.',
   arguments = {
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The radius of the capsule, in meters.'
     },
     length = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The length of the capsule, not including the caps, in meters.'
     }

@@ -10,8 +10,7 @@ return {
   ]],
   arguments = {
     device = {
-      type = 'Device',
-      default = 'nil',
+      type = 'Device?',
       description = 'The device the layer is attached to, or `nil` to make the layer world space.'
     }
   },

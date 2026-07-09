@@ -14,17 +14,16 @@ return {
       description = 'The offset of the subsection to reference, in bytes.'
     },
     extent = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
-        The size of the subsection, in bytes.  When nil, the subsection will extend to the end of
-        the parent Blob.
+        The size of the subsection, in bytes.  By default the view will extend to the end of the
+        parent Blob.
       ]]
     },
     name = {
-      type = 'string',
+      type = 'string?',
       default = [['']],
-      description = 'An optional name for the view (used in error messages).'
+      description = 'An optional name for the view to use in error messages.'
     }
   },
   returns = {

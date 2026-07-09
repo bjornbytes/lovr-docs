@@ -14,27 +14,27 @@ return {
   returns = {
     minx = {
       type = 'number',
-      description = 'The minimum x coordinate of the vertices in the model.'
+      description = 'The minimum x coordinate of the bounding box.'
     },
     maxx = {
       type = 'number',
-      description = 'The maximum x coordinate of the vertices in the model.'
+      description = 'The maximum x coordinate of the bounding box.'
     },
     miny = {
       type = 'number',
-      description = 'The minimum y coordinate of the vertices in the model.'
+      description = 'The minimum y coordinate of the bounding box.'
     },
     maxy = {
       type = 'number',
-      description = 'The maximum y coordinate of the vertices in the model.'
+      description = 'The maximum y coordinate of the bounding box.'
     },
     minz = {
       type = 'number',
-      description = 'The minimum z coordinate of the vertices in the model.'
+      description = 'The minimum z coordinate of the bounding box.'
     },
     maxz = {
       type = 'number',
-      description = 'The maximum z coordinate of the vertices in the model.'
+      description = 'The maximum z coordinate of the bounding box.'
     }
   },
   variants = {

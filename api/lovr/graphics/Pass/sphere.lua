@@ -56,12 +56,12 @@ return {
       description = 'The transform of the sphere.'
     },
     longitudes = {
-      type = 'number',
+      type = 'number?',
       default = '48',
       description = 'The number of "horizontal" segments.'
     },
     latitudes = {
-      type = 'number',
+      type = 'number?',
       default = 'longitudes / 2',
       description = 'The number of "vertical" segments.'
     }

@@ -9,7 +9,7 @@ return {
   ]],
   arguments = {
     type = {
-      type = 'AudioType',
+      type = 'AudioType?',
       default = [['playback']],
       description = 'The type of device to stop.'
     }
@@ -20,8 +20,8 @@ return {
       description = 'Whether the device was successfully stopped.'
     },
     error = {
-      type = 'string | nil',
-      description = 'The error message, if any.'
+      type = 'string?',
+      description = 'The error message, on failure.'
     }
   },
   variants = {

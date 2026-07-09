@@ -15,8 +15,7 @@ return {
       description = 'The z coordinate of the control point.'
     },
     index = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         The index to insert the control point at.  If nil, the control point is added to the end of
         the list of control points.

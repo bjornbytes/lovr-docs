@@ -18,7 +18,7 @@ return {
       description = 'Whether the operation was successful.'
     },
     error = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The error message, or `nil` if there was no error.'
     }
   },

@@ -11,34 +11,38 @@ return {
       table = {
         {
           name = 'width',
-          type = 'number',
+          type = 'number?',
           default = '720',
           description = 'The width of the window, or 0 to use the width of the monitor.'
         },
         {
           name = 'height',
-          type = 'number',
+          type = 'number?',
           default = '800',
           description = 'The height of the window, or 0 to use the height of the monitor.'
         },
         {
           name = 'fullscreen',
-          type = 'boolean',
+          type = 'boolean?',
+          default = 'false',
           description = 'Whether the window should be fullscreen.'
         },
         {
           name = 'resizable',
-          type = 'boolean',
+          type = 'boolean?',
+          default = 'false',
           description = 'Whether the window should be resizable.'
         },
         {
           name = 'title',
-          type = 'string',
+          type = 'string?',
+          default = 'LÖVR',
           description = 'The window title.'
         },
         {
           name = 'icon',
-          type = 'string',
+          type = 'string?',
+          default = 'nil',
           description = 'An `Image` or path to an image file to use for the window icon.'
         }
       }

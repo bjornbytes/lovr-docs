@@ -4,7 +4,7 @@ return {
   description = 'Returns the current linear velocity of a device, in meters per second.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to get the velocity of.'
     }

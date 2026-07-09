@@ -12,22 +12,22 @@ return {
       table = {
         {
           name = 'filter',
-          type = 'function | nil',
+          type = 'function?',
           description = 'The function used to filter collisions.'
         },
         {
           name = 'enter',
-          type = 'function | nil',
+          type = 'function?',
           description = 'The function called when 2 colliders start touching.'
         },
         {
           name = 'exit',
-          type = 'function | nil',
+          type = 'function?',
           description = 'The function called when 2 colliders stop touching.'
         },
         {
           name = 'contact',
-          type = 'function | nil',
+          type = 'function?',
           description = 'The function called every frame while 2 colliders are in contact.'
         }
       }

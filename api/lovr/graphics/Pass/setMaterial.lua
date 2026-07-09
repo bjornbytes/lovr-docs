@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     material = {
-      type = 'Texture | Material',
+      type = 'Texture | Material | nil',
       description = 'The texture or material to apply to surfaces.'
     }
   },

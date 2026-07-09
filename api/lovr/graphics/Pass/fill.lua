@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     texture = {
-      type = 'Texture',
+      type = 'Texture?',
       description = 'The texture to fill.  If nil, the texture from the active material is used.'
     }
   },

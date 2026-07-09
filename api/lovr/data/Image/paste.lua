@@ -7,32 +7,32 @@ return {
       description = 'The Image to copy pixels from.'
     },
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate to paste to (0-indexed).',
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate to paste to (0-indexed).',
     },
     fromX = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate in the source to paste from (0-indexed).',
     },
     fromY = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate in the source to paste from (0-indexed).',
     },
     width = {
-      type = 'number',
+      type = 'number?',
       default = 'source:getWidth()',
       description = 'The width of the region to copy.'
     },
     height = {
-      type = 'number',
+      type = 'number?',
       default = 'source:getHeight()',
       description = 'The height of the region to copy.'
     }

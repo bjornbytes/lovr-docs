@@ -18,7 +18,7 @@ return {
       description = 'What happened to the file.'
     },
     oldpath = {
-      type = 'string',
+      type = 'string?',
       description = 'The old path, for `rename` actions.'
     }
   },

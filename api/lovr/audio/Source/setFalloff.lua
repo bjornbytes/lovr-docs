@@ -20,7 +20,7 @@ return {
       ]]
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = [[
         Whether volume falloff should be enabled.  Passing `true` will set a default falloff with a
         `minDistance` of `0` and a `minVolume` of `0`.  Falsy values disable falloff completely

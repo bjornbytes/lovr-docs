@@ -30,7 +30,7 @@ return {
       description = 'The orientation.'
     },
     blend = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = [[
         A number from 0 to 1 indicating how much of the target orientation to blend in.  A value of

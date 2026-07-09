@@ -7,7 +7,7 @@ return {
   ]],
   arguments = {
     curve = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The curve of the layer.  Negative values or zero means no curve.'
     }

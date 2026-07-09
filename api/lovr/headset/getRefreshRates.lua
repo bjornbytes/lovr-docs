@@ -7,9 +7,10 @@ return {
   arguments = {},
   returns = {
     rates = {
-      type = 'table | nil',
+      type = '{number}?',
       description = [[
-        A flat table of the refresh rates supported by the headset display, or nil if not supported.
+        A table of refresh rates supported by the headset display, or nil if the current VR runtime
+        does not support changing the refresh rate.
       ]]
     }
   },

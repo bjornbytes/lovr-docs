@@ -10,7 +10,7 @@ return {
   ]],
   arguments = {
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'An offset applied to values in the index buffer during drawing.'
     }

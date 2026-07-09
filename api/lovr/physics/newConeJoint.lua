@@ -3,7 +3,7 @@ return {
   description = 'Creates a new ConeJoint.',
   arguments = {
     colliderA = {
-      type = 'Collider',
+      type = 'Collider?',
       description = [[
         The first collider to attach the Joint to, or `nil` to attach the joint to a fixed position
         in the World.
@@ -14,35 +14,35 @@ return {
       description = 'The second collider to attach the Joint to.'
     },
     x = {
-      type = 'number',
+      type = 'number?',
       description = 'The x position of the joint anchor point, in world space.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       description = 'The y position of the joint anchor point, in world space.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       description = 'The z position of the joint anchor point, in world space.'
     },
     ax = {
-      type = 'number',
+      type = 'number?',
       description = 'The x component of the cone axis, in world space.'
     },
     ay = {
-      type = 'number',
+      type = 'number?',
       description = 'The y component of the cone axis, in world space.'
     },
     az = {
-      type = 'number',
+      type = 'number?',
       description = 'The z component of the cone axis, in world space.'
     },
     anchor = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The joint anchor point, in world space.'
     },
     axis = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The cone axis, in world space.'
     }
   },

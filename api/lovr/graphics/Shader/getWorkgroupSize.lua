@@ -7,15 +7,15 @@ return {
   arguments = {},
   returns = {
     x = {
-      type = 'number',
+      type = 'number?',
       description = 'The x size of a workgroup.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       description = 'The y size of a workgroup.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       description = 'The z size of a workgroup.'
     }
   },
@@ -31,6 +31,8 @@ return {
 
     The maximum workgroup size is hardware-specific, and is given by the `workgroupSize` and
     `totalWorkgroupSize` limit in `lovr.graphics.getLimits`.
+
+    This will return `nil` if the shader is not a compute shader.
   ]],
   related = {
     'Pass:compute',

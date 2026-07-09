@@ -46,7 +46,7 @@ return {
       description = 'The target orientation.  Can also be provided as 4 numbers in angle-axis form.'
     },
     blend = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = [[
         A number from 0 to 1 indicating how much of the target pose to blend in.  A value of 0 will

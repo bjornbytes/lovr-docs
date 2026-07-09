@@ -72,7 +72,7 @@ return {
       description = 'The transform of the box.'
     },
     style = {
-      type = 'DrawStyle',
+      type = 'DrawStyle?',
       default = [['fill']],
       description = 'Whether the box should be drawn filled or outlined.'
     }

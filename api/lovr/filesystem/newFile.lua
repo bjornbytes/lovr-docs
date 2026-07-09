@@ -20,11 +20,11 @@ return {
   },
   returns = {
     file = {
-      type = 'File',
+      type = 'File?',
       description = 'A new file object, or nil if an error occurred.'
     },
     error = {
-      type = 'string',
+      type = 'string?',
       description = 'The error message, if an error occurred.'
     }
   },

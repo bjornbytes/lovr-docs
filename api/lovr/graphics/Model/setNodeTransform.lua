@@ -66,7 +66,7 @@ return {
       description = 'The transform.'
     },
     blend = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = [[
         A number from 0 to 1 indicating how much of the target transform to blend in.  A value of 0

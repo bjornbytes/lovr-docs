@@ -6,7 +6,7 @@ return {
   ]],
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to get the direction of.'
     },

@@ -8,7 +8,7 @@ return {
   ]],
   arguments = {
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether alpha to coverage should be enabled.'
     }
   },

@@ -10,7 +10,7 @@ return {
   ]],
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to use for the animation data.'
     },

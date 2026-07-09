@@ -70,7 +70,7 @@ return {
       description = 'The transform of the rectangle.'
     },
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         The radius of the rectangle corners.  If the radius is zero or negative, the rectangle will
@@ -78,7 +78,7 @@ return {
       ]]
     },
     segments = {
-      type = 'number',
+      type = 'number?',
       default = '8',
       description = [[
         The number of circular segments to use for each corner.  This increases the smoothness, but

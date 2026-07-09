@@ -4,7 +4,7 @@ return {
   description = 'Returns the current position and orientation of a device or model.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to get the pose of.'
     },

@@ -6,8 +6,8 @@ return {
     before the game starts.
 
     :::note
-    Make sure you put `lovr.conf` in a file called `conf.lua`, a special file that's loaded before
-    the rest of the framework initializes.
+    Make sure you put `lovr.conf` in a file called `conf.lua` alongside `main.lua`.  `conf.lua` is a
+    special file that is loaded before the rest of the framework initializes.
     :::
   ]],
   arguments = {

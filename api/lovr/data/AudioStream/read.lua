@@ -3,9 +3,8 @@ return {
   description = 'Reads data from the AudioStream.',
   arguments = {
     count = {
-      type = 'number',
-      default = 'nil',
-      description = 'The number of frames to read.  When nil, reads all of the data in the stream.'
+      type = 'number?',
+      description = 'The number of frames to read.  Defaults to all of the data in the stream.'
     },
     sound = {
       type = 'Sound',
@@ -16,7 +15,7 @@ return {
       description = 'A Blob to write the audio to.'
     },
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         An offset to start writing into the destination (frames for Sounds, bytes for Blobs).

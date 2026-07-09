@@ -18,7 +18,7 @@ return {
   ]],
   arguments = {
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether automatic mass should be enabled.'
     }
   },

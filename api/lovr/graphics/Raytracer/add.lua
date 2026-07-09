@@ -73,7 +73,7 @@ return {
       description = 'The transform of the object.'
     },
     layers = {
-      type = 'number',
+      type = 'number?',
       default = '0xff',
       description = [[
         A binary bitmask of 8 layers to place the object on.  The object is placed on all layers by
@@ -82,8 +82,7 @@ return {
       ]]
     },
     tag = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
         A custom tag for the object, provided in the shader when the object is hit.  Shaders can use
         this tag for whatever they want.  If nil, the tag will be set to the same ID as the one

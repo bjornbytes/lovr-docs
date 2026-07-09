@@ -11,11 +11,8 @@ return {
       description = 'The Blob containing data to write to the file.'
     },
     size = {
-      type = 'number',
-      default = 'nil',
-      description = [[
-        The number of bytes to write, or nil to write all of the data from the string/Blob.
-      ]]
+      type = 'number?',
+      description = 'The number of bytes to write, or nil to write all of the data from the source.'
     }
   },
   returns = {
@@ -24,7 +21,7 @@ return {
       description = 'Whether the data was successfully written.'
     },
     message = {
-      type = 'string',
+      type = 'string?',
       description = 'The error message.'
     }
   },

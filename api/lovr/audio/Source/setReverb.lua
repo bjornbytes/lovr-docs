@@ -15,7 +15,7 @@ return {
       ]]
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       dsecription = [[
         Whether reverb should be enabled.  Passing `true` is short for setting a level of 1 and a
         mode of "listener", and falsy values will disable reverb.

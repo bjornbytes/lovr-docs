@@ -12,7 +12,7 @@ return {
       description = 'An existing Rasterizer to use to load glyph images.'
     },
     size = {
-      type = 'number',
+      type = 'number?',
       default = '32',
       description = [[
         The size of the Font in pixels (TTF only).  Larger sizes are slower to initialize and use
@@ -20,12 +20,11 @@ return {
       ]]
     },
     atlas = {
-      type = 'Image',
-      default = 'nil',
+      type = 'Image?',
       description = 'An Image to use for the BMFont atlas, instead of the one in the BMFont file.'
     },
     spread = {
-      type = 'number',
+      type = 'number?',
       default = '4',
       description = [[
         For signed distance field fonts (currently all fonts), the width of the SDF, in pixels.  The

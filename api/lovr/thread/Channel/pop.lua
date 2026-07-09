@@ -6,7 +6,7 @@ return {
   ]],
   arguments = {
     wait = {
-      type = 'number | boolean',
+      type = 'number? | boolean?',
       default = 'false',
       description = [[
         How long to wait for a message to be popped, in seconds.  `true` can be used to wait forever

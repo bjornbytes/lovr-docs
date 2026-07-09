@@ -4,7 +4,7 @@ return {
   description = 'Draws a skybox.',
   arguments = {
     skybox = {
-      type = 'Texture',
+      type = 'Texture?',
       description = [[
         The skybox to render.  Its `TextureType` can be `cube` to render as a cubemap, or `2d` to
         render as an equirectangular (spherical) 2D image.

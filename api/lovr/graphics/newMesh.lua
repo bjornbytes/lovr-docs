@@ -52,23 +52,23 @@ return {
       ]]
     },
     options = {
-      type = 'table',
+      type = 'table?',
       description = 'Optional options.',
       table = {
         {
           name = 'storage',
-          type = 'MeshStorage',
+          type = 'MeshStorage?',
           default = [['cpu']],
           description = 'The storage mode of the Mesh.'
         },
         {
           name = 'raytracer',
-          type = 'table',
+          type = 'table?',
           description = 'Optional raytracing options.',
           table = {
             {
               name = 'dynamic',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'false',
               description = [[
                 An optimization hint indicating that raytracing data will be frequently rebuilt.
@@ -77,7 +77,7 @@ return {
             },
             {
               name = 'fasttrace',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'true',
               description = [[
                 An optimization hint indicating that raytracing data should be optimized for fast
@@ -86,7 +86,7 @@ return {
             },
             {
               name = 'fastbuild',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'false',
               description = [[
                 An optimization hint indicating that raytracing data should be optimized for fast
@@ -96,7 +96,7 @@ return {
             },
             {
               name = 'compress',
-              type = 'boolean',
+              type = 'boolean?',
               default = 'false',
               description = [[
                 An optimization hint indicating that raytracing data should use less VRAM, possibly

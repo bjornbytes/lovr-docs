@@ -9,7 +9,7 @@ return {
   ]],
   arguments = {
     type = {
-      type = 'AudioType',
+      type = 'AudioType?',
       default = [['playback']],
       description = 'The type of devices to query (playback or capture).'
     }

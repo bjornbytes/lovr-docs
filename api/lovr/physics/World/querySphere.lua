@@ -32,8 +32,7 @@ return {
       description = 'The position of the center of the sphere.'
     },
     filter = {
-      type = 'string',
-      default = 'nil',
+      type = 'string?',
       description = [[
         An optional tag filter.  Pass one or more tags separated by spaces to only return colliders
         with those tags.  Or, put `~` in front of the tags to exclude colliders with those tags.
@@ -41,7 +40,6 @@ return {
     },
     callback = {
       type = 'function',
-      default = 'nil',
       description = [[
         A function to call when an intersection is detected.  The function will be called with a
         single `Collider` argument.

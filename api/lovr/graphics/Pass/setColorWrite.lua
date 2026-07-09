@@ -27,7 +27,7 @@ return {
       description = 'Whether the alpha component should be affected by draws.'
     },
     enable = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether all color components should be affected by draws.'
     }
   },

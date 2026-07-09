@@ -7,7 +7,7 @@ return {
       description = 'The capacity of the audio stream, in frames.'
     },
     format = {
-      type = 'SampleFormat',
+      type = 'SampleFormat?',
       default = [['f32']],
       description = 'The format of the audio stream.'
     },
@@ -16,7 +16,7 @@ return {
       description = 'The number of channels in the audio stream.'
     },
     rate = {
-      type = 'number',
+      type = 'number?',
       default = '48000',
       description = 'The sample rate of the audio stream, in Hz.'
     }

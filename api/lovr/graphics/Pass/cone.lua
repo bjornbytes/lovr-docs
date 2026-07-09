@@ -69,7 +69,7 @@ return {
       description = 'The position of the tip of the cone.'
     },
     segments = {
-      type = 'number',
+      type = 'number?',
       default = '64',
       description = 'The number of segments in the cone.'
     }

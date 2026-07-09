@@ -57,7 +57,7 @@ return {
       description = 'The orientation of the shape.'
     },
     maxDistance = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         The maximum distance at which a shape can be detected, in meters.  Zero will detect shapes
@@ -65,13 +65,11 @@ return {
       ]]
     },
     filter = {
-      type = 'string',
-      default = 'nil',
+      type = 'string?',
       description = 'Tags to filter by, or nil for no filter.'
     },
     callback = {
       type = 'function',
-      default = 'nil',
       description = 'The callback to call for each intersection detected.'
     }
   },

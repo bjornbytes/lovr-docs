@@ -12,7 +12,7 @@ return {
       description = 'The foveation level (or the maximum level when dynamic foveation is active).'
     },
     dynamic = {
-      type = 'boolean',
+      type = 'boolean?',
       default = 'true',
       description = [[
         Whether the system is allowed to dynamically adjust the foveation level based on GPU load.

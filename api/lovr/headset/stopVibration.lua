@@ -4,7 +4,7 @@ return {
   description = 'Causes the device to stop any active haptics vibration.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to stop the vibration on.'
     }

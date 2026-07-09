@@ -3,27 +3,27 @@ return {
   description = 'Adds a Collider to the world and attaches a `SphereShape`.',
   arguments = {
     x = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The x coordinate of the center of the sphere, in meters.'
     },
     y = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The y coordinate of the center of the sphere, in meters.'
     },
     z = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'The z coordinate of the center of the sphere, in meters.'
     },
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The radius of the sphere, in meters.'
     },
     position = {
-      type = 'vector',
+      type = 'vector?',
       description = 'The position of the center of the sphere, in meters.'
     }
   },

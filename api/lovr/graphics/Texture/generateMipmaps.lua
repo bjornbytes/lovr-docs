@@ -8,15 +8,14 @@ return {
   ]],
   arguments = {
     base = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The base mipmap level which will be used to generate subsequent mipmaps.'
     },
     count = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = [[
-        The number of mipmap levels to generate.  If nil, the rest of the mipmaps will be generated.
+        The number of mipmap levels to generate, or `nil` to generate the rest of the mipmaps.
       ]]
     }
   },

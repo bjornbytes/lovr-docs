@@ -10,11 +10,11 @@ return {
   },
   returns = {
     contents = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The contents of the file, or nil if the file could not be read.'
     },
     error = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The error message, if any.'
     }
   },

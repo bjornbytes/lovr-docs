@@ -33,26 +33,26 @@ return {
   arguments = {
     callbacks = {
       type = 'table',
-      description = 'The World collision callbacks.  All of them are optional.',
+      description = 'The World collision callbacks.',
       table = {
         {
           name = 'filter',
-          type = 'function',
+          type = 'function?',
           description = 'The function to use to filter collisions.'
         },
         {
           name = 'enter',
-          type = 'function',
+          type = 'function?',
           description = 'The function to call when 2 colliders start touching.'
         },
         {
           name = 'exit',
-          type = 'function',
+          type = 'function?',
           description = 'The function to call when 2 colliders stop touching.'
         },
         {
           name = 'contact',
-          type = 'function',
+          type = 'function?',
           description = 'The function to call every frame while 2 colliders are in contact.'
         }
       }

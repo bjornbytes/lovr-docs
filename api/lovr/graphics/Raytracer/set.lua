@@ -68,13 +68,11 @@ return {
       description = 'The transform of the object.'
     },
     layers = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = 'The new layer mask for the object, or nil to leave it unchanged.'
     },
     tag = {
-      type = 'number',
-      default = 'nil',
+      type = 'number?',
       description = 'The new tag for the object, or nil to leave it unchanged.'
     }
   },

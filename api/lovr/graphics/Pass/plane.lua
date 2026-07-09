@@ -65,17 +65,17 @@ return {
       description = 'The transform of the plane.'
     },
     style = {
-      type = 'DrawStyle',
+      type = 'DrawStyle?',
       default = [['fill']],
       description = 'Whether the plane should be drawn filled or outlined.'
     },
     columns = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The number of horizontal segments in the plane.'
     },
     rows = {
-      type = 'number',
+      type = 'number?',
       default = 'columns',
       description = 'The number of vertical segments in the plane.'
     }

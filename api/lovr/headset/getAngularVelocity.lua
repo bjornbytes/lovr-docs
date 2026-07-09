@@ -4,7 +4,7 @@ return {
   description = 'Returns the current angular velocity of a device.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to get the velocity of.'
     }

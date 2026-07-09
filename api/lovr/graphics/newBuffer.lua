@@ -8,19 +8,19 @@ return {
       description = 'The size of the Buffer, in bytes.'
     },
     length = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The length of the Buffer.'
     },
     data = {
-      type = 'table | Blob',
+      type = 'table? | Blob?',
       description = [[
         The initial data to put into the Buffer.  The length of the Buffer will be determined by the
         length of the table or the size of the Blob, combined with the format information.
       ]]
     },
     blob = {
-      type = 'Blob',
+      type = 'Blob?',
       description = 'A Blob with the initial contents of the Buffer.'
     },
     format = {
@@ -31,14 +31,14 @@ return {
       ]],
       table = {
         {
-          name = 'layout',
+          name = 'layout?',
           type = 'DataLayout',
           default = 'packed',
           description = 'How to lay out the Buffer fields in memory.'
         },
         {
           name = 'stride',
-          type = 'number',
+          type = 'number?',
           description = [[
             The stride of the Buffer, in bytes.  When `nil`, the stride will be automatically
             computed based on the fields.  The stride can not be zero or smaller than the max byte

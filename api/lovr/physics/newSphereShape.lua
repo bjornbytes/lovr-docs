@@ -3,7 +3,7 @@ return {
   description = 'Creates a new SphereShape.',
   arguments = {
     radius = {
-      type = 'number',
+      type = 'number?',
       default = '1',
       description = 'The radius of the sphere, in meters.'
     }

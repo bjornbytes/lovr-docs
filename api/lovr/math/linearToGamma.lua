@@ -16,7 +16,7 @@ return {
       description = 'The blue component of the linear-space color.'
     },
     a = {
-      type = 'number',
+      type = 'number?',
       description = 'An optional alpha component (returned unchanged).'
     },
     color = {
@@ -42,7 +42,7 @@ return {
       description = 'The blue component of the resulting gamma-space color.'
     },
     a = {
-      type = 'number',
+      type = 'number?',
       description = 'An optional alpha component (returned unchanged).'
     },
     y = {

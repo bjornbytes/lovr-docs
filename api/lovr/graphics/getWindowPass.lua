@@ -9,7 +9,7 @@ return {
   arguments = {},
   returns = {
     pass = {
-      type = 'Pass | nil',
+      type = 'Pass?',
       description = 'The window pass, or `nil` if there is no window.'
     }
   },

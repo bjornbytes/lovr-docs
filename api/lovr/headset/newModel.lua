@@ -29,14 +29,14 @@ return {
       description = 'A model key to load, previously obtained with `lovr.headset.getModelKeys`.'
     },
     device = {
-      type = 'Device',
+      type = 'Device?',
       default = [['head']],
       description = 'The device to load a model for.'
     }
   },
   returns = {
     model = {
-      type = 'Model',
+      type = 'Model?',
       description = 'The new Model, or `nil` if a model could not be loaded.'
     }
   },

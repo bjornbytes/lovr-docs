@@ -4,7 +4,8 @@ return {
   description = 'Returns whether a button on a device is currently touched.',
   arguments = {
     device = {
-      type = 'Device',
+      type = 'Device?',
+      default = [['head']],
       description = 'The device.'
     },
     button = {
@@ -14,7 +15,7 @@ return {
   },
   returns = {
     touched = {
-      type = 'boolean | nil',
+      type = 'boolean?',
       description = [[
         Whether the button on the device is currently touched, or `nil` if the device does not have
         the button or it isn't touch-sensitive.

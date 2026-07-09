@@ -19,7 +19,7 @@ return {
       description = 'The timestamp to evaluate the keyframes at, in seconds.'
     },
     blend = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = 'How much of the animation\'s pose to blend into the nodes, from 0 to 1.'
     }

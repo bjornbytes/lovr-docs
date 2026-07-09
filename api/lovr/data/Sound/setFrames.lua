@@ -7,17 +7,19 @@ return {
       description = 'A table, Blob, or Sound containing audio frames to write.'
     },
     count = {
-      type = 'number',
-      default = 'nil',
-      description = 'How many frames to write.  If nil, writes as many as possible.'
+      type = 'number?',
+      description = [[
+        How many frames to write.  Defaults to writing as many frames as possible, based on the size
+        of the source and destination.
+      ]]
     },
     dstOffset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'A frame offset to apply when writing the frames.'
     },
     srcOffset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'A frame, byte, or index offset to apply when reading frames from the source.'
     }

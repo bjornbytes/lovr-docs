@@ -4,7 +4,7 @@ return {
   description = 'Returns the current playback position of the Source.',
   arguments = {
     unit = {
-      type = 'TimeUnit',
+      type = 'TimeUnit?',
       default = [['seconds']],
       description = 'The unit to return.'
     }

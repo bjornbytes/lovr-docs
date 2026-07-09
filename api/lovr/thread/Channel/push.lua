@@ -10,7 +10,7 @@ return {
       description = 'The message to push.'
     },
     wait = {
-      type = 'number | boolean',
+      type = 'number? | boolean?',
       default = 'false',
       description = [[
         How long to wait for the message to be popped, in seconds.  `true` can be used to wait

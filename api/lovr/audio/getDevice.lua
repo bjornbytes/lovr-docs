@@ -4,18 +4,18 @@ return {
   description = 'Returns information about the active playback or capture device.',
   arguments = {
     type = {
-      type = 'AudioType',
+      type = 'AudioType?',
       default = [['playback']],
       description = 'The type of device to query.'
     }
   },
   returns = {
     name = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The name of the device, or `nil` if no device is set.'
     },
     id = {
-      type = 'userdata | nil',
+      type = 'userdata?',
       description = 'The opaque id of the device, or `nil` if no device is set.'
     }
   },

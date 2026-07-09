@@ -30,7 +30,7 @@ return {
       description = 'The new position.'
     },
     blend = {
-      type = 'number',
+      type = 'number?',
       default = '1.0',
       description = [[
         A number from 0 to 1 indicating how much of the new position to blend in.  A value of 0 will

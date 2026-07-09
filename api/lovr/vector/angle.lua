@@ -11,8 +11,8 @@ return {
       description = 'The second vector.'
     },
     axis = {
-      type = 'vector',
-      description = 'An axis used to determine the sign of the angle.'
+      type = 'vector?',
+      description = 'An optional axis used to determine the sign of the angle.'
     }
   },
   returns = {

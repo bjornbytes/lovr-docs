@@ -15,12 +15,12 @@ return {
       description = 'The Buffer to assign.'
     },
     offset = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = 'An offset from the start of the buffer where data will be read, in bytes.'
     },
     extent = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         The number of bytes that will be available for reading.  If zero, as much data as possible

@@ -9,7 +9,7 @@ return {
   arguments = {},
   returns = {
     texture = {
-      type = 'Texture | nil',
+      type = 'Texture?',
       description = 'The headset texture.'
     }
   },

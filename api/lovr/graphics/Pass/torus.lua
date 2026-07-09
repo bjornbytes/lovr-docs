@@ -65,12 +65,12 @@ return {
       description = 'The transform of the torus.'
     },
     tsegments = {
-      type = 'number',
+      type = 'number?',
       default = '64',
       description = 'The number of toroidal (circular) segments to render.'
     },
     psegments = {
-      type = 'number',
+      type = 'number?',
       default = '32',
       description = 'The number of poloidal (tubular) segments to render.'
     }

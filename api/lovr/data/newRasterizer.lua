@@ -7,7 +7,7 @@ return {
       description = 'A filename or Blob containing the font file to load.'
     },
     size = {
-      type = 'number',
+      type = 'number?',
       default = '32',
       description = [[
         The resolution to render the font at, in pixels (TTF only).  Higher resolutions use more
@@ -16,8 +16,7 @@ return {
       ]]
     },
     atlas = {
-      type = 'Image',
-      default = 'nil',
+      type = 'Image?',
       description = 'An Image to use for the BMFont atlas, instead of the one in the BMFont file.'
     }
   },

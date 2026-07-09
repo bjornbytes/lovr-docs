@@ -5,11 +5,11 @@ return {
 
     When enabled, the Collider will go to sleep if it hasn't moved in a while.  The physics engine
     does not simulate movement for colliders that are asleep, which saves a lot of CPU for a typical
-    physics world where most objects are at rest at any given time.  
+    physics world where most objects are at rest at any given time.
   ]],
   arguments = {
     sleepy = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the Collider can go to sleep.'
     }
   },

@@ -14,7 +14,7 @@ return {
   },
   returns = {
     skip = {
-      type = 'boolean | nil',
+      type = 'boolean?',
       description = 'If truthy, the input Pass will not be submitted to the GPU.'
     }
   },

@@ -64,8 +64,7 @@ return {
       description = 'The orientation of the shape.'
     },
     filter = {
-      type = 'string',
-      default = 'nil',
+      type = 'string?',
       description = [[
         An optional tag filter.  Pass one or more tags separated by spaces to only return colliders
         with those tags.  Or, put `~` in front the tags to exclude colliders with those tags.

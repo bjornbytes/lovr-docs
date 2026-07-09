@@ -69,7 +69,7 @@ return {
       description = 'The transform of the text.'
     },
     wrap = {
-      type = 'number',
+      type = 'number?',
       default = '0',
       description = [[
         The maximum width of each line in meters (before scale is applied).  When zero, the text
@@ -77,12 +77,12 @@ return {
       ]]
     },
     halign = {
-      type = 'HorizontalAlign',
+      type = 'HorizontalAlign?',
       default = [['center']],
       description = 'The horizontal alignment relative to the text origin.'
     },
     valign = {
-      type = 'VerticalAlign',
+      type = 'VerticalAlign?',
       default = [['middle']],
       description = 'The vertical alignment relative to the text origin.'
     }

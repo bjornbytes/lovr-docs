@@ -18,7 +18,7 @@ return {
       description = 'Whether the write was successful.'
     },
     error = {
-      type = 'string',
+      type = 'string?',
       description = 'The error message, if there was an error.'
     }
   },

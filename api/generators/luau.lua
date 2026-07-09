@@ -9,12 +9,6 @@ declare extern type quaternion with
   w: number
 end
 
-type Vec2 = {number}
-type Vec3 = {number} | vector
-type Vec4 = {number}
-type Quat = {number} | quaternion
-type Mat4 = {number}
-
 declare class Joint end
 declare class Shape end
 ]]
@@ -37,7 +31,7 @@ local function genType(info)
   end
 
   if #types == 1 then
-    return types[1] .. (info.default and '?' or '')
+    return types[1]
   else
     return table.concat(types, ' | ') .. (info.default and ' | nil' or '')
   end

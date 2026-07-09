@@ -12,7 +12,7 @@ return {
   ]],
   arguments = {
     continuous = {
-      type = 'boolean',
+      type = 'boolean?',
       description = 'Whether the Collider uses continuous collision detection.'
     }
   },

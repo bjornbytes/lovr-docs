@@ -20,25 +20,23 @@ return {
       description = 'The parent Texture to create a view of.'
     },
     options = {
-      type = 'table',
-      default = 'nil',
+      type = 'table?',
       description = 'Options for the texture view.',
       table = {
         {
           name = 'type',
-          type = 'TextureType',
+          type = 'TextureType?',
           description = 'The texture type of the view.  Defaults to the type of the parent.'
         },
         {
           name = 'layer',
-          type = 'number',
+          type = 'number?',
           default = '1',
           description = 'The index of the first layer referenced by the view.'
         },
         {
           name = 'layercount',
-          type = 'number',
-          default = 'nil',
+          type = 'number?',
           description = [[
             The number of layers in the view.  Defaults to 1 if a layer index is provided, otherwise
             the view will reference all layers.
@@ -46,14 +44,13 @@ return {
         },
         {
           name = 'mipmap',
-          type = 'number',
+          type = 'number?',
           default = '1',
           description = 'The index of the first mipmap referenced by the view.'
         },
         {
           name = 'mipmapcount',
-          type = 'number',
-          default = 'nil',
+          type = 'number?',
           description = [[
             The number of mipmap levels in the view.  Defaults to 1 if a mipmap index is provided,
             otherwise the view will reference all mipmaps.
@@ -61,7 +58,7 @@ return {
         },
         {
           name = 'label',
-          type = 'string',
+          type = 'string?',
           description = 'An optional label for the view that will show up in debugging tools.'
         }
       }

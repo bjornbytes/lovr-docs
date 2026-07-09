@@ -12,11 +12,11 @@ return {
   },
   returns = {
     data = {
-      type = 'string',
+      type = 'string?',
       description = 'The data that was read, or nil if an error occurred.'
     },
     size = {
-      type = 'number',
+      type = 'number | string',
       description = 'The number of bytes that were read, or the error message if an error occurred.'
     }
   },

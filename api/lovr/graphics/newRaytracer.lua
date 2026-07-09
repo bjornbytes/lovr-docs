@@ -12,12 +12,12 @@ return {
       description = 'The capacity of the Raytracer.'
     },
     options = {
-      type = 'table',
+      type = 'table?',
       description = 'Optional options.',
       table = {
         {
           name = 'dynamic',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'false',
           description = [[
             An optimization hint indicating that the Raytracer will be frequently rebuilt with new
@@ -27,7 +27,7 @@ return {
         },
         {
           name = 'fasttrace',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = [[
             An optimization hint indicating that the Raytracer should be optimized for fast tracing
@@ -36,7 +36,7 @@ return {
         },
         {
           name = 'fastbuild',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'false',
           description = [[
             An optimization hint indicating that the Raytracer should be optimized for fast rebuilds
@@ -45,7 +45,7 @@ return {
         },
         {
           name = 'compress',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'false',
           description = [[
             An optimization hint indicating that the Raytracer should use less VRAM, possibly at the

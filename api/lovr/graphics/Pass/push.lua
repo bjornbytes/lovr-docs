@@ -8,7 +8,7 @@ return {
   ]],
   arguments = {
     stack = {
-      type = 'StackType',
+      type = 'StackType?',
       default = [['transform']],
       description = 'The type of stack to push.'
     }

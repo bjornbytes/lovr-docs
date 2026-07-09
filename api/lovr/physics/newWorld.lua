@@ -3,13 +3,12 @@ return {
   description = 'Creates a new physics World.',
   arguments = {
     settings = {
-      type = 'table',
-      default = 'nil',
+      type = 'table?',
       description = 'An optional table with settings for the physics simulation.',
       table = {
         {
           name = 'tags',
-          type = 'table',
+          type = 'table?',
           default = '{}',
           description = [[
             The list of collision tags (strings).  Colliders can be assigned a tag, and collision
@@ -18,7 +17,7 @@ return {
         },
         {
           name = 'staticTags',
-          type = 'table',
+          type = 'table?',
           default = '{}',
           description = [[
             An optional list of collision tags that are "static".  Colliders with a static tag will
@@ -27,7 +26,7 @@ return {
         },
         {
           name = 'maxColliders',
-          type = 'number',
+          type = 'number?',
           default = '16384',
           description = [[
             The maximum number of Colliders in the World.  Increasing this will use more memory.
@@ -36,7 +35,7 @@ return {
         },
         {
           name = 'threadSafe',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = [[
             Whether the World and the objects it contains can be used from multiple threads.  This
@@ -47,7 +46,7 @@ return {
         },
         {
           name = 'allowSleep',
-          type = 'boolean',
+          type = 'boolean?',
           default = 'true',
           description = [[
             Whether colliders should be allowed to go to sleep when they come to rest.  Sleeping
@@ -57,7 +56,7 @@ return {
         },
         {
           name = 'stabilization',
-          type = 'number',
+          type = 'number?',
           default = '0.2',
           description = [[
             How quickly the physics engine corrects position error from collisions and joints, from
@@ -67,13 +66,13 @@ return {
         },
         {
           name = 'maxOverlap',
-          type = 'number',
+          type = 'number?',
           default = '.01',
           description = 'The maximum amount that colliders are allowed to overlap, in meters.'
         },
         {
           name = 'restitutionThreshold',
-          type = 'number',
+          type = 'number?',
           default = '1.0',
           description = [[
             A velocity below which restitution (bounciness) will not be applied, in meters per
@@ -82,7 +81,7 @@ return {
         },
         {
           name = 'velocitySteps',
-          type = 'number',
+          type = 'number?',
           default = '10',
           description = [[
             The number of solver velocity iterations to run per tick.  This must be at least 2.
@@ -91,7 +90,7 @@ return {
         },
         {
           name = 'positionSteps',
-          type = 'number',
+          type = 'number?',
           default = '2',
           description = [[
             The number of solver position iterations to run per tick.  Larger values will increase
