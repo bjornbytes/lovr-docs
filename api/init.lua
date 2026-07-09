@@ -8959,6 +8959,89 @@ return {
                 }
               }
             }
+          },
+          sections = {
+            {
+              name = "Nodes",
+              links = {
+                "ModelData:getNodeCount",
+                "ModelData:getNodeName",
+                "ModelData:getRootNode",
+                "ModelData:getNodeParent",
+                "ModelData:getNodeChild",
+                "ModelData:getNodeSibling",
+                "ModelData:getNodeMesh",
+                "ModelData:getNodeSkin",
+                "ModelData:getNodePosition",
+                "ModelData:getNodeOrientation",
+                "ModelData:getNodeScale",
+                "ModelData:getNodePose",
+                "ModelData:getNodeTransform"
+              }
+            },
+            {
+              name = "Meshes",
+              links = {
+                "ModelData:getMeshCount",
+                "ModelData:getMeshVertexCount",
+                "ModelData:getMeshIndexCount",
+                "ModelData:getMeshVertex",
+                "ModelData:getMeshIndex",
+                "ModelData:getMeshPartCount",
+                "ModelData:getMeshDrawMode",
+                "ModelData:getMeshDrawRange",
+                "ModelData:getMeshMaterial",
+                "ModelData:getMeshBlendShapeCount",
+                "ModelData:getMeshBlendShapeName",
+                "ModelData:getMeshBlendVertex"
+              }
+            },
+            {
+              name = "Materials",
+              links = {
+                "ModelData:getImageCount",
+                "ModelData:getImage",
+                "ModelData:getMaterialCount",
+                "ModelData:getMaterialName",
+                "ModelData:getMaterial"
+              }
+            },
+            {
+              name = "Bounds",
+              links = {
+                "ModelData:getWidth",
+                "ModelData:getHeight",
+                "ModelData:getDepth",
+                "ModelData:getDimensions",
+                "ModelData:getCenter",
+                "ModelData:getBoundingBox"
+              }
+            },
+            {
+              name = "Animations",
+              links = {
+                "ModelData:getAnimationCount",
+                "ModelData:getAnimationName",
+                "ModelData:getAnimationDuration",
+                "ModelData:getAnimationChannelCount",
+                "ModelData:getAnimationNode",
+                "ModelData:getAnimationProperty",
+                "ModelData:getAnimationSmoothMode",
+                "ModelData:getAnimationKeyframeCount",
+                "ModelData:getAnimationKeyframe",
+                "ModelData:getBlendShapeCount",
+                "ModelData:getBlendShapeName",
+                "ModelData:getSkinCount",
+                "ModelData:getSkinInverseBindMatrix",
+                "ModelData:getSkinJoints"
+              }
+            },
+            {
+              name = "Miscellaneous",
+              links = {
+                "ModelData:getMetadata"
+              }
+            }
           }
         },
         {
