@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the property targeted by a channel of an animation.',
+  summary = 'Get the property targeted by an animation channel.',
   description = 'Returns the property targeted by an animation\'s channel.',
   arguments = {
     animation = {

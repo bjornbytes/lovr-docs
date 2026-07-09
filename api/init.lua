@@ -6853,7 +6853,7 @@ return {
             },
             {
               name = "getAnimationKeyframeCount",
-              summary = "Get the number of keyframes in a channel of an animation.",
+              summary = "Get the number of keyframes in an animation channel.",
               description = "Returns the number of keyframes in a channel of an animation.",
               key = "ModelData:getAnimationKeyframeCount",
               module = "lovr.data",
@@ -6917,7 +6917,7 @@ return {
             },
             {
               name = "getAnimationNode",
-              summary = "Get the node targeted by the channel of an animation.",
+              summary = "Get the node targeted by an animation channel.",
               description = "Returns the index of the node targeted by an animation's channel.",
               key = "ModelData:getAnimationNode",
               module = "lovr.data",
@@ -6951,7 +6951,7 @@ return {
             },
             {
               name = "getAnimationProperty",
-              summary = "Get the property targeted by a channel of an animation.",
+              summary = "Get the property targeted by an animation channel.",
               description = "Returns the property targeted by an animation's channel.",
               key = "ModelData:getAnimationProperty",
               module = "lovr.data",
@@ -6985,7 +6985,7 @@ return {
             },
             {
               name = "getAnimationSmoothMode",
-              summary = "Get the smooth mode of a channel in an animation.",
+              summary = "Get the smooth mode of an animation channel.",
               description = "Returns the smooth mode of a channel in an animation.",
               key = "ModelData:getAnimationSmoothMode",
               module = "lovr.data",

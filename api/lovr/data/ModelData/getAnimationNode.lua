@@ -1,5 +1,5 @@
 return {
-  summary = 'Get the node targeted by the channel of an animation.',
+  summary = 'Get the node targeted by an animation channel.',
   description = 'Returns the index of the node targeted by an animation\'s channel.',
   arguments = {
     animation = {
