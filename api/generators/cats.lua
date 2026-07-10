@@ -5,11 +5,6 @@ local ENABLE_SEE_TAGS = false
 
 local root = lovr.filesystem.getSource()
 
-local function getPath(filename, sep)
-  sep = sep or "/"
-  return filename:match("(.*" .. sep .. ")")
-end
-
 --- Writes `contents` into a file identified by `filename`.
 local function writeFile(filename, contents)
   local fullpath = ('%s/cats/%s'):format(root, filename)
