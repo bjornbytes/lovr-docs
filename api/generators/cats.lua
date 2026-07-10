@@ -261,7 +261,7 @@ local function renderModule(mod)
   for _, obj in ipairs(mod.objects) do
     add(out, "")
     add(out, doc(obj.description))
-    add(out, doc("@class %s"):format(obj.key))
+    add(out, doc("@class %s%s"):format(obj.key, obj.key == "Object" and "" or ": Object"))
 
     -- see tags
     seeTags(out, obj)
