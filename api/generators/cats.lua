@@ -166,7 +166,7 @@ local function renderType(out, tag, variant)
   local returns
   if #variant.returns > 0 then
     returns = join(map(variant.returns, function(ret)
-      return ret.type
+      return argumentType(ret)
     end), ", ")
   else
     returns = "nil"
@@ -192,7 +192,7 @@ local function renderFunctionVariant(out, func, variant)
   -- Document return type
   if variant.returns then
     for _, ret in ipairs(variant.returns) do
-      add(out, doc(("@return %s %s %s"):format(ret.type, ret.name, ret.description)))
+      add(out, doc(("@return %s %s %s"):format(argumentType(ret), ret.name, ret.description)))
     end
   end
 
