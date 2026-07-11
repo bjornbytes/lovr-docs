@@ -7989,6 +7989,12 @@ return {
                       name = "mesh",
                       type = "number",
                       description = "The index of a mesh."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of a part.",
+                      default = "1"
                     }
                   },
                   returns = {
@@ -17866,6 +17872,12 @@ return {
                       name = "mesh",
                       type = "number",
                       description = "The index of a mesh."
+                    },
+                    {
+                      name = "part",
+                      type = "number",
+                      description = "The index of a part.",
+                      default = "1"
                     }
                   },
                   returns = {

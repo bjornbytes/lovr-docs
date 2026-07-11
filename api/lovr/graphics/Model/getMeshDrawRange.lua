@@ -27,7 +27,7 @@ return {
   },
   variants = {
     {
-      arguments = { 'mesh' },
+      arguments = { 'mesh', 'part' },
       returns = { 'start', 'count' }
     }
   },
