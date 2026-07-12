@@ -16,13 +16,13 @@ local device = 'head'
 local pointer = { released = false, hover = false, scroll = false }
 local motion = {
   pose = lovr.math.newMat4(),
-  flying = false,
+  flying = true,
   walkingSpeed = 2,
 }
 local reticle = {
   scaleTo   = 0.1,
   scale     = 0.1,
-  zoomSpeed = 0.005, 
+  zoomSpeed = 0.35, 
   texture   = false,
   textures  = {
     idle  = lovr.graphics.newTexture("reticle_idle.png"),
@@ -74,10 +74,11 @@ function lovr.update(dt)
     reticle.scale   = reticle.scaleTo 
   end
 
-  if pointer.scroll then 
-    if not motion.flying then direction = vector(direction.x, 0, direction.z) end
-    -- move forward/backward via scrollwheel
-    motion.pose:translate(direction * (pointer.scroll.y * motion.walkingSpeed) )
+  if pointer.scroll then moveOnScroll(direction) end
+
+  -- animate
+  if reticle.scale < reticle.scaleTo then -- animate hover
+    reticle.scale = reticle.scale + (reticle.zoomSpeed * dt )
   end
 
   pointer = { released = false, hover = false, scroll = false } -- reset events
@@ -110,19 +111,12 @@ function lovr.draw(pass)
   local y = pos.y + distance * diry
   local z = pos.z + distance * dirz
   local angle, ax, ay, az = lovr.headset.getOrientation(device)
-  local scale = reticle.scale
-  if scale < reticle.scaleTo then -- animate hover
-    scale = scale + reticle.zoomSpeed 
-    reticle.scale = scale
-  end
-  pass:setMaterial(reticle.texture)
   pass:setColor(white)
   pass:setCullMode('back')
-  pass:plane(x, y, z, scale, scale, angle, ax, ay, az)
+  pass:draw(reticle.texture, x, y, z, reticle.scale, angle, ax, ay, az)
 end
 
 -- openxr accessibility interactions: scroll to move + key/mousebutton as action
-
 function lovr.mousereleased(x, y, button)
   pointer.released = {x=x, y=y, button=button, type = "mouse"}
 end
@@ -134,3 +128,11 @@ end
 function lovr.wheelmoved(x, y)
   pointer.scroll   = {x=x, y=y}
 end
+
+function moveOnScroll(direction)
+  if not motion.flying then direction = vector(direction.x, 0, direction.z) end
+  direction = direction:normalize() -- constant speed
+  -- move forward/backward via scrollwheel
+  motion.pose:translate(direction * (pointer.scroll.y * motion.walkingSpeed) )
+end
+
