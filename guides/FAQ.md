@@ -15,16 +15,6 @@ design considerations.  This means that LÖVR does not prioritize features commo
 desktop-focused game engines like advanced control over the desktop window, joystick support,
 touchscreens, etc.
 
-> I can't run LÖVR on macOS!  It says the app is damaged.
-
-By default, Apple quarantines applications downloaded from the internet and prevents you from
-opening them.  Run this to free LÖVR from the quarantine:
-
-    xattr -d com.apple.quarantine /path/to/lovr.app
-
-After typing `xattr -d com.apple.quarantine `, you can drag the app onto the terminal to get the
-path automatically.
-
 > Is there any way to access keyboard/mouse input?
 
 Yes, `lovr.system` has functions for keyboard and mouse input, and there are input events like
