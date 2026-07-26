@@ -155,7 +155,7 @@ the command line:
 - Set `ANDROID_KEYSTORE_PASS` to the keystore password.  This can be used in multiple ways,
   described in [Creating a Keystore](#creating-a-keystore) below.
 - Optional: Set `ANDROID_MANIFEST` to use a custom Android manifest XML file.
-- Optional: Set `ANDROID_ASSETS` to include extra assets (e.g. a project folder) in the APK.
+- Optional: Set `LOVR_PROJECT` to a path to a LÖVR project to bundle into the APK.
 - Windows: Add the `-G Ninja` flag to use the Ninja generator instead of Visual Studio.  Ensure that
   `/path/to/android/sdk/cmake/bin` is added to the `PATH` environment variable so CMake is able to
   find `ninja.exe`.
@@ -190,7 +190,7 @@ To install the APK.
 
 ### Adding Project Code
 
-To build an APK that runs a LÖVR project instead of the splash screen, add an `ANDROID_ASSETS` CMake
+To build an APK that runs a LÖVR project instead of the splash screen, add a `LOVR_PROJECT` CMake
 variable with the path to the project folder.  The project will be included in the `assets` folder
 of the APK, and LÖVR will run that project when the APK starts.
 
