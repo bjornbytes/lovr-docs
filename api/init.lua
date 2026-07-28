@@ -42722,6 +42722,11 @@ return {
                       name = "nz",
                       type = "number",
                       description = "The z component of the penetration vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number | nil",
+                      description = "The index of the triangle that was overlapping, or nil if a MeshShape was not hit."
                     }
                   }
                 },
@@ -42795,6 +42800,11 @@ return {
                       name = "nz",
                       type = "number",
                       description = "The z component of the penetration vector."
+                    },
+                    {
+                      name = "triangle",
+                      type = "number | nil",
+                      description = "The index of the triangle that was overlapping, or nil if a MeshShape was not hit."
                     }
                   }
                 }

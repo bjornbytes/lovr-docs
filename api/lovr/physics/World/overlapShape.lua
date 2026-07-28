@@ -107,6 +107,10 @@ return {
     nz = {
       type = 'number',
       description = 'The z component of the penetration vector.'
+    },
+    triangle = {
+      type = 'number | nil',
+      description = 'The index of the triangle that was overlapping, or nil if a MeshShape was not hit.'
     }
   },
   variants = {
@@ -120,11 +124,11 @@ return {
     },
     {
       arguments = { 'shape', 'x', 'y', 'z', 'angle', 'ax', 'ay', 'az', 'maxDistance', 'filter' },
-      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
+      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz', 'triangle' }
     },
     {
       arguments = { 'shape', 'position', 'orientation', 'maxDistance', 'filter' },
-      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz' }
+      returns = { 'collider', 'shape', 'x', 'y', 'z', 'nx', 'ny', 'nz', 'triangle' }
     }
   },
   related = {
