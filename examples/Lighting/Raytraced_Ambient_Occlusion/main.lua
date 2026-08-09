@@ -111,6 +111,7 @@ function lovr.load()
     occlusionTextures[i] = lovr.graphics.newTexture(width, height, layers, {
       format = format,
       linear = true,
+      type = 'array',
       usage = { 'sample', 'render', 'transfer' }
     })
 
