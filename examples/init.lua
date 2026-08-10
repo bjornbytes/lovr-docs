@@ -43,7 +43,6 @@ return {
   'Physics/Zip_Line',
   'Audio/Playback',
   'Audio/Spatialization',
-  'Audio/Directivity',
   'Audio/Mute',
   'Audio/Sine_Wave_Generator',
   'Effects/Billboards',
