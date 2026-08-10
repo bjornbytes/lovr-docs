@@ -23,5 +23,5 @@ return {
       returns = {}
     }
   },
-  notes = 'The default reqiure path is \'?.lua;?/init.lua\'.'
+  notes = 'The default require path is \'?.lua;?/init.lua\'.'
 }
