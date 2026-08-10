@@ -4,6 +4,13 @@ return {
   description = [[
     Creates and returns a new Pass object.  The canvas (the set of textures the Pass renders to) can
     be specified when creating the Pass, or later using `Pass:setCanvas`.
+
+    :::note
+    Rather than creating new `Pass` objects every frame in `lovr.draw`, it's more efficient to
+    create them once and reuse them.  It's common to call `Pass:reset` at the beginning of a frame
+    to remove all of its existing draws and re-record new draws, but draws can also be recorded to a
+    Pass once and submitted multiple times.
+    :::
   ]],
   arguments = {
     ['...textures'] = {
