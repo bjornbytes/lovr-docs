@@ -23,8 +23,7 @@ return {
     }
   },
   notes = [[
-    Arguments can be nil, booleans, numbers, strings, lightuserdata, vectors, tables, and LÖVR
-    objects.
+    Arguments can be nil, booleans, numbers, strings, lightuserdata, tables, and LÖVR objects.
   ]],
   related = {
     'lovr.event.poll',
