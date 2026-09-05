@@ -2,7 +2,7 @@ return {
   summary = 'Push a message onto the Channel.',
   description = [[
     Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean,
-    number, string, table, lightuserdata, vectors, and userdata (LÖVR objects).
+    number, string, table, lightuserdata, and userdata (LÖVR objects).
   ]],
   arguments = {
     message = {

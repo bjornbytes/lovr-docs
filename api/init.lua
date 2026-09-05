@@ -10591,7 +10591,7 @@ return {
           description = "Pushes an event onto the event queue.  It will be processed the next time `lovr.event.poll` is called.  For an event to be processed properly, there needs to be a function in the `lovr.handlers` table with a key that's the same as the event name.",
           key = "lovr.event.push",
           module = "lovr.event",
-          notes = "Arguments can be nil, booleans, numbers, strings, lightuserdata, vectors, tables, and LÖVR objects.",
+          notes = "Arguments can be nil, booleans, numbers, strings, lightuserdata, tables, and LÖVR objects.",
           related = {
             "lovr.event.poll",
             "lovr.event.quit"
@@ -45443,7 +45443,7 @@ return {
         {
           name = "Channel",
           summary = "A message channel for communicating between threads.",
-          description = "A Channel is an object used to communicate between `Thread` objects.  Different threads can send messages on the same Channel to communicate with each other.  Messages can be sent and received on a Channel using `Channel:push` and `Channel:pop`, and are received in a first-in-first-out fashion. The following types of data can be passed through Channels: nil, boolean, number, string, lightuserdata, table, vector, and any LÖVR object.",
+          description = "A Channel is an object used to communicate between `Thread` objects.  Different threads can send messages on the same Channel to communicate with each other.  Messages can be sent and received on a Channel using `Channel:push` and `Channel:pop`, and are received in a first-in-first-out fashion. The following types of data can be passed through Channels: nil, boolean, number, string, lightuserdata, table, and any LÖVR object.",
           key = "Channel",
           module = "lovr.thread",
           constructors = {
@@ -45574,7 +45574,7 @@ return {
             {
               name = "push",
               summary = "Push a message onto the Channel.",
-              description = "Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean, number, string, table, lightuserdata, vectors, and userdata (LÖVR objects).",
+              description = "Pushes a message onto the Channel.  The following types of data can be pushed: nil, boolean, number, string, table, lightuserdata, and userdata (LÖVR objects).",
               key = "Channel:push",
               module = "lovr.thread",
               notes = "Threads can get stuck forever waiting on Channel messages, so be careful.",
