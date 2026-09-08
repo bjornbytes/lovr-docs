@@ -109,13 +109,12 @@ end
 
 local function render_shadow_map(draw)
   local near_plane = 2
-  local projection = lovr.math.newMat4()
   if light_orthographic then
     local radius = 3
     local far_plane = 15
-    projection:orthographic(-radius, radius, -radius, radius, near_plane, far_plane)
+    projection_matrix:orthographic(-radius, radius, -radius, radius, near_plane, far_plane)
   else
-    projection:perspective(math.pi / 3, 1, near_plane)
+    projection_matrix:perspective(math.pi / 3, 1, near_plane)
   end
 
   view_matrix:lookAt(light_pos, vector(0, 1, z))
