@@ -44897,6 +44897,7 @@ return {
           description = "Sets the mouse mode.",
           key = "lovr.system.setMouseMode",
           module = "lovr.system",
+          notes = "By default, `lovr.simulate` uses this function to implement the mouse controls for the VR headset simulator.  To prevent conflicts with the simulator, you may want to disable `lovr.headset` in `lovr.conf` or set the `lovr.simulate` callback to `nil`.",
           related = {
             "lovr.mousemoved"
           },
