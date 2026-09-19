@@ -14,8 +14,8 @@ This is because kinematic hand controllers can never be affected by collision fo
 squeezed collider cannot push back against them and the collision cannot be resolved.
 
 The approach taken here is to have hand controllers behave as normal dynamic colliders that can be
-affected by other collisions. To track hand controllers, we apply force and torque on collider
-objects that's proportional to distance from correct position.
+affected by other collisions. To track hand controllers, we attach this collider to a small
+kinematic collider (can't be moved by collisions), which is moved in the naive way, with a joint.
 
 This means hand colliders won't have 1:1 mapping with actual hand controllers, they will actually
 'bend' under large force. Also the colliders can become stuck and buried beneath other objects.
@@ -27,24 +27,53 @@ together. This enables pulling, stacking and throwing.                          
 
 local hands = { -- palms that can push and grab objects
   colliders = {nil, nil},     -- physical objects for palms
+  anchors = {nil, nil},
   touching  = {nil, nil},     -- the collider currently touched by each hand
   holding   = {nil, nil},     -- the collider attached to palm
+  grabJoints = {{}, {}},
   solid     = {false, false}, -- hand can either pass through objects or be solid
 } -- to be filled with as many hands as there are active controllers
 
 local world
-local collisionCallbacks = {}
 local boxes = {}
 
-local hand_torque = 20
-local hand_force = 30000
+local function handEnter(hand, object)
+  local id = hand:getUserData()
+  local grabbable = object:getTag() == 'grab'
+  if id and grabbable then
+    hands.touching[id] = object
+  end
+end
+
+local function handExit(hand, object)
+  local id = hand:getUserData()
+  if id and hands.touching[id] == object then
+    hands.touching[id] = nil
+  end
+end
 
 function lovr.load()
-  world = lovr.physics.newWorld(0, -2, 0, false) -- low gravity and no collider sleeping
-  -- ground plane
-  local box = world:newBoxCollider(vector(0, 0, 0), vector(20, 0.1, 20))
-  box:setKinematic(true)
-  table.insert(boxes, box)
+  world = lovr.physics.newWorld({
+    allowSleep = false,
+    tags = { 'grab' },
+  })
+  world:setGravity(0, -2, 0)
+  world:setCallbacks({
+    filter = function(a, b)
+      return a:getUserData() or b:getUserData()
+    end,
+    enter = function(a, b, contact)
+      handEnter(a, b)
+      handEnter(b, a)
+    end,
+    exit = function(a, b, contact)
+      handExit(a, b)
+      handExit(b, a)
+    end,
+  })
+  local floor = world:newBoxCollider(vector(0, 0, 0), vector(20, 0.1, 20))
+  floor:setKinematic(true)
+  table.insert(boxes, floor)
   -- create a fort of boxes
   lovr.math.setRandomSeed(0)
   for angle = 0, 2 * math.pi, 2 * math.pi / 12 do
@@ -53,51 +82,38 @@ function lovr.load()
       local position = orientation * vector(0, height, -1)
       local size = vector(0.3, 0.4, 0.2)
       local box = world:newBoxCollider(position, size)
+      box:setTag('grab')
       box:setOrientation(orientation)
       table.insert(boxes, box)
     end
   end
   -- make colliders for two hands
   for i = 1, 2 do
-    hands.colliders[i] = world:newBoxCollider(vector(0,2,0), vector(0.04, 0.08, 0.08))
-    hands.colliders[i]:setLinearDamping(0.7)
-    hands.colliders[i]:setAngularDamping(0.9)
-    hands.colliders[i]:setMass(0.5)
-    registerCollisionCallback(hands.colliders[i],
-      function(collider, world)
-        -- store collider that was last touched by hand
-        hands.touching[i] = collider
-      end)
+    local collider = world:newBoxCollider(vector(0,2,0), vector(0.04, 0.08, 0.08))
+    collider:setContinuous(true)
+    collider:setLinearDamping(0.7)
+    collider:setAngularDamping(0.9)
+    collider:setMass(0.5)
+    collider:setUserData(i)
+    hands.colliders[i] = collider
+
+    local anchor = world:newBoxCollider(vector(0,2,0), vector.one * 0.001)
+    anchor:setKinematic(true)
+    anchor:setSensor(true)
+    hands.anchors[i] = anchor
+
+    lovr.physics.newWeldJoint(collider, anchor)
   end
 end
 
 
 function lovr.update(dt)
-  -- override collision resolver to notify all colliders that have registered their callbacks
-  world:update(dt, function(world)
-    world:computeOverlaps()
-    for shapeA, shapeB in world:overlaps() do
-      local areColliding = world:collide(shapeA, shapeB)
-      if areColliding then
-        cbA = collisionCallbacks[shapeA]
-        if cbA then cbA(shapeB:getCollider(), world) end
-        cbB = collisionCallbacks[shapeB]
-        if cbB then cbB(shapeA:getCollider(), world) end
-      end
-    end
-  end)
-  -- hand updates - location, orientation, solidify on trigger button, grab on grip button
+  world:update(dt)
   for i, hand in pairs(lovr.headset.getHands()) do
-    -- align collider with controller by applying force (position) and torque (orientation)
-    local handPosition = vector(lovr.headset.getPosition(hand))
-    local handOrientation = quaternion(lovr.headset.getOrientation(hand))
+    -- update anchor's position, the weld joint will move the collider for us
+    hands.anchors[i]:setPose(lovr.headset.getPose(hand))
+
     local colliderOrientation = quaternion(hands.colliders[i]:getOrientation())
-    local rotation = handOrientation * colliderOrientation:conjugate()
-    local angle, ax,ay,az = rotation:toangleaxis()
-    angle = ((angle + math.pi) % (2 * math.pi) - math.pi) -- for minimal motion wrap to (-pi, +pi) range
-    hands.colliders[i]:applyTorque(vector(ax, ay, az) * (angle * dt * hand_torque))
-    local delta = vector(lovr.headset.getPosition(hand)) - vector(hands.colliders[i]:getPosition())
-    hands.colliders[i]:applyForce(delta * dt * hand_force)
     -- solidify when trigger touched
     hands.solid[i] = lovr.headset.isDown(hand, 'trigger')
     hands.colliders[i]:setSensor(not hands.solid[i])
@@ -105,17 +121,19 @@ function lovr.update(dt)
     if lovr.headset.isDown(hand, 'grip') and hands.touching[i] and not hands.holding[i] then
       hands.holding[i] = hands.touching[i]
       -- grab object with ball joint to drag it, and slider joint to also match the orientation
-      lovr.physics.newBallJoint(hands.colliders[i], hands.holding[i], hands.colliders[i]:getPosition())
-      lovr.physics.newSliderJoint(hands.colliders[i], hands.holding[i], colliderOrientation:direction())
+      table.insert(hands.grabJoints[i],
+        lovr.physics.newBallJoint(hands.colliders[i], hands.holding[i], hands.colliders[i]:getPosition()))
+      table.insert(hands.grabJoints[i],
+        lovr.physics.newSliderJoint(hands.colliders[i], hands.holding[i], colliderOrientation:direction()))
     end
     if lovr.headset.wasReleased(hand, 'grip') and hands.holding[i] then
-      for _,joint in ipairs(hands.colliders[i]:getJoints()) do
+      for _, joint in ipairs(hands.grabJoints[i]) do
         joint:destroy()
       end
+      hands.grabJoints[i] = {}
       hands.holding[i] = nil
     end
   end
-  hands.touching = {nil, nil} -- to be set again in collision resolver
 end
 
 
@@ -125,7 +143,7 @@ function lovr.draw(pass)
     drawBoxCollider(pass, collider, not hands.solid[i])
   end
   lovr.math.setRandomSeed(0)
-  for i, collider in ipairs(boxes) do
+  for _, collider in ipairs(boxes) do
     local shade = 0.2 + 0.6 * lovr.math.random()
     pass:setColor(shade, shade, shade)
     drawBoxCollider(pass, collider)
@@ -142,11 +160,10 @@ function drawBoxCollider(pass, collider, is_sensor)
   pass:pop()
 end
 
-
-function registerCollisionCallback(collider, callback)
-  collisionCallbacks = collisionCallbacks or {}
-  for _, shape in ipairs(collider:getShapes()) do
-    collisionCallbacks[shape] = callback
-  end
-  -- to be called with arguments callback(otherCollider, world) from update function
+-- grab with middle mouse when no headset is connected
+local defaultSimulate = lovr.simulate
+function lovr.simulate(dt)
+  local grip = lovr.system.isMouseDown(3)
+  lovr.headset.setButton('hand/left', 'grip', grip)
+  defaultSimulate(dt)
 end
