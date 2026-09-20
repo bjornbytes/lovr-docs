@@ -97,21 +97,19 @@ return {
             accuracy but use more CPU.
           ]]
         },
-         {
+        {
           name = 'timeBeforeSleep',
           type = 'number?',
           default = '0.5',
-          description = [[
-            Time before object is allowed to go to sleep, in seconds.
-          ]]
+          description = 'Time before colliders are allowed to go to sleep, in seconds.'
         },
         {
           name = 'sleepVelocityThreshold',
           type = 'number?',
           default = '0.03',
           description = [[
-            Velocity in meters per second. Must be a positive number.  
-            When movement of an object's vertices is below this threshold, it is allowed to go to sleep.
+            Velocity in meters per second.  Must be a positive number.  When movement of points on
+            a collider is below this threshold, it is allowed to go to sleep.
           ]]
         }
       }

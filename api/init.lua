@@ -34939,6 +34939,18 @@ return {
                       type = "number?",
                       description = "The number of solver position iterations to run per tick.  Larger values will increase accuracy but use more CPU.",
                       default = "2"
+                    },
+                    {
+                      name = "timeBeforeSleep",
+                      type = "number?",
+                      description = "Time before colliders are allowed to go to sleep, in seconds.",
+                      default = "0.5"
+                    },
+                    {
+                      name = "sleepVelocityThreshold",
+                      type = "number?",
+                      description = "Velocity in meters per second.  Must be a positive number.  When movement of points on a collider is below this threshold, it is allowed to go to sleep.",
+                      default = "0.03"
                     }
                   }
                 }
