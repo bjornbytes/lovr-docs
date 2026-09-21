@@ -24967,12 +24967,16 @@ return {
           description = "Raytracers store the information needed to trace rays in shaders.  They are sometimes also called \"acceleration structures\".  Raytracing is useful for implementing lighting effects in shaders, like shadows and ambient occlusion.\n\n### Usage\n\nAfter creating a Raytracer with `lovr.graphics.newRaytracer`, add `Mesh` and `Model` objects to it with `Raytracer:add`.  After adding everything, call `Raytracer:build` to finalize everything.  Finally, send the Raytracer to a `Shader` with `Pass:send`.  The shader code can use the Raytracer to trace rays.\n\nNot all GPUs support raytracing.  Use `lovr.graphics.getFeatures` to check for the `raytracing` feature.\n\n### Objects\n\nTo move objects after adding them, use the ID returned from `Raytracer:add` along with `Raytracer:set` to set a new transform for the object.  To remove an object, either set its scale to zero, set its layer mask to zero, or call `Raytracer:clear` to remove everything and rebuild the raytracer from scratch.\n\nObjects can be placed on up to 8 different layers when they are added to the raytracer.  When tracing rays in shaders, rays have a mask that controls which layers they can hit.\n\nRaytracers have a fixed capacity that must be declared upfront.  `Raytracer:add` will return `nil` instead of an ID if this capacity is exceeded.\n\n`Mesh` and `Model` have their own internal \"mini raytracer\".  The first time an object is added to a raytracer, LÖVR will create the mini raytracer and build it automatically.  However, if the vertices change after the object has been added to the raytracer, the raytracer needs to be rebuilt with `Mesh:buildRaytracer` or `Model:buildRaytracer` for the changes to take affect. Additionally, any `Raytracer` objects using those meshes/models need to be rebuilt as well.",
           key = "Raytracer",
           module = "lovr.graphics",
+          constructors = {
+            "lovr.graphics.newRaytracer"
+          },
           examples = {
             {
               description = "This example demonstrates raytraced shadows for an animated model.",
               code = "function lovr.load()\n  model = lovr.graphics.newModel('model.glb')\n  lovr.graphics.setBackgroundColor(.2, .2, .22)\n\n  shader = lovr.graphics.newShader('unlit', [[\n    uniform raytracer tracer;\n    uniform vec3 lightPosition;\n\n    vec4 lovrmain() {\n      vec4 color = DefaultColor;\n      vec3 L = lightPosition - PositionWorld;\n      vec3 rayPos = PositionWorld + normalize(Normal) * .01;\n      vec3 rayDir = L;\n\n      rayQueryEXT ray;\n      float tmin = .001, tmax = 1.0;\n      uint flags = gl_RayFlagsTerminateOnFirstHitEXT;\n      rayQueryInitializeEXT(ray, tracer, flags, 0xff, rayPos, tmin, rayDir, tmax);\n      rayQueryProceedEXT(ray);\n\n      if (rayQueryGetIntersectionTypeEXT(ray, true) == gl_RayQueryCommittedIntersectionNoneEXT) {\n        return vec4(color.rgb, 1.);\n      } else {\n        return vec4(color.rgb * .05, color.a);\n      }\n    }\n  ]])\n\n  raytracer = lovr.graphics.newRaytracer(1)\n  raytracer:add(model, 0, 0, 0, .01)\nend\n\nfunction lovr.update(dt)\n  model:resetNodeTransforms()\n  model:animate(1, lovr.timer.getTime())\n  model:buildRaytracer()\n  raytracer:build()\nend\n\nfunction lovr.draw(pass)\n  pass:setShader(shader)\n  pass:send('tracer', raytracer)\n  pass:send('lightPosition', 5, 5, 5)\n\n  pass:setColor(0x664455)\n  pass:plane(0, 0, 0, 10, 10, math.pi / 2, 1, 0, 0)\n\n  pass:setColor(0xffffff)\n  pass:draw(model, 0, 0, 0, .01)\nend"
             }
           },
+          extends = "Object",
           methods = {
             {
               name = "add",
@@ -32232,6 +32236,7 @@ return {
             "lovr.math.newMat4",
             "lovr.math.mat4"
           },
+          extends = "Object",
           methods = {
             {
               name = "equals",
@@ -38029,10 +38034,11 @@ return {
         },
         {
           name = "Contact",
-          summary = "TODO",
-          description = "TODO",
+          summary = "A physics contact between two colliders.",
+          description = "Contacts hold collision-related state between two colliders.\n\nThey are not created directly, but are reported from the `enter` and `contact` physics callbacks, set with `World:setCallbacks`.",
           key = "Contact",
           module = "lovr.physics",
+          extends = "Object",
           methods = {
             {
               name = "getColliders",
