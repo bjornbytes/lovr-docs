@@ -34,6 +34,8 @@ return {
     rebuilt with `Mesh:buildRaytracer` or `Model:buildRaytracer` for the changes to take affect.
     Additionally, any `Raytracer` objects using those meshes/models need to be rebuilt as well.
   ]],
+  extends = 'Object',
+  constructor = 'lovr.graphics.newRaytracer',
   example = {
     description = 'This example demonstrates raytraced shadows for an animated model.',
     code = [=[
