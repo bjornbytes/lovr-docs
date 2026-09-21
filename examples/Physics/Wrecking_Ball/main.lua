@@ -81,7 +81,7 @@ function makeRope(origin, destination, thickness, elements)
     local position = origin:lerp(destination, (i - 0.5) / elements)
     local anchor   = origin:lerp(destination, (i - 1.0) / elements)
     element = world:newBoxCollider(position, vector(thickness, thickness, elementSize * 0.95))
-    element:setGravityIgnored(true)
+    element:setGravityScale(0)
     element:setOrientation(orientation)
     element:setMass(0.1)
     if prev then
