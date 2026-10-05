@@ -44,6 +44,7 @@ return {
         if lovr.timer then lovr.timer.step() end
         if lovr.load then lovr.load(arg) end
         return function()
+          if lovr.headset then lovr.headset.pollEvents() end
           if lovr.system then lovr.system.pollEvents() end
           if lovr.event then
             for name, a, b, c, d in lovr.event.poll() do
@@ -53,19 +54,31 @@ return {
             end
           end
           local dt = 0
+          if lovr.headset then lovr.headset.update() end
           if lovr.timer then dt = lovr.timer.step() end
-          if lovr.headset and lovr.headset.isActive() then dt = lovr.headset.update() end
-          if lovr.update then lovr.update(dt) end
-          if lovr.graphics then
-            local headset = lovr.headset and lovr.headset.getPass()
-            if headset and (not lovr.draw or lovr.draw(headset)) then headset = nil end
-            local window = lovr.graphics.getWindowPass()
-            if window and (not lovr.mirror or lovr.mirror(window)) then window = nil end
-            lovr.graphics.submit(headset, window)
-            lovr.graphics.present()
+          if lovr.headset and not lovr.headset.isActive() and lovr.simulate then lovr.simulate(dt) end
+          if lovr.task then
+            for task in lovr.task.poll() do
+              lovr.taskready(task)
+            end
           end
-          if lovr.headset then lovr.headset.submit() end
-          if lovr.math then lovr.math.drain() end
+          if lovr.update then lovr.update(dt) end
+          if lovr.audio then lovr.audio.update(dt) end
+          if lovr.graphics then
+            local window = lovr.graphics.getWindowPass()
+            if lovr.headset then
+              local headset = lovr.headset.getPass()
+              if headset and lovr.draw and lovr.draw(headset) then headset = nil end
+              if window and lovr.mirror and lovr.mirror(window) then window = nil end
+              if headset or window then lovr.graphics.submit(headset, window) end
+              lovr.headset.submit()
+            elseif window and (not lovr.draw or not lovr.draw(window)) then
+              lovr.graphics.submit(window)
+            end
+            lovr.graphics.present()
+          elseif lovr.headset then
+            lovr.headset.submit()
+          end
         end
       end
     ]],
