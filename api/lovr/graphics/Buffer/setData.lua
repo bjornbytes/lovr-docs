@@ -107,12 +107,12 @@ return {
         buffer = lovr.graphics.newBuffer('vec3', 2)
         buffer:setData({ 1,2,3, 4,5,6 })
         buffer:setData({ { 1, 2, 3 }, { 4, 5, 6 } })
-        buffer:setData({ vec3(1, 2, 3), vec3(4, 5, 6) })
+        buffer:setData({ vector(1, 2, 3), vector(4, 5, 6) })
 
         -- When the Buffer's length is 1, wrapping in table is optional:
         buffer = lovr.graphics.newBuffer('vec3')
         buffer:setData(1, 2, 3)
-        buffer:setData(vec3(1, 2, 3))
+        buffer:setData(vector(1, 2, 3))
 
         -- Same for key-value structs
         buffer = lovr.graphics.newBuffer({
@@ -152,7 +152,7 @@ return {
         })
         local data = { positions = {}, sizes = {} }
         for i = 1, buffer:getLength() do
-          data.positions[i] = vec3(i, i, i)
+          data.positions[i] = vector(i, i, i)
           data.sizes[i] = i
         end
         buffer:setData(data)

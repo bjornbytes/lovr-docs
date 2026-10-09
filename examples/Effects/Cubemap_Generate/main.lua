@@ -103,12 +103,12 @@ function cubemap.load()
 	local center = scene.sphereCenter
 	cubemap.facePerspective = lovr.math.newMat4():perspective(math.rad(90), 1, .1, 0)
 	cubemap.faces = {
-		lovr.math.newMat4():lookAt(center, center - unitX, vec3(0, 1, 0)),
-		lovr.math.newMat4():lookAt(center, center + unitX, vec3(0, 1, 0)),
-		lovr.math.newMat4():lookAt(center, center + unitY, vec3(0, 0, -1)),
-		lovr.math.newMat4():lookAt(center, center - unitY, vec3(0, 0, 1)),
-		lovr.math.newMat4():lookAt(center, center + unitZ, vec3(0, 1, 0)),
-		lovr.math.newMat4():lookAt(center, center - unitZ, vec3(0, 1, 0))
+		lovr.math.newMat4():lookAt(center, center - unitX, vector(0, 1, 0)),
+		lovr.math.newMat4():lookAt(center, center + unitX, vector(0, 1, 0)),
+		lovr.math.newMat4():lookAt(center, center + unitY, vector(0, 0, -1)),
+		lovr.math.newMat4():lookAt(center, center - unitY, vector(0, 0, 1)),
+		lovr.math.newMat4():lookAt(center, center + unitZ, vector(0, 1, 0)),
+		lovr.math.newMat4():lookAt(center, center - unitZ, vector(0, 1, 0))
 	}
 
 	-- Create reflection shader

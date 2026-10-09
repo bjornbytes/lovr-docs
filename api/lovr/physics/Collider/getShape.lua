@@ -25,9 +25,9 @@ return {
   },
   example = [[
     function drawBoxCollider(pass, collider)
-      local position = vec3(collider:getPosition())
-      local size = vec3(collider:getShape():getDimensions())
-      local orientation = quat(collider:getOrientation())
+      local position = vector(collider:getPosition())
+      local size = vector(collider:getShape():getDimensions())
+      local orientation = quaternion(collider:getOrientation())
       pass:box(position, size, orientation)
     end
   ]],
