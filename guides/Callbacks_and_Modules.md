@@ -218,7 +218,7 @@ Here's an example that makes a tower of boxes that you can knock down with contr
     -- A helper function for drawing boxes
     function drawBox(pass, box)
       local x, y, z = box:getPosition()
-      pass:cube(x, y, z, .25, quat(box:getOrientation()), 'line')
+      pass:cube(x, y, z, .25, quaternion(box:getOrientation()), 'line')
     end
 
     function lovr.draw(pass)
