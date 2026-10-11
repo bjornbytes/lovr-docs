@@ -88,9 +88,15 @@ return {
     }
   },
   notes = [[
-    By default, the projection is set by the headset.  Each HMD has a specific field of view given
-    by `lovr.headset.getViewAngles`, and the clipping planes can be customized with
-    `lovr.headset.setClipDistance`.
+    The Pass given to `lovr.draw` will have its projection set to match the headset.  Each HMD has a
+    specific field of view given by `lovr.headset.getViewAngles`, and the clipping planes can be
+    customized with `lovr.headset.setClipDistance`.
+
+    The default projection is equivalent to
+
+        mat4():perspective(1.2, pass:getWidth() / pass:getHeight(), .01, 0)
+
+    Calling `Pass:reset` will reset the projection back to the default.
   ]],
   example = [[
     function lovr.draw(pass)
