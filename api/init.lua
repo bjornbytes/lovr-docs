@@ -23527,7 +23527,7 @@ return {
                   code = "function lovr.draw(pass)\n  -- Orthographic/2D\n  pass:setProjection('orthographic')\n\n  -- 90 degree perspective projection\n  pass:setProjection('perspective', math.rad(90))\n\n  -- Asymmetric, for 1 view\n  local fov = math.rad(60) / 2\n  pass:setProjection(1, fov, fov, fov, fov, .1, 0)\n\n  -- Copying from headset\n  for i = 1, lovr.headset.getViewCount() do\n    local left, right, up, down = lovr.headset.getViewAngles(i)\n    local near, far = lovr.headset.getClipDistance()\n    pass:setProjection(i, left, right, up, down, near, far)\n  end\nend"
                 }
               },
-              notes = "By default, the projection is set by the headset.  Each HMD has a specific field of view given by `lovr.headset.getViewAngles`, and the clipping planes can be customized with `lovr.headset.setClipDistance`.",
+              notes = "The Pass given to `lovr.draw` will have its projection set to match the headset.  Each HMD has a specific field of view given by `lovr.headset.getViewAngles`, and the clipping planes can be customized with `lovr.headset.setClipDistance`.\n\nThe default projection is equivalent to\n\n    mat4():perspective(1.2, pass:getWidth() / pass:getHeight(), .01, 0)\n\nCalling `Pass:reset` will reset the projection back to the default.",
               related = {
                 "lovr.headset.getViewAngles",
                 "lovr.headset.getViewCount",
