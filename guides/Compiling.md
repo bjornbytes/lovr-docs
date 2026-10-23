@@ -237,8 +237,7 @@ SDK](https://emscripten.org/docs/getting_started/downloads.html#installation-ins
     $ ./emsdk activate latest
     $ source ./emsdk_env.sh
 
-Add `source ./emsdk_env.sh` bit to your `PATH` if you don't want to re-run it in every terminal
-session.
+Add `source ./emsdk_env.sh` to your `PATH` if you don't want to re-run it in every terminal.
 
 The `tincture` library is necessary to compile shaders to WGSL.  It isn't included as a submodule
 because it is very big.
