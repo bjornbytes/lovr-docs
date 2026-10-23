@@ -16,14 +16,6 @@ LÖVR is currently known to work with (and optimized for)
 
 Other systems and hardware may work, but are not frequently tested.
 
-### Physics SIMD
-
-When building for x86, the physics module requires a CPU with AVX/AVX2 support.  To run LÖVR on
-older CPUs that don't support AVX, either disable the physics module by compiling with
-`-DLOVR_ENABLE_PHYSICS=OFF`, or compile with the `-DUSE_AVX=OFF` and `-DUSE_AVX2=OFF` flags to
-remove AVX instructions.  This will use SSE4.1/SSE4.2 instead, which can similarly be disabled with
-the `-DUSE_SSE4_2=OFF` and/or `-DUSE_SSE4_1=OFF` flags to run on even older CPUs.
-
 Dependencies
 ---
 
