@@ -20,6 +20,7 @@ return {
   },
   related = {
     'lovr.physics.newWorld',
+    'World:isTagStatic',
     'Collider:getTag',
     'Collider:setTag',
     'World:enableCollisionBetween',

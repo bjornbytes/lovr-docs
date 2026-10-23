@@ -41450,6 +41450,7 @@ return {
               module = "lovr.physics",
               related = {
                 "lovr.physics.newWorld",
+                "World:isTagStatic",
                 "Collider:getTag",
                 "Collider:setTag",
                 "World:enableCollisionBetween",
@@ -41599,6 +41600,38 @@ return {
                       name = "allowed",
                       type = "boolean",
                       description = "Whether colliders can sleep."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              name = "isTagStatic",
+              summary = "Check if a collision tag is static.",
+              description = "Returns whether a collision tag was marked as static when the World was created.  Static tags will never collide with other static tags, regardless of whether collision is enabled between them.",
+              key = "World:isTagStatic",
+              module = "lovr.physics",
+              notes = "This function will throw an error if the tag does not exist.",
+              related = {
+                "lovr.physics.newWorld",
+                "World:getTags",
+                "Collider:getTag",
+                "Collider:setTag"
+              },
+              variants = {
+                {
+                  arguments = {
+                    {
+                      name = "tag",
+                      type = "string",
+                      description = "The tag to check."
+                    }
+                  },
+                  returns = {
+                    {
+                      name = "static",
+                      type = "boolean",
+                      description = "Whether the tag is static."
                     }
                   }
                 }
@@ -44170,6 +44203,7 @@ return {
               description = "Collision tags are used to ignore collision between certain pairs of colliders.  The list of available tags is defined when creating the world, and colliders can be given a tag using `Collider:setTag`.",
               links = {
                 "World:getTags",
+                "World:isTagStatic",
                 "World:disableCollisionBetween",
                 "World:enableCollisionBetween",
                 "World:isCollisionEnabledBetween"
