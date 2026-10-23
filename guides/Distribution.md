@@ -120,3 +120,17 @@ LÖVR's build system has options for including assets in the APK.  For CMake, sp
 guide for more info.
 
 (TODO: Mention other approaches like `aapt add`, `apktool`, or manually unzipping/rezipping).
+
+WebAssembly
+---
+
+Follow the instructions in the [Compiling](Compiling#WebAssembly) guide to build LÖVR for
+WebAssembly.
+
+Replace the `project.lovr` with your project archive, or set the `LOVR_PROJECT` CMake variable
+for the build.
+
+The `lovr.html` file can be used as a starting point and customized, or the JS/WASM files can be
+used on any web page.
+
+Finally, serve the HTML file along with `lovr.js`, `lovr.wasm`, and `project.lovr`!

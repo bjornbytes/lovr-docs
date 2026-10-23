@@ -213,6 +213,70 @@ can take the following forms:
 - `env:<var>` will use the value of the `<var>` environment variable.
 - `file:<file>` will use the contents of `<file>` as the password.
 
+WebAssembly
+---
+
+LÖVR can run in a browser by compiling to WebAssembly.
+
+### Requirements
+
+LÖVR uses several new WebGPU features.  Currently a "bleeding edge" browser is necessary.
+
+On Linux, launch Chrome with these flags:
+
+    --ozone-platform=x11 --use-angle=vulkan --enable-features=Vulkan,VulkanFromANGLE
+
+### Setup
+
+First, [install the emscripten
+SDK](https://emscripten.org/docs/getting_started/downloads.html#installation-instructions-using-the-emsdk-recommended):
+
+    $ git clone https://github.com/emscripten-core/emsdk.git
+    $ cd emsdk
+    $ ./emsdk install latest
+    $ ./emsdk activate latest
+    $ source ./emsdk_env.sh
+
+Add `source ./emsdk_env.sh` bit to your `PATH` if you don't want to re-run it in every terminal
+session.
+
+The `tincture` library is necessary to compile shaders to WGSL.  It isn't included as a submodule
+because it is very big.
+
+    $ git clone git@github.com:bjornbytes/tincture deps/tincture
+
+### Compiling
+
+Once you have the emscripten SDK, build LÖVR using emscripten's CMake wrapper:
+
+    $ emcmake cmake -B build
+    $ cmake --build build
+
+This will output `lovr.wasm`, `lovr.js`, `lovr.html`, and `project.lovr` in the `build` directory.
+
+The HTML file downloads and runs `project.lovr`, which is the nogame screen by default.  To run a
+different project, replace the `project.lovr` file, or set the `LOVR_PROJECT` CMake variable:
+
+    $ emcmake cmake -B build -DLOVR_PROJECT=/path/to/mygame
+    $ cmake --build build
+
+### Running
+
+Start a web server that serves the build directory:
+
+    $ python -m http.server -d build
+
+Then visit [http://localhost:8000](http://localhost:8000) in a browser.
+
+### Restrictions
+
+There are a few known issues when running in a browser:
+
+- LuaJIT can not be built for WebAssembly, so `ffi` and other LuaJIT features aren't available.
+- `lovr.thread` requires `SharedArrayBuffer` (TODO: elaborate).
+- SteamAudio support is unclear, you may need to build with `-DLOVR_USE_STEAM_AUDIO=OFF`.
+- Plugins (enet, http) don't work on web, although it is theoretically possible to get this working.
+
 Using Docker
 ---
 
