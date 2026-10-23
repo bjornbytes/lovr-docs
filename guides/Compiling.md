@@ -42,10 +42,8 @@ First, make sure you have a C compiler.
 From the lovr folder, run these commands to create a build folder and compile the project using
 CMake:
 
-    $ mkdir build
-    $ cd build
-    $ cmake ..
-    $ cmake --build .
+    $ cmake -B build
+    $ cmake --build build
 
 The executable will then exist at `/path/to/lovr/build/Debug/lovr.exe`.  A LÖVR project (a folder
 containing a `main.lua` script) can then be dropped onto `lovr.exe` to run it, or it can be run
@@ -90,10 +88,8 @@ First, install a C compiler, CMake, and other dependencies:
 
 Then, compile using CMake:
 
-    $ mkdir build
-    $ cd build
-    $ cmake ..
-    $ cmake --build .
+    $ cmake -B build
+    $ cmake --build build
 
 LÖVR can use either SteamVR or monado as the VR runtime on Linux.
 
