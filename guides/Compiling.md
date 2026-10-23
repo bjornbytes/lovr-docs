@@ -23,13 +23,14 @@ LÖVR uses the following libraries.  They are included as submodules in the `dep
 repository, so make sure you clone with the `--recursive` flag or run
 `git submodule update --init --recursive` in an existing repository.
 
-- Lua (5.1+) or LuaJIT (2.1+)
+- Lua (5.1+), LuaJIT (2.1+), or Luau (LÖVR fork)
 - GLFW (3.3+)
 - glslang
 - OpenXR
 - Vulkan SDK
 - msdfgen
 - Jolt Physics
+- SteamAudio
 
 LÖVR requires a C compiler that supports C11.  GCC 4.9, clang 3.1, and Windows SDK 2104 support C11.
 
