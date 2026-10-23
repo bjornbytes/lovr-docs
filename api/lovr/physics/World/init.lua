@@ -49,6 +49,7 @@ return {
       ]],
       links = {
         'World:getTags',
+        'World:isTagStatic',
         'World:disableCollisionBetween',
         'World:enableCollisionBetween',
         'World:isCollisionEnabledBetween'
