@@ -273,7 +273,7 @@ There are a few known issues when running in a browser:
 
 - LuaJIT can not be built for WebAssembly, so `ffi` and other LuaJIT features aren't available.
 - `lovr.thread` requires `SharedArrayBuffer` (TODO: elaborate).
-- SteamAudio support is unclear, you may need to build with `-DLOVR_USE_STEAM_AUDIO=OFF`.
+- Audio does not work very well.  Expect crackling.  SteamAudio likely does not work yet.
 - Plugins (enet, http) don't work on web, although it is theoretically possible to get this working.
 
 Using Docker
