@@ -23,12 +23,20 @@ LÖVR-specific libraries:
 <table>
   <tbody>
     <tr>
+      <td><a href="https://github.com/jmiskovic/chui">chui</a></td>
+      <td>UI lib in 3D.</td>
+    </tr>
+    <tr>
       <td><a href="https://github.com/immortalx74/game_controller">game_controller</a></td>
       <td>Game controller library for LÖVR.</td>
     </tr>
     <tr>
       <td><a href="https://github.com/jmiskovic/indeck">inDECK</a></td>
       <td>A standalone 3D development environment focused on developing VR from within VR.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/DonaldHays/iui">iui</a></td>
+      <td>Immediate Mode GUI Library for Lua.</td>
     </tr>
     <tr>
       <td><a href="https://github.com/jmiskovic/lite-lovr">lite-lovr</a></td>
@@ -49,6 +57,10 @@ LÖVR-specific libraries:
     <tr>
       <td><a href="https://github.com/mcclure/lovr-ent">lovr-ent</a></td>
       <td>Entity tree library / sample project.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/jmiskovic/lovr-firstperson">lovr-firstperson</a></td>
+      <td>A character controller within the LÖVR physics world.</td>
     </tr>
     <tr>
       <td><a href="https://github.com/excessive/lovr-haxe-wrappergen">lovr-haxe-wrappergen</a></td>
