@@ -1,7 +1,5 @@
-lovr.mouse = require 'lovr-mouse'
-
 function lovr.load()
-  lovr.mouse.setRelativeMode(true)
+  lovr.system.setMouseMode('relative')
 
   camera = {
     transform = lovr.math.newMat4(),
@@ -44,6 +42,7 @@ end
 function lovr.draw(pass)
   pass:push()
   pass:setViewPose(1, camera.transform)
+  pass:setProjection('perspective', math.rad(60))
   pass:setColor(0xff0000)
   pass:cube(0, 1.7, -3, .5, lovr.timer.getTime())
   pass:setColor(0xffffff)
@@ -53,7 +52,14 @@ end
 
 function lovr.mousemoved(x, y, dx, dy)
   camera.pitch = camera.pitch - dy * .004
-  camera.yaw = camera.yaw - dx * .004
+  camera.yaw = camera.yaw - dx * .003
+
+  -- Clamp the up and down mouselook
+  if camera.pitch < -math.pi / 2 then
+    camera.pitch = -math.pi / 2
+  elseif camera.pitch > math.pi / 2 then
+    camera.pitch = math.pi / 2
+  end
 end
 
 function lovr.keypressed(key)
