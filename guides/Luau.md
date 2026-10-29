@@ -75,8 +75,68 @@ Luau LSP
 ---
 
 [Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR, and `lovr-docs` is able to
-generate Luau type definitions.  However, Luau LSP does not currently understand LÖVR's `require`
-function, which means it doesn't work for multi-file projects.
+generate Luau type definitions.
 
-TODO: see if [source code transformation](https://github.com/JohnnyMorganz/luau-lsp/pull/1088) can
-be used to fix this.
+:::note
+Luau's new type solver is not currently able to parse LÖVR's type definitions because it requires
+definitions to be in a strict order, see [this
+issue](https://github.com/luau-lang/luau/issues/2096).
+
+The V1 type solver works.
+:::
+
+### Require
+
+LÖVR and Luau use different `require` systems, so by default luau-lsp won't understand LÖVR require
+paths.  To fix this, use an [LSP plugin](https://github.com/JohnnyMorganz/luau-lsp/blob/main/src/Plugin/README.md)
+that tells luau-lsp to treat require paths as relative to the root of the project.  Place this in a
+`lovr-require.luau` file somewhere:
+
+    return {
+      transformSource = function(source, context)
+        local root = lsp.workspace.getRootUri()
+        local edits = {}
+
+        local line = 1
+
+        for text in source:gmatch('(.-)\n') do
+          local first, last = text:find('require%(?[\'\"].-[\'\"]%)?')
+
+          if first then
+            local statement = text:sub(first, last)
+            local module = statement:match('[\'\"](.-)[\'\"]')
+
+            if module then
+              local path = module:gsub('%.', '/')
+              local absolutePath = root:joinPath(path).fsPath
+
+              table.insert(edits, {
+                startLine = line,
+                startColumn = first,
+                endLine = line,
+                endColumn = last + 1,
+                newText = string.format('require \'%s\'', absolutePath)
+              })
+            end
+          end
+
+          line = line + 1
+        end
+
+        return edits
+      end
+    } :: PluginApi
+
+Then, configure luau-lsp to use the plugin:
+
+    {
+      plugins = {
+        enabled = true,
+        paths = {
+          '/path/to/plugin.luau'
+        },
+        fileSystem = {
+          enabled = true
+        }
+      }
+    }
