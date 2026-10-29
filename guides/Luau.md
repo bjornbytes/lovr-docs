@@ -131,7 +131,7 @@ Then, configure luau-lsp to use the plugin:
       plugins = {
         enabled = true,
         paths = {
-          '/path/to/plugin.luau'
+          '/path/to/lovr-require.luau'
         },
         fileSystem = {
           enabled = true
