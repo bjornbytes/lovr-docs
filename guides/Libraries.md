@@ -59,16 +59,8 @@ LÖVR-specific libraries:
       <td>A library to create icosphere meshes.</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/bjornbytes/lovr-keyboard">lovr-keyboard</a></td>
-      <td>Keyboard input.</td>
-    </tr>
-    <tr>
       <td><a href="https://github.com/alloverse/lovr-letters">lovr-letters</a></td>
       <td>A library for making VR keyboards.</td>
-    </tr>
-    <tr>
-      <td><a href="https://github.com/bjornbytes/lovr-mouse">lovr-mouse</a></td>
-      <td>Mouse input.</td>
     </tr>
     <tr>
       <td><a href="https://github.com/bjornbytes/lovr-neovim">lovr-neovim</a></td>
