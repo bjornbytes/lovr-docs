@@ -74,8 +74,8 @@ LÖVR does not currently implement Luau's native codegen.
 Luau LSP
 ---
 
-[Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR, and `lovr-docs` is able to
-generate Luau type definitions.
+[Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR.  To generate type
+definitions, run `lovr api luau` from lovr-docs.
 
 :::note
 Luau's new type solver is not currently able to parse LÖVR's type definitions because it requires
