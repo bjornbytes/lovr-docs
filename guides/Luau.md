@@ -79,9 +79,7 @@ definitions, run `lovr api luau` from lovr-docs.
 
 :::note
 Luau's new type solver is not currently able to parse LÖVR's type definitions because it requires
-definitions to be in a strict order, see [this
-issue](https://github.com/luau-lang/luau/issues/2096).
-
+definitions to be in a strict order, see [this issue](https://github.com/luau-lang/luau/issues/2096).
 The V1 type solver works.
 :::
 
