@@ -1,16 +1,6 @@
 local preamble = [[
 declare extern type userdata with end
 declare extern type lightuserdata with end
-
-declare extern type quaternion with
-  x: number
-  y: number
-  z: number
-  w: number
-end
-
-declare class Joint end
-declare class Shape end
 ]]
 
 local genFunctionType
@@ -140,33 +130,33 @@ return function(api)
       write('\n')
     end
 
-    local ignore = {
-      Vec2 = true,
-      Vec3 = true,
-      Vec4 = true,
-      Quat = true,
-      Mat4 = true,
-      Vectors = true
-    }
+    -- Superclasses need to be declared before their subclasses
+    table.sort(module.objects, function(a, b)
+      local abase = a.name == 'Joint' or a.name == 'Shape'
+      local bbase = b.name == 'Joint' or b.name == 'Shape'
+      if abase == bbase then
+        return a.name < b.name
+      else
+        return abase
+      end
+    end)
 
     for _, object in ipairs(module.objects) do
-      if not ignore[object.name] then
-        write('declare class %s', object.name)
+      write('declare extern type %s', object.name)
 
-        if object.extends then
-          write(' extends %s', object.extends)
-        end
-
-        write('\n')
-
-        for _, method in ipairs(object.methods) do
-          for _, variant in ipairs(method.variants) do
-            write('%s\n', genMethod(method, variant))
-          end
-        end
-
-        write('end\n\n')
+      if object.extends then
+        write(' extends %s', object.extends)
       end
+
+      write(' with\n')
+
+      for _, method in ipairs(object.methods) do
+        for _, variant in ipairs(method.variants) do
+          write('%s\n', genMethod(method, variant))
+        end
+      end
+
+      write('end\n\n')
     end
 
     if module.name ~= 'lovr' and #module.functions > 0 then
