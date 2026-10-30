@@ -51,7 +51,11 @@ local function genReturns(returns)
   local t = {}
 
   for _, ret in ipairs(returns) do
-    table.insert(t, genType(ret))
+    if ret.name:match('%.%.%.') then
+      table.insert(t, '...' .. genType(ret))
+    else
+      table.insert(t, genType(ret))
+    end
   end
 
   return table.concat(t, ', ')
