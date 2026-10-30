@@ -207,6 +207,6 @@ return function(api)
   write('}\n')
 
   local file = assert(io.open(directory .. '/lovr.d.luau', 'w'))
-  file:write(table.concat(out):sub(1, -2))
+  file:write(table.concat(out))
   file:close()
 end
