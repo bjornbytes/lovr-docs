@@ -125,7 +125,7 @@ WebAssembly
 ---
 
 First, grab a WebAssembly build from GitHub actions.  It includes `lovr.js`, `lovr.wasm`,
-a `lovr.html` webpage,, and a `project.lovr` project to run (which is just the nogame screen).  You
+a `lovr.html` webpage, and a `project.lovr` project to run (which is just the nogame screen).  You
 can also build the WebAssembly build yourself to customize the build, see the [Compiling](Compiling#WebAssembly)
 guide for instructions.
 
