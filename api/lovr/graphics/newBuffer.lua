@@ -31,8 +31,8 @@ return {
       ]],
       table = {
         {
-          name = 'layout?',
-          type = 'DataLayout',
+          name = 'layout',
+          type = 'DataLayout?',
           default = 'packed',
           description = 'How to lay out the Buffer fields in memory.'
         },

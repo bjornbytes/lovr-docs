@@ -13399,8 +13399,8 @@ return {
                   description = "A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple arrays.",
                   table = {
                     {
-                      name = "layout?",
-                      type = "DataLayout",
+                      name = "layout",
+                      type = "DataLayout?",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
@@ -13434,8 +13434,8 @@ return {
                   description = "A list of fields in the Buffer.  A `DataType` can also be used for buffers that are simple arrays.",
                   table = {
                     {
-                      name = "layout?",
-                      type = "DataLayout",
+                      name = "layout",
+                      type = "DataLayout?",
                       description = "How to lay out the Buffer fields in memory.",
                       default = "packed"
                     },
