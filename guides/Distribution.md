@@ -124,13 +124,17 @@ guide for more info.
 WebAssembly
 ---
 
-Follow the instructions in the [Compiling](Compiling#WebAssembly) guide to build LÖVR for
-WebAssembly.
+First, grab a WebAssembly build from GitHub actions.  It includes `lovr.js`, `lovr.wasm`,
+a `lovr.html` webpage,, and a `project.lovr` project to run (which is just the nogame screen).  You
+can also build the WebAssembly build yourself to customize the build, see the [Compiling](Compiling#WebAssembly)
+guide for instructions.
 
 Replace the `project.lovr` with your project archive, or set the `LOVR_PROJECT` CMake variable
 for the build.
 
-The `lovr.html` file can be used as a starting point and customized, or the JS/WASM files can be
-used on any web page.
+The `lovr.html` file can be used as a starting point and customized, alternatively the JS/WASM files
+can be included on any web page.  Make sure the page at least has a `<canvas>` with an ID of
+"canvas", and see the sample HTML file for how to set up the `Module` global and add the project
+file to emscripten's virtual filesystem (`FS_createPreloadedFile`).
 
 Finally, serve the HTML file along with `lovr.js`, `lovr.wasm`, and `project.lovr`!
