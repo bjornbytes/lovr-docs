@@ -15,7 +15,7 @@ return {
   },
   returns = {
     sibling = {
-      type = 'number | nil',
+      type = 'number?',
       description = [[
         The index of the node's next sibling, or `nil` if the node doesn't have a sibling.
       ]]

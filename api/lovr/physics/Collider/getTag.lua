@@ -12,7 +12,7 @@ return {
   arguments = {},
   returns = {
     tag = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The Collider\'s tag.'
     }
   },

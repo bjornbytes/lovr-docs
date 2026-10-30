@@ -13,7 +13,7 @@ return {
   },
   returns = {
     mesh = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The index of the node\'s mesh, or `nil` if the node does not have a mesh.'
     }
   },

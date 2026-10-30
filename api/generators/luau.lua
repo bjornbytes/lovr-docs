@@ -70,10 +70,12 @@ local genFunctionType
 
 local function genType(info)
   local types = {}
+  local optional = info.default or info.type:find('?')
 
   for t in info.type:gmatch('[%w{}%*%.]+') do
     if t == 'function' then
-      table.insert(types, genFunctionType(info))
+      -- Need to wrap optional functions in parens so the ? doesn't apply to the return type
+      table.insert(types, (optional and '(%s)' or '%s'):format(genFunctionType(info)))
     elseif t == '*' then
       table.insert(types, 'any')
     elseif t == 'table' then
@@ -84,9 +86,9 @@ local function genType(info)
   end
 
   if #types == 1 then
-    return types[1]
+    return types[1] .. (optional and '?' or '')
   else
-    return table.concat(types, ' | ') .. (info.default and ' | nil' or '')
+    return table.concat(types, ' | ') .. (optional and ' | nil' or '')
   end
 end
 
@@ -261,7 +263,7 @@ return function(api)
     end
   end
 
-  write('}\n')
+  write('}\n\n')
 
   write(vectors)
 

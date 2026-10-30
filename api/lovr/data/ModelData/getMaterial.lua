@@ -97,17 +97,17 @@ return {
         },
         {
           name = 'texture',
-          type = 'number | nil',
+          type = 'number?',
           description = 'The index of the Image used for the color texture.',
         },
         {
           name = 'glowTexture',
-          type = 'number | nil',
+          type = 'number?',
           description = 'The index of the Image used for the glow texture.',
         },
         {
           name = 'occlusionTexture',
-          type = 'number | nil',
+          type = 'number?',
           description = [[
             The index of the Image used for the ambient occlusion texture.  The red channel of the
             texture is used for ambient occlusion, allowing multiple parameters to use the same
@@ -116,7 +116,7 @@ return {
         },
         {
           name = 'metalnessTexture',
-          type = 'number | nil',
+          type = 'number?',
           description = [[
             The index of the Image used for the metalness texture.  The blue channel of the texture
             is used for metalness, allowing multiple parameters to use the same texture.
@@ -124,7 +124,7 @@ return {
         },
         {
           name = 'roughnessTexture',
-          type = 'number | nil',
+          type = 'number?',
           description = [[
             The index of the Image to use for the roughness texture.  The green channel of the
             texture is used for roughness, allowing multiple parameters to use the same texture.
@@ -132,7 +132,7 @@ return {
         },
         {
           name = 'clearcoatTexture',
-          type = 'number | nil',
+          type = 'number?',
           description = [[
             The index of the Image to use for the clearcoat texture.  The red channel of the texture
             is used for the clearcoat parameter, allowing multiple parameters to use the same
@@ -141,7 +141,7 @@ return {
         },
         {
           name = 'normalTexture',
-          type = 'number | nil',
+          type = 'number?',
           description = 'The index of the Image to use for the normal map.'
         }
       }

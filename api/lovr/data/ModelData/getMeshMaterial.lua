@@ -17,7 +17,7 @@ return {
   },
   returns = {
     material = {
-      type = 'number | nil',
+      type = 'number?',
       description = [[
         The index of the material applied to the part, or nil if the part does not have a material.
       ]]

@@ -9,7 +9,7 @@ return {
   },
   returns = {
     status = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The status of the task.'
     }
   },

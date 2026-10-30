@@ -10,7 +10,7 @@ return {
   arguments = {},
   returns = {
     shape = {
-      type = 'Shape | nil',
+      type = 'Shape?',
       description = [[
         One of the `Shape` objects attached to the Collider, or `nil` if the Collider doesn't have
         any shapes attached to it.

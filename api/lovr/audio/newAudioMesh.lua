@@ -26,7 +26,7 @@ return {
       description = 'A Mesh to use for the mesh data.  It must use the `cpu` storage mode.'
     },
     material = {
-      type = 'AudioMaterial | {AudioMaterial} | nil',
+      type = 'AudioMaterial | {AudioMaterial}',
       default = [['generic']],
       description = [[
         The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the

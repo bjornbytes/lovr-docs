@@ -6908,7 +6908,7 @@ return {
                   returns = {
                     {
                       name = "name",
-                      type = "string | nil",
+                      type = "string?",
                       description = "The name of the animation, or `nil` if the animation doesn't have a name."
                     }
                   }
@@ -7677,37 +7677,37 @@ return {
                         },
                         {
                           name = "texture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image used for the color texture."
                         },
                         {
                           name = "glowTexture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image used for the glow texture."
                         },
                         {
                           name = "occlusionTexture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image used for the ambient occlusion texture.  The red channel of the texture is used for ambient occlusion, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "metalnessTexture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image used for the metalness texture.  The blue channel of the texture is used for metalness, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "roughnessTexture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image to use for the roughness texture.  The green channel of the texture is used for roughness, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "clearcoatTexture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image to use for the clearcoat texture.  The red channel of the texture is used for the clearcoat parameter, allowing multiple parameters to use the same texture."
                         },
                         {
                           name = "normalTexture",
-                          type = "number | nil",
+                          type = "number?",
                           description = "The index of the Image to use for the normal map."
                         }
                       }
@@ -8103,7 +8103,7 @@ return {
                   returns = {
                     {
                       name = "material",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the material applied to the part, or nil if the part does not have a material."
                     }
                   }
@@ -8332,7 +8332,7 @@ return {
                   returns = {
                     {
                       name = "child",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the node's first child, or `nil` if the node doesn't have any children."
                     }
                   }
@@ -8413,7 +8413,7 @@ return {
                   returns = {
                     {
                       name = "mesh",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the node's mesh, or `nil` if the node does not have a mesh."
                     }
                   }
@@ -8692,7 +8692,7 @@ return {
                   returns = {
                     {
                       name = "sibling",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the node's next sibling, or `nil` if the node doesn't have a sibling."
                     }
                   }
@@ -17033,7 +17033,7 @@ return {
                   returns = {
                     {
                       name = "name",
-                      type = "string | nil",
+                      type = "string?",
                       description = "The name of the animation, or `nil` if the animation doesn't have a name."
                     }
                   }
@@ -17952,7 +17952,7 @@ return {
                   returns = {
                     {
                       name = "material",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the material applied to the part, or nil if the part does not have a material."
                     }
                   }
@@ -18066,7 +18066,7 @@ return {
                   returns = {
                     {
                       name = "child",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the node's first child, or `nil` if the node doesn't have any children."
                     }
                   }
@@ -18147,7 +18147,7 @@ return {
                   returns = {
                     {
                       name = "mesh",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the node's mesh, or `nil` if the node does not have a mesh."
                     }
                   }
@@ -18470,7 +18470,7 @@ return {
                   returns = {
                     {
                       name = "sibling",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the node's next sibling, or `nil` if the node doesn't have a sibling."
                     }
                   }
@@ -36447,7 +36447,7 @@ return {
                   returns = {
                     {
                       name = "shape",
-                      type = "Shape | nil",
+                      type = "Shape?",
                       description = "One of the `Shape` objects attached to the Collider, or `nil` if the Collider doesn't have any shapes attached to it."
                     }
                   }
@@ -36498,7 +36498,7 @@ return {
                   returns = {
                     {
                       name = "tag",
-                      type = "string | nil",
+                      type = "string?",
                       description = "The Collider's tag."
                     }
                   }
@@ -40304,7 +40304,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the triangle that was hit, or `nil` if this is not a MeshShape."
                     }
                   }
@@ -40355,7 +40355,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the triangle that was hit, or `nil` if this is not a MeshShape."
                     }
                   }
@@ -42763,7 +42763,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the triangle that was overlapping, or nil if a MeshShape was not hit."
                     }
                   }
@@ -42840,7 +42840,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the triangle that was overlapping, or nil if a MeshShape was not hit."
                     }
                   }
@@ -43406,7 +43406,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the triangle that was hit, or nil if a MeshShape was not hit."
                     }
                   }
@@ -43472,7 +43472,7 @@ return {
                     },
                     {
                       name = "triangle",
-                      type = "number | nil",
+                      type = "number?",
                       description = "The index of the triangle that was hit, or nil if a MeshShape was not hit."
                     }
                   }
@@ -44343,7 +44343,7 @@ return {
               returns = {
                 {
                   name = "text",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The clipboard text."
                 }
               }
@@ -45170,7 +45170,7 @@ return {
               returns = {
                 {
                   name = "status",
-                  type = "string | nil",
+                  type = "string?",
                   description = "The status of the task."
                 }
               }

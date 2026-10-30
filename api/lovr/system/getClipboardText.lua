@@ -5,7 +5,7 @@ return {
   arguments = {},
   returns = {
     text = {
-      type = 'string | nil',
+      type = 'string?',
       description = 'The clipboard text.'
     }
   },

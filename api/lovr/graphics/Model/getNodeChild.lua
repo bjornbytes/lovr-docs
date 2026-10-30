@@ -14,7 +14,7 @@ return {
   },
   returns = {
     child = {
-      type = 'number | nil',
+      type = 'number?',
       description = [[
         The index of the node's first child, or `nil` if the node doesn't have any children.
       ]]

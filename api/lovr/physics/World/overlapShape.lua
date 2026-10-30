@@ -107,7 +107,7 @@ return {
       description = 'The z component of the penetration vector.'
     },
     triangle = {
-      type = 'number | nil',
+      type = 'number?',
       description = 'The index of the triangle that was overlapping, or nil if a MeshShape was not hit.'
     }
   },
