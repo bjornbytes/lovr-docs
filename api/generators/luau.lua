@@ -199,7 +199,7 @@ return function(api)
   write('\n')
 
   for _, module in ipairs(api.modules) do
-    if module.name ~= 'lovr' and #module.functions > 0 then
+    if module.name ~= 'lovr' and #module.functions > 0 and not module.external then
       write('  %s: %sModule,\n', module.name, module.name:gsub('^%l', string.upper))
     end
   end
