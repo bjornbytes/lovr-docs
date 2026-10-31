@@ -87,54 +87,20 @@ The V1 type solver works.
 
 LÖVR and Luau use different `require` systems, so by default luau-lsp won't understand LÖVR require
 paths.  To fix this, use an [LSP plugin](https://github.com/JohnnyMorganz/luau-lsp/blob/main/src/Plugin/README.md)
-that tells luau-lsp to treat require paths as relative to the root of the project.  Place this in a
-`lovr-require.luau` file somewhere:
-
-    return {
-      transformSource = function(source, context)
-        local root = lsp.workspace.getRootUri()
-        local edits = {}
-
-        local line = 1
-
-        for text in source:gmatch('(.-)\n') do
-          local first, last = text:find('require%(?[\'\"].-[\'\"]%)?')
-
-          if first then
-            local statement = text:sub(first, last)
-            local module = statement:match('[\'\"](.-)[\'\"]')
-
-            if module then
-              local path = module:gsub('%.', '/')
-              local absolutePath = root:joinPath(path).fsPath
-
-              table.insert(edits, {
-                startLine = line,
-                startColumn = first,
-                endLine = line,
-                endColumn = last + 1,
-                newText = string.format('require \'%s\'', absolutePath)
-              })
-            end
-          end
-
-          line = line + 1
-        end
-
-        return edits
-      end
-    } :: PluginApi
-
-Then, configure luau-lsp to use the plugin:
+to tell luau-lsp to treat require paths as relative to the root of the project.  The plugin can be
+found [here](https://github.com/bjornbytes/lovr-docs/tree/api/luau/require.luau), and the necessary
+config is:
 
     {
-      plugins = {
-        enabled = true,
-        paths = {
-          '/path/to/lovr-require.luau'
-        },
-        fileSystem = {
-          enabled = true
+      ['luau-lsp'] = {
+        plugins = {
+          enabled = true,
+          fileSystem = {
+            enabled = true
+          },
+          paths = {
+            '/path/to/require.luau'
+          }
         }
       }
     }
