@@ -74,10 +74,13 @@ LÖVR does not currently implement Luau's native codegen.
 Luau LSP
 ---
 
-[Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR.
+[Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) is able to provide type checking for LÖVR's
+API.
 
-To generate type definitions, run `lovr api luau` from lovr-docs, which generates `lovr.d.luau` in
-the `api/luau` folder.  Then configure Luau LSP to use that definition file.
+Luau LSP needs a definition file so it understands LÖVR's API.  To generate the definition file, run
+`lovr api luau` from lovr-docs.  This will generate a `lovr.d.luau` file in the `api/luau` folder.
+Then, configure Luau LSP to start with the `--definitions:lovr=/path/to/lovr.d.luau` argument (your
+editor may also have its own way of specifying paths to definition files).
 
 :::note
 These type definitions are compatible with Luau's new "V2" type solver, not the old solver.
@@ -95,9 +98,7 @@ config is:
       ['luau-lsp'] = {
         plugins = {
           enabled = true,
-          fileSystem = {
-            enabled = true
-          },
+          fileSystem = { enabled = true },
           paths = {
             '/path/to/require.luau'
           }
@@ -105,13 +106,17 @@ config is:
       }
     }
 
-### Full Config
+### Example
 
-Here's a full example of a neovim LSP config for Luau:
+A full neovim LSP config for Luau + LÖVR might look something like this:
 
     vim.lsp.enable('luau_lsp')
     vim.lsp.config('luau_lsp', {
-      cmd = { 'luau-lsp', 'lsp', '--definitions=/path/to/lovr-docs/api/luau/lovr.d.luau' },
+      cmd = {
+        'luau-lsp',
+        'lsp',
+        '--definitions:lovr=/path/to/lovr-docs/api/luau/lovr.d.luau'
+      },
       filetypes = { 'luau' },
       root_markers = { '.git' },
       settings = {
@@ -130,9 +135,7 @@ Here's a full example of a neovim LSP config for Luau:
           },
           plugins = {
             enabled = true,
-            fileSystem = {
-              enabled = true
-            },
+            fileSystem = { enabled = true },
             paths = {
               '/path/to/lovr-docs/api/luau/require.luau'
             }
