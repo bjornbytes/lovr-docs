@@ -66,7 +66,7 @@ declare quaternion: {
 }
 ]]
 
-local genFunctionType
+local genFunction
 
 local function genType(info)
   local types = {}
@@ -75,9 +75,23 @@ local function genType(info)
   for t in info.type:gmatch('[%w{}%*%.]+') do
     if t == 'function' then
       -- Need to wrap optional functions in parens so the ? doesn't apply to the return type
-      table.insert(types, (optional and '(%s)' or '%s'):format(genFunctionType(info)))
+      table.insert(types, (optional and '(%s)' or '%s'):format(genFunction(info)))
     elseif t == '*' then
       table.insert(types, 'any')
+    elseif t == 'table' and info.table then
+      local fields = {}
+
+      for _, field in ipairs(info.table) do
+        table.insert(fields, ('%s: %s'):format(field.name:match('%w+$'), genType(field)))
+      end
+
+      fields = table.concat(fields, ', ')
+
+      if info.table[1].name:match('%[%]') then
+        table.insert(types, ('{{%s}}'):format(fields))
+      else
+        table.insert(types, ('{%s}'):format(fields))
+      end
     elseif t == 'table' then
       table.insert(types, '{}')
     else
@@ -126,7 +140,7 @@ local function genReturns(returns)
   return table.concat(t, ', ')
 end
 
-genFunctionType = function(fn)
+genFunction = function(fn)
   if not fn.arguments or not fn.returns then
     return '() -> ()'
   end
@@ -183,10 +197,10 @@ return function(api)
       write('  %s:\n', fn.name)
 
       for i, variant in ipairs(fn.variants) do
-        write('    & (%s)%s\n', genFunctionType(variant), i == #fn.variants and ',' or '')
+        write('    & (%s)%s\n', genFunction(variant), i == #fn.variants and ',' or '')
       end
     else
-      write('  %s: %s,\n', fn.name, genFunctionType(fn.variants[1]))
+      write('  %s: %s,\n', fn.name, genFunction(fn.variants[1]))
     end
   end
 
