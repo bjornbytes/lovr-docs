@@ -74,13 +74,13 @@ LÖVR does not currently implement Luau's native codegen.
 Luau LSP
 ---
 
-[Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR.  To generate type
-definitions, run `lovr api luau` from lovr-docs.
+[Luau LSP](https://github.com/JohnnyMorganz/luau-lsp) works with LÖVR.
+
+To generate type definitions, run `lovr api luau` from lovr-docs, which generates `lovr.d.luau` in
+the `api/luau` folder.  Then configure Luau LSP to use that definition file.
 
 :::note
-Luau's new type solver is not currently able to parse LÖVR's type definitions because it requires
-definitions to be in a strict order, see [this issue](https://github.com/luau-lang/luau/issues/2096).
-The V1 type solver works.
+These type definitions are compatible with Luau's new "V2" type solver, not the old solver.
 :::
 
 ### Require
@@ -104,3 +104,39 @@ config is:
         }
       }
     }
+
+### Full Config
+
+Here's a full example of a neovim LSP config for Luau:
+
+    vim.lsp.enable('luau_lsp')
+    vim.lsp.config('luau_lsp', {
+      cmd = { 'luau-lsp', 'lsp', '--definitions=/path/to/lovr-docs/api/luau/lovr.d.luau' },
+      filetypes = { 'luau' },
+      root_markers = { '.git' },
+      settings = {
+        ['luau-lsp'] = {
+          platform = {
+            type = 'standard'
+          },
+          sourcemap = {
+            enabled = false
+          },
+          index = {
+            enabled = false
+          },
+          fflags = {
+            enableNewSolver = true
+          },
+          plugins = {
+            enabled = true,
+            fileSystem = {
+              enabled = true
+            },
+            paths = {
+              '/path/to/lovr-docs/api/luau/require.luau'
+            }
+          }
+        }
+      }
+    })
