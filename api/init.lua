@@ -26795,92 +26795,95 @@ return {
                     {
                       name = "texture",
                       type = "Texture",
-                      description = "The source texture to copy to this texture."
+                      description = "The texture to copy from."
                     },
                     {
                       name = "dstx",
-                      type = "number?",
+                      type = "number",
                       description = "The x offset to copy to.",
                       default = "0"
                     },
                     {
                       name = "dsty",
-                      type = "number?",
+                      type = "number",
                       description = "The y offset to copy to.",
                       default = "0"
                     },
                     {
                       name = "dstlayer",
-                      type = "number?",
+                      type = "number",
                       description = "The index of the layer to copy to.",
                       default = "1"
                     },
                     {
                       name = "dstmipmap",
-                      type = "number?",
+                      type = "number",
                       description = "The index of the mipmap level to copy to.",
                       default = "1"
                     },
                     {
                       name = "srcx",
-                      type = "number?",
+                      type = "number",
                       description = "The x offset to copy from.",
                       default = "0"
                     },
                     {
                       name = "srcy",
-                      type = "number?",
+                      type = "number",
                       description = "The y offset to copy from.",
                       default = "0"
                     },
                     {
                       name = "srclayer",
-                      type = "number?",
+                      type = "number",
                       description = "The index of the layer to copy from.",
                       default = "1"
                     },
                     {
                       name = "srcmipmap",
-                      type = "number?",
+                      type = "number",
                       description = "The index of the mipmap level to copy from.",
                       default = "1"
                     },
                     {
                       name = "width",
-                      type = "number?",
-                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters."
+                      type = "number",
+                      description = "The width of the region of pixels to copy.  If nil, the maximum possible width will be used, based on the widths of the source/destination and the offset parameters.",
+                      default = "nil"
                     },
                     {
                       name = "height",
-                      type = "number?",
-                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters."
+                      type = "number",
+                      description = "The height of the region of pixels to copy.  If nil, the maximum possible height will be used, based on the heights of the source/destination and the offset parameters.",
+                      default = "nil"
                     },
                     {
                       name = "layers",
-                      type = "number?",
-                      description = "The number of layers to copy.  If nil, copies as many layers as possible."
+                      type = "number",
+                      description = "The number of layers to copy.  If nil, copies as many layers as possible.",
+                      default = "nil"
                     },
                     {
                       name = "srcwidth",
-                      type = "number?",
+                      type = "number",
                       description = "The width of the region in the source texture to copy.  If it doesn't match `width`, the copy will be scaled up or down to fit.",
                       default = "width"
                     },
                     {
                       name = "srcheight",
-                      type = "number?",
+                      type = "number",
                       description = "The height of the region in the source texture to copy.  If it doesn't match `height`, the copy will be scaled up or down to fit.",
-                      default = "width"
+                      default = "height"
                     },
                     {
                       name = "srcdepth",
-                      type = "number?",
+                      type = "number",
                       description = "The depth of the region in the source texture to copy (`3d` textures only).",
                       default = "layers"
                     },
                     {
                       name = "filter",
-                      type = "FilterMode?",
+                      type = "FilterMode",
                       description = "The filtering mode used to scale the copy when the source and destination sizes don't match.",
                       default = "'linear'"
                     }
