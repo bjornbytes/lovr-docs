@@ -7,25 +7,12 @@ return {
   arguments = {},
   returns = {
     format = {
-      type = 'table',
-      description = 'The vertex format.',
-      table = {
-        {
-          name = '[][1]',
-          type = 'string',
-          description = 'The name of the attribute.'
-        },
-        {
-          name = '[][2]',
-          type = 'DataType',
-          description = 'The type of the attribute.'
-        },
-        {
-          name = '[][3]',
-          type = 'number',
-          description = 'The byte offset of the attribute.'
-        }
-      }
+      type = '{{string | DataType | number}}',
+      description = [[
+        The vertex format.  Each attribute is a table `{ name, type, offset }`, where the name is a
+        string, the type is the `DataType` of the attribute, and the offset is a number indicating
+        the byte offset of the attribute.
+      ]]
     }
   },
   variants = {

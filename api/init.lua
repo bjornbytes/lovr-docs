@@ -1891,7 +1891,7 @@ return {
                 },
                 {
                   name = "material",
-                  type = "AudioMaterial | {AudioMaterial} | nil",
+                  type = "AudioMaterial | {AudioMaterial}",
                   description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
                   default = "'generic'"
                 }
@@ -1913,7 +1913,7 @@ return {
                 },
                 {
                   name = "material",
-                  type = "AudioMaterial | {AudioMaterial} | nil",
+                  type = "AudioMaterial | {AudioMaterial}",
                   description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
                   default = "'generic'"
                 }
@@ -1935,7 +1935,7 @@ return {
                 },
                 {
                   name = "material",
-                  type = "AudioMaterial | {AudioMaterial} | nil",
+                  type = "AudioMaterial | {AudioMaterial}",
                   description = "The material the audio mesh is made out of.  Can be a single `AudioMaterial` to apply to the whole mesh, or a table of `AudioMaterial` values, one for each triangle.",
                   default = "'generic'"
                 }
@@ -14434,48 +14434,14 @@ return {
                     {
                       name = "filter",
                       type = "FilterMode? | {FilterMode}?",
-                      description = "How the sampler smooths texture pixels.  Can be a table of 3 FilterModes, or a single FilterMode to use for all three.",
-                      default = "'linear'",
-                      table = {
-                        {
-                          name = "[1]",
-                          type = "FilterMode",
-                          description = "The filter mode to use when minifying a texture (drawing it at a smaller size than its native pixel resolution)."
-                        },
-                        {
-                          name = "[2]",
-                          type = "FilterMode",
-                          description = "The filter mode to use when magnifying a texture (drawing it at a larger size than its native pixel resolution)."
-                        },
-                        {
-                          name = "[3]",
-                          type = "FilterMode",
-                          description = "The filter mode used to smooth between mipmap levels in a texture."
-                        }
-                      }
+                      description = "How the sampler smooths texture pixels.  Can be a single FilterMode, or a table of three: one for minification, one for magnification, and one for smoothing between mipmap levels.",
+                      default = "'linear'"
                     },
                     {
                       name = "wrap",
                       type = "WrapMode? | {WrapMode}?",
-                      description = "How the sampler behaves when wrapping UVs outside the 0-1 range.  Can be a table of 3 WrapModes, or a single WrapMode to use for all three axes.",
-                      default = "'repeat'",
-                      table = {
-                        {
-                          name = "[1]",
-                          type = "WrapMode",
-                          description = "The horizontal wrap mode."
-                        },
-                        {
-                          name = "[2]",
-                          type = "WrapMode",
-                          description = "The vertical wrap mode."
-                        },
-                        {
-                          name = "[3]",
-                          type = "WrapMode",
-                          description = "The \"z\" wrap mode, for 3D textures."
-                        }
-                      }
+                      description = "How the sampler behaves when wrapping UVs outside the 0-1 range.  Can be a table of 3 WrapModes, for x, y, and z directions, or a single WrapMode to use for all three axes.",
+                      default = "'repeat'"
                     },
                     {
                       name = "compare",
@@ -14491,7 +14457,7 @@ return {
                     },
                     {
                       name = "mipmaprange",
-                      type = "table?",
+                      type = "{number}?",
                       description = "A table of 2 mipmap levels the sampler will clamp to."
                     }
                   }
@@ -16441,25 +16407,8 @@ return {
                   returns = {
                     {
                       name = "format",
-                      type = "table",
-                      description = "The vertex format.",
-                      table = {
-                        {
-                          name = "[][1]",
-                          type = "string",
-                          description = "The name of the attribute."
-                        },
-                        {
-                          name = "[][2]",
-                          type = "DataType",
-                          description = "The type of the attribute."
-                        },
-                        {
-                          name = "[][3]",
-                          type = "number",
-                          description = "The byte offset of the attribute."
-                        }
-                      }
+                      type = "{{string | DataType | number}}",
+                      description = "The vertex format.  Each attribute is a table `{ name, type, offset }`, where the name is a string, the type is the `DataType` of the attribute, and the offset is a number indicating the byte offset of the attribute."
                     }
                   }
                 }

@@ -16,32 +16,10 @@ return {
           type = 'FilterMode? | {FilterMode}?',
           default = [['linear']],
           description = [[
-            How the sampler smooths texture pixels.  Can be a table of 3 FilterModes, or a single
-            FilterMode to use for all three.
-          ]],
-          table = {
-            {
-              name = '[1]',
-              type = 'FilterMode',
-              description = [[
-                The filter mode to use when minifying a texture (drawing it at a smaller size than
-                its native pixel resolution).
-              ]]
-            },
-            {
-              name = '[2]',
-              type = 'FilterMode',
-              description = [[
-                The filter mode to use when magnifying a texture (drawing it at a larger size than
-                its native pixel resolution).
-              ]]
-            },
-            {
-              name = '[3]',
-              type = 'FilterMode',
-              description = 'The filter mode used to smooth between mipmap levels in a texture.'
-            }
-          }
+            How the sampler smooths texture pixels.  Can be a single FilterMode, or a table of
+            three: one for minification, one for magnification, and one for smoothing between mipmap
+            levels.
+          ]]
         },
         {
           name = 'wrap',
@@ -49,25 +27,8 @@ return {
           default = [['repeat']],
           description = [[
             How the sampler behaves when wrapping UVs outside the 0-1 range.  Can be a table of 3
-            WrapModes, or a single WrapMode to use for all three axes.
-          ]],
-          table = {
-            {
-              name = '[1]',
-              type = 'WrapMode',
-              description = 'The horizontal wrap mode.'
-            },
-            {
-              name = '[2]',
-              type = 'WrapMode',
-              description = 'The vertical wrap mode.'
-            },
-            {
-              name = '[3]',
-              type = 'WrapMode',
-              description = 'The "z" wrap mode, for 3D textures.'
-            }
-          }
+            WrapModes, for x, y, and z directions, or a single WrapMode to use for all three axes.
+          ]]
         },
         {
           name = 'compare',
@@ -83,7 +44,7 @@ return {
         },
         {
           name = 'mipmaprange',
-          type = 'table?',
+          type = '{number}?',
           description = 'A table of 2 mipmap levels the sampler will clamp to.'
         }
       }
