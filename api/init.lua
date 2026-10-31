@@ -46730,7 +46730,7 @@ return {
               returns = {
                 {
                   name = "v",
-                  type = "number",
+                  type = "vector",
                   description = "The rotated vector."
                 }
               }
