@@ -26795,7 +26795,7 @@ return {
                       name = "srcheight",
                       type = "number?",
                       description = "The height of the region in the source texture to copy.  If it doesn't match `height`, the copy will be scaled up or down to fit.",
-                      default = "width"
+                      default = "height"
                     },
                     {
                       name = "srcdepth",

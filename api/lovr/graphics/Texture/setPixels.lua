@@ -82,7 +82,7 @@ return {
     },
     srcheight = {
       type = 'number?',
-      default = 'width',
+      default = 'height',
       description = [[
         The height of the region in the source texture to copy.  If it doesn't match `height`, the
         copy will be scaled up or down to fit.
