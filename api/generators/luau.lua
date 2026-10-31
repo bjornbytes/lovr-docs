@@ -1,6 +1,7 @@
 local preamble = [[
 declare extern type userdata with end
 declare extern type lightuserdata with end
+declare arg: { [number]: string, restart: any }
 ]]
 
 local vectors = [[

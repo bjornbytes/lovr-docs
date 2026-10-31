@@ -115,6 +115,7 @@ A full neovim LSP config for Luau + LÖVR might look something like this:
       cmd = {
         'luau-lsp',
         'lsp',
+        '--flag:LuauSolverV2=true',
         '--definitions:lovr=/path/to/lovr-docs/api/luau/lovr.d.luau'
       },
       filetypes = { 'luau' },
@@ -129,9 +130,6 @@ A full neovim LSP config for Luau + LÖVR might look something like this:
           },
           index = {
             enabled = false
-          },
-          fflags = {
-            enableNewSolver = true
           },
           plugins = {
             enabled = true,
