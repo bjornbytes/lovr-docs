@@ -207,7 +207,7 @@ return function(api)
 
   for _, module in ipairs(api.modules) do
     for _, enum in ipairs(module.enums) do
-      write('type %s =\n', enum.name)
+      write('export type %s =\n', enum.name)
       for _, value in ipairs(enum.values) do
         write('  | %q\n', value.name)
       end
