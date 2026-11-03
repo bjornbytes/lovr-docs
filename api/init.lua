@@ -13514,7 +13514,7 @@ return {
                 },
                 {
                   name = "atlas",
-                  type = "Image?",
+                  type = "Image",
                   description = "An Image to use for the BMFont atlas, instead of the one in the BMFont file."
                 },
                 {
