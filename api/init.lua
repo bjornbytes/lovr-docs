@@ -350,15 +350,16 @@ return {
       name = "errhand",
       tag = "callbacks",
       summary = "Called when an error occurs.",
-      description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a parameter containing the error message.  It should return a handler function that will run in a loop to render the error screen.\n\nThis handler function is of the same type as the one returned by `lovr.run` and has the same requirements (such as pumping events).  If an error occurs while this handler is running, the program will terminate immediately -- `lovr.errhand` will not be given a second chance.  Errors which occur in the error handler or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
+      description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a parameter containing the error message.  It should return a handler function that will run in a loop to render the error screen.\n\nThis handler function is of the same type as the one returned by `lovr.run` and has the same requirements (such as pumping events).  If an error occurs while this handler is running, the program will terminate immediately -- `lovr.errhand` will not be given a second chance.  Errors which occur in the error handler or in the handler it returns may not be cleanly reported, so be careful.",
       key = "lovr.errhand",
       module = "lovr",
       examples = {
         {
-          description = "The default error handler.",
-          code = "function lovr.errhand(message)\n  local function formatTraceback(s)\n    return s:gsub('\\n[^\\n]+$', ''):gsub('\\t', ''):gsub('stack traceback:', '\\nStack:\\n')\n  end\n\n  message = 'Error:\\n\\n' .. tostring(message) .. formatTraceback(debug.traceback('', 4))\n\n  print(message)\n\n  if not lovr.graphics or not lovr.graphics.isInitialized() then\n    return function() return 1 end\n  end\n\n  if lovr.audio then lovr.audio.stop() end\n\n  if not lovr.headset or lovr.headset.getPassthrough() == 'opaque' then\n    lovr.graphics.setBackgroundColor(.11, .10, .14)\n  else\n    lovr.graphics.setBackgroundColor(0, 0, 0, 0)\n  end\n\n  local font = lovr.graphics.getDefaultFont()\n\n  return function()\n    lovr.system.pollEvents()\n\n    for name, a in lovr.event.poll() do\n      if name == 'quit' then return a or 1\n      elseif name == 'restart' then return 'restart', lovr.restart and lovr.restart()\n      elseif name == 'keypressed' and a == 'f5' then lovr.event.restart()\n      elseif name == 'keypressed' and a == 'escape' then lovr.event.quit() end\n    end\n\n    if lovr.headset and lovr.headset.getDriver() ~= 'simulator' then\n      lovr.headset.update()\n      local pass = lovr.headset.getPass()\n      if pass then\n        font:setPixelDensity()\n\n        local scale = .35\n        local font = lovr.graphics.getDefaultFont()\n        local wrap = .7 * font:getPixelDensity()\n        local lines = font:getLines(message, wrap)\n        local width = math.min(font:getWidth(message), wrap) * scale\n        local height = .8 + #lines * font:getHeight() * scale\n        local x = -width / 2\n        local y = math.min(height / 2, 10)\n        local z = -10\n\n        pass:setColor(.95, .95, .95)\n        pass:text(message, x, y, z, scale, 0, 0, 0, 0, wrap, 'left', 'top')\n\n        lovr.graphics.submit(pass)\n        lovr.headset.submit()\n      end\n    end\n\n    if lovr.system.isWindowOpen() then\n      local pass = lovr.graphics.getWindowPass()\n      if pass then\n        local w, h = lovr.system.getWindowDimensions()\n        pass:setProjection(1, lovr.math.mat4():orthographic(0, w, 0, h, -1, 1))\n        font:setPixelDensity(1)\n\n        local scale = .6\n        local wrap = w * .8 / scale\n        local width = math.min(font:getWidth(message), wrap) * scale\n        local x = w / 2 - width / 2\n\n        pass:setColor(.95, .95, .95)\n        pass:text(message, x, h / 2, 0, scale, 0, 0, 0, 0, wrap, 'left', 'middle')\n\n        lovr.graphics.submit(pass)\n        lovr.graphics.present()\n      end\n    end\n\n    lovr.math.drain()\n  end\nend"
+          description = "Wrapping the default error screen with custom error handling logic.",
+          code = "require 'errhand' -- assigns the default error screen to lovr.errhand\n\nlocal errhand = lovr.errhand\nfunction lovr.errhand(message)\n  -- log message to file, or do whatever else you need\n\n  return errhand(message) -- then show the default error screen\nend"
         }
       },
+      notes = "The default error handler can be found [here](https://github.com/bjornbytes/lovr/blob/dev/etc/nogame/errhand.lua). It is fused to the LÖVR executable, similar to the nogame screen.\n\nWhen an error occurs and `lovr.errhand` hasn't been set yet, LÖVR will load the default error handle.  The `errhand` file can also be loaded manually to set up the error handler earlier, which can be useful to wrap it in custom code.",
       related = {
         "lovr.quit"
       },
@@ -374,7 +375,7 @@ return {
           returns = {
             {
               name = "handler",
-              type = "function",
+              type = "function?",
               description = "The error handler function.  It should return nil to continue running, \"restart\" to restart the app, or a number representing an exit status.",
               arguments = {},
               returns = {
