@@ -350,9 +350,16 @@ return {
       name = "errhand",
       tag = "callbacks",
       summary = "Called when an error occurs.",
-      description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a parameter containing the error message.  It should return a handler function that will run in a loop to render the error screen.\n\nThis handler function is of the same type as the one returned by `lovr.run` and has the same requirements (such as pumping events).  If an error occurs while this handler is running, the program will terminate immediately -- `lovr.errhand` will not be given a second chance.  Errors which occur in the error handler or in the handler it returns may not be cleanly reported, so be careful.\n\nA default error handler is supplied that renders the error message as text to the headset and to the window.",
+      description = "The `lovr.errhand` callback is run whenever an error occurs.  It receives a parameter containing the error message.  It should return a handler function that will run in a loop to render the error screen.\n\nThis handler function is of the same type as the one returned by `lovr.run` and has the same requirements (such as pumping events).  If an error occurs while this handler is running, the program will terminate immediately -- `lovr.errhand` will not be given a second chance.  Errors which occur in the error handler or in the handler it returns may not be cleanly reported, so be careful.",
       key = "lovr.errhand",
       module = "lovr",
+      examples = {
+        {
+          description = "Wrapping the default error screen with custom error handling logic.",
+          code = "require 'errhand' -- assigns the default error screen to lovr.errhand\n\nlocal errhand = lovr.errhand\nfunction lovr.errhand(message)\n  -- log message to file, or do whatever else you need\n\n  return errhand(message) -- then show the default error screen\nend"
+        }
+      },
+      notes = "The default error handler can be found [here](https://github.com/bjornbytes/lovr/blob/dev/etc/nogame/errhand.lua). It is fused to the LÖVR executable, similar to the nogame screen.\n\nWhen an error occurs and `lovr.errhand` hasn't been set yet, LÖVR will load the default error handle.  The `errhand` file can also be loaded manually to set up the error handler earlier, which can be useful to wrap it in custom code.",
       related = {
         "lovr.quit"
       },
