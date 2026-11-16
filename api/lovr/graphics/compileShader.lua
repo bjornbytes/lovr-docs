@@ -8,25 +8,33 @@ return {
     This allows shaders to be precompiled in a build step.
   ]],
   arguments = {
-    stage = {
-      type = 'ShaderStage',
-      description = 'The type of shader to compile.'
-    },
-    source = {
+    vertex = {
       type = 'string | Blob',
-      description = 'A string, filename, or Blob with shader code.'
+      description = 'A string, filename, or Blob containing code for the vertex stage.'
+    },
+    fragment = {
+      type = 'string | Blob',
+      description = 'A string, filename, or Blob containing code for the fragment stage.'
+    },
+    compute = {
+      type = 'string | Blob',
+      description = 'A string, filename, or Blob containing code for the compute stage.'
     }
   },
   returns = {
-    bytecode = {
+    ['...blobs'] = {
       type = 'Blob',
-      description = 'A Blob containing compiled SPIR-V code.'
+      description = 'Blobs containing compiled SPIR-V code, one for each input stage.'
     }
   },
   variants = {
     {
-      arguments = { 'stage', 'source' },
-      returns = { 'bytecode' }
+      arguments = { 'vertex', 'fragment' },
+      returns = { '...blobs' }
+    },
+    {
+      arguments = { 'compute' },
+      returns = { '...blobs' }
     }
   },
   notes = [[

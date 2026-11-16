@@ -12793,21 +12793,37 @@ return {
             {
               arguments = {
                 {
-                  name = "stage",
-                  type = "ShaderStage",
-                  description = "The type of shader to compile."
+                  name = "vertex",
+                  type = "string | Blob",
+                  description = "A string, filename, or Blob containing code for the vertex stage."
                 },
                 {
-                  name = "source",
+                  name = "fragment",
                   type = "string | Blob",
-                  description = "A string, filename, or Blob with shader code."
+                  description = "A string, filename, or Blob containing code for the fragment stage."
                 }
               },
               returns = {
                 {
-                  name = "bytecode",
+                  name = "...blobs",
                   type = "Blob",
-                  description = "A Blob containing compiled SPIR-V code."
+                  description = "Blobs containing compiled SPIR-V code, one for each input stage."
+                }
+              }
+            },
+            {
+              arguments = {
+                {
+                  name = "compute",
+                  type = "string | Blob",
+                  description = "A string, filename, or Blob containing code for the compute stage."
+                }
+              },
+              returns = {
+                {
+                  name = "...blobs",
+                  type = "Blob",
+                  description = "Blobs containing compiled SPIR-V code, one for each input stage."
                 }
               }
             }
