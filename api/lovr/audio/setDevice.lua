@@ -7,16 +7,14 @@ return {
     If a device for the given type is already active, it will be stopped and destroyed.  The new
     device will not be started automatically, use `lovr.audio.start` to start it.
 
-    A device id (previously retrieved using `lovr.audio.getDevices`) can be given to use a specific
-    audio device, or `nil` can be used for the id to use the default audio device.
+    The device ID can be one of the IDs retrieved using `lovr.audio.getDevices`, or `nil` to use the
+    default audio device.
 
-    A sink can be also be provided when changing the device.  A sink is an audio stream (`Sound`
-    object with a `stream` type) that will receive all audio samples played (for playback) or all
-    audio samples captured (for capture).  When an audio device with a sink is started, be sure to
-    periodically call `Sound:read` on the sink to read audio samples from it, otherwise it will
-    overflow and discard old data.  The sink can have any format, data will be converted as needed.
-    Using a sink for the playback device will reduce performance, but this isn't the case for
-    capture devices.
+    A stream can also be provided when changing the device.  This is an `AudioStream` object that
+    will receive all audio played or captured from the device.  It can also be `true` to create a
+    default stream, which can be accessed using `lovr.audio.getStream`. Data from the device will
+    automatically be converted to the format of the stream.  Be sure to periodically read data from
+    the stream using `AudioStream:read`, otherwise its buffer could overflow and start to drop data.
 
     Audio devices can be started in `shared` or `exclusive` mode.  Exclusive devices may have lower
     latency than shared devices, but there's a higher chance that requesting exclusive access to an
