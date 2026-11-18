@@ -43590,7 +43590,7 @@ return {
                   code = "world:setCallbacks({\n  filter = function(a, b)\n    return true\n  end,\n  enter = function(a, b, contact)\n    -- play sounds, spawn particles, etc.\n    -- the collision has not been resolved yet, so the velocity of a and b\n    -- is the velocity before the collision, and can be used to estimate the\n    -- collision force\n  end,\n  exit = function(a, b)\n    -- a and b have stopped touching!\n  end,\n  contact = function(a, b, contact)\n    -- a and b are touching this frame\n    -- use sparingly, as this may be called many times per frame\n    -- use Contact:setFriction and Contact:setResitution to update\n    -- the contact behavior, or Contact:setSurfaceVelocity, for a\n    -- conveyor belt effect, or Contact:setEnabled to disable the\n    -- collision completely.\n  end\n})"
                 }
               },
-              notes = "The `Thread` that last set these callbacks must also be the thread to call `World:update`.\n\nNote that when a collider goes to sleep, its active contacts will be removed and the `exit` callback will be called.",
+              notes = "Note that when a collider goes to sleep, its active contacts will be removed and the `exit` callback will be called.\n\nIf callbacks are set on a particular `Thread`/coroutine, then `World:update` must be called from there as well.",
               related = {
                 "World:update",
                 "Contact"

@@ -66,10 +66,11 @@ return {
     }
   },
   notes = [[
-    The `Thread` that last set these callbacks must also be the thread to call `World:update`.
-
     Note that when a collider goes to sleep, its active contacts will be removed and the `exit`
     callback will be called.
+
+    If callbacks are set on a particular `Thread`/coroutine, then `World:update` must be called from
+    there as well.
   ]],
   example = [[
     world:setCallbacks({
