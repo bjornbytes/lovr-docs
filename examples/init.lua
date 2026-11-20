@@ -29,6 +29,7 @@ return {
   'Environment/Triplanar_Mapping',
   'Lighting/Cel_Shading',
   'Lighting/Circular_Shadows',
+  'Lighting/Fog',
   'Lighting/PBR_Materials',
   'Lighting/Raytraced_Ambient_Occlusion',
   'Lighting/Shadows',
